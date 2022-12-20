@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name');
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->date('date_of_birth');
+            $table->date('date_of_birth')->nullable();
             $table->unsignedBigInteger('university_id')->nullable();
             $table->unsignedBigInteger('major_id')->nullable();
             $table->string('github_link')->nullable();
+            $table->boolean('is_confirm');
             $table->timestamps();
         });
     }
