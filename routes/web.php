@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\MajortController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UniversityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +54,6 @@ Route::get('/studentprofilerepo', function () {
 Route::get('/leaderboard', function () {
     return view('welcome');
 });
+
+// Admin
+Route::get('/leaderboard', [UserController::class, 'index']);
