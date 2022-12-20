@@ -16,3 +16,37 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Home Page
+
+Route::get('/home', function () {
+    return view('welcome');
+});
+
+Route::get('/project', function () {
+    return view('welcome');
+});
+
+Route::get('/signin', function () {
+    return view('welcome');
+});
+
+Route::get('/signup', function () {
+    return view('welcome');
+});
+
+Route::get('/supportlib', function () {
+    return view('welcome');
+});
+
+Route::get('/q&a', function () {
+    return view('welcome');
+});
+
+Route::get('/studentprofilerepo', function () {
+    return view('welcome');
+});
+
+Route::get('/leaderboard', function () {
+    return view('welcome');
+});
