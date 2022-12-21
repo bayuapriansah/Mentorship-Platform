@@ -5,7 +5,7 @@
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <meta name="format-detection" content="telephone=no">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>{{contact.FIRSTNAME | default : 'Beloved User'}}</title>
+ <title>Beloved Simulated Internship User</title>
  <style type="text/css" emogrify="no">
   #outlook a { padding:0; } .ExternalClass { width:100%; } .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; } table td { border-collapse: collapse; mso-line-height-rule: exactly; } .editable.image { font-size: 0 !important; line-height: 0 !important; } .nl2go_preheader { display: none !important; mso-hide:all !important; mso-line-height-rule: exactly; visibility: hidden !important; line-height: 0px !important; font-size: 0px !important; } body { width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0; } img { outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; } a img { border:none; } table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; } th { font-weight: normal; text-align: left; } *[class="gmail-fix"] { display: none !important; } 
  </style>
@@ -128,10 +128,13 @@
                               <td class="nl2go-responsive-hide" width="16" style="font-size: 0px; line-height: 1px;">­ </td>
                               <td align="left" valign="top" class="r14-i nl2go-default-textstyle" style="color: #3b3f44; font-family: Roboto Mono; font-size: 16px; line-height: 1.5; text-align: left;">
                                <div>
-                                <!-- <p style="margin: 0;"><span style="font-size: 18px;">you're registration to our website is under review, please wait for confirmation email from us. Thank you! 😊</span><br><span style="font-size: 18px;">it takes 1-2 days to review your registration.</span><br><span style="font-size: 18px;">but no worries if you're account is ready to use, we will inform you via email.</span></p> -->
-                                <p style="margin: 0;"><span style="font-size: 18px;">{{ $data['body'] }}<span></p>
-                                <!-- <p style="margin: 0;"><span style="font-size: 18px;">Best regards,</span></p>
-                                <p style="margin: 0;"><span style="font-size: 18px;">Simulated Internship</span></p> -->
+                                <p style="margin: 0;"><span style="font-size: 18px;">{{ $data['body'] }}</span>
+                                <br>
+                                <span style="font-size: 18px;">{{ $data['body2'] }}</span>
+                                <br>
+                                <span style="font-size: 18px;">{{ $data['body3'] }}</span></p>
+                                <p style="margin: 0;"><span style="font-size: 18px;">{{ $data['body4'] }}</span></p>
+                                <p style="margin: 0;"><span style="font-size: 18px;">{{ $data['body5'] }}</span></p>
                                </div>
                               </td>
                              </tr>
