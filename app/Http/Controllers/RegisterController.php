@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
 use App\Models\Company;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -24,6 +25,8 @@ class RegisterController extends Controller
             $student->password = $validated['password'];
             $student->is_confirm = 0;
             $student->save();
+            Auth::guard('student')->login($student);
+            return redirect('/');
         }elseif ($validated['role'] == 'partner') {
             $company = new Company;
             $company->name = $validated['name'];
@@ -31,8 +34,19 @@ class RegisterController extends Controller
             $company->password = $validated['password'];
             $company->is_confirm = 0;
             $company->save();
+            Auth::guard('company')->login($company);
+            return redirect('/');
         }else{
             return redirect('/');
         }
+    }
+
+    public function logout(Request $request){
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }
