@@ -9,12 +9,7 @@
     
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Favicons -->
-<link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
+
 <meta name="theme-color" content="#712cf9">
 
 
@@ -85,21 +80,24 @@
 
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="/" class="nav-link link-dark px-2" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="{{route('projects.index')}}" class="nav-link link-dark px-2">Project Page</a></li>
+        
         @if(Auth::guard('student')->check())
+        <li class="nav-item"><a href="{{route('projects.index')}}" class="nav-link link-dark px-2">Project Page</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('student')->user()->name}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf
           <button type="submit" class="btn btn-primary">Logout</button>
         </form>
         @elseif(Auth::guard('company')->check())
+        <li class="nav-item"><a href="{{route('projects.index')}}" class="nav-link link-dark px-2">Project Page</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('company')->user()->name}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf
           <button type="submit" class="btn btn-danger">Logout</button>
         </form>
         @else
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Sign In</a></li>
+        
+        <li class="nav-item"><a href="/login" class="nav-link link-dark px-2">Sign In</a></li>
         <li class="nav-item"><a href="#register" class="nav-link link-dark px-2">Register</a></li>
         @endif
       </ul>

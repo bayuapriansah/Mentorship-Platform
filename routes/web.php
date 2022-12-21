@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\MajortController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UniversityController;
 
 /*
@@ -23,16 +23,24 @@ use App\Http\Controllers\UniversityController;
 
 
 // register
-Route::post('/register', [RegisterController::class, 'store'])->name('register');
-Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
+Route::post('/register', [AuthController::class, 'store'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+
+// Student projects page
+// Route::group(['middleware'=>'auth:student'], function(){
+Route::group(['middleware'=>'auth:student, company'], function(){
+    // projects page
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+});
 
 // Home Page
 Route::get('/', function () {
     return view('index');
 })->name('index');
 
-// projects page
-Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+
 
 // Route::get('/home', [DashboardController::class, 'index'])->name('home');
 Route::view('/home', 'layouts.index');

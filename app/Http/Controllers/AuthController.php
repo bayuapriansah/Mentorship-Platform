@@ -7,10 +7,11 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
     public function store(Request $request){
-        dd($request->all());
+        // dd($request->all());
+        
         $validated = $request->validate([
             'name' => ['required', 'min:3'],
             'email' => ['required'],
@@ -82,4 +83,39 @@ class RegisterController extends Controller
     
         return redirect('/');
     }
+
+    public function login(){
+        return view('auth.login');
+    }
+
+    public function authenticate(Request $request){
+        try {
+            $validated = $request->validate([
+                'email' => ['required'],
+                'password' => ['required']
+            ]);
+    
+            $existing_student_credential = Student::where('email',$validated['email'])->first();
+            $existing_company_credential = Company::where('email',$validated['email'])->first();
+            
+            if(Auth::guard('student')->attempt($validated)){
+                $request->session()->regenerate();
+                return redirect('/')->with('success','Logged in');;
+            }
+            if(Auth::guard('company')->attempt($validated)){
+                $request->session()->regenerate();
+                return redirect('/')->with('success','Logged in company');;
+            }
+        } catch(\Exception $error){
+            $response =[
+                'status'=>'error',
+                'message'=>'error',
+                'data'=>$error->getMessage(),
+            ];
+            return response()->json($response, 200);
+        }
+        
+
+    }
+
 }
