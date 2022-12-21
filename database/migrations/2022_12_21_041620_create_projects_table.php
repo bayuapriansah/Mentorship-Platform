@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('problem');
             $table->string('image');
             $table->unsignedBigInteger('batch_id');
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('company_id');
             $table->timestamps();
         });
     }

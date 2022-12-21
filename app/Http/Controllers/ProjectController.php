@@ -9,7 +9,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $project = Project::first();
-        return view('projects', compact('project'));
+        $projects = Project::get();
+        return view('projects', compact('projects'));
     }
 }

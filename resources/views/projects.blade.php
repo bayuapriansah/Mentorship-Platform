@@ -5,23 +5,19 @@
     <img src="{{asset('assets/img/heroBackground.jpg')}}" alt="" width="100%">
   </div>
 
-  <h2>Project Page</h2>
+  <h1>My Project</h1>
   
-  <h5 class="mt-5">Problem statement:</h5>
-  <ul>
-    <li>Backround information</li>
-    <li>Problem to solve</li>
-    <li>Expectations for the project</li>
-    <li>Limitations on the project</li>
-  </ul>
-  <div class="row justify-content-center">
-    <div class=" card col-6 p-4 bg-light">
-      <p>Customer Messaging Board:</p>
-      <p>To be used for communications between the customer and the students</p>
-      <p>Updates to the project will be posted here</p>
-      <p>Call information will be posted here</p>
+  @foreach($projects as $project)
+  <a href="#">
+    <div class="row mb-2">
+      <div class="card col p-4 bg-light">
+        <h2>{{$project->name}}</h2>
+        <h4>Company name : {{$project->company->name}}</h4>
+      </div>
     </div>
-  </div>
+  </a>
+  @endforeach
+  
   {{-- <div class="card mt-5 text-center bg-light">
     
   </div> --}}

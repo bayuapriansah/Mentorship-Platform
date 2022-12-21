@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;   
 
 class Company extends Authenticatable
@@ -13,5 +14,9 @@ class Company extends Authenticatable
     protected $guard = 'company';
 
     protected $fillable = ['name', 'email', 'password'];
-
+    
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
