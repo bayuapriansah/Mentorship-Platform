@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('university_id')->nullable();
             $table->unsignedBigInteger('major_id')->nullable();
             $table->string('github_link')->nullable();
+            $table->string('g_captcha_response')->nullable();
             $table->boolean('is_confirm');
             $table->timestamps();
         });

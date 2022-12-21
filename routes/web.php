@@ -46,8 +46,8 @@ Route::get('/signup', function () {
 });
 
 Route::get('/supportlib', function () {
-    return view('welcome');
-});
+    return view('supportlibrary');
+})->name('supportlib');
 
 Route::get('/q&a', function () {
     return view('welcome');
@@ -60,6 +60,3 @@ Route::get('/studentprofilerepo', function () {
 Route::get('/leaderboard', function () {
     return view('welcome');
 });
-
-// Admin
-// Route::get('/leaderboard', [UserController::class, 'index']);

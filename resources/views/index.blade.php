@@ -25,7 +25,7 @@
 
   </div>
 
-  <form action="/register" method="post">
+  <form action="/register" method="post" id="register">
     @csrf
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
@@ -49,26 +49,11 @@
         <option value="partner">Partner</option>
       </select>
     </div>
-    
-    <div class="mb3">
-      <label for="date" class="form-label">Date of Birth</label>
-      <div class="col-5">
-        <div class="input-group date" id="datepicker">
-          <input type="text" class="form-control" id="date" name="date">
-          <span class="input-group-append">
-            <span class="input-group-text bg-light d-block">
-              <i class="fa fa-calendar"></i>
-            </span>
-          </span>
-        </div>
-      </div>
-    </div>
-
     <div class="mb3">
       <label for="g-recaptcha-response" class="form-label">Captcha</label>
       {!! htmlFormSnippet() !!}
     </div>
-    
+
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
