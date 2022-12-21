@@ -15,30 +15,40 @@ class RegisterController extends Controller
             'name' => ['required', 'min:3'],
             'email' => ['required'],
             'password' => ['required', 'min:8'],
-            // 'role' => ['required'],
+            'role' => ['required'],
             // 'date' => ['required'],
             // 'g-recaptcha-response' => 'recaptcha',
         ]);
 
         $validated['password'] = bcrypt($validated['password']);
         if($validated['role'] == 'student'){
-            $student = new Student;
-            $student->name = $validated['name'];
-            $student->email = $validated['email'];
-            $student->password = $validated['password'];
-            $student->is_confirm = 0;
-            $student->save();
-            // Auth::guard('student')->login($student);
-            return redirect('/')->with('success','Akun sudah terdaftar dan sedang direview silahkan tunggu email konfirmasi ');
+            $existing_student = Student::where('email',$validated['email'])->first();
+            if($existing_student == null){
+                $student = new Student;
+                $student->name = $validated['name'];
+                $student->email = $validated['email'];
+                $student->password = $validated['password'];
+                $student->is_confirm = 0;
+                $student->save();
+                // Auth::guard('student')->login($student);
+                return redirect('/')->with('success','Your account has been registered and under review, please wait for confirmation email');
+            }else{
+                return redirect('/')->with('error','The email you are using is already registered');
+            }
         }elseif ($validated['role'] == 'partner') {
-            $company = new Company;
-            $company->name = $validated['name'];
-            $company->email = $validated['email'];
-            $company->password = $validated['password'];
-            $company->is_confirm = 0;
-            $company->save();
-            // Auth::guard('company')->login($company);
-            return redirect('/')->with('success','Akun sudah terdaftar dan sedang direview silahkan tunggu email konfirmasi ');
+            $existing_company = Company::where('email', $validated['email'])->first();
+            if($existing_company == null){
+                $company = new Company;
+                $company->name = $validated['name'];
+                $company->email = $validated['email'];
+                $company->password = $validated['password'];
+                $company->is_confirm = 0;
+                $company->save();
+                // Auth::guard('company')->login($company);
+                return redirect('/')->with('success','Your account has been registered and under review, please wait for confirmation email');
+            }else{
+                return redirect('/')->with('error','The email you are using is already registered');
+            }
         }else{
             return redirect('/');
         }

@@ -46,7 +46,7 @@
       </select>
     </div>
     
-    <div class="mb3">
+    {{-- <div class="mb3">
       <label for="date" class="form-label">Date of Birth</label>
       <div class="col-5">
         <div class="input-group date" id="datepicker">
@@ -58,7 +58,7 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> --}}
 
     <div class="mb3">
       {{-- <label for="g-recaptcha-response" class="form-label">Captcha</label> --}}
