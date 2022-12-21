@@ -7,6 +7,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MajortController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::get('/', function () {
 // register
 Route::post('/register', [RegisterController::class, 'store'])->name('register');
 Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
+Route::get('/sendmail', [MailController::class, 'index']);
 
 // Home Page
 

@@ -30,7 +30,6 @@ class RegisterController extends Controller
             $student->save();
             // Auth::guard('student')->login($student);
             return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
-            // You're account is under review, please wait for confirmation email from us. Thank you! 😊
         }elseif ($validated['role'] == 'partner') {
             $company = new Company;
             $company->name = $validated['name'];
