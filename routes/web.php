@@ -28,9 +28,9 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register')
 
 // Home Page
 
-Route::get('/home', function () {
-    return view('welcome');
-});
+// Route::get('/home', [DashboardController::class, 'index'])->name('home');
+Route::view('/home', 'layouts.index');
+
 
 Route::get('/project', function () {
     return view('welcome');
