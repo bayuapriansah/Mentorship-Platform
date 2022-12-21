@@ -47,7 +47,11 @@ Route::get('/signup', function () {
 
 Route::get('/supportlib', function () {
     return view('supportlibrary');
-})->name('supportlib');
+});
+
+Route::get('/project/detail-project', function () {
+    return view('detail-project');
+});
 
 Route::get('/q&a', function () {
     return view('welcome');

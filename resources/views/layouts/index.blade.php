@@ -81,7 +81,7 @@
   <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <span class="fs-4"><img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Intel-logo-2022.png" alt="Intel" width="5%" srcset=""></span>
+        <span class="fs-4"><img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Intel-logo-2022.png]" alt="Intel" width="5%" srcset=""></span>
       </a>
 
       <ul class="nav nav-pills">
