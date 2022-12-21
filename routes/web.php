@@ -33,14 +33,17 @@ Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('aut
 Route::group(['middleware'=>'auth:student, company'], function(){
     // projects page
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/supportlib', function () {
+        return view('projects.supportlibrary');
+    })->name('projects.support');
+    
 });
 
 // Home Page
 Route::get('/', function () {
     return view('index');
 })->name('index');
-
-
 
 // Route::get('/home', [DashboardController::class, 'index'])->name('home');
 Route::view('/home', 'layouts.index');
@@ -53,9 +56,7 @@ Route::get('/signup', function () {
     return view('welcome');
 });
 
-Route::get('/supportlib', function () {
-    return view('supportlibrary');
-});
+
 
 Route::get('/project/detail-project', function () {
     return view('detail-project');
