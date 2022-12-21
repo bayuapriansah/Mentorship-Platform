@@ -2,18 +2,14 @@
 @section('content')
 <div class="container">
   @include('flash-message')
-  <div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5">
-      <h1 class="display-5 fw-bold">Custom jumbotron</h1>
-      <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-      <button class="btn btn-primary btn-lg" type="button">Example button</button>
-    </div>
+  <div class="p-5 mb-4 text-center">
+    <img src="{{asset('assets/img/heroBackground.jpg')}}" alt="" width="100%">
   </div>
 
   <div class="text-center mb-5">
     <h1>Welcome to the AI for Workforce Platform</h1>
     <h5 class="mt-5">Jump to the current AI project, sponsored by [Partner Name]</h5>
-    <button type="button" class="btn btn-primary mb-2">Project Details</button>
+    <a href="{{route('projects.index')}}" class="btn btn-primary mb-2">Project Details</a>
     <img src="https://via.placeholder.com/150" class="text-center" width="100%" height="300px">
 
     <h5 class="mt-5">Info Page</h5>
@@ -65,8 +61,8 @@
     </div>
 
     <div class="mb3">
-      <label for="g-recaptcha-response" class="form-label">Captcha</label>
-      {!! htmlFormSnippet() !!}
+      {{-- <label for="g-recaptcha-response" class="form-label">Captcha</label> --}}
+      {{-- {{!! htmlFormSnippet() !!}} --}}
     </div>
     
     <button type="submit" class="btn btn-primary">Submit</button>

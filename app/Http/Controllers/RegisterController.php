@@ -15,9 +15,9 @@ class RegisterController extends Controller
             'name' => ['required', 'min:3'],
             'email' => ['required'],
             'password' => ['required', 'min:8'],
-            'role' => ['required'],
-            'date' => ['required'],
-            'g-recaptcha-response' => 'recaptcha',
+            // 'role' => ['required'],
+            // 'date' => ['required'],
+            // 'g-recaptcha-response' => 'recaptcha',
         ]);
 
         $validated['password'] = bcrypt($validated['password']);
