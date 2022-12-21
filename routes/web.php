@@ -21,7 +21,7 @@ use App\Http\Controllers\UniversityController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 // register
 Route::post('/register', [RegisterController::class, 'store'])->name('register');
@@ -62,4 +62,4 @@ Route::get('/leaderboard', function () {
 });
 
 // Admin
-Route::get('/leaderboard', [UserController::class, 'index']);
+// Route::get('/leaderboard', [UserController::class, 'index']);

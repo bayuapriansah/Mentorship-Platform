@@ -85,14 +85,18 @@
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2" aria-current="page">Home</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Project Page</a></li>
-        
-        @if(Auth::guard('student'))
+        @if(Auth::guard('student')->check())
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('student')->user()->name}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf
           <button type="submit" class="btn btn-primary">Logout</button>
         </form>
-        @elseif(Auth::guard('company'))
+        @elseif(Auth::guard('company')->check())
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('company')->user()->name}}</a></li>
+        <form class="inline" method="post" action="/logout">
+          @csrf
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
         @else
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Sign In</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Register</a></li>
