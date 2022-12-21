@@ -11,9 +11,11 @@ class MailController extends Controller
     {
         $data = [
             'subject' => 'Registration Under Review',
-            'body' => 'Your registration is under review, please wait for confirmation email from us. Thank you! 😊
-            Best regards,
-            Simulated Internship'
+            'body' => 'Your registration is under review, please wait for confirmation email from us. Thank you! 😊',
+            'body2' => 'it takes 1-2 days to review your registration.',
+            'body3' => 'but no worries if you\'re account is ready to use, we will inform you via email.',
+            'body4'=> 'Best regards,',
+            'body5'=> 'Simulated Internship Team ❤️'
         ];
         try
         {
