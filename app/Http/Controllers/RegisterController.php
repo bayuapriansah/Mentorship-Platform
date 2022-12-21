@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     public function store(Request $request){
-        // dd($request->all());
+        dd($request->all());
         $validated = $request->validate([
             'name' => ['required', 'min:3'],
             'email' => ['required'],
             'password' => ['required', 'min:8'],
             'role' => ['required'],
-            // 'date' => ['required'],
-            // 'g-recaptcha-response' => 'recaptcha',
+            'g-recaptcha-response' => 'recaptcha'
         ]);
 
         $validated['password'] = bcrypt($validated['password']);
@@ -28,13 +27,16 @@ class RegisterController extends Controller
                 $student->name = $validated['name'];
                 $student->email = $validated['email'];
                 $student->password = $validated['password'];
+                // $student->g_captcha_response = $validated['g_captcha_response'];
                 $student->is_confirm = 0;
                 $student->save();
                 // Auth::guard('student')->login($student);
-                return redirect('/')->with('success','Your account has been registered and under review, please wait for confirmation email');
+                return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
+                // You're account is under review, please wait for confirmation email from us. Thank you! 😊
             }else{
                 return redirect('/')->with('error','The email you are using is already registered');
             }
+            
         }elseif ($validated['role'] == 'partner') {
             $existing_company = Company::where('email', $validated['email'])->first();
             if($existing_company == null){
@@ -42,10 +44,11 @@ class RegisterController extends Controller
                 $company->name = $validated['name'];
                 $company->email = $validated['email'];
                 $company->password = $validated['password'];
+                // $company->g_captcha_response = $validated['g_captcha_response'];
                 $company->is_confirm = 0;
                 $company->save();
                 // Auth::guard('company')->login($company);
-                return redirect('/')->with('success','Your account has been registered and under review, please wait for confirmation email');
+                return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
             }else{
                 return redirect('/')->with('error','The email you are using is already registered');
             }
