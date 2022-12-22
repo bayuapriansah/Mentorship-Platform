@@ -58,9 +58,6 @@ Route::group(['middleware'=>'auth:web, company', 'prefix'=>'dashboard','as'=>'da
     Route::get('companies/registered', [CompanyController::class, 'registered'])->name('companies.registered');
     Route::resource('companies', CompanyController::class);
 
-    //Batch
-    Route::resource('batches', BatchController::class);
-
     // Project
     Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
 

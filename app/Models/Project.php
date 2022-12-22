@@ -22,9 +22,4 @@ class Project extends Model
     {
         return $this->belongsTo(Company::class);
     }
-
-    public function batch()
-    {
-        return $this->belongsTo(Batch::class);
-    }
 }
