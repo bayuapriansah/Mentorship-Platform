@@ -16,7 +16,15 @@ class RegisterController extends Controller
             'email' => ['required'],
             'password' => ['required', 'min:8'],
             'role' => ['required'],
-            'g-recaptcha-response' => 'recaptcha'
+            'g-recaptcha-response' => function ($attribute, $value, $fail) {
+                $secretkey = '6LdY15UjAAAAAGaREFFVXukJbTHqA68uo9M79up0';
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                dd($response);
+            },
         ]);
 
         $validated['password'] = bcrypt($validated['password']);
@@ -25,7 +33,6 @@ class RegisterController extends Controller
             $student->name = $validated['name'];
             $student->email = $validated['email'];
             $student->password = $validated['password'];
-            // $student->g_captcha_response = $validated['g_captcha_response'];
             $student->is_confirm = 0;
             $student->save();
             // Auth::guard('student')->login($student);
@@ -35,7 +42,6 @@ class RegisterController extends Controller
             $company->name = $validated['name'];
             $company->email = $validated['email'];
             $company->password = $validated['password'];
-            // $company->g_captcha_response = $validated['g_captcha_response'];
             $company->is_confirm = 0;
             $company->save();
             // Auth::guard('company')->login($company);

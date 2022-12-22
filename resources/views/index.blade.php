@@ -1,7 +1,6 @@
 @extends('layouts.index')
 @section('content')
 <div class="container">
-  @include('flash-message')
   <div class="p-5 mb-4 text-center">
     <img src="{{asset('assets/img/heroBackground.jpg')}}" alt="" width="100%">
   </div>
@@ -20,7 +19,7 @@
     {{-- register form --}}
 
   </div>
-
+  @include('flash-message')
   <form action="/register" method="post" id="register">
     @csrf
     <div class="mb-3">
@@ -30,7 +29,7 @@
 
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="text" id="email" class="form-control" name="email">
+      <input type="email" id="email" class="form-control" name="email">
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
@@ -46,8 +45,16 @@
       </select>
     </div>
     <div class="mb-3">
-      <label for="g-recaptcha-response" class="form-label">Captcha</label>
-      {!! htmlFormSnippet() !!}
+      <!-- <label for="g-recaptcha-response" class="form-label">Captcha</label> -->
+      <div class="g-recaptcha" data-sitekey="{{config('services.recaptcha.key')}}"></div>
+      <!-- Here lies google recaptcha 😅 -->
+      <div class="col md-3">
+        @if(Session::has('g-recaptcha-response'))
+        <p class="alert {{Session::get('alert-class', 'alert-info')}}">
+        {{Session::get('g-recaptcha-response')}}
+        </p>
+        @endif
+      </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>

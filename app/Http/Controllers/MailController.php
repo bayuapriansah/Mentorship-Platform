@@ -7,7 +7,7 @@ use Mail;
 use App\Mail\MailNotify;
 class MailController extends Controller
 {
-    public function index()
+    public function emailregister($mailto)
     {
         $data = [
             'subject' => 'Registration Under Review',
@@ -19,7 +19,7 @@ class MailController extends Controller
         ];
         try
         {
-            Mail::to('bayuapriansah77@gmail.com')->send(new MailNotify($data));
+            Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Email sent successfully']);
         } catch (Exeption $th) {
             return response()->json(['Sorry Something went wrong']);

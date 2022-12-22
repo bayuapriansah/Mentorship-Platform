@@ -6,18 +6,32 @@ use App\Models\Company;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MailController;
+use Session;
 
 class AuthController extends Controller
 {
-    public function store(Request $request){
-        // dd($request->all());
+    public function store(Request $request){ 
         
         $validated = $request->validate([
             'name' => ['required', 'min:3'],
             'email' => ['required'],
             'password' => ['required', 'min:8'],
             'role' => ['required'],
-            'g-recaptcha-response' => 'recaptcha'
+            'g-recaptcha-response' => function ($attribute, $value, $fail) {
+                $secretkey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                // dd($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    Session::flash('alert-class', 'alert-danger');
+                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
+                } 
+            },
         ]);
 
         $validated['password'] = bcrypt($validated['password']);
@@ -28,12 +42,10 @@ class AuthController extends Controller
                 $student->name = $validated['name'];
                 $student->email = $validated['email'];
                 $student->password = $validated['password'];
-                // $student->g_captcha_response = $validated['g_captcha_response'];
                 $student->is_confirm = 0;
                 $student->save();
-                // Auth::guard('student')->login($student);
+                $sendmail = (new MailController)->emailregister($validated['email']);
                 return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
-                // You're account is under review, please wait for confirmation email from us. Thank you! 😊
             }else{
                 return redirect('/')->with('error','The email you are using is already registered');
             }
@@ -45,16 +57,15 @@ class AuthController extends Controller
                 $company->name = $validated['name'];
                 $company->email = $validated['email'];
                 $company->password = $validated['password'];
-                // $company->g_captcha_response = $validated['g_captcha_response'];
                 $company->is_confirm = 0;
                 $company->save();
-                // Auth::guard('company')->login($company);
+                $sendmail = (new MailController)->emailregister($validated['email']);
                 return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
             }else{
                 return redirect('/')->with('error','The email you are using is already registered');
             }
         }else{
-            return redirect('/');
+            return redirect('/'+"#register");
         }
     }
 
