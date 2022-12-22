@@ -53,10 +53,17 @@
 
   <!-- Nav Item - Charts -->
   <li class="nav-item">
-      <a class="nav-link" href="{{route('dashboard.projects.index')}}">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Projects</span></a>
+        <a class="nav-link" href="{{route('dashboard.projects.index')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Projects</span>
+        </a>
   </li>
+  <li class="nav-item">
+        <a class="nav-link" href="{{route('dashboard.batches.index')}}">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Batch</span>
+        </a>
+    </li>
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

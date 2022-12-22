@@ -1,12 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-@extends('layouts.admin')
-@section('content')
 <div class="container-fluid">
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Parner</h1>
+      <h1 class="h3 mb-0 text-gray-800">Projects</h1>
       {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add Students</a> --}}
   </div>
 
@@ -17,21 +15,27 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>Project name</th>
+            <th>Problem</th>
+            <th>Image</th>
+            <th>Batch</th>
+            <th>Student</th>
+            <th>Company</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           @php $no=1 @endphp
-          @foreach($companies as $company)
+          @foreach($projects as $project)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$company->name}}</td>
-            <td>{{$company->email}}</td>
-            <td>{{$company->is_confirm}}</td>
-            <td></td>
+            <td>{{$project->name}}</td>
+            <td>{{$project->problem}}</td>
+            <td><img src="{{$project->image}}" alt="" width="150px"></td>
+            <td>{{$project->batch_id}}</td>
+            <td>{{$project->student->name}}</td>
+            <td>{{$project->company->name}}</td>
+            <td>actions</td>
           </tr>
           @php $no++ @endphp
           @endforeach
@@ -44,5 +48,4 @@
 @endsection
 @section('more-js')
 
-@endsection
 @endsection

@@ -19,4 +19,9 @@ class Company extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
 }

@@ -1,13 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-@extends('layouts.admin')
-@section('content')
 <div class="container-fluid">
-
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Parner</h1>
-      {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add Students</a> --}}
+      <h1 class="h3 mb-0 text-gray-800">Batch</h1>
+      <a href="{{route('dashboard.batches.create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Batch</a>
   </div>
 
   <!-- Content Row -->
@@ -17,21 +14,21 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>Batch number</th>
+            <th>Start Date</th>
+            <th>End Data</th>
+            <th>Company name</th>
           </tr>
         </thead>
         <tbody>
           @php $no=1 @endphp
-          @foreach($companies as $company)
+          @foreach($batches as $batch)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$company->name}}</td>
-            <td>{{$company->email}}</td>
-            <td>{{$company->is_confirm}}</td>
-            <td></td>
+            <td>{{$batch->batch_number}}</td>
+            <td>{{$batch->start_date}}</td>
+            <td>{{$batch->end_date}}</td>
+            <td>{{$batch->company->name}}</td>
           </tr>
           @php $no++ @endphp
           @endforeach
@@ -39,10 +36,5 @@
       </table>
     </div>
   </div>
-
 </div>
-@endsection
-@section('more-js')
-
-@endsection
 @endsection

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
@@ -48,16 +49,22 @@ Route::group(['middleware'=>'auth:student'], function(){
 Route::group(['middleware'=>'auth:web, company', 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // projects page
     Route::get('/', [DashboardController::class, 'index'])->name('index');
+
     // Student
     Route::get('students/registered', [StudentController::class, 'registered'])->name('students.registered');
     Route::resource('students', StudentController::class);
+
     // Company/partner/supervisor
     Route::get('companies/registered', [CompanyController::class, 'registered'])->name('companies.registered');
     Route::resource('companies', CompanyController::class);
 
+    //Batch
+    Route::resource('batches', BatchController::class);
 
     // Project
     Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
+
+
     // Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
     // Route::get('/supportlib', function () {
     //     return view('projects.supportlibrary');

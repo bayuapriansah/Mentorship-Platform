@@ -21,6 +21,7 @@ class ProjectController extends Controller
 
     public function dashboardIndex()
     {
-        return view();
+        $projects = Project::with(['student', 'company'])->get();
+        return view('dashboard.projects.index', compact('projects'));
     }
 }
