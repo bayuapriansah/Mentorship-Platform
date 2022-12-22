@@ -12,30 +12,32 @@
 
   <!-- Content Row -->
   <div class="row">
-    <table id="myTable" class="display responsive w-100" style="width: 100%">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        @php $no=1 @endphp
-        @foreach($students as $student)
-        <tr>
-          <td>{{$no}}</td>
-          <td>{{$student->name}}</td>
-          <td>{{$student->email}}</td>
-          <td>{{$student->is_confirm}}</td>
-          <td></td>
-        </tr>
-        @php $no++ @endphp
-        @endforeach
-      </tbody>
-    </table>
+    <div class="col">
+      <table id="myTable" class="display responsive w-100" style="width: 100%">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @php $no=1 @endphp
+          @foreach($students as $student)
+          <tr>
+            <td>{{$no}}</td>
+            <td>{{$student->name}}</td>
+            <td>{{$student->email}}</td>
+            <td>{{$student->is_confirm}}</td>
+            <td></td>
+          </tr>
+          @php $no++ @endphp
+          @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>

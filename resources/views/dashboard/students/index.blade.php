@@ -10,34 +10,36 @@
 
   <!-- Content Row -->
   <div class="row">
-    <table id="myTable" class="table table-striped table-responsive display responsive" style="width: 100%">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Date Of Birth</th>
-          <th>University</th>
-          <th>Major</th>
-          <th>Github link</th>
-        </tr>
-      </thead>
-      <tbody>
-        @php $no=1 @endphp
-        @foreach($students as $student)
-        <tr>
-          <td>{{$no}}</td>
-          <td>{{$student->name}}</td>
-          <td>{{$student->email}}</td>
-          <td>{{$student->date_of_birth}}</td>
-          <td>{{$student->university}}</td>
-          <td>{{$student->major}}</td>
-          <td>{{$student->github_link}}</td>
-        </tr>
-        @php $no++ @endphp
-        @endforeach
-      </tbody>
-    </table>
+    <div class="col">
+      <table id="myTable" class="display responsive w-100" style="width: 100%">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date Of Birth</th>
+            <th>University</th>
+            <th>Major</th>
+            <th>Github link</th>
+          </tr>
+        </thead>
+        <tbody>
+          @php $no=1 @endphp
+          @foreach($students as $student)
+          <tr>
+            <td>{{$no}}</td>
+            <td>{{$student->name}}</td>
+            <td>{{$student->email}}</td>
+            <td>{{$student->date_of_birth}}</td>
+            <td>{{$student->university}}</td>
+            <td>{{$student->major}}</td>
+            <td>{{$student->github_link}}</td>
+          </tr>
+          @php $no++ @endphp
+          @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>

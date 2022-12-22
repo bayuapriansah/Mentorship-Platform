@@ -43,10 +43,10 @@
           <i class="fa-solid fa-handshake"></i>
           <span>Partner</span>
       </a>
-      <div id="collapsePartner" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white collapse-inner rounded">
-              <a class="collapse-item m-0" href="{{route('dashboard.companies.index')}}">All Partner</a>
-              <a class="collapse-item m-0" href="{{route('dashboard.companies.registered')}}">Waiting to confirm partner</a>
+      <div id="collapsePartner" class="collapse" aria-labelledby="partnerPage" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All Partner</a>
+              <a class="collapse-item" href="{{route('dashboard.companies.registered')}}">Waiting to confirm partner</a>
           </div>
       </div>
   </li>
