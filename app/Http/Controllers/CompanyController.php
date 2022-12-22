@@ -14,7 +14,14 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::get();
+        return view('dashboard.companies.index', compact('companies'));
+    }
+
+    public function registered()
+    {
+        $companies = Company::where('is_confirm', 0)->get();
+        return view('dashboard.companies.registered', compact('companies'));
     }
 
     /**

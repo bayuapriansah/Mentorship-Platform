@@ -13,8 +13,14 @@ class ProjectController extends Controller
         return view('projects.index', compact('projects'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $project = Project::find($id);
         return view('projects.show', compact('project'));
+    }
+
+    public function dashboardIndex()
+    {
+        return view();
     }
 }

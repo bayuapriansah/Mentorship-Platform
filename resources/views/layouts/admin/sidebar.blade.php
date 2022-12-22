@@ -1,0 +1,69 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard.index')}}">
+      <div class="sidebar-brand-text mx-3">Simulated Intern</div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
+
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item active">
+      <a class="nav-link" href="{{route('dashboard.index')}}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+
+  <!-- Heading -->
+  {{-- <div class="sidebar-heading">
+      Interface
+  </div> --}}
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudent"
+          aria-expanded="true" aria-controls="collapseStudent">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span>Student</span>
+      </a>
+      <div id="collapseStudent" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white collapse-inner rounded">
+              <a class="collapse-item m-0" href="{{route('dashboard.students.index')}}">All Student</a>
+              <a class="collapse-item m-0" href="{{route('dashboard.students.registered')}}">Waiting to confirm student</a>
+          </div>
+      </div>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePartner"
+          aria-expanded="true" aria-controls="collapsePartner">
+          <i class="fa-solid fa-handshake"></i>
+          <span>Partner</span>
+      </a>
+      <div id="collapsePartner" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white collapse-inner rounded">
+              <a class="collapse-item m-0" href="{{route('dashboard.companies.index')}}">All Partner</a>
+              <a class="collapse-item m-0" href="{{route('dashboard.companies.registered')}}">Waiting to confirm partner</a>
+          </div>
+      </div>
+  </li>
+
+  <!-- Nav Item - Charts -->
+  <li class="nav-item">
+      <a class="nav-link" href="{{route('dashboard.projects.index')}}">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Projects</span></a>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block">
+
+  <!-- Sidebar Toggler (Sidebar) -->
+  <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+
+</ul>

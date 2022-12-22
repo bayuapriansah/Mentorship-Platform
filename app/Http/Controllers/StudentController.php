@@ -14,7 +14,14 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::get();
+        return view('dashboard.students.index', compact('students'));
+    }
+
+    public function registered()
+    {
+        $students = Student::where('is_confirm', 0)->get();
+        return view('dashboard.students.registered', compact('students'));
     }
 
     /**

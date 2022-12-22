@@ -117,6 +117,10 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 return redirect('/')->with('success','Logged in company');;
             }
+            if(Auth::guard('web')->attempt($validated)){
+                $request->session()->regenerate();
+                return redirect('/')->with('success','Logged in admin');;
+            }
         } catch(\Exception $error){
             $response =[
                 'status'=>'error',
