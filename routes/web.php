@@ -3,12 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
-use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,10 @@ use App\Http\Controllers\MailController;
 |
 */
 
-
+// Home Page
+Route::get('/', function () {
+    return view('index');
+})->name('index');
 
 // register
 Route::post('/register', [AuthController::class, 'store'])->name('register');
@@ -32,46 +36,40 @@ Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('aut
 
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){
-Route::group(['middleware'=>'auth:student, company'], function(){
+Route::group(['middleware'=>'auth:student'], function(){
     // projects page
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
     Route::get('/supportlib', function () {
         return view('projects.supportlibrary');
     })->name('projects.support');
-    
 });
 
-// Home Page
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::group(['middleware'=>'auth:web, company', 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
+    // projects page
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::resource('students', StudentController::class);
+    Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
+    // Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    // Route::get('/supportlib', function () {
+    //     return view('projects.supportlibrary');
+    // })->name('projects.support');
+});
+
+
 
 // Route::get('/home', [DashboardController::class, 'index'])->name('home');
-Route::view('/home', 'layouts.index');
-
-Route::get('/signin', function () {
-    return view('welcome');
-});
-
-Route::get('/signup', function () {
-    return view('welcome');
-});
+// Route::view('/home', 'layouts.index');
 
 
+// Route::get('/q&a', function () {
+//     return view('welcome');
+// });
 
-Route::get('/project/detail-project', function () {
-    return view('detail-project');
-});
+// Route::get('/studentprofilerepo', function () {
+//     return view('welcome');
+// });
 
-Route::get('/q&a', function () {
-    return view('welcome');
-});
-
-Route::get('/studentprofilerepo', function () {
-    return view('welcome');
-});
-
-Route::get('/leaderboard', function () {
-    return view('welcome');
-});
+// Route::get('/leaderboard', function () {
+//     return view('welcome');
+// });
