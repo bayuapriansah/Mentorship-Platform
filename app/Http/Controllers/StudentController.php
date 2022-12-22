@@ -18,6 +18,12 @@ class StudentController extends Controller
         return view('dashboard.students.index', compact('students'));
     }
 
+    public function registered()
+    {
+        $students = Student::where('is_confirm', 0)->get();
+        return view('dashboard.students.registered', compact('students'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

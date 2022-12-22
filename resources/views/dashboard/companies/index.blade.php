@@ -4,7 +4,7 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Students</h1>
+      <h1 class="h3 mb-0 text-gray-800">Companies</h1>
       {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add Students</a> --}}
   </div>
 
@@ -14,25 +14,17 @@
       <thead>
         <tr>
           <th>No</th>
-          <th>Name</th>
+          <th>Company Name</th>
           <th>Email</th>
-          <th>Date Of Birth</th>
-          <th>University</th>
-          <th>Major</th>
-          <th>Github link</th>
         </tr>
       </thead>
       <tbody>
         @php $no=1 @endphp
-        @foreach($students as $student)
+        @foreach($companies as $company)
         <tr>
           <td>{{$no}}</td>
-          <td>{{$student->name}}</td>
-          <td>{{$student->email}}</td>
-          <td>{{$student->date_of_birth}}</td>
-          <td>{{$student->university}}</td>
-          <td>{{$student->major}}</td>
-          <td>{{$student->github_link}}</td>
+          <td>{{$company->name}}</td>
+          <td>{{$company->email}}</td>
         </tr>
         @php $no++ @endphp
         @endforeach

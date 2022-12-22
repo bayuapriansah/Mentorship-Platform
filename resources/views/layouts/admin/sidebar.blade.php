@@ -33,7 +33,7 @@
       <div id="collapseStudent" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white collapse-inner rounded">
               <a class="collapse-item m-0" href="{{route('dashboard.students.index')}}">All Student</a>
-              <a class="collapse-item m-0" href="#">Waiting to confirm student</a>
+              <a class="collapse-item m-0" href="{{route('dashboard.students.registered')}}">Waiting to confirm student</a>
           </div>
       </div>
   </li>
@@ -45,8 +45,8 @@
       </a>
       <div id="collapsePartner" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white collapse-inner rounded">
-              <a class="collapse-item m-0" href="#">All Partner</a>
-              <a class="collapse-item m-0" href="#">Waiting to confirm partner</a>
+              <a class="collapse-item m-0" href="{{route('dashboard.companies.index')}}">All Partner</a>
+              <a class="collapse-item m-0" href="{{route('dashboard.companies.registered')}}">Waiting to confirm partner</a>
           </div>
       </div>
   </li>
