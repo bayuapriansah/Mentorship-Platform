@@ -65,6 +65,7 @@ Route::group(['middleware'=>['auth:company,web'], 'prefix'=>'dashboard','as'=>'d
 
     // Project
     Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'dashboardIndexCreate'])->name('projects.create');
 
 
     // Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
