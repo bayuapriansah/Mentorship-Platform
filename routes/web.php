@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\MentorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
@@ -46,13 +47,17 @@ Route::group(['middleware'=>'auth:student'], function(){
     })->name('projects.support');
 });
 
-Route::group(['middleware'=>'auth:web, company', 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
-    // projects page
+Route::group(['middleware'=>['auth:company,web'], 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
+    // dashboard page
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     // Student
     Route::get('students/registered', [StudentController::class, 'registered'])->name('students.registered');
     Route::resource('students', StudentController::class);
+
+    // Mentors
+    Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
+    Route::resource('mentors', MentorController::class);
 
     // Company/partner/supervisor
     Route::get('companies/registered', [CompanyController::class, 'registered'])->name('companies.registered');

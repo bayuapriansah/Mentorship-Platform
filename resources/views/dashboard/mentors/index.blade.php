@@ -4,7 +4,7 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Confirmed students</h1>
+      <h1 class="h3 mb-0 text-gray-800">Confirmed mentors</h1>
       {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add Students</a> --}}
   </div>
 
@@ -17,25 +17,25 @@
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Gender</th>
-            <th>Date of birth</th>
-            <th>Github Link</th>
+            <th>gender</th>
+            <th>Institution Name</th>
+            <th>Position</th>
             <th>State</th>
             <th>Country</th>
           </tr>
         </thead>
         <tbody>
           @php $no=1 @endphp
-          @foreach($students as $student)
+          @foreach($mentors as $mentor)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$student->name}}</td>
-            <td>{{$student->email}}</td>
-            <td>{{$student->gender}}</td>
-            <td>{{$student->date_of_birth}}</td>
-            <td>{{$student->github_link}}</td>
-            <td>{{$student->state}}</td>
-            <td>{{$student->country}}</td>
+            <td>{{$mentor->name}}</td>
+            <td>{{$mentor->email}}</td>
+            <td>{{$mentor->gender}}</td>
+            <td>{{$mentor->institution_name}}</td>
+            <td>{{$mentor->position}}</td>
+            <td>{{$mentor->state}}</td>
+            <td>{{$mentor->country}}</td>
           </tr>
           @php $no++ @endphp
           @endforeach

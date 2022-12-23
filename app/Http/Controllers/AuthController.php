@@ -119,6 +119,10 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 return redirect('/')->with('success','Logged in');;
             }
+            if(Auth::guard('mentor')->attempt($validated)){
+                $request->session()->regenerate();
+                return redirect('/')->with('success','Logged in mentor');;
+            }
             if(Auth::guard('company')->attempt($validated)){
                 $request->session()->regenerate();
                 return redirect('/')->with('success','Logged in company');;
