@@ -51,6 +51,7 @@
     </div>
   </li>
 
+  @if(Auth::guard('web')->check())
   <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePartner"
           aria-expanded="true" aria-controls="collapsePartner">
@@ -64,7 +65,8 @@
           </div>
       </div>
   </li>
-  
+  @endif
+
 
   <!-- Nav Item - Charts -->
   <li class="nav-item">

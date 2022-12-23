@@ -47,10 +47,11 @@ Route::group(['middleware'=>'auth:student'], function(){
     })->name('projects.support');
 });
 
-Route::group(['middleware'=>['auth:company,web'], 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
+Route::group(['middleware'=>['auth:web'], 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
+    
     Route::get('/', [DashboardController::class, 'index'])->name('index');
-
+    
     // Student
     Route::get('students/registered', [StudentController::class, 'registered'])->name('students.registered');
     Route::resource('students', StudentController::class);
@@ -70,6 +71,7 @@ Route::group(['middleware'=>['auth:company,web'], 'prefix'=>'dashboard','as'=>'d
     Route::get('/projects/{project}', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
     Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
     Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
+    
 
 
 
@@ -78,7 +80,15 @@ Route::group(['middleware'=>['auth:company,web'], 'prefix'=>'dashboard','as'=>'d
     //     return view('projects.supportlibrary');
     // })->name('projects.support');
 });
-
+Route::group(['middleware'=>['auth:web,company'], 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
+    // Project
+    Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'dashboardIndexCreate'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'dashboardIndexStore'])->name('projects.store');
+    Route::get('/projects/{project}', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
+    Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
+    Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
+});
 
 
 // Route::get('/home', [DashboardController::class, 'index'])->name('home');
