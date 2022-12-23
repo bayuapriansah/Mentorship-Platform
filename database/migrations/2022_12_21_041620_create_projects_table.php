@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('resources');
             $table->integer('valid_time');
             $table->string('status');
-            $table->boolean('is_confirm');
+            $table->boolean('is_enrolled');
             $table->timestamps();
         });
     }

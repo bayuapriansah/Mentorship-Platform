@@ -66,6 +66,11 @@ Route::group(['middleware'=>['auth:company,web'], 'prefix'=>'dashboard','as'=>'d
     // Project
     Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
     Route::get('/projects/create', [ProjectController::class, 'dashboardIndexCreate'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'dashboardIndexStore'])->name('projects.store');
+    Route::get('/projects/{project}', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
+    Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
+    Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
+
 
 
     // Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');

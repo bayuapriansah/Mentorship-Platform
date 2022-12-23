@@ -10,7 +10,8 @@
 
   <!-- Content Row -->
   <div class="row">
-    <div class="col">
+    <div class="col card p-4">
+      @include('flash-message')
       <table id="myTable" class="display responsive w-100" style="width: 100%">
         <thead>
           <tr>
@@ -34,10 +35,19 @@
             <td>{{$project->project_domain}}</td>
             <td>{{$project->problem}}</td>
             <td>{{$project->company->name}}</td>
-            <td>{{$project->resources}}</td>
+            <td><a href="{{asset('storage/'. $project->resources)}}">[Resource file name]</a></td>
             <td>{{$project->valid_time}}</td>
             <td>{{$project->status}}</td>
-            <td>actions</td>
+            <td>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}" >Edit</a>
+
+              <form method="POST" action="/dashboard/projects/{{ $project->id }}" >
+                @csrf
+                @method('DELETE')
+                <div class="control">
+                <button type="submit" class="btn btn-danger ms-2" onClick="return confirm('Delete this project?')">Delete</button>
+              </form>
+            </td>
           </tr>
           @php $no++ @endphp
           @endforeach
