@@ -44,9 +44,9 @@ return [
             'driver' => 'session',
             'provider' => 'students',
         ],
-        'company' => [
+        'mentor' => [
             'driver' => 'session',
-            'provider' => 'companies',
+            'provider' => 'mentors',
         ],
     ],
 
@@ -76,9 +76,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
         ],
-        'companies' => [
+        'mentors' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Company::class,
+            'model' => App\Models\Mentor::class,
         ],
 
         // 'users' => [

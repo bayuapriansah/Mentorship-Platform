@@ -80,9 +80,9 @@
           @csrf
           <button type="submit" class="btn btn-primary">Logout</button>
         </form>
-        @elseif(Auth::guard('company')->check())
+        @elseif(Auth::guard('mentor')->check())
         <li class="nav-item"><a href="{{route('dashboard.index')}}" class="nav-link link-dark px-2">Dashboard</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('company')->user()->name}}</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('mentor')->user()->name}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf
           <button type="submit" class="btn btn-danger">Logout</button>
@@ -153,6 +153,8 @@
     </div>
   </div>
 </main>
+    <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    @yield('more-js')
   </body>
 </html>

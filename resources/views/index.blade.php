@@ -22,28 +22,60 @@
   @include('flash-message')
   <form action="/register" method="post" id="register">
     @csrf
+
     <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" id="name" class="form-control" name="name">
+      <label for="role" class="form-label">Role</label>
+      <select class="form-select" aria-label="Default select example" name="role" id="role">
+        <option>--Select Role--</option>
+        <option value="student">Student</option>
+        <option value="mentor">Mentor</option>
+      </select>
     </div>
 
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
       <input type="email" id="email" class="form-control" name="email">
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input type="password" id="password" class="form-control" name="password">
+
+    <div class="mb-3" id="name">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" name="name">
+    </div>
+
+    <div class="mb-3" id="institution">
+      <label for="institution" class="form-label">Institution Name</label>
+      <input type="text" class="form-control" name="institution_name">
+    </div>
+
+    <div class="mb-3" id="position">
+      <label for="position" class="form-label">Position</label>
+      <select class="form-select" aria-label="Default select example" name="position">
+        <option selected value="">--Select Position--</option>
+        <option value="staff">Staff</option>
+        <option value="supervisor">Supervisor</option>
+        <option value="ceo">Ceo</option>
+      </select>
+    </div>
+
+    <div class="mb-3" id="gender">
+      <label for="gender" class="form-label">Gender</label>
+      <select class="form-select" aria-label="Default select example" name="gender">
+        <option selected value="">--Select Gender--</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
     </div>
 
     <div class="mb-3">
-      <label for="role" class="form-label">Role</label>
-      <select class="form-select" aria-label="Default select example" name="role">
-        <option selected>--Select Role--</option>
-        <option value="student">Student</option>
-        <option value="partner">Partner</option>
-      </select>
+      <label for="state" class="form-label">State</label>
+      <input type="text" id="state" class="form-control" name="state">
     </div>
+
+    <div class="mb-3">
+      <label for="country" class="form-label">Country</label>
+      <input type="text" id="country" class="form-control" name="country">
+    </div>
+    
     <div class="mb-3">
       <!-- <label for="g-recaptcha-response" class="form-label">Captcha</label> -->
       <div class="g-recaptcha" data-sitekey="{{config('services.recaptcha.key')}}"></div>
@@ -60,4 +92,27 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
+@endsection
+@section('more-js')
+<script>
+  $(document).ready(function(){
+    $('#name').hide();
+    $('#institution').hide();
+    $('#position').hide();
+    $('#role').on('click', function(){
+      // console.log($('#role option:selected').val());
+      if($('#role option:selected').val()=='student'){
+        $('#name').hide();
+        $('#gender').show();
+        $('#institution').hide();
+        $('#position').hide();
+      }else if($('#role option:selected').val()=='mentor'){
+        $('#name').show();
+        $('#gender').hide();
+        $('#institution').show();
+        $('#position').show();
+      }
+    })
+  });
+</script>
 @endsection

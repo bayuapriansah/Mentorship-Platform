@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+use App\Models\Mentor;
 use App\Models\Company;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
-use Session;
 
 class AuthController extends Controller
 {
     public function store(Request $request){ 
-        
         $validated = $request->validate([
-            'name' => ['required', 'min:3'],
             'email' => ['required'],
-            'password' => ['required', 'min:8'],
+            // 'name' => ['sometimes', 'min:3'],
+            // 'gender' => ['sometimes'],
+            'state' => ['required', 'min:3'],
+            'country' => ['required', 'min:3'],
             'role' => ['required'],
             'g-recaptcha-response' => function ($attribute, $value, $fail) {
                 $secretkey = config('services.recaptcha.secret');
@@ -34,14 +36,15 @@ class AuthController extends Controller
             },
         ]);
 
-        $validated['password'] = bcrypt($validated['password']);
+        // $validated['password'] = bcrypt($validated['password']);
         if($validated['role'] == 'student'){
             $existing_student = Student::where('email',$validated['email'])->first();
             if($existing_student == null){
                 $student = new Student;
-                $student->name = $validated['name'];
                 $student->email = $validated['email'];
-                $student->password = $validated['password'];
+                $student->gender = $request->gender;
+                $student->state = $validated['state'];
+                $student->country = $validated['country'];
                 $student->is_confirm = 0;
                 $student->save();
                 $sendmail = (new MailController)->emailregister($validated['email']);
@@ -50,15 +53,18 @@ class AuthController extends Controller
                 return redirect('/')->with('error','The email you are using is already registered');
             }
             
-        }elseif ($validated['role'] == 'partner') {
-            $existing_company = Company::where('email', $validated['email'])->first();
-            if($existing_company == null){
-                $company = new Company;
-                $company->name = $validated['name'];
-                $company->email = $validated['email'];
-                $company->password = $validated['password'];
-                $company->is_confirm = 0;
-                $company->save();
+        }elseif ($validated['role'] == 'mentor') {
+            $existing_mentor = Mentor::where('email', $validated['email'])->first();
+            if($existing_mentor == null){
+                $mentor = new Mentor;
+                $mentor->name =  $request->name;
+                $mentor->email = $validated['email'];
+                $mentor->institution_name = $request->institution_name;
+                $mentor->position = $request->position;
+                $mentor->state = $validated['state'];
+                $mentor->country = $validated['country'];
+                $mentor->is_confirm = 0;
+                $mentor->save();
                 $sendmail = (new MailController)->emailregister($validated['email']);
                 return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
             }else{

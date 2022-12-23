@@ -11,7 +11,6 @@ class Company extends Authenticatable
 {
     use HasFactory;
 
-    protected $guard = 'company';
 
     protected $fillable = ['name', 'email', 'password'];
     
