@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('enrolled_projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('project_domain');
-            $table->string('problem');
-            $table->unsignedBigInteger('company_id');
-            $table->string('resources');
-            $table->integer('valid_time');
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('project_id');
             $table->string('status');
-            $table->boolean('is_confirm');
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('enrolled_projects');
     }
 };

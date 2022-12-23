@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Major;
+use App\Models\Submission;
 use Illuminate\Http\Request;
 
-class MajorController extends Controller
+class SubmissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class MajorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Major  $major
+     * @param  \App\Models\Submission  $submission
      * @return \Illuminate\Http\Response
      */
-    public function show(Major $major)
+    public function show(Submission $submission)
     {
         //
     }
@@ -52,10 +52,10 @@ class MajorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Major  $major
+     * @param  \App\Models\Submission  $submission
      * @return \Illuminate\Http\Response
      */
-    public function edit(Major $major)
+    public function edit(Submission $submission)
     {
         //
     }
@@ -64,10 +64,10 @@ class MajorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Major  $major
+     * @param  \App\Models\Submission  $submission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Major $major)
+    public function update(Request $request, Submission $submission)
     {
         //
     }
@@ -75,10 +75,10 @@ class MajorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Major  $major
+     * @param  \App\Models\Submission  $submission
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Major $major)
+    public function destroy(Submission $submission)
     {
         //
     }

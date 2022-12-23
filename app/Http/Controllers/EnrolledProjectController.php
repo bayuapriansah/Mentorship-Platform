@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\University;
+use App\Models\EnrolledProject;
 use Illuminate\Http\Request;
 
-class UniversityController extends Controller
+class EnrolledProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class UniversityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\University  $university
+     * @param  \App\Models\EnrolledProject  $enrolledProject
      * @return \Illuminate\Http\Response
      */
-    public function show(University $university)
+    public function show(EnrolledProject $enrolledProject)
     {
         //
     }
@@ -52,10 +52,10 @@ class UniversityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\University  $university
+     * @param  \App\Models\EnrolledProject  $enrolledProject
      * @return \Illuminate\Http\Response
      */
-    public function edit(University $university)
+    public function edit(EnrolledProject $enrolledProject)
     {
         //
     }
@@ -64,10 +64,10 @@ class UniversityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\University  $university
+     * @param  \App\Models\EnrolledProject  $enrolledProject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, University $university)
+    public function update(Request $request, EnrolledProject $enrolledProject)
     {
         //
     }
@@ -75,10 +75,10 @@ class UniversityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\University  $university
+     * @param  \App\Models\EnrolledProject  $enrolledProject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(University $university)
+    public function destroy(EnrolledProject $enrolledProject)
     {
         //
     }
