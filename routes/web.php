@@ -51,7 +51,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
     
     Route::middleware(['auth:web'])->group(function(){
-        Route::get('/', [DashboardController::class, 'index'])->name('index');
+        Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
         Route::get('students/registered', [StudentController::class, 'registered'])->name('students.registered');
         Route::resource('students', StudentController::class);
@@ -65,8 +65,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::resource('companies', CompanyController::class);
     });
     
-    Route::middleware(['auth:company'])->group(function(){
-        Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::middleware(['auth:web,company'])->group(function(){
+        Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
         // Project
         Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');

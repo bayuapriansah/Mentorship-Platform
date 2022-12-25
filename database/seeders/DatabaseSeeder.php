@@ -17,18 +17,18 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'farhan',
-        //     'email' => 'farhan@admin.com',
-        // ]);
-
-        Company::create([
-            'name' => fake()->name(),
-            'email' => 'company@mail.com',
-            'address' => fake()->address(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'is_confirm' => 1
+        \App\Models\User::factory()->create([
+            'name' => 'farhan',
+            'email' => 'farhan@admin.com',
         ]);
+
+        // Company::create([
+        //     'name' => fake()->name(),
+        //     'email' => 'company@mail.com',
+        //     'address' => fake()->address(),
+        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        //     'is_confirm' => 1
+        // ]);
         // \App\Models\Project::create([
         //     'name' => 'First Project ',
         //     'problem' => 'create user admin',

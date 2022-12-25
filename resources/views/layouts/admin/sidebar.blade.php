@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard.index')}}">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard.admin')}}">
       <div class="sidebar-brand-text mx-3">Simulated Intern</div>
   </a>
 
@@ -10,7 +10,7 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item active">
-      <a class="nav-link" href="{{route('dashboard.index')}}">
+      <a class="nav-link" href="{{route('dashboard.admin')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
   </li>
@@ -34,7 +34,7 @@
       <div id="collapseStudent" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white collapse-inner rounded">
               <a class="collapse-item m-0" href="{{route('dashboard.students.index')}}">All student</a>
-              <a class="collapse-item m-0" href="{{route('dashboard.students.registered')}}">Waiting to confirm student</a>
+              <a class="collapse-item m-0" href="{{route('dashboard.students.registered')}}">Pending student</a>
           </div>
       </div>
   </li>
@@ -47,7 +47,7 @@
     <div id="collapseMentor" class="collapse" aria-labelledby="mentorPage" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('dashboard.mentors.index')}}">All mentors</a>
-            <a class="collapse-item" href="{{route('dashboard.mentors.registered')}}">Waiting to confirm mentors</a>
+            <a class="collapse-item" href="{{route('dashboard.mentors.registered')}}">Pending mentors</a>
         </div>
     </div>
   </li>
@@ -61,12 +61,12 @@
       <div id="collapsePartner" class="collapse" aria-labelledby="partnerPage" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All companies</a>
-              <a class="collapse-item" href="{{route('dashboard.companies.registered')}}">Waiting to confirm companies</a>
+              <a class="collapse-item" href="{{route('dashboard.companies.registered')}}">Pending companies</a>
           </div>
       </div>
   </li>
   @endif
-  
+
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProject"
     aria-expanded="true" aria-controls="collapseProject">

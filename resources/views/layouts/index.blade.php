@@ -88,14 +88,14 @@
           <button type="submit" class="btn btn-danger">Logout</button>
         </form>
         @elseif(Auth::guard('company')->check())
-        <li class="nav-item"><a href="{{route('dashboard.index')}}" class="nav-link link-dark px-2">Dashboard</a></li>
+        <li class="nav-item"><a href="{{route('dashboard.company')}}" class="nav-link link-dark px-2">Dashboard</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('company')->user()->name}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf
           <button type="submit" class="btn btn-danger">Logout</button>
         </form>
         @elseif(Auth::guard('web')->check())
-        <li class="nav-item"><a href="{{route('dashboard.index')}}" class="nav-link link-dark px-2">Dashboard</a></li>
+        <li class="nav-item"><a href="{{route('dashboard.admin')}}" class="nav-link link-dark px-2">Dashboard</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('web')->user()->name}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf

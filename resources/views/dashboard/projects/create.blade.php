@@ -39,6 +39,18 @@
             <label for="inputvalid" class="form-label">Valid days</label>
             <input type="number" class="form-control" id="inputvalid" name="valid_time">
           </div>
+          @if(Auth::guard('web')->check())
+          <div class="mb-3">
+            <label for="inputvalid" class="form-label">Company</label>
+            <select class="form-control form-select" id="inputdomain" aria-label="Default select example" name="company_id">
+              <option value="">--Select Project Domain--</option>
+              @foreach($companies as $company)
+              <option value="{{$company->id}}">{{$company->name}}</option>
+              @endforeach
+            </select>
+          </div>
+          @endif
+
           <input type="submit" class="btn btn-primary" name="publish" value="Publish Project">
           <input type="submit" class="btn btn-success" name="draft" value="Save as Draft">
         </form>
