@@ -47,30 +47,39 @@ Route::group(['middleware'=>'auth:student'], function(){
     })->name('projects.support');
 });
 
-Route::group(['middleware'=>['auth:web'], 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
+Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
     
-    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::middleware(['auth:web'])->group(function(){
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+        // Student
+        Route::get('students/registered', [StudentController::class, 'registered'])->name('students.registered');
+        Route::resource('students', StudentController::class);
+
+        // Mentors
+        Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
+        Route::resource('mentors', MentorController::class);
+
+        // Company/partner/supervisor
+        Route::get('companies/registered', [CompanyController::class, 'registered'])->name('companies.registered');
+        Route::resource('companies', CompanyController::class);
+    });
     
-    // Student
-    Route::get('students/registered', [StudentController::class, 'registered'])->name('students.registered');
-    Route::resource('students', StudentController::class);
+    Route::middleware(['auth:company'])->group(function(){
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
 
-    // Mentors
-    Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
-    Route::resource('mentors', MentorController::class);
+        // Project
+        Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
+        Route::get('/projects/draft', [ProjectController::class, 'draftIndex'])->name('projects.draft');
+        Route::get('/projects/create', [ProjectController::class, 'dashboardIndexCreate'])->name('projects.create');
+        Route::post('/projects', [ProjectController::class, 'dashboardIndexStore'])->name('projects.store');
+        Route::get('/projects/{project}/edit', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
+        Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
+        Route::patch('projects/{project}/publish', [ProjectController::class, 'publish'])->name('project.publish');
+        Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
+    });
 
-    // Company/partner/supervisor
-    Route::get('companies/registered', [CompanyController::class, 'registered'])->name('companies.registered');
-    Route::resource('companies', CompanyController::class);
-
-    // Project
-    Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
-    Route::get('/projects/create', [ProjectController::class, 'dashboardIndexCreate'])->name('projects.create');
-    Route::post('/projects', [ProjectController::class, 'dashboardIndexStore'])->name('projects.store');
-    Route::get('/projects/{project}', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
-    Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
-    Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
+    
     
 
 
@@ -79,15 +88,6 @@ Route::group(['middleware'=>['auth:web'], 'prefix'=>'dashboard','as'=>'dashboard
     // Route::get('/supportlib', function () {
     //     return view('projects.supportlibrary');
     // })->name('projects.support');
-});
-Route::group(['middleware'=>['auth:web,company'], 'prefix'=>'dashboard','as'=>'dashboard.'], function(){
-    // Project
-    Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
-    Route::get('/projects/create', [ProjectController::class, 'dashboardIndexCreate'])->name('projects.create');
-    Route::post('/projects', [ProjectController::class, 'dashboardIndexStore'])->name('projects.store');
-    Route::get('/projects/{project}', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
-    Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
-    Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
 });
 
 

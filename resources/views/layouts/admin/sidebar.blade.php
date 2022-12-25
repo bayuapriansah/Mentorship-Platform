@@ -24,6 +24,7 @@
   </div> --}}
 
   <!-- Nav Item - Pages Collapse Menu -->
+  @if(Auth::guard('web')->check())
   <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudent"
           aria-expanded="true" aria-controls="collapseStudent">
@@ -51,7 +52,6 @@
     </div>
   </li>
 
-  @if(Auth::guard('web')->check())
   <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePartner"
           aria-expanded="true" aria-controls="collapsePartner">
@@ -66,14 +66,19 @@
       </div>
   </li>
   @endif
-
-
-  <!-- Nav Item - Charts -->
+  
   <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.projects.index')}}">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Projects</span>
-        </a>
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProject"
+    aria-expanded="true" aria-controls="collapseProject">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Projects</span>
+    </a>
+    <div id="collapseProject" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white collapse-inner rounded">
+            <a class="collapse-item m-0" href="{{route('dashboard.projects.index')}}">Published Project</a>
+            <a class="collapse-item m-0" href="{{route('dashboard.projects.draft')}}">Drafted Project</a>
+        </div>
+    </div>
   </li>
   
 

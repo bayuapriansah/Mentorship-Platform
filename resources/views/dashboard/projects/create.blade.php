@@ -39,7 +39,8 @@
             <label for="inputvalid" class="form-label">Valid days</label>
             <input type="number" class="form-control" id="inputvalid" name="valid_time">
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <input type="submit" class="btn btn-primary" name="publish" value="Publish Project">
+          <input type="submit" class="btn btn-success" name="draft" value="Save as Draft">
         </form>
       </div>
     </div>

@@ -23,7 +23,13 @@ class ProjectController extends Controller
 
     public function dashboardIndex()
     {
-        $projects = Project::with(['student', 'company'])->get();
+        $projects = Project::with(['student', 'company'])->where('status','publish')->get();
+        return view('dashboard.projects.index', compact('projects'));
+    }
+
+    public function draftIndex()
+    {
+        $projects = Project::with(['student', 'company'])->where('status','draft')->get();
         return view('dashboard.projects.index', compact('projects'));
     }
 
@@ -42,15 +48,27 @@ class ProjectController extends Controller
             'valid_time' => ['required']
         ]);
         $project = new Project;
-        $project->name = $validated['name'];
-        $project->project_domain = $validated['domain'];
-        $project->problem = $validated['problem'];
-        $project->company_id = Auth::guard('company')->user()->id;
-        $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
-        $project->valid_time = $validated['valid_time'];
-        $project->status = 'publish';
-        $project->is_enrolled = 0;
-        $project->save();
+        if ($request->has('publish')){
+            $project->name = $validated['name'];
+            $project->project_domain = $validated['domain'];
+            $project->problem = $validated['problem'];
+            $project->company_id = Auth::guard('company')->user()->id;
+            $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
+            $project->valid_time = $validated['valid_time'];
+            $project->status = 'publish';
+            $project->is_enrolled = 0;
+            $project->save();
+        }elseif($request->has('draft')){
+            $project->name = $validated['name'];
+            $project->project_domain = $validated['domain'];
+            $project->problem = $validated['problem'];
+            $project->company_id = Auth::guard('company')->user()->id;
+            $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
+            $project->valid_time = $validated['valid_time'];
+            $project->status = 'draft';
+            $project->is_enrolled = 0;
+            $project->save();
+        };
         return redirect('/dashboard/projects');
     }
 
@@ -70,17 +88,40 @@ class ProjectController extends Controller
         ]);
 
         $project = Project::findOrFail($request->id);
-        $project->name = $validated['name'];
-        $project->project_domain = $validated['project_domain'];
-        $project->problem = $validated['problem'];
-        if($request->hasFile('resources')){
-            $resource = Storage::disk('public')->put('projects/resources', $request->file('resources'));
-            $project->resources = $resource;
-        }
-        $project->valid_time = $validated['valid_time'];
-        $project->save();
-        return redirect('dashboard/projects')->with('success','edited');
+        if($project->status == 'publish'){
+            $project->name = $validated['name'];
+            $project->project_domain = $validated['project_domain'];
+            $project->problem = $validated['problem'];
+            if($request->hasFile('resources')){
+                $resource = Storage::disk('public')->put('projects/resources', $request->file('resources'));
+                $project->resources = $resource;
+            }
+            $project->valid_time = $validated['valid_time'];
+            $project->save();
+            return redirect('dashboard/projects')->with('success','Project has been edited');
+        }elseif($project->status == 'draft'){
+            $project->name = $validated['name'];
+            $project->project_domain = $validated['project_domain'];
+            $project->problem = $validated['problem'];
+            if($request->hasFile('resources')){
+                $resource = Storage::disk('public')->put('projects/resources', $request->file('resources'));
+                $project->resources = $resource;
+            }
+            $project->valid_time = $validated['valid_time'];
+            $project->save();
+            return redirect('dashboard/projects/draft')->with('success','Project has been edited');
+        };
+        
     }
+
+    public function publish($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->status = 'publish';
+        $project->save();
+        return redirect('dashboard/projects')->with('success','Project has been published');
+    }
+
 
     public function dashboardIndexDestroy($id)
     {
