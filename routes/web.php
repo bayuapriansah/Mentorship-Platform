@@ -12,6 +12,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\SimintEncryption;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     //     return view('projects.supportlibrary');
     // })->name('projects.support');
 });
+
+Route::get('/testEnkripsi', [SimintEncryption::class, 'enkripsi']);
 
 
 // Route::get('/home', [DashboardController::class, 'index'])->name('home');
