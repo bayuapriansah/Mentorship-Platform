@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('project_id');
-            $table->string('status');
+            $table->boolean('is_submited');
             $table->timestamps();
         });
     }

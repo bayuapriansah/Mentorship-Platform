@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Company;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,13 +23,23 @@ class DatabaseSeeder extends Seeder
             'email' => 'farhan@admin.com',
         ]);
 
-        // Company::create([
-        //     'name' => fake()->name(),
-        //     'email' => 'company@mail.com',
-        //     'address' => fake()->address(),
-        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        //     'is_confirm' => 1
-        // ]);
+        Company::create([
+            'name' => fake()->name(),
+            'email' => 'company@mail.com',
+            'address' => fake()->address(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'is_confirm' => 1
+        ]);
+
+        Student::create([
+            'name' => fake()->name(),
+            'email' => 'student@mail.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'gender' => 'male',
+            'state' => 'medan',
+            'country' => 'indonesia',
+            'is_confirm' => 1
+        ]);
         // \App\Models\Project::create([
         //     'name' => 'First Project ',
         //     'problem' => 'create user admin',

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
 use App\Models\Company;
+use App\Models\Project;
+use App\Models\Submission;
 use Illuminate\Http\Request;
+use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,7 +23,7 @@ class ProjectController extends Controller
         $project = Project::find($id);
         return view('projects.show', compact('project'));
     }
-
+    
     public function dashboardIndex()
     {
         $projects = Project::with(['student', 'company'])->where('status','publish')->get();
@@ -62,7 +64,6 @@ class ProjectController extends Controller
                 $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
                 $project->valid_time = $validated['valid_time'];
                 $project->status = 'publish';
-                $project->is_enrolled = 0;
                 $project->save();
             }elseif($request->has('draft')){
                 $project->name = $validated['name'];
@@ -72,7 +73,6 @@ class ProjectController extends Controller
                 $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
                 $project->valid_time = $validated['valid_time'];
                 $project->status = 'draft';
-                $project->is_enrolled = 0;
                 $project->save();
             };
         }elseif(Auth::guard('company')->check()){
@@ -84,7 +84,6 @@ class ProjectController extends Controller
                 $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
                 $project->valid_time = $validated['valid_time'];
                 $project->status = 'publish';
-                $project->is_enrolled = 0;
                 $project->save();
             }elseif($request->has('draft')){
                 $project->name = $validated['name'];
@@ -94,7 +93,6 @@ class ProjectController extends Controller
                 $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
                 $project->valid_time = $validated['valid_time'];
                 $project->status = 'draft';
-                $project->is_enrolled = 0;
                 $project->save();
             };
         }
@@ -189,5 +187,51 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $project->delete();
         return redirect('dashboard/projects');
+    }
+
+    public function applyProject($id)
+    {
+        $enrolled_project = new EnrolledProject;
+        $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
+                                            ->where('project_id',$id)->first();
+        if($already_enrolled == null ){
+            $enrolled_project->student_id = Auth::guard('student')->user()->id;
+            $enrolled_project->project_id = $id;
+            $enrolled_project->is_submited = 0;
+            $enrolled_project->save();
+            return redirect('projects')->with('success', 'Selected project has been applied');
+        }
+        
+    }
+
+    public function applied($id)
+    {
+        $applied_project = EnrolledProject::where('student_id', $id)->get();
+        return view('projects.applied', compact('applied_project'));
+    }
+
+    public function submission($student_id, $enrolled_project_id)
+    {
+        $enrolled_project = EnrolledProject::find($enrolled_project_id);
+        return view('projects.submission', compact('enrolled_project'));
+    }
+
+    public function submit(Request $request,$student_id, $enrolled_project_id)
+    {
+        $validated = $request->validate([
+            'submission' => ['required'],
+        ]);
+        $enrolled_project = EnrolledProject::where('student_id',$student_id)
+                                            ->where('project_id',$enrolled_project_id)
+                                            ->update(['is_submited'=>1]);
+        $submission = new Submission;
+        $submission->enrolled_project_id = $enrolled_project_id;
+        $submission->student_id = $student_id;
+        if($request->hasFile('submission')){
+            $file = Storage::disk('public')->put('projects/submission', $validated['submission']);
+            $submission->file = $file;
+        }
+        $submission->save();
+        return back()->with('success','Project has been submited');
     }
 }

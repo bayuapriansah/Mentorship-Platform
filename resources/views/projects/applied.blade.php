@@ -5,9 +5,9 @@
     <img src="{{asset('assets/img/image.png')}}" alt="" width="100%" height="250px">
   </div>
 
-  <h1 class="mb-4">Available Projects</h1>
+  <h1 class="mb-4">Applied Projects</h1>
   
-  @foreach($projects as $project)
+  @foreach($applied_project as $project)
   <div class="row">
     <div class="col-9">
       <div class="row">
@@ -15,25 +15,31 @@
           <div class="card bg-light p-4 text-decoration-none text-dark">
             <div class="row">
               <div class="col-10">
-                <h3>{{$project->name}}</h3>
+                <h3>{{$project->project->name}}</h3>
               </div>
               <div class="col-2">
-                <a class="btn btn-primary" href="/projects/{{$project->id}}" role="button">Details</a>
+                <a class="btn btn-primary" href="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$project->id}}/submission" role="button">Submission</a>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p>{{$project->company->name}}</p>
+                <p>{{$project->project->company->name}}</p>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p>created at {{$project->created_at->toDateString()}}</p>
+                <p>applied at {{$project->created_at->toDateString()}}</p>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p>{{$project->project_domain}}</p>
+                <p>{{$project->project->project_domain}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p>{{$project->project->is_submit== 0 ? 'Waiting to submit': 'submitted'}}</p>
               </div>
             </div>
           </div>

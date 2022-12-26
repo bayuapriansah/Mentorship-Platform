@@ -37,11 +37,14 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
 // Student projects page
-// Route::group(['middleware'=>'auth:student'], function(){
 Route::group(['middleware'=>'auth:student'], function(){
     // projects page
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
+    Route::get('/projects/{student}/applied/{project}/submission', [ProjectController::class, 'submission'])->name('projects.submission');
+    Route::post('/projects/{student}/applied/{project}', [ProjectController::class, 'submit'])->name('projects.submit');
+    Route::post('/projects/{project}/apply', [ProjectController::class, 'applyProject'])->name('projects.apply');
     Route::get('/supportlib', function () {
         return view('projects.supportlibrary');
     })->name('projects.support');
