@@ -15,6 +15,11 @@
           <div class="mb-3">
             <label for="inputname" class="form-label">Project Name</label>
             <input type="text" class="form-control" id="inputname" name="name" value="{{$project->name}}">
+            @error('name')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
 
           <div class="mb-3">
@@ -25,11 +30,21 @@
               <option value="statistical" {{$project->project_domain == 'statistical'? 'selected':''}}>Statistical</option>
               <option value="computer_vision" {{$project->project_domain == 'computer_vision'? 'selected':''}}>Computer Vision</option>
             </select>
+            @error('project_domain')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
           
           <div class="mb-3">
             <label for="inputproblem" class="form-label">Problem</label>
             <input type="text" class="form-control" id="inputproblem" name="problem" value="{{$project->problem}}">
+            @error('problem')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
 
           <div class="mb-3">
@@ -41,6 +56,11 @@
           <div class="mb-3">
             <label for="inputvalid" class="form-label">Valid days</label>
             <input type="number" class="form-control" id="inputvalid" name="valid_time" value="{{$project->valid_time}}">
+            @error('valid_time')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
 
           @if(Auth::guard('web')->check())
@@ -52,6 +72,11 @@
               <option value="{{$company->id}}" {{$company->id == $project->company_id? 'selected':''}} >{{$company->name}}</option>
               @endforeach
             </select>
+            @error('company_id')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
           @endif
           <button type="submit" class="btn btn-primary">Submit</button>

@@ -130,18 +130,17 @@ class AuthController extends Controller
             if(Auth::guard('student')->attempt($validated)){
                 $request->session()->regenerate();
                 return redirect('/')->with('success','Logged in');;
-            }
-            if(Auth::guard('mentor')->attempt($validated)){
+            }elseif(Auth::guard('mentor')->attempt($validated)){
                 $request->session()->regenerate();
                 return redirect('/')->with('success','Logged in mentor');;
-            }
-            if(Auth::guard('company')->attempt($validated)){
+            }elseif(Auth::guard('company')->attempt($validated)){
                 $request->session()->regenerate();
                 return redirect('/')->with('success','Logged in company');;
-            }
-            if(Auth::guard('web')->attempt($validated)){
+            }elseif(Auth::guard('web')->attempt($validated)){
                 $request->session()->regenerate();
                 return redirect('/')->with('success','Logged in admin');;
+            }else{
+                return back()->with('error','User has not been registered');;
             }
         } catch(\Exception $error){
             $response =[

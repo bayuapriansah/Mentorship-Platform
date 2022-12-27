@@ -12,32 +12,57 @@
           @csrf
           <div class="mb-3">
             <label for="inputname" class="form-label">Project Name</label>
-            <input type="text" class="form-control" id="inputname" name="name">
+            <input type="text" class="form-control" id="inputname" name="name" value="{{old('name')}}">
+            @error('name')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
 
           <div class="mb-3">
             <label for="inputdomain" class="form-label">Project Domain</label>
             <select class="form-control form-select" id="inputdomain" aria-label="Default select example" name="domain">
               <option value="">--Select Project Domain--</option>
-              <option value="nlp">NLP</option>
-              <option value="statistical">Statistical</option>
-              <option value="computer_vision">Computer Vision</option>
+              <option value="nlp" {{old('domain') == 'nlp' ? 'selected': ''}}>NLP</option>
+              <option value="statistical" {{old('domain') == 'statistical' ? 'selected': ''}}>Statistical</option>
+              <option value="computer_vision" {{old('domain') == 'computer_vision' ? 'selected': ''}}>Computer Vision</option>
             </select>
+            @error('domain')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
           
           <div class="mb-3">
             <label for="inputproblem" class="form-label">Problem</label>
-            <input type="text" class="form-control" id="inputproblem" name="problem">
+            <input type="text" class="form-control" id="inputproblem" name="problem" value="{{old('problem')}}">
+            @error('problem')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
 
           <div class="mb-3">
             <label for="inputresources" class="form-label">Resources</label>
             <input type="file" class="form-control-file" id="inputresources" name="resources">
+            @error('resources')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
 
           <div class="mb-3">
             <label for="inputvalid" class="form-label">Valid days</label>
-            <input type="number" class="form-control" id="inputvalid" name="valid_time">
+            <input type="number" class="form-control" id="inputvalid" name="valid_time" value="{{old('valid_time')}}">
+            @error('valid_time')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
           @if(Auth::guard('web')->check())
           <div class="mb-3">
@@ -45,9 +70,14 @@
             <select class="form-control form-select" id="inputdomain" aria-label="Default select example" name="company_id">
               <option value="">--Select Project Domain--</option>
               @foreach($companies as $company)
-              <option value="{{$company->id}}">{{$company->name}}</option>
+              <option value="{{$company->id}}" {{old('company_id') == $company->id ? 'selected': ''}} >{{$company->name}}</option>
               @endforeach
             </select>
+            @error('company_id')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
           @endif
 
