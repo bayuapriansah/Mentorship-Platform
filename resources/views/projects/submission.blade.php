@@ -14,7 +14,7 @@
           <div class="card bg-light p-4 text-decoration-none text-dark">
             <div class="row">
               <div class="col-10">
-                <h3>{{$enrolled_project->project->name}}</h3>
+                <h3>{{$enrolled_project->name}}</h3>
               </div>
               <div class="col-2">
                 {{-- <a class="btn btn-primary" href="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$project->id}}/submission" role="button">Submission</a> --}}
@@ -22,7 +22,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <p>{{$enrolled_project->project->company->name}}</p>
+                <p>{{$enrolled_project->company->name}}</p>
               </div>
             </div>
             <div class="row">
@@ -32,7 +32,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <p>{{$enrolled_project->project->project_domain}}</p>
+                <p>{{$enrolled_project->project_domain}}</p>
               </div>
             </div>
             <div class="row">

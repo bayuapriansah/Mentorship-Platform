@@ -194,7 +194,7 @@ class ProjectController extends Controller
 
     public function submission($student_id, $enrolled_project_id)
     {
-        $enrolled_project = EnrolledProject::find($enrolled_project_id);
+        $enrolled_project = Project::find($enrolled_project_id);
         return view('projects.submission', compact('enrolled_project'));
     }
 
@@ -203,9 +203,9 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'submission' => ['required'],
         ]);
-        $enrolled_project = EnrolledProject::where('student_id',$student_id)
-                                            ->where('project_id',$enrolled_project_id)
-                                            ->update(['is_submited'=>1]);
+        EnrolledProject::where('student_id',$student_id)
+                        ->where('project_id',$enrolled_project_id)
+                        ->update(['is_submited'=>1]);
         $submission = new Submission;
         $submission->enrolled_project_id = $enrolled_project_id;
         $submission->student_id = $student_id;
@@ -214,6 +214,6 @@ class ProjectController extends Controller
             $submission->file = $file;
         }
         $submission->save();
-        return back()->with('success','Project has been submited');
+        return redirect('/projects/'.$student_id.'/applied')->with('success','Project has been submited');
     }
 }

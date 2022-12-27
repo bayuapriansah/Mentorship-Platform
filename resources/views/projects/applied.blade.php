@@ -19,7 +19,7 @@
               </div>
               <div class="col-2">
                 @if($project->is_submited == 0)
-                <a class="btn btn-primary" href="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$project->id}}/submission" role="button">Submission</a>
+                <a class="btn btn-primary" href="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$project->project->id}}/submission" role="button">Submission</a>
                 @else
                 Submitted
                 @endif
