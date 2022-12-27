@@ -9,17 +9,16 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     public function store(Request $request){ 
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => ['required'],
-            // 'name' => ['sometimes', 'min:3'],
-            // 'gender' => ['sometimes'],
+            'gender' => ['required'],
             'state' => ['required', 'min:3'],
             'country' => ['required', 'min:3'],
-            'role' => ['required'],
             'g-recaptcha-response' => function ($attribute, $value, $fail) {
                 $secretkey = config('services.recaptcha.secret');
                 $response = $value;
@@ -36,42 +35,23 @@ class AuthController extends Controller
             },
         ]);
 
-        // $validated['password'] = bcrypt($validated['password']);
-        if($validated['role'] == 'student'){
-            $existing_student = Student::where('email',$validated['email'])->first();
-            if($existing_student == null){
-                $student = new Student;
-                $student->email = $validated['email'];
-                $student->gender = $request->gender;
-                $student->state = $validated['state'];
-                $student->country = $validated['country'];
-                $student->is_confirm = 0;
-                $student->save();
-                $sendmail = (new MailController)->emailregister($validated['email']);
-                return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
-            }else{
-                return redirect('/')->with('error','The email you are using is already registered');
-            }
-            
-        }elseif ($validated['role'] == 'mentor') {
-            $existing_mentor = Mentor::where('email', $validated['email'])->first();
-            if($existing_mentor == null){
-                $mentor = new Mentor;
-                $mentor->name =  $request->name;
-                $mentor->email = $validated['email'];
-                $mentor->institution_name = $request->institution_name;
-                $mentor->position = $request->position;
-                $mentor->state = $validated['state'];
-                $mentor->country = $validated['country'];
-                $mentor->is_confirm = 0;
-                $mentor->save();
-                $sendmail = (new MailController)->emailregister($validated['email']);
-                return redirect('/')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
-            }else{
-                return redirect('/')->with('error','The email you are using is already registered');
-            }
+        if($validator->fails()){
+            return redirect('/#register')->withErrors($validator)->withInput();
+        }
+        $validated = $validator->validated();
+        $existing_student = Student::where('email',$validated['email'])->first();
+        if($existing_student == null){
+            $student = new Student;
+            $student->email = $validated['email'];
+            $student->gender = $validated['gender'];
+            $student->state = $validated['state'];
+            $student->country = $validated['country'];
+            $student->is_confirm = 0;
+            $student->save();
+            $sendmail = (new MailController)->emailregister($validated['email']);
+            return redirect('/#register')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
         }else{
-            return redirect('/'+"#register");
+            return redirect('/#register')->with('error','The email you are using is already registered');
         }
     }
 
