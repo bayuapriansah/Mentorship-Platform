@@ -13,6 +13,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\SimintEncryption;
+use App\Http\Controllers\AuthOtpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,33 +83,13 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::patch('projects/{project}/publish', [ProjectController::class, 'publish'])->name('project.publish');
         Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
     });
-
-    
-    
-
-
-
-    // Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
-    // Route::get('/supportlib', function () {
-    //     return view('projects.supportlibrary');
-    // })->name('projects.support');
 });
 
 Route::get('/testEnkripsi', [SimintEncryption::class, 'enkripsi']);
 
-
-// Route::get('/home', [DashboardController::class, 'index'])->name('home');
-// Route::view('/home', 'layouts.index');
-
-
-// Route::get('/q&a', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/studentprofilerepo', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/leaderboard', function () {
-//     return view('welcome');
-// });
+Route::controller(AuthOtpController::class)->group(function(){
+    Route::get('/otp/login', 'login')->name('otp.login');
+    Route::post('/otp/generate', 'generate')->name('otp.generate');
+    Route::get('/otp/verification', 'verification')->name('otp.verification');
+    Route::post('/otp/login', 'loginWithOtp')->name('otp.getLogin');
+});

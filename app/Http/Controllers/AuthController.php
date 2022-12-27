@@ -123,9 +123,6 @@ class AuthController extends Controller
                 'email' => ['required'],
                 'password' => ['required']
             ]);
-    
-            $existing_student_credential = Student::where('email',$validated['email'])->first();
-            $existing_company_credential = Company::where('email',$validated['email'])->first();
             
             if(Auth::guard('student')->attempt($validated)){
                 $request->session()->regenerate();
