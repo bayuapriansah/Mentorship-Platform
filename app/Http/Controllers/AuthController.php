@@ -35,27 +35,6 @@ class AuthController extends Controller
             },
         ]);
 
-        // $validated = $request->validate([
-        //     'email' => ['required'],
-        //     'gender' => ['required'],
-        //     'state' => ['required', 'min:3'],
-        //     'country' => ['required', 'min:3'],
-        //     'g-recaptcha-response' => function ($attribute, $value, $fail) {
-        //         $secretkey = config('services.recaptcha.secret');
-        //         $response = $value;
-        //         $userIP = $_SERVER['REMOTE_ADDR'];
-        //         $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
-        //         $response = \file_get_contents($url);
-        //         $response = json_decode($response);
-        //         // dd($response);
-        //         if(!$response->success){
-        //             Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-        //             Session::flash('alert-class', 'alert-danger');
-        //             $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-        //         } 
-        //     },
-        // ]);
-
         if($validator->fails()){
             return redirect('/#register')->withErrors($validator)->withInput();
         }
