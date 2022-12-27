@@ -14,7 +14,10 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::get();
+        $projects = Project::whereNotIn('id', function($query){
+            $query->select('project_id')->from('enrolled_projects');
+            $query->where('student_id',Auth::guard('student')->user()->id);
+        })->get();
         return view('projects.index', compact('projects'));
     }
 

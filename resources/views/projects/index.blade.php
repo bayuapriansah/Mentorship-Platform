@@ -7,10 +7,10 @@
 
   <h1 class="mb-4">Available Projects</h1>
   
-  @foreach($projects as $project)
   <div class="row">
     <div class="col-9">
-      <div class="row">
+      @foreach($projects as $project)
+      <div class="row mb-4">
         <div class="col">
           <div class="card bg-light p-4 text-decoration-none text-dark">
             <div class="row">
@@ -39,10 +39,11 @@
           </div>
         </div>
       </div>
+      @endforeach
+
     </div>
     @include('projects.sidebar')
   </div>
-  @endforeach
   
   {{-- <div class="card mt-5 text-center bg-light">
     
