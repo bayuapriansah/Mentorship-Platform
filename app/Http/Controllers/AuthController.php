@@ -48,33 +48,17 @@ class AuthController extends Controller
             $student->country = $validated['country'];
             $student->is_confirm = 0;
             $student->save();
-            $sendmail = (new MailController)->emailregister($validated['email']);
-            return redirect('/#register')->with('success','You\'re account is under review, please wait for confirmation email from us. Thank you! 😊');
+            $otp = rand(1000,9999);
+            // $sendmail = (new MailController)->emailregister($validated['email']);
+            $sendmail = (new MailController)->otplogin($validated['email'],$otp);
+            return redirect('/login')->with('success','You\'re Success create an Student account, please check you\'re Email for OTP Token from us. Thank you! 😊');
         }else{
             return redirect('/#register')->with('error','The email you are using is already registered');
         }
     }
 
     public function logout(Request $request){
-        // Auth::logout();
-        // $request->session()->invalidate();
-        // // $request->session()->regenerateToken();
-        // return redirect('/');
-
-        // if(Auth::guard('student')->check()) // this means that the admin was logged in.
-        // {
-        //     Auth::guard('student')->logout();
-        //     return redirect()->guest(route( 'index' ));
-
-        // }
-
-        // if(Auth::guard('company')->check()) // this means that the admin was logged in.
-        // {
-        //     Auth::guard('company')->logout();
-        //     return redirect()->guest(route( 'index' ));
-        // }
         Auth::guard()->logout();
-        // $this->guard()->logout();
         $request->session()->flush();
         $request->session()->regenerate();
     
@@ -97,38 +81,48 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function authenticate(Request $request){
-        try {
-            $validated = $request->validate([
-                'email' => ['required'],
-                'password' => ['required']
-            ]);
-            
-            if(Auth::guard('student')->attempt($validated)){
-                $request->session()->regenerate();
-                return redirect('/')->with('success','Logged in');;
-            }elseif(Auth::guard('mentor')->attempt($validated)){
-                $request->session()->regenerate();
-                return redirect('/')->with('success','Logged in mentor');;
-            }elseif(Auth::guard('company')->attempt($validated)){
-                $request->session()->regenerate();
-                return redirect('/')->with('success','Logged in company');;
-            }elseif(Auth::guard('web')->attempt($validated)){
-                $request->session()->regenerate();
-                return redirect('/')->with('success','Logged in admin');;
-            }else{
-                return back()->with('error','User has not been registered');;
-            }
-        } catch(\Exception $error){
-            $response =[
-                'status'=>'error',
-                'message'=>'error',
-                'data'=>$error->getMessage(),
-            ];
-            return response()->json($response, 200);
-        }
+    // belum fix
+    public function loginOtp(){
         
+    }
 
+    public function authenticate(Request $request){
+        $validated = $request->validate([
+            'email' => ['required'],
+            'password' => ['required']
+        ]);
+        if(Auth::guard('student')->attempt($validated)){
+            $request->session()->regenerate();
+            return redirect('/')->with('success','Logged in');
+        }elseif(Auth::guard('mentor')->attempt($validated)){
+            $request->session()->regenerate();
+            return redirect('/')->with('success','Logged in mentor');
+        }elseif(Auth::guard('company')->attempt($validated)){
+            $request->session()->regenerate();
+            return redirect('/')->with('success','Logged in company');
+        }elseif(Auth::guard('web')->attempt($validated)){
+            $request->session()->regenerate();
+            return redirect('/')->with('success','Logged in admin');
+        }else{
+            return back()->with('error','User has not been registered');
+        }
+    }
+
+    // belum fix
+    public function authenticateOTP(Request $request){
+        $validated = $request->validate([
+            'otp' => ['required']
+        ]);
+        $student = Student::where('email',$validated['email'])->first();
+        if($student->otp == $validated['otp']){
+            $student->is_confirm = 1;
+            $student->save();
+            Auth::guard('student')->login($student);
+            $request->session()->regenerate();
+            return redirect('/')->with('success','Logged in');
+        }else{
+            return back()->with('error','OTP is not valid');
+        }
     }
 
 }

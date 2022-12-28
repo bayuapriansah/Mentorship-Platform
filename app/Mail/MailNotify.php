@@ -31,9 +31,9 @@ class MailNotify extends Mailable
      */
     public function build()
     {
-        return $this->from('admin@example.com', 'Admin Simulated Internship')
-        ->subject($this->data['subject'])
-        ->view('emails.index')->with('data', $this->data);
+        return $this->from('no-reply@simulatedinternship.com', 'no-reply@simulatedinternship.com')->with('data', $this->data);
+        // ->subject($this->data['subject'])
+        // ->view('emails.otp')
     }
 
     /**
@@ -44,7 +44,7 @@ class MailNotify extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Simulated Internship',
+            subject: $this->data['subject'],
         );
     }
 
@@ -56,7 +56,7 @@ class MailNotify extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.index',
+            view: 'emails.'.$this->data['type'],
         );
     }
 

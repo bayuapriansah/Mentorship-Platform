@@ -18,21 +18,22 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'farhan',
-            'email' => 'farhan@admin.com',
-        ]);
+        // \App\Models\User::factory()->create([
+        //     'name' => 'farhan',
+        //     'email' => 'farhan@admin.com',
+        // ]);
 
-        Company::create([
-            'name' => fake()->name(),
-            'email' => 'company@mail.com',
-            'address' => fake()->address(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'is_confirm' => 1
-        ]);
+        // Company::create([
+        //     'name' => fake()->name(),
+        //     'email' => 'company@mail.com',
+        //     'address' => fake()->address(),
+        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        //     'is_confirm' => 1
+        // ]);
 
         Student::create([
-            'name' => fake()->name(),
+            'first_name' => fake()->firstname(),
+            'last_name' => fake()->lastname(),
             'email' => 'student@mail.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'gender' => 'male',

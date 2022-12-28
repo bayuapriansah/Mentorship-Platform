@@ -36,6 +36,7 @@ Route::post('/register', [AuthController::class, 'store'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/sendmail', [MailController::class, 'index']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/login/otp', [AuthController::class, 'loginOtp'])->name('loginOtp');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
 // Student projects page
@@ -86,10 +87,3 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 });
 
 Route::get('/testEnkripsi', [SimintEncryption::class, 'enkripsi']);
-
-Route::controller(AuthOtpController::class)->group(function(){
-    Route::get('/otp/login', 'login')->name('otp.login');
-    Route::post('/otp/generate', 'generate')->name('otp.generate');
-    Route::get('/otp/verification', 'verification')->name('otp.verification');
-    Route::post('/otp/login', 'loginWithOtp')->name('otp.getLogin');
-});
