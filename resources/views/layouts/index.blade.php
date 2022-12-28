@@ -75,7 +75,7 @@
         
         @if(Auth::guard('student')->check())
         <li class="nav-item"><a href="{{route('projects.index')}}" class="nav-link link-dark px-2">Project Page</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('student')->user()->name}}</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('student')->user()->email}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf
           <button type="submit" class="btn btn-primary">Logout</button>

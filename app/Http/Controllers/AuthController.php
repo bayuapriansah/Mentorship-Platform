@@ -48,10 +48,9 @@ class AuthController extends Controller
             $student->country = $validated['country'];
             $student->is_confirm = 0;
             $student->save();
-            $otp = rand(1000,9999);
-            // $sendmail = (new MailController)->emailregister($validated['email']);
-            $sendmail = (new MailController)->otplogin($validated['email'],$otp);
-            return redirect('/login')->with('success','You\'re Success create an Student account, please check you\'re Email for OTP Token from us. Thank you! 😊');
+            $sendmail = (new MailController)->emailregister($validated['email']);
+            // $sendmail = (new MailController)->otplogin($validated['email'],$otp);
+            return redirect('/otp/login')->with('success','You\'re Success create an Student account, please check you\'re Email for OTP Token from us. Thank you! 😊');
         }else{
             return redirect('/#register')->with('error','The email you are using is already registered');
         }
