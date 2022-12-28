@@ -4,8 +4,8 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Waiting to confirm mentors</h1>
-      {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add Students</a> --}}
+      <h1 class="h3 mb-0 text-gray-800">Invited mentors</h1>
+      {{-- <a href="{{route('dashboard.mentors.invite')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Invite Mentor</a> --}}
   </div>
 
   <!-- Content Row -->
@@ -16,26 +16,21 @@
           <tr>
             <th>No</th>
             <th>Name</th>
+            <th>address</th>
             <th>Email</th>
-            <th>gender</th>
-            <th>Institution Name</th>
-            <th>Position</th>
-            <th>State</th>
-            <th>Country</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           @php $no=1 @endphp
-          @foreach($mentors as $mentor)
+          @foreach($companies as $company)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$mentor->name}}</td>
-            <td>{{$mentor->email}}</td>
-            <td>{{$mentor->gender}}</td>
-            <td>{{$mentor->institution_name}}</td>
-            <td>{{$mentor->position}}</td>
-            <td>{{$mentor->state}}</td>
-            <td>{{$mentor->country}}</td>
+            <td>{{$company->name}}</td>
+            <td>{{$company->address}}</td>
+            <td>{{$company->email}}</td>
+            <td><a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/mentors/registered/{{$company->id}}/invite" >Invite Mentor</a>
+            </td>
           </tr>
           @php $no++ @endphp
           @endforeach

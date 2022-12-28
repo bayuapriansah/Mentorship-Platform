@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Mentor;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,8 +21,9 @@ class Company extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
-    public function batches()
+    public function mentors()
     {
-        return $this->hasMany(Batch::class);
+        return $this->hasMany(Mentor::class);
     }
+
 }

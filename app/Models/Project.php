@@ -22,4 +22,9 @@ class Project extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function mentors()
+    {
+        return $this->belongsToMany(Mentor::class);
+    }
 }
