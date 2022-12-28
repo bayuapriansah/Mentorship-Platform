@@ -22,19 +22,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@mail.com',
         ]);
 
-        // Company::create([
-        //     'name' => fake()->name(),
-        //     'email' => 'company@mail.com',
-        //     'address' => fake()->address(),
-        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        //     'is_confirm' => 1
-        // ]);
+        Company::create([
+            'name' => fake()->name(),
+            'email' => 'company@mail.com',
+            'address' => fake()->address(),
+        ]);
 
         Student::create([
             'first_name' => fake()->firstname(),
             'last_name' => fake()->lastname(),
             'email' => 'student@mail.com',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'gender' => 'male',
             'state' => 'medan',
             'country' => 'indonesia',

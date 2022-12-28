@@ -18,9 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('email')->unique();
-            $table->string('password');
             $table->string('g_captcha_response')->nullable();
-            $table->boolean('is_confirm');
             $table->timestamps();
         });
     }

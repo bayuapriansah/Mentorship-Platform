@@ -53,8 +53,6 @@ class CompanyController extends Controller
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
-        $company->password = Hash::make('password');
-        $company->is_confirm = 1;
         $company->save();
         return redirect('dashboard/companies/')->with('success','Company has been added');
     }
