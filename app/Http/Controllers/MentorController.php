@@ -34,9 +34,9 @@ class MentorController extends Controller
         $company = Company::find($company_id);
         // $mentorProjects = MentorProject::join('mentors', 'mentor.company_id', '=', 'mentor_projects.mentor_id');
         $mentor = Mentor::where('company_id', $company_id)->get();
-        $mentorProjects = MentorProject::with('mentor')->get();
+        // $mentorProjects = MentorProject::with('mentor')->get();
         // $mentorProjects->mentor;
-        return view('dashboard.mentors.invite', compact('projects','company','mentorProjects', 'mentor'));
+        return view('dashboard.mentors.invite', compact('projects','company','mentor'));
     }
 
     public function sendInvite(Request $request,$company_id)

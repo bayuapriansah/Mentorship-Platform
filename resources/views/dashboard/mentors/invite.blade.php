@@ -59,6 +59,7 @@
           <tbody>
             @php $no=1 @endphp  
             @foreach($mentor as $data_mentor)
+            <tr>
               <td>{{$no}}</td>
 
               <td>{{$data_mentor->email}}</td>
@@ -67,7 +68,7 @@
               <td>{{$data_project->name}}</td>
               @endforeach
             @php $no++ @endphp
-
+            </tr>
             @endforeach
             {{-- @foreach($mentor->project as $data_mentor)
             <tr>
