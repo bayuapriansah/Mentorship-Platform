@@ -41,14 +41,14 @@ class DatabaseSeeder extends Seeder
             'country' => 'indonesia',
             'is_confirm' => 1
         ]);
-        \App\Models\Project::create([
-            'name' => 'First Project ',
-            'project_domain' => 'nlp',
-            'problem' => 'first project problem',
-            'company_id' => '1',
-            'status' => 'publish',
-            'resources' => 'dummy_link',
-            'valid_time' => 7,
-        ]);
+        // \App\Models\Project::create([
+        //     'name' => 'First Project ',
+        //     'project_domain' => 'nlp',
+        //     'problem' => 'first project problem',
+        //     'company_id' => '1',
+        //     'status' => 'publish',
+        //     'resources' => 'dummy_link',
+        //     'valid_time' => 7,
+        // ]);
     }
 }

@@ -18,7 +18,15 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+    tinymce.init({
+        selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 250,
+        //  plugins: 'powerpaste advcode table lists checklist',
+        //  toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table'
+    });
+    </script>
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">

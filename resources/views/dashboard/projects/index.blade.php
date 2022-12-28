@@ -18,7 +18,6 @@
             <th>No</th>
             <th>Project name</th>
             <th>Project domain</th>
-            <th>Problem</th>
             <th>Company</th>
             <th>Resources</th>
             <th>Valid Time</th>
@@ -33,7 +32,6 @@
             <td>{{$no}}</td>
             <td>{{$project->name}}</td>
             <td>{{$project->project_domain}}</td>
-            <td>{{$project->problem}}</td>
             <td>{{$project->company->name}}</td>
             <td><a href="{{asset('storage/'. $project->resources)}}">[Resource file name]</a></td>
             <td>{{$project->valid_time}}</td>
