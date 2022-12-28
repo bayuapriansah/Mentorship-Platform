@@ -17,11 +17,12 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => 'company@mail.com',
-            'address' => fake()->address(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'is_confirm' => 1
+            // 'first_name' => fake()->firstname(),
+            // 'last_name' => fake()->lastname(),
+            // 'email' => 'company@mail.com',
+            // 'address' => fake()->address(),
+            // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            // 'is_confirm' => 1
         ];
     }
 }

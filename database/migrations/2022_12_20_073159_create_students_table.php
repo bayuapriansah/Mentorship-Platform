@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('gender');
             $table->string('state');
             $table->string('country');
@@ -26,7 +26,6 @@ return new class extends Migration
             $table->unsignedBigInteger('university_id')->nullable();
             $table->unsignedBigInteger('major_id')->nullable();
             $table->string('github_link')->nullable();
-            $table->string('g_captcha_response')->nullable();
             $table->boolean('is_confirm');
             $table->timestamps();
         });
