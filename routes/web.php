@@ -36,7 +36,6 @@ Route::post('/register', [AuthController::class, 'store'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/sendmail', [MailController::class, 'index']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/login/otp', [AuthController::class, 'loginOtp'])->name('loginOtp');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
 // Student projects page
