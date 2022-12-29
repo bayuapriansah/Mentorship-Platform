@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
-            $table->string('institution_name');
-            $table->string('state');
-            $table->string('country');
+            $table->unsignedBigInteger('company_id');
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
             $table->string('gender')->nullable();
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->string('is_confirm');
             $table->timestamps();
         });

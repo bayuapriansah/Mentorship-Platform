@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
 {
@@ -31,7 +32,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.companies.create');
     }
 
     /**
@@ -42,7 +43,18 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+        ]);
+
+        $company = new Company;
+        $company->name = $validated['name'];
+        $company->address = $validated['address'];
+        $company->email = $validated['email'];
+        $company->save();
+        return redirect('dashboard/companies/')->with('success','Company has been added');
     }
 
     /**
@@ -64,7 +76,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        return view('dashboard.companies.edit', compact('company'));
     }
 
     /**
@@ -74,9 +86,21 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update($id, Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+        ]);
+        
+        $company = Company::find($id);
+        $company->name = $validated['name'];
+        $company->address = $validated['address'];
+        $company->email = $validated['email'];
+        $company->save();
+        return redirect('dashboard/companies')->with('success','Company has been edited');
+
     }
 
     /**
@@ -85,8 +109,11 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy($id)
     {
-        //
+        $company = Company::find($id);
+        $company->delete();
+        return redirect('dashboard/companies');
+
     }
 }

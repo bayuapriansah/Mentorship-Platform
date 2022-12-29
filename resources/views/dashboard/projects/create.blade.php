@@ -37,7 +37,8 @@
           
           <div class="mb-3">
             <label for="inputproblem" class="form-label">Problem</label>
-            <input type="text" class="form-control" id="inputproblem" name="problem" value="{{old('problem')}}">
+            {{-- <input type="text" class="form-control" id="inputproblem" name="problem" value="{{old('problem')}}"> --}}
+            <textarea name="problem" id="problem" cols="30" rows="10">{{old('problem')}}</textarea>
             @error('problem')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
@@ -80,9 +81,11 @@
             @enderror
           </div>
           @endif
-
-          <input type="submit" class="btn btn-primary" name="publish" value="Publish Project">
-          <input type="submit" class="btn btn-success" name="draft" value="Save as Draft">
+          
+          <div class="mb-3">
+            <input type="submit" class="btn btn-primary" name="publish" value="Publish Project">
+            <input type="submit" class="btn btn-success" name="draft" value="Save as Draft">
+          </div>
         </form>
       </div>
     </div>

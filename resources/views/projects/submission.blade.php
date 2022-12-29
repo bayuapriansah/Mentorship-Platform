@@ -32,7 +32,12 @@
             </div>
             <div class="row">
               <div class="col">
-                <p>{{$enrolled_project->project_domain}}</p>
+                <p> {!!$enrolled_project->problem!!}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>Domain : {{$enrolled_project->project_domain}}</p>
               </div>
             </div>
             <div class="row">

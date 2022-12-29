@@ -17,25 +17,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory()->create([
+            'name' => 'farhan',
+            'email' => 'admin@mail.com',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'farhan',
-        //     'email' => 'farhan@admin.com',
-        // ]);
-
-        // Company::create([
-        //     'name' => fake()->name(),
-        //     'email' => 'company@mail.com',
-        //     'address' => fake()->address(),
-        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        //     'is_confirm' => 1
-        // ]);
+        Company::create([
+            'name' => fake()->name(),
+            'email' => 'company@mail.com',
+            'address' => fake()->address(),
+        ]);
 
         Student::create([
             'first_name' => fake()->firstname(),
             'last_name' => fake()->lastname(),
             'email' => 'student@mail.com',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'gender' => 'male',
             'state' => 'medan',
             'country' => 'indonesia',
@@ -43,9 +39,12 @@ class DatabaseSeeder extends Seeder
         ]);
         // \App\Models\Project::create([
         //     'name' => 'First Project ',
-        //     'problem' => 'create user admin',
-        //     'image' => 'https://www.codingem.com/wp-content/uploads/2021/10/juanjo-jaramillo-mZnx9429i94-unsplash-2048x1365.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1',
-        //     'batch_id' => 1
+        //     'project_domain' => 'nlp',
+        //     'problem' => 'first project problem',
+        //     'company_id' => '1',
+        //     'status' => 'publish',
+        //     'resources' => 'dummy_link',
+        //     'valid_time' => 7,
         // ]);
     }
 }

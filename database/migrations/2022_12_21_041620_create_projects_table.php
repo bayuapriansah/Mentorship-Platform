@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('project_domain');
-            $table->string('problem');
+            $table->text('problem');
             $table->unsignedBigInteger('company_id');
             $table->string('resources');
             $table->integer('valid_time');

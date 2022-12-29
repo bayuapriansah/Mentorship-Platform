@@ -18,7 +18,7 @@
   <div class="row mt-1">
     <div class="col">
       <p class="text-bold mb-0">Problem : </p>
-      <p>{{$project->problem}}</p>
+      <p>{!! $project->problem !!}</p>
     </div>
   </div>
 
