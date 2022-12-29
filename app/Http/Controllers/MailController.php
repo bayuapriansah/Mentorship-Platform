@@ -57,7 +57,7 @@ class MailController extends Controller
         try
         {
             Mail::to($mailto)->send(new MailNotify($data));
-            return response()->json(['Registration Email sent successfully']);
+            return response()->json(['Mentor Invitation  Email sent successfully']);
         } catch (Exeption $th) {
             return response()->json(['Sorry Something went wrong']);
         }
@@ -77,7 +77,7 @@ class MailController extends Controller
         try
         {
             Mail::to($mailto)->send(new MailNotify($data));
-            return response()->json(['Registration Email sent successfully']);
+            return response()->json(['Mentor Registration Email sent successfully']);
         } catch (Exeption $th) {
             return response()->json(['Sorry Something went wrong']);
         }
@@ -97,7 +97,7 @@ class MailController extends Controller
         try
         {
             Mail::to($mailto)->send(new MailNotify($data));
-            return response()->json(['Registration Email sent successfully']);
+            return response()->json(['Mentor Assignment Project Email sent successfully']);
         } catch (Exeption $th) {
             return response()->json(['Sorry Something went wrong']);
         }
