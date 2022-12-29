@@ -7,13 +7,13 @@ use Mail;
 use App\Mail\MailNotify;
 class MailController extends Controller
 {
-    public function emailregister($mailto)
+    public function emailregister($mailto) //Just Email
     {
         $data = [
-            'subject' => 'Registration Under Review',
-            'body' => 'Your registration is under review, please wait for confirmation email from us. Thank you! 😊',
-            'body2' => 'it takes 1-2 days to review your registration.',
-            'body3' => 'but no worries if you\'re account is ready to use, we will inform you via email.',
+            'subject' => 'Registration Completed',
+            'body' => 'Your registration as Student is Completed',
+            'body2' => 'You can Login, and Choose the Projet that Available.',
+            'body3' => 'If you still have a question related about this, please contact us.',
             'body4'=> 'Best regards,',
             'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'index',
@@ -27,7 +27,7 @@ class MailController extends Controller
         }
     }
 
-    public function otplogin($mailto,$otpdata)
+    public function otplogin($mailto,$otpdata) //Email , OTP
     {
         $data = [
             'subject' => '[Simulated Internship] OTP Verification',
@@ -38,6 +38,66 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['OTP Verification Email sent successfully']);
+        } catch (Exeption $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+    public function EmailMentorInvitation($mailto) //Email
+    {
+        $data = [
+            'subject' => 'Invitation to be a Mentor',
+            'body' => 'We would like to invite you to be a Mentor.',
+            'body2' => 'Please click the link below to fill the form and register as a Mentor.',
+            'body3' => 'http://localhost:8000/mentor/register',
+            'body4' => 'Best regards,',
+            'body5'=> 'Simulated Internship Team ❤️',
+            'type' => 'index',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Invitation  Email sent successfully']);
+        } catch (Exeption $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+    public function EmailMentorRegister($mailto) //Email
+    {
+        $data = [
+            'subject' => 'Registration Completed',
+            'body' => 'Your registration as Mentor is Completed',
+            'body2' => 'You can Login, and Choose the Projet that you mentored.',
+            'body3' => 'if you still have a question related about this, please contact us : support@simulatedinternship.com',
+            'body4' => 'Best regards,',
+            'body5'=> 'Simulated Internship Team ❤️',
+            'type' => 'index',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Registration Email sent successfully']);
+        } catch (Exeption $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+    public function EmailMentor($mailto,$projectName) //Email , Project Name
+    {
+        $data = [
+            'subject' => 'New Project Assignment',
+            'body' => 'You have been assigned to a new project, please check your dashboard for more information.',
+            'body2' => 'Project Name: '.$projectName,
+            'body3' => '',
+            'body4' => 'Best regards,',
+            'body5'=> 'Simulated Internship Team ❤️',
+            'type' => 'index',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Assignment Project Email sent successfully']);
         } catch (Exeption $th) {
             return response()->json(['Sorry Something went wrong']);
         }

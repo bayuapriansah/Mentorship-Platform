@@ -80,11 +80,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // belum fix
-    public function loginOtp(){
-        
-    }
-
     public function authenticate(Request $request){
         $validated = $request->validate([
             'email' => ['required'],
@@ -104,23 +99,6 @@ class AuthController extends Controller
             return redirect('/')->with('success','Logged in admin');
         }else{
             return back()->with('error','User has not been registered');
-        }
-    }
-
-    // belum fix
-    public function authenticateOTP(Request $request){
-        $validated = $request->validate([
-            'otp' => ['required']
-        ]);
-        $student = Student::where('email',$validated['email'])->first();
-        if($student->otp == $validated['otp']){
-            $student->is_confirm = 1;
-            $student->save();
-            Auth::guard('student')->login($student);
-            $request->session()->regenerate();
-            return redirect('/')->with('success','Logged in');
-        }else{
-            return back()->with('error','OTP is not valid');
         }
     }
 

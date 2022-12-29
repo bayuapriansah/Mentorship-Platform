@@ -102,7 +102,7 @@
           <button type="submit" class="btn btn-danger">Logout</button>
         </form>
         @else
-        <li class="nav-item"><a href="/login" class="nav-link link-dark px-2">Sign In</a></li>
+        <li class="nav-item"><a href="{{ route('otp.login') }}" class="nav-link link-dark px-2">Sign In</a></li>
         <li class="nav-item"><a href="/#register" class="nav-link link-dark px-2">Register</a></li>
         @endif
       </ul>
