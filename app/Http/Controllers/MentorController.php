@@ -48,23 +48,30 @@ class MentorController extends Controller
         }
         
         if(!$checkMentor){
-            $mentor = new Mentor;
-            $mentor->email = $request->email;
-            $mentor->company_id = $company_id;
-            $mentor->is_confirm = 0;
-            $mentor->save();
-            $this->addMentorToProject($mentor,$request);
-            $sendmail = (new MailController)->EmailMentorInvitation($mentor->email);
+            $mentors = $this->addMentor($request,$company_id);
+            $this->addMentorToProject($mentors,$request);
+            $sendmail = (new MailController)->EmailMentorInvitation($mentors->email);
+            $message = "Successfully Send Invitation to Mentor";
+            return redirect()->route('dashboard.mentors.registered')->with('success', $message);
         }elseif($checkMentorProject){
             $message = "Mentor Already Exist in this Project";
             return redirect()->route('dashboard.mentors.invite', [$checkMentor->company_id])->with('error', $message);
         }elseif($checkMentor && $checkMentor->is_confirm == 1){
-            $textDebug = "Mentor udah ada di project";
-            dd($textDebug);
+            $mentors = $this->addMentor($request,$company_id);
             $sendmail = (new MailController)->EmailMentor($checkMentor->email);
+            $message = "Successfully Send Invitation to Mentor";
+            return redirect()->route('dashboard.mentors.invite', [$checkMentor->company_id])->with('success', $message);
         }
-        return redirect('/dashboard/mentors/registered');
+    }
 
+    public function addMentor($request,$company_id){
+        $mentor = new Mentor;
+        $mentor->email = $request->email;
+        $mentor->company_id = $company_id;
+        $mentor->is_confirm = 0;
+        $mentor->save();
+
+        return $mentor;
     }
 
     public function addMentorToProject($mentor,$request){
