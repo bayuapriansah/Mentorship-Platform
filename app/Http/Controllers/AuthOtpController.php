@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\simintEncryption;
 
 
 class AuthOtpController extends Controller
@@ -24,9 +25,11 @@ class AuthOtpController extends Controller
         // dd($user_id->all());
         $verificationCode = $this->generateOtp($request->email);
         $otp = $verificationCode->otp;
+        $encId = (new simintEncryption)->encData($user_id->id);
+        // dd($encId);
         $message = "Your OTP verification code Already sent to your email";
         $sendmail = (new MailController)->otplogin($request->email,$otp);
-        return redirect('/otp/verification/'.$user_id->id)->with('success', $message);
+        return redirect('/otp/verification/'.$encId)->with('success', $message);
     }
 
     public function generateOtp($email){
