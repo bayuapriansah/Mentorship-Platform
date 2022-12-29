@@ -38,6 +38,10 @@ Route::get('/sendmail', [MailController::class, 'index']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
+// mentor register
+Route::get('/mentor/register', [MentorController::class, 'register'])->name('mentor.register');
+
+
 // Student projects page
 Route::group(['middleware'=>'auth:student'], function(){
     // projects page

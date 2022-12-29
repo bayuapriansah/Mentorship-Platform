@@ -46,7 +46,6 @@ class MentorController extends Controller
         if($checkMentor){
             $checkMentorProject = MentorProject::where('mentor_id', $checkMentor->id)->where('project_id', $request->project_id)->first();
         }
-        
         if(!$checkMentor){
             $mentor = new Mentor;
             $mentor->email = $request->email;
@@ -63,7 +62,7 @@ class MentorController extends Controller
             dd($textDebug);
             $sendmail = (new MailController)->EmailMentor($checkMentor->email);
         }
-        return redirect('/dashboard/mentors/registered');
+        return back();
 
     }
 
@@ -137,5 +136,11 @@ class MentorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // Register mentor
+    public function register()
+    {
+        return view('mentor.index');
     }
 }
