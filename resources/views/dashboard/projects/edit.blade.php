@@ -39,7 +39,9 @@
           
           <div class="mb-3">
             <label for="inputproblem" class="form-label">Problem</label>
-            <input type="text" class="form-control" id="inputproblem" name="problem" value="{{$project->problem}}">
+            {{-- <input type="text" class="form-control" id="inputproblem" name="problem" value="{{$project->problem}}"> --}}
+            <textarea name="problem" id="problem" cols="30" rows="10">{{$project->problem}}</textarea>
+
             @error('problem')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
@@ -48,15 +50,31 @@
           </div>
 
           <div class="mb-3">
-            <label for="inputresources" class="form-label">Resources</label>
-            <input type="file" class="form-control-file" id="inputresources" name="resources">
-            {{explode('/',$project->resources)[2]}}
+            <label for="inputtype" class="form-label">Type</label>
+            <select class="form-control form-select" id="inputtype" aria-label="Default select example" name="type">
+              <option value="">--Select Project Type--</option>
+              <option value="weekly" {{$project->type == 'weekly' ? 'selected': ''}} >Weekly</option>
+              <option value="monthly" {{$project->type == 'monthly' ? 'selected': ''}} >Monthly</option>
+            </select>
+            @error('type')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
 
           <div class="mb-3">
-            <label for="inputvalid" class="form-label">Valid days</label>
-            <input type="number" class="form-control" id="inputvalid" name="valid_time" value="{{$project->valid_time}}">
-            @error('valid_time')
+            <label for="inputperiod" class="form-label">Period</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" class="form-control" id="inputperiod" name="period" value="{{$project->period}}">
+              </div>
+              <div class="col">
+                <label for="inputperiod" class="form-label" id="period_text_monthly">Month</label>
+              </div>
+            </div>
+
+            @error('period')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>

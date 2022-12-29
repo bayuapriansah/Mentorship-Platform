@@ -45,21 +45,31 @@
                 </p>
             @enderror
           </div>
-
           <div class="mb-3">
-            <label for="inputresources" class="form-label">Resources</label>
-            <input type="file" class="form-control-file" id="inputresources" name="resources">
-            @error('resources')
+            <label for="inputtype" class="form-label">Type</label>
+            <select class="form-control form-select" id="inputtype" aria-label="Default select example" name="type">
+              <option value="">--Select Project Type--</option>
+              <option value="weekly" {{old('type') == 'weekly' ? 'selected': ''}} >Weekly</option>
+              <option value="monthly" {{old('type') == 'monthly' ? 'selected': ''}} >Monthly</option>
+            </select>
+            @error('type')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>
             @enderror
           </div>
-
           <div class="mb-3">
-            <label for="inputvalid" class="form-label">Valid days</label>
-            <input type="number" class="form-control" id="inputvalid" name="valid_time" value="{{old('valid_time')}}">
-            @error('valid_time')
+            <label for="inputperiod" class="form-label">Period</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" class="form-control" id="inputperiod" name="period" value="{{old('period')}}">
+              </div>
+              <div class="col">
+                <label for="inputperiod" class="form-label" id="period_text_month">Month</label>
+              </div>
+            </div>
+
+            @error('period')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>
@@ -91,4 +101,9 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('more-js')
+<script>
+</script>
 @endsection

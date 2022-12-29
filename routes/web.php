@@ -85,6 +85,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
         Route::patch('projects/{project}/publish', [ProjectController::class, 'publish'])->name('project.publish');
         Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
+
+        //section
+        Route::get('/projects/{project}/section', [ProjectController::class, 'dashboardIndexSection'])->name('projects.section');
+        Route::post('/projects/{project}', [ProjectController::class, 'dashboardIndexStoreSection'])->name('projects.storeSection');
     });
 });
 

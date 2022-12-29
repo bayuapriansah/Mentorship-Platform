@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Project;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -54,8 +55,8 @@ class ProjectController extends Controller
             'name' => ['required'],
             'domain' => ['required'],
             'problem' => ['required'],
-            'resources' => ['required'],
-            'valid_time' => ['required'],
+            'type' => ['required'],
+            'period' => ['required'],
             'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
             
         ]);
@@ -65,8 +66,8 @@ class ProjectController extends Controller
             $project->project_domain = $validated['domain'];
             $project->problem = $validated['problem'];
             $project->company_id = $request->company_id;
-            $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
-            $project->valid_time = $validated['valid_time'];
+            $project->type = $validated['type'];
+            $project->period = $validated['period'];
             if ($request->has('publish')){
                 $project->status = 'publish';
                 $project->save();
@@ -82,7 +83,8 @@ class ProjectController extends Controller
             $project->project_domain = $validated['domain'];
             $project->problem = $validated['problem'];
             $project->company_id = Auth::guard('company')->user()->id;
-            $project->resources = Storage::disk('public')->put('projects/resources', $request->file('resources'));
+            $project->type = $validated['type'];
+            $project->period = $validated['period'];
             $project->valid_time = $validated['valid_time'];
             if ($request->has('publish')){
                 $project->status = 'publish';
@@ -113,7 +115,8 @@ class ProjectController extends Controller
             'name' => ['required'],
             'project_domain' => ['required'],
             'problem' => ['required'],
-            'valid_time' => ['required','numeric','min:3', 'max:7'],
+            'type' => ['required'],
+            'period' => ['required'],
             'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
 
         ]);
@@ -124,11 +127,8 @@ class ProjectController extends Controller
             $project->project_domain = $validated['project_domain'];
             $project->problem = $validated['problem'];
             $project->company_id = $request->company_id;
-            if($request->hasFile('resources')){
-                $resource = Storage::disk('public')->put('projects/resources', $request->file('resources'));
-                $project->resources = $resource;
-            }
-            $project->valid_time = $validated['valid_time'];
+            $project->type = $validated['type'];
+            $project->period = $validated['period'];
             if($project->status == 'publish'){
                 $project->save();
                 return redirect('dashboard/projects')->with('success','Project has been edited');
@@ -215,5 +215,30 @@ class ProjectController extends Controller
         }
         $submission->save();
         return redirect('/projects/'.$student_id.'/applied')->with('success','Project has been submited');
+    }
+
+    // SECTION
+    public function dashboardIndexSection($project_id)
+    {
+        // $project = Project::findOrFail($request->id);
+
+        $project = Project::find($project_id);
+        $project_sections =  ProjectSection::where('project_id', $project_id)->get();
+        return view('dashboard.projects.section.index', compact(['project', 'project_sections']));
+    }
+
+    public function dashboardIndexStoreSection($project_id, Request $request)
+    {
+        $validated = $request->validate([
+            'section' => ['required'],
+            'description' => ['required'],
+        ]);
+        $project_section = new ProjectSection;
+        $project_section->project_id = $project_id;
+        $project_section->section = $validated['section'];
+        $project_section->description = $validated['description'];
+        $project_section->save();
+
+        return redirect('dashboard/projects/'.$project_id.'/section')->with('success','Project section has been created');
     }
 }

@@ -17,14 +17,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('project_id');
             $table->integer('section');
-            $table->integer('subsection');
-            $table->string('description_section');
-            $table->string('file_1');
-            $table->string('file_2');
-            $table->string('file_3');
-            $table->string('video_link');
-            $table->string('submit_assignment');
+            $table->string('description');
             $table->timestamps();
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onDelete('cascade');
         });
     }
 
