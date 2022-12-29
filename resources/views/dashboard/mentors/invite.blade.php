@@ -8,6 +8,7 @@
   <div class="row">
     <div class="col">
       <div class="card p-4">
+        @include('flash-message')
         <form action="/dashboard/mentors/registered/{{$company->id}}/invite" method="post">
           @csrf
           <div class="mb-3">

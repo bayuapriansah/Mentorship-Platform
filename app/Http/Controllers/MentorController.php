@@ -41,20 +41,34 @@ class MentorController extends Controller
 
     public function sendInvite(Request $request,$company_id)
     {
-        // dd($request->all());
-        $mentor = new Mentor;
-        $mentor->email = $request->email;
-        $mentor->company_id = $company_id;
-        $mentor->is_confirm = 0;
-        $mentor->save();
+        dd($request->all());
+        $checkMentor = Mentor::where('email', $request->email)->first();   
+        $checkMentorProject = MentorProject::where('mentor_id', $checkMentor->id)->where('project_id', $request->project_id)->first();
+        if(!$checkMentor){
+            $mentor = new Mentor;
+            $mentor->email = $request->email;
+            $mentor->company_id = $company_id;
+            $mentor->is_confirm = 0;
+            $mentor->save();
+            $this->addMentorToProject($mentor,$request);
+            $sendmail = (new MailController)->EmailMentorInvitation($mentor->email);
+        }elseif($checkMentorProject){
+            $message = "Mentor Already Exist in this Project";
+            return redirect()->route('dashboard.mentors.invite', [$checkMentor->company_id])->with('error', $message);
+        }elseif($checkMentor && $checkMentor->is_confirm == 1){
+            $textDebug = "Mentor udah ada di project";
+            dd($textDebug);
+            $sendmail = (new MailController)->EmailMentor($checkMentor->email);
+        }
+        return redirect('/dashboard/mentors/registered');
 
+    }
+
+    public function addMentorToProject($mentor,$request){
         $mentorProject = new MentorProject;
         $mentorProject->mentor_id = $mentor->id;
         $mentorProject->project_id = $request->project_id;
         $mentorProject->save();
-
-        return redirect('/dashboard/mentors/registered');
-
     }
     /**
      * Show the form for creating a new resource.

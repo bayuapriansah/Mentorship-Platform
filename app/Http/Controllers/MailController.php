@@ -47,7 +47,7 @@ class MailController extends Controller
     {
         $data = [
             'subject' => 'Invitation to be a Mentor',
-            'body' => 'We would like to invite you to be a Mentor.',
+            'body' => 'We would like to invite you to be a Mentor, and put you on project that you can mentor.',
             'body2' => 'Please click the link below to fill the form and register as a Mentor.',
             'body3' => 'http://localhost:8000/mentor/register',
             'body4' => 'Best regards,',
