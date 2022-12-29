@@ -41,9 +41,12 @@ class MentorController extends Controller
 
     public function sendInvite(Request $request,$company_id)
     {
-        dd($request->all());
+        
         $checkMentor = Mentor::where('email', $request->email)->first();   
-        $checkMentorProject = MentorProject::where('mentor_id', $checkMentor->id)->where('project_id', $request->project_id)->first();
+        if($checkMentor){
+            $checkMentorProject = MentorProject::where('mentor_id', $checkMentor->id)->where('project_id', $request->project_id)->first();
+        }
+        
         if(!$checkMentor){
             $mentor = new Mentor;
             $mentor->email = $request->email;
