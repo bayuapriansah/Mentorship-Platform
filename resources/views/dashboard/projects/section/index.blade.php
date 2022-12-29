@@ -4,8 +4,7 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Projects {{$project->name}}</h1>
-      <a href="{{route('dashboard.projects.create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Projects</a>
+      <h1 class="h3 mb-0 text-gray-800">Sections for {{$project->name}}</h1>
   </div>
 
   <div class="row">
@@ -62,10 +61,10 @@
             <td>{{$project_section->description}}</td>
             <td>
 
-              {{-- <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/edit" >Edit</a>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section" >Project Section</a>
+              {{-- <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/edit" >Edit</a> --}}
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage Project Subsection</a>
 
-              <form method="POST" action="/dashboard/projects/{{ $project->id }}" >
+              {{--  <form method="POST" action="/dashboard/projects/{{ $project->id }}" >
                 @csrf
                 @method('DELETE')
                 <div class="control">

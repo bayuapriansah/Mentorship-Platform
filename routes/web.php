@@ -88,6 +88,11 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         //section
         Route::get('/projects/{project}/section', [ProjectController::class, 'dashboardIndexSection'])->name('projects.section');
         Route::post('/projects/{project}', [ProjectController::class, 'dashboardIndexStoreSection'])->name('projects.storeSection');
+
+        //subsection
+        Route::get('/projects/{project}/section/{section}/subsection', [ProjectController::class, 'dashboardIndexSubsection'])->name('projects.subsection');
+        Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.storeSubsection');
+        Route::post('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardStoreSubsection'])->name('projects.storeSubsection');
     });
 });
 

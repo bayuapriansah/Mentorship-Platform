@@ -8,6 +8,7 @@ use App\Models\Submission;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
+use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -241,4 +242,35 @@ class ProjectController extends Controller
 
         return redirect('dashboard/projects/'.$project_id.'/section')->with('success','Project section has been created');
     }
-}
+
+    // SUBSECTION
+    public function dashboardIndexSubsection($project_id, $section_id)
+    {
+        $project = Project::find($project_id);
+        $project_section = ProjectSection::find($section_id);
+        $project_subsections =  SectionSubsection::where('project_section_id', $section_id)->get();
+        return view('dashboard.projects.section.subsection.index', compact(['project' ,'project_section', 'project_subsections']));
+    }
+
+    public function dashboardCreateSubsection ($project_id, $section_id)
+    {
+        $project = Project::find($project_id);
+        $section = ProjectSection::find($section_id);
+
+        return view('dashboard.projects.section.subsection.create', compact(['project', 'section']));
+    }
+
+    public function dashboardStoreSubsection($project_id, $section_id, Request $request)
+    {
+        $sectionSubsection = new SectionSubsection;
+        $sectionSubsection->project_section_id = $section_id;
+        $sectionSubsection->file1 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file1'));
+        $sectionSubsection->file2 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file2'));
+        $sectionSubsection->file3 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file2'));
+        $sectionSubsection->video_link = $request->video_link;
+        $sectionSubsection->is_submit = 0 ;
+        $sectionSubsection->status = 0 ;
+        $sectionSubsection->save();
+        return back();
+    }
+}   
