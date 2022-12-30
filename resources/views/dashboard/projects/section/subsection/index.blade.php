@@ -4,8 +4,8 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Subsection {{$project->id}}</h1>
-      <a href="create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Projects</a>
+      <h1 class="h3 mb-0 text-gray-800">Subsection</h1>
+      <a href="create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Subsection</a>
 
   </div>
 
@@ -37,10 +37,10 @@
             <td>{{$project->is_submit}}</td>
             <td>
 
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/edit" >Edit</a>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section" >Project Section</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection/{{$project_subsection->id}}/edit" >Edit</a>
 
-              <form method="POST" action="/dashboard/projects/{{ $project->id }}" >
+              <form method="POST" action="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection/{{$project_subsection->id}}" >
+                
                 @csrf
                 @method('DELETE')
                 <div class="control">
