@@ -43,13 +43,13 @@ class MailController extends Controller
         }
     }
 
-    public function EmailMentorInvitation($mailto) //Email
+    public function EmailMentorInvitation($mailto,$urlInvitation) //Email, urlInvitation
     {
         $data = [
             'subject' => 'Invitation to be a Mentor',
             'body' => 'We would like to invite you to be a Mentor, and put you on project that you can mentor.',
             'body2' => 'Please click the link below to fill the form and register as a Mentor.',
-            'body3' => 'http://localhost:8000/mentor/register',
+            'body3' => $urlInvitation,
             'body4' => 'Best regards,',
             'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'index',
