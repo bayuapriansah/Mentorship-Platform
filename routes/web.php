@@ -39,7 +39,8 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
 // mentor register
-Route::get('/mentor/register', [MentorController::class, 'register'])->name('mentor.register');
+Route::get('/mentor/register/{mentor_id}', [MentorController::class, 'register'])->name('mentor.register');
+Route::post('/mentor/register/{mentor_id}/auth', [MentorController::class, 'update'])->name('mentor.registerAuth');
 
 
 // Student projects page

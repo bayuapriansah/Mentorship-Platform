@@ -6,7 +6,7 @@
     <h1>Mentor Register</h1>
   </div>
   @include('flash-message')
-  <form action="#" method="post" id="mentorregister">
+  <form action="{{ route('mentor.registerAuth',[$checkMentor->id]) }}" method="post" id="mentorregister">
     @csrf
     <div class="row">
       <div class="col">
@@ -31,7 +31,7 @@
 
     <div class="mb-3">
       <label for="state" class="form-label">Email</label>
-      <input type="text" name="email" id="disabledTextInput" class="form-control" value="mentor@mail.com" disabled>
+      <input type="text" name="email" id="disabledTextInput" class="form-control" value="{{$checkMentor->email}}" disabled>
       @error('email')
           <p class="text-danger text-sm mt-1">
             {{$message}}
@@ -41,7 +41,7 @@
 
     <div class="mb-3">
       <label for="company" class="form-label">Company</label>
-      <input type="text" name="company" id="disabledTextInput" class="form-control" value="Joseph n Co Ltd." disabled>
+      <input type="text" name="company" id="disabledTextInput" class="form-control" value="{{$checkCompany->name}}}" disabled>
       @error('company')
           <p class="text-danger text-sm mt-1">
             {{$message}}
