@@ -131,7 +131,28 @@ class MentorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'gender' => 'required',
+            'position' => 'required',
+        ]);
+
+        $mentor = Mentor::find($id);
+        $mentor->first_name = $validated['first_name'];
+        $mentor->last_name = $validated['last_name'];
+        $mentor->state = $validated['state'];
+        $mentor->country = $validated['country'];
+        $mentor->gender = $validated['gender'];
+        $mentor->position = $validated['position'];
+        $mentor->is_confirm = 1;
+        $mentor->save();
+        $sendmail = (new MailController)->EmailMentorRegister($mentor->email);
+        $message = "Successfully Register as Mentor, Now you can login to your account";
+        return redirect()->route('otp.login')->with('success', $message);
     }
 
     /**
@@ -146,8 +167,19 @@ class MentorController extends Controller
     }
 
     // Register mentor
-    public function register()
+    public function register($mentor_id)
     {
-        return view('mentor.index');
+        $checkMentor = Mentor::where('id', $mentor_id)->where('is_confirm',0)->first();
+        
+        if(!$checkMentor){
+            return redirect()->route('index');
+        }elseif($checkMentor){
+            $checkCompany = Company::where('id', $checkMentor->company_id)->first();
+            return view('mentor.index', compact(['checkMentor','checkCompany']));
+        }
+    }
+
+    public function registerAuth(){
+
     }
 }
