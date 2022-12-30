@@ -7,6 +7,8 @@ use App\Models\Company;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\MentorProject;
+use MagicLink\Actions\ResponseAction;
+use MagicLink\MagicLink;
 
 class MentorController extends Controller
 {
@@ -40,8 +42,7 @@ class MentorController extends Controller
     }
 
     public function sendInvite(Request $request,$company_id)
-    {
-        
+    {   
         $checkMentor = Mentor::where('email', $request->email)->first();   
         if($checkMentor){
             $checkMentorProject = MentorProject::where('mentor_id', $checkMentor->id)->where('project_id', $request->project_id)->first();
@@ -49,7 +50,16 @@ class MentorController extends Controller
         if(!$checkMentor){
             $mentors = $this->addMentor($request,$company_id);
             $this->addMentorToProject($mentors,$request);
-            $sendmail = (new MailController)->EmailMentorInvitation($mentors->email);
+
+            // $action = new ResponseAction(function () {       
+
+            //     return redirect()->route('mentor.register',[$mentors->id]);
+            // });
+            
+            // $urlInvitation = MagicLink::create($action)->url;
+
+            // dd($urlInvitation);
+            $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,null);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.mentors.registered')->with('success', $message);
         }elseif($checkMentorProject){
@@ -177,9 +187,5 @@ class MentorController extends Controller
             $checkCompany = Company::where('id', $checkMentor->company_id)->first();
             return view('mentor.index', compact(['checkMentor','checkCompany']));
         }
-    }
-
-    public function registerAuth(){
-
     }
 }

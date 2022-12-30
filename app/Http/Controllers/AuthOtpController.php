@@ -29,7 +29,7 @@ class AuthOtpController extends Controller
         // dd($encId);
         $message = "Your OTP verification code Already sent to your email";
         $sendmail = (new MailController)->otplogin($request->email,$otp);
-        return redirect()->route('otp.login', [$encId])->with('success', $message);
+        return redirect()->route('otp.verification', [$encId])->with('success', $message);
     }
 
     public function generateOtp($email){
@@ -53,6 +53,7 @@ class AuthOtpController extends Controller
     }
 
     public function verification($user_id){
+        $user_id = (new simintEncryption)->decData($user_id);
         return view('auth.loginOtpVerification')->with([
             'user_id' => $user_id
         ]);
