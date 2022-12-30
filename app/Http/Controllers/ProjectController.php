@@ -27,7 +27,9 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
-        return view('projects.show', compact('project'));
+        $project_sections = ProjectSection::where('project_id', $id)->get();
+        // dd($project_sections);
+        return view('projects.show', compact(['project','project_sections']));
     }
     
     public function dashboardIndex()
@@ -285,11 +287,12 @@ class ProjectController extends Controller
     public function dashboardStoreSubsection($project_id, $section_id, Request $request)
     {
         $validated = $request->validate([
-            'file1' => ['required'],
+            'file1' => 'required',
+            'description' => 'required'
         ]);
         $sectionSubsection = new SectionSubsection;
         $sectionSubsection->project_section_id = $section_id;
-
+        $sectionSubsection->description = $validated['description'];
         if($request->hasFile('file1')){
             $file1 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $validated['file1']);
             $sectionSubsection->file1 = $file1;
@@ -317,7 +320,12 @@ class ProjectController extends Controller
 
     public function dashboardUpdateSubsection($project_id, $section_id, $subsection_id, Request $request)
     {
+        $validated = $request->validate([
+            'description' => 'required',
+            'video_link'=> 'required'
+        ]);
         $section_subsection = SectionSubsection::find($subsection_id);
+        $section_subsection->description = $validated['description'];
         if($request->hasFile('file1')){
             // $file1path = public_path().'/'.$section_subsection->file1;
 

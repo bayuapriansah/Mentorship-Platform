@@ -9,14 +9,29 @@
     
     <div class="col">
       <div class="card p-4">
-        @if($errors->any())
+        {{-- @if($errors->any())
             {!! implode('', $errors->all('<div class="text-danger text-sm mt-1">:message</div>')) !!}
-        @endif
+        @endif --}}
+        
         <form action="/dashboard/projects/{{$project->id}}/section/{{$section->id}}" method="post" enctype="multipart/form-data">
           @csrf
           <div class="mb-3">
+            <label for="inputsection" class="form-label">Description</label>
+            <textarea name="description" id="problem" cols="30" rows="10">{{old('description')}}</textarea>
+            @error('description')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          <div class="mb-3">
             <label for="inputfile1" class="form-label">File 1</label>
             <input type="file" class="form-control-file" id="inputfile1" name="file1">
+            @error('file1')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
           <div class="mb-3">
             <label for="inputfile2" class="form-label">File 2</label>

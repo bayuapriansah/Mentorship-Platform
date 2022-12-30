@@ -17,6 +17,7 @@
         <thead>
           <tr>
             <th>No</th>
+            <th>Description</th>
             <th>File 1</th>
             <th>File 2</th>
             <th>File 3</th>
@@ -30,6 +31,7 @@
           @foreach($project_subsections as $project_subsection)
           <tr>
             <td>{{$no}}</td>
+            <td>{{$project_subsection->description}}</td>
             <td><a href="{{asset('storage/'.$project_subsection->file1)}}">file1</a></td>
             <td><a href="{{asset('storage/'.$project_subsection->file2)}}">file2</a></td>
             <td><a href="{{asset('storage/'.$project_subsection->file3)}}">file3</a></td>

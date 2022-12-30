@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('project_id');
             $table->integer('section');
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
             $table->foreign('project_id')
                 ->references('id')
