@@ -394,4 +394,13 @@ class ProjectController extends Controller
         $section_subsection->delete();
         return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
     }
+
+    // Student subsection
+    public function showSubsection($project_id, $subsection_id)
+    {
+        $section_subsection = SectionSubsection::find($subsection_id);
+        return view('projects.subsection.index', compact(['section_subsection']));
+        // return view('projects.show', compact(['project','project_sections']));
+    }
+
 }   

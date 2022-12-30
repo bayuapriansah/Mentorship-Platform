@@ -51,6 +51,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     // projects page
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
     Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
     Route::get('/projects/{student}/applied/{project}/submission', [ProjectController::class, 'submission'])->name('projects.submission');
     Route::post('/projects/{student}/applied/{project}', [ProjectController::class, 'submit'])->name('projects.submit');

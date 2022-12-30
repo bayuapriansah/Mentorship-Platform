@@ -55,9 +55,11 @@
             <div class="accordion-body">
               {!!$project_section->description!!}
               @foreach($project_section->sectionSubsections as $subsection)
-              <div class="card p-4 mb-2">
-                  {!!$subsection->description!!}
-              </div>
+              <a href="/projects/{{$project->id}}/detail/{{$subsection->id}}" class="text-decoration-none text-dark">
+                <div class="card p-4 mb-2">
+                    {!!$subsection->description!!}
+                </div>
+              </a>
               @endforeach
             </div>
           </div>
