@@ -42,6 +42,9 @@ Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('aut
 Route::get('/mentor/register/{mentor_id}', [MentorController::class, 'register'])->name('mentor.register');
 Route::post('/mentor/register/{mentor_id}/auth', [MentorController::class, 'update'])->name('mentor.registerAuth');
 
+// student register
+Route::get('/student/register/{student_id}', [StudentController::class, 'register'])->name('student.register');
+Route::post('/student/register/{student_id}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 
 // Student projects page
 Route::group(['middleware'=>'auth:student'], function(){
