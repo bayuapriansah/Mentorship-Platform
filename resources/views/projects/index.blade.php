@@ -2,6 +2,7 @@
 @section('content')
 <div class="container">
   <div class="p-5 mb-4 text-center">
+    @include('flash-message')
     <img src="{{asset('assets/img/image.png')}}" alt="" width="100%" height="250px">
   </div>
 
@@ -12,7 +13,7 @@
       @foreach($projects as $project)
       <div class="row mb-4">
         <div class="col">
-          <div class="card bg-light p-4 text-decoration-none text-dark">
+          <div class="card bg-light p-4 text-decoration-none text-dark border-left-primary">
             <div class="row">
               <div class="col-10">
                 <h3>{{$project->name}}</h3>

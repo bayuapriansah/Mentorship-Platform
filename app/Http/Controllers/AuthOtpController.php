@@ -78,7 +78,7 @@ class AuthOtpController extends Controller
                 'expired_at' => $now
             ]);
             Auth::guard('student')->login($student);
-            return redirect('/')->with('success', 'You are logged in');
+            return redirect()->route('projects.index')->with('success', 'You are logged in');
         }
     }
 }

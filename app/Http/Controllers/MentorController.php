@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Models\Mentor;
 use App\Models\Company;
 use App\Models\Project;
@@ -50,15 +51,6 @@ class MentorController extends Controller
         if(!$checkMentor){
             $mentors = $this->addMentor($request,$company_id);
             $this->addMentorToProject($mentors,$request);
-
-            // $action = new ResponseAction(function () {       
-
-            //     return redirect()->route('mentor.register',[$mentors->id]);
-            // });
-            
-            // $urlInvitation = MagicLink::create($action)->url;
-
-            // dd($urlInvitation);
             $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,null);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.mentors.registered')->with('success', $message);
@@ -149,6 +141,20 @@ class MentorController extends Controller
             'country' => 'required',
             'gender' => 'required',
             'position' => 'required',
+            'g-recaptcha-response' => function ($attribute, $value, $fail) {
+                $secretkey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                // dd($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    Session::flash('alert-class', 'alert-danger');
+                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
+                } 
+            },
         ]);
 
         $mentor = Mentor::find($id);
@@ -179,8 +185,7 @@ class MentorController extends Controller
     // Register mentor
     public function register($mentor_id)
     {
-        $checkMentor = Mentor::where('id', $mentor_id)->where('is_confirm',0)->first();
-        
+        $checkMentor = Mentor::where('id', $mentor_id)->where('is_confirm',0)->first();      
         if(!$checkMentor){
             return redirect()->route('index');
         }elseif($checkMentor){

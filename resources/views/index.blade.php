@@ -20,7 +20,7 @@
 
   </div>
   @include('flash-message')
-  <form action="/register" method="post" id="register">
+  <form action="{{route('register')}}" method="post" id="register">
     @csrf
 
     <div class="mb-3">
