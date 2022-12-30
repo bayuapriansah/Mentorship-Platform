@@ -20,9 +20,13 @@ return new class extends Migration
             $table->string('file2')->nullable();
             $table->string('file3')->nullable();
             $table->string('video_link')->nullable();
-            $table->string('is_submit');
-            $table->string('status');
+            $table->boolean('is_submit');
             $table->timestamps();
+
+            $table->foreign('project_section_id')
+                ->references('id')
+                ->on('project_sections')
+                ->onDelete('cascade');
         });
     }
 

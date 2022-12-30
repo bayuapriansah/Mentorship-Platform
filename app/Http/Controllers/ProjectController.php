@@ -304,7 +304,6 @@ class ProjectController extends Controller
         }
         $sectionSubsection->video_link = $request->video_link;
         $sectionSubsection->is_submit = 0 ;
-        $sectionSubsection->status = 0 ;
         $sectionSubsection->save();
         return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
 
