@@ -243,6 +243,27 @@ class ProjectController extends Controller
         return redirect('dashboard/projects/'.$project_id.'/section')->with('success','Project section has been created');
     }
 
+    public function dashboardIndexEditSection($project_id, $section_id)
+    {
+        $project_section = ProjectSection::find($section_id);
+        return view('dashboard.projects.section.edit', compact(['project_id','section_id','project_section']));
+    }
+
+    public function dashboardIndexUpdateSection($project_id, $section_id, Request $request)
+    {
+        $project_section = ProjectSection::find($section_id);
+        $project_section->description = $request->desc;
+        $project_section->save();
+        return redirect('/dashboard/projects/'.$project_id.'/section');
+    }
+
+    public function dashboardIndexDestroySection($project_id, $section_id)
+    {
+        $project_section = ProjectSection::find($section_id);
+        $project_section->delete();
+        return redirect('/dashboard/projects/'.$project_id.'/section');
+    }
+
     // SUBSECTION
     public function dashboardIndexSubsection($project_id, $section_id)
     {
