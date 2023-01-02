@@ -23,4 +23,9 @@ class Mentor extends Authenticatable
     {
         return $this->belongsToMany(Project::class, 'mentor_projects');
     }
+
+    public function grade()
+    {
+        return $this->belongsToMany(Grade::class,);
+    }
 }

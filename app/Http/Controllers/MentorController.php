@@ -9,6 +9,8 @@ use App\Models\Project;
 use MagicLink\MagicLink;
 use Illuminate\Http\Request;
 use App\Models\MentorProject;
+use App\Models\ProjectSection;
+use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 use MagicLink\Actions\ResponseAction;
 
@@ -207,4 +209,21 @@ class MentorController extends Controller
         $mentor = Mentor::find(Auth::guard('mentor')->user()->id);
         return view('dashboard.mentors.assigned.index', compact('mentor'));      
     }
+
+    public function sectionProjectAssign($project_id)
+    {
+        $project = Project::find($project_id);
+        $project_sections =  ProjectSection::where('project_id', $project_id)->get();
+        return view('dashboard.mentors.assigned.section.index', compact(['project', 'project_sections']));      
+    }
+
+    public function subsectionProjectAssign($project_id, $section_id)
+    {
+        $project = Project::find($project_id);
+        $project_section = ProjectSection::find($section_id);
+        $project_subsections =  SectionSubsection::where('project_section_id', $section_id)->get();
+        // dd($project_subsections->submission);
+        return view('dashboard.mentors.assigned.section.subsection.index', compact(['project' ,'project_section', 'project_subsections']));      
+    }
+    
 }

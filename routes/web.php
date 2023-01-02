@@ -5,15 +5,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MentorController;
+use App\Http\Controllers\SimintEncryption;
+use App\Http\Controllers\AuthOtpController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
-use App\Http\Controllers\SimintEncryption;
-use App\Http\Controllers\AuthOtpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,7 +115,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
 
         Route::get('/assigned_projects',[MentorController::class, 'indexAssigned'])->name('assigned.index');
-        
+        Route::get('/assigned_projects/{project}/section', [MentorController::class, 'sectionProjectAssign'])->name('assigned.projectSection');
+        Route::get('/assigned_projects/{project}/section/{section}/subsection', [MentorController::class, 'subsectionProjectAssign'])->name('assigned.projectSubsection');
+        Route::post('/grade/{submission}', [GradeController::class, 'subsectionProjectGradeAssign'])->name('assigned.projectSubsectionGrade');
+
     });
 });
 

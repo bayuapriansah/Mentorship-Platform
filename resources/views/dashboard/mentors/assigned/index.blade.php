@@ -29,8 +29,10 @@
             <td>{{$no}}</td>
             <td>{{$project->name}}</td>
             <td>{{$project->problem}}</td>
-            <th>{{$project->project_domain}}</th>
-            <th>{{$project->project_domain}}</th>
+            <td>{{$project->project_domain}}</td>
+            <td>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/assigned_projects/{{$project->id}}/section" >Project Section</a>
+            </td>
           </tr>
           @php $no++ @endphp
           @endforeach
