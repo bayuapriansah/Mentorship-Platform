@@ -58,7 +58,10 @@ class MentorController extends Controller
         }elseif($checkMentorProject){
             $message = "Mentor Already Exist in this Project";
             return redirect()->route('dashboard.mentors.invite', [$company_id])->with('error', $message);
-        }elseif($checkMentor && $checkMentor->is_confirm == 1){
+        }elseif($checkMentor->company_id != $company_id){
+            $message = "Mentor can't be assigned to different project in different company";
+            return redirect()->route('dashboard.mentors.invite', [$company_id])->with('error', $message);
+        }elseif($checkMentor && $checkMentor->is_confirm == 1 && $checkMentor->company_id == $company_id){
             $projects = Project::where('id', $request->project_id)->first();
             $mentors = $this->addMentorToProject($checkMentor,$request);
             $sendmail = (new MailController)->EmailMentor($checkMentor->email,$projects->name);
