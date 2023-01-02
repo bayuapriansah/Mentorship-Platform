@@ -6,7 +6,7 @@
     <h1>Mentor Register</h1>
   </div>
   @include('flash-message')
-  <form action="{{ route('mentor.registerAuth',[$checkMentor->id]) }}" method="post" id="mentorregister">
+  <form action="{{ route('mentor.registerAuth',[$checkMentor->email]) }}" method="post" id="mentorregister">
     @csrf
     <div class="row">
       <div class="col">

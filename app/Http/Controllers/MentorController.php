@@ -50,12 +50,13 @@ class MentorController extends Controller
         // dd($company_id);
         $checkMentor = Mentor::where('email', $request->email)->first();   
         if($checkMentor){
-            $checkMentorProject = MentorProject::where('mentor_id', $checkMentor->id)->where('project_id', $request->project_id)->first();
+            $checkMentorProject = MentorProject::where('mentor_id', )->where('project_id', $request->project_id)->first();
         }
         if(!$checkMentor){
+            $link = route('mentor.register', [$request->email]);
             $mentors = $this->addMentor($request,$company_id);
-            $this->addMentorToProject($mentors,$request);
-            $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,null);
+            $dataMentor = $this->addMentorToProject($mentors,$request);
+            $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.mentors.registered')->with('success', $message);
         }elseif($checkMentorProject){
@@ -191,13 +192,14 @@ class MentorController extends Controller
     }
 
     // Register mentor
-    public function register($mentor_id)
+    public function register($email)
     {
-        $checkMentor = Mentor::where('id', $mentor_id)->where('is_confirm',0)->first();      
+        $checkMentor = Mentor::where('email', $email)->where('is_confirm',0)->first();
         if(!$checkMentor){
             return redirect()->route('index');
         }elseif($checkMentor){
             $checkCompany = Company::where('id', $checkMentor->company_id)->first();
+            dd($checkCompany);
             return view('mentor.index', compact(['checkMentor','checkCompany']));
         }
     }
