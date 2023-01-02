@@ -6,10 +6,11 @@ use Session;
 use App\Models\Mentor;
 use App\Models\Company;
 use App\Models\Project;
+use MagicLink\MagicLink;
 use Illuminate\Http\Request;
 use App\Models\MentorProject;
+use Illuminate\Support\Facades\Auth;
 use MagicLink\Actions\ResponseAction;
-use MagicLink\MagicLink;
 
 class MentorController extends Controller
 {
@@ -197,5 +198,13 @@ class MentorController extends Controller
             $checkCompany = Company::where('id', $checkMentor->company_id)->first();
             return view('mentor.index', compact(['checkMentor','checkCompany']));
         }
+    }
+
+    // Assigned mentor project
+
+    public function indexAssigned()
+    {   
+        $mentor = Mentor::find(Auth::guard('mentor')->user()->id);
+        return view('dashboard.mentors.assigned.index', compact('mentor'));      
     }
 }

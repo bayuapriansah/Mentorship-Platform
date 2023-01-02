@@ -82,8 +82,8 @@
         </form>
         @elseif(Auth::guard('mentor')->check())
         {{-- Cek Route nya han --}}
-        {{-- <li class="nav-item"><a href="{{route('dashboard.index')}}" class="nav-link link-dark px-2">Dashboard</a></li> --}}
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('mentor')->user()->name}}</a></li>
+        <li class="nav-item"><a href="{{route('dashboard.mentor')}}" class="nav-link link-dark px-2">Dashboard</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('mentor')->user()->email}}</a></li>
         <form class="inline" method="post" action="/logout">
           @csrf
           <button type="submit" class="btn btn-danger">Logout</button>

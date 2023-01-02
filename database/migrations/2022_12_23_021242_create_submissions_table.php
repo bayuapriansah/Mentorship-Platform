@@ -19,10 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->string('file');
             $table->timestamps();
-            $table->foreign('section_subsection_id')
-                ->references('id')
-                ->on('section_subsections')
-                ->onDelete('cascade');
         });
     }
 

@@ -110,6 +110,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
         Route::delete('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardDestroySubsection'])->name('projects.DestroySubsection');
     });
+    Route::middleware(['auth:mentor'])->group(function(){
+        Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
+
+        Route::get('/assigned_projects',[MentorController::class, 'indexAssigned'])->name('assigned.index');
+        
+    });
 });
 
 Route::get('/testEnkripsi', [SimintEncryption::class, 'enkripsi']);

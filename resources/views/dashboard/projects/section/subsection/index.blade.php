@@ -22,7 +22,7 @@
             <th>File 2</th>
             <th>File 3</th>
             <th>Video link</th>
-            <th>Status</th>
+            {{-- <th>Status</th> --}}
             <th>Actions</th>
           </tr>
         </thead>
@@ -36,7 +36,7 @@
             <td><a href="{{asset('storage/'.$project_subsection->file2)}}">file2</a></td>
             <td><a href="{{asset('storage/'.$project_subsection->file3)}}">file3</a></td>
             <td>{{$project_subsection->video_link}}</td>
-            <td>{{$project->is_submit}}</td>
+            {{-- <td>{{$project->is_submit}}</td> --}}
             <td>
 
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection/{{$project_subsection->id}}/edit" >Edit</a>

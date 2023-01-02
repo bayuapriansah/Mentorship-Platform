@@ -67,6 +67,7 @@
   </li>
   @endif
 
+  @if(Auth::guard('company')->check())
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProject"
     aria-expanded="true" aria-controls="collapseProject">
@@ -80,6 +81,16 @@
         </div>
     </div>
   </li>
+  @endif
+
+  @if(Auth::guard('mentor')->check())
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="{{route('dashboard.assigned.index')}}">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Assigned Projects</span>
+    </a>
+  </li>
+  @endif
   
 
   <!-- Divider -->
