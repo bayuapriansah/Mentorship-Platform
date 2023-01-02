@@ -22,11 +22,9 @@ class AuthOtpController extends Controller
             'email' => 'required|exists:students,email'
         ]);
         $user_id = Student::where('email', $request->email)->first();
-        // dd($user_id->all());
         $verificationCode = $this->generateOtp($request->email);
         $otp = $verificationCode->otp;
         $encId = (new simintEncryption)->encData($user_id->id);
-        // dd($encId);
         $message = "Your OTP verification code Already sent to your email";
         $sendmail = (new MailController)->otplogin($request->email,$otp);
         return redirect()->route('otp.verification', [$encId])->with('success', $message);

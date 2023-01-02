@@ -60,16 +60,16 @@
           <tbody>
             @php $no=1 @endphp  
             @foreach($mentor as $data_mentor)
+            @foreach($data_mentor->projects as $data_project)
             <tr>
               <td>{{$no}}</td>
 
               <td>{{$data_mentor->email}}</td>
 
-              @foreach($data_mentor->projects as $data_project)
               <td>{{$data_project->name}}</td>
-              @endforeach
-            @php $no++ @endphp
             </tr>
+            @php $no++ @endphp
+            @endforeach
             @endforeach
             {{-- @foreach($mentor->project as $data_mentor)
             <tr>

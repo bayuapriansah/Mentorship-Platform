@@ -41,9 +41,10 @@ class MentorController extends Controller
         // $mentorProjects->mentor;
         return view('dashboard.mentors.invite', compact('projects','company','mentor'));
     }
-
+// fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
     public function sendInvite(Request $request,$company_id)
     {   
+        // dd($company_id);
         $checkMentor = Mentor::where('email', $request->email)->first();   
         if($checkMentor){
             $checkMentorProject = MentorProject::where('mentor_id', $checkMentor->id)->where('project_id', $request->project_id)->first();
@@ -56,12 +57,16 @@ class MentorController extends Controller
             return redirect()->route('dashboard.mentors.registered')->with('success', $message);
         }elseif($checkMentorProject){
             $message = "Mentor Already Exist in this Project";
-            return redirect()->route('dashboard.mentors.invite', [$checkMentor->company_id])->with('error', $message);
-        }elseif($checkMentor && $checkMentor->is_confirm == 1){
-            $mentors = $this->addMentor($request,$company_id);
-            $sendmail = (new MailController)->EmailMentor($checkMentor->email);
+            return redirect()->route('dashboard.mentors.invite', [$company_id])->with('error', $message);
+        }elseif($checkMentor->company_id != $company_id){
+            $message = "Mentor can't be assigned to different project in different company";
+            return redirect()->route('dashboard.mentors.invite', [$company_id])->with('error', $message);
+        }elseif($checkMentor && $checkMentor->is_confirm == 1 && $checkMentor->company_id == $company_id){
+            $projects = Project::where('id', $request->project_id)->first();
+            $mentors = $this->addMentorToProject($checkMentor,$request);
+            $sendmail = (new MailController)->EmailMentor($checkMentor->email,$projects->name);
             $message = "Successfully Send Invitation to Mentor";
-            return redirect()->route('dashboard.mentors.invite', [$checkMentor->company_id])->with('success', $message);
+            return redirect()->route('dashboard.mentors.invite', [$company_id])->with('success', $message);
         }
     }
 
