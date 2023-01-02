@@ -16,13 +16,18 @@ return new class extends Migration
         Schema::create('section_subsections', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('project_section_id');
+            $table->text('description');
             $table->string('file1');
             $table->string('file2')->nullable();
             $table->string('file3')->nullable();
             $table->string('video_link')->nullable();
-            $table->string('is_submit');
-            $table->string('status');
+            $table->boolean('is_submit');
             $table->timestamps();
+
+            $table->foreign('project_section_id')
+                ->references('id')
+                ->on('project_sections')
+                ->onDelete('cascade');
         });
     }
 

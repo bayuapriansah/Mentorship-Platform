@@ -24,7 +24,7 @@
 
           <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
-            <input type="text" class="form-control" id="inputsection" name="description" value="{{old('description')}}">
+            <textarea name="description" id="problem" cols="30" rows="10">{{old('description')}}</textarea>
             @error('description')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}

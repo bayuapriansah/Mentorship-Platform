@@ -11,6 +11,7 @@ use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class ProjectController extends Controller
 {
@@ -26,7 +27,9 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
-        return view('projects.show', compact('project'));
+        $project_sections = ProjectSection::where('project_id', $id)->get();
+        // dd($project_sections);
+        return view('projects.show', compact(['project','project_sections']));
     }
     
     public function dashboardIndex()
@@ -283,15 +286,121 @@ class ProjectController extends Controller
 
     public function dashboardStoreSubsection($project_id, $section_id, Request $request)
     {
+        $validated = $request->validate([
+            'file1' => 'required',
+            'description' => 'required'
+        ]);
         $sectionSubsection = new SectionSubsection;
         $sectionSubsection->project_section_id = $section_id;
-        $sectionSubsection->file1 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file1'));
-        $sectionSubsection->file2 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file2'));
-        $sectionSubsection->file3 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file2'));
+        $sectionSubsection->description = $validated['description'];
+        if($request->hasFile('file1')){
+            $file1 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $validated['file1']);
+            $sectionSubsection->file1 = $file1;
+        }
+        if($request->hasFile('file2')){
+            $file2 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file2'));
+            $sectionSubsection->file2 = $file2;
+        }
+        if($request->hasFile('file3')){
+            $file3 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file('file3'));
+            $sectionSubsection->file3 = $file3;
+        }
         $sectionSubsection->video_link = $request->video_link;
         $sectionSubsection->is_submit = 0 ;
-        $sectionSubsection->status = 0 ;
         $sectionSubsection->save();
-        return back();
+        return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
+
     }
+
+    public function dashboardEditSubsection($project_id, $section_id, $subsection_id)
+    {
+        $section_subsection = SectionSubsection::find($subsection_id);
+        return view('dashboard.projects.section.subsection.edit', compact(['project_id','section_id','section_subsection']));
+    }
+
+    public function dashboardUpdateSubsection($project_id, $section_id, $subsection_id, Request $request)
+    {
+        $validated = $request->validate([
+            'description' => 'required',
+            'video_link'=> 'required'
+        ]);
+        $section_subsection = SectionSubsection::find($subsection_id);
+        $section_subsection->description = $validated['description'];
+        if($request->hasFile('file1')){
+            // $file1path = public_path().'/'.$section_subsection->file1;
+
+            // user intends to replace the current image for the category.  
+            // delete existing (if set)
+        
+            if(Storage::path($section_subsection->file1)) {
+                Storage::disk('public')->delete($section_subsection->file1);
+            }
+        
+            // save the new image
+            $file1 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file1);
+            $section_subsection->file1 = $file1;
+        }
+        if($request->hasFile('file2')){
+
+            // user intends to replace the current image for the category.  
+            // delete existing (if set)
+            if($section_subsection->file2 != null){
+                if(Storage::path($section_subsection->file2)) {
+                    Storage::disk('public')->delete($section_subsection->file2);
+                }
+            }
+            // save the new image
+            $file2 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file2);
+            $section_subsection->file2 = $file2;
+        }
+        if($request->hasFile('file3')){
+
+            // user intends to replace the current image for the category.  
+            // delete existing (if set)
+        
+            if($section_subsection->file3 != null){
+                if(Storage::path($section_subsection->file3)) {
+                    Storage::disk('public')->delete($section_subsection->file3);
+                }
+            }
+        
+            // save the new image
+            $file3 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file3);
+            $section_subsection->file3 = $file3;
+        }
+        $section_subsection->video_link = $request->video_link;
+        $section_subsection->save();
+        return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
+    }
+
+    public function dashboardDestroySubsection($project_id, $section_id, $subsection_id)
+    {
+        $section_subsection = SectionSubsection::find($subsection_id);
+        if($section_subsection->file1 != null){
+            if(Storage::path($section_subsection->file1)) {
+                Storage::disk('public')->delete($section_subsection->file1);
+            }
+        }
+        if($section_subsection->file2 != null){
+            if(Storage::path($section_subsection->file2)) {
+                Storage::disk('public')->delete($section_subsection->file2);
+            }
+        }
+        if($section_subsection->file3 != null){
+            if(Storage::path($section_subsection->file3)) {
+                Storage::disk('public')->delete($section_subsection->file3);
+            }
+        }
+        $section_subsection->delete();
+        return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
+    }
+
+    // Student subsection
+    public function showSubsection($project_id, $subsection_id)
+    {
+        $section_subsection = SectionSubsection::find($subsection_id);
+        return view('projects.subsection.index', compact(['section_subsection']));
+        // return view('projects.show', compact(['project','project_sections']));
+    }
+
 }   

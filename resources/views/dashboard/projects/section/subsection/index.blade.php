@@ -4,8 +4,8 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Subsection {{$project->id}}</h1>
-      <a href="create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Projects</a>
+      <h1 class="h3 mb-0 text-gray-800">Subsection</h1>
+      <a href="create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Subsection</a>
 
   </div>
 
@@ -17,6 +17,7 @@
         <thead>
           <tr>
             <th>No</th>
+            <th>Description</th>
             <th>File 1</th>
             <th>File 2</th>
             <th>File 3</th>
@@ -30,6 +31,7 @@
           @foreach($project_subsections as $project_subsection)
           <tr>
             <td>{{$no}}</td>
+            <td>{{$project_subsection->description}}</td>
             <td><a href="{{asset('storage/'.$project_subsection->file1)}}">file1</a></td>
             <td><a href="{{asset('storage/'.$project_subsection->file2)}}">file2</a></td>
             <td><a href="{{asset('storage/'.$project_subsection->file3)}}">file3</a></td>
@@ -37,10 +39,10 @@
             <td>{{$project->is_submit}}</td>
             <td>
 
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/edit" >Edit</a>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section" >Project Section</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection/{{$project_subsection->id}}/edit" >Edit</a>
 
-              <form method="POST" action="/dashboard/projects/{{ $project->id }}" >
+              <form method="POST" action="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection/{{$project_subsection->id}}" >
+                
                 @csrf
                 @method('DELETE')
                 <div class="control">

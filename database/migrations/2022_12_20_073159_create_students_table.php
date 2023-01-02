@@ -22,9 +22,6 @@ return new class extends Migration
             $table->string('state');
             $table->string('country');
             $table->date('date_of_birth')->nullable();
-            $table->unsignedBigInteger('university_id')->nullable();
-            $table->unsignedBigInteger('major_id')->nullable();
-            $table->string('github_link')->nullable();
             $table->boolean('is_confirm');
             $table->timestamps();
         });

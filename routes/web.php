@@ -51,6 +51,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     // projects page
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
     Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
     Route::get('/projects/{student}/applied/{project}/submission', [ProjectController::class, 'submission'])->name('projects.submission');
     Route::post('/projects/{student}/applied/{project}', [ProjectController::class, 'submit'])->name('projects.submit');
@@ -97,12 +98,16 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/section', [ProjectController::class, 'dashboardIndexSection'])->name('projects.section');
         Route::post('/projects/{project}', [ProjectController::class, 'dashboardIndexStoreSection'])->name('projects.storeSection');
         Route::get('/projects/{project}/section/{section}/edit', [ProjectController::class, 'dashboardIndexEditSection'])->name('projects.EditSection');
+        Route::patch('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexUpdateSection'])->name('projects.UpdateSection');
         Route::delete('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexDestroySection'])->name('projects.DestroySection');
-
+        
         //subsection
         Route::get('/projects/{project}/section/{section}/subsection', [ProjectController::class, 'dashboardIndexSubsection'])->name('projects.subsection');
         Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.storeSubsection');
         Route::post('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardStoreSubsection'])->name('projects.storeSubsection');
+        Route::get('/projects/{project}/section/{section}/subsection/{subsection}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('projects.EditSubsection');
+        Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
+        Route::delete('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardDestroySubsection'])->name('projects.DestroySubsection');
     });
 });
 

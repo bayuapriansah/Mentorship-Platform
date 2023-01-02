@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Batch;
 use App\Models\Company;
 use App\Models\Student;
+use App\Models\ProjectSection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,6 +22,11 @@ class Project extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function projectSections()
+    {
+        return $this->hasMany(ProjectSection::class);
     }
 
     public function mentors()
