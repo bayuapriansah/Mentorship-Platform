@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\VerificationCode;
 use Carbon\Carbon;
 use App\Models\Student;
+use App\Models\Mentor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\simintEncryption;
@@ -19,23 +20,30 @@ class AuthOtpController extends Controller
 
     public function generate(Request $request){
         $request->validate([
-            'email' => 'required|exists:students,email'
+            'email' => 'required'
         ]);
         $user_id = Student::where('email', $request->email)->first();
+        if(!$user_id){
+            $user_id = Mentor::where('email', $request->email)->first();
+        }
         $verificationCode = $this->generateOtp($request->email);
         $otp = $verificationCode->otp;
         $encId = (new simintEncryption)->encData($user_id->id);
+        $encEmail = (new simintEncryption)->encData($request->email);
         $message = "Your OTP verification code Already sent to your email";
         $sendmail = (new MailController)->otplogin($request->email,$otp);
-        return redirect()->route('otp.verification', [$encId])->with('success', $message);
+        return redirect()->route('otp.verification', [$encId,$encEmail])->with('success', $message);
     }
 
     public function generateOtp($email){
         // Check if email exists
-        $student = Student::where('email', $email)->first();
+        $data_user = Student::where('email', $email)->first();
+        if(!$data_user){
+            $data_user = Mentor::where('email', $email)->first();
+        }
 
         // check email does not have otp code
-        $verificationCode = VerificationCode::where('user_id', $student->id)->latest()->first();
+        $verificationCode = VerificationCode::where('user_id', $data_user->id)->latest()->first();
 
         $now = Carbon::now();
 
@@ -44,38 +52,49 @@ class AuthOtpController extends Controller
         }
 
         return VerificationCode::create([
-            'user_id' => $student->id,
+            'user_id' => $data_user->id,
+            'email' => $email,
             'otp' => rand(1111, 9999),
             'expired_at' => $now->addMinutes(5) // Otp Only Last 5 minutes
         ]);
     }
 
-    public function verification($user_id){
-        $user_id = (new simintEncryption)->decData($user_id);
+    public function verification($user_id,$email){
         return view('auth.loginOtpVerification')->with([
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'email' => $email
         ]);
     }
 
     public function loginWithOtp(Request $request){
         $request->validate([
-            'user_id' => 'required|exists:students,id',
+            'user_id' => 'required',
+            'email' => 'required',
             'otp' => 'required'
         ]);
-        $verificationCode = VerificationCode::where('user_id', $request->user_id)->where('otp', $request->otp)->first();
+        $encId = (new simintEncryption)->decData($request->user_id);
+        $encEmail = (new simintEncryption)->decData($request->email);
+        $verificationCode = VerificationCode::where('user_id', $encId)->where('email', $encEmail)->where('otp', $request->otp)->first();
         $now = Carbon::now();
         if(!$verificationCode){
             return redirect()->route('otp.verification')->with('error', 'Your verification code is invalid');
         }elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
             return redirect()->route('otp.login')->with('error', 'Your verification code has expired');
         }
-        $student = Student::where('id', $request->user_id)->first();
-        // dd($student);
-        if($student){
+
+        $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
+        if(!$data_user){
+            $data_user = Mentor::where('id', $encId)->where('email', $encEmail)->first();
             $verificationCode->update([
                 'expired_at' => $now
             ]);
-            Auth::guard('student')->login($student);
+            Auth::guard('mentor')->login($data_user);
+            return redirect('/')->with('success', 'You are logged in');
+        }else{
+            $verificationCode->update([
+                'expired_at' => $now
+            ]);
+            Auth::guard('student')->login($data_user);
             return redirect()->route('projects.index')->with('success', 'You are logged in');
         }
     }

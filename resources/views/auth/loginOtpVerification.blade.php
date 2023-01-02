@@ -6,7 +6,9 @@
       @include('flash-message')
       <form method="post" action="{{ route('otp.getlogin') }}">
         @csrf
+        
         <input type="hidden" name="user_id" value="{{$user_id}}">
+        <input type="hidden" name="email" value="{{$email}}">
         <label for="otp" class="form-label">OTP Code</label>
         <input type="text" id="otp" name="otp" class="form-control">
 
