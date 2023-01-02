@@ -43,7 +43,9 @@
       @endforeach
 
     </div>
-    @include('projects.sidebar')
+    <div class="col">
+      @include('projects.sidebar')
+    </div>
   </div>
   
   {{-- <div class="card mt-5 text-center bg-light">

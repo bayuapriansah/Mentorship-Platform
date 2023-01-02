@@ -18,11 +18,11 @@
                 <h3>{{$project->project->name}}</h3>
               </div>
               <div class="col-2">
-                @if($project->is_submited == 0)
-                <a class="btn btn-primary" href="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$project->project->id}}/submission" role="button">Submission</a>
-                @else
+                {{-- @if($project->is_submited == 0) --}}
+                <a class="btn btn-primary" href="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$project->project->id}}/detail" role="button">Detail</a>
+                {{-- @else
                 Submitted
-                @endif
+                @endif --}}
               </div>
             </div>
             <div class="row">
@@ -43,7 +43,7 @@
 
             <div class="row">
               <div class="col">
-                <p><strong>{{$project->is_submited == 0 ? 'Waiting to submit': 'submitted'}}</strong></p>
+                {{-- <p><strong>{{$project->is_submited == 0 ? 'Waiting to submit': 'submitted'}}</strong></p> --}}
               </div>
             </div>
           </div>
@@ -52,7 +52,9 @@
     @endforeach
 
     </div>
-    @include('projects.sidebar')
+    <div class="col">
+      @include('projects.sidebar')
+    </div>
   </div>
   
   {{-- <div class="card mt-5 text-center bg-light">

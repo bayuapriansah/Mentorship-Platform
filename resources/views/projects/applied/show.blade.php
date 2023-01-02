@@ -5,16 +5,14 @@
     <img src="{{asset('assets/img/image.png')}}" alt="" width="100%" height="250px">
   </div>
 
-  <h1 class="mb-4">Submission</h1>
   @include('flash-message')
   <div class="row">
     <div class="col-9">
       <div class="row">
         <div class="col">
-          <div class="card bg-light p-4 text-decoration-none text-dark">
             <div class="row">
               <div class="col-10">
-                <h3>{{$enrolled_project->name}}</h3>
+                <h3>{{$project->name}}</h3>
               </div>
               <div class="col-2">
                 {{-- <a class="btn btn-primary" href="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$project->id}}/submission" role="button">Submission</a> --}}
@@ -22,36 +20,55 @@
             </div>
             <div class="row">
               <div class="col">
-                <p>{{$enrolled_project->company->name}}</p>
+                <p>{{$project->company->name}}</p>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p>applied at {{$enrolled_project->created_at->toDateString()}}</p>
+                <p>applied at {{$project->created_at->toDateString()}}</p>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p> {!!$enrolled_project->problem!!}</p>
+                <p> {!!$project->problem!!}</p>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p>Domain : {{$enrolled_project->project_domain}}</p>
+                <p>Domain : {{$project->project_domain}}</p>
               </div>
             </div>
-            <div class="row">
+            <div class="row mt-4">
               <div class="col">
-                <form action="/projects/{{Auth::guard('student')->user()->id}}/applied/{{$enrolled_project->id}}" method="post" enctype="multipart/form-data">
-                  @csrf
-                  <div class="mb-3">
-                    <input type="file" class="form-control-file" id="inputsubmission" name="submission">
+                <div class="accordion" id="accordionExample">
+                  @php $no = 1 @endphp
+                  @foreach($project_sections as $project_section)
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{$no}}">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$no}}" aria-expanded="true" aria-controls="collapse{{$no}}">
+                        Section {{$no}}
+                      </button>
+                    </h2>
+                    <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        {!!$project_section->description!!}
+                        @foreach($project_section->sectionSubsections as $subsection)
+                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark">
+                          <div class="card p-4 mb-2">
+                              {!!$subsection->description!!}
+                          </div>
+                        </a>
+                        @endforeach
+                      </div>
+                    </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Upload Submission</button>
-                </form>
+                @php $no++ @endphp
+                @endforeach
+          
+                </div>
               </div>
             </div>
-          </div>
+            
         </div>
       </div>
     </div>

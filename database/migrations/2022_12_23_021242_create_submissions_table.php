@@ -15,10 +15,14 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('enrolled_project_id');
+            $table->unsignedBigInteger('section_subsection_id');
             $table->unsignedBigInteger('student_id');
             $table->string('file');
             $table->timestamps();
+            $table->foreign('section_subsection_id')
+                ->references('id')
+                ->on('section_subsections')
+                ->onDelete('cascade');
         });
     }
 
