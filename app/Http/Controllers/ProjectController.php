@@ -190,37 +190,6 @@ class ProjectController extends Controller
         
     }
 
-    public function applied($id)
-    {
-        $applied_project = EnrolledProject::where('student_id', $id)->get();
-        return view('projects.applied', compact('applied_project'));
-    }
-
-    public function submission($student_id, $enrolled_project_id)
-    {
-        $enrolled_project = Project::find($enrolled_project_id);
-        return view('projects.submission', compact('enrolled_project'));
-    }
-
-    public function submit(Request $request,$student_id, $enrolled_project_id)
-    {
-        $validated = $request->validate([
-            'submission' => ['required'],
-        ]);
-        EnrolledProject::where('student_id',$student_id)
-                        ->where('project_id',$enrolled_project_id)
-                        ->update(['is_submited'=>1]);
-        $submission = new Submission;
-        $submission->enrolled_project_id = $enrolled_project_id;
-        $submission->student_id = $student_id;
-        if($request->hasFile('submission')){
-            $file = Storage::disk('public')->put('projects/submission', $validated['submission']);
-            $submission->file = $file;
-        }
-        $submission->save();
-        return redirect('/projects/'.$student_id.'/applied')->with('success','Project has been submited');
-    }
-
     // SECTION
     public function dashboardIndexSection($project_id)
     {
@@ -401,6 +370,46 @@ class ProjectController extends Controller
         $section_subsection = SectionSubsection::find($subsection_id);
         return view('projects.subsection.index', compact(['section_subsection']));
         // return view('projects.show', compact(['project','project_sections']));
+    }
+
+    // Student applied
+    public function applied($id)
+    {
+        $applied_project = EnrolledProject::where('student_id', $id)->get();
+        return view('projects.applied.index', compact('applied_project'));
+    }
+
+    public function appliedDetail($student_id, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        return view('projects.applied.show', compact('student_id','project', 'project_sections'));
+    }
+
+    public function appliedSubmission($student_id, $project_id, $subsection_id)
+    {
+        $section_subsection = SectionSubsection::find($subsection_id);
+        return view('projects.subsection.index', compact(['student_id','project_id','section_subsection']));
+    }
+
+    public function appliedSubmit($student_id, $project_id, $subsection_id,Request $request)
+    {
+        $validated = $request->validate([
+            'submission' => ['required'],
+        ]);
+        $subsection = SectionSubsection::find($subsection_id);
+        // EnrolledProject::where('student_id',$student_id)
+        //                 ->where('project_id',$project_id)
+        //                 ->update(['is_submited'=>1]);
+        $submission = new Submission;
+        $submission->section_subsection_id = $subsection_id;
+        $submission->student_id = $student_id;
+        if($request->hasFile('submission')){
+            $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/section/'.$subsection->project_section_id.'/subsection/'.$subsection_id, $validated['submission']);
+            $submission->file = $file;
+        }
+        $submission->save();
+        return redirect('/projects/'.$student_id.'/applied/'.$project_id.'/detail')->with('success','Project has been submited');
     }
 
 }   
