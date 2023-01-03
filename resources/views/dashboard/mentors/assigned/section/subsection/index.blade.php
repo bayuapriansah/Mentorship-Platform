@@ -44,10 +44,12 @@
                 <button type="submit" class="btn btn-danger ms-2" onClick="return confirm('Delete this project?')">Delete</button>
               </form> --}}
               {{-- @dd($project_subsection->submission) --}}
+              {{-- @dd($project_subsection->submission->grade->mentor_id); --}}
+              {{-- @dd(Auth::guard('mentor')->user()->id); --}}
               @if($project_subsection->submission == null)
                 Student has not submit yet
 
-              @elseif($project_subsection->submission->grade !=null)
+              @elseif($project_subsection->submission->grade !=null && $project_subsection->submission->grade->mentor_id == Auth::guard('mentor')->user()->id )
                 {{$project_subsection->submission->grade->score}}
               @elseif($project_subsection->submission != null )
               <form action="/dashboard/grade/{{$project_subsection->submission->id}}" method="post">
