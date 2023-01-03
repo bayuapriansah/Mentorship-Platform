@@ -32,9 +32,7 @@
             </li>
             @endif
             @if($section_subsection->video_link != null)
-            <li>
-              <a href="{{$section_subsection->video_link}}" target="_blank">Video Link</a>
-            </li>
+            <iframe width="420" height="315" src="{{$section_subsection->video_link}}" class="mt-4"></iframe>
             @endif
           </ul>
           @if(Route::is('projects.appliedSubmission'))

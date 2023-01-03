@@ -69,7 +69,6 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     Route::middleware(['auth:web'])->group(function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
-        Route::get('students/registered', [StudentController::class, 'registered'])->name('students.registered');
         Route::resource('students', StudentController::class);
 
         // Mentors
@@ -79,7 +78,6 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::resource('mentors', MentorController::class);
 
         // Company/partner/supervisor
-        Route::get('companies/registered', [CompanyController::class, 'registered'])->name('companies.registered');
         Route::resource('companies', CompanyController::class);
     });
     

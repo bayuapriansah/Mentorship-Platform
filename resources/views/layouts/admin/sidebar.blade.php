@@ -26,17 +26,10 @@
   <!-- Nav Item - Pages Collapse Menu -->
   @if(Auth::guard('web')->check())
   <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudent"
-          aria-expanded="true" aria-controls="collapseStudent">
+      <a class="nav-link collapsed" href="{{route('dashboard.students.index')}} ">
           <i class="fa fa-users" aria-hidden="true"></i>
           <span>Students</span>
       </a>
-      <div id="collapseStudent" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white collapse-inner rounded">
-              <a class="collapse-item m-0" href="{{route('dashboard.students.index')}}">All student</a>
-              <a class="collapse-item m-0" href="{{route('dashboard.students.registered')}}">Pending student</a>
-          </div>
-      </div>
   </li>
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMentor"
@@ -53,17 +46,15 @@
   </li>
 
   <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePartner"
-          aria-expanded="true" aria-controls="collapsePartner">
+      <a class="nav-link collapsed" href="{{route('dashboard.companies.index')}}">
           <i class="fa-solid fa-handshake"></i>
           <span>Partner Companies</span>
       </a>
-      <div id="collapsePartner" class="collapse" aria-labelledby="partnerPage" data-parent="#accordionSidebar">
+      {{-- <div id="collapsePartner" class="collapse" aria-labelledby="partnerPage" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All companies</a>
-              <a class="collapse-item" href="{{route('dashboard.companies.registered')}}">Pending companies</a>
           </div>
-      </div>
+      </div> --}}
   </li>
   @endif
 
