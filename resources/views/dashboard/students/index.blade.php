@@ -15,12 +15,14 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Email</th>
             <th>Gender</th>
             <th>Date of birth</th>
             <th>Github Link</th>
             <th>State</th>
+            <th>Join since</th>
             <th>Country</th>
           </tr>
         </thead>
@@ -29,12 +31,14 @@
           @foreach($students as $student)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$student->name}}</td>
+            <td>{{$student->first_name}}</td>
+            <td>{{$student->last_name}}</td>
             <td>{{$student->email}}</td>
             <td>{{$student->gender}}</td>
             <td>{{$student->date_of_birth}}</td>
             <td>{{$student->github_link}}</td>
             <td>{{$student->state}}</td>
+            <td>{{$student->created_at->format('m-d-Y')}}</td>
             <td>{{$student->country}}</td>
           </tr>
           @php $no++ @endphp

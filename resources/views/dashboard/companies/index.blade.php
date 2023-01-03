@@ -32,7 +32,7 @@
             <td>{{$company->address}}</td>
             <td>
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/companies/{{$company->id}}/edit">Edit</a>
-
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/companies/{{$company->id}}/inviteMentors" >Invite Mentor</a>
               <form method="POST" action="/dashboard/companies/{{ $company->id }}" >
                 @csrf
                 @method('DELETE')

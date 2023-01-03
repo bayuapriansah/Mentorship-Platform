@@ -5,7 +5,7 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
       @include('flash-message')
-      <h1 class="h3 mb-0 text-gray-800">Invited mentors</h1>
+      <h1 class="h3 mb-0 text-gray-800">Pending mentor invitation</h1>
       {{-- <a href="{{route('dashboard.mentors.invite')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Invite Mentor</a> --}}
   </div>
 
@@ -16,24 +16,26 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Name</th>
-            <th>address</th>
             <th>Email</th>
-            <th>Action</th>
+            <th>Company</th>
+            <th>Project</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           @php $no=1 @endphp
-          @foreach($companies as $company)
+          @foreach($mentors as $mentor)
+          @foreach($mentor->projects as $data_project)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$company->name}}</td>
-            <td>{{$company->address}}</td>
-            <td>{{$company->email}}</td>
-            <td><a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/mentors/registered/{{$company->id}}/invite" >Invite Mentor</a>
+            <td>{{$mentor->email}}</td>
+            <td>{{$mentor->company->name}}</td>
+            <td>{{$data_project->name}}</td>
+            <td>{{$mentor->is_confirm == 0 ? 'Invited' : 'Confirm'}}</td>
             </td>
           </tr>
           @php $no++ @endphp
+          @endforeach
           @endforeach
         </tbody>
       </table>
