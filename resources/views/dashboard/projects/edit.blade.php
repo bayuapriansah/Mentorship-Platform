@@ -50,9 +50,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="inputtype" class="form-label">Type</label>
+            <label for="inputtype" class="form-label">Task Progress</label>
             <select class="form-control form-select" id="inputtype" aria-label="Default select example" name="type">
-              <option value="">--Select Project Type--</option>
+              <option value="">--Select Task Progress--</option>
               <option value="weekly" {{$project->type == 'weekly' ? 'selected': ''}} >Weekly</option>
               <option value="monthly" {{$project->type == 'monthly' ? 'selected': ''}} >Monthly</option>
             </select>
