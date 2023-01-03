@@ -4,7 +4,7 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Sections for {{$project->name}}</h1>
+      <h1 class="h3 mb-0 text-gray-800">Manage task for {{$project->name}}</h1>
   </div>
 
   <div class="row">
@@ -41,6 +41,9 @@
   <!-- Content Row -->
   <div class="row mt-4">
     <div class="col">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Task Lists</h1>
+      </div>
       <div class="card p-4">
         @include('flash-message')
       <table id="myTable" class="display responsive w-100" style="width: 100%">
@@ -62,7 +65,7 @@
             <td>
 
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/edit" >Edit</a>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage Subsection</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage Subtask</a>
               
               <form method="POST" action="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}" >
                 @csrf

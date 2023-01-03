@@ -19,7 +19,7 @@
             <th>Project name</th>
             <th>Project domain</th>
             <th>Company</th>
-            <th>Type</th>
+            <th>Task Progress</th>
             <th>Period</th>
             <th>Status</th>
             <th>Actions</th>
@@ -39,7 +39,7 @@
             <td>
 
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/edit" >Edit</a>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section" >Project Section</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section" >Manage Task</a>
 
               <form method="POST" action="/dashboard/projects/{{ $project->id }}" >
                 @csrf
