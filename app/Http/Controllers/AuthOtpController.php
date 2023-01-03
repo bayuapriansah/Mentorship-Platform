@@ -62,7 +62,7 @@ class AuthOtpController extends Controller
     public function verification($user_id,$email){
         return view('auth.loginOtpVerification')->with([
             'user_id' => $user_id,
-            'email' => $email
+            'email' => (new simintEncryption)->decData($email)
         ]);
     }
 
@@ -72,8 +72,9 @@ class AuthOtpController extends Controller
             'email' => 'required',
             'otp' => 'required'
         ]);
+        $theMail = (new simintEncryption)->encData($request->email);
         $encId = (new simintEncryption)->decData($request->user_id);
-        $encEmail = (new simintEncryption)->decData($request->email);
+        $encEmail = (new simintEncryption)->decData($theMail);
         $verificationCode = VerificationCode::where('user_id', $encId)->where('email', $encEmail)->where('otp', $request->otp)->first();
         $now = Carbon::now();
         if(!$verificationCode){
