@@ -5,7 +5,7 @@
     <img src="{{asset('assets/img/image.png')}}" alt="" width="100%" height="250px">
   </div>
 
-  <h1 class="mb-4">Applied Projects</h1>
+  <h1 class="mb-4">My Projects</h1>
   
   <div class="row">
     <div class="col-9">
