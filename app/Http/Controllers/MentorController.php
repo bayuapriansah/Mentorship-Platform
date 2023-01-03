@@ -199,7 +199,7 @@ class MentorController extends Controller
             return redirect()->route('index');
         }elseif($checkMentor){
             $checkCompany = Company::where('id', $checkMentor->company_id)->first();
-            dd($checkCompany);
+            // dd($checkCompany);
             return view('mentor.index', compact(['checkMentor','checkCompany']));
         }
     }
