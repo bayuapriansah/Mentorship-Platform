@@ -35,27 +35,28 @@
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMentor"
         aria-expanded="true" aria-controls="collapseMentor">
         <i class="fa-solid fa-chalkboard-user"></i>
-        <span>Mentors</span>
+        <span>Mentors and Partners</span>
     </a>
     <div id="collapseMentor" class="collapse" aria-labelledby="mentorPage" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('dashboard.mentors.index')}}">All mentors</a>
-            <a class="collapse-item" href="{{route('dashboard.mentors.registered')}}">Invite mentors</a>
+            <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All companies</a>
+            <a class="collapse-item" href="{{route('dashboard.mentors.registered')}}">Pending mentor invitation</a>
         </div>
     </div>
   </li>
 
-  <li class="nav-item">
+  {{-- <li class="nav-item">
       <a class="nav-link collapsed" href="{{route('dashboard.companies.index')}}">
           <i class="fa-solid fa-handshake"></i>
           <span>Partner Companies</span>
-      </a>
+      </a> --}}
       {{-- <div id="collapsePartner" class="collapse" aria-labelledby="partnerPage" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All companies</a>
           </div>
       </div> --}}
-  </li>
+  {{-- </li> --}}
   @endif
 
   @if(Auth::guard('company')->check() ||Auth::guard('web')->check() )

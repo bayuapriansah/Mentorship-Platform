@@ -29,9 +29,9 @@ class MentorController extends Controller
 
     public function registered()
     {
-        // $mentors = Mentor::where('is_confirm', 0)->get();
-        $companies = Company::get();
-        return view('dashboard.mentors.registered', compact('companies'));
+        $mentors = Mentor::where('is_confirm', 0)->get();
+        // $mentors = Company::get();
+        return view('dashboard.mentors.registered', compact('mentors'));
     }
 
     public function invite($company_id)
@@ -58,7 +58,7 @@ class MentorController extends Controller
             $dataMentor = $this->addMentorToProject($mentors,$request);
             $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
             $message = "Successfully Send Invitation to Mentor";
-            return redirect()->route('dashboard.mentors.registered')->with('success', $message);
+            return redirect()->route('dashboard.mentors.invite', [$company_id])->with('success', $message);
         }elseif($checkMentorProject){
             $message = "Mentor Already Exist in this Project";
             return redirect()->route('dashboard.mentors.invite', [$company_id])->with('error', $message);

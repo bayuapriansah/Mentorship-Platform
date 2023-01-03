@@ -73,11 +73,13 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // Mentors
         Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
-        Route::get('mentors/registered/{company_id}/invite', [MentorController::class, 'invite'])->name('mentors.invite');
-        Route::post('mentors/registered/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
+        // Route::get('mentors/registered/{company_id}/invite', [MentorController::class, 'invite'])->name('mentors.invite');
+        // Route::post('mentors/registered/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
         Route::resource('mentors', MentorController::class);
 
         // Company/partner/supervisor
+        Route::get('companies/{company_id}/inviteMentors', [MentorController::class, 'invite'])->name('mentors.invite');
+        Route::post('companies/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
         Route::resource('companies', CompanyController::class);
     });
     
