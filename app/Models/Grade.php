@@ -15,6 +15,6 @@ class Grade extends Model
 
     public function mentor()
     {
-        return $this->hasOne(Mentor::class);
+        return $this->belongsTo(Mentor::class);
     }
 }
