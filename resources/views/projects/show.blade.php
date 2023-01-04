@@ -57,7 +57,7 @@
               @foreach($project_section->sectionSubsections as $subsection)
               <a href="/projects/{{$project->id}}/detail/{{$subsection->id}}" class="text-decoration-none text-dark">
                 <div class="card p-4 mb-2">
-                    {!!$subsection->description!!}
+                    {{$subsection->title}}
                 </div>
               </a>
               @endforeach

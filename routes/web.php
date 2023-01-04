@@ -102,10 +102,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/section/{section}/edit', [ProjectController::class, 'dashboardIndexEditSection'])->name('projects.EditSection');
         Route::patch('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexUpdateSection'])->name('projects.UpdateSection');
         Route::delete('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexDestroySection'])->name('projects.DestroySection');
+        Route::post('/projects/{project}/section/{section}/up', [ProjectController::class, 'dashboardIndexSectionUp'])->name('projects.SectionUp');
+        Route::post('/projects/{project}/section/{section}/down', [ProjectController::class, 'dashboardIndexSectionDown'])->name('projects.SectionDown');
         
         //subsection
         Route::get('/projects/{project}/section/{section}/subsection', [ProjectController::class, 'dashboardIndexSubsection'])->name('projects.subsection');
-        Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.storeSubsection');
+        Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.createSubsection');
         Route::post('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardStoreSubsection'])->name('projects.storeSubsection');
         Route::get('/projects/{project}/section/{section}/subsection/{subsection}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('projects.EditSubsection');
         Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');

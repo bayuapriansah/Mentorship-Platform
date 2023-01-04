@@ -203,12 +203,16 @@ class ProjectController extends Controller
     public function dashboardIndexStoreSection($project_id, Request $request)
     {
         $validated = $request->validate([
-            'section' => ['required'],
             'description' => ['required'],
         ]);
         $project_section = new ProjectSection;
+        $latest_item = ProjectSection::where('project_id', $project_id)->orderByDesc('section')->first();
+        if($latest_item==null){
+            $project_section->section    = 1;
+        }else{
+            $project_section->section    = $latest_item->section+1;
+        }
         $project_section->project_id = $project_id;
-        $project_section->section = $validated['section'];
         $project_section->description = $validated['description'];
         $project_section->save();
 
@@ -232,8 +236,55 @@ class ProjectController extends Controller
     public function dashboardIndexDestroySection($project_id, $section_id)
     {
         $project_section = ProjectSection::find($section_id);
+        $select_bigger_section   = ProjectSection::where('project_id', $project_id)->where('section', '>', $project_section->section)
+                                    ->get();
+        foreach($select_bigger_section as $item){
+            $item->section = $item->section-1;
+            $item->save();
+        }
         $project_section->delete();
         return redirect('/dashboard/projects/'.$project_id.'/section');
+    }
+
+    public function dashboardIndexSectionUp(Request $request,$project_id ,$section_id)
+    {
+
+        $project_section = ProjectSection::find($section_id);
+        $project_section->section = $project_section->section-1;
+        $select_smaller_section   = ProjectSection::where('project_id', $project_id)
+                                    ->where('section', '=', $project_section->section)
+                                    ->orderByDesc('section')
+                                    ->first();
+        if($select_smaller_section != null){
+            $section = ProjectSection::find($select_smaller_section->id);
+            $section->section = $select_smaller_section->section+1;
+            $section->save();
+        }else{
+            return back();
+        }
+        
+        $project_section->save();
+        return back();
+    }
+
+    public function dashboardIndexSectionDown(Request $request,$project_id ,$section_id)
+    {
+        $project_section = ProjectSection::find($section_id);
+        $project_section->section = $project_section->section+1;
+        $select_smaller_section   = ProjectSection::where('project_id', $project_id)
+                                    ->where('section', '=', $project_section->section)
+                                    ->orderByDesc('section')
+                                    ->first();
+        if($select_smaller_section != null){
+            $section = ProjectSection::find($select_smaller_section->id);
+            $section->section = $select_smaller_section->section-1;
+            $section->save();
+        }else{
+            return back();
+        }
+        
+        $project_section->save();
+        return back();
     }
 
     // SUBSECTION

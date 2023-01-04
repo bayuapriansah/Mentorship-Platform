@@ -4,6 +4,9 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a href="/dashboard/projects/" class="text-decoration-none"><i class="fa-solid fa-arrow-left"></i> Back</a>
+</div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Manage task for {{$project->name}}</h1>
   </div>
 
@@ -12,15 +15,15 @@
       <div class="card p-4">
         <form action="/dashboard/projects/{{$project->id}}" method="post">
           @csrf
-          <div class="mb-3">
-            <label for="inputsection" class="form-label">Section Number</label>
+          {{-- <div class="mb-3">
+            <label for="inputsection" class="form-label">Task</label>
             <input type="number" class="form-control" id="inputsection" name="section" value="{{old('section')}}">
             @error('section')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>
             @enderror
-          </div>
+          </div> --}}
 
           <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
@@ -50,16 +53,34 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Section number</th>
+            <th>Task</th>
             <th>Description</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           @php $no=1 @endphp
-          @foreach($project_sections as $project_section)
+          @foreach($project_sections->sortBy('section') as $project_section)
           <tr>
-            <td>{{$no}}</td>
+            <td>
+              {{$no}}
+              <div class="btn-group" role="group" aria-label="Basic example">
+                {{-- UP --}}
+                {!! Form::open(['route' => ['dashboard.projects.SectionUp', [$project->id,$project_section->id]]]) !!}
+                <button type="submit" class="btn btn-outline-primary mr-1">
+                  <i class="fa-solid fa-arrow-up"></i>
+                </button>
+                {!! Form::close() !!}
+
+                {{-- Down --}}
+                {!! Form::open(['route' => ['dashboard.projects.SectionDown', [$project->id,$project_section->id]]]) !!}
+                <button type="submit" class="btn btn-outline-primary">
+                  <i class="fa-solid fa-arrow-down"></i>
+                </button>
+                {!! Form::close() !!}
+                
+              </div>
+            </td>
             <td>{{$project_section->section}}</td>
             <td>{{$project_section->description}}</td>
             <td>

@@ -4,7 +4,7 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <a href="#">Back</a>
+      <a href="/dashboard/projects/{{$project->id}}/section" class="text-decoration-none"><i class="fa-solid fa-arrow-left"></i> Back</a>
   </div>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Subtask</h1>
