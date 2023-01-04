@@ -18,10 +18,10 @@ class StudentController extends Controller
         return view('dashboard.students.index', compact('students'));
     }
 
-    public function registered()
+    public function register()
     {
-        $students = Student::where('is_confirm', 0)->get();
-        return view('dashboard.students.registered', compact('students'));
+        // $students = Student::where('is_confirm', 0)->get();
+        return view('student.index');
     }
 
     /**

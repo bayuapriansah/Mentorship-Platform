@@ -44,7 +44,7 @@ Route::get('/mentor/register/{email}', [MentorController::class, 'register'])->n
 Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update'])->name('mentor.registerAuth');
 
 // student register
-Route::get('/student/register/{student_id}', [StudentController::class, 'register'])->name('student.register');
+Route::get('/student/register', [StudentController::class, 'register'])->name('student.register');
 Route::post('/student/register/{student_id}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 
 // Student projects page

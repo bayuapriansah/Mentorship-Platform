@@ -3,10 +3,10 @@
 <div class="container">
 
   <div class="text-center mb-5">
-    <h1>Mentor Register</h1>
+    <h1>Student Register</h1>
   </div>
   @include('flash-message')
-  <form action="{{ route('mentor.registerAuth',[$checkMentor->id]) }}" method="post" id="mentorregister">
+  <form action="#" method="post" id="mentorregister">
     @csrf
     <div class="row">
       <div class="col">
@@ -30,8 +30,19 @@
     </div>
 
     <div class="mb-3">
-      <label for="state" class="form-label">Email</label>
-      <input type="text" name="email" id="disabledTextInput" class="form-control" value="{{$checkMentor->email}}" disabled>
+      <label for="">Date of birth</label>
+      <input type="date" class="form-control" name="date_of_birth" value="{{old('date_of_birth')}}">
+      @error('date_of_birth')
+            <p class="text-danger text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+    </div>
+
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="text" name="email" id="disabledTextInput" class="form-control" value="[email]" disabled>
       @error('email')
           <p class="text-danger text-sm mt-1">
             {{$message}}
@@ -40,42 +51,8 @@
     </div>
 
     <div class="mb-3">
-      <label for="company" class="form-label">Company</label>
-      <input type="text" name="company" id="disabledTextInput" class="form-control" value="{{$checkCompany->name}}}" disabled>
-      @error('company')
-          <p class="text-danger text-sm mt-1">
-            {{$message}}
-          </p>
-      @enderror
-    </div>
-
-    <div class="mb-3">
-      <label for="state" class="form-label">State</label>
-      <input type="text" name="state" id="disabledTextInput" class="form-control">
-      @error('state')
-          <p class="text-danger text-sm mt-1">
-            {{$message}}
-          </p>
-      @enderror
-    </div>
-
-    <div class="mb-3">
-      <label for="country" class="form-label">Country</label>
-      <input type="text" name="country" id="disabledTextInput" class="form-control">
-      @error('country')
-          <p class="text-danger text-sm mt-1">
-            {{$message}}
-          </p>
-      @enderror
-    </div>
-
-    <div class="mb-3" id="gender">
-      <label for="gender" class="form-label">Gender</label>
-      <select class="form-select" aria-label="Default select example" name="gender">
-        <option value="">--Select Gender--</option>
-        <option value="male" {{old('gender') == 'male' ? 'selected' : ''}}>Male</option>
-        <option value="female" {{old('gender') == 'female' ? 'selected' : ''}}>Female</option>
-      </select>
+      <label class="form-label">Gender</label>
+      <input type="text" name="gender" id="disabledTextInput" class="form-control" value="[gender]" disabled>
       @error('gender')
           <p class="text-danger text-sm mt-1">
             {{$message}}
@@ -84,9 +61,19 @@
     </div>
 
     <div class="mb-3">
-      <label for="position" class="form-label">Position</label>
-      <input type="text" name="position" id="disabledTextInput" class="form-control">
-      @error('position')
+      <label class="form-label">State</label>
+      <input type="text" name="state" id="disabledTextInput" class="form-control" value="[state]" disabled>
+      @error('state')
+          <p class="text-danger text-sm mt-1">
+            {{$message}}
+          </p>
+      @enderror
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Country</label>
+      <input type="text" name="country" id="disabledTextInput" class="form-control" value="[country]" disabled>
+      @error('country')
           <p class="text-danger text-sm mt-1">
             {{$message}}
           </p>
