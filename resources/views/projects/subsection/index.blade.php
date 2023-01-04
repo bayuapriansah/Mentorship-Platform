@@ -36,25 +36,27 @@
             @endif
           </ul>
           @if(Route::is('projects.appliedSubmission'))
-            @if($section_subsection->submission == null)
-            <div class="row">
-              <div class="col">
-                <form action="/projects/{{$student_id}}/applied/{{$project_id}}/detail/{{$section_subsection->id}}" method="post" enctype="multipart/form-data">
-                  @csrf
-                  <div class="mb-3">
-                    <input type="file" class="form-control-file" id="inputsubmission" name="submission">
-                  </div>
-                  @error('submission')
-                    <p class="text-danger text-sm mt-1">
-                      {{$message}}
-                    </p>
-                  @enderror
-                  <button type="submit" class="btn btn-primary">Upload Submission</button>
-                </form>
+            @if($section_subsection->category == 'task')
+              @if($section_subsection->submission == null)
+              <div class="row">
+                <div class="col">
+                  <form action="/projects/{{$student_id}}/applied/{{$project_id}}/detail/{{$section_subsection->id}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                      <input type="file" class="form-control-file" id="inputsubmission" name="submission">
+                    </div>
+                    @error('submission')
+                      <p class="text-danger text-sm mt-1">
+                        {{$message}}
+                      </p>
+                    @enderror
+                    <button type="submit" class="btn btn-primary">Upload Submission</button>
+                  </form>
+                </div>
               </div>
-            </div>
-            @else
-            <strong>[Submitted]</strong>
+              @else
+              <strong>[Submitted]</strong>
+              @endif
             @endif
           @endif
         </div>

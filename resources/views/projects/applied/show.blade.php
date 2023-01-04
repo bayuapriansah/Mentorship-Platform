@@ -55,7 +55,8 @@
                         @foreach($project_section->sectionSubsections as $subsection)
                         <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark">
                           <div class="card p-4 mb-2">
-                              {!!$subsection->description!!}
+                              <div class="text-muted">{{$subsection->category}}</div>
+                              {{$subsection->title}}
                           </div>
                         </a>
                         @endforeach
