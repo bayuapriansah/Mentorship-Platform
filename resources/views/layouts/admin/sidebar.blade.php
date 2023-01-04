@@ -40,7 +40,7 @@
     <div id="collapseMentor" class="collapse" aria-labelledby="mentorPage" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('dashboard.mentors.index')}}">All mentors</a>
-            <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All companies</a>
+            <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All partner</a>
             <a class="collapse-item" href="{{route('dashboard.mentors.registered')}}">Pending mentor invitation</a>
         </div>
     </div>

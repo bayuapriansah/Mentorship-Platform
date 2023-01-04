@@ -82,12 +82,24 @@
               </div>
             </td>
             <td>{{$project_section->section}}</td>
-            <td>{{$project_section->description}}</td>
+            <td>
+              {{$project_section->description}}
+              
+              <div class="collapse my-3" id="collapseExample{{$no}}">
+                <div class="card card-body">
+                 <ul class="m-0">
+                  @foreach($project_section->sectionSubsections as $subsection)
+                    <li>{{$subsection->title}}</li>
+                  @endforeach
+                 </ul>
+                </div>
+              </div>
+            </td>
             <td>
 
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/edit" >Edit</a>
+              <a class="btn btn-labele btn-primary " data-toggle="collapse" href="#collapseExample{{$no}}" role="button" aria-expanded="false" aria-controls="collapseExample">Show available subtask</a>
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage Subtask</a>
-              
               <form method="POST" action="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}" >
                 @csrf
                 @method('DELETE')

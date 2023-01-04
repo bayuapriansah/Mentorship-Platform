@@ -34,7 +34,7 @@
             <td>{{$project->project_domain}}</td>
             <td>{{$project->company->name}}</td>
             <td>{{$project->type}}</td>
-            <td>{{$project->period}}</td>
+            <td>{{$project->period}} Month</td>
             <td>{{$project->status}}</td>
             <td>
 
