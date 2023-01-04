@@ -9,7 +9,7 @@ use App\Models\Student;
 use App\Models\Mentor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
-use App\Http\Controllers\simintEncryption;
+use App\Http\Controllers\SimintEncryption;
 
 
 class AuthOtpController extends Controller
@@ -28,8 +28,8 @@ class AuthOtpController extends Controller
         }
         $verificationCode = $this->generateOtp($request->email);
         $otp = $verificationCode->otp;
-        $encId = (new simintEncryption)->encData($user_id->id);
-        $encEmail = (new simintEncryption)->encData($request->email);
+        $encId = (new SimintEncryption)->encData($user_id->id);
+        $encEmail = (new SimintEncryption)->encData($request->email);
         $message = "Your OTP verification code Already sent to your email";
         $sendmail = (new MailController)->otplogin($request->email,$otp);
         return redirect()->route('otp.verification', [$encId,$encEmail])->with('success', $message);
@@ -62,7 +62,7 @@ class AuthOtpController extends Controller
     public function verification($user_id,$email){
         return view('auth.loginOtpVerification')->with([
             'user_id' => $user_id,
-            'email' => (new simintEncryption)->decData($email)
+            'email' => (new SimintEncryption)->decData($email)
         ]);
     }
 
@@ -72,9 +72,9 @@ class AuthOtpController extends Controller
             'email' => 'required',
             'otp' => 'required'
         ]);
-        $theMail = (new simintEncryption)->encData($request->email);
-        $encId = (new simintEncryption)->decData($request->user_id);
-        $encEmail = (new simintEncryption)->decData($theMail);
+        $theMail = (new SimintEncryption)->encData($request->email);
+        $encId = (new SimintEncryption)->decData($request->user_id);
+        $encEmail = (new SimintEncryption)->decData($theMail);
         $verificationCode = VerificationCode::where('user_id', $encId)->where('email', $encEmail)->where('otp', $request->otp)->first();
         $now = Carbon::now();
         if(!$verificationCode){
