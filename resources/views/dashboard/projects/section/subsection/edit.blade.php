@@ -16,6 +16,30 @@
           @csrf
           @method('patch')
           <div class="mb-3">
+            <label for="inputcategory" class="form-label">Select Category</label>
+            <select class="form-control form-select" id="inputcategory" aria-label="Default select example" name="category">
+              <option value="">--Select Category--</option>
+              <option value="video" {{$section_subsection->category == 'video' ? 'selected': ''}}>Video</option>
+              <option value="reading" {{$section_subsection->category == 'reading' ? 'selected': ''}}>Reading</option>
+              <option value="task" {{$section_subsection->category == 'task' ? 'selected': ''}}>Task</option>
+            </select>
+            @error('category')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+
+          <div class="mb-3">
+            <label for="" class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" value="{{$section_subsection->title}}">
+            @error('title')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
             <textarea name="description" id="problem" cols="30" rows="10">{{$section_subsection->description}}</textarea>
             @error('description')

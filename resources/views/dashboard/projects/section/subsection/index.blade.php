@@ -4,9 +4,11 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <a href="#">Back</a>
+  </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Subtask</h1>
       <a href="create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Subsection</a>
-
   </div>
 
   <!-- Content Row -->
@@ -17,7 +19,8 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Description</th>
+            <th>Title</th>
+            <th>Category</th>
             <th>File 1</th>
             <th>File 2</th>
             <th>File 3</th>
@@ -31,11 +34,12 @@
           @foreach($project_subsections as $project_subsection)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$project_subsection->description}}</td>
+            <td>{{$project_subsection->title}}</td>
+            <td>{{$project_subsection->category}}</td>
             <td><a href="{{asset('storage/'.$project_subsection->file1)}}">file1</a></td>
             <td><a href="{{asset('storage/'.$project_subsection->file2)}}">file2</a></td>
             <td><a href="{{asset('storage/'.$project_subsection->file3)}}">file3</a></td>
-            <td>{{$project_subsection->video_link}}</td>
+            <td>{{$project_subsection->video_link ? $project_subsection->video_link : "None"}}</td>
             {{-- <td>{{$project->is_submit}}</td> --}}
             <td>
 

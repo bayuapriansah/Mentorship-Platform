@@ -254,13 +254,27 @@ class ProjectController extends Controller
     }
 
     public function dashboardStoreSubsection($project_id, $section_id, Request $request)
-    {
+    {   
+        if($request->category == 'video'){
+            $validated = $request->validate([
+                'video_link' => 'required',
+                'category' => 'required',
+                'title' => 'required',
+                'file1' => 'required',
+                'description' => 'required'
+            ]);
+        }
+
         $validated = $request->validate([
+            'category' => 'required',
+            'title' => 'required',
             'file1' => 'required',
             'description' => 'required'
         ]);
         $sectionSubsection = new SectionSubsection;
         $sectionSubsection->project_section_id = $section_id;
+        $sectionSubsection->title = $validated['title'];
+        $sectionSubsection->category = $validated['category'];
         $sectionSubsection->description = $validated['description'];
         if($request->hasFile('file1')){
             $file1 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $validated['file1']);
@@ -289,17 +303,26 @@ class ProjectController extends Controller
 
     public function dashboardUpdateSubsection($project_id, $section_id, $subsection_id, Request $request)
     {
+        if($request->category == 'video'){
+            $validated = $request->validate([
+                'video_link' => 'required',
+                'category' => 'required',
+                'title' => 'required',
+                'description' => 'required'
+            ]);
+        }
+
         $validated = $request->validate([
-            'description' => 'required',
-            'video_link'=> 'required'
+            'category' => 'required',
+            'title' => 'required',
+            'description' => 'required'
         ]);
-        $section_subsection = SectionSubsection::find($subsection_id);
+        $section_subsection = SectionSubsection::findOrFail($subsection_id);
+
+        $section_subsection->category = $validated['category'];
+        $section_subsection->title = $validated['title'];
         $section_subsection->description = $validated['description'];
         if($request->hasFile('file1')){
-            // $file1path = public_path().'/'.$section_subsection->file1;
-
-            // user intends to replace the current image for the category.  
-            // delete existing (if set)
         
             if(Storage::path($section_subsection->file1)) {
                 Storage::disk('public')->delete($section_subsection->file1);

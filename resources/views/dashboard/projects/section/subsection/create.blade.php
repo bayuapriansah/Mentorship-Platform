@@ -16,6 +16,30 @@
         <form action="/dashboard/projects/{{$project->id}}/section/{{$section->id}}" method="post" enctype="multipart/form-data">
           @csrf
           <div class="mb-3">
+            <label for="inputcategory" class="form-label">Select Category</label>
+            <select class="form-control form-select" id="inputcategory" aria-label="Default select example" name="category">
+              <option value="">--Select Category--</option>
+              <option value="video" {{old('category') == 'video' ? 'selected': ''}}>Video</option>
+              <option value="reading" {{old('category') == 'reading' ? 'selected': ''}}>Reading</option>
+              <option value="task" {{old('category') == 'task' ? 'selected': ''}}>Task</option>
+            </select>
+            @error('category')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+
+          <div class="mb-3">
+            <label for="" class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" value="{{old('title')}}">
+            @error('title')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
             <textarea name="description" id="problem" cols="30" rows="10">{{old('description')}}</textarea>
             @error('description')
@@ -25,7 +49,7 @@
             @enderror
           </div>
           <div class="mb-3">
-            <label for="inputfile1" class="form-label">File 1</label>
+            <label for="inputfile1" class="form-label">File 1 <small>*required</small></label>
             <input type="file" class="form-control-file" id="inputfile1" name="file1">
             @error('file1')
                 <p class="text-danger text-sm mt-1">
