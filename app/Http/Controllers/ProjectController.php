@@ -468,9 +468,12 @@ class ProjectController extends Controller
 
     public function appliedSubmit($student_id, $project_id, $subsection_id,Request $request)
     {
-        $validated = $request->validate([
-            'submission' => ['required'],
-        ]);
+        if($request->hasFile('submission')==true){
+            $validated = $request->validate([
+                'submission' => ['required'],
+            ]);
+        }
+        
         $subsection = SectionSubsection::find($subsection_id);
         // EnrolledProject::where('student_id',$student_id)
         //                 ->where('project_id',$project_id)
@@ -478,10 +481,12 @@ class ProjectController extends Controller
         $submission = new Submission;
         $submission->section_subsection_id = $subsection_id;
         $submission->student_id = $student_id;
+        $submission->is_complete = 1;
         if($request->hasFile('submission')){
             $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/section/'.$subsection->project_section_id.'/subsection/'.$subsection_id, $validated['submission']);
             $submission->file = $file;
         }
+        $submission->file = 'null';
         $submission->save();
         return redirect('/projects/'.$student_id.'/applied/'.$project_id.'/detail')->with('success','Project has been submited');
     }

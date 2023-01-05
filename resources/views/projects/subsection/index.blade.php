@@ -57,6 +57,15 @@
               @else
               <strong>[Submitted]</strong>
               @endif
+            @else
+              @if($section_subsection->submission == null)
+              <form action="/projects/{{$student_id}}/applied/{{$project_id}}/detail/{{$section_subsection->id}}" method="post">
+              @csrf
+                <button type="submit" class="btn btn-primary">Complete this task</button>
+              </form>
+              @else
+              <strong>Completed</strong>
+              @endif
             @endif
           @endif
         </div>

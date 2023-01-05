@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('submissions', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('section_subsection_id');
-            $table->unsignedBigInteger('student_id');
-            $table->string('file')->nullable();
-            $table->timestamps();
+        Schema::table('submissions', function (Blueprint $table) {
+            $table->boolean('is_complete')->after('student_id');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submissions');
+        Schema::table('submissions', function (Blueprint $table) {
+            $table->dropColumn('is_complete');
+        });
     }
 };
