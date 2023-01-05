@@ -124,7 +124,7 @@ class MentorController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     *$this->
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -140,9 +140,9 @@ class MentorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $email)
     {
-        // dd($request->all());
+        // dd($id);
         $validated = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -159,14 +159,13 @@ class MentorController extends Controller
                 $response = json_decode($response);
                 // dd($response);
                 if(!$response->success){
-                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    Session::flash('alert-class', 'alert-danger');
+                    $this->session()->flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    $this->session()->flash('alert-class', 'alert-danger');
                     $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
                 } 
             },
         ]);
-
-        $mentor = Mentor::find($id);
+        $mentor = Mentor::where('email',$email)->first();
         $mentor->first_name = $validated['first_name'];
         $mentor->last_name = $validated['last_name'];
         $mentor->state = $validated['state'];
