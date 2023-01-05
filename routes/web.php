@@ -44,8 +44,8 @@ Route::get('/mentor/register/{email}', [MentorController::class, 'register'])->n
 Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update'])->name('mentor.registerAuth');
 
 // student register
-Route::get('/student/register', [StudentController::class, 'register'])->name('student.register');
-Route::post('/student/register/{student_id}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
+Route::get('/student/register/{email}', [StudentController::class, 'register'])->name('student.register');
+Route::post('/student/register/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 
 // Student projects page
 Route::group(['middleware'=>'auth:student'], function(){
@@ -124,7 +124,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     });
 });
 
-Route::get('/testEnkripsi', [SimintEncryption::class, 'enkripsi']);
+Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');

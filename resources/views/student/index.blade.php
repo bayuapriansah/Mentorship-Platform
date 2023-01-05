@@ -3,7 +3,7 @@
 <div class="container">
 
   <div class="text-center mb-5">
-    <h1>Student Register</h1>
+    <h1>Student Profile</h1>
   </div>
   @include('flash-message')
   <form action="#" method="post" id="mentorregister">
