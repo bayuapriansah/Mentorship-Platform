@@ -30,7 +30,6 @@ class MentorController extends Controller
     public function registered()
     {
         $mentors = Mentor::where('is_confirm', 0)->get();
-        // $mentors = Company::get();
         return view('dashboard.mentors.registered', compact('mentors'));
     }
 
@@ -38,10 +37,7 @@ class MentorController extends Controller
     {
         $projects = Project::where('company_id', $company_id)->get();
         $company = Company::find($company_id);
-        // $mentorProjects = MentorProject::join('mentors', 'mentor.company_id', '=', 'mentor_projects.mentor_id');
         $mentor = Mentor::where('company_id', $company_id)->get();
-        // $mentorProjects = MentorProject::with('mentor')->get();
-        // $mentorProjects->mentor;
         return view('dashboard.mentors.invite', compact('projects','company','mentor'));
     }
 // fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
@@ -159,8 +155,8 @@ class MentorController extends Controller
                 $response = json_decode($response);
                 // dd($response);
                 if(!$response->success){
-                    $this->session()->flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    $this->session()->flash('alert-class', 'alert-danger');
+                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    Session::flash('alert-class', 'alert-danger');
                     $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
                 } 
             },

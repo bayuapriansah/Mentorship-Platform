@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Session;
 
 class StudentController extends Controller
 {
@@ -18,12 +19,16 @@ class StudentController extends Controller
         return view('dashboard.students.index', compact('students'));
     }
 
-    public function register()
+    public function register($email)
     {
-        // $students = Student::where('is_confirm', 0)->get();
-        return view('student.index');
+        $checkStudent = Student::where('email', $email)->first();
+        if(!$checkStudent){
+            return redirect()->route('index');
+        }elseif($checkStudent){
+            // @dd($checkStudent);
+            return view('student.index', compact(['checkStudent']));
+        }
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -74,11 +79,46 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $email)
     {
-        //
+        // dd($request->all());
+        // dd($email);
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'date_of_birth' => 'required',
+            'gender' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'g-recaptcha-response' => function ($attribute, $value, $fail) {
+                $secretkey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                // dd($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    Session::flash('alert-class', 'alert-danger');
+                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
+                } 
+            },
+        ]);
+        $student = Student::where('email',$email)->first();
+        // dd($student);
+        $student->first_name = $validated['first_name'];
+        $student->last_name = $validated['last_name'];
+        $student->date_of_birth = $validated['date_of_birth'];
+        $student->gender = $validated['gender'];
+        $student->state = $validated['state'];
+        $student->country = $validated['country'];
+        $student->is_confirm = 1;
+        $student->save();
+        $message = "Profile Updated";
+        return redirect()->route('student.register',[$email])->with('success', $message);
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *

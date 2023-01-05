@@ -75,11 +75,20 @@
         
         @if(Auth::guard('student')->check())
         <li class="nav-item"><a href="{{route('projects.index')}}" class="nav-link link-dark px-2">Project Page</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('student')->user()->email}}</a></li>
-        <form class="inline" method="post" action="/logout">
-          @csrf
-          <button type="submit" class="btn btn-primary">Logout</button>
-        </form>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger">{{Auth::guard('student')->user()->email}}</button>
+          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ route('student.register', [Auth::guard('student')->user()->email]) }}">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <form class="inline" method="post" action="{{ route('logout') }}">
+              @csrf
+              <li><button type="submit" class="btn dropdown-item">Log Out</button></li>
+            </form>
+          </ul>
+        </div>
         @elseif(Auth::guard('mentor')->check())
         {{-- Cek Route nya han --}}
         <li class="nav-item"><a href="{{route('dashboard.mentor')}}" class="nav-link link-dark px-2">Dashboard</a></li>
