@@ -57,13 +57,17 @@
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
                         {!!$project_section->description!!}
-                        available until : {{$appliedDate->addDays(7)->toDateString()}}
+                        available until : {{$availDate = $appliedDate->addDays(7)->toDateString()}}
                         {{-- available until : {{\Carbon\Carbon::now()->toDateString() <= $appliedDate->addDays(7)->toDateString() ? 'yeay' :'wew' }} --}}
                         @foreach($project_section->sectionSubsections as $subsection)
+                        {{-- {{isset($subsection->submission) ? 'true' : 'false'}} --}}
+                        {{-- @if($subsection->submission) --}}
                         {{-- @php
                         $project_id = $subsection->submission->sectionSubsection->projectSection->project->id @endphp --}}
-                        @dd($subsection->submission->where('student_id', $student_id)->latest()->first()); 
-                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark "  >
+
+                        
+                        {{-- @dd($subsection->submission->where('student_id', $student_id)->latest()->first());  --}}
+                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                           <div class="card p-4 mb-2">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
