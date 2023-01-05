@@ -4,6 +4,9 @@
 
   <div class="text-center mb-5">
     <h1>Student Profile</h1>
+    <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
   </div>
   @include('flash-message')
   <form action="#" method="post" id="mentorregister">
