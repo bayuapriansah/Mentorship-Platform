@@ -33,4 +33,9 @@ class Project extends Model
     {
         return $this->belongsToMany(Mentor::class);
     }
+
+    public function enrolled_project()
+    {
+        return $this->hasOne(EnrolledProject::class);
+    }
 }

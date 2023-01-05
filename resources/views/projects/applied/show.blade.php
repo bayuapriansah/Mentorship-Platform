@@ -25,7 +25,12 @@
             </div>
             <div class="row">
               <div class="col">
-                <p>applied at {{$project->created_at->toDateString()}}</p>
+                @php 
+                  $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', $student_id)->where('project_id', $project->id)->first()->created_at);
+                  
+                  $date = $appliedDate->format('Y-m-d'); 
+                @endphp
+                <p>applied at {{$date}}</p>
               </div>
             </div>
             <div class="row">
@@ -52,10 +57,15 @@
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
                         {!!$project_section->description!!}
+                        available until : {{$appliedDate->addDays(7)->toDateString()}}
+                        {{-- available until : {{\Carbon\Carbon::now()->toDateString() <= $appliedDate->addDays(7)->toDateString() ? 'yeay' :'wew' }} --}}
                         @foreach($project_section->sectionSubsections as $subsection)
-                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark">
+                        {{-- @php
+                        $project_id = $subsection->submission->sectionSubsection->projectSection->project->id @endphp --}}
+                        @dd($subsection->submission->where('student_id', $student_id)->latest()->first()); 
+                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark "  >
                           <div class="card p-4 mb-2">
-                              <div class="text-muted">{{$subsection->category}}</div>
+                              <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
                           </div>
                         </a>

@@ -27,6 +27,15 @@
         //  plugins: 'powerpaste advcode table lists checklist',
         //  toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table'
     });
+    tinymce.init({
+        selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 300,
+    });
+    tinymce.init({
+        selector: 'textarea#sectionDescDisable', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 300,
+        readonly : true
+    });
     </script>
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -34,6 +43,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
 
 </head>
 

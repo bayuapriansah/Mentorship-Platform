@@ -6,8 +6,14 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <a href="/dashboard/projects/" class="text-decoration-none"><i class="fa-solid fa-arrow-left"></i> Back</a>
 </div>
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <div class="d-sm-flex-row align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Manage task for {{$project->name}}</h1>
+      <h5>
+        @if($project->type == 'weekly')
+        @php $max_task = 4 * $project->period @endphp
+        *Max Task is {{$max_task}}
+        @endif
+      </h5>
   </div>
 
   <div class="row">
@@ -15,19 +21,9 @@
       <div class="card p-4">
         <form action="/dashboard/projects/{{$project->id}}" method="post">
           @csrf
-          {{-- <div class="mb-3">
-            <label for="inputsection" class="form-label">Task</label>
-            <input type="number" class="form-control" id="inputsection" name="section" value="{{old('section')}}">
-            @error('section')
-                <p class="text-danger text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div> --}}
-
           <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
-            <textarea name="description" id="problem" cols="30" rows="10">{{old('description')}}</textarea>
+            <textarea name="description" id="{{$project_sections->count() != $max_task ? 'sectionDesc' : 'sectionDescDisable'}}" cols="30" rows="10">{{old('description')}}</textarea>
             @error('description')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
@@ -35,7 +31,7 @@
             @enderror
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" {{$project_sections->count() == $max_task ? 'disabled' : ''}}>Submit</button>
         </form>
       </div>
     </div>
