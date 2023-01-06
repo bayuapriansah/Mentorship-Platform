@@ -59,20 +59,36 @@
                         {!!$project_section->description!!}
                         available until : {{$availDate = $appliedDate->addDays(7)->toDateString()}}
                         {{-- available until : {{\Carbon\Carbon::now()->toDateString() <= $appliedDate->addDays(7)->toDateString() ? 'yeay' :'wew' }} --}}
+                        @php
+                            $isNotCompleted = 0;
+                        @endphp
                         @foreach($project_section->sectionSubsections as $subsection)
-                        {{-- {{isset($subsection->submission) ? 'true' : 'false'}} --}}
-                        {{-- @if($subsection->submission) --}}
-                        {{-- @php
-                        $project_id = $subsection->submission->sectionSubsection->projectSection->project->id @endphp --}}
-
-                        
-                        {{-- @dd($subsection->submission->where('student_id', $student_id)->latest()->first());  --}}
-                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
+                        @if (!$subsection->submission && $isNotCompleted == 0)
+                          <a style="color: red !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
+                            <div class="card p-4 mb-2">
+                                <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
+                                {{$subsection->title}}
+                            </div>
+                          </a>
+                          @php
+                              $isNotCompleted = 1;
+                          @endphp
+                        @elseif($subsection->submission)
+                          <a  style="color: green !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
+                            <div class="card p-4 mb-2">
+                                <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
+                                {{$subsection->title}}
+                            </div>
+                          </a>
+                        @else 
+                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark disabled-link">
                           <div class="card p-4 mb-2">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
                           </div>
                         </a>
+                        @endif
+                       
                         @endforeach
                       </div>
                     </div>
