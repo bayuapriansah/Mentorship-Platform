@@ -55,14 +55,29 @@
                       </button>
                     </h2>
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
+                      {{-- <div class="accordion-body"> --}}
+                      <div class="accordion-body {{\Carbon\Carbon::now()->toDateString() >= $date ? '': 'bg-primary'}}">
                         {!!$project_section->description!!}
-                        available until : {{$availDate = $appliedDate->addDays(7)->toDateString()}}
-                        {{-- available until : {{\Carbon\Carbon::now()->toDateString() <= $appliedDate->addDays(7)->toDateString() ? 'yeay' :'wew' }} --}}
+                        Start from {{$date}}
                         @php
+                            $date = $appliedDate->addDays(7)->toDateString();
                             $isNotCompleted = 0;
                         @endphp
                         @foreach($project_section->sectionSubsections as $subsection)
+                        {{-- jumlah submission subsection --}}
+                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
+
+                        {{-- cari jumlah task per section --}}
+                        {{-- @dd($project_section->sectionSubsections->count()) --}}
+                        
+                        {{--  --}}
+                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count() ? 'true': 'false') --}}
+                        
+                        {{-- @if ($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count())
+                            @dd('yee')
+                        @else
+                          @dd('ts')
+                        @endif --}}
                         @if (!$subsection->submission && $isNotCompleted == 0)
                           <a style="color: red !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                             <div class="card p-4 mb-2">
@@ -82,20 +97,18 @@
                           </a>
                         @else 
                         <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark disabled-link">
-                          <div class="card p-4 mb-2">
+                          <div class="card p-4 mb-2 ">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
                           </div>
                         </a>
                         @endif
-                       
                         @endforeach
                       </div>
                     </div>
                   </div>
-                @php $no++ @endphp
-                @endforeach
-          
+                  @php $no++ @endphp
+                  @endforeach
                 </div>
               </div>
             </div>
