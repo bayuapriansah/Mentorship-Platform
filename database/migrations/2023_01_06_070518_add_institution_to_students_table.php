@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->string('institution')->before('is_confirm');
+            $table->string('institution')->after('date_of_birth');
         });
     }
 

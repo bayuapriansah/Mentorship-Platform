@@ -90,6 +90,7 @@ class StudentController extends Controller
             'gender' => 'required',
             'state' => 'required',
             'country' => 'required',
+            'institution' => 'required',
             'g-recaptcha-response' => function ($attribute, $value, $fail) {
                 $secretkey = config('services.recaptcha.secret');
                 $response = $value;
@@ -113,6 +114,7 @@ class StudentController extends Controller
         $student->gender = $validated['gender'];
         $student->state = $validated['state'];
         $student->country = $validated['country'];
+        $student->institution = $validated['institution'];
         $student->is_confirm = 1;
         $student->save();
         $message = "Profile Updated";

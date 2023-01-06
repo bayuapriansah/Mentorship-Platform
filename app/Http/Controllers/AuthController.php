@@ -23,6 +23,7 @@ class AuthController extends Controller
             'gender' => ['required'],
             'state' => ['required', 'min:3'],
             'country' => ['required', 'min:3'],
+            'institution' => ['required'],
             'g-recaptcha-response' => function ($attribute, $value, $fail) {
                 $secretkey = config('services.recaptcha.secret');
                 $response = $value;
@@ -50,6 +51,7 @@ class AuthController extends Controller
             $student->gender = $validated['gender'];
             $student->state = $validated['state'];
             $student->country = $validated['country'];
+            $student->institution = $validated['institution'];
             $student->is_confirm = 0;
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
