@@ -86,6 +86,16 @@
           </p>
       @enderror
     </div>
+
+    <div class="mb-3">
+      <label class="form-label">Institution</label>
+      <input type="text" name="institution" id="CountryInput" class="form-control" value="{{ $checkStudent->institution }}">
+      @error('institution')
+          <p class="text-danger text-sm mt-1">
+            {{$message}}
+          </p>
+      @enderror
+    </div>
     
     <div class="mb-3">
       <!-- <label for="g-recaptcha-response" class="form-label">Captcha</label> -->
