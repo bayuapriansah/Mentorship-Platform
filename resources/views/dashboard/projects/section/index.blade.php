@@ -9,8 +9,12 @@
   <div class="d-sm-flex-row align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Manage task for {{$project->name}}</h1>
       <h5>
+        {{-- @dd($project->period) --}}
         @if($project->type == 'weekly')
         @php $max_task = 4 * $project->period @endphp
+        *Max Task is {{$max_task}}
+        @elseif($project->type == 'monthly')
+        @php $max_task = 1 * $project->period @endphp
         *Max Task is {{$max_task}}
         @endif
       </h5>

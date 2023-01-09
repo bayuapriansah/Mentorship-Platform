@@ -43,6 +43,17 @@
                 <p>Domain : {{$project->project_domain}}</p>
               </div>
             </div>
+            <div class="row">
+              <div class="col">
+                @foreach($section_count as $scount)
+                <p>{{ $scount->title }}</p>
+                @endforeach
+                <p>{{$section_count->where('section',1)}}</p>
+              </div>
+            </div>
+                            {{-- @for($i = 1;$i <= $max_task; $i++)
+                  <p>{{$section_count->where('section',$i)}}</p>
+                @endfor --}}
             <div class="row mt-4">
               <div class="col">
                 <div class="accordion" id="accordionExample">
@@ -56,7 +67,7 @@
                     </h2>
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
                       {{-- <div class="accordion-body"> --}}
-                      <div class="accordion-body {{\Carbon\Carbon::now()->toDateString() >= $date ? '': 'bg-primary'}}">
+                      <div class="accordion-body {{\Carbon\Carbon::now()->toDateString() >= $date ? 'bg-primary': 'pe-none'}}">
                         {!!$project_section->description!!}
                         Start from {{$date}}
                         @php
@@ -64,6 +75,7 @@
                             $isNotCompleted = 0;
                         @endphp
                         {{-- SUBSECTION --}}
+                        {{-- @dd($project) --}}
                         @foreach($project_section->sectionSubsections as $subsection)
                         {{-- jumlah submission subsection --}}
                         {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
@@ -72,6 +84,7 @@
                         {{-- @dd($project_section->sectionSubsections->count()) --}}
                         
                         {{--  --}}
+                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
                         {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count() ? 'true': 'false') --}}
                         
                         {{-- @if ($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count())
@@ -79,7 +92,9 @@
                         @else
                           @dd('ts')
                         @endif --}}
+                        
                         @if (!$subsection->submission && $isNotCompleted == 0)
+                        {{-- make sure link cant be accessed if time not meet yet --}}
                           <a style="color: red !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                             <div class="card p-4 mb-2">
                                 <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
@@ -90,6 +105,7 @@
                               $isNotCompleted = 1;
                           @endphp
                         @elseif($subsection->submission)
+                        {{-- make sure link cant be accessed if time not meet yet --}}
                           <a  style="color: green !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                             <div class="card p-4 mb-2">
                                 <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
@@ -97,7 +113,7 @@
                             </div>
                           </a>
                         @else 
-                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark disabled-link">
+                        <a href="{{--/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission--}}" class="text-decoration-none text-dark disabled-link">
                           <div class="card p-4 mb-2 ">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}

@@ -11,6 +11,7 @@ use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use File;
 
 class ProjectController extends Controller
@@ -455,9 +456,27 @@ class ProjectController extends Controller
 
     public function appliedDetail($student_id, $project_id)
     {
+        $section_count = DB::table('section_subsections')
+        ->select('students.id','projects.NAME','section_subsections.title','project_sections.id','project_sections.project_id','project_sections.section')
+        ->crossJoin('students')
+        ->crossJoin('project_sections')
+        ->crossJoin('projects')
+        ->whereRaw('section_subsections.project_section_id = project_sections.id')
+        ->whereRaw('projects.id = project_sections.project_id')
+        ->where('project_sections.project_id','=', $project_id)
+        ->where('students.id','=',$student_id)
+        ->get();
+        // dd($section_count->where('section',1));
         $project = Project::find($project_id);
+            if($project->type == 'weekly')
+            {
+                $max_task = 4 * $project->period;
+            }elseif($project->type == 'monthly')
+            {
+                $max_task = 1 * $project->period;
+            }
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-        return view('projects.applied.show', compact('student_id','project', 'project_sections'));
+        return view('projects.applied.show', compact('student_id','project', 'project_sections','section_count','max_task'));
     }
 
     public function appliedSubmission($student_id, $project_id, $subsection_id)

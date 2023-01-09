@@ -13,7 +13,8 @@
         <input type="email" id="email" name="email" value="{{$email}}" class="form-control">
         <label for="otp" class="form-label">OTP Code</label>
         <input type="text" id="otp" name="otp" class="form-control">
-        <button type="submit" class="btn btn-primary mt-2">Log In</button>
+        <button type="submit" name="action" value="login" class="btn btn-primary mt-2">Log In</button>
+        <button type="submit" name="action" value="otp" class="btn btn-primary mt-2">Get OTP Again</button>
         {{-- <button type="button" class="btn btn-primary mt-2">Get OTP</button> --}}
       </form>
     </div>
