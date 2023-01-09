@@ -63,6 +63,7 @@
                             $date = $appliedDate->addDays(7)->toDateString();
                             $isNotCompleted = 0;
                         @endphp
+                        {{-- SUBSECTION --}}
                         @foreach($project_section->sectionSubsections as $subsection)
                         {{-- jumlah submission subsection --}}
                         {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
