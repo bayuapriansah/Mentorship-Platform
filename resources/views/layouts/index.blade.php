@@ -8,7 +8,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
-    {{-- @vite('resources/css/app.css') --}}
+    @vite('resources/css/app.css')
     <meta name="theme-color" content="#712cf9">
     <style>
       .bd-placeholder-img {
@@ -65,41 +65,23 @@
     <!-- Custom styles for this template -->
   </head>
 <body>
-  <main>
-    {{-- <div class="w-full text-gray-700 bg-blue-900 dark-mode:text-gray-200 dark-mode:bg-gray-800">
-      <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-        <div class="p-4 flex flex-row items-center justify-between">
-          <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Flowtrail UI</a>
-          <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
-            <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
-              <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-              <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-        </div>
-        <nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex md:justify-end md:flex-row">
-          <a class="px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Blog</a>
-          <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Portfolio</a>
-          <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">About</a>
-          <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Contact</a>
-          <div @click.away="open = false" class="relative" x-data="{ open: false }">
-            <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-              <span>Dropdown</span>
-              <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </button>
-            <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
-              <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #1</a>
-                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #2</a>
-                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #3</a>
-              </div>
-            </div>
-          </div>    
-        </nav>
+  <div class="w-full bg-dark-blue">
+    <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
+      <img src="assets/img/Intel-logo-2022.png" class="col-span-3" alt="">
+      <ul class="mx-1.5 col-start-5 col-span-4 flex justify-between text-black">
+        <li class="text-white intelOne font-light text-sm"><a href="/">Home</a></li>
+        <li class="text-white intelOne font-light text-sm"><a href="#">Internship Programs</a></li>
+        <li class="text-white intelOne font-light text-sm"><a href="#">Industry Partners</a></li>
+      </ul>
+      <div class="col-start-9 col-span-4 flex justify-between">
+        <button class="py-2.5 px-11 rounded-full border-2 border-solid border-light-grey text-center capitalize bg-orange text-white font-light text-sm intelOne">Get Started</button>
+        <a href="{{route('registerPage')}}" class="py-2.5 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Register</a>
       </div>
-    </div> --}}
+    </nav>
+  </div>
+  
 
-  <div class="container">
+  {{-- <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <span class="fs-4">Intel</span>
@@ -125,7 +107,7 @@
           </ul>
         </div>
         @elseif(Auth::guard('mentor')->check())
-        {{-- Cek Route nya han --}}
+        //cek routenya han
         <li class="nav-item"><a href="{{route('dashboard.mentor')}}" class="nav-link link-dark px-2">Dashboard</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('mentor')->user()->email}}</a></li>
         <form class="inline" method="post" action="/logout">
@@ -152,10 +134,51 @@
         @endif
       </ul>
     </header>
-  </div> 
-</nav> 
-</main>
-@yield('content')
+  </div>  --}}
+  <main>
+  @yield('content')
+  </main>
+  <footer class="w-full bg-lightest-blue relative z-30">
+    <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
+      <div class="col-span-3">
+        <img src="{{asset('assets/img/Intelblue 1.png')}}" alt="">
+        <p class="text-grey font-normal text-xs pt-2 intelOne">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      </div>
+      <div class="col-start-7 col-span-2 flex flex-col">
+        <ul class="text-dark-blue intelOne text-xs font-normal">
+          <li class="pb-3"><a href="">About Us</a></li>
+          <li class="pb-3"><a href="">For Industry Partners</a></li>
+          <li class="pb-3"><a href="">For Institution</a></li>
+          <li class="pb-3"><a href="">For Students</a></li>
+        </ul>
+      </div>
+      <div class="col-start-9 col-span-2 flex flex-col">
+        <ul class="text-dark-blue intelOne text-xs font-normal">
+          <li class="pb-3"><a href="">FAQs</a></li>
+          <li class="pb-3"><a href="">Contact Us</a></li>
+          <li class="pb-3"><a href="">Help and Support</a></li>
+        </ul>
+      </div>
+      <div class="col-start-11 col-span-2 flex flex-col">
+        <ul class="text-dark-blue intelOne text-xs font-normal">
+          <li class="pb-3"><a href="">Terms & Conditions</a></li>
+          <li class="pb-3"><a href="">Privacy Policies</a></li>
+          <li class="pb-3"><a href="">Site Map</a></li>
+          <li class="pb-3"><a href="">Cookie Settings</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="h-px bg-gray-200 border-1 dark:bg-gray-700">
+    <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col">
+      <div class="col-span-5">
+        <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
+      </div>
+      <div class="col-end-13 col-span-2 flex flex-col">
+        <p class="text-grey font-normal text-xs pt-2 intelOne">Powered by</p>
+        <img class="h-9 w-[71px]" src="{{asset('assets/img/image_3.png')}}" alt="">
+      </div>
+    </div>
+  </footer>
     <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
