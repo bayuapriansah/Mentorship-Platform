@@ -19,6 +19,7 @@ module.exports = {
         'blue-light' : '#98A1FF',
         'light-grey' : '#D9D9D9',
         'lightest-grey': '#B9C0F4',
+        'red-alert': '#F4D2D5'
       },
       fontSize: {
         sm: '0.938rem',

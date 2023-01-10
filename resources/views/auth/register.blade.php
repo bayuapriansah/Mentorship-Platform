@@ -5,38 +5,89 @@
     <div class="col-span-6">
       <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Register</h1>
       <p class="intelOne font-light text-black text-lg leading-6 py-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-      <form action="#" method="post">
+      <form action="{{route('register')}}" method="post" id="register">
         @csrf
         <div class="flex justify-between">
-          <input class=" border rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="firstname" type="text" placeholder="First Name *" name="first_name" required>
-          <input class=" border rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="lastname" type="text" placeholder="Last Name *" name="last_name" required>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="firstname" type="text" value="{{old('first_name')}}" placeholder="First Name *" name="first_name" required>
+          @error('first_name')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
+
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="lastname" type="text" value="{{old('last_name')}}" placeholder="Last Name *" name="last_name" required>
+          @error('last_name')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <input class=" border rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="date" name="date_of_birth" required>
-          <select id="sex" class="border rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:ring-blue-500 focus:border-blue-500 " name="sex" required>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="date" value="{{old('date_of_birth')}}" name="date_of_birth" required>
+          @error('date_of_birth')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
+          
+          <select id="sex" class="border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:ring-blue-500 focus:border-blue-500 " name="sex" required>
             <option value="">Sex *</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
+            <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
           </select>
+          @error('sex')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <select id="country" class="border rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:ring-blue-500 focus:border-blue-500 mr-5" name="country" required>
-            <option value="">Country *</option>
-            <option value="sad">Male</option>
-            <option value="sdw">Female</option>
-          </select>
-          <select id="" class="border rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:ring-blue-500 focus:border-blue-500" name="state" required>
-            <option value="">State *</option>
-            <option value="sd">Male</option>
-            <option value="wdw">Female</option>
-          </select>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="country" type="text" value="{{old('country')}}" placeholder="Country *" name="country" required>
+          @error('country')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
+
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="state" type="text" value="{{old('state')}}" placeholder="State *" name="state" required>
+          @error('state')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
         </div>
-        <input type="text" class="text w-full border rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" placeholder="Institution Name *" name="institution_name" required>
-        <input type="email" class="text w-full border rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" placeholder="Email *" name="email" required>
+
+        <input type="text" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('institution')}}" placeholder="Institution Name *" name="institution" required>
+        @error('institution')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+
+        <input type="email" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required>
+        @error('email')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+
+        <div class="g-recaptcha mt-4" data-sitekey="{{config('services.recaptcha.key')}}"></div>
+          @if(Session::has('g-recaptcha-response'))
+            <p class="alert my-2 {{Session::get('alert-class', 'alert-info')}}">
+            {{Session::get('g-recaptcha-response')}}
+            </p>
+          @endif
         <div class="flex items-center mt-4">
           <input type="checkbox" class="checked:bg-blue-500 mr-4" name="tnc" required>
           <p class="text-sm font-normal leading-4">I accept the <span class="text-dark-blue text-sm font-normal leading-4" >Terms & Conditions and Privacy Policies</span></p>
         </div>
+        <div class="mt-4">
+          @include('flash-message')
+        </div>
+        {{-- <div class="bg-red-alert intelOne text-sm p-4 w-2/3 rounded-lg mt-4 flex" role="alert">
+          <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
+          This email address is already registered!
+        </div> --}}
         <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Sign Up</button>
       </form>
     </div>

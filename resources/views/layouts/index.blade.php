@@ -172,7 +172,7 @@
     </div>
     <hr class="h-px bg-gray-200 border-1 dark:bg-gray-700">
     <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col">
-      <div class="col-span-5">
+      <div class="col-span-5 my-auto">
         <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
       </div>
       <div class="col-end-13 col-span-2 flex flex-col">
