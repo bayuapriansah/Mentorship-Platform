@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
     @vite('resources/css/app.css')
+    {{-- font --}}
+    <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet">
     <meta name="theme-color" content="#712cf9">
     <style>
       .bd-placeholder-img {
