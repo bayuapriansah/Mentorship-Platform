@@ -30,7 +30,7 @@
               </p>
           @enderror
           
-          <select id="sex" class="border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:ring-blue-500 focus:border-blue-500 " name="sex" required>
+          <select id="sex" class="border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight " name="sex" required>
             <option value="">Sex *</option>
             <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
             <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
