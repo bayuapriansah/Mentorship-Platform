@@ -45,7 +45,10 @@
             </div>
             <div class="row">
               <div class="col">
+<<<<<<< HEAD
+=======
                 
+>>>>>>> 37b30d4b2a4b545a7260a7502b36daf28df3ccff
               </div>
             </div>
             <div class="row mt-4">
@@ -67,12 +70,7 @@
                         Section {{$no}}
                       </button>
                     </h2>
-                    {{-- <p>Ini Data Section {{ $no }} yang selesai : {{ $dat = $section_count_complete->where('section',$no) }}</p>
-                    <p>Jumlah Section yang selesai : {{ $section_complete = $section_count_complete->where('section',$no)->count() }}</p>
-                    <p>Jumlah Section yang harus selesai : {{ $section_must_complete = $section_count->where('section', $no)->count() }}</p>
-                    {{ $section_complete == $section_must_complete ? 'selesai' : 'belum' }} --}}
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
-                      {{-- <div class="accordion-body"> --}}
                       <div class="accordion-body {{\Carbon\Carbon::now()->toDateString() >= $date ? '': 'pe-none'}}">
                         {!!$project_section->description!!}
                         {{-- Start from {{$date}} --}}
@@ -80,10 +78,7 @@
                             $date = $appliedDate->addDays(7)->toDateString();
                             $isNotCompleted = 0;
                         @endphp
-                        {{-- SUBSECTION --}}
-                        {{-- @dd($project) --}}
                         @foreach($project_section->sectionSubsections as $subsection)
-                        {{-- isErrorPrevious --}}
                        
                         @if (!isset($subsection->submission))
                         
@@ -98,29 +93,6 @@
                             @endphp
                             
                         @endif
-                        {{-- <p>
-                          {{  !$isErrorPrevious ? "SHOW" : "ERROR" }}
-                         </p> --}}
-                        {{-- jumlah submission subsection --}}
-                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
-
-                        {{-- cari jumlah task per section --}}
-                        {{-- @dd($project_section->sectionSubsections->count()) --}}
-                        {{-- @dd($section_complete = $section_count_complete->where('section',$no)->count()) --}}
-                        
-                        {{--  --}}
-                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
-                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count() ? 'true': 'false') --}}
-                        
-                        {{-- @if ($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count())
-                            @dd('yee')
-                        @else
-                          @dd('ts')
-                        @endif --}}
-                        {{-- {{ $project_section->section == 1 ? 'OK' : 'GAGAL' }} --}}
-                        {{-- @if($section_complete == $section_must_complete && $project_section->section == $no && \Carbon\Carbon::now()->toDateString() >= $date) --}}
-                         {{-- KONDISI 1 =  --}}
-                        {{-- {{ print_r($ErrorId, $subsection ? "BELUM KOMPLIT" :"UDAH KOMPLIT") }} --}}
                         @if (!$subsection->submission && $isNotCompleted != 0 && $ErrorId == $project_section->id)
                         {{-- <p>KONDISI 1</p> --}}
 
@@ -144,9 +116,6 @@
                             @php
                                 $isNotCompleted = 1;
                             @endphp
-                          {{-- @endif --}}
-                         
-
                         @elseif($subsection->submission)
                         {{-- make sure link cant be accessed if time not meet yet --}}                          
                         {{-- <p>KONDISI 3</p> --}}
@@ -168,8 +137,6 @@
                               {{$subsection->title}}
                           </div> 
                         </a>
-                     
-                        {{-- @endif --}}
                         @endif
                         @endforeach
                       </div>
@@ -186,10 +153,6 @@
     </div>
     @include('projects.sidebar')
   </div>
-  
-  {{-- <div class="card mt-5 text-center bg-light">
-    
-  </div> --}}
 
   <div class="mt-5 text-center">
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="" width="30px" height="30px">
