@@ -15,6 +15,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\InstitutionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
         Route::resource('students', StudentController::class);
+
+        // Institution
+        Route::resource('institutions', InstitutionController::class);
 
         // Mentors
         Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
