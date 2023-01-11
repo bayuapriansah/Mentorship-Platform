@@ -56,7 +56,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
     Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
     Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
-    Route::get('/projects/{student}/applied/{project}/detail/{subsection}/submission', [ProjectController::class, 'appliedSubmission'])->name('projects.appliedSubmission');
+    Route::get('/projects/{student}/applied/{project}/task/{section}/detail/{subsection}/submission', [ProjectController::class, 'appliedSubmission'])->name('projects.appliedSubmission');
     Route::post('/projects/{student}/applied/{project}/detail/{subsection}', [ProjectController::class, 'appliedSubmit'])->name('projects.appliedSubmit');
     Route::post('/projects/{project}/apply', [ProjectController::class, 'applyProject'])->name('projects.apply');
     Route::get('/supportlib', function () {

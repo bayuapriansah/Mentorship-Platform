@@ -461,9 +461,15 @@ class ProjectController extends Controller
         return view('projects.applied.show', compact('student_id','project', 'project_sections'));
     }
 
-    public function appliedSubmission($student_id, $project_id, $subsection_id)
+    public function appliedSubmission($student_id, $project_id, $section_id, $subsection_id)
     {
-        $section_subsection = SectionSubsection::find($subsection_id);
+
+        $section_subsection = SectionSubsection::where('project_section_id', $project_id)->find($subsection_id);
+
+        // dd($section_subsection);
+        if ($section_subsection == null) {
+            abort(403);
+        }
         return view('projects.subsection.index', compact(['student_id','project_id','section_subsection']));
     }
 
