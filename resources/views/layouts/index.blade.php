@@ -7,6 +7,7 @@
     <title>Simulated Internship</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
     @vite('resources/css/app.css')
     <meta name="theme-color" content="#712cf9">
@@ -76,8 +77,8 @@
         <li class="text-white intelOne font-light text-sm"><a href="#">Industry Partners</a></li>
       </ul>
       <div class="col-start-9 col-span-4 flex justify-between">
-        <button class="py-2.5 px-11 rounded-full border-2 border-solid border-light-grey text-center capitalize bg-orange text-white font-light text-sm intelOne">Get Started</button>
-        <a href="{{route('registerPage')}}" class="py-2.5 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Register</a>
+        <button class="py-2 px-14 rounded-full border-2 border-solid border-light-grey text-center capitalize bg-orange text-white font-light text-sm intelOne ml-4">Login</button>
+        <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Register</a>
       </div>
     </nav>
   </div>

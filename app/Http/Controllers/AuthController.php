@@ -17,6 +17,7 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
+
     public function store(Request $request){ 
         $validator = Validator::make($request->all(), [
             'first_name' => ['required'],
@@ -113,5 +114,15 @@ class AuthController extends Controller
             return back()->with('error','User has not been registered');
         }
     }
+
+    public function verifyEmail()
+    {
+        return view('auth.verifyEmail');
+    }
+    public function verified()
+    {
+        return view('auth.verified');
+    }
+
 
 }

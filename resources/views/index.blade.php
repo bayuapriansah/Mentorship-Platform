@@ -6,7 +6,7 @@
       <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Join Simulated Internship Program And Get Yourself Industry Ready!</h1>
       <p class="intelOne text-black py-6 font-thin text-lg leading-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
       <div class="flex">
-        <button class="intelOne text-white text-sm font-normal bg-darker-blue px-16 py-3.5 rounded-full">Get Started</button>
+        <button class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-16 py-3.5 rounded-full">Get Started</button>
       </div>
     </div>
     <div class="col-start-7 col-span-6 relative">
@@ -48,7 +48,7 @@
     <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-24 " aria-hidden="true" >
     <img src="{{asset('assets/img/image8.png')}}" class="relative z-20" alt="">
   </div>
-  <div class="container">
+  <div class="container mx-auto">
     <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 flex justify-between items-center">
       <div class="col-span-4">
         <h1 class="intelOne text-dark-blue font-bold text-3xl">Active Internships Program</h1>

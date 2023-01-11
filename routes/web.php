@@ -33,6 +33,8 @@ Route::get('/', function () {
 })->name('index');
 
 // register
+Route::get('/verify', [AuthController::class, 'verifyEmail'])->name('verify');
+Route::get('/verified', [AuthController::class, 'verified'])->name('verified');
 Route::get('/register', [AuthController::class, 'register'])->name('registerPage');
 Route::post('/register', [AuthController::class, 'store'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
