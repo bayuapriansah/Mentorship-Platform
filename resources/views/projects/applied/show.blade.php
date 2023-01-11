@@ -45,6 +45,10 @@
             </div>
             <div class="row">
               <div class="col">
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 37b30d4b2a4b545a7260a7502b36daf28df3ccff
               </div>
             </div>
             <div class="row mt-4">
@@ -69,8 +73,7 @@
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
                       <div class="accordion-body {{\Carbon\Carbon::now()->toDateString() >= $date ? '': 'pe-none'}}">
                         {!!$project_section->description!!}
-                        Start from {{$date}}
-                        @dd($project_section)
+                        {{-- Start from {{$date}} --}}
                         @php
                             $date = $appliedDate->addDays(7)->toDateString();
                             $isNotCompleted = 0;
@@ -91,16 +94,20 @@
                             
                         @endif
                         @if (!$subsection->submission && $isNotCompleted != 0 && $ErrorId == $project_section->id)
-                        <p>KONDISI 1</p>
-                        <a style="color: yellow !important" class="text-decoration-none text-dark disabled-link">
+                        {{-- <p>KONDISI 1</p> --}}
+
+                        <a style="color: yellow !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/task/{{$project_section->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark disabled-link">
                           <div class="card p-4 mb-2">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
                           </div>
                         </a>
                         @elseif (!$subsection->submission && $isNotCompleted == 0 && $ErrorId == $project_section->id)
-                        <p>KONDISI 2</p>
-                          <a style="color: red !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
+                        {{-- make sure link cant be accessed if time not meet yet --}}
+                        {{-- @if($section_complete == 'selesai' && )   --}}                          
+                        {{-- <p>KONDISI 2</p> --}}
+
+                          <a style="color: red !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/task/{{$project_section->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                               <div class="card p-4 mb-2">
                                   <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                                   {{$subsection->title}}
@@ -110,16 +117,21 @@
                                 $isNotCompleted = 1;
                             @endphp
                         @elseif($subsection->submission)
-                        <p>KONDISI 3</p>
-                          <a style="color: green !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
+                        {{-- make sure link cant be accessed if time not meet yet --}}                          
+                        {{-- <p>KONDISI 3</p> --}}
+
+                          <a  style="color: green !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/task/{{$project_section->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                             <div class="card p-4 mb-2">
                                 <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                                 {{$subsection->title}}
                             </div>
                           </a>
-                          @else 
-                        <p>KONDISI 4</p>
-                        <a class="text-decoration-none text-dark disabled-link">
+
+                        @else 
+                        {{-- <p>
+                          KONDISI 4
+                        </p> --}}
+                        <a href="/projects/{{$student_id}}/applied/{{$project->id}}/task/{{$project_section->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark disabled-link">
                           <div class="card p-4 mb-2 ">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
