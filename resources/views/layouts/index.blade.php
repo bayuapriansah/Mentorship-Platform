@@ -71,7 +71,7 @@
   <div class="w-full bg-dark-blue">
     <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
       <a href="/" class="col-span-3">
-        <img src="assets/img/Intel-logo-2022.png" class="" alt="">
+        <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
       <ul class="mx-1.5 col-start-5 col-span-4 flex justify-between text-black">
         <li class="text-white intelOne font-light text-sm"><a href="/">Home</a></li>

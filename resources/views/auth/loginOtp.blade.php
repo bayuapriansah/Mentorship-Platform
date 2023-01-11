@@ -47,7 +47,6 @@
         </div> --}}
         <div class="flex">
           <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Request OTP</button>
-          <p class="my-auto mx-2.5 font-normal text-sm intelOne text-light-black">or, <a href="/login" class="text-dark-blue">Login with Password</a></p>
         </div>
       </form>
     </div>
