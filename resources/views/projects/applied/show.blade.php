@@ -45,26 +45,6 @@
             </div>
             <div class="row">
               <div class="col">
-                {{-- MASIH DIKERJAKAN --}}
-                {{-- @foreach($section_count_complete as $scount)
-                <p>{{ $scount->title }}</p>
-                @endforeach --}}
-                {{-- <p>{{$section_count_complete->where('section',1)->count()}}</p> --}}
-                {{-- @for($i = 1;$i <= $max_task; $i++)
-                  <p>{{$section_count_complete->where('section',$i)->count()}}</p>
-                @endfor --}}
-                {{-- @for($i = 1;$i <= $max_task; $i++) --}}
-                {{-- <p>Ini Data Section {{ $i }} yang selesai : {{ $dat = $section_count_complete->where('section',$i) }}</p>
-                <p>Jumlah Section yang selesai : {{ $section_complete = $section_count_complete->where('section',$i)->count() }}</p>
-                <p>Jumlah Section yang harus selesai : {{ $section_must_complete = $section_count->where('section', $i)->count() }}</p> --}}
-                  {{-- @foreach($dat as $scount)
-                  @if($section_complete == $section_must_complete)
-                      section berikutnya terbuka
-                      <p></p> --}}
-                  {{-- <p>{{ $scount->title }}</p> --}}
-                  {{-- @endif
-                  @endforeach --}}
-                {{-- @endfor --}}
               </div>
             </div>
             <div class="row mt-4">
@@ -86,23 +66,16 @@
                         Section {{$no}}
                       </button>
                     </h2>
-                    {{-- <p>Ini Data Section {{ $no }} yang selesai : {{ $dat = $section_count_complete->where('section',$no) }}</p>
-                    <p>Jumlah Section yang selesai : {{ $section_complete = $section_count_complete->where('section',$no)->count() }}</p>
-                    <p>Jumlah Section yang harus selesai : {{ $section_must_complete = $section_count->where('section', $no)->count() }}</p>
-                    {{ $section_complete == $section_must_complete ? 'selesai' : 'belum' }} --}}
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
-                      {{-- <div class="accordion-body"> --}}
                       <div class="accordion-body {{\Carbon\Carbon::now()->toDateString() >= $date ? '': 'pe-none'}}">
-                        {{-- {!!$project_section->description!!} --}}
-                        {{-- Start from {{$date}} --}}
+                        {!!$project_section->description!!}
+                        Start from {{$date}}
+                        @dd($project_section)
                         @php
                             $date = $appliedDate->addDays(7)->toDateString();
                             $isNotCompleted = 0;
                         @endphp
-                        {{-- SUBSECTION --}}
-                        {{-- @dd($project) --}}
                         @foreach($project_section->sectionSubsections as $subsection)
-                        {{-- isErrorPrevious --}}
                        
                         @if (!isset($subsection->submission))
                         
@@ -117,42 +90,16 @@
                             @endphp
                             
                         @endif
-                        {{-- <p>
-                          {{  !$isErrorPrevious ? "SHOW" : "ERROR" }}
-                         </p> --}}
-                        {{-- jumlah submission subsection --}}
-                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
-
-                        {{-- cari jumlah task per section --}}
-                        {{-- @dd($project_section->sectionSubsections->count()) --}}
-                        {{-- @dd($section_complete = $section_count_complete->where('section',$no)->count()) --}}
-                        
-                        {{--  --}}
-                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count()) --}}
-                        {{-- @dd($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count() ? 'true': 'false') --}}
-                        
-                        {{-- @if ($subsection->submission->where('section_subsection_id', $subsection->id)->get()->count() != $project_section->sectionSubsections->count())
-                            @dd('yee')
-                        @else
-                          @dd('ts')
-                        @endif --}}
-                        {{-- {{ $project_section->section == 1 ? 'OK' : 'GAGAL' }} --}}
-                        {{-- @if($section_complete == $section_must_complete && $project_section->section == $no && \Carbon\Carbon::now()->toDateString() >= $date) --}}
-                         {{-- KONDISI 1 =  --}}
-                        {{-- {{ print_r($ErrorId, $subsection ? "BELUM KOMPLIT" :"UDAH KOMPLIT") }} --}}
                         @if (!$subsection->submission && $isNotCompleted != 0 && $ErrorId == $project_section->id)
                         <p>KONDISI 1</p>
-
-                        <a style="color: yellow !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark disabled-link">
+                        <a style="color: yellow !important" class="text-decoration-none text-dark disabled-link">
                           <div class="card p-4 mb-2">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
                           </div>
                         </a>
                         @elseif (!$subsection->submission && $isNotCompleted == 0 && $ErrorId == $project_section->id)
-                        {{-- make sure link cant be accessed if time not meet yet --}}
-                          {{-- @if($section_complete == 'selesai' && )   --}}                          <p>KONDISI 2</p>
-
+                        <p>KONDISI 2</p>
                           <a style="color: red !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                               <div class="card p-4 mb-2">
                                   <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
@@ -162,31 +109,22 @@
                             @php
                                 $isNotCompleted = 1;
                             @endphp
-                          {{-- @endif --}}
-                         
-
                         @elseif($subsection->submission)
-                        {{-- make sure link cant be accessed if time not meet yet --}}                          <p>KONDISI 3</p>
-
-                          <a  style="color: green !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
+                        <p>KONDISI 3</p>
+                          <a style="color: green !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
                             <div class="card p-4 mb-2">
                                 <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                                 {{$subsection->title}}
                             </div>
                           </a>
-
-                        @else 
-                        <p>
-                          KONDISI 4
-                        </p>
-                        <a href="" class="text-decoration-none text-dark disabled-link">
+                          @else 
+                        <p>KONDISI 4</p>
+                        <a class="text-decoration-none text-dark disabled-link">
                           <div class="card p-4 mb-2 ">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
                           </div> 
                         </a>
-                     
-                        {{-- @endif --}}
                         @endif
                         @endforeach
                       </div>
@@ -203,10 +141,6 @@
     </div>
     @include('projects.sidebar')
   </div>
-  
-  {{-- <div class="card mt-5 text-center bg-light">
-    
-  </div> --}}
 
   <div class="mt-5 text-center">
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="" width="30px" height="30px">
