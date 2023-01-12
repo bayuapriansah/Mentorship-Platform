@@ -19,6 +19,7 @@ class AuthOtpController extends Controller
     }
 
     public function generate(Request $request){
+        // dd($request->all());
         $request->validate([
             'email' => 'required'
         ]);
@@ -36,7 +37,6 @@ class AuthOtpController extends Controller
     }
 
     public function generateOtp($email){
-        // Check if email exists
         $data_user = Student::where('email', $email)->first();
         if(!$data_user){
             $data_user = Mentor::where('email', $email)->first();
@@ -67,37 +67,43 @@ class AuthOtpController extends Controller
     }
 
     public function loginWithOtp(Request $request){
-        // dd($request->all());
-        $request->validate([
-            'user_id' => 'required',
-            'email' => 'required',
-            'otp' => 'required'
-        ]);
-        $theMail = (new SimintEncryption)->encData($request->email);
-        $encId = (new SimintEncryption)->decData($request->user_id);
-        $encEmail = (new SimintEncryption)->decData($theMail);
-        $verificationCode = VerificationCode::where('user_id', $encId)->where('email', $encEmail)->where('otp', $request->otp)->first();
-        $now = Carbon::now();
-        if(!$verificationCode){
-            return redirect()->route('otp.verification')->with('error', 'Your verification code is invalid');
-        }elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
-            return redirect()->route('otp.login')->with('error', 'Your verification code has expired');
-        }
-
-        $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
-        if(!$data_user){
-            $data_user = Mentor::where('id', $encId)->where('email', $encEmail)->first();
-            $verificationCode->update([
-                'expired_at' => $now
+        if($request->input('action') == 'login'){
+            $request->validate([
+                'user_id' => 'required',
+                'email' => 'required',
+                'otp' => 'required'
             ]);
-            Auth::guard('mentor')->login($data_user);
-            return redirect('/')->with('success', 'You are logged in');
+            $theMail = (new SimintEncryption)->encData($request->email);
+            $encId = (new SimintEncryption)->decData($request->user_id);
+            $encEmail = (new SimintEncryption)->decData($theMail);
+            $verificationCode = VerificationCode::where('user_id', $encId)->where('email', $encEmail)->where('otp', $request->otp)->first();
+            $now = Carbon::now();
+            if(!$verificationCode){
+                return redirect()->route('otp.verification')->with('error', 'Your verification code is invalid');
+            }elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
+                return redirect()->route('otp.login')->with('error', 'Your verification code has expired');
+            }
+    
+            $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
+            if(!$data_user){
+                $data_user = Mentor::where('id', $encId)->where('email', $encEmail)->first();
+                $verificationCode->update([
+                    'expired_at' => $now
+                ]);
+                Auth::guard('mentor')->login($data_user);
+                return redirect('/')->with('success', 'You are logged in');
+            }else{
+                $verificationCode->update([
+                    'expired_at' => $now
+                ]);
+                Auth::guard('student')->login($data_user);
+                return redirect('/projects/'.Auth::guard('student')->user()->id.'/applied')->with('success', 'You are logged in');
+            }
+        }elseif($request->input('action') == 'otp'){
+            $this->generate($request);
+            return back();
         }else{
-            $verificationCode->update([
-                'expired_at' => $now
-            ]);
-            Auth::guard('student')->login($data_user);
-            return redirect('/projects/'.Auth::guard('student')->user()->id.'/applied')->with('success', 'You are logged in');
+            return abort(403, 'Unauthorized action.');   
         }
     }
 }

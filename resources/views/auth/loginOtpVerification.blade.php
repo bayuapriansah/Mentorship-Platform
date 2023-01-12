@@ -13,15 +13,16 @@
         <input type="email" id="email" name="email" value="{{$email}}" class="form-control">
         <label for="otp" class="form-label">OTP Code</label>
         <input type="text" id="otp" name="otp" class="form-control">
-        <button type="submit" class="btn btn-primary mt-2">Log In</button>
+        <button type="submit" name="action" value="login" class="btn btn-primary mt-2">Log In</button>
+        <button type="submit" name="action" value="otp" class="btn btn-primary mt-2">Get OTP Again</button>
         {{-- <button type="button" class="btn btn-primary mt-2">Get OTP</button> --}}
       {{-- </form>
     </div>
   </div>
 </div> --}}
-@if($errors->any())
+{{-- @if($errors->any())
             {!! implode('', $errors->all('<div class="text-danger text-sm mt-1">:message</div>')) !!}
-        @endif
+        @endif --}}
 <section id="login" class="w-full">
   <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-11 grid-flow-col bg-lightest-blue">
     <div class="col-span-6">
@@ -38,12 +39,11 @@
           This email address is already registered!
         </div> --}}
         <div class="flex justify-end mt-4">
-          <a href="#" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue">Resend OTP</a>
+          <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue">Resend OTP</button>
         </div>
 
         <div class="flex mt-4">
-          <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Verify OTP</button>
-          <p class="my-auto mx-2.5 font-normal text-sm intelOne text-light-black">or, <a href="/login" class="text-dark-blue">Login with Password</a></p>
+          <button name="action" value="login" class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Verify OTP</button>
         </div>
       </form>
     </div>

@@ -15,6 +15,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\InstitutionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
     Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
     Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
-    Route::get('/projects/{student}/applied/{project}/detail/{subsection}/submission', [ProjectController::class, 'appliedSubmission'])->name('projects.appliedSubmission');
+    Route::get('/projects/{student}/applied/{project}/task/{section}/detail/{subsection}/submission', [ProjectController::class, 'appliedSubmission'])->name('projects.appliedSubmission');
     Route::post('/projects/{student}/applied/{project}/detail/{subsection}', [ProjectController::class, 'appliedSubmit'])->name('projects.appliedSubmit');
     Route::post('/projects/{project}/apply', [ProjectController::class, 'applyProject'])->name('projects.apply');
     Route::get('/supportlib', function () {
@@ -73,6 +74,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
         Route::resource('students', StudentController::class);
+
+        // Institution
+        Route::resource('institutions', InstitutionController::class);
 
         // Mentors
         Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');

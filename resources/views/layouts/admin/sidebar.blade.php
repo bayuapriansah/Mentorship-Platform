@@ -45,6 +45,12 @@
         </div>
     </div>
   </li>
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="{{route('dashboard.institutions.index')}} ">
+        <i class="fa fa-users" aria-hidden="true"></i>
+        <span>Institutions</span>
+    </a>
+</li>
 
   {{-- <li class="nav-item">
       <a class="nav-link collapsed" href="{{route('dashboard.companies.index')}}">
