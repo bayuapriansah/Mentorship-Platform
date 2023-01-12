@@ -104,9 +104,9 @@
       </div>
       <div class="col-span-4">
         <div class="flex flex-grow">
-          <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
+          <div class="block p-3 rounded-lg shadow-lg hover:border-[1px] border-[1px] hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
             <div class="flex space-x-2">
-              <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
+              <div class=" my-auto border-[1px] border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
                 <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
               </div>
               <div class="flex-col">
