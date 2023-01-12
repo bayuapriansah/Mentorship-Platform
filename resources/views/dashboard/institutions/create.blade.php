@@ -19,11 +19,18 @@
                 </p>
             @enderror
           </div>
-
+          {{-- @dd($countries) --}}
           <div class="mb-3">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity" name="city" value="{{old('city')}}">
-            @error('city')
+            <label for="inputCountries" class="form-label">City</label>
+            <select class="form-control form-select" id="inputCountries" aria-label="Default select example" name="countries">
+              <option>Country</option>
+              @forelse($countries as $country)
+              <option value="{{$country['iso2']}}">{{$country['name']}}</option>
+              @empty
+              <p>There is no Country Data</p>
+              @endforelse
+            </select>
+            @error('countries')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>
@@ -47,4 +54,21 @@
     </div>
   </div>
 </div>
+<script>
+  // Fetch dari API
+  $(document).ready(function() {
+    $('#inputCountries').change(function(){
+      // var iso2Data = $("#inputCountries option:selected").val();
+      var e = document.getElementById("inputCountries");
+      var iso2Datavalue = e.value;
+      var text = e.options[e.selectedIndex].text;
+      fetch("http://localhost:8000/api/countries?fields=iso2,states&filters[iso2]=" + iso2Datavalue)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          //  $("#input").val(data);
+        });     
+    });
+  });
+</script>
 @endsection

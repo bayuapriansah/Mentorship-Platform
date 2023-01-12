@@ -16,6 +16,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\TheWorldController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,8 @@ Route::group(['middleware'=>'auth:student'], function(){
         return view('projects.supportlibrary');
     })->name('projects.support');
 });
+
+Route::get('/theworld', [TheWorldController::class, 'index']);
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Institution;
 use Illuminate\Http\Request;
+// use TheWorldController;
 
 class InstitutionController extends Controller
 {
@@ -25,7 +26,8 @@ class InstitutionController extends Controller
      */
     public function create()
     {
-        return view('dashboard.institutions.create');
+        $countries = (new TheWorldController)->TheWorld();
+        return view('dashboard.institutions.create', compact('countries'));
     }
 
     /**

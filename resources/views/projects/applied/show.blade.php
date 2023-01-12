@@ -45,10 +45,7 @@
             </div>
             <div class="row">
               <div class="col">
-<<<<<<< HEAD
-=======
                 
->>>>>>> 37b30d4b2a4b545a7260a7502b36daf28df3ccff
               </div>
             </div>
             <div class="row mt-4">
@@ -73,7 +70,7 @@
                     <div id="collapse{{$no}}" class="accordion-collapse collapse {{$no==1 ? 'show': ''}}" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
                       <div class="accordion-body {{\Carbon\Carbon::now()->toDateString() >= $date ? '': 'pe-none'}}">
                         {!!$project_section->description!!}
-                        {{-- Start from {{$date}} --}}
+                        Start from {{$date}}
                         @php
                             $date = $appliedDate->addDays(7)->toDateString();
                             $isNotCompleted = 0;

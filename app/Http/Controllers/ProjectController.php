@@ -463,7 +463,7 @@ class ProjectController extends Controller
 
     public function appliedSubmission($student_id, $project_id, $section_id, $subsection_id)
     {
-
+        // $check_submission = Submission::where('')
         $section_subsection = SectionSubsection::where('project_section_id', $project_id)->find($subsection_id);
 
         // dd($section_subsection);
