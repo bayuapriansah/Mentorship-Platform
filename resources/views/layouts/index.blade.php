@@ -74,9 +74,9 @@
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
       <ul class="col-start-5 col-span-4 flex justify-between text-black">
-        <li class="text-white intelOne font-light text-sm"><a href="/">Home</a></li>
-        <li class="text-white intelOne font-light text-sm"><a href="{{route('projects.index')}}">Internship Programs</a></li>
-        <li class="text-white intelOne font-light text-sm"><a href="#">Industry Partners</a></li>
+        <li class="text-white intelOne font-light text-sm"><a href="/" class="hover:text-neutral-300">Home</a></li>
+        <li class="text-white intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-300">Internship Programs</a></li>
+        <li class="text-white intelOne font-light text-sm"><a href="#" class="hover:text-neutral-300">Industry Partners</a></li>
       </ul>
       <div class="col-start-9 col-span-4 flex {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
         @if(Auth::guard('student')->check())

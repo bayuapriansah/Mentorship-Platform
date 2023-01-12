@@ -128,7 +128,7 @@
           <div class="flex-col">
             <p class="intelOne text-dark-blue font-bold text-xl leading-7">{{$project->name}}</p>
             <p class="text-black font-normal text-sm">{{$project->company->name}}</p>
-            <p class="text-black font-normal text-sm bg-lightest-blue text-center rounded-full px-8">{{$project->project_domain}}</p>
+            <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center">{{$project->project_domain}}</p>
           </div>
         </div>
         <p class="intelOne text-grey font-normal text-sm py-2">{!! substr($project->problem,0,200) !!}...</p>

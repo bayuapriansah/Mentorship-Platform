@@ -17,11 +17,16 @@ use File;
 class ProjectController extends Controller
 {
     public function index()
-    {
-        $projects = Project::whereNotIn('id', function($query){
-            $query->select('project_id')->from('enrolled_projects');
-            $query->where('student_id',Auth::guard('student')->user()->id);
-        })->get();
+    {   
+        if(Auth::guard('student')->check()){
+            $projects = Project::whereNotIn('id', function($query){
+                $query->select('project_id')->from('enrolled_projects');
+                $query->where('student_id',Auth::guard('student')->user()->id);
+            })->get();
+        }else{
+            $projects = Project::get();
+        }
+        
         return view('projects.index', compact('projects'));
     }
 

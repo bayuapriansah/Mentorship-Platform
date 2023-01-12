@@ -52,7 +52,7 @@ Route::get('/student/register/{email}', [StudentController::class, 'register'])-
 Route::post('/student/register/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 
 // Student projects page
-Route::group(['middleware'=>'auth:student'], function(){
+// Route::group(['middleware'=>'auth:student'], function(){
     // projects page
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
@@ -65,7 +65,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/supportlib', function () {
         return view('projects.supportlibrary');
     })->name('projects.support');
-});
+// });
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page

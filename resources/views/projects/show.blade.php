@@ -71,7 +71,7 @@
       </div>
     </div>
   </div>
- 
+  @if(Auth::guard('student')->check())
   <div class="row mt-2">
     <div class="col">
       <form method="POST" action="{{ $project->id }}/apply" >
@@ -82,5 +82,6 @@
       </form>
     </div>
   </div>
+  @endif
 </div>
 @endsection
