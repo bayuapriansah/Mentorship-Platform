@@ -312,9 +312,18 @@ class ProjectController extends Controller
 
     public function dashboardStoreSubsection($project_id, $section_id, Request $request)
     {   
+        
         if($request->category == 'video'){
             $validated = $request->validate([
                 'video_link' => 'required',
+                'category' => 'required',
+                'title' => 'required',
+                'file1' => 'required',
+                'description' => 'required'
+            ]);
+        }elseif($request->category == 'task'){
+            $validated = $request->validate([
+                'inputfiletype'=>'required',
                 'category' => 'required',
                 'title' => 'required',
                 'file1' => 'required',
@@ -346,6 +355,9 @@ class ProjectController extends Controller
             $sectionSubsection->file3 = $file3;
         }
         $sectionSubsection->video_link = $request->video_link;
+        if($request->inputfiletype != null){
+            $sectionSubsection->file_type = $request->inputfiletype;
+        }
         $sectionSubsection->is_submit = 0 ;
         $sectionSubsection->save();
         return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
@@ -363,6 +375,14 @@ class ProjectController extends Controller
         if($request->category == 'video'){
             $validated = $request->validate([
                 'video_link' => 'required',
+                'category' => 'required',
+                'title' => 'required',
+                'description' => 'required'
+            ]);
+        }
+        if($request->category == 'task'){
+            $validated = $request->validate([
+                'inputfiletype'=>'required',
                 'category' => 'required',
                 'title' => 'required',
                 'description' => 'required'
@@ -418,6 +438,9 @@ class ProjectController extends Controller
             $section_subsection->file3 = $file3;
         }
         $section_subsection->video_link = $request->video_link;
+        if($request->inputfiletype != null){
+            $section_subsection->file_type = $request->inputfiletype;
+        }
         $section_subsection->save();
         return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
     }

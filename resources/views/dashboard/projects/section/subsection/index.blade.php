@@ -21,6 +21,7 @@
             <th>No</th>
             <th>Title</th>
             <th>Category</th>
+            <th>File type</th>
             <th>File 1</th>
             <th>File 2</th>
             <th>File 3</th>
@@ -36,9 +37,28 @@
             <td>{{$no}}</td>
             <td>{{$project_subsection->title}}</td>
             <td>{{$project_subsection->category}}</td>
-            <td><a href="{{asset('storage/'.$project_subsection->file1)}}">file1</a></td>
-            <td><a href="{{asset('storage/'.$project_subsection->file2)}}">file2</a></td>
-            <td><a href="{{asset('storage/'.$project_subsection->file3)}}">file3</a></td>
+            <td>{{$project_subsection->file_type}}</td>
+            <td>
+              @if($project_subsection->file1)
+                <a href="{{asset('storage/'.$project_subsection->file1)}}">file1</a>
+              @else
+                [None]
+              @endif
+            </td>
+            <td>
+              @if($project_subsection->file2)
+                <a href="{{asset('storage/'.$project_subsection->file2)}}">file2</a>
+              @else
+                [None]
+              @endif
+              </td>
+            <td>
+              @if($project_subsection->file3)
+                <a href="{{asset('storage/'.$project_subsection->file3)}}">file3</a>
+              @else
+                [None]
+              @endif
+              </td>
             <td>{{$project_subsection->video_link ? $project_subsection->video_link : "None"}}</td>
             {{-- <td>{{$project->is_submit}}</td> --}}
             <td>

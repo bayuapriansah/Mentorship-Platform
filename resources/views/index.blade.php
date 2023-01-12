@@ -66,7 +66,7 @@
               <div class="flex-col">
                 <p class="intelOne text-dark-blue font-bold text-xl leading-7">Build a chat bot</p>
                 <p class="text-black font-normal text-sm">Sustainable Living Lab</p>
-                <p class="text-black font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
+                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
               </div>
             </div>
             <p class="text-gray-700 text-base mb-2 pt-3">
@@ -89,7 +89,7 @@
               <div class="flex-col">
                 <p class="intelOne text-dark-blue font-bold text-xl leading-7">Build a chat bot</p>
                 <p class="text-black font-normal text-sm">Sustainable Living Lab</p>
-                <p class="text-black font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
+                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
               </div>
             </div>
             <p class="text-gray-700 text-base mb-2 pt-3">
@@ -112,7 +112,7 @@
               <div class="flex-col">
                 <p class="intelOne text-dark-blue font-bold text-xl leading-7">Build a chat bot</p>
                 <p class="text-black font-normal text-sm">Sustainable Living Lab</p>
-                <p class="text-black font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
+                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
               </div>
             </div>
             <p class="text-gray-700 text-base mb-2 pt-3">
