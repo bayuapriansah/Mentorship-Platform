@@ -30,6 +30,13 @@ class ProjectController extends Controller
         return view('projects.index', compact('projects'));
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $projects = Project::where('name', 'like', "%" . $keyword . "%")->get();
+        return view('projects.index', compact('projects'));
+    }
+
     public function show($id)
     {
         $project = Project::find($id);

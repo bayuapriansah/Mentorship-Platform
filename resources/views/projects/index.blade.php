@@ -73,7 +73,7 @@
     <div class="col-span-6 my-auto">
       <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Search Internships</h1>
       <p class="intelOne font-light text-black text-lg leading-6 py-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-      <form action="" method="post">
+      <form action="/projects/search" method="get">
         @csrf
         <div class="flex justify-between">
         <div class="relative flex-grow">
@@ -102,7 +102,7 @@
       
     </div>
   </div>
-  <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col">
+  <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col" id="#projectsSection">
     <div class="col-span-3">
       <h3 class="intelOne text-dark-blue text-2xl font-semibold">Program Filters</h3>
       <p>Reset</p>
