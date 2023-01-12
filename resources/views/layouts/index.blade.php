@@ -73,73 +73,57 @@
       <a href="/" class="col-span-3">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
-      <ul class="mx-1.5 col-start-5 col-span-4 flex justify-between text-black">
+      <ul class="col-start-5 col-span-4 flex justify-between text-black">
         <li class="text-white intelOne font-light text-sm"><a href="/">Home</a></li>
         <li class="text-white intelOne font-light text-sm"><a href="#">Internship Programs</a></li>
         <li class="text-white intelOne font-light text-sm"><a href="#">Industry Partners</a></li>
       </ul>
-      <div class="col-start-9 col-span-4 flex justify-between">
-        <button class="py-2 px-14 rounded-full border-2 border-solid border-light-grey text-center capitalize bg-orange text-white font-light text-sm intelOne ml-4">Login</button>
+      <div class="col-start-9 col-span-4 flex {{Auth::guard('web')->check() ? 'justify-end':'justify-between'}}">
+        @if(Auth::guard('student')->check())
+        <ul class="space-x-9 flex justify-between text-black">
+          <li class="text-white intelOne font-light text-sm my-auto"><a href="/">{{Auth::guard('student')->user()->email}}</a></li>
+          <form class="inline" method="post" action="{{ route('logout') }}">
+            @csrf
+            <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>
+          </form>
+        </ul>
+        @elseif(Auth::guard('web')->check())
+        <ul class="text-left">
+          <li class="">
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="intelOne text-darker-blue bg-light-grey  hover:bg-neutral-200 focus:ring-4 focus:outline-none focus:ring-light-grey font-medium rounded-lg text-sm px-11 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">{{Auth::guard('web')->user()->email}} <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+      
+      <!-- Dropdown menu -->
+            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="{{route('dashboard.admin')}}" class="block px-4 py-2 hover:text-dark-blue hover:font-semibold">Dashboard</a>
+                  </li>
+                  <form class="inline" method="post" action="{{ route('logout') }}" class="hover:bg-gray-100">
+                    @csrf
+                    <li><button type="submit" class="block px-4 py-2 hover:text-dark-blue hover:font-semibold intelOne">Log Out</button></li>
+                  </form>
+                </ul>
+            </div>
+          </li>
+        </ul>
+          
+        {{-- <ul class="flex justify-between flex-grow  text-black">
+          <li class="text-white intelOne font-light text-sm my-auto"><a href="{{route('dashboard.admin')}}">Dashboard</a></li>
+          <li class="text-white intelOne font-light text-sm my-auto">{{Auth::guard('web')->user()->email}}</a></li>
+          
+          <form class="inline" method="post" action="{{ route('logout') }}">
+            @csrf
+            <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>
+          </form>
+        </ul> --}}
+        @else
+        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-2 border-solid border-light-grey text-center capitalize bg-orange text-white font-light text-sm intelOne ml-4">Login</a>
         <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Register</a>
+        @endif
+        
       </div>
     </nav>
   </div>
-  
-
-  {{-- <div class="container">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <span class="fs-4">Intel</span>
-      </a>
-
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="/" class="nav-link link-dark px-2" aria-current="page">Home</a></li>
-        
-        @if(Auth::guard('student')->check())
-        <li class="nav-item"><a href="{{route('projects.index')}}" class="nav-link link-dark px-2">Project Page</a></li>
-        <div class="btn-group">
-          <button type="button" class="btn btn-danger">{{Auth::guard('student')->user()->email}}</button>
-          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="visually-hidden">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ route('student.register', [Auth::guard('student')->user()->email]) }}">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <form class="inline" method="post" action="{{ route('logout') }}">
-              @csrf
-              <li><button type="submit" class="btn dropdown-item">Log Out</button></li>
-            </form>
-          </ul>
-        </div>
-        @elseif(Auth::guard('mentor')->check())
-        //cek routenya han
-        <li class="nav-item"><a href="{{route('dashboard.mentor')}}" class="nav-link link-dark px-2">Dashboard</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('mentor')->user()->email}}</a></li>
-        <form class="inline" method="post" action="/logout">
-          @csrf
-          <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
-        @elseif(Auth::guard('company')->check())
-        <li class="nav-item"><a href="{{route('dashboard.company')}}" class="nav-link link-dark px-2">Dashboard</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('company')->user()->name}}</a></li>
-        <form class="inline" method="post" action="/logout">
-          @csrf
-          <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
-        @elseif(Auth::guard('web')->check())
-        <li class="nav-item"><a href="{{route('dashboard.admin')}}" class="nav-link link-dark px-2">Dashboard</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::guard('web')->user()->name}}</a></li>
-        <form class="inline" method="post" action="/logout">
-          @csrf
-          <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
-        @else
-        <li class="nav-item"><a href="{{ route('otp.login') }}" class="nav-link link-dark px-2">Sign In</a></li>
-        <li class="nav-item"><a href="/#register" class="nav-link link-dark px-2">Register</a></li>
-        @endif
-      </ul>
-    </header>
-  </div>  --}}
   <main>
   @yield('content')
   </main>
@@ -184,6 +168,8 @@
       </div>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script>
+
     <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

@@ -33,7 +33,7 @@
               {{$message}}
             </p>
         @enderror
-        <input type="text" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('email')}}" placeholder="Password" id="password" name="password" required>
+        <input type="password" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('email')}}" placeholder="Password" id="password" name="password" required>
         @error('password')
             <p class="text-red-600 text-sm mt-1">
               {{$message}}

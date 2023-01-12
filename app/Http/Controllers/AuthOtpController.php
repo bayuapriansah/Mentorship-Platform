@@ -67,6 +67,7 @@ class AuthOtpController extends Controller
     }
 
     public function loginWithOtp(Request $request){
+        // dd($request->all());
         $request->validate([
             'user_id' => 'required',
             'email' => 'required',
