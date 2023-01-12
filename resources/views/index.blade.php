@@ -55,74 +55,80 @@
       </div>
       {{-- untuk arrow --}}
     </div>
-    <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
+    <div class="max-w-[1366px] mx-auto px-36 pt-8 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
       <div class="col-span-4">
         <div class="flex flex-grow">
-          <a href="#" class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-grey bg-white max-w-sm">
-            <div class="flex">
-              <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9 mr-5" alt="">
+          <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
+            <div class="flex space-x-2">
+              <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
+                <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+              </div>
               <div class="flex-col">
-                <p class="bg-lighter-blue text-dark-blue font-normal text-sm min-w-2 mx-w-2 rounded-full text-center">1 January 2023</p>
-                  <p class="intelOne text-dark-blue font-bold text-xl">[Project name]</p>
+                <p class="intelOne text-dark-blue font-bold text-xl leading-7">Build a chat bot</p>
+                <p class="text-black font-normal text-sm">Sustainable Living Lab</p>
+                <p class="text-black font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
               </div>
             </div>
             <p class="text-gray-700 text-base mb-2 pt-3">
-              Some quick example text to build on the card title and make up the bulk of the card's
-              content.
+              Some quick example text to build on the card title and make up
             </p>
             <div class="flex justify-between">
-            <p class="intelOne text-dark-blue text-sm font-normal my-auto">232 student</p>
-            <button class="intelOne text-white text-sm font-normal bg-darker-blue px-3 py-2 rounded-full">View Internship</button>
+            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">2 Months</span></p>
+            <a href="#" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
             </div>
-          </a>
+          </div>
         </div>
       </div>
       <div class="col-span-4">
         <div class="flex flex-grow">
-          <a href="#" class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-grey bg-white max-w-sm">
-            <div class="flex">
-              <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9 mr-5" alt="">
+          <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
+            <div class="flex space-x-2">
+              <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
+                <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+              </div>
               <div class="flex-col">
-                <p class="bg-lighter-blue text-dark-blue font-normal text-sm min-w-2 mx-w-2 rounded-full text-center">1 January 2023</p>
-                  <p class="intelOne text-dark-blue font-bold text-xl">[Project name]</p>
+                <p class="intelOne text-dark-blue font-bold text-xl leading-7">Build a chat bot</p>
+                <p class="text-black font-normal text-sm">Sustainable Living Lab</p>
+                <p class="text-black font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
               </div>
             </div>
             <p class="text-gray-700 text-base mb-2 pt-3">
-              Some quick example text to build on the card title and make up the bulk of the card's
-              content.
+              Some quick example text to build on the card title and make up
             </p>
             <div class="flex justify-between">
-            <p class="intelOne text-dark-blue text-sm font-normal my-auto">232 student</p>
-            <button class="intelOne text-white text-sm font-normal bg-darker-blue px-3 py-2 rounded-full">View Internship</button>
+            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">2 Months</span></p>
+            <a href="#" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
             </div>
-          </a>
+          </div>
         </div>
       </div>
       <div class="col-span-4">
         <div class="flex flex-grow">
-          <a href="#" class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-grey bg-white max-w-sm">
-            <div class="flex">
-              <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9 mr-5" alt="">
+          <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
+            <div class="flex space-x-2">
+              <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
+                <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+              </div>
               <div class="flex-col">
-                <p class="bg-lighter-blue text-dark-blue font-normal text-sm min-w-2 mx-w-2 rounded-full text-center">1 January 2023</p>
-                  <p class="intelOne text-dark-blue font-bold text-xl">[Project name]</p>
+                <p class="intelOne text-dark-blue font-bold text-xl leading-7">Build a chat bot</p>
+                <p class="text-black font-normal text-sm">Sustainable Living Lab</p>
+                <p class="text-black font-normal text-sm bg-lightest-blue text-center rounded-full">Computer vision</p>
               </div>
             </div>
             <p class="text-gray-700 text-base mb-2 pt-3">
-              Some quick example text to build on the card title and make up the bulk of the card's
-              content.
+              Some quick example text to build on the card title and make up
             </p>
             <div class="flex justify-between">
-            <p class="intelOne text-dark-blue text-sm font-normal my-auto">232 student</p>
-            <button class="intelOne text-white text-sm font-normal bg-darker-blue px-3 py-2 rounded-full">View Internship</button>
+            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">2 Months</span></p>
+            <a href="#" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>
     <div class="max-w-[1366px] mx-auto px-36 pt-12 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
       <div class="col-end-13 col-span-2">
-        <button class="intelOnetext-sm font-normal border-2 border-solid border-dark-blue text-darker-blue px-3 py-2 rounded-full">View Internship</button>
+        <button class="intelOnetext-sm font-normal border-2 border-solid border-dark-blue text-darker-blue hover:bg-dark-blue hover:text-white px-3 py-2 rounded-full">View Internship</button>
       </div>
     </div>
   </div>
