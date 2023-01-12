@@ -22,10 +22,10 @@
           {{-- @dd($countries) --}}
           <div class="mb-3">
             <label for="inputCountries" class="form-label">City</label>
-            <select class="form-control form-select" id="inputCountries" aria-label="Default select example" name="countries">
+            <select class="form-control form-select" id="inputCountries" name="countries">
               <option>Country</option>
               @forelse($countries as $country)
-              <option value="{{$country['iso2']}}">{{$country['name']}}</option>
+              <option value="{{$country['id']}}">{{$country['name']}}</option>
               @empty
               <p>There is no Country Data</p>
               @endforelse
@@ -39,7 +39,9 @@
 
           <div class="mb-3">
             <label for="inputState" class="form-label">State</label>
-            <input type="text" class="form-control" id="inputState" name="state" value="{{old('state')}}">
+            <select class="form-control form-select" id="inputState" name="state">
+              <option>State</option>
+            </select>
             @error('state')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
@@ -55,20 +57,26 @@
   </div>
 </div>
 <script>
-  // Fetch dari API
-  $(document).ready(function() {
-    $('#inputCountries').change(function(){
-      // var iso2Data = $("#inputCountries option:selected").val();
-      var e = document.getElementById("inputCountries");
-      var iso2Datavalue = e.value;
-      var text = e.options[e.selectedIndex].text;
-      fetch("http://localhost:8000/api/countries?fields=iso2,states&filters[iso2]=" + iso2Datavalue)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          //  $("#input").val(data);
-        });     
-    });
+  $(document).ready(function () {
+      $('#inputCountries').on('change', function () {
+          var iso2Country = this.value;
+          var base_url = window.location.origin;
+          $("#inputState").html('');
+          $.ajax({
+              url: base_url+"/api/countries?fields=iso2,states&filters[id]="+iso2Country,
+              contentType: "application/json",
+              dataType: 'json',
+              success: function (result) {
+                // console.log(result.data['0'].states);
+                  $('#inputState').html('<option value="">Select State</option>');
+                  $.each(result.data['0'].states, function (key, value) {
+                      $("#inputState").append('<option value="' + value
+                          .id + '">' + value.name + '</option>');
+                  });
+                  // $('#inputCity').html('<option value="">Select City</option>');
+              }
+          });
+      });
   });
 </script>
 @endsection
