@@ -82,7 +82,7 @@
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
         </div>
-        <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne ml-5" type="submit">Search</button>
+        {{-- <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne ml-5" type="submit">Search</button> --}}
 
         </div>
         {{-- <div class="mt-4">
