@@ -105,24 +105,40 @@
   <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col">
     <div class="col-span-3">
       <h3 class="intelOne text-dark-blue text-2xl font-semibold">Program Filters</h3>
+      <p>Reset</p>
     </div>
-    <div class="col-start-5 col-span-8 space-y-4">
+    <div class="col-start-4 col-span-8 space-y-4">
       <h3 class="intelOne text-dark-blue text-2xl font-semibold">Internships Programs</h3>
     </div>
   </div>
 
   <div class="max-w-[1366px] mx-auto px-36 py-8 mb-0 grid grid-cols-12 gap-11 grid-flow-col">
     <div class="col-span-3">
-      <div class="border-2 border-blue-400 py-5 px-2">
-
+      <div class="border-[1px] border-light-blue py-5 px-5 rounded-xl">
+        <div class="border-b-[1px] border-light-blue pb-2">
+          <div class="flex flex-col">
+            <h5 class="intelOne text-lg text-dark-blue mb-2">Select Partners</h5>
+            <div class="flex">
+              <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 my-auto  text-dark-blueborder-gray-300 rounded  dark:focus:ring-dark-blue ">
+              <label for="default-checkbox" class="intelOne ml-2 my-auto text-sm font-normal text-black">Default checkbox</label>
+            </div>
+            <div class="flex">
+              <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 my-auto  text-dark-blueborder-gray-300 rounded  dark:focus:ring-dark-blue ">
+              <label for="default-checkbox" class="intelOne ml-2 my-auto text-sm font-normal text-black">Default checkbox</label>
+            </div>
+            <div class="flex">
+              <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 my-auto  text-dark-blueborder-gray-300 rounded  dark:focus:ring-dark-blue ">
+              <label for="default-checkbox" class="intelOne ml-2 my-auto text-sm font-normal text-black">Default checkbox</label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-start-5 col-span-8 space-y-4 ">
+    <div class="col-start-4 col-span-9 space-y-4 ">
       @forelse($projects as $project)
-
-      <div class="border-[1px] hover:border-darker-blue hover:border-2 border-[#A4AADC] py-5 px-5 rounded-xl">
+      <div class="border-[1px] hover:border-darker-blue hover:border-2 border-light-blue py-5 px-5 rounded-xl">
         <div class="flex space-x-2">
-          <div class=" my-auto border-[1px] border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
+          <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
             <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
           </div>
           <div class="flex-col">
@@ -133,13 +149,13 @@
         </div>
         <p class="intelOne text-grey font-normal text-sm py-2">{!! substr($project->problem,0,200) !!}...</p>
         <div class="flex justify-between mt-4">
-          <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">2 Months</span></p>
+          <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$project->period}} Months</span></p>
           <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Internship Details</a>
-          </div>
+        </div>
       </div>
-          
       @empty
-          
+        <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
+        <p class="intelOne text-lg text-center">No Internship Found</p>
       @endforelse
     </div>
   </div>
