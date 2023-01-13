@@ -68,20 +68,20 @@
     <!-- Custom styles for this template -->
   </head>
 <body>
-  <div class="w-full bg-dark-blue">
+  <div class="w-full bg-white">
     <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
       <a href="/" class="col-span-3">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
       <ul class="col-start-5 col-span-4 flex justify-between text-black">
-        <li class="text-white intelOne font-light text-sm"><a href="/" class="hover:text-neutral-300">Home</a></li>
-        <li class="text-white intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-300">Internship Programs</a></li>
-        <li class="text-white intelOne font-light text-sm"><a href="#" class="hover:text-neutral-300">Industry Partners</a></li>
+        <li class="text-dark-blue intelOne font-light text-sm"><a href="/" class="hover:text-neutral-500">Home</a></li>
+        <li class="text-dark-blue intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-500">Internship Programs</a></li>
+        <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Industry Partners</a></li>
       </ul>
       <div class="col-start-9 col-span-4 flex {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
         @if(Auth::guard('student')->check())
         <ul class="space-x-9 flex items-end text-black">
-          <li class="text-white intelOne font-light text-sm my-auto"><a href="/">{{Auth::guard('student')->user()->email}}</a></li>
+          <li class="text-dark-blue intelOne font-light text-sm my-auto"><a href="/">{{Auth::guard('student')->user()->email}}</a></li>
           <form class="inline" method="post" action="{{ route('logout') }}">
             @csrf
             <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>
@@ -116,8 +116,8 @@
           </form>
         </ul> --}}
         @else
-        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-2 border-solid border-light-grey text-center capitalize bg-orange text-white font-light text-sm intelOne ml-4">Login</a>
-        <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Register</a>
+        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne ml-4">Login</a>
+        <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-dark-blue bg-dark-blue text-center capitalize bg-orange text-white hover:bg-darker-blue font-normal text-sm intelOne">Register</a>
         @endif
         
       </div>

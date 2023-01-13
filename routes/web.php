@@ -54,19 +54,20 @@ Route::post('/student/register/{email}/auth', [StudentController::class, 'update
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){
     // projects page
-    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-    Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
-    Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
-    Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
-    Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
-    Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
-    Route::get('/projects/{student}/applied/{project}/task/{section}/detail/{subsection}/submission', [ProjectController::class, 'appliedSubmission'])->name('projects.appliedSubmission');
-    Route::post('/projects/{student}/applied/{project}/detail/{subsection}', [ProjectController::class, 'appliedSubmit'])->name('projects.appliedSubmit');
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
+Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
+Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
+Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
+Route::get('/projects/{student}/applied/{project}/task/{section}/detail/{subsection}/submission', [ProjectController::class, 'appliedSubmission'])->name('projects.appliedSubmission');
+Route::post('/projects/{student}/applied/{project}/detail/{subsection}', [ProjectController::class, 'appliedSubmit'])->name('projects.appliedSubmit');
+Route::group(['middleware'=>'auth:student'], function(){
     Route::post('/projects/{project}/apply', [ProjectController::class, 'applyProject'])->name('projects.apply');
-    Route::get('/supportlib', function () {
-        return view('projects.supportlibrary');
-    })->name('projects.support');
-// });
+});
+Route::get('/supportlib', function () {
+    return view('projects.supportlibrary');
+})->name('projects.support');
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
