@@ -38,7 +38,20 @@ class InstitutionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $validated = $request->validate([
+            'name' => ['required'],
+            'countries' => ['required'],
+            'state' => ['required'],
+            
+        ]);
+
+        $institutions = new Institution;
+        $institutions->name = $validated['name'];
+        $institutions->country = $validated['countries'];
+        $institutions->state = $validated['state'];
+        $institutions->save();
+        return redirect()->route('dashboard.institutions.index');
     }
 
     /**

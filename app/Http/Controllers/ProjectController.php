@@ -56,6 +56,7 @@ class ProjectController extends Controller
     
     public function dashboardIndexStore(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
             'name' => ['required'],
             'domain' => ['required'],

@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col">
       <div class="card p-4">
-        <form action="/dashboard/institutions" method="post">
+        <form action="{{ route('dashboard.institutions.store') }}" method="post">
           @csrf
           <div class="mb-3">
             <label for="inputname" class="form-label">Institution Name</label>
