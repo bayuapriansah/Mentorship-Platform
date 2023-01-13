@@ -9,9 +9,9 @@
     
     <div class="col">
       <div class="card p-4">
-        {{-- @if($errors->any())
+        @if($errors->any())
             {!! implode('', $errors->all('<div class="text-danger text-sm mt-1">:message</div>')) !!}
-        @endif --}}
+        @endif
         <form action="/dashboard/projects/{{$project_id}}/section/{{$section_id}}/subsection/{{$section_subsection->id}}" method="post" enctype="multipart/form-data">
           @csrf
           @method('patch')
@@ -29,6 +29,25 @@
                 </p>
             @enderror
           </div>
+
+          <div class="mb-3" id="filetype">
+            <label for="inputfiletype" class="form-label">File type</label>
+            <select class="form-control form-select" id="inputfiletype" aria-label="Default select example" name="inputfiletype">
+              <option value="">--Select File type--</option>
+              <option value="zip" {{$section_subsection->file_type  == 'zip' ? 'selected': ''}}>.zip</option>
+              <option value="ipynb" {{$section_subsection->file_type == 'ipynb' ? 'selected': ''}}>.ipynb</option>
+              <option value="pdf" {{$section_subsection->file_type == 'pdf' ? 'selected': ''}}>.pdf</option>
+              <option value="doc" {{$section_subsection->file_type == 'doc' ? 'selected': ''}}>.doc or docx</option>
+              <option value="ppt" {{$section_subsection->file_type == 'ppt' ? 'selected': ''}}>.ppt or pptx</option>
+              <option value="none" {{$section_subsection->file_type == 'none' ? 'selected': ''}}>No need to upload file</option>
+            </select>
+            @error('inputfiletype')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+
 
           <div class="mb-3">
             <label for="" class="form-label">Title</label>
@@ -87,5 +106,27 @@
 
 @section('more-js')
 <script>
+   $(document).ready(function(){
+    // $('#inviteMentors').hide();
+    $('#filetype').hide();
+    // console.log($('#inputcategory').val())
+    var values = $("#inputcategory option:selected").val();
+
+    if(values == "task"){
+      $('#filetype').show();
+    }else{
+      $('#filetype').hide();
+    }
+
+    $("#inputcategory").change(function(){
+      var values = $("#inputcategory option:selected").val();
+      if(values == "task"){
+        $('#filetype').show();
+      }else{
+        $('#filetype').hide();
+      }
+    });
+    
+  });
 </script>
 @endsection

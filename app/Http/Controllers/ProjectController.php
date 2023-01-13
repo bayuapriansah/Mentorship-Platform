@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use File;
+use App\Models\Search;
 use App\Models\Company;
 use App\Models\Project;
 use App\Models\Submission;
@@ -9,19 +11,40 @@ use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-use File;
 
 class ProjectController extends Controller
 {
     public function index()
+    {   
+        if(Auth::guard('student')->check()){
+            $projects = Project::whereNotIn('id', function($query){
+                $query->select('project_id')->from('enrolled_projects');
+                $query->where('student_id',Auth::guard('student')->user()->id);
+            })->get();
+        }else{
+            $projects = Project::get();
+        }
+        
+        return view('projects.index', compact('projects'));
+    }
+
+    public function search(Request $request)
     {
-        $projects = Project::whereNotIn('id', function($query){
-            $query->select('project_id')->from('enrolled_projects');
-            $query->where('student_id',Auth::guard('student')->user()->id);
-        })->get();
+        $keyword = $request->search;
+        $search = new Search;
+        if($keyword != null){
+            if(Auth::guard('student')->check()){
+                $search->comments = $keyword;
+                $search->searcher = Auth::guard('student')->user()->email;
+            }else{
+                $search->comments = $keyword;
+            }
+            $search->save();
+        }
+        $projects = Project::where('name', 'like', "%" . $keyword . "%")->get();
         return view('projects.index', compact('projects'));
     }
 
@@ -62,7 +85,7 @@ class ProjectController extends Controller
             'domain' => ['required'],
             'problem' => ['required'],
             'type' => ['required'],
-            'period' => ['required'],
+            'period' => ['required', 'lte:3'],
             'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
             
         ]);
@@ -308,9 +331,18 @@ class ProjectController extends Controller
 
     public function dashboardStoreSubsection($project_id, $section_id, Request $request)
     {   
+        
         if($request->category == 'video'){
             $validated = $request->validate([
                 'video_link' => 'required',
+                'category' => 'required',
+                'title' => 'required',
+                'file1' => 'required',
+                'description' => 'required'
+            ]);
+        }elseif($request->category == 'task'){
+            $validated = $request->validate([
+                'inputfiletype'=>'required',
                 'category' => 'required',
                 'title' => 'required',
                 'file1' => 'required',
@@ -342,6 +374,9 @@ class ProjectController extends Controller
             $sectionSubsection->file3 = $file3;
         }
         $sectionSubsection->video_link = $request->video_link;
+        if($request->inputfiletype != null){
+            $sectionSubsection->file_type = $request->inputfiletype;
+        }
         $sectionSubsection->is_submit = 0 ;
         $sectionSubsection->save();
         return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
@@ -359,6 +394,14 @@ class ProjectController extends Controller
         if($request->category == 'video'){
             $validated = $request->validate([
                 'video_link' => 'required',
+                'category' => 'required',
+                'title' => 'required',
+                'description' => 'required'
+            ]);
+        }
+        if($request->category == 'task'){
+            $validated = $request->validate([
+                'inputfiletype'=>'required',
                 'category' => 'required',
                 'title' => 'required',
                 'description' => 'required'
@@ -414,6 +457,9 @@ class ProjectController extends Controller
             $section_subsection->file3 = $file3;
         }
         $section_subsection->video_link = $request->video_link;
+        if($request->inputfiletype != null){
+            $section_subsection->file_type = $request->inputfiletype;
+        }
         $section_subsection->save();
         return redirect('/dashboard/projects/'.$project_id.'/section/'.$section_id.'/subsection');
     }

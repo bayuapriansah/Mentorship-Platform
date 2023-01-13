@@ -17,10 +17,14 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
+
     public function store(Request $request){ 
         $validator = Validator::make($request->all(), [
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'date_of_birth' => ['required'],
             'email' => ['required'],
-            'gender' => ['required'],
+            'sex' => ['required'],
             'state' => ['required', 'min:3'],
             'country' => ['required', 'min:3'],
             'institution' => ['required'],
@@ -41,24 +45,28 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/#register')->withErrors($validator)->withInput();
+            return redirect('/register')->withErrors($validator)->withInput();
         }
         $validated = $validator->validated();
         $existing_student = Student::where('email',$validated['email'])->first();
         if($existing_student == null){
             $student = new Student;
+            $student->first_name = $validated['first_name'];
+            $student->last_name = $validated['last_name'];
+            $student->date_of_birth = $validated['date_of_birth'];
             $student->email = $validated['email'];
-            $student->gender = $validated['gender'];
+            $student->sex = $validated['sex'];
             $student->state = $validated['state'];
             $student->country = $validated['country'];
             $student->institution = $validated['institution'];
+            $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $student->is_confirm = 0;
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
             // $sendmail = (new MailController)->otplogin($validated['email'],$otp);
             return redirect('/otp/login')->with('success','You\'re Success create an Student account. Thank you! 😊');
         }else{
-            return redirect('/#register')->with('error','The email you are using is already registered');
+            return redirect('/register#register')->withInput()->with('error','This email address is already registered!');
         }
     }
 
@@ -107,5 +115,15 @@ class AuthController extends Controller
             return back()->with('error','User has not been registered');
         }
     }
+
+    public function verifyEmail()
+    {
+        return view('auth.verifyEmail');
+    }
+    public function verified()
+    {
+        return view('auth.verified');
+    }
+
 
 }

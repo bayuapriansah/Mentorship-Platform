@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
+.intelOne{
+  font-family: 'IntelOne Display', sans-serif;
+}
+*{
+  font-family: 'IntelOne Display', sans-serif;
+}
+h1{
+  display: block;
+  font-size: 2em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: #000F8A;
+}
+p{
+  color: #838383;
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
 @tailwind utilities;

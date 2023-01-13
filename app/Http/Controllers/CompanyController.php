@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -43,16 +44,29 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->file('logo')->extension());
         $validated = $request->validate([
             'name' => 'required',
             'address' => 'required',
             'email' => 'required',
+            'logo' => 'required'
         ]);
+
+        
 
         $company = new Company;
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
+        if($request->hasFile('logo')){
+            if($request->file('logo')->extension() =='png' || 'jpg' || 'jpeg'){
+                $logo = Storage::disk('public')->put('companies', $validated['logo']);
+                $company->logo = $logo;
+            }else{
+                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
+            }
+            
+        }
         $company->save();
         return redirect('dashboard/companies/')->with('success','Company has been added');
     }
@@ -98,6 +112,16 @@ class CompanyController extends Controller
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
+        if($request->hasFile('logo')){
+        
+            if(Storage::path($company->logo)) {
+                Storage::disk('public')->delete($company->logo);
+            }
+        
+            // save the new image
+            $logo = Storage::disk('public')->put('companies', $request->logo);
+            $company->logo = $logo;
+        }
         $company->save();
         return redirect('dashboard/companies')->with('success','Company has been edited');
 

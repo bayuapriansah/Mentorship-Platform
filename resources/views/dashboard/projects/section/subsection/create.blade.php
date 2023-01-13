@@ -30,6 +30,24 @@
             @enderror
           </div>
 
+          <div class="mb-3" id="filetype">
+            <label for="inputfiletype" class="form-label">File type</label>
+            <select class="form-control form-select" id="inputfiletype" aria-label="Default select example" name="inputfiletype">
+              <option value="">--Select File type--</option>
+              <option value="zip" {{old('inputfiletype') == 'zip' ? 'selected': ''}}>.zip</option>
+              <option value="ipynb" {{old('inputfiletype') == 'ipynb' ? 'selected': ''}}>.ipynb</option>
+              <option value="pdf" {{old('inputfiletype') == 'pdf' ? 'selected': ''}}>.pdf</option>
+              <option value="doc" {{old('inputfiletype') == 'doc' ? 'selected': ''}}>.doc or docx</option>
+              <option value="ppt" {{old('inputfiletype') == 'ppt' ? 'selected': ''}}>.ppt or pptx</option>
+              <option value="none" {{old('inputfiletype') == 'none' ? 'selected': ''}}>No need to upload file</option>
+            </select>
+            @error('inputfiletype')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+
           <div class="mb-3">
             <label for="" class="form-label">Title</label>
             <input type="text" class="form-control" name="title" value="{{old('title')}}">
@@ -85,5 +103,17 @@
 
 @section('more-js')
 <script>
+   $(document).ready(function(){
+    // $('#inviteMentors').hide();
+    $('#filetype').hide();
+    $("#inputcategory").change(function(){
+      var values = $("#inputcategory option:selected").val();
+      if(values == "task"){
+        $('#filetype').show();
+      }else{
+        $('#filetype').hide();
+      }
+    });
+  });
 </script>
 @endsection
