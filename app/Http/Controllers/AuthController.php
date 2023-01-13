@@ -59,6 +59,7 @@ class AuthController extends Controller
             $student->state = $validated['state'];
             $student->country = $validated['country'];
             $student->institution = $validated['institution'];
+            $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $student->is_confirm = 0;
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
