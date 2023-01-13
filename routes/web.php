@@ -77,6 +77,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::resource('students', StudentController::class);
 
         // Institution
+        // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
         Route::resource('institutions', InstitutionController::class);
 
         // Mentors

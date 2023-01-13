@@ -27,12 +27,11 @@
           @foreach($institutions as $institution)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$institution->name}}</td>
-            <td>{{$institution->city}}</td>
-            <td>{{$institution->state}}</td>
+            <td>{{$institution->institutions}}</td>
+            <td>{{$institution->countries}}</td>
+            <td>{{$institution->states}}</td>
             <td>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/institutions/{{$institution->id}}/edit">Edit</a>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/institutions/{{$institution->id}}/inviteMentors" >Invite Mentor</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="{{route('dashboard.institutions.edit',[$institution->id])}}">Edit</a>
               <form method="POST" action="/dashboard/institutions/{{ $institution->id }}" >
                 @csrf
                 @method('DELETE')

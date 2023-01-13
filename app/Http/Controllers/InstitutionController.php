@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Institution;
 use Illuminate\Http\Request;
-// use TheWorldController;
+use App\Models\institution_world_data_view;;
 
 class InstitutionController extends Controller
 {
@@ -15,7 +15,8 @@ class InstitutionController extends Controller
      */
     public function index()
     {
-        $institutions = Institution::get();
+        // $institutionss = Institution::get();
+        $institutions = institution_world_data_view::get();
         return view('dashboard.institutions.index', compact('institutions'));
     }
 
@@ -73,7 +74,10 @@ class InstitutionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $institutions = Institution::where('id',$id)->first();
+        $institutions_view = institution_world_data_view::where('id',$id)->first();
+        $countries = (new TheWorldController)->TheWorld();
+        return view('dashboard.institutions.edit', compact('institutions','institutions_view','id','countries'));
     }
 
     /**
@@ -85,7 +89,20 @@ class InstitutionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        $validated = $request->validate([
+            'name' => 'required',
+            'countries' => 'required',
+            'state' => 'required',
+        ]);
+        $institutions = Institution::where('id',$id)->first();
+        // dd($institutions);
+        $institutions->name = $validated['name'];
+        $institutions->country = $validated['countries'];
+        $institutions->state = $validated['state'];
+        $institutions->save();
+        $message = "Successfully Edited Institution Data";
+        return redirect()->route('dashboard.institutions.index')->with('success', $message);
     }
 
     /**
