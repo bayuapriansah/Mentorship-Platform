@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col">
       <div class="card p-4">
-        <form action="/dashboard/companies/{{$company->id}}" method="post">
+        <form action="/dashboard/companies/{{$company->id}}" method="post" enctype="multipart/form-data">
           @csrf
           @method('patch')
           <div class="mb-3">
@@ -30,11 +30,20 @@
                 </p>
             @enderror
           </div>
-
           <div class="mb-3">
             <label for="inputemail" class="form-label">Email</label>
             <input type="text" class="form-control" id="inputemail" name="email" value="{{$company->email}}">
             @error('email')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="inputlogo" class="form-label">Company logo</label><br>
+            <img src="{{asset('storage/'.$company->logo)}}" alt="" style="width: 350px; height: 230px;">
+            <input type="file" class="form-control-file" id="inputlogo" name="logo">
+            @error('logo')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>

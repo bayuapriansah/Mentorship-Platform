@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col">
       <div class="card p-4">
-        <form action="/dashboard/companies" method="post">
+        <form action="/dashboard/companies" method="post" enctype="multipart/form-data">
           @csrf
           <div class="mb-3">
             <label for="inputname" class="form-label">Name</label>
@@ -34,6 +34,15 @@
             <label for="inputemail" class="form-label">Email</label>
             <input type="text" class="form-control" id="inputemail" name="email" value="{{old('email')}}">
             @error('email')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="inputlogo" class="form-label">Company logo</label>
+            <input type="file" class="form-control-file" id="inputlogo" name="logo">
+            @error('logo')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use File;
+use App\Models\Search;
 use App\Models\Company;
 use App\Models\Project;
 use App\Models\Submission;
@@ -9,10 +11,9 @@ use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-use File;
 
 class ProjectController extends Controller
 {
@@ -33,6 +34,16 @@ class ProjectController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->search;
+        $search = new Search;
+        if($keyword != null){
+            if(Auth::guard('student')->check()){
+                $search->comments = $keyword;
+                $search->searcher = Auth::guard('student')->user()->email;
+            }else{
+                $search->comments = $keyword;
+            }
+            $search->save();
+        }
         $projects = Project::where('name', 'like', "%" . $keyword . "%")->get();
         return view('projects.index', compact('projects'));
     }
