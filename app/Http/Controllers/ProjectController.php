@@ -84,7 +84,7 @@ class ProjectController extends Controller
             'domain' => ['required'],
             'problem' => ['required'],
             'type' => ['required'],
-            'period' => ['required'],
+            'period' => ['required', 'lte:3'],
             'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
             
         ]);

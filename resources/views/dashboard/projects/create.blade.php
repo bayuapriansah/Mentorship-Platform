@@ -59,12 +59,12 @@
             @enderror
           </div>
           <div class="mb-3">
-            <label for="inputperiod" class="form-label">Period</label>
+            <label for="inputperiod" class="form-label">Period *max 3</label>
             <div class="row">
               <div class="col">
                 <input type="number" class="form-control" id="inputperiod" name="period" value="{{old('period')}}">
               </div>
-              <div class="col">
+              <div class="col my-auto">
                 <label for="inputperiod" class="form-label" id="period_text_month">Month</label>
               </div>
             </div>
