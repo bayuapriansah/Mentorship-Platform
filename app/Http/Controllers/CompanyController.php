@@ -59,7 +59,11 @@ class CompanyController extends Controller
         $company->address = $validated['address'];
         $company->email = $validated['email'];
         if($request->hasFile('logo')){
-            if($request->file('logo')->extension() =='png' || 'jpg' || 'jpeg'){
+            // 5000000
+            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+                $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
+                $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
+                ){
                 $logo = Storage::disk('public')->put('companies', $validated['logo']);
                 $company->logo = $logo;
             }else{
@@ -119,12 +123,34 @@ class CompanyController extends Controller
             }
         
             // save the new image
-            $logo = Storage::disk('public')->put('companies', $request->logo);
-            $company->logo = $logo;
+             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+                $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
+                $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
+                ){
+                $logo = Storage::disk('public')->put('companies', $request->logo);
+                $company->logo = $logo;
+            }else{
+                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
+            }
         }
         $company->save();
         return redirect('dashboard/companies')->with('success','Company has been edited');
-
+        
+        // 
+        if($request->hasFile('logo')){
+            // 5000000
+            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+                $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
+                $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
+                ){
+                $logo = Storage::disk('public')->put('companies', $validated['logo']);
+                $company->logo = $logo;
+            }else{
+                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
+            }
+            
+        }
+        // 
     }
 
     /**
