@@ -69,37 +69,39 @@
   <a href="#" class="link-primary">Link to support document library</a>
 </div> --}}
 <section id="login" class="w-full">
-  <div class="max-w-[1366px] mx-auto px-16 pt-0 grid grid-cols-12 gap-11 grid-flow-col bg-darker-blue">
-    <div class="col-span-6 my-auto">
-      <h2 class="intelOne text-white font-bold text-4xl leading-11">Search <span class="text-light-brown">Internships</span></h2>
-      <p class="intelOne font-light text-white text-lg leading-6 py-6 m-0">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-      <form action="/projects/search" method="get">
-        @csrf
-        <div class="flex justify-between">
-        <div class="relative flex-grow">
-          <input type="text" id="email-address-icon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5" placeholder="Search an internship program" name="search">
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <i class="fa-solid fa-magnifying-glass"></i>
+  <div class="bg-darker-blue">
+    <div class="max-w-[1366px] mx-auto px-16 pt-0 grid grid-cols-12 gap-11 grid-flow-col ">
+      <div class="col-span-6 my-auto">
+        <h2 class="intelOne text-white font-bold text-4xl leading-11">Search <span class="text-light-brown">Internships</span></h2>
+        <p class="intelOne font-light text-white text-lg leading-6 py-6 m-0">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <form action="/projects/search" method="get">
+          @csrf
+          <div class="flex justify-between">
+          <div class="relative flex-grow">
+            <input type="text" id="email-address-icon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5" placeholder="Search an internship program" name="search">
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
           </div>
-        </div>
-        {{-- <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne ml-5" type="submit">Search</button> --}}
+          {{-- <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne ml-5" type="submit">Search</button> --}}
 
-        </div>
-        {{-- <div class="mt-4">
-          @include('flash-message')
-        </div> --}}
-        <div class="flex">
-        </div>
-      </form>
-    </div>
-    <div class="col-start-7 col-span-6 relative">
-      <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
-      <img src="{{asset('assets/img/internship-1.png')}}" class="relative z-20" alt="">
+          </div>
+          {{-- <div class="mt-4">
+            @include('flash-message')
+          </div> --}}
+          <div class="flex">
+          </div>
+        </form>
+      </div>
+      <div class="col-start-7 col-span-6 relative">
+        <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
+        <img src="{{asset('assets/img/internship-1.png')}}" class="relative z-20" alt="">
 
-      <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
-      <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
-      <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
-      
+        <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
+        <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
+        <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
+        
+      </div>
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-16 pt-24 mb-0 grid grid-cols-12 gap-8 grid-flow-col" id="#projectsSection">
