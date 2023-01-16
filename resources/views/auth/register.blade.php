@@ -1,13 +1,15 @@
 @extends('layouts.index')
 @section('content')
 <section id="register" class="w-full">
-  <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col bg-darker-blue">
-    <div class="col-span-7 relative">
-      <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">Register</h1>
-      <p class="m-0 text-light-blue">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae, eaque.</p>
-      <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-2 ">
-    </div>
-    <div class="col-start-10 col-span-4 relative ">
+  <div class="bg-darker-blue">
+    <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col ">
+      <div class="col-span-7 relative">
+        <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">Register</h1>
+        <p class="m-0 text-light-blue">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae, eaque.</p>
+        <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-2 ">
+      </div>
+      <div class="col-start-10 col-span-4 relative ">
+      </div>
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">

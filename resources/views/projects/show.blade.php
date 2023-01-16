@@ -85,20 +85,22 @@
   @endif
 </div> --}}
 <section id="show" class="w-full">
-  <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col bg-darker-blue">
-    <div class="col-span-9 relative my-auto">
-      <h1 class="font-bold text-white text-3xl relative mb-4 z-20">{{$project->name}}</h1>
-      <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30">{{$project->project_domain}}</span>
-      <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 top-0 ">
-    </div>
-    <div class="col-start-10 col-span-4 relative ">
-      <img src="{{asset('assets/img/dotsdetail_2.png')}}" class="absolute z-10 right-0 -top-3 ">
-    </div>
-    {{-- <div class="col-start-11 col-span-2 absolute">
-      <div class=" my-auto border-[1px] border-light-blue rounded-xl w-30">
-        <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+  <div class="bg-darker-blue">
+    <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col ">
+      <div class="col-span-9 relative my-auto">
+        <h1 class="font-bold text-white text-3xl relative mb-4 z-20">{{$project->name}}</h1>
+        <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30">{{$project->project_domain}}</span>
+        <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 top-0 ">
       </div>
-    </div> --}}
+      <div class="col-start-10 col-span-4 relative ">
+        <img src="{{asset('assets/img/dotsdetail_2.png')}}" class="absolute z-10 right-0 -top-3 ">
+      </div>
+      {{-- <div class="col-start-11 col-span-2 absolute">
+        <div class=" my-auto border-[1px] border-light-blue rounded-xl w-30">
+          <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+        </div>
+      </div> --}}
+    </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-16 pt-5 grid grid-cols-12 gap-11 grid-flow-col bg-white">
     <div class="col-span-7 relative my-auto">

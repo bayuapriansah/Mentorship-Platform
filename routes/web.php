@@ -55,7 +55,9 @@ Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update']
 // student register
 Route::get('/student/register/{email}', [StudentController::class, 'register'])->name('student.register');
 Route::post('/student/register/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
-
+Route::group(['middleware'=>'auth:student'], function(){
+    Route::get('/profile', [StudentController::class, 'profile'])->name('student.profile');
+});
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){
     // projects page
