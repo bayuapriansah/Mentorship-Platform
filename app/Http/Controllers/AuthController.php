@@ -62,7 +62,7 @@ class AuthController extends Controller
             $student->state = $validated['state'];
             $student->country = $validated['country'];
             $student->institution = $validated['institution'];
-            $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+            // $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $student->is_confirm = 0;
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
@@ -130,9 +130,17 @@ class AuthController extends Controller
         }
         return view('auth.verifyEmail', compact(['email']));
     }
-    public function verified()
+    public function verified($email)
     {
-        return view('auth.verified');
+        $email = (new SimintEncryption)->decData($email);
+        $registeredEmail = Student::where('email', $email)->first();
+        // dd($registeredEmail);
+        if($registeredEmail){
+            $registeredEmail->is_confirm = 1;
+            $registeredEmail->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+            $registeredEmail->save();
+            return view('auth.verified');
+        }
     }
 
 

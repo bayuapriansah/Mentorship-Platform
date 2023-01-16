@@ -52,6 +52,21 @@
               </p>
           @enderror
         </div>
+
+        <select id="institution" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" name="institution" required>
+          <option>Institution Name *</option>
+          @forelse($GetInstituionData as $ins)
+          <option value="{{$ins->id}}">{{$ins->institutions}}</option>
+          @empty
+          <p>There is no Country Data</p>
+          @endforelse
+        </select><br>
+        @error('institution')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror        
+        
         <div class="flex justify-between mt-4">
           <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
           <br>
@@ -70,19 +85,6 @@
           @enderror
         </div>
 
-        <select id="institution" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" name="institution" required>
-          <option>Institution Name *</option>
-          @forelse($GetInstituionData as $ins)
-          <option value="{{$ins->id}}">{{$ins->institutions}}</option>
-          @empty
-          <p>There is no Country Data</p>
-          @endforelse
-        </select><br>
-        @error('institution')
-            <p class="text-red-600 text-sm mt-1">
-              {{$message}}
-            </p>
-        @enderror
         <input type="email" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required><br>
         @error('email')
             <p class="text-red-600 text-sm mt-1">
