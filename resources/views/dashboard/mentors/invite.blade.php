@@ -7,8 +7,7 @@
         <div class="mb-3">
           <label for="inputvalid" class="form-label">Project</label>
             <select class="form-control form-select" id="inputdomain" aria-label="Default select example" name="project_id">
-            <option value="">--Select Project--</option>
-            <option value="invmen">Invite Mentor</option>
+            <option value="invmen" selected>Invite Mentor</option>
             <option value="addmen">Add Mentor To Project</option>
           </select>
         </div>
@@ -38,7 +37,7 @@
             </div>
             <div class="mb-3" id="inviteToProject">
               <label for="inputemail" class="form-label">Affiliated Mentors to This project</label>
-              <select class="form-control form-select" id="inputemail" aria-label="Default select example" name="email">
+              <select class="form-control form-select" id="inputemail" aria-label="Default select example" name="emails">
                 <option value="">--Select Registered Mentor--</option>
                 @forelse($mentor as $data_mentor)
                 <option value="{{$data_mentor->email}}">{{$data_mentor->email}}</option>

@@ -104,17 +104,7 @@
                 </ul>
             </div>
           </li>
-        </ul>
-          
-        {{-- <ul class="flex justify-between flex-grow  text-black">
-          <li class="text-white intelOne font-light text-sm my-auto"><a href="{{route('dashboard.admin')}}">Dashboard</a></li>
-          <li class="text-white intelOne font-light text-sm my-auto">{{Auth::guard('web')->user()->email}}</a></li>
-          
-          <form class="inline" method="post" action="{{ route('logout') }}">
-            @csrf
-            <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>
-          </form>
-        </ul> --}}
+        </ul>      
         @else
         <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne ml-4">Login</a>
         <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-dark-blue bg-dark-blue text-center capitalize bg-orange text-white hover:bg-darker-blue font-normal text-sm intelOne">Register</a>
