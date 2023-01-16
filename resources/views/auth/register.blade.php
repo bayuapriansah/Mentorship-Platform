@@ -37,7 +37,7 @@
           @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="date" value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="text" placeholder="Date of birth" onfocus="(this.type='date')"  value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
           @error('date_of_birth')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}

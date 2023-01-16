@@ -55,8 +55,33 @@
       </div>
       {{-- untuk arrow --}}
     </div>
-    <div class="max-w-[1366px] mx-auto px-36 pt-8 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
+    <div class="max-w-[1366px] mx-auto px-36 pt-8 mb-0 grid grid-cols-13 gap-8 grid-flow-col">
+      @foreach($projects as $project)
       <div class="col-span-4">
+        <div class="flex flex-grow">
+          <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
+            <div class="flex space-x-2">
+              <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
+                <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9  mx-auto " alt="">
+              </div>
+              <div class="flex-col">
+                <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{substr($project->name,0,17)}}...</p>
+                <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
+                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36">{{$project->project_domain}}</p>
+              </div>
+            </div>
+            <p class="text-gray-700 text-base mb-2 pt-3">
+              {!! substr($project->problem,0,62) !!}
+            </p>
+            <div class="flex justify-between">
+            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">2 Months</span></p>
+            <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endforeach
+      {{-- <div class="col-span-4">
         <div class="flex flex-grow">
           <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
             <div class="flex space-x-2">
@@ -101,30 +126,7 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-span-4">
-        <div class="flex flex-grow">
-          <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
-            <div class="flex space-x-2">
-              <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
-                <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
-              </div>
-              <div class="flex-col">
-                <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">Build a chat bot</p>
-                <p class="text-black font-normal text-sm m-0">Sustainable Living Lab</p>
-                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0">Computer vision</p>
-              </div>
-            </div>
-            <p class="text-gray-700 text-base mb-2 pt-3">
-              Some quick example text to build on the card title and make up
-            </p>
-            <div class="flex justify-between">
-            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">2 Months</span></p>
-            <a href="#" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div> --}}
     </div>
     <div class="max-w-[1366px] mx-auto px-36 pt-12 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
       <div class="col-end-13 col-span-2">

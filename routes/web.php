@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\SimintEncryption;
@@ -13,10 +14,10 @@ use App\Http\Controllers\AuthOtpController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TheWorldController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\InstitutionController;
-use App\Http\Controllers\TheWorldController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +31,10 @@ use App\Http\Controllers\TheWorldController;
 */
 
 // Home Page
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+// Route::get('/', function () {
+//     return view('index');
+// })->name('index');
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
 // register
 Route::get('/verify/{email}', [AuthController::class, 'verifyEmail'])->name('verify');
