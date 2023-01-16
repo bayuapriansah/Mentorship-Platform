@@ -73,16 +73,16 @@
       <a href="/" class="col-span-2">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
-      <ul class="col-start-4 col-span-4 flex justify-between text-black">
+      <ul class="col-start-4 col-span-5 flex justify-between text-black">
         <li class="text-dark-blue intelOne font-light text-sm"><a href="/" class="hover:text-neutral-500">My Project</a></li>
         <li class="text-dark-blue intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-500">Internship Programs</a></li>
         <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Certificate</a></li>
         <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
       </ul>
-      <div class="col-start-8 col-span-5 flex relative">
+      <div class="col-start-9 col-span-4 flex relative">
         <div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
           <div class="grid grid-cols-12 gap-2 grid-flow-col">
-            <div class="col-span-1">
+            <div class="col-span-2">
               <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
             </div>
             <div class="col-span-1">
@@ -97,14 +97,39 @@
               <img src="{{asset('assets/img/icon/profile/pp.png')}}" class="w-[100px] h-[100px]  mx-auto"  alt="message">
               <p class="text-dark-blue font-normal text-xl text-center ">Shweta Tripathi</p>
               <p class="text-black font-normal text-sm text-center">4th Year, B.Tech in Computer Science & Engineering </p>
+              <p class="text-dark-blue font-bold text-sm text-center ">IIT BOMBAY</p>
+              <p class="text-black font-normal text-sm text-center">Internship Status: <span class="text-light-blue">Not Started</span> </p>
             </div>
+          </div>
+          <div class="flex justify-between mt-8 ">
+            <div>
+              <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">0</p>
+              <p class="text-light-black text-sm font-normal">Projects Enrolled</p>
+            </div>
+            <div>
+              <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">0</p>
+              <p class="text-light-black text-sm font-normal">Projects Completed</p>
+            </div>
+          </div>
+          <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
+            <p class="text-black text-sm font-normal">Total Enrolled Duration: </p>
+            <p class="text-dark-blue text-sm font-bold">0 Months out of 3 Months</p>
           </div>
         </div>
       </div>
     </nav>
   </div>
-  <main class="mb-[500px]">
-  @yield('content')
+  <main class="mb-[500px] bg-profile-grey ">
+    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center">
+      <div class="col-span-8">
+        <div class="grid grid-cols-12 gap-4 grid-flow-col">
+          <div class="col-span-3">
+            <h2 class="text-dark-blue text-2xl font-medium">My Projects</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{-- @yield('content') content didalem main --}}
   </main>
   <footer class="w-full bg-lightest-blue relative z-30">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
