@@ -9,11 +9,6 @@
     </div>
     <div class="col-start-10 col-span-4 relative ">
     </div>
-    {{-- <div class="col-start-11 col-span-2 absolute">
-      <div class=" my-auto border-[1px] border-light-blue rounded-xl w-30">
-        <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
-      </div>
-    </div> --}}
   </div>
   <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
     <div class="col-span-6">
@@ -56,14 +51,16 @@
           @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="country" type="text" value="{{old('country')}}" placeholder="Country *" name="country" required><br>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
+          <br>
           @error('country')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
 
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="state" type="text" value="{{old('state')}}" placeholder="State *" name="state" required><br>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
+          <br>
           @error('state')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -71,7 +68,14 @@
           @enderror
         </div>
 
-        <input type="text" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('institution')}}" placeholder="Institution Name *" name="institution" required><br>
+        <select id="institution" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" name="institution" required>
+          <option>Institution Name *</option>
+          @forelse($GetInstituionData as $ins)
+          <option value="{{$ins->id}}">{{$ins->institutions}}</option>
+          @empty
+          <p>There is no Country Data</p>
+          @endforelse
+        </select><br>
         @error('institution')
             <p class="text-red-600 text-sm mt-1">
               {{$message}}
@@ -115,4 +119,26 @@
     </div>
   </div>
 </section>
+@endsection
+
+@section('more-js')
+<script>
+  $(document).ready(function () {
+      $('#institution').on('change', function () {
+          var institutionVal = this.value;
+          var base_url = window.location.origin;
+          $("#ForState").html('');
+          $.ajax({
+              url: base_url+"/api/institution/"+institutionVal,
+              contentType: "application/json",
+              dataType: 'json',
+              success: function (result) {
+                console.log(result);
+                $('#ForCountry').val(result.countries);
+                $('#ForState').val(result.states);
+              }
+          });
+      });
+  });
+</script>
 @endsection

@@ -10,15 +10,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\InstitutionController;
 
 class AuthController extends Controller
 {
     public function register()
     {
-        return view('auth.register');
+        $GetInstituionData = (new InstitutionController)->GetInstituionData();
+        return view('auth.register', compact('GetInstituionData'));
     }
 
     public function store(Request $request){ 
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'first_name' => ['required'],
             'last_name' => ['required'],
@@ -63,9 +66,10 @@ class AuthController extends Controller
             $student->is_confirm = 0;
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
+            $emailEnc = (new SimintEncryption)->encData($validated['email']);
             // $sendmail = (new MailController)->otplogin($validated['email'],$otp);
             // return redirect('/otp/login')->with('success','You\'re Success create an Student account. Thank you! 😊');
-            return redirect('/verify/'.$validated['email']);
+            return redirect()->route('verify',[$emailEnc]);
         }else{
             return redirect('/register#register')->withInput()->with('error','This email address is already registered!');
         }
@@ -119,6 +123,7 @@ class AuthController extends Controller
 
     public function verifyEmail($email)
     {
+        $email = (new SimintEncryption)->decData($email);
         $registeredEmail = Student::where('email', $email)->first();
         if($registeredEmail == null){
             abort(403);
