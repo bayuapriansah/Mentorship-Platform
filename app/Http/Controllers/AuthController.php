@@ -25,8 +25,8 @@ class AuthController extends Controller
             'date_of_birth' => ['required'],
             'email' => ['required'],
             'sex' => ['required'],
-            'state' => ['required', 'min:3'],
-            'country' => ['required', 'min:3'],
+            'state' => ['required'],
+            'country' => ['required'],
             'institution' => ['required'],
             'g-recaptcha-response' => function ($attribute, $value, $fail) {
                 $secretkey = config('services.recaptcha.secret');
@@ -64,7 +64,8 @@ class AuthController extends Controller
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
             // $sendmail = (new MailController)->otplogin($validated['email'],$otp);
-            return redirect('/otp/login')->with('success','You\'re Success create an Student account. Thank you! 😊');
+            // return redirect('/otp/login')->with('success','You\'re Success create an Student account. Thank you! 😊');
+            return redirect('/verify/'.$validated['email']);
         }else{
             return redirect('/register#register')->withInput()->with('error','This email address is already registered!');
         }
@@ -116,9 +117,13 @@ class AuthController extends Controller
         }
     }
 
-    public function verifyEmail()
+    public function verifyEmail($email)
     {
-        return view('auth.verifyEmail');
+        $registeredEmail = Student::where('email', $email)->first();
+        if($registeredEmail == null){
+            abort(403);
+        }
+        return view('auth.verifyEmail', compact(['email']));
     }
     public function verified()
     {

@@ -86,8 +86,8 @@
 </div> --}}
 <section id="show" class="w-full">
   <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col bg-darker-blue">
-    <div class="col-span-7 relative my-auto">
-      <h1 class="font-bold text-white text-3xl relative z-20">{{$project->name}}</h1>
+    <div class="col-span-9 relative my-auto">
+      <h1 class="font-bold text-white text-3xl relative mb-4 z-20">{{$project->name}}</h1>
       <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30">{{$project->project_domain}}</span>
       <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 top-0 ">
     </div>
@@ -100,7 +100,7 @@
       </div>
     </div> --}}
   </div>
-  <div class="max-w-[1366px] mx-auto px-16 py-5 grid grid-cols-12 gap-11 grid-flow-col bg-white">
+  <div class="max-w-[1366px] mx-auto px-16 pt-5 grid grid-cols-12 gap-11 grid-flow-col bg-white">
     <div class="col-span-7 relative my-auto">
       <h1 class="text-dark-blue text-[22px]">Project Details</h1>
     </div>
@@ -108,14 +108,16 @@
       <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-20 -top-20 ">
         <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
       </div>
+    @if(Auth::guard('student')->check())
       <form method="POST" action="{{ $project->id }}/apply" >
         @csrf
         <button type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full absolute ">Apply</button> 
       </form> 
+    @endif
     </div>
   </div>
 
-  <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col bg-white">
+  <div class="max-w-[1366px] mx-auto px-16 py-5 grid grid-cols-12 gap-11 grid-flow-col bg-white problem">
     <div class="col-span-9 my-auto">
       {!!$project->problem!!}
     </div>

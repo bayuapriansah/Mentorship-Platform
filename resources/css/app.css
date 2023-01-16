@@ -6,7 +6,7 @@
 *{
   font-family: 'IntelOne Display', sans-serif;
 }
-h1{
+.problem h1{
   display: block;
   font-size: 2em;
   margin-bottom: 0.67em;
@@ -15,7 +15,7 @@ h1{
   font-weight: bold;
   color: #000F8A;
 }
-p{
+.problem p{
   color: #838383;
   display: block;
   margin-top: 1em;

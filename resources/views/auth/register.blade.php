@@ -1,6 +1,20 @@
 @extends('layouts.index')
 @section('content')
 <section id="register" class="w-full">
+  <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col bg-darker-blue">
+    <div class="col-span-7 relative">
+      <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">Register</h1>
+      <p class="m-0 text-light-blue">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae, eaque.</p>
+      <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-2 ">
+    </div>
+    <div class="col-start-10 col-span-4 relative ">
+    </div>
+    {{-- <div class="col-start-11 col-span-2 absolute">
+      <div class=" my-auto border-[1px] border-light-blue rounded-xl w-30">
+        <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+      </div>
+    </div> --}}
+  </div>
   <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
     <div class="col-span-6">
       <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Register</h1>
@@ -8,14 +22,14 @@
       <form action="{{route('register')}}" method="post" id="register">
         @csrf
         <div class="flex justify-between">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="firstname" type="text" value="{{old('first_name')}}" placeholder="First Name *" name="first_name" required>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="firstname" type="text" value="{{old('first_name')}}" placeholder="First Name *" name="first_name" required><br>
           @error('first_name')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
 
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="lastname" type="text" value="{{old('last_name')}}" placeholder="Last Name *" name="last_name" required>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="lastname" type="text" value="{{old('last_name')}}" placeholder="Last Name *" name="last_name" required><br>
           @error('last_name')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -23,7 +37,7 @@
           @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="date" value="{{old('date_of_birth')}}" name="date_of_birth" required>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="date" value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
           @error('date_of_birth')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -34,7 +48,7 @@
             <option value="">Sex *</option>
             <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
             <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
-          </select>
+          </select><br>
           @error('sex')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -42,14 +56,14 @@
           @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="country" type="text" value="{{old('country')}}" placeholder="Country *" name="country" required>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="country" type="text" value="{{old('country')}}" placeholder="Country *" name="country" required><br>
           @error('country')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
 
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="state" type="text" value="{{old('state')}}" placeholder="State *" name="state" required>
+          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="state" type="text" value="{{old('state')}}" placeholder="State *" name="state" required><br>
           @error('state')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -57,14 +71,13 @@
           @enderror
         </div>
 
-        <input type="text" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('institution')}}" placeholder="Institution Name *" name="institution" required>
+        <input type="text" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('institution')}}" placeholder="Institution Name *" name="institution" required><br>
         @error('institution')
             <p class="text-red-600 text-sm mt-1">
               {{$message}}
             </p>
         @enderror
-
-        <input type="email" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required>
+        <input type="email" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required><br>
         @error('email')
             <p class="text-red-600 text-sm mt-1">
               {{$message}}
@@ -93,7 +106,7 @@
     </div>
     <div class="col-start-7 col-span-6 relative">
       <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
-      <img src="{{asset('assets/img/home1.png')}}" class="relative z-20" alt="">
+      <img src="{{asset('assets/img/home2.png')}}" class="relative z-20" alt="">
 
       <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
       <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
