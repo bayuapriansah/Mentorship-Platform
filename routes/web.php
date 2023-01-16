@@ -29,7 +29,9 @@ use App\Http\Controllers\InstitutionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/emailtemp', function () {
+    return view('emails.otp');
+});
 // Home Page
 // Route::get('/', function () {
 //     return view('index');
