@@ -40,8 +40,11 @@
             @enderror
           </div>
           <div class="mb-3">
-            <label for="inputlogo" class="form-label">Company logo</label>
+            <label for="inputlogo" class="form-label">Company logo *max file size is 5MB</label>
             <input type="file" class="form-control-file" id="inputlogo" name="logo">
+            <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
+            <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>
+
             @error('logo')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
