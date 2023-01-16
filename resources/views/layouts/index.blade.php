@@ -81,7 +81,7 @@
       <div class="col-start-9 col-span-4 flex relative {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
         @if(Auth::guard('student')->check())
         <ul class="space-x-9 flex items-end text-black ">
-          <li class="text-dark-blue intelOne font-light text-sm my-auto"><a href="/">{{Auth::guard('student')->user()->email}}</a></li>
+          <li class="text-dark-blue intelOne font-light text-sm my-auto"><a href="/profile">{{Auth::guard('student')->user()->email}}</a></li>
           <form class="inline" method="post" action="{{ route('logout') }}">
             @csrf
             <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>

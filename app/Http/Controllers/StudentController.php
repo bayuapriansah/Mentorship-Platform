@@ -131,4 +131,10 @@ class StudentController extends Controller
     {
         //
     }
+    
+    // STUDENT PROFILE
+    public function profile()
+    {
+        return view('student.index');
+    }
 }
