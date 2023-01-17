@@ -115,7 +115,7 @@
     
     <div class="col-span-8 space-y-4 ">
       @forelse($projects as $project)
-      <div class="border-[1px] hover:border-darker-blue hover:border-2 border-light-blue py-5 px-5 rounded-xl">
+      <div class="border-[1px] hover:border-darker-blue border-light-blue py-5 px-5 rounded-xl">
         <div class="flex space-x-2">
           <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
             <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">

@@ -68,54 +68,75 @@
     <!-- Custom styles for this template -->
   </head>
 <body>
-  <div class="w-full bg-white">
+  <div class="w-full bg-profile-grey">
     <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
-      <a href="/" class="col-span-3">
+      <a href="/" class="col-span-2">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
-      <ul class="col-start-5 col-span-4 flex justify-between text-black">
-        <li class="text-dark-blue intelOne font-light text-sm"><a href="/" class="hover:text-neutral-500">Home</a></li>
+      <ul class="col-start-4 col-span-5 flex justify-between text-black">
+        <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Project</a></li>
         <li class="text-dark-blue intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-500">Internship Programs</a></li>
-        <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Industry Partners</a></li>
+        <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Certificate</a></li>
+        <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
       </ul>
-      <div class="col-start-9 col-span-4 flex relative {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
-        @if(Auth::guard('student')->check())
-        <ul class="space-x-9 flex items-end text-black ">
-          <li class="text-dark-blue intelOne font-light text-sm my-auto"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects">{{Auth::guard('student')->user()->email}}</a></li>
-          <form class="inline" method="post" action="{{ route('logout') }}">
-            @csrf
-            <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>
-          </form>
-        </ul>
-        @elseif(Auth::guard('web')->check())
-        <ul class="text-left z-40">
-          <li>
-            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="intelOne text-darker-blue bg-light-grey  hover:bg-neutral-200 focus:ring-4 focus:outline-none focus:ring-light-grey font-medium rounded-lg text-sm px-11 py-2 text-center inline-flex items-center " type="button">{{Auth::guard('web')->user()->email}} <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-      <!-- Dropdown menu -->
-            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
-                <ul class="py-1 text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton">
-                  <li>
-                    <a href="{{route('dashboard.admin')}}" class="block px-4 py-2 hover:text-dark-blue hover:font-semibold">Dashboard</a>
-                  </li>
-                  <form class="inline" method="post" action="{{ route('logout') }}" class="hover:bg-gray-100">
-                    @csrf
-                    <li><button type="submit" class="block px-4 py-2 hover:text-dark-blue hover:font-semibold intelOne">Log Out</button></li>
-                  </form>
-                </ul>
-            </div>
-          </li>
-        </ul>      
-        @else
-        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne ml-4">Login</a>
-        <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-dark-blue bg-dark-blue text-center capitalize bg-orange text-white hover:bg-darker-blue font-normal text-sm intelOne">Register</a>
-        @endif
-        
+      <div class="col-start-9 col-span-4 flex relative">
+        @include('layouts.profile.sidebar')
       </div>
     </nav>
   </div>
-  <main>
-  @yield('content')
+
+  <main class="  bg-profile-grey ">
+    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center">
+      <div class="col-span-8">
+        <div class="grid grid-cols-12 gap-4 grid-flow-col">
+          <div class="col-span-3">
+            <h2 class="text-dark-blue text-2xl font-medium">My Projects</h2>
+          </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 grid-flow-col">
+          <div class="col-span-8">
+            <div class="text-sm font-medium text-center text-light-blue border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+              <ul class="flex flex-wrap -mb-px">
+                  <li class="mr-2">
+                    {{-- {{}} --}}
+                    @if(Route::is('student.allProjects'))
+                      <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-semibold" id="all">All Enrolled Projects</a>
+                    @else
+                      <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="inline-block p-4 border-b-2 rounded-t-lg  hover:text-lighter-blue hover:border-gray-300" id="all">All Enrolled Projects</a>
+                    @endif
+                  </li>
+                  <li class="mr-2">
+                    @if(Route::is('student.ongoingProjects'))
+                      <a href="/profile/{{Auth::guard('student')->user()->id}}/ongoingProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-semibold" aria-current="page">Ongoing Project</a>
+                    @else
+                      <a href="/profile/{{Auth::guard('student')->user()->id}}/ongoingProjects" class="inline-block p-4 border-b-2 rounded-t-lg  hover:text-lighter-blue hover:border-gray-300" aria-current="page">Ongoing Project</a>
+                    @endif
+                  </li>
+                  <li class="mr-2">
+                    @if(Route::is('student.completedProjects'))
+                      <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-semibold">Completed Project</a>
+                    @else
+                      <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-lighter-blue hover:border-gray-300">Completed Project</a>
+                    @endif
+                  </li>
+              </ul>
+            </div>
+            @yield('content')
+          </div>
+          <div class="col-start-9 col-span-4 ">
+            <div class="border p-4 rounded-l-lg rounded-t-lg bg-dark-blue flex flex-col items-center ">
+              <div class="flex justify-between relative items-center">
+                <p class="text-white text-xl z-20 ">Score In <span class="text-light-brown">Top 10 Students</span> To Get Rewards</p>
+                <img class="absolute w-36 z-10 -right-4 -top-9 -translate-y-0.5"  src="{{asset('assets/img/icon/profile/trophy1.png')}}" alt="">
+              </div>
+              <a href="#" class="intelOne z-30 text-dark-blue text-sm font-normal bg-white hover:bg-neutral-200 px-16 py-2 rounded-full mt-1" >Leaderboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
+
   <footer class="w-full bg-lightest-blue relative z-30">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
       <div class="col-span-3">

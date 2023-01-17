@@ -56,7 +56,10 @@ Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update']
 Route::get('/student/register/{email}', [StudentController::class, 'register'])->name('student.register');
 Route::post('/student/register/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 Route::group(['middleware'=>'auth:student'], function(){
-    Route::get('/profile', [StudentController::class, 'profile'])->name('student.profile');
+    Route::get('/profile/{student}/allProjects', [StudentController::class, 'allProjects'])->name('student.allProjects');
+    Route::get('/profile/{student}/ongoingProjects', [StudentController::class, 'ongoingProjects'])->name('student.ongoingProjects');
+    Route::get('/profile/{student}/completedProjects', [StudentController::class, 'completedProjects'])->name('student.completedProjects');
+    // Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){

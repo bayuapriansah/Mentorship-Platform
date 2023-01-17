@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Session;
+use App\Models\EnrolledProject;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -133,8 +135,39 @@ class StudentController extends Controller
     }
     
     // STUDENT PROFILE
-    public function profile()
+    public function allProjects($id)
     {
-        return view('student.index');
+        // dd(Auth::guard('student')->user()->id);
+        if($id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+        $student = Student::where('id', $id)->first();
+
+        return view('student.index', compact('enrolled_projects', 'student'));
+    }
+    
+    public function ongoingProjects($id)
+    {
+        // dd(Auth::guard('student')->user()->id);
+        if($id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('is_submited', 0)->get();
+        $student = Student::where('id', $id)->first();
+        
+        return view('student.index', compact('enrolled_projects', 'student'));
+    }
+    
+    public function completedProjects($id)
+    {
+        // dd(Auth::guard('student')->user()->id);
+        if($id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('is_submited', 1)->get();
+        $student = Student::where('id', $id)->first();
+        
+        return view('student.index', compact('enrolled_projects', 'student'));
     }
 }
