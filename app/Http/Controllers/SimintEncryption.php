@@ -15,11 +15,28 @@ class SimintEncryption extends Controller
     }
 
     public function decData($data){
+      // Check the format of the data
+      if(!is_string($data) || strlen($data) < 1) {
+          return 'Error: Invalid data format';
+      }
+      // Check if the encryption key is valid
+      if(!config('app.key')){
+          return 'Error: Invalid key';
+      }
+      // Check if the payload is base64 encoded
       if(!base64_decode($data, true)){
+          return 'Error: Payload is not base64 encoded';
+      }
+      try {
+          // Decrypt the data
           $decrypted = Crypt::decryptString($data);
           return $decrypted;
+      } catch(\Illuminate\Contracts\Encryption\DecryptException $e) {
+          return abort(403);
+          return 'Error: Invalid payload';
       }
   }
+  
 
     public function waktu()
     {

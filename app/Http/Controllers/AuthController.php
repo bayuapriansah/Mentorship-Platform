@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Session;
-use App\Models\Mentor;
-use App\Models\Company;
-use App\Models\Student;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\InstitutionController;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\Company;
+use App\Models\Mentor;
+
 
 class AuthController extends Controller
 {
@@ -133,13 +134,14 @@ class AuthController extends Controller
     public function verified($email)
     {
         $email = (new SimintEncryption)->decData($email);
-        $registeredEmail = Student::where('email', $email)->first();
-        // dd($registeredEmail);
+        $registeredEmail = Student::where('email', $email)->where('is_confirm', 0)->first();
         if($registeredEmail){
             $registeredEmail->is_confirm = 1;
             $registeredEmail->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $registeredEmail->save();
             return view('auth.verified');
+        }else{
+            return abort(403);
         }
     }
 
