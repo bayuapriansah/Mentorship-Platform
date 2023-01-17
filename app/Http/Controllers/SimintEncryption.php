@@ -15,9 +15,11 @@ class SimintEncryption extends Controller
     }
 
     public function decData($data){
-      $decrypted = Crypt::decryptString($data);
-      return $decrypted;
-    }
+      if(!base64_decode($data, true)){
+          $decrypted = Crypt::decryptString($data);
+          return $decrypted;
+      }
+  }
 
     public function waktu()
     {
