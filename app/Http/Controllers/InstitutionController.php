@@ -8,6 +8,17 @@ use App\Models\institution_world_data_view;;
 
 class InstitutionController extends Controller
 {
+    public function GetInstituionData()
+    {
+        $GetInstitutionData = institution_world_data_view::get();
+        return $GetInstitutionData;
+    }
+
+    public function GetInstituionById($id)
+    {
+        $GetInstitution = institution_world_data_view::where('id',$id)->first();
+        return $GetInstitution;
+    }
     /**
      * Display a listing of the resource.
      *

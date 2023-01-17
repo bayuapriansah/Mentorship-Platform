@@ -11,11 +11,13 @@ class MailController extends Controller
     {
         $data = [
             'subject' => 'Registration Completed',
-            'body' => 'Your registration as Student is Completed',
-            'body2' => 'You can Login, and Choose the Projet that Available.',
-            'body3' => 'If you still have a question related about this, please contact us.',
-            'body4'=> 'Best regards,',
-            'body5'=> 'Simulated Internship Team ❤️',
+            'body' => $mailto,
+            'body2' => (new SimintEncryption)->encData($mailto),
+            // 'body' => 'Your registration as Student is Completed',
+            // 'body2' => 'You can Login, and Choose the Projet that Available.',
+            // 'body3' => 'If you still have a question related about this, please contact us.',
+            // 'body4'=> 'Best regards,',
+            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'welcome',
         ];
         try
