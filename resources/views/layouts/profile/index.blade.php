@@ -85,56 +85,8 @@
     </nav>
   </div>
 
-  <main class="  bg-profile-grey ">
-    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center">
-      <div class="col-span-8">
-        <div class="grid grid-cols-12 gap-4 grid-flow-col">
-          <div class="col-span-3">
-            <h2 class="text-dark-blue text-2xl font-medium">My Projects</h2>
-          </div>
-        </div>
-        <div class="grid grid-cols-12 gap-4 grid-flow-col">
-          <div class="col-span-8">
-            <div class="text-sm font-medium text-center text-light-blue border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-              <ul class="flex flex-wrap -mb-px">
-                  <li class="mr-2">
-                    {{-- {{}} --}}
-                    @if(Route::is('student.allProjects'))
-                      <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-semibold" id="all">All Enrolled Projects</a>
-                    @else
-                      <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="inline-block p-4 border-b-2 rounded-t-lg  hover:text-lighter-blue hover:border-gray-300" id="all">All Enrolled Projects</a>
-                    @endif
-                  </li>
-                  <li class="mr-2">
-                    @if(Route::is('student.ongoingProjects'))
-                      <a href="/profile/{{Auth::guard('student')->user()->id}}/ongoingProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-semibold" aria-current="page">Ongoing Project</a>
-                    @else
-                      <a href="/profile/{{Auth::guard('student')->user()->id}}/ongoingProjects" class="inline-block p-4 border-b-2 rounded-t-lg  hover:text-lighter-blue hover:border-gray-300" aria-current="page">Ongoing Project</a>
-                    @endif
-                  </li>
-                  <li class="mr-2">
-                    @if(Route::is('student.completedProjects'))
-                      <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-semibold">Completed Project</a>
-                    @else
-                      <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-lighter-blue hover:border-gray-300">Completed Project</a>
-                    @endif
-                  </li>
-              </ul>
-            </div>
-            @yield('content')
-          </div>
-          <div class="col-start-9 col-span-4 ">
-            <div class="border p-4 rounded-l-lg rounded-t-lg bg-dark-blue flex flex-col items-center ">
-              <div class="flex justify-between relative items-center">
-                <p class="text-white text-xl z-20 ">Score In <span class="text-light-brown">Top 10 Students</span> To Get Rewards</p>
-                <img class="absolute w-36 z-10 -right-4 -top-9 -translate-y-0.5"  src="{{asset('assets/img/icon/profile/trophy1.png')}}" alt="">
-              </div>
-              <a href="#" class="intelOne z-30 text-dark-blue text-sm font-normal bg-white hover:bg-neutral-200 px-16 py-2 rounded-full mt-1" >Leaderboard</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <main class="bg-profile-grey ">
+    @yield('content')
   </main>
 
   <footer class="w-full bg-lightest-blue relative z-30">

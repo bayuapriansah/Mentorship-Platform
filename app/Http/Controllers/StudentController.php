@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Session;
+use App\Models\Project;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
 
@@ -169,5 +171,15 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         
         return view('student.index', compact('enrolled_projects', 'student'));
+    }
+
+    public function enrolledDetail($student_id, $project_id)
+    {
+        // dd($project_id);
+        $student = Student::where('id', $student_id)->first();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+        $project = Project::find($project_id);
+        $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections'));
     }
 }

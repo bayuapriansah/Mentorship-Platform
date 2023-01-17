@@ -113,7 +113,7 @@
     @if(Auth::guard('student')->check())
       <form method="POST" action="{{ $project->id }}/apply" >
         @csrf
-        <button type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full absolute ">Apply</button> 
+        <button type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full absolute ">Enroll</button> 
       </form> 
     @endif
     </div>
@@ -126,6 +126,70 @@
     <div class="col-end-13 col-span-3 text-right flex flex-col relative">
       <img src="{{asset('assets/img/certificate.png')}}" alt="" class="relative mt-20 w-[305] h-[236]">
     </div> 
+  </div>
+
+  {{--  --}}
+  <div class="max-w-[1366px] mx-auto px-16 pb-16 grid grid-cols-12 gap-11 grid-flow-col bg-white">
+    <div class="col-span-7">
+      <h1 class="text-xl font-semibold text-dark-blue">FAQs</h1>
+      <div id="accordion-collapse" data-accordion="collapse">
+        <h2 id="accordion-collapse-heading-1">
+          <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border  border-dark-blue rounded-xl mt-5 mb-2 focus:ring-4 bg-white focus:bg-neutral-100  hover:bg-neutral-100 " data-accordion-target="#accordion-collapse-body-1" aria-controls="accordion-collapse-body-1">
+            <span class="text-darker-blue font-bold text-xl flex items-center space-x-3">
+              <span class="text-grey text-base"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo?</span>
+            </span>
+            <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </button>
+        </h2>
+        <div id="accordion-collapse-body-1" class="hidden" aria-labelledby="accordion-collapse-heading-1">
+          <ul class="">
+            <li class="py-4 px-5 rounded-xl mb-2 border border-xl border-gray-200 font-normal text-sm text-black">
+              <div class="flex">
+                <span class="font-normal text-sm ml-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda aperiam dolores quis quibusdam laboriosam sint corrupti nemo et optio praesentium.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="accordion-collapse" data-accordion="collapse">
+        <h2 id="accordion-collapse-heading-2">
+          <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border  border-dark-blue rounded-xl mt-5 mb-2 focus:ring-4 bg-white focus:bg-neutral-100  hover:bg-neutral-100 " data-accordion-target="#accordion-collapse-body-2" aria-controls="accordion-collapse-body-2">
+            <span class="text-darker-blue font-bold text-xl flex items-center space-x-3">
+              <span class="text-grey text-base"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo?</span>
+            </span>
+            <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </button>
+        </h2>
+        <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
+          <ul class="">
+            <li class="py-4 px-5 rounded-xl mb-2 border border-xl border-gray-200 font-normal text-sm text-black">
+              <div class="flex">
+                <span class="font-normal text-sm ml-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi id, cum neque quis minus vero sunt fuga excepturi inventore sint!</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="accordion-collapse" data-accordion="collapse">
+        <h2 id="accordion-collapse-heading-3">
+          <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border  border-dark-blue rounded-xl mt-5 mb-2 focus:ring-4 bg-white focus:bg-neutral-100  hover:bg-neutral-100 " data-accordion-target="#accordion-collapse-body-3"  aria-controls="accordion-collapse-body-3">
+            <span class="text-darker-blue font-bold text-xl flex items-center space-x-3">
+              <span class="text-grey text-base"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo?</span>
+            </span>
+            <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </button>
+        </h2>
+        <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
+          <ul class="">
+            <li class="py-4 px-5 rounded-xl mb-2 border border-xl border-gray-200 font-normal text-sm text-black">
+              <div class="flex">
+                <span class="font-normal text-sm ml-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam, iste quos. Molestiae porro deserunt ea repudiandae corrupti atque iure? Ea.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
   @if(Auth::guard('student')->check())
   <div class="max-w-[1366px] mx-auto px-16 pb-16 grid grid-cols-12 gap-11 grid-flow-col bg-white">

@@ -59,7 +59,9 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/allProjects', [StudentController::class, 'allProjects'])->name('student.allProjects');
     Route::get('/profile/{student}/ongoingProjects', [StudentController::class, 'ongoingProjects'])->name('student.ongoingProjects');
     Route::get('/profile/{student}/completedProjects', [StudentController::class, 'completedProjects'])->name('student.completedProjects');
-    // Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
+    Route::get('/profile/{student}/enrolled/{project}/detail', [StudentController::class, 'enrolledDetail'])->name('student.enrolledDetail');
+    // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
+
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){
@@ -68,8 +70,8 @@ Route::get('/projects', [ProjectController::class, 'index'])->name('projects.ind
 Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
 Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
-Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
-Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
+// Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
+// Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
 Route::get('/projects/{student}/applied/{project}/task/{section}/detail/{subsection}/submission', [ProjectController::class, 'appliedSubmission'])->name('projects.appliedSubmission');
 Route::post('/projects/{student}/applied/{project}/detail/{subsection}', [ProjectController::class, 'appliedSubmit'])->name('projects.appliedSubmit');
 Route::group(['middleware'=>'auth:student'], function(){
