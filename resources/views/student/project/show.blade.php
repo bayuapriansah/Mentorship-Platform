@@ -1,5 +1,19 @@
 @extends('layouts.profile.index')
 @section('content')
+{{-- 
+  
+  PHP CODE HERE
+
+  --}}
+  @php
+  $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', $student->id)->where('project_id', $project->id)->first()->created_at);
+  $date = $appliedDate->format('Y-m-d');
+  $now = \Carbon\Carbon::now();
+  @endphp
+
+{{-- 
+  END OF PHP CODE HERE
+  --}}
 <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
@@ -32,6 +46,7 @@
         <div id="accordion-collapse" data-accordion="collapse">
           @php $no = 1 @endphp
           @foreach($project_sections as $project_section)
+          @if($now > $date)
           <h2 id="accordion-collapse-heading-{{$no}}">
             <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border  border-dark-blue rounded-xl mt-5 mb-2 focus:ring-4 bg-white focus:bg-neutral-100  hover:bg-neutral-100 " data-accordion-target="#accordion-collapse-body-{{$no}}" aria-expanded="true" aria-controls="accordion-collapse-body-{{$no}}">
               <span class="text-darker-blue font-bold text-xl flex items-center space-x-3">
@@ -39,12 +54,18 @@
                 {{$project->type == 'weekly' ? 'Week': 'Month'}} {{$no}} 
                 <span class="text-grey text-base">{{$project_section->sectionSubsections->count()}} tasks</span>
               </span>
+              {{ $date }}
+              @php
+              $date = $appliedDate->addDays(10)->toDateString();
+              @endphp
+              {{-- @dd($student->id) --}}
               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
           </h2>
           <div id="accordion-collapse-body-{{$no}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$no}}">
             <ul class="ml-4">
               @foreach($project_section->sectionSubsections as $subsection)
+              {{-- @dd($date > $now) --}}
               <li class="py-4 px-5 rounded-xl mb-2 border border-xl border-gray-200 font-normal text-sm text-black bg-white">
                 <div class="flex">
                   @if($subsection->category == 'video')
@@ -57,11 +78,11 @@
                   <span class="font-normal text-sm ml-4">{{$subsection->category}}</span>
                 </div>
               </li>
-  
               @endforeach
             </ul>
           </div>
           @php $no++ @endphp
+          @endif
           @endforeach
         </div>
       </div>

@@ -55,6 +55,8 @@ Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update']
 // student register
 Route::get('/student/register/{email}', [StudentController::class, 'register'])->name('student.register');
 Route::post('/student/register/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
+
+// bay
 Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/allProjects', [StudentController::class, 'allProjects'])->name('student.allProjects');
     Route::get('/profile/{student}/ongoingProjects', [StudentController::class, 'ongoingProjects'])->name('student.ongoingProjects');

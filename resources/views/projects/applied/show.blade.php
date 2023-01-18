@@ -27,7 +27,6 @@
               <div class="col">
                 @php 
                   $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', $student_id)->where('project_id', $project->id)->first()->created_at);
-                  
                   $date = $appliedDate->format('Y-m-d'); 
                 @endphp
                 <p>applied at {{$date}}</p>
