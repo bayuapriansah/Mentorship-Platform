@@ -74,10 +74,20 @@
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
       <ul class="col-start-4 col-span-5 flex justify-between text-black">
-        <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Project</a></li>
-        <li class="text-dark-blue intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-500">Internship Programs</a></li>
-        <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Certificate</a></li>
-        <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
+        @if(Route::is('student.allProjects') || Route::is('student.ongoingProjects') || Route::is('student.completedProjects'))
+          <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Project</a></li>
+        @else
+          <li class="text-black intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Project</a></li>
+        @endif
+
+        @if(Route::is('student.allProjectsAvailable') || Route::is('student.availableProjectDetail'))
+          <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjectsAvailable" class="hover:text-neutral-500">Internship Programs</a></li>
+        @else
+          <li class="text-black intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjectsAvailable" class="hover:text-neutral-500">Internship Programs</a></li>
+        @endif
+
+        <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Certificate</a></li>
+        <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
       </ul>
       <div class="col-start-9 col-span-4 flex relative">
         @include('layouts.profile.sidebar')

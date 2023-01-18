@@ -182,4 +182,32 @@ class StudentController extends Controller
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections'));
     }
+
+    public function allProjectsAvailable($student_id)
+    {
+        // dd(Auth::guard('student')->user()->id);
+        // if(Auth::guard('student')->check()){
+        $projects = Project::whereNotIn('id', function($query){
+            $query->select('project_id')->from('enrolled_projects');
+            $query->where('student_id',Auth::guard('student')->user()->id);
+        })->get();
+        $student = Student::where('id', $student_id)->first();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+        // }else{
+        //     $projects = Project::get();
+        // }
+
+        return view('student.project.available.index', compact('student','projects','enrolled_projects'));
+    }
+
+    public function availableProjectDetail($student_id, $project_id)
+    {
+        if($student_id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
+        $student = Student::where('id', $student_id)->first();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+        $project = Project::find($project_id);
+        return view('student.project.available.show', compact('student','project','enrolled_projects'));
+    }
 }

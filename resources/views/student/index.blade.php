@@ -35,7 +35,7 @@
               </li>
           </ul>
         </div>
-        <div class="mt-5">
+        <div class="mt-5 mb-28">
           @forelse($enrolled_projects as $enrolled_project)
           <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl">
             <div class="flex space-x-2">
