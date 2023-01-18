@@ -2,7 +2,7 @@
 @section('content')
 <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center">
   <div class="col-span-8 flex justify-between">
-    <h1 class="text-dark-blue text-2xl font-medium flex items-center">Internship Projects <img src="{{asset('assets/img/icon/magGlass.png')}}" class="pl-2 my-auto" alt="Magnifying glass" id="search">
+    <h1 class="text-dark-blue text-2xl font-medium flex items-center">Internship Projects <img src="{{asset('assets/img/icon/magGlass.png')}}" class="pl-2 my-auto cursor-pointer" alt="Magnifying glass" id="search">
     </h1>
     <p>Sort</p>
   </div>

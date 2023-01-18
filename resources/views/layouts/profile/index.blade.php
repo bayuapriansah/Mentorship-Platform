@@ -89,6 +89,7 @@
         <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Certificate</a></li>
         <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
       </ul>
+
       <div class="col-start-9 col-span-4 flex relative">
         @include('layouts.profile.sidebar')
       </div>
@@ -101,9 +102,9 @@
 
   <footer class="w-full bg-lightest-blue relative z-30">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
-      <div class="col-span-3">
-        <img src="{{asset('assets/img/Intelblue 1.png')}}" alt="">
-        <p class="text-grey font-normal text-xs pt-2 intelOne">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <div class="col-span-5">
+        <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
+        <p class="text-grey font-normal text-xs pt-2 intelOne">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal Notices and Disclaimers. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See Intel's Global Human Rights Principles. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
       </div>
       <div class="col-start-7 col-span-2 flex flex-col">
         <ul class="text-dark-blue intelOne text-xs font-normal">
@@ -129,14 +130,10 @@
         </ul>
       </div>
     </div>
-    <hr class="h-px bg-gray-200 border-1">
-    <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col">
+    <hr class="border border-grey">
+    <div class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-11 grid-flow-col">
       <div class="col-span-5 my-auto">
         <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
-      </div>
-      <div class="col-end-13 col-span-2 flex flex-col">
-        <p class="text-grey font-normal text-xs pt-2 intelOne">Powered by</p>
-        <img class="h-9 w-[71px]" src="{{asset('assets/img/image_3.png')}}" alt="">
       </div>
     </div>
   </footer>

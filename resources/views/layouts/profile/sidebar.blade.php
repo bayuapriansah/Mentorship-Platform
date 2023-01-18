@@ -1,4 +1,4 @@
-<div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
+<div class=" bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
@@ -34,7 +34,10 @@
     </div>
   </div>
   <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
-    <p class="text-black text-sm font-normal">Total Enrolled Duration: </p>
-    <p class="text-dark-blue text-sm font-bold">0 Months out of 3 Months</p>
+    <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
+    <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2">
+      <div class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style="width: 45%"></div>
+    </div>
+    <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
   </div>
 </div>
