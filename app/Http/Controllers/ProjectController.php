@@ -13,6 +13,7 @@ use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -45,7 +46,7 @@ class ProjectController extends Controller
             $search->save();
         }
         $projects = Project::where('name', 'like', "%" . $keyword . "%")->get();
-        return view('projects.index', compact('projects'));
+        // return view('projects.index', compact('projects'));
     }
 
     public function show($id)
@@ -205,12 +206,19 @@ class ProjectController extends Controller
         $enrolled_project = new EnrolledProject;
         $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('project_id',$id)->first();
+        $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
+                                            ->where('is_submited', 1)->first();
+        // dd($already_completed);                                          
         if($already_enrolled == null ){
-            $enrolled_project->student_id = Auth::guard('student')->user()->id;
-            $enrolled_project->project_id = $id;
-            $enrolled_project->is_submited = 0;
-            $enrolled_project->save();
-            return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
+            if($already_completed){
+                $enrolled_project->student_id = Auth::guard('student')->user()->id;
+                $enrolled_project->project_id = $id;
+                $enrolled_project->is_submited = 0;
+                $enrolled_project->save();
+                return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
+            }else{
+                return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail');
+            }
         }
         
     }
