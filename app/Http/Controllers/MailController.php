@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\MailNotify;
+use Exception;
 class MailController extends Controller
 {
     public function emailregister($mailto) //Just Email
@@ -24,7 +25,7 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Registration Email sent successfully']);
-        } catch (Exeption $th) {
+        } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
     }
@@ -40,7 +41,7 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['OTP Verification Email sent successfully']);
-        } catch (Exeption $th) {
+        } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
     }
@@ -65,7 +66,7 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Mentor Invitation  Email sent successfully']);
-        } catch (Exeption $th) {
+        } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
     }
@@ -85,7 +86,7 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Mentor Registration Email sent successfully']);
-        } catch (Exeption $th) {
+        } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
     }
@@ -105,7 +106,7 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Mentor Assignment Project Email sent successfully']);
-        } catch (Exeption $th) {
+        } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
     }

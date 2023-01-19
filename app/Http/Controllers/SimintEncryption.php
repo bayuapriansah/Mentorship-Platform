@@ -47,16 +47,21 @@ class SimintEncryption extends Controller
       dd($date);
     }
 
-    public function bday()
-    {
-      $myBday = "2023-04-07";
-      $myBday = new DateTime($myBday);
-      $myDate = Carbon::now()->toDateString();
-      $date = Carbon::createFromFormat('Y-m-d', $myDate);
-      $date = new DateTime($myDate);
-      $bday = $date->diff($myBday);
-      // $daysToAdd = 20;
-      // $date = $date->addDays($daysToAdd)->toDateString();
-      dd($bday->format('%a'));
+    public function daycompare($date,$end)
+    { 
+      $todayDate = Carbon::now();
+      $initialDate = Carbon::parse($date)->format('Y-m-d');
+      $endDate = Carbon::parse($end)->format('Y-m-d');
+      $finalDate = $todayDate->diffInDays($initialDate);
+      $totalDate = floor(abs(strtotime($endDate) - strtotime($initialDate))/86400);
+
+      if ($totalDate < 0) {
+          $totalDate = abs($totalDate);
+      } else {
+          $totalDate = $totalDate;
+      }
+      $percentage = ($finalDate/$totalDate) * 100;
+      // dd($percentage);
+      return $percentage;
     }
 }

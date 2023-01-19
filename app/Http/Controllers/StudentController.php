@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Models\Project;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -112,11 +112,7 @@ class StudentController extends Controller
         ]);
         $student = Student::where('email',$email)->first();
         // dd($student);
-        $student->first_name = $validated['first_name'];
-        $student->last_name = $validated['last_name'];
-        $student->date_of_birth = $validated['date_of_birth'];
-        $student->gender = $validated['gender'];
-        $student->state = $validated['state'];
+        $student->first_name = $valiresult['state'];
         $student->country = $validated['country'];
         $student->institution = $validated['institution'];
         $student->is_confirm = 1;
@@ -145,8 +141,9 @@ class StudentController extends Controller
         }
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $student = Student::where('id', $id)->first();
-
-        return view('student.index', compact('enrolled_projects', 'student'));
+        // dd($student->created_at);
+        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+        return view('student.index', compact('enrolled_projects', 'student','dataDate'));
     }
     
     public function ongoingProjects($id)

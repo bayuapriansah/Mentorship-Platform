@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Models\Mentor;
 use App\Models\Company;
 use App\Models\Project;
-use MagicLink\MagicLink;
 use Illuminate\Http\Request;
 use App\Models\MentorProject;
 use App\Models\ProjectSection;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
-use MagicLink\Actions\ResponseAction;
 
 class MentorController extends Controller
 {
@@ -43,7 +41,7 @@ class MentorController extends Controller
 // fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
     public function sendInvite(Request $request,$company_id)
     {   
-        // dd($request->all());
+        dd($request->all());
         $checkMentor = Mentor::where('email', $request->email)->first();   
         if($checkMentor){
             $checkMentorProject = MentorProject::where('mentor_id', )->where('project_id', $request->project_id)->first();
