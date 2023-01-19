@@ -202,7 +202,6 @@ class ProjectController extends Controller
 
     public function applyProject($id)
     {
-        dd('wew');
         $enrolled_project = new EnrolledProject;
         $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('project_id',$id)->first();
