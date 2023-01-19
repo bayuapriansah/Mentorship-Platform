@@ -118,7 +118,7 @@
       <div class="border-[1px] hover:border-darker-blue border-light-blue py-5 px-5 rounded-xl">
         <div class="flex space-x-2">
           <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
-            <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+            <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
           </div>
           <div class="flex-col">
             <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>

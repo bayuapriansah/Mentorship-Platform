@@ -51,7 +51,7 @@
                   <span class="ml-2">Completed</span>
                 </div>
                 @endif
-                <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+                <img src="{{asset('storage/'.$enrolled_project->project->company->logo)}}" class="w-16 h-9 object-scale-down  mx-auto " alt="">
               </div>
               <div class="flex-col">
                 <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$enrolled_project->project->name}}</p>

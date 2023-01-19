@@ -108,7 +108,7 @@
     </div>
     <div class="col-start-11 col-span-2 relative flex flex-col space-y-5">
       <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-0 -top-20 ">
-        <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
+        <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
       </div>
       <form method="POST" action="{{ $project->id }}/apply" class="">
         @csrf

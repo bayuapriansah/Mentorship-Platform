@@ -24,7 +24,7 @@
       <div class="col-span-6 relative">
         <img src="{{asset('assets/img/icon/profile/dots.png')}}" class="absolute z-10 right-0 -top-3 ">
         <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-10 top-10 ">
-          <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9  mx-auto " alt="">
+          <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
         </div>
       </div>
     </div>
