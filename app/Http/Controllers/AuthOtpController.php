@@ -79,11 +79,11 @@ class AuthOtpController extends Controller
             $verificationCode = VerificationCode::where('user_id', $encId)->where('email', $encEmail)->where('otp', $request->otp)->first();
             $now = Carbon::now();
             if(!$verificationCode){
-                return redirect()->route('otp.verification')->with('error', 'Your verification code is invalid');
+                return redirect()->route('otp.verification',[$request->user_id,$theMail])->with('error', 'Your verification code is invalid');
             }elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
                 return redirect()->route('otp.login')->with('error', 'Your verification code has expired');
             }
-    
+            
             $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
             if(!$data_user){
                 $data_user = Mentor::where('id', $encId)->where('email', $encEmail)->first();
