@@ -32,8 +32,12 @@
       <div class="col-span-7 relative my-auto">
         <h1 class="text-dark-blue text-[22px]">Project Details</h1>
       </div>
-      <div class="col-start-10 col-span-2">
-          <button  class="intelOne text-white text-sm font-normal bg-darker-blue  px-12 py-3 rounded-full absolute ">Enrolled</button> 
+      <div class="col-start-10 col-span-3">
+          <button  class="intelOne text-white text-sm font-normal bg-darker-blue px-12 py-2 rounded-full absolute cursor-default ">Enrolled</button> 
+          <div class="border border-light-blue rounded-[10px] bg-white p-2 absolute mt-14  flex items-center space-x-3">
+            <i class="fa-regular fa-calendar"></i>
+            <p class="font-normal text-sm text-light-blue">Duration: <span class="text-dark-blue">{{$project->period}} Month</span></p>
+          </div>  
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
