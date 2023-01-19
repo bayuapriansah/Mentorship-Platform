@@ -19,14 +19,14 @@
       <form action="{{route('register')}}" method="post" id="register">
         @csrf
         <div class="flex justify-between">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="firstname" type="text" value="{{old('first_name')}}" placeholder="First Name *" name="first_name" required><br>
+          <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="firstname" type="text" value="{{old('first_name')}}" placeholder="First Name *" name="first_name" required><br>
           @error('first_name')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
 
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="lastname" type="text" value="{{old('last_name')}}" placeholder="Last Name *" name="last_name" required><br>
+          <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="lastname" type="text" value="{{old('last_name')}}" placeholder="Last Name *" name="last_name" required><br>
           @error('last_name')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -34,14 +34,14 @@
           @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="text" placeholder="Date of birth" onfocus="(this.type='date')"  value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
+          <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="text" placeholder="Date of birth" onfocus="(this.type='date')"  value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
           @error('date_of_birth')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
           
-          <select id="sex" class="border-2 rounded w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight " name="sex" required>
+          <select id="sex" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight " name="sex" required>
             <option value="">Sex *</option>
             <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
             <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
@@ -53,7 +53,7 @@
           @enderror
         </div>
 
-        <select id="institution" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" name="institution" required>
+        <select id="institution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight" name="institution" required>
           <option>Institution Name *</option>
           @forelse($GetInstituionData as $ins)
           <option value="{{$ins->id}}">{{$ins->institutions}}</option>
@@ -68,7 +68,7 @@
         @enderror        
         
         <div class="flex justify-between mt-4">
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
+          <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
           <br>
           @error('country')
               <p class="text-red-600 text-sm mt-1">
@@ -76,7 +76,7 @@
               </p>
           @enderror
 
-          <input class=" border-2 rounded w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
+          <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
           <br>
           @error('state')
               <p class="text-red-600 text-sm mt-1">
@@ -85,7 +85,7 @@
           @enderror
         </div>
 
-        <input type="email" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required><br>
+        <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required><br>
         @error('email')
             <p class="text-red-600 text-sm mt-1">
               {{$message}}

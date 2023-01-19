@@ -24,16 +24,16 @@
             {!! implode('', $errors->all('<div class="text-danger text-sm mt-1">:message</div>')) !!}
         @endif --}}
 <section id="login" class="w-full">
-  <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-11 grid-flow-col bg-lightest-blue">
-    <div class="col-span-6">
+  <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col bg-lightest-blue">
+    <div class="col-span-5">
       <a href="/otp/login" class="intelOne text-dark-blue font-normal text-base"><i class="fa-solid fa-arrow-left"></i> Go back</a>
       <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Login</h1>
       <p class="intelOne font-light text-black text-lg leading-6 py-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
       <form action="{{ route('otp.getlogin') }}" method="post" id="register">
         @csrf
         <input type="hidden" name="user_id" value="{{$user_id}}">
-        <input class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" name="email" value="{{$email}}" placeholder="Email *" id="email" name="email" required>
-        <input class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " placeholder="Enter OTP*" id="otp" name="otp" required>
+        <input class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" name="email" value="{{$email}}" placeholder="Email *" id="email" name="email" required>
+        <input class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " placeholder="Enter OTP*" id="otp" name="otp" required>
         {{-- <div class="bg-red-alert intelOne text-sm p-4 w-2/3 rounded-lg mt-4 flex" role="alert">
           <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
           This email address is already registered!

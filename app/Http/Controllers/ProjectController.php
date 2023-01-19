@@ -53,7 +53,6 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $project_sections = ProjectSection::where('project_id', $id)->get();
-        // dd($project_sections);
         return view('projects.show', compact(['project','project_sections']));
     }
     
@@ -203,23 +202,29 @@ class ProjectController extends Controller
 
     public function applyProject($id)
     {
+        dd('wew');
         $enrolled_project = new EnrolledProject;
         $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('project_id',$id)->first();
         $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('is_submited', 1)->first();
-        // dd($already_completed);                                          
-        if($already_enrolled == null ){
-            if($already_completed){
-                $enrolled_project->student_id = Auth::guard('student')->user()->id;
-                $enrolled_project->project_id = $id;
-                $enrolled_project->is_submited = 0;
-                $enrolled_project->save();
-                return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
-            }else{
-                return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail');
+        // dd($already_completed);
+        if(Auth::guard('student')->check()){
+            if($already_enrolled == null ){
+                if($already_completed){
+                    $enrolled_project->student_id = Auth::guard('student')->user()->id;
+                    $enrolled_project->project_id = $id;
+                    $enrolled_project->is_submited = 0;
+                    $enrolled_project->save();
+                    return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
+                }else{
+                    return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail');
+                }
             }
-        }
+        }else{
+            return redirect('auth.otplogin');
+        }                                          
+        
         
     }
 

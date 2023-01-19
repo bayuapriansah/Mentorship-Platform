@@ -1,10 +1,21 @@
 @tailwind base;
 @tailwind components;
-.intelOne{
-  font-family: 'IntelOne Display', sans-serif;
+@font-face {
+  font-family: 'IntelOne';
+  src: url(/public/assets/intelOneFont/intelone-display-regular.woff);
+}
+@font-face {
+  font-family: 'IntelOne';
+  src: url(/public/assets/intelOneFont/intelone-display-bold.woff);
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'IntelOne';
+  src: url(/public/assets/intelOneFont/intelone-display-medium.woff2);
+  font-weight: 500;
 }
 *{
-  font-family: 'IntelOne Display', sans-serif;
+  font-family: 'IntelOne';
 }
 .problem h1{
   display: block;

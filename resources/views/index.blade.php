@@ -21,7 +21,7 @@
   </div>
 </div>
 <div class="w-full">
-  <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-7 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
+  <div class="max-w-[1366px] mx-auto px-16 pt-16 pb-7 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
     <div class="col-span-12 text-center">
       <p class="font-normal inteOne text-base text-black m-0">More than <span class="text-dark-blue">10,000+</span> Simulated Internships provided by our partners</p>
     </div>
@@ -34,23 +34,45 @@
     <img src="{{asset('assets/img/image 7.png')}}" alt="">
   </div>
   <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col">
-    <div class="col-span-5 flex my-auto">
-      <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for Future Workforce</h2>
+    <div class="col-span-6 flex my-auto">
+      <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
     </div>
     <div class="col-end-13 col-span-6">
       <p class="m-0 text-black">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
       <br>
       <p class="m-0 text-black">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus ea temporibus similique neque quam sapiente facilis molestiae nesciunt officia, alias inventore deleniti modi perspiciatis voluptatum repudiandae quibusdam illo dolore eligendi.</p>
+      <br>
+      <img src="{{asset('assets/img/intelss.png')}}" class="relative z-20" alt="">
     </div>
   </div>
-  <div class="max-w-[1366px] mx-auto px-36 pt-20 mb-0 flex justify-between items-center relative">
-    <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/3 -translate-y-2/4 right-1/4 translate-x-3/4" aria-hidden="true" >
-    <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-24 " aria-hidden="true" >
-    <img src="{{asset('assets/img/image8.png')}}" class="relative z-20" alt="">
+  <div class="max-w-[1366px] mx-auto px-36 pt-20 mb-0 grid grid-cols-12 gap-11 grid-flow-col  relative">
+    <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 -top-32 right-0" aria-hidden="true" >
+    <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-10 left-0 " aria-hidden="true" >
+    <div class="col-span-4">
+      <div class="flex flex-col">
+        <img src="{{asset('assets/img/for_students.png')}}" class="relative z-20" alt="for students">
+        <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
+        <p class="text-black font-normal text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium, debitis fugit fuga harum commodi nihil ea veniam dolore ipsam ex?</p>
+      </div>
+    </div>
+    <div class="col-span-4">
+      <div class="flex flex-col">
+        <img src="{{asset('assets/img/for_institution.png')}}" class="relative z-20" alt="for students">
+        <h1 class="text-dark-blue text-2xl font-bold py-3">For Institutes</h1>
+        <p class="text-black font-normal text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium, debitis fugit fuga harum commodi nihil ea veniam dolore ipsam ex?</p>
+      </div>
+    </div>
+    <div class="col-span-4">
+      <div class="flex flex-col">
+        <img src="{{asset('assets/img/for_industries.png')}}" class="relative z-20" alt="for students">
+        <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
+        <p class="text-black font-normal text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium, debitis fugit fuga harum commodi nihil ea veniam dolore ipsam ex?</p>
+      </div>
+    </div>
   </div>
   <div class="container mx-auto">
-    <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 flex justify-between items-center">
-      <div class="col-span-4">
+    <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 flex ">
+      <div class="">
         <h2 class="intelOne text-dark-blue font-bold text-3xl">Active Internships Program</h2>
       </div>
       {{-- untuk arrow --}}
@@ -70,11 +92,11 @@
                 <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36">{{$project->project_domain}}</p>
               </div>
             </div>
-            <p class="text-gray-700 text-base mb-2 pt-3">
+            <div class="text-grey font-normal text-base mb-2 pt-3">
               {!! substr($project->problem,0,62) !!}
-            </p>
+            </div>
             <div class="flex justify-between">
-            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">2 Months</span></p>
+            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-medium">2 Months</span></p>
             <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
             </div>
           </div>
@@ -147,7 +169,7 @@
             alt=""
             class="absolute rounded-full w-[75px] h-[75px] right-8 -translate-x-1/4 -top-6"
             />
-          <p class="text-grey intelOne font-normal pt-12 m-0">
+          <p class="text-grey font-normal text-sm pt-12 m-0">
             “On the Windows talking painted pasture yet its express parties
             use. Sure last upon he same as knew next. Of believed or
             diverted no.”
@@ -168,6 +190,18 @@
           <p class="mt-10 mb-2 text-right text-dark-blue font-medium text-sm intelOne m-0">Mike taylor</p>
         </div>
         
+      </div>
+    </div>
+  </div>
+  <div class="w-full bg-white relative z-20">
+    <div class="max-w-[1366px] mx-auto px-16  pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container relative">
+      <div class="absolute z-10 w-20 h-20 bg-light-brown top-72 left-10 rounded-[10px]"></div>
+      <div class="col-span-5">
+        <img src="{{asset('assets/img/learningneverstops.png')}}" class=" relative z-30" alt="learning never stops">
+      </div>
+      <div class="col-span-7">
+        <h1 class="font-bold text-2xl text-dark-blue">Learning Never Stops</h1>
+        <p>When he was 16 years old, Feridoon Ghanbari and his family left Iran to live in the U.S. With time spent in the Army as a combat medic and the Air Force as a guidance and navigation engineer—the military has shaped his life. Afterward, he moved to New Mexico, where he's been living for over four decades. With degrees in Electrical Engineering, Industrial Engineering, and Business, he has a deep background in STEM. He's passionate about Artificial Intelligence and always wants to learn about where the future of tech is headed, in real time for the real world. That's why he's excited about expanding his knowledge in our AI for Workforce classes. The program teaches innovative tech while empowering students with the necessary AI skills for employability in the digital economy.</p>
       </div>
     </div>
   </div>

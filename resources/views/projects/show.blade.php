@@ -110,12 +110,10 @@
       <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-20 -top-20 ">
         <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
       </div>
-    @if(Auth::guard('student')->check())
       <form method="POST" action="{{ $project->id }}/apply" >
         @csrf
         <button type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full absolute ">Enroll</button> 
       </form> 
-    @endif
     </div>
   </div>
 
@@ -191,7 +189,7 @@
       </div>
     </div>
   </div>
-  @if(Auth::guard('student')->check())
+  {{-- @if(Auth::guard('student')->check())
   <div class="max-w-[1366px] mx-auto px-16 pb-16 grid grid-cols-12 gap-11 grid-flow-col bg-white">
     <div class="col-span-7">
       <div id="accordion-collapse" data-accordion="collapse">
@@ -231,7 +229,7 @@
       </div>
     </div>
   </div>
-  @endif
+  @endif --}}
   
 
 

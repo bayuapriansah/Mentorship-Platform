@@ -27,13 +27,13 @@
       <p class="intelOne font-light text-black text-lg leading-6 py-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
       <form action="/authenticate" method="post" id="register">
         @csrf
-        <input type="email" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email" id="email" name="email" required>
+        <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email" id="email" name="email" required>
         @error('email')
             <p class="text-red-600 text-sm mt-1">
               {{$message}}
             </p>
         @enderror
-        <input type="password" class="text w-full border-2 rounded mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('email')}}" placeholder="Password" id="password" name="password" required>
+        <input type="password" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight" value="{{old('email')}}" placeholder="Password" id="password" name="password" required>
         @error('password')
             <p class="text-red-600 text-sm mt-1">
               {{$message}}

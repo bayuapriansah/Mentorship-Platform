@@ -11,7 +11,7 @@
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
     @vite('resources/css/app.css')
     {{-- font --}}
-    <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet">
+    {{-- <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet"> --}}
     <meta name="theme-color" content="#712cf9">
     <style>
       .bd-placeholder-img {
@@ -106,7 +106,7 @@
           </li>
         </ul>      
         @else
-        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne ml-4">Login</a>
+        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne ml-10">Login</a>
         <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-dark-blue bg-dark-blue text-center capitalize bg-orange text-white hover:bg-darker-blue font-normal text-sm intelOne">Register</a>
         @endif
         
@@ -118,26 +118,26 @@
   </main>
   <footer class="w-full bg-lightest-blue relative z-30">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
-      <div class="col-span-5">
+      <div class="col-span-4">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
-        <p class="text-grey font-normal text-xs pt-2 intelOne">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal Notices and Disclaimers. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See Intel's Global Human Rights Principles. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
+        <p class="text-grey font-normal text-[10px] pt-2 ">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal <span class="text-black">Notices and Disclaimers</span>. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See Intel's Global Human Rights Principles. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
       </div>
-      <div class="col-start-7 col-span-2 flex flex-col">
-        <ul class="text-dark-blue intelOne text-xs font-normal">
+      <div class="col-start-6 col-span-2 flex flex-col">
+        <ul class="text-dark-blue text-xs font-normal">
           <li class="pb-3"><a href="">About Us</a></li>
           <li class="pb-3"><a href="">For Industry Partners</a></li>
           <li class="pb-3"><a href="">For Institution</a></li>
           <li class="pb-3"><a href="">For Students</a></li>
         </ul>
       </div>
-      <div class="col-start-9 col-span-2 flex flex-col">
-        <ul class="text-dark-blue intelOne text-xs font-normal">
+      <div class="col-start-8 col-span-2 flex flex-col">
+        <ul class="text-dark-blue text-xs font-normal">
           <li class="pb-3"><a href="">FAQs</a></li>
           <li class="pb-3"><a href="">Contact Us</a></li>
           <li class="pb-3"><a href="">Help and Support</a></li>
         </ul>
       </div>
-      <div class="col-start-11 col-span-2 flex flex-col">
+      <div class="col-start-10 col-span-2 flex flex-col">
         <ul class="text-dark-blue intelOne text-xs font-normal">
           <li class="pb-3"><a href="">Terms & Conditions</a></li>
           <li class="pb-3"><a href="">Privacy Policies</a></li>
@@ -146,12 +146,14 @@
         </ul>
       </div>
     </div>
-    <hr class="border border-grey">
-    <div class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-11 grid-flow-col">
-      <div class="col-span-5 my-auto">
-        <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
+    <div class="w-full border-t border-grey">
+      <div class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-11 grid-flow-col ">
+        <div class="col-span-5 my-auto ">
+          <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
+        </div>
       </div>
     </div>
+    
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script>
 
