@@ -68,7 +68,7 @@
         @enderror        
         
         <div class="flex justify-between mt-4">
-          <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 " id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
+          <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed" id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
           <br>
           @error('country')
               <p class="text-red-600 text-sm mt-1">
@@ -76,7 +76,7 @@
               </p>
           @enderror
 
-          <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
+          <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight bg-gray-300 cursor-not-allowed" id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
           <br>
           @error('state')
               <p class="text-red-600 text-sm mt-1">
