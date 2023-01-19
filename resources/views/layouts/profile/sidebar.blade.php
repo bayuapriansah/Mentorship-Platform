@@ -1,4 +1,4 @@
-<div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
+<div class=" bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
@@ -20,7 +20,13 @@
       <p class="text-dark-blue font-normal text-xl text-center ">{{$student->first_name}} {{$student->last_name}}</p>
       <p class="text-black font-normal text-sm text-center">4th Year, B.Tech in Computer Science & Engineering </p>
       <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution}}</p>
-      <p class="text-black font-normal text-sm text-center">Internship Status: <span class="text-light-blue">Not Started</span> </p>
+      <p class="text-black font-normal text-sm text-center">Internship Status:
+        @if($student->is_confirm == 0)
+          <span class="text-light-blue">Not Started</span>
+        @else
+        <span class="text-[#F8AC2A]">Ongoing</span>
+        @endif 
+      </p>
     </div>
   </div>
   <div class="flex justify-between mt-8 ">
@@ -29,12 +35,33 @@
       <p class="text-light-black text-sm font-normal">Projects Enrolled</p>
     </div>
     <div>
+  @php
+   $start_date =   \Carbon\Carbon::parse($student->created_at);
+   $start_date = $start_date->format('d-m-Y');
+  @endphp
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Completed</p>
     </div>
   </div>
   <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
-    <p class="text-black text-sm font-normal">Total Enrolled Duration: </p>
-    <p class="text-dark-blue text-sm font-bold">0 Months out of 3 Months</p>
+    <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
+    <div class="flex justify-between">
+      @if($student->is_confirm == 1)
+      <p class="text-black text-xs">{{$start_date}}</p>
+      @endif
+      <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2">
+        <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: 45%"></div>
+      </div>
+      {{-- <div class="flex-col ">
+        <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
+        <p class="text-black text-[6px]">{{$student->end_date}}</p>
+      </div> --}}
+      @if($student->is_confirm == 1)
+        <p class="text-black text-xs">{{$student->end_date}}</p>
+      @endif
+    </div>
+    @if($student->is_confirm == 0)
+      <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
+    @endif
   </div>
 </div>
