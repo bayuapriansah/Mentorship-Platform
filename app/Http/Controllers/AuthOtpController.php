@@ -83,7 +83,7 @@ class AuthOtpController extends Controller
             }elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
                 return redirect()->route('otp.login')->with('error', 'Your verification code has expired');
             }
-    
+            
             $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
             if(!$data_user){
                 $data_user = Mentor::where('id', $encId)->where('email', $encEmail)->first();
