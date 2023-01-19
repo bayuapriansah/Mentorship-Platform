@@ -8,6 +8,7 @@ use App\Http\Controllers\BatchController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\AssignController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\SimintEncryption;
 use App\Http\Controllers\AuthOtpController;
@@ -140,6 +141,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/section/{section}/subsection/{subsection}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('projects.EditSubsection');
         Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
         Route::delete('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardDestroySubsection'])->name('projects.DestroySubsection');
+   
+        // Assign Project to institution
     });
     Route::middleware(['auth:mentor'])->group(function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');

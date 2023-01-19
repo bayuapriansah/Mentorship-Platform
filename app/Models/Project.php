@@ -38,4 +38,9 @@ class Project extends Model
     {
         return $this->hasOne(EnrolledProject::class);
     }
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
 }

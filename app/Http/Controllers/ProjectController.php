@@ -556,5 +556,4 @@ class ProjectController extends Controller
         $submission->save();
         return redirect('/projects/'.$student_id.'/applied/'.$project_id.'/detail')->with('success','Project has been submited');
     }
-
 }   
