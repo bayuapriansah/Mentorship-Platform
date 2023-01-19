@@ -106,14 +106,18 @@
     <div class="col-span-7 relative my-auto">
       <h1 class="text-dark-blue text-[22px]">Project Details</h1>
     </div>
-    <div class="col-start-11 col-span-2 relative flex flex-col">
-      <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-20 -top-20 ">
+    <div class="col-start-11 col-span-2 relative flex flex-col space-y-5">
+      <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-0 -top-20 ">
         <img src="{{asset('assets/img/imagesl.png')}}" class="w-16 h-9  mx-auto " alt="">
       </div>
-      <form method="POST" action="{{ $project->id }}/apply" >
+      <form method="POST" action="{{ $project->id }}/apply" class="">
         @csrf
-        <button type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full absolute ">Enroll</button> 
+        <button type="submit" class="intelOne text-white w-full text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full absolute ">Enroll</button> 
       </form> 
+      <div class="border border-light-blue rounded-[10px] bg-white p-2 absolute right-0 top-16 flex items-center space-x-3">
+        <i class="fa-regular fa-calendar"></i>
+        <p class="font-normal text-sm text-light-blue">Duration: <span class="text-dark-blue">{{$project->period}} Month</span></p>
+      </div>
     </div>
   </div>
 
@@ -121,7 +125,7 @@
     <div class="col-span-9 my-auto">
       {!!$project->problem!!}
     </div>
-    <div class="col-end-13 col-span-3 text-right flex flex-col relative">
+    <div class="col-end-13 col-span-3 text-right flex flex-col relative mt-5">
       <img src="{{asset('assets/img/certificate.png')}}" alt="" class="relative mt-20 w-[305] h-[236]">
     </div> 
   </div>
