@@ -46,7 +46,7 @@
         <div id="accordion-collapse" data-accordion="collapse">
           @php $no = 1 @endphp
           @foreach($project_sections as $project_section)
-          @if($now > $date)
+          @if($now > $date)gi
           <h2 id="accordion-collapse-heading-{{$no}}">
             <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border  border-dark-blue rounded-xl mt-5 mb-2 focus:ring-4 bg-white focus:bg-neutral-100  hover:bg-neutral-100 " data-accordion-target="#accordion-collapse-body-{{$no}}" aria-expanded="true" aria-controls="accordion-collapse-body-{{$no}}">
               <span class="text-darker-blue font-bold text-xl flex items-center space-x-3">
