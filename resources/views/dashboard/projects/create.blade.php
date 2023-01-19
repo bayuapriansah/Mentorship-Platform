@@ -91,6 +91,9 @@
             @enderror
           </div>
           @endif
+          <div class="mb-3">
+          
+          </div>
           
           <div class="mb-3">
             <input type="submit" class="btn btn-primary" name="publish" value="Publish Project">
