@@ -191,23 +191,18 @@ class StudentController extends Controller
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::find($task_id);
-        return view('student.project.task.index', compact('student', 'enrolled_projects', 'dataDate', 'task'));
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task'));
     }
 
     public function allProjectsAvailable($student_id)
     {
-        // dd(Auth::guard('student')->user()->id);
-        // if(Auth::guard('student')->check()){
+        $student = Student::where('id', $student_id)->first();
         $projects = Project::whereNotIn('id', function($query){
             $query->select('project_id')->from('enrolled_projects');
             $query->where('student_id',Auth::guard('student')->user()->id);
-        })->get();
-        $student = Student::where('id', $student_id)->first();
+        })->where('institution_id', $student->institution)->where('status', 'publish')->get();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        // }else{
-        //     $projects = Project::get();
-        // }
 
         return view('student.project.available.index', compact('student','projects','enrolled_projects','dataDate'));
     }
