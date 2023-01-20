@@ -64,4 +64,10 @@
       <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
     @endif
   </div>
+  @if(Route::is('student.taskDetail'))
+    <div class="flex flex-col mt-8 ">
+      <p class="text-sm font-medium text-dark-blue">Task Submission</p>
+      <button class="text-sm font-normal text-white bg-dark-blue rounded-full p-2">Make Final Submission</button>
+    </div>
+  @endif
 </div>
