@@ -90,7 +90,7 @@
         <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
       </ul>
 
-      <div class="col-start-9 col-span-4 flex relative">
+      <div class="col-start-9 col-span-4 flex relative ">
         @include('layouts.profile.sidebar')
       </div>
     </nav>
@@ -100,7 +100,7 @@
     @yield('content')
   </main>
 
-  <footer class="w-full bg-lightest-blue relative z-30">
+  <footer class="w-full bg-lightest-blue relative z-30 bottom-0">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
       <div class="col-span-4">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">

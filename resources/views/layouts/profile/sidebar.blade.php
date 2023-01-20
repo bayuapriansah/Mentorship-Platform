@@ -1,4 +1,4 @@
-<div class=" bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
+<aside class=" bg-white fixed top-5 w-1/4  rounded-xl border border-light-blue p-5 bottom-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
@@ -19,7 +19,7 @@
       <img src="{{asset('assets/img/icon/profile/pp.png')}}" class="w-[100px] h-[100px]  mx-auto"  alt="message">
       <p class="text-dark-blue font-normal text-xl text-center ">{{$student->first_name}} {{$student->last_name}}</p>
       <p class="text-black font-normal text-sm text-center">4th Year, B.Tech in Computer Science & Engineering </p>
-      <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution}}</p>
+      <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
       <p class="text-black font-normal text-sm text-center">Internship Status:
         @if($student->is_confirm == 0)
           <span class="text-light-blue">Not Started</span>
@@ -73,4 +73,4 @@
     </div>
   </form>
   @endif
-</div>
+</aside>
