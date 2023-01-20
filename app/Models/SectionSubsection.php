@@ -15,9 +15,4 @@ class SectionSubsection extends Model
     {
         return $this->belongsTo(ProjectSection::class);
     }
-    
-    public function submission()
-    {
-        return $this->hasOne(Submission::class);
-    }
 }
