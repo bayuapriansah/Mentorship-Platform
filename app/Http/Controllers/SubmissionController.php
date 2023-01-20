@@ -64,7 +64,7 @@ class SubmissionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Submission  $submission
+     * @param  \App\Models\form actionSubmission  $submission
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Submission $submission)
