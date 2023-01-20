@@ -50,6 +50,7 @@
       <p class="text-black text-xs">{{$start_date}}</p>
       @endif
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2">
+        {{-- $dataDate is a function to calculate --}}
         <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ $dataDate }}%"></div>
       </div>
       {{-- <div class="flex-col ">

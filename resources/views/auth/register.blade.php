@@ -128,16 +128,18 @@
 @section('more-js')
 <script>
   $(document).ready(function () {
-      $('#institution').on('change', function () {
+      $('#inputInstitution').on('change', function () {
           var institutionVal = this.value;
           var base_url = window.location.origin;
-          $("#ForState").html('');
+          // $("#ForState").html('');
+          // console.log(institutionVal);
           $.ajax({
+
               url: base_url+"/api/institution/"+institutionVal,
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
-                console.log(result);
+                // console.log(result);
                 $('#ForCountry').val(result.countries);
                 $('#ForState').val(result.states);
               }

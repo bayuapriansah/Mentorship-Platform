@@ -22,12 +22,12 @@ class AuthController extends Controller
     }
 
     public function store(Request $request){ 
-        // dd($request->all());
+        dd($request->all());
         $validator = Validator::make($request->all(), [
             'first_name' => ['required'],
             'last_name' => ['required'],
             'date_of_birth' => ['required'],
-            'email' => ['required'],
+            'email' => ['requireister ........................................................................................................................ register › AuthControlld'],
             'sex' => ['required'],
             'state' => ['required'],
             'country' => ['required'],
