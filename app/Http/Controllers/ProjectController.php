@@ -225,7 +225,7 @@ class ProjectController extends Controller
                     $enrolled_project->save();
                     return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
                 }else{
-                    return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail');
+                    return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail')->with('error', 'You have to complete your currently project');
                 }
             }
         }else{
@@ -251,6 +251,7 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'title' => ['required'],
             'description' => ['required'],
+            'inputfiletype' => ['required']
         ]);
         $project_section = new ProjectSection;
         $latest_item = ProjectSection::where('project_id', $project_id)->orderByDesc('section')->first();
@@ -262,6 +263,7 @@ class ProjectController extends Controller
         $project_section->project_id = $project_id;
         $project_section->title = $validated['title'];
         $project_section->description = $validated['description'];
+        $project_section->file_type = $validated['inputfiletype'];
         $project_section->save();
 
         return redirect('dashboard/projects/'.$project_id.'/section')->with('success','Project section has been created');
@@ -278,6 +280,7 @@ class ProjectController extends Controller
         $project_section = ProjectSection::find($section_id);
         $project_section->title = $request->title;
         $project_section->description = $request->desc;
+        $project_section->file_type = $request->inputfiletype;
         $project_section->save();
         return redirect('/dashboard/projects/'.$project_id.'/section');
     }

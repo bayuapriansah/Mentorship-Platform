@@ -52,7 +52,7 @@
         @if($now > $date)
           @php $date = $appliedDate->addDays(10)->toDateString() @endphp
             <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
-              <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->enrolled_project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+              <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
                 Task {{$no}}: {{substr($project_section->title,0,60)}}...
                 <span class="text-sm font-normal">{{ $appliedDate }}</span>
               </a>

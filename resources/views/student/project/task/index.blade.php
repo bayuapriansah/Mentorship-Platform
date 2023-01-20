@@ -17,7 +17,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
       <div class="col-span-7 relative my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium">Project Details</h1>
+        <h1 class="text-dark-blue text-[22px] font-medium">{{$task->title}}</h1>
       </div>
       <div class="col-start-10 col-span-3">
           <span class="intelOne text-black text-sm font-normal">due date</span> 

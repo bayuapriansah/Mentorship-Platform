@@ -11,9 +11,9 @@ class Submission extends Model
 {
     use HasFactory;
 
-    public function sectionSubsection()
+    public function projectSection()
     {
-        return $this->belongsTo(SectionSubsection::class);
+        return $this->belongsTo(ProjectSection::class);
     }
 
     public function grade()

@@ -20,4 +20,9 @@ class ProjectSection extends Model
     {
         return $this->hasMany(SectionSubsection::class);
     }
+
+    public function submission()
+    {
+        return $this->hasOne(Submission::class);
+    }
 }

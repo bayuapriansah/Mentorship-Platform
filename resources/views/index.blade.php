@@ -93,7 +93,7 @@
               </div>
             </div>
             <div class="text-grey font-normal text-base mb-2 pt-3">
-              {!! substr($project->problem,0,62) !!}
+              {!! substr($project->problem,0,62) !!}...
             </div>
             <div class="flex justify-between">
             <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-medium">2 Months</span></p>

@@ -10,13 +10,7 @@
       <h1 class="h3 mb-0 text-gray-800">Manage task for {{$project->name}}</h1>
       <h5>
         {{-- @dd($project->period) --}}
-        @if($project->type == 'weekly')
-        @php $max_task = 4 * $project->period @endphp
-        *Max Task is {{$max_task}}
-        @elseif($project->type == 'monthly')
-        @php $max_task = 1 * $project->period @endphp
-        *Max Task is {{$max_task}}
-        @endif
+        
       </h5>
   </div>
 
@@ -38,7 +32,7 @@
           
           <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
-            <textarea name="description" id="{{$project_sections->count() != $max_task ? 'sectionDesc' : 'sectionDescDisable'}}" cols="30" rows="10">{{old('description')}}</textarea>
+            <textarea name="description" id="sectionDesc" cols="30" rows="10">{{old('description')}}</textarea>
             @error('description')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
@@ -46,7 +40,24 @@
             @enderror
           </div>
 
-          <button type="submit" class="btn btn-primary" {{$project_sections->count() == $max_task ? 'disabled' : ''}}>Submit</button>
+          <div class="mb-3" id="filetype">
+            <label for="inputfiletype" class="form-label">File type</label>
+            <select class="form-control form-select" id="inputfiletype" aria-label="Default select example" name="inputfiletype">
+              <option value="">--Select File type--</option>
+              <option value="zip" {{old('inputfiletype') == 'zip' ? 'selected': ''}}>.zip</option>
+              <option value="ipynb" {{old('inputfiletype') == 'ipynb' ? 'selected': ''}}>.ipynb</option>
+              <option value="pdf" {{old('inputfiletype') == 'pdf' ? 'selected': ''}}>.pdf</option>
+              <option value="doc" {{old('inputfiletype') == 'doc' ? 'selected': ''}}>.doc or docx</option>
+              <option value="ppt" {{old('inputfiletype') == 'ppt' ? 'selected': ''}}>.ppt or pptx</option>
+            </select>
+            @error('inputfiletype')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+
+          <button type="submit" class="btn btn-primary" >Submit</button>
         </form>
       </div>
     </div>
@@ -67,6 +78,7 @@
             <th>Task</th>
             <th>Title</th>
             <th>Description</th>
+            <th>Submission type</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -94,9 +106,9 @@
               </div>
             </td>
             <td>{{$project_section->section}}</td>
-            <td>{{$project_section->title}}</td>
+            <td>{{substr($project_section->title,0,20)}}...</td>
             <td>
-              {{$project_section->description}}
+              {{substr($project_section->description,0,70)}}...
               
               <div class="collapse my-3" id="collapseExample{{$no}}">
                 <div class="card card-body">
@@ -108,6 +120,8 @@
                 </div>
               </div>
             </td>
+            <td>{{$project_section->file_type}}</td>
+
             <td>
 
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/edit" >Edit</a>
