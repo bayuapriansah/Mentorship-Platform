@@ -54,7 +54,7 @@
         </div>
 
         <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight" name="institution" required>
-          <option>Institution Name *</option>
+          <option>Institution Name</option>
           @forelse($GetInstituionData as $ins)
           <option value="{{$ins->id}}">{{$ins->institutions}}</option>
           @empty
@@ -131,15 +131,12 @@
       $('#inputInstitution').on('change', function () {
           var institutionVal = this.value;
           var base_url = window.location.origin;
-          // $("#ForState").html('');
-          // console.log(institutionVal);
           $.ajax({
-
               url: base_url+"/api/institution/"+institutionVal,
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
-                // console.log(result);
+                // console.log(institutionVal);
                 $('#ForCountry').val(result.countries);
                 $('#ForState').val(result.states);
               }
