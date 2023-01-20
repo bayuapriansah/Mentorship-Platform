@@ -225,7 +225,7 @@ class ProjectController extends Controller
                     $enrolled_project->save();
                     return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
                 }else{
-                    return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail');
+                    return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail')->with('error', 'You have to complete your currently project');
                 }
             }
         }else{
