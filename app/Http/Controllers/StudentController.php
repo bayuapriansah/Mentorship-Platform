@@ -178,6 +178,9 @@ class StudentController extends Controller
 
     public function enrolledDetail($student_id, $project_id)
     {
+        // to handle new task if the previous task complete then the next task is show
+        // $submissions = Submission::where([['section_id', $project_section->id], ['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
+        // end of code
         // dd($project_id);
         $student = Student::where('id', $student_id)->first();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
@@ -189,11 +192,17 @@ class StudentController extends Controller
 
     public function taskDetail($student_id, $project_id, $task_id)
     {
-        $student = Student::where('id', $student_id)->first();
-        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
-        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        $task = ProjectSection::find($task_id);
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task'));
+        // dd($project_id);
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id',$project_id)->get();
+        $check_enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id',$project_id)->first();
+        if ($check_enrolled_projects) {
+            // dd($enrolled_projects);
+            $student = Student::where('id', $student_id)->first();
+            $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+            $task = ProjectSection::find($task_id);
+            return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task'));
+        }
+        return redirect()->route('student.allProjects',[$student_id]);
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
