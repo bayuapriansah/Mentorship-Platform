@@ -11,6 +11,16 @@
         <form action="/dashboard/projects/{{$project_id}}/section/{{$section_id}}" method="post">
           @csrf
           @method('patch')
+
+          <div class="mb-3">
+            <label for="inputtitle" class="form-label">Title Section</label>
+            <input type="text" class="form-control" id="inputtitle" name="title" value="{{$project_section->title}}">
+            @error('title')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
           <div class="mb-3">
             <label for="inputfile1" class="form-label">Description</label>
             <textarea name="desc" id="problem" cols="30" rows="10">{{$project_section->description}}</textarea>

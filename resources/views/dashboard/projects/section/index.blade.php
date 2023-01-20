@@ -25,6 +25,17 @@
       <div class="card p-4">
         <form action="/dashboard/projects/{{$project->id}}" method="post">
           @csrf
+
+          <div class="mb-3">
+            <label for="inputtitle" class="form-label">Title Section</label>
+            <input type="text" class="form-control" id="inputtitle" name="title" value="{{old('title')}}">
+            @error('title')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          
           <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
             <textarea name="description" id="{{$project_sections->count() != $max_task ? 'sectionDesc' : 'sectionDescDisable'}}" cols="30" rows="10">{{old('description')}}</textarea>
@@ -54,6 +65,7 @@
           <tr>
             <th>No</th>
             <th>Task</th>
+            <th>Title</th>
             <th>Description</th>
             <th>Actions</th>
           </tr>
@@ -82,6 +94,7 @@
               </div>
             </td>
             <td>{{$project_section->section}}</td>
+            <td>{{$project_section->title}}</td>
             <td>
               {{$project_section->description}}
               

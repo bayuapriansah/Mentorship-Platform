@@ -247,7 +247,9 @@ class ProjectController extends Controller
 
     public function dashboardIndexStoreSection($project_id, Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
+            'title' => ['required'],
             'description' => ['required'],
         ]);
         $project_section = new ProjectSection;
@@ -258,6 +260,7 @@ class ProjectController extends Controller
             $project_section->section    = $latest_item->section+1;
         }
         $project_section->project_id = $project_id;
+        $project_section->title = $validated['title'];
         $project_section->description = $validated['description'];
         $project_section->save();
 
@@ -273,6 +276,7 @@ class ProjectController extends Controller
     public function dashboardIndexUpdateSection($project_id, $section_id, Request $request)
     {
         $project_section = ProjectSection::find($section_id);
+        $project_section->title = $request->title;
         $project_section->description = $request->desc;
         $project_section->save();
         return redirect('/dashboard/projects/'.$project_id.'/section');
