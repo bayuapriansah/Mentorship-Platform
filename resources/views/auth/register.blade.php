@@ -34,7 +34,7 @@
           @enderror
         </div>
         <div class="flex justify-between mt-4">
-          <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="text" placeholder="Date of birth" onfocus="(this.type='date')"  value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
+          <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5" id="dob" type="text" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
           @error('date_of_birth')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -53,8 +53,8 @@
           @enderror
         </div>
 
-        <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight" name="institution" required>
-          <option>Institution Name</option>
+        <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey " name="institution" required>
+          <option value="">Institution Name</option>
           @forelse($GetInstituionData as $ins)
           <option value="{{$ins->id}}">{{$ins->institutions}}</option>
           @empty
