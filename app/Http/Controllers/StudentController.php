@@ -185,6 +185,15 @@ class StudentController extends Controller
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate'));
     }
 
+    public function taskDetail($student_id, $project_id, $task_id)
+    {
+        $student = Student::where('id', $student_id)->first();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+        $task = ProjectSection::find($task_id);
+        return view('student.project.task.index', compact('student', 'enrolled_projects', 'dataDate', 'task'));
+    }
+
     public function allProjectsAvailable($student_id)
     {
         // dd(Auth::guard('student')->user()->id);

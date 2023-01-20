@@ -46,8 +46,21 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
-      <div class="col-span-9">
-        <div id="accordion-collapse" data-accordion="collapse">
+      <div class="col-span-12">
+        @php $no = 1 @endphp
+        @foreach($project_sections as $project_section)
+        @if($now > $date)
+          @php $date = $appliedDate->addDays(10)->toDateString() @endphp
+            <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+              <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->enrolled_project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                Task {{$no}}: {{substr($project_section->title,0,60)}}...
+                <span class="text-sm font-normal">{{ $appliedDate }}</span>
+              </a>
+            </div>
+        @php $no++ @endphp
+        @endif
+        @endforeach
+        {{-- <div id="accordion-collapse" data-accordion="collapse">
           @php $no = 1 @endphp
           @foreach($project_sections as $project_section)
           @if($now > $date)
@@ -60,18 +73,18 @@
               </span>
               {{ $date }}
               @php
-              $date = $appliedDate->addDays(10)->toDateString();
-              // @dd($appliedDate->toDateString());
-              @endphp
+              $date = $appliedDate->addDays(10)->toDateString(); --}}
+              {{-- // @dd($appliedDate->toDateString()); --}}
+              {{-- @endphp --}}
               {{-- @dd($student->id) --}}
-              <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </button>
+              {{-- <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg> --}}
+            {{-- </button>
           </h2>
           <div id="accordion-collapse-body-{{$no}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$no}}">
             <ul class="ml-4">
-              @foreach($project_section->sectionSubsections as $subsection)
+              @foreach($project_section->sectionSubsections as $subsection) --}}
               {{-- @dd($date > $now) --}}
-              <li class="py-4 px-5 rounded-xl mb-2 border border-xl border-gray-200 font-normal text-sm text-black bg-white">
+              {{-- <li class="py-4 px-5 rounded-xl mb-2 border border-xl border-gray-200 font-normal text-sm text-black bg-white">
                 <div class="flex">
                   @if($subsection->category == 'video')
                     <img src="{{asset('assets/img/icon/video.png')}}" alt="">
@@ -89,7 +102,7 @@
           @php $no++ @endphp
           @endif
           @endforeach
-        </div>
+        </div> --}}
       </div>
     </div>
   </div>
