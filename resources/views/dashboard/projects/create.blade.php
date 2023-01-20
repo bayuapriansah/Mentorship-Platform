@@ -75,11 +75,13 @@
                 </p>
             @enderror
           </div>
+
+          {{-- fix id name and option value to clear the confussion --}}
           @if(Auth::guard('web')->check())
           <div class="mb-3">
             <label for="inputvalid" class="form-label">Company</label>
-            <select class="form-control form-select" id="inputdomain" aria-label="Default select example" name="company_id">
-              <option value="">--Select Project Domain--</option>
+            <select class="form-control form-select" id="inputCompany" aria-label="Default select example" name="company_id">
+              <option value="">--Select Project Company--</option>
               @foreach($companies as $company)
               <option value="{{$company->id}}" {{old('company_id') == $company->id ? 'selected': ''}} >{{$company->name}}</option>
               @endforeach
@@ -91,9 +93,26 @@
             @enderror
           </div>
           @endif
+
+          {{-- add institution dropdown --}}
+          @if(Auth::guard('web')->check())
           <div class="mb-3">
-          
+            <label for="inputvalid" class="form-label">Institution</label>
+            <select class="form-control form-select" id="inputInstitution" aria-label="Default select example" name="institution_id">
+              <option>Institution Name *</option>
+              @forelse($GetInstituionData as $ins)
+              <option value="{{$ins->id}}">{{$ins->institutions}}</option>
+              @empty
+              <p>There is no Country Data</p>
+              @endforelse
+            </select><br>
+            @error('institution')
+                <p class="text-red-600 text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
           </div>
+          @endif
           
           <div class="mb-3">
             <input type="submit" class="btn btn-primary" name="publish" value="Publish Project">
@@ -108,5 +127,22 @@
 
 @section('more-js')
 <script>
+  $(document).ready(function () {
+      $('#institution').on('change', function () {
+          var institutionVal = this.value;
+          var base_url = window.location.origin;
+          $("#ForState").html('');
+          $.ajax({
+              url: base_url+"/api/institution/"+institutionVal,
+              contentType: "application/json",
+              dataType: 'json',
+              success: function (result) {
+                console.log(result);
+                $('#ForCountry').val(result.countries);
+                $('#ForState').val(result.states);
+              }
+          });
+      });
+  });
 </script>
 @endsection

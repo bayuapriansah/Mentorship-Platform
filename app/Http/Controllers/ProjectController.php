@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\InstitutionController;
+use App\Models\Institution;
 
 class ProjectController extends Controller
 {
@@ -72,14 +74,15 @@ class ProjectController extends Controller
     {
         if(Auth::guard('web')->check()){
             $companies = Company::get();
-            return view('dashboard.projects.create', compact('companies'));
+            $GetInstituionData = (new InstitutionController)->GetInstituionData();
+            return view('dashboard.projects.create', compact('companies','GetInstituionData'));
         }
         return view('dashboard.projects.create');
     }
     
     public function dashboardIndexStore(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
         $validated = $request->validate([
             'name' => ['required'],
             'domain' => ['required'],
@@ -87,7 +90,7 @@ class ProjectController extends Controller
             'type' => ['required'],
             'period' => ['required', 'lte:3'],
             'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
-            
+            'institution_id' => ['required'],
         ]);
         $project = new Project;
         if(Auth::guard('web')->check()){
@@ -95,6 +98,7 @@ class ProjectController extends Controller
             $project->project_domain = $validated['domain'];
             $project->problem = $validated['problem'];
             $project->company_id = $request->company_id;
+            $project->institution_id = $validated['institution_id'];
             $project->type = $validated['type'];
             $project->period = $validated['period'];
             if ($request->has('publish')){
@@ -132,7 +136,9 @@ class ProjectController extends Controller
     {
         if(Auth::guard('web')->check()){
             $companies = Company::get();
-            return view('dashboard.projects.edit', compact(['project','companies']));
+            // $institution = Institution::get();
+            $GetInstituionData = (new InstitutionController)->GetInstituionData();
+            return view('dashboard.projects.edit', compact(['project','companies','GetInstituionData']));
         }
         return view('dashboard.projects.edit', compact('project'));
     }
@@ -147,6 +153,7 @@ class ProjectController extends Controller
             'type' => ['required'],
             'period' => ['required'],
             'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
+            'institution_id' => ['required'],
 
         ]);
 
@@ -156,6 +163,7 @@ class ProjectController extends Controller
             $project->project_domain = $validated['project_domain'];
             $project->problem = $validated['problem'];
             $project->company_id = $request->company_id;
+            $project->institution_id = $validated['institution_id'];
             $project->type = $validated['type'];
             $project->period = $validated['period'];
             if($project->status == 'publish'){

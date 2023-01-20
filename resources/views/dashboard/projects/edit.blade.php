@@ -97,6 +97,26 @@
             @enderror
           </div>
           @endif
+
+          {{-- add institution dropdown --}}
+          @if(Auth::guard('web')->check())
+          <div class="mb-3">
+            <label for="inputvalid" class="form-label">Institution</label>
+            <select class="form-control form-select" id="inputInstitution" aria-label="Default select example" name="institution_id">
+              <option value="{{$project->institution_id}}" selected></option>
+              @forelse($GetInstituionData as $ins)
+              <option value="{{$ins->id}}">{{$ins->institutions}}</option>
+              @empty
+              <p>There is no Country Data</p>
+              @endforelse
+            </select><br>
+            @error('institution')
+                <p class="text-red-600 text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          @endif
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>

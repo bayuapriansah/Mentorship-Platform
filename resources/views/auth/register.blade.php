@@ -53,7 +53,7 @@
           @enderror
         </div>
 
-        <select id="institution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight" name="institution" required>
+        <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight" name="institution" required>
           <option>Institution Name *</option>
           @forelse($GetInstituionData as $ins)
           <option value="{{$ins->id}}">{{$ins->institutions}}</option>
@@ -120,7 +120,7 @@
       <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
       <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
       
-    </div>
+    </div>Project Domain
   </div>
 </section>
 @endsection
