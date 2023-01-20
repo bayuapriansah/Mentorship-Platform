@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Session;
 use App\Models\Project;
 use App\Models\Student;
+use App\Models\Submission;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -192,6 +194,33 @@ class StudentController extends Controller
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::find($task_id);
         return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task'));
+    }
+
+    public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
+    {
+        $task = ProjectSection::find($task_id);
+        // dd($task->file_type);
+        if($request->hasFile('file')==true){
+            $validated = $request->validate([
+                'file' => ['required'],
+            ]);
+        }
+        $submission = new Submission;
+        $submission->section_id = $task_id;
+        $submission->student_id = $student_id;
+        $submission->is_complete = 1;
+        if($request->hasFile('file')){
+            $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
+            // dd($uploadedFileType);
+            if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
+                $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
+                $submission->file = $file;
+            }else{
+                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong boiii');
+            }
+        }
+        $submission->save();
+        return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
 
     public function allProjectsAvailable($student_id)
