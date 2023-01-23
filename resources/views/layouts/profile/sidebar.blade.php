@@ -1,4 +1,4 @@
-<aside class=" bg-white fixed top-5 w-1/4  rounded-xl border border-light-blue p-5 bottom-5">
+<aside class="bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
