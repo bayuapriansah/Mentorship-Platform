@@ -187,7 +187,7 @@ class StudentController extends Controller
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        $project_sections = ProjectSection::orderBy('id','DESC')->where('project_id', $project_id)->get();
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submission'));
     }
 

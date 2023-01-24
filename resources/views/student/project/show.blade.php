@@ -30,69 +30,44 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
       <div class="col-span-7 relative my-auto">
-        <h1 class="text-dark-blue text-[22px]">Project Details</h1>
+        <h1 class="text-dark-blue text-[22px] font-medium">Project Details</h1>
       </div>
-      <div class="col-start-10 col-span-3">
-          <button  class="intelOne text-white text-sm font-normal bg-darker-blue px-12 py-2 rounded-full absolute cursor-default ">Enrolled</button> 
-          <div class="border border-light-blue rounded-[10px] bg-white p-2 absolute mt-14  flex items-center space-x-3">
-            <i class="fa-regular fa-calendar"></i>
-            <p class="font-normal text-sm text-light-blue">Duration: <span class="text-dark-blue">{{$project->period}} Month</span></p>
-          </div>  
+      <div class="col-end-13 col-span-3">
+          {{-- <button  class="intelOne text-white text-sm font-normal bg-darker-blue px-12 py-2 rounded-full absolute cursor-default ">Enrolled</button>  --}}
+          @php
+          $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at);
+          $enrolledDate = $appliedDate->format('dS M,Y'); 
+          @endphp
+          <p class="font-normal text-sm text-right">Enrolled On <br> {{$enrolledDate}}</p>
+          
       </div>
     </div>
-    <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
-      <div class="col-span-9 problem text-justify">
+    <div class="grid grid-cols-12 gap-8 grid-flow-col mt-14">
+      <div class="col-span-10 problem text-justify">
         {!!$project->problem!!}
+      </div>
+      <div class="col-start-11 col-span-3">
+        <div class="border border-light-blue rounded-[10px] bg-white p-2 absolute mt-14  flex  float-right space-x-3 ">
+          <i class="fa-regular fa-calendar"></i>
+          <p class="font-normal text-sm text-light-blue">Duration: <span class="text-dark-blue">{{$project->period}} Month</span></p>
+        </div>
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
       <div class="col-span-12">
-        {{-- @foreach ($submissions as $sub) --}}
-        @php
-          $no = 1;
-        @endphp
-        @foreach($project_sections as $project_section)
-        @php
-            $appliedDate = $appliedDate->addDays(9);
-            $isNotCompleted = 0;
-        @endphp
-        {{ $project_section->id }}
-        {{ $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->first() }}
-        {{-- {{ $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->first() }} --}}
-        <br>
-          @if ($now >= $appliedDate || in_array($project_section->id, $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->toArray()))
-            {{ 'KONDISI 1' }}
-            <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
-              <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                  Task {{$no}}: {{substr($project_section->title,0,60)}}...
-                  <span class="text-sm font-normal">{{ $appliedDate }}</span>
-              </a>
-            </div>
-            @php
-              $no++;
-            @endphp
-          @elseif ($now >= $appliedDate || !in_array($project_section->id, $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->toArray()) && $isNotCompleted == 0)
-          {{ 'KONDISI 2' }}
-          <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
-            <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                Task {{$no}}: {{substr($project_section->title,0,60)}}...
-                <span class="text-sm font-normal">{{ $appliedDate }}</span>
-            </a>
-          </div>
-          @php
-            $no++;
-          @endphp
-        @endif
-        @endforeach
-            {{-- @if($now >= $appliedDate || !$submissions->first()->is_complete && $isNotCompleted != 0) --}}
-                {{-- <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
-                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                        Task {{$no}}: {{substr($project_section->title,0,60)}}...
-                        <span class="text-sm font-normal">{{ $appliedDate }}</span>
-                    </a>
-                </div> --}}
-            {{-- @endif --}}
-        {{-- @endforeach --}}
+          @php $no = 1 @endphp
+          @foreach($project_sections as $project_section)
+          @if($now > $date || in_array($project_section->id, $submissions->pluck('section_id')->toArray()))
+              <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+                  <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                    Task {{$no}}: {{substr($project_section->title,0,60)}}...
+                    <span class="text-sm font-normal">{{ $appliedDate }}</span>
+                  </a>
+              </div>
+              @php $no++ @endphp
+              @php $date = $appliedDate->addDays(10)->toDateString() @endphp
+          @endif
+          @endforeach
       </div>
   </div>
     </div>
