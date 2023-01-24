@@ -75,7 +75,6 @@
                             $isNotCompleted = 0;
                         @endphp
                         @foreach($project_section->sectionSubsections as $subsection)
-                       
                         @if (!isset($subsection->submission))
                         
                             @if (!$isErrorPrevious)
@@ -89,8 +88,9 @@
                             @endphp
                             
                         @endif
-                        @if (!$subsection->submission && $isNotCompleted != 0 && $ErrorId == $project_section->id)
+                        @if (!$subsection->submission && $isNotCompleted != 0)
                         {{-- <p>KONDISI 1</p> --}}
+                        {{-- @dd($subsection) --}}
 
                         <a style="color: yellow !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/task/{{$project_section->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark disabled-link">
                           <div class="card p-4 mb-2">
@@ -98,7 +98,7 @@
                               {{$subsection->title}}
                           </div>
                         </a>
-                        @elseif (!$subsection->submission && $isNotCompleted == 0 && $ErrorId == $project_section->id)
+                        @elseif (!$subsection->submission && $isNotCompleted == 0)
                         {{-- make sure link cant be accessed if time not meet yet --}}
                         {{-- @if($section_complete == 'selesai' && )   --}}                          
                         {{-- <p>KONDISI 2</p> --}}

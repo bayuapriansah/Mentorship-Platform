@@ -182,14 +182,13 @@ class StudentController extends Controller
         // to handle new task if the previous task complete then the next task is show
         $submissions = Submission::where([['section_id', $project_section->id], ['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
         // end of code
-        // dd($project_id);
+        // dd($submissions);
         $student = Student::where('id', $student_id)->first();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submission'));
-        // return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate'));
     }
 
     public function enrolledDetail($student_id, $project_id)
@@ -199,9 +198,7 @@ class StudentController extends Controller
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
-        // dd($submissions);
 
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions'));
     }

@@ -100,7 +100,7 @@
     @yield('content')
   </main>
 
-  <footer class="w-full bg-lightest-blue relative z-30 bottom-0">
+  {{-- <footer class="w-full bg-lightest-blue relative z-30 bottom-0">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
       <div class="col-span-4">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
@@ -135,7 +135,7 @@
         <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
       </div>
     </div>
-  </footer>
+  </footer> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script>
 
     <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
