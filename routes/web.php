@@ -12,6 +12,7 @@ use App\Http\Controllers\AssignController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\SimintEncryption;
 use App\Http\Controllers\AuthOtpController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
@@ -69,7 +70,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
     // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
-
+    Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){

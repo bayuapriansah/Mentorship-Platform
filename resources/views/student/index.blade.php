@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
-      <div class="col-span-8">
+      <div class="col-span-12">
         <div class="text-sm font-medium text-center text-light-blue border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
           <ul class="flex flex-wrap -mb-px">
               <li class="mr-2">
@@ -86,7 +86,7 @@
           @endforelse
         </div>
       </div>
-      <div class="col-start-9 col-span-4 ">
+      {{-- <div class="col-start-9 col-span-4 ">
         <div class="border p-4 rounded-l-lg rounded-t-lg bg-dark-blue flex flex-col items-center ">
           <div class="flex justify-between relative items-center">
             <p class="text-white text-xl z-20 ">Score In <span class="text-light-brown">Top 10 Students</span> To Get Rewards</p>
@@ -94,7 +94,7 @@
           </div>
           <a href="#" class="intelOne z-30 text-dark-blue text-sm font-normal bg-white hover:bg-neutral-200 px-16 py-2 rounded-full mt-1" >Leaderboard</a>
         </div>
-      </div>
+      </div> --}}
     </div>
   </div>
 </div>

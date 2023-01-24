@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
 use App\Models\Submission;
@@ -211,8 +212,9 @@ class StudentController extends Controller
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project_id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::find($task_id);
+        $comments = Comment::where('student_id', $student_id)->where('project_id', $project_id)->where('project_section_id', $task_id)->get();
         $submission = Submission::where('student_id',$student_id)->where('section_id', $task_id)->first();
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task', 'submission'));
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
