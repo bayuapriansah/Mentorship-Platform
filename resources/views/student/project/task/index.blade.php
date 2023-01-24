@@ -53,19 +53,34 @@
       <div class="col-span-9 relative my-auto">
         <h1 class="text-dark-blue text-[22px] font-medium">Comments</h1>
         <div class="border border-light-blue p-3 rounded-xl">
-          <div class="chat pb-20">
+          <div class="chat pb-20 grid grid-cols-12 gap-4 grid-flow-col">
+            <div class="col-end-13 col-span-6">
               @foreach($comments as $comment)
                 @if(Auth::guard('student')->check())
-                  <div class="flex flex-row-reverse ">
-                    <div class="w-1/2 border border-light-blue  p-2 rounded-xl  bg-white mb-2">
-                      {{$comment->message}}
+                  <div class="mb-2">
+                    <div class=" border border-light-blue  py-3 px-5 rounded-xl  bg-white ">
+                      <div class="text-sm font-light">
+                        {{$comment->message}}
+                        @if($comment->file)
+                          <br>
+                          <a href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
+                            <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+                            <span class="text-xs">click to download</span>
+                          </a>
+                        @endif
+                      </div>
                     </div>
+                    <p class="text-[14px] text-right text-[#585858]">
+                      {{$comment->created_at}}
+                    </p>
                   </div>
                 @endif
               @endforeach
+            </div>
+
           </div>
           <div class="form">
-            <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/chat" method="post" enctype="multipart/form-data">
+            <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/chat" method="post" id="form-chat" enctype="multipart/form-data">
             @csrf
             <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
             <div class="px-4 py-2 bg-white rounded-t-lg ">
@@ -74,10 +89,13 @@
             </div>
             <div class="flex items-center justify-between px-3 py-2 bg-white ">
                 <div class="flex pl-0 space-x-1 sm:pl-2">
-                    <button type="button" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 ">
+
+                    <label for="file-chat-input" type="button" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 ">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"></path></svg>
-                        <span class="sr-only">Attach file</span>
-                    </button>
+                        <span class="sr-only"></span>
+                    </label>
+                    <div id="chatFileName"></div>
+                    <input id="file-chat-input" class="hidden" type="file" name="file" />
                 </div>
                 <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-800">
                   Post comment
@@ -145,6 +163,8 @@
 const dropArea = document.getElementById('drop-area')
 const fileInput = document.getElementById('file-input')
 const fileName = document.getElementById('file-name')
+const fileChatInput = document.getElementById('file-chat-input')
+const chatFileName = document.getElementById('chatFileName')
 
 // Listen for file drag-and-drop events
 dropArea.addEventListener('dragover', e => {
@@ -170,6 +190,18 @@ dropArea.addEventListener('drop', e => {
         fileName.textContent = '';
         fileInput.value = '';
         resetUI();
+    });
+})
+fileChatInput.addEventListener('change', e =>{
+  // console.log('${e.target.files[0].name}');
+  chatFileName.innerHTML = `${e.target.files[0].name} <i class="fas fa-times"></i> `
+  console.log('tes')
+  const fileClear = document.querySelector('.fa-times')
+    fileClear.addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('form-chat').reset()
+        chatFileName.textContent = '';
+        chatFileName.value = '';
     });
 })
 

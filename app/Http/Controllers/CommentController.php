@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CommentController extends Controller
 {
@@ -19,7 +20,7 @@ class CommentController extends Controller
         $comment->project_section_id = $task_id;
         $comment->message = $validated['message'];
         if($request->hasFile('file')){
-            $file = Storage::disk('public')->put('comments/.'.$student_id.'/project/'.$project_id.'/task/'.$task_id, $request->file);
+            $file = Storage::disk('public')->put('comments/'.$student_id.'/project/'.$project_id.'/task/'.$task_id, $request->file);
             $comment->file = $file;
         }
         $comment->save();
