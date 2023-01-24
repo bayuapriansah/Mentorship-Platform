@@ -26,7 +26,7 @@ class ProjectController extends Controller
             $projects = Project::whereNotIn('id', function($query){
                 $query->select('project_id')->from('enrolled_projects');
                 $query->where('student_id',Auth::guard('student')->user()->id);
-            })->where('institution_id', Auth::guard('student')->user()->institution)->where('status', 'publish')->get();
+            })->where('institution_id', Auth::guard('student')->user()->institution_id)->where('status', 'publish')->get();
         }else{
             $projects = Project::get();
         }

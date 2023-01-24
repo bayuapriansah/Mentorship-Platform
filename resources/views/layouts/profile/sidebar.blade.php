@@ -1,4 +1,4 @@
-<div class=" bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
+<aside class="bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
@@ -19,7 +19,7 @@
       <img src="{{asset('assets/img/icon/profile/pp.png')}}" class="w-[100px] h-[100px]  mx-auto"  alt="message">
       <p class="text-dark-blue font-normal text-xl text-center ">{{$student->first_name}} {{$student->last_name}}</p>
       <p class="text-black font-normal text-sm text-center">4th Year, B.Tech in Computer Science & Engineering </p>
-      <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution}}</p>
+      <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
       <p class="text-black font-normal text-sm text-center">Internship Status:
         @if($student->is_confirm == 0)
           <span class="text-light-blue">Not Started</span>
@@ -67,8 +67,17 @@
   </div>
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
-      <p class="text-sm font-medium text-dark-blue">Task Submission</p>
-      <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Make Final Submission</button>
+      <p class="text-sm font-medium text-dark-blue text-center">Task Submission</p>
+      @if($submission == null)
+      <button class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Make Final Submission</button>
+      @else
+      <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submission->created_at}}</p>
+      <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
+        <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+        <a href="{{asset('storage/'.$submission->file)}}">Your Submission file</a>
+        <img src="{{asset('assets/img/icon/download.png')}}" alt="">
+      </div>
+      @endif
     </div>
   @endif
-</div>
+</aside>

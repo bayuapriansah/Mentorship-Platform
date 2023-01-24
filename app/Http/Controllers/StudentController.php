@@ -19,6 +19,7 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $students = Student::get();
@@ -207,13 +208,12 @@ class StudentController extends Controller
 
     public function taskDetail($student_id, $project_id, $task_id)
     {
-        // dd($project_id);
-        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
-        // dd($enrolled_projects);
         $student = Student::where('id', $student_id)->first();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project_id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::find($task_id);
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task'));
+        $submission = Submission::where('student_id',$student_id)->where('section_id', $task_id)->first();
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task', 'submission'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
@@ -249,7 +249,7 @@ class StudentController extends Controller
         $projects = Project::whereNotIn('id', function($query){
             $query->select('project_id')->from('enrolled_projects');
             $query->where('student_id',Auth::guard('student')->user()->id);
-        })->where('institution_id', $student->institution)->where('status', 'publish')->get();
+        })->where('institution_id', $student->institution_id)->where('status', 'publish')->get();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
