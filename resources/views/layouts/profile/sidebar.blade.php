@@ -69,7 +69,7 @@
     <div class="flex flex-col mt-8 ">
       <p class="text-sm font-medium text-dark-blue text-center">Task Submission</p>
       @if($submission == null)
-      <button class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Make Final Submission</button>
+      <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Make Final Submission</button>
       @else
       <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submission->created_at}}</p>
       <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">

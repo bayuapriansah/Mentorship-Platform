@@ -2,7 +2,7 @@
 @section('content')
 @include('flash-message')
   {{-- @dd($task->project->name); --}}
-<div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center ">
+<div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center pb-36 ">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
       <div class="col-span-6 my-auto">
@@ -39,6 +39,7 @@
         @foreach($task->sectionSubsections as $subsection)
         <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
           <a href="{{asset('storage/'.$subsection->file1)}}" class="flex justify-between items-center">
+            <img src="{{asset("assets/img/icon/Vector.png")}}" alt="">
             {{$subsection->title}} {{substr($subsection->file1, strpos($subsection->file1, '.'))}}
             <img src="{{asset('assets/img/icon/download.png')}}" alt="">
           </a>
@@ -51,20 +52,19 @@
     <div id="staticModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-2xl md:h-auto">
             <!-- Modal content -->
-            <div class="relative border-4 border-dashed border-inherit drop-shadow-2xl hover:drop-shadow-xl bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="relative border border-light-blue border-inherit shadow drop-shadow-2xl hover:drop-shadow-xl bg-white rounded-lg  ">
                 <!-- Modal header -->
-                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        Upload Submission
-                    </h3>
+                <div class="flex items-start justify-between p-4  dark:border-gray-600">
+                    
                     <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="staticModal">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-6 space-y-6">
+                <div class="px-6 py-2 ">
                     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                       <div class="pb-20">
+                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
                         <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}" method="POST" enctype="multipart/form-data">
                           @csrf
                           <div class="relative cursor-pointer " id="drop-area">
@@ -78,11 +78,14 @@
                                           Click to upload or drag and drop
                                         </p>
                                         <p class="text-xs text-gray-500 dark:text-gray-400">.{{$task->file_type}} (MAX. 5MB)</p>
-                                        <p class="mt-2 text-sm text-gray-600" id="file-name"></p>
+                                        {{-- <p class="mt-2 text-sm text-gray-600" id="file-name"></p> --}}
                                     </div>
                                 </div>
                               </div>
                             </label>
+                            <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
+
+                            </div>
                             <button class="text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="submit">Confirm Submission</button>
                           </div>
                         </form>
@@ -114,7 +117,9 @@ dropArea.addEventListener('drop', e => {
     e.preventDefault()
     dropArea.classList.remove('bg-gray-200')
     fileInput.files = e.dataTransfer.files
-    fileName.innerHTML = `${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
+    let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
+    fileName.classList.add(...classesToAdd);
+    fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
     // You can handle the files here.
     handleUpload(e.dataTransfer.files)
     const fileClear = document.querySelector('.fa-times')
@@ -128,9 +133,11 @@ dropArea.addEventListener('drop', e => {
 
 // Listen for file input change events
 fileInput.addEventListener('change', e => {
-    fileName.innerHTML = `${e.target.files[0].name} <i class="fas fa-times"></i> `
+    fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
     // You can handle the files here.
     handleUpload(e.target.files)
+    let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
+    fileName.classList.add(...classesToAdd);
     const fileClear = document.querySelector('.fa-times')
     fileClear.addEventListener('click', e => {
         e.preventDefault();
