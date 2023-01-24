@@ -46,22 +46,22 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
-        <div class="col-span-12">
+      <div class="col-span-12">
           @php $no = 1 @endphp
           @foreach($project_sections as $project_section)
-          @if($now > $date)
+          @if($now > $date || in_array($project_section->id, $submissions->pluck('section_id')->toArray()))
               <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
-                <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                  Task {{$no}}: {{substr($project_section->title,0,60)}}...
-                  <span class="text-sm font-normal">{{ $appliedDate }}</span>
-                </a>
+                  <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                    Task {{$no}}: {{substr($project_section->title,0,60)}}...
+                    <span class="text-sm font-normal">{{ $appliedDate }}</span>
+                  </a>
               </div>
-          @php $no++ @endphp
-          @php $date = $appliedDate->addDays(5)->toDateString() @endphp
+              @php $no++ @endphp
+              @php $date = $appliedDate->addDays(10)->toDateString() @endphp
           @endif
           @endforeach
-        </div>
       </div>
+  </div>
     </div>
   </div>
 </div>
