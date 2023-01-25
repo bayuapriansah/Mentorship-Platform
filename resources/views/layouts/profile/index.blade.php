@@ -104,7 +104,7 @@
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
       <div class="col-span-4">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
-        <p class="text-grey font-normal text-[10px] pt-2 ">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal <span class="text-black">Notices and Disclaimers</span>. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See Intel's Global Human Rights Principles. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
+        <p class="text-grey font-normal text-[10px] pt-2 ">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal <span class="text-black">Notices and Disclaimers</span>. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See <span class="text-black">Intel's Global Human Rights Principles</span>. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
       </div>
       <div class="col-start-6 col-span-2 flex flex-col">
         <ul class="text-dark-blue text-xs font-normal">

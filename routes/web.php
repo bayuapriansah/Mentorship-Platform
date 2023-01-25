@@ -31,9 +31,16 @@ use App\Http\Controllers\InstitutionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Static Page
 Route::get('/emailtemp', function () {
     return view('emails.otp');
 });
+Route::get('/supportlib', function () {
+    return view('projects.supportlibrary');
+})->name('projects.support');
+Route::get('/faq', function () {
+    return view('faq');
+})->name('faq');
 // Home Page
 // Route::get('/', function () {
 //     return view('index');
@@ -86,9 +93,7 @@ Route::post('/projects/{student}/applied/{project}/detail/{subsection}', [Projec
 Route::group(['middleware'=>'auth:student'], function(){
     Route::post('/projects/{project}/apply', [ProjectController::class, 'applyProject'])->name('projects.apply');
 });
-Route::get('/supportlib', function () {
-    return view('projects.supportlibrary');
-})->name('projects.support');
+
 
 Route::get('/theworld', [TheWorldController::class, 'index']);
 

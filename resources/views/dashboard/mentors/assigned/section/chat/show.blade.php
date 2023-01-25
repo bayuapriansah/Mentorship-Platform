@@ -61,7 +61,7 @@
           <textarea id="comment" rows="4" class="form form-control" name="message" required></textarea>
           <div class="row">
             <div class="col-8">
-              <input type="file" class="form form-control">
+              <input type="file" class="form form-control" name="file">
             </div>
             <div class="col-4 text-right">
               <button type="submit" class="btn btn-primary">Send Comment</button>

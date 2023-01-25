@@ -11,7 +11,6 @@ class CommentController extends Controller
 {
     public function store(Request $request, $sender_id, $project_id, $task_id, $student_id)
     {
-        // dd($student_id);
         $validated = $request->validate([
             'message' => 'required',
         ]);
