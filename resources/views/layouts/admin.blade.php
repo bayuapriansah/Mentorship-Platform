@@ -23,7 +23,11 @@
     <script>
     tinymce.init({
         selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
-        height: 250,
+        height: 350,
+        plugins: 'media, image',
+        menubar: 'insert image or video',
+        images_upload_url: 'postAcceptor.php',
+        automatic_uploads: false
         //  plugins: 'powerpaste advcode table lists checklist',
         //  toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table'
     });
