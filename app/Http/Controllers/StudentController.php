@@ -202,9 +202,26 @@ class StudentController extends Controller
 
         // To Check if there's data in submission inputed from Project_section
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
-        // dd($submissions->count());
+        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['section_id',$project_id], ['is_complete', 1]])->get();
+
         // To Check if The Project_Section not in the Submission Table then Show the data but limit data to only One
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
+
+        // Change is_submited in enrolled_project
+        // dd($project_sections->count());
+        // dd($submissions->count());
+        // dd(EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first());
+        // dd($submissions->count() == $project_sections->count());
+        if($submissions->count() == $project_sections->count()){
+            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+            $success_project->is_submited = 1;
+            $success_project->save();
+        }else{
+            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+            $success_project->is_submited = 0;
+            $success_project->save();
+        }
+
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections'));
     }
 
