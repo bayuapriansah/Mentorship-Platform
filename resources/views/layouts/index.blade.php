@@ -161,8 +161,8 @@
       </div>
       <div class="col-start-10 col-span-2 flex flex-col">
         <ul class="text-dark-blue intelOne text-xs font-normal">
-          <li class="pb-3"><a href="">Terms & Conditions</a></li>
-          <li class="pb-3"><a href="">Privacy Policies</a></li>
+          <li class="pb-3"><a href="/terms-of-use">Terms & Conditions</a></li>
+          <li class="pb-3"><a href="/privacy-policy">Privacy Policies</a></li>
           <li class="pb-3"><a href="">Site Map</a></li>
           <li class="pb-3"><a href="">Cookie Settings</a></li>
         </ul>

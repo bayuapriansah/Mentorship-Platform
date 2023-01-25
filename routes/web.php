@@ -41,6 +41,12 @@ Route::get('/supportlib', function () {
 Route::get('/faq', function () {
     return view('faq');
 })->name('faq');
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy-policy');
+Route::get('/terms-of-use', function () {
+    return view('terms-of-use');
+})->name('terms-of-use');
 // Home Page
 // Route::get('/', function () {
 //     return view('index');

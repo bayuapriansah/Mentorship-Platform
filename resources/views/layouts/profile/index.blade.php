@@ -100,7 +100,7 @@
     @yield('content')
   </main>
 
-  <footer class="w-full bg-lightest-blue relative z-30 bottom-0">
+  <footer class="w-full bg-lightest-blue relative z-30">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
       <div class="col-span-4">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
@@ -116,25 +116,28 @@
       </div>
       <div class="col-start-8 col-span-2 flex flex-col">
         <ul class="text-dark-blue text-xs font-normal">
-          <li class="pb-3"><a href="">FAQs</a></li>
+          <li class="pb-3"><a href="/faq">FAQs</a></li>
           <li class="pb-3"><a href="">Contact Us</a></li>
           <li class="pb-3"><a href="">Help and Support</a></li>
         </ul>
       </div>
       <div class="col-start-10 col-span-2 flex flex-col">
         <ul class="text-dark-blue intelOne text-xs font-normal">
-          <li class="pb-3"><a href="">Terms & Conditions</a></li>
-          <li class="pb-3"><a href="">Privacy Policies</a></li>
+          <li class="pb-3"><a href="/terms-of-use">Terms & Conditions</a></li>
+          <li class="pb-3"><a href="/privacy-policy">Privacy Policies</a></li>
           <li class="pb-3"><a href="">Site Map</a></li>
           <li class="pb-3"><a href="">Cookie Settings</a></li>
         </ul>
       </div>
     </div>
-    <div class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-11 grid-flow-col border-t border-grey">
-      <div class="col-span-5 my-auto ">
-        <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
+    <div class="w-full border-t border-grey">
+      <div class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-11 grid-flow-col ">
+        <div class="col-span-5 my-auto ">
+          <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
+        </div>
       </div>
     </div>
+    
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script>
 
