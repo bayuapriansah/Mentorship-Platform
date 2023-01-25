@@ -137,8 +137,12 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     
   </footer>
+=======
+  </footer> --}}
+>>>>>>> 6ee59899a643adae4fd8475ba70ea102559b1907
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script>
 
     <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>

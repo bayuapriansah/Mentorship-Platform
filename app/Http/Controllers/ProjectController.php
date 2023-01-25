@@ -528,12 +528,13 @@ class ProjectController extends Controller
         return view('projects.applied.index', compact('applied_project'));
     }
 
-    // public function appliedDetail($student_id, $project_id)
-    // {
-    //     $project = Project::find($project_id);
-    //     $project_sections = ProjectSection::where('project_id', $project_id)->get();
-    //     return view('projects.applied.show', compact('student_id','project', 'project_sections'));
-    // }
+    // activate again for debug
+    public function appliedDetail($student_id, $project_id)
+    {
+        $project = Project::find($project_id);
+        $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        return view('projects.applied.show', compact('student_id','project', 'project_sections'));
+    }
 
     public function appliedSubmission($student_id, $project_id, $section_id, $subsection_id)
     {

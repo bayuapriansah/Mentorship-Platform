@@ -22,7 +22,7 @@ use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\InstitutionController;
 
 /*
-|--------------------------------------------------------------------------
+|--------------------------------------(------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -52,7 +52,8 @@ Route::get('/terms-of-use', function () {
 //     return view('index');
 // })->name('index');
 Route::get('/', [IndexController::class, 'index'])->name('index');
-
+// for debugging temp
+Route::get('/ccc/{student}/{project}', [ProjectController::class, 'appliedDetail'])->name('ccc');
 // register
 Route::get('/verify/{email}', [AuthController::class, 'verifyEmail'])->name('verify');
 Route::get('/verified/{email}', [AuthController::class, 'verified'])->name('verified');

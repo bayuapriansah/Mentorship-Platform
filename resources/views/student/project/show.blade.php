@@ -1,19 +1,5 @@
 @extends('layouts.profile.index')
 @section('content')
-{{-- 
-  
-  PHP CODE HERE
-
-  --}}
-  @php
-  $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', $student->id)->where('project_id', $project->id)->first()->created_at);
-  $date = $appliedDate->format('Y-m-d');
-  $now = \Carbon\Carbon::now();
-  @endphp
-
-{{-- 
-  END OF PHP CODE HERE
-  --}}
 <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
@@ -35,8 +21,9 @@
       <div class="col-end-13 col-span-3">
           {{-- <button  class="intelOne text-white text-sm font-normal bg-darker-blue px-12 py-2 rounded-full absolute cursor-default ">Enrolled</button>  --}}
           @php
-          $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at);
+          $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
           $enrolledDate = $appliedDate->format('dS M,Y'); 
+          $now = \Carbon\Carbon::now();
           @endphp
           <p class="font-normal text-sm text-right">Enrolled On <br> {{$enrolledDate}}</p>
           
@@ -55,21 +42,35 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
       <div class="col-span-12">
-          @php $no = 1 @endphp
-          {{-- @dd($project_sections) --}}
-          {{-- @dd($project_sections->orderBy('id', 'desc')->get()) --}}
-          @foreach($project_sections as $project_section)
-          @if($now > $date || in_array($project_section->id, $submissions->pluck('section_id')->toArray()))
-              <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
-                  <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                    Task {{$no}}: {{substr($project_section->title,0,60)}}...
-                    <span class="text-sm font-normal">{{ $appliedDate }}</span>
-                  </a>
-              </div>
-              @php $no++ @endphp
-              @php $date = $appliedDate->addDays(10)->toDateString() @endphp
+        @php
+          $no = 1;
+        @endphp
+        @foreach($project_sections as $project_section)
+          @if ($now >= $appliedDate || in_array($project_section->id, $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->toArray()))
+            <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+              <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                  Task {{$no}}: {{substr($project_section->title,0,60)}}...
+                  <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+              </a>
+            </div>
           @endif
-          @endforeach
+          @php
+            $no++;
+            $appliedDate = $appliedDate->addDays(10);
+          @endphp
+        @endforeach
+        {{-- if(!) --}}
+        {{-- @dd($projectsections->count() > 0) --}}
+        @if($projectsections->count() > 0)
+        @foreach($projectsections as $pro_section)
+            <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+                <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$pro_section->id}}" class="flex justify-between items-center">
+                    Task {{$no}}: {{substr($pro_section->title,0,60)}}...
+                    <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+                </a>
+            </div>
+        @endforeach
+        @endif
       </div>
   </div>
     </div>
