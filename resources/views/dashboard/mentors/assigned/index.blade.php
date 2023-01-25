@@ -28,7 +28,7 @@
           <tr>
             <td>{{$no}}</td>
             <td>{{$project->name}}</td>
-            <td>{{$project->problem}}</td>
+            <td>{{substr($project->problem,0,250)}}</td>
             <td>{{$project->project_domain}}</td>
             <td>
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/assigned_projects/{{$project->id}}/section" >Project Section</a>

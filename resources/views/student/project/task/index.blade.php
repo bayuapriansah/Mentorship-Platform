@@ -51,8 +51,8 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-9 relative my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium">Comments</h1>
-        <div class="border border-light-blue p-3 rounded-xl">
+        <h1 class="text-dark-blue text-[22px] font-medium">Discussion</h1>
+        <div class="border border-light-blue p-3 rounded-xl max-h-screen overflow-y-auto">
           <div class="chat grid grid-cols-12 gap-4 grid-flow-col">
             <div class="col-end-13 col-span-6">
               @foreach($comments->where('student_id', $student->id)->where('mentor_id', null) as $comment)
