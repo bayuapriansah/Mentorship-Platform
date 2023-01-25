@@ -38,10 +38,19 @@
           <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
           This email address is already registered!
         </div> --}}
-        <div class="flex justify-end mt-4">
-          <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue">Resend OTP</button>
+        <div class="grid grid-cols-[300px_minmax(200px,_1fr)_100px]">
+          <div class="mt-2">
+            @include('flash-message')
+          </div>
+          <div class="grid grid-cols-1">
+          <div class="flex justify-end mb-4">
+            <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue">Resend OTP</button>
+          </div>
+          <div class="flex justify-end mt-1">
+            <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue"></button>
+          </div>
+          </div>
         </div>
-
         <div class="flex mt-4">
           <button name="action" value="login" class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Verify OTP</button>
         </div>

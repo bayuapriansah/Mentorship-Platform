@@ -64,6 +64,10 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+      
+      .hidden {
+        display: none;
+      }
     </style>
     <!-- Custom styles for this template -->
   </head>

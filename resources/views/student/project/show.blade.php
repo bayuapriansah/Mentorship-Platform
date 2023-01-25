@@ -55,19 +55,52 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
       <div class="col-span-12">
-          @php $no = 1 @endphp
-          @foreach($project_sections as $project_section)
-          @if($now > $date || in_array($project_section->id, $submissions->pluck('section_id')->toArray()))
-              <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
-                  <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                    Task {{$no}}: {{substr($project_section->title,0,60)}}...
-                    <span class="text-sm font-normal">{{ $appliedDate }}</span>
-                  </a>
-              </div>
-              @php $no++ @endphp
-              @php $date = $appliedDate->addDays(10)->toDateString() @endphp
-          @endif
-          @endforeach
+        {{-- @foreach ($submissions as $sub) --}}
+        @php
+          $no = 1;
+        @endphp
+        @foreach($project_sections as $project_section)
+        @php
+            $appliedDate = $appliedDate->addDays(9);
+            $isNotCompleted = 0;
+        @endphp
+        {{ $project_section->id }}
+        {{ $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->first() }}
+        {{-- {{ $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->first() }} --}}
+        <br>
+          @if ($now >= $appliedDate || in_array($project_section->id, $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->toArray()))
+            {{ 'KONDISI 1' }}
+            <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+              <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                  Task {{$no}}: {{substr($project_section->title,0,60)}}...
+                  <span class="text-sm font-normal">{{ $appliedDate }}</span>
+              </a>
+            </div>
+            @php
+              $no++;
+            @endphp
+          @elseif ($now >= $appliedDate || !in_array($project_section->id, $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->toArray()) && $isNotCompleted == 0)
+          {{ 'KONDISI 2' }}
+          <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+            <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                Task {{$no}}: {{substr($project_section->title,0,60)}}...
+                <span class="text-sm font-normal">{{ $appliedDate }}</span>
+            </a>
+          </div>
+          @php
+            $no++;
+          @endphp
+        @endif
+        @endforeach
+            {{-- @if($now >= $appliedDate || !$submissions->first()->is_complete && $isNotCompleted != 0) --}}
+                {{-- <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                        Task {{$no}}: {{substr($project_section->title,0,60)}}...
+                        <span class="text-sm font-normal">{{ $appliedDate }}</span>
+                    </a>
+                </div> --}}
+            {{-- @endif --}}
+        {{-- @endforeach --}}
       </div>
   </div>
     </div>
