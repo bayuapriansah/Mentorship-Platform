@@ -61,7 +61,7 @@
         @endforeach
         {{-- if(!) --}}
         {{-- @dd($projectsections->count() > 0) --}}
-        @if($projectsections->count() > 0)
+        @if($projectsections->count() > 0 || $submissions)
         @foreach($projectsections as $pro_section)
             <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
                 <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$pro_section->id}}" class="flex justify-between items-center">
