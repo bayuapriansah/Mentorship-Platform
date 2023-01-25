@@ -25,4 +25,9 @@ class ProjectSection extends Model
     {
         return $this->hasOne(Submission::class);
     }
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
 }

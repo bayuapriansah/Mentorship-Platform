@@ -28,4 +28,9 @@ class Mentor extends Authenticatable
     {
         return $this->belongsToMany(Grade::class,);
     }
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
 }

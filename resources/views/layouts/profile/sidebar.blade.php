@@ -67,7 +67,6 @@
   </div>
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
-      <p class="text-sm font-medium text-dark-blue text-center">Task Submission</p>
       @if($submission == null)
       <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Make Final Submission</button>
       @else

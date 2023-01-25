@@ -43,4 +43,9 @@ class Project extends Model
     {
         return $this->belongsTo(Institution::class);
     }
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
 }
