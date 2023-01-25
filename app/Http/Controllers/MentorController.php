@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Session;
 use App\Models\Mentor;
+use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\MentorProject;
 use App\Models\ProjectSection;
+use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class MentorController extends Controller
 {
@@ -219,6 +221,19 @@ class MentorController extends Controller
         $project_subsections =  SectionSubsection::where('project_section_id', $section_id)->get();
         // dd($project_subsections->submission);
         return view('dashboard.mentors.assigned.section.subsection.index', compact(['project' ,'project_section', 'project_subsections']));      
+    }
+
+    public function showAllStudentsChats($project_id, $section_id)
+    {
+        $enrolled_students = EnrolledProject::where('project_id', $project_id)->get();
+        // dd($enrolled_students);
+        return view('dashboard.mentors.assigned.section.chat.index', compact(['project_id','section_id','enrolled_students']));
+    }
+
+    public function singleStudentChat($project_id, $section_id, $student_id)
+    {
+        $comments = Comment::where('project_id', $project_id)->where('project_section_id', $section_id)->get();
+        return view('dashboard.mentors.assigned.section.chat.show', compact(['project_id','section_id','student_id','comments']));
     }
     
 }

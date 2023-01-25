@@ -27,9 +27,10 @@
           <tr>
             <td>{{$no}}</td>
             <td>{{$project_section->section}}</td>
-            <td>{{$project_section->description}}</td>
+            <td>{{$project_section->title}}</td>
             <td>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/assigned_projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage Subsection</a>
+              <a class="btn btn-labeled bg-success editbtn text-white" href="/dashboard/assigned_projects/{{$project->id}}/section/{{$project_section->id}}/chat" >View Student chat</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/assigned_projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage Attachment</a>
             </td>
           </tr>
           @php $no++ @endphp

@@ -57,7 +57,7 @@
     </div>
     <div class="col-span-4">
       <div class="flex flex-col">
-        <img src="{{asset('assets/img/for_institution.png')}}" class="relative z-20" alt="for students">
+        <img src="{{asset('assets/img/for_institution.png')}}" class="relative z-20 mt-5" alt="for students">
         <h1 class="text-dark-blue text-2xl font-bold py-3">For Institutes</h1>
         <p class="text-black font-normal text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium, debitis fugit fuga harum commodi nihil ea veniam dolore ipsam ex?</p>
       </div>

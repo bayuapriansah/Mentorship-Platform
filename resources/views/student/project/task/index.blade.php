@@ -53,9 +53,9 @@
       <div class="col-span-9 relative my-auto">
         <h1 class="text-dark-blue text-[22px] font-medium">Comments</h1>
         <div class="border border-light-blue p-3 rounded-xl">
-          <div class="chat pb-20 grid grid-cols-12 gap-4 grid-flow-col">
+          <div class="chat grid grid-cols-12 gap-4 grid-flow-col">
             <div class="col-end-13 col-span-6">
-              @foreach($comments as $comment)
+              @foreach($comments->where('student_id', $student->id)->where('mentor_id', null) as $comment)
                 @if(Auth::guard('student')->check())
                   <div class="mb-2">
                     <div class=" border border-light-blue  py-3 px-5 rounded-xl  bg-white ">
@@ -76,8 +76,32 @@
                   </div>
                 @endif
               @endforeach
+              {{-- @dd($comments->where('student_id', $student->id)->whereNotNull('mentor_id')) --}}
             </div>
-
+            
+          </div>
+          <div class="grid grid-cols-12 gap-4 grid-flow-col">
+            <div class="col-start-1 col-span-6">
+              @foreach($comments->where('student_id', $student->id)->whereNotNull('mentor_id') as $comment)
+                <div class="mb-2">
+                  <div class=" border border-light-blue  py-3 px-5 rounded-xl  bg-white ">
+                    <div class="text-sm font-light">
+                      {{$comment->message}}
+                      @if($comment->file)
+                        <br>
+                        <a href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
+                          <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+                          <span class="text-xs">click to download</span>
+                        </a>
+                      @endif
+                    </div>
+                  </div>
+                  <p class="text-[14px]  text-[#585858]">
+                    {{$comment->created_at}}
+                  </p>
+                </div>
+              @endforeach
+            </div>
           </div>
           <div class="form">
             <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/chat" method="post" id="form-chat" enctype="multipart/form-data">
