@@ -11,6 +11,7 @@ use App\Http\Controllers\SimintEncryption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class AuthOtpController extends Controller
 {
@@ -20,7 +21,7 @@ class AuthOtpController extends Controller
 
     public function generate(Request $request){
         // dd($request->all());
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required',
             'g-recaptcha-response' => function ($attribute, $value, $fail) {
                 $secretkey = config('services.recaptcha.secret');
@@ -38,9 +39,11 @@ class AuthOtpController extends Controller
             },
         ]);
 
-        if($request->fails()){
-            return redirect()->route('otp.login')->withErrors($request)->withInput();
+        if($validator->fails()){
+            return redirect()->route('otp.login')->withErrors($validator)->withInput();
         }
+
+        $validated = $validator->validated();
         $user_id = Student::where('email', $request->email)->first();
         if(!$user_id){
             $user_id = Mentor::where('email', $request->email)->first();
