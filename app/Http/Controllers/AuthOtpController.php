@@ -38,8 +38,8 @@ class AuthOtpController extends Controller
             },
         ]);
 
-        if($validator->fails()){
-            return redirect()->route('otp.login')->withErrors($validator)->withInput();
+        if($request->fails()){
+            return redirect()->route('otp.login')->withErrors($request)->withInput();
         }
         $user_id = Student::where('email', $request->email)->first();
         if(!$user_id){
