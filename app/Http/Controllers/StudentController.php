@@ -202,7 +202,7 @@ class StudentController extends Controller
 
         // To Check if there's data in submission inputed from Project_section
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
-        
+        dd($submissions->count());
         // To Check if The Project_Section not in the Submission Table then Show the data but limit data to only One
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections'));
