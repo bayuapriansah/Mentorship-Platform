@@ -78,7 +78,7 @@
           @csrf
           <div class="flex justify-between">
           <div class="relative flex-grow">
-            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5" placeholder="Search an internship program" name="search">
+            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5 focus:outline-none" placeholder="Search an internship program" name="search">
             <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <i class="fa-solid fa-magnifying-glass"></i>
             </div>
