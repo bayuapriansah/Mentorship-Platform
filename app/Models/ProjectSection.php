@@ -26,6 +26,11 @@ class ProjectSection extends Model
         return $this->hasOne(Submission::class);
     }
 
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class, 'section_id', 'id');
+    }
+
     public function comment()
     {
         return $this->belongsTo(Comment::class);

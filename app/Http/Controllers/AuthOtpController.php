@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\VerificationCode;
 use Carbon\Carbon;
-use App\Models\Student;
 use App\Models\Mentor;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Student;
+use App\Models\VerificationCode;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\SimintEncryption;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthOtpController extends Controller
 {
@@ -21,8 +21,26 @@ class AuthOtpController extends Controller
     public function generate(Request $request){
         // dd($request->all());
         $request->validate([
-            'email' => 'required'
+            'email' => 'required',
+            'g-recaptcha-response' => function ($attribute, $value, $fail) {
+                $secretkey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                // dd($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    Session::flash('alert-class', 'alert-danger');
+                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
+                } 
+            },
         ]);
+
+        if($validator->fails()){
+            return redirect()->route('otp.login')->withErrors($validator)->withInput();
+        }
         $user_id = Student::where('email', $request->email)->first();
         if(!$user_id){
             $user_id = Mentor::where('email', $request->email)->first();
