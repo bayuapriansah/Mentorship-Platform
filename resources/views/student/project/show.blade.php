@@ -52,13 +52,13 @@
             <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
               <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
                   Task {{$no++}}: {{substr($project_section->title,0,60)}}...
-                  <span class="text-sm font-normal">{{ $appliedDate->addDays(10)->format('dS M,Y') }}</span>
+                  <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
               </a>
             </div>
           @endif
-          {{-- @php
+          @php
             $appliedDate = $appliedDate->addDays(10);
-          @endphp --}}
+          @endphp
         @endforeach
         {{-- @dd($now->gte($appliedDate)) --}}
         @if($projectsections->count() > 0 && $submissions->count() > 0 && $appliedDate >= $now)
