@@ -212,34 +212,29 @@ class ProjectController extends Controller
     {
         $enrolled_project = new EnrolledProject;
         $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
-                                            ->where('project_id',$id)->first();
+                                            ->where('is_submited', 0)->latest()->first();
         $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('is_submited', 1)->first();
-        // dd($already_completed);
+        // dd($already_enrolled);
         if(Auth::guard('student')->check()){
             if($already_enrolled == null ){
-                if($already_completed){
-                    $enrolled_project->student_id = Auth::guard('student')->user()->id;
-                    $enrolled_project->project_id = $id;
-                    $enrolled_project->is_submited = 0;
-                    $enrolled_project->save();
-                    return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
-                }else{
-                    return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail')->with('error', 'You have to complete your currently project');
-                }
+                $enrolled_project->student_id = Auth::guard('student')->user()->id;
+                $enrolled_project->project_id = $id;
+                $enrolled_project->is_submited = 0;
+                $enrolled_project->save();
+                return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
+            }else{
+                return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$id.'/detail')->with('error', 'You have to complete your currently project');
             }
         }else{
             return redirect('auth.otplogin');
         }                                          
-        
-        
     }
 
     // SECTION
     public function dashboardIndexSection($project_id)
     {
         // $project = Project::findOrFail($request->id);
-
         $project = Project::find($project_id);
         $project_sections =  ProjectSection::where('project_id', $project_id)->get();
         return view('dashboard.projects.section.index', compact(['project', 'project_sections']));

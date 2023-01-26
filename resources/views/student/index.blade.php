@@ -36,7 +36,7 @@
           </ul>
         </div>
         {{-- ->where('is_submited', 0) --}}
-        <div class="mt-5 h-[500px]">
+        <div class="mt-5 min-h-[500px]">
           {{-- $enrolled_projects->where('is_submited', 0) --}}
           @if(Route::is('student.allProjects'))
             @forelse($enrolled_projects as $enrolled_project)

@@ -32,6 +32,8 @@ class AuthController extends Controller
             'state' => ['required'],
             'country' => ['required'],
             'institution' => ['required'],
+            'study_program' => ['required'],
+            'year_of_study' => ['required'],
             'g-recaptcha-response' => function ($attribute, $value, $fail) {
                 $secretkey = config('services.recaptcha.secret');
                 $response = $value;
@@ -62,8 +64,14 @@ class AuthController extends Controller
             $student->sex = $validated['sex'];
             $student->state = $validated['state'];
             $student->country = $validated['country'];
-            $student->institution = $validated['institution'];
-            // $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+            $student->institution_id = $validated['institution'];
+            if($validated['study_program']=='other'){
+                $student->study_program = $request->study_program_form;
+            }else{
+                $student->study_program = $validated['study_program'];
+            }
+            $student->year_of_study = $validated['year_of_study'];
+            $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $student->is_confirm = 0;
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
