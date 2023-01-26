@@ -46,7 +46,7 @@
           $no = 1;
         @endphp
         @foreach($project_sections as $project_section)
-        {{ $no }}
+        {{-- {{ $no }} --}}
         {{-- <br> --}}
           @if ($now->gte($appliedDate) || in_array($project_section->id, $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->toArray()))
             <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
@@ -56,7 +56,7 @@
               </a>
             </div>
           @php
-            $appliedDate = $appliedDate->addDays(11);
+            $appliedDate = $appliedDate->addDays(10);
           @endphp
           @endif
         @endforeach
