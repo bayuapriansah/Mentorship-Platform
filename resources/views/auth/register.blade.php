@@ -109,7 +109,7 @@
           <option value="2st">2nd</option>
           <option value="3rd">3rd</option>
           <option value="4th">4th</option>
-          <option value="4th+">4th+</option>
+          <option value="5th+">5th+</option>
         </select><br>
         @error('year_of_study')
             <p class="text-red-600 text-sm mt-1">

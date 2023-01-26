@@ -213,11 +213,6 @@ class StudentController extends Controller
             $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
             $success_project->is_submited = 1;
             $success_project->save();
-        }else{
-        // Revert back if in the development data deleted directly
-            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-            $success_project->is_submited = 0;
-            $success_project->save();
         }
         
         // Total Task in Section

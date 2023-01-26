@@ -1,4 +1,13 @@
 <aside class="bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
+  {{-- @dd($enrolled_projects->where('is_submited',1)) --}}
+  {{-- @foreach ($enrolled_projects as $enrolled_project)
+      @if($enrolled_projects->where('is_submited',1))
+      @dd('tes')
+
+        <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" class="ml-[{{$dataDate}}%]">
+      @endif
+  @endforeach --}}
+
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
@@ -22,13 +31,18 @@
       <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mx-auto" alt="">
       <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
       <p class="text-black font-normal text-sm text-center">Internship Status:
-        @if($student->is_confirm == 0)
+        @if(\Carbon\Carbon::now()<=$student->end_date)
+          <span class="text-[#F8AC2A] font-medium">Ongoing</span>
+        @else
+          <span class="text-light-green font-medium">Complete</span>
+        @endif
+        {{-- @if($student->is_confirm == 0)
           <span class="text-light-blue">Not Started</span>
         @elseif($student->is_confirm == 1)
         <span class="text-green">Complete</span>
         @else
         <span class="text-[#F8AC2A]">Ongoing</span>
-        @endif 
+        @endif  --}}
       </p>
     </div>
   </div>
@@ -75,14 +89,20 @@
     @else
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
     <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
+    {{-- <span>s</span> --}}
+
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
-      
       <p class="text-black text-xs">{{$start_date}}</p>
       @endif
-      <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2">
+      <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2  ">
         {{-- $dataDate is a function to calculate --}}
-        <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ $dataDate }}%"></div>
+        <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%">
+        </div>
+        @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
+            <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" class="ml-[{{$dataDate}}%]">
+        @endforeach
+
       </div>
       {{-- <div class="flex-col ">
         <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
