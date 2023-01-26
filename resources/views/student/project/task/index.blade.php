@@ -51,9 +51,50 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-9 relative my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium">Comments</h1>
-        <div class="border border-light-blue p-3 rounded-xl">
-          <div class="chat grid grid-cols-12 gap-4 grid-flow-col">
+        <h1 class="text-dark-blue text-[22px] font-medium">Discussion</h1>
+        <div class="border border-light-blue p-3 rounded-xl h-[600px] overflow-y-auto">
+          <div class="chat pb-5">
+            @foreach($comments->where('project_id', $task->project->id)->where('project_section_id', $task->id) as $comment)
+              <div class="mb-2">
+                {{-- @dd($comment->mentor_id == null) --}}
+                @if ($comment->mentor_id == null)
+                <div class="flex flex-row-reverse">
+                  <div class="w-1/2 border border-light-blue  p-2 rounded-xl  bg-white ">
+                    {{$comment->message}}
+                    @if($comment->file)
+                      <br>
+                      <a href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
+                        <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+                        <span class="text-xs">click to download</span>
+                      </a>
+                    @endif
+                  </div>
+                </div>
+                <p class="text-[14px] text-right text-[#585858]">
+                  {{$comment->created_at}}
+                </p>
+                @else
+                <div class="flex ">
+                  <div class="w-1/2 border border-light-blue  p-2 rounded-xl  bg-[#E2E3ED] ">
+                    {{$comment->message}}
+                    @if($comment->file)
+                      <br>
+                      <a href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
+                        <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+                        <span class="text-xs">click to download</span>
+                      </a>
+                    @endif
+                  </div>
+                </div>
+                <p class="text-[14px] text-[#585858]">
+                  {{$comment->created_at}}
+                </p>
+                @endif
+                
+              </div>
+              @endforeach
+          </div>
+          {{-- <div class="chat grid grid-cols-12 gap-4 grid-flow-col">
             <div class="col-end-13 col-span-6">
               @foreach($comments->where('student_id', $student->id)->where('mentor_id', null) as $comment)
                 @if(Auth::guard('student')->check())
@@ -76,10 +117,9 @@
                   </div>
                 @endif
               @endforeach
-              {{-- @dd($comments->where('student_id', $student->id)->whereNotNull('mentor_id')) --}}
             </div>
-            
           </div>
+
           <div class="grid grid-cols-12 gap-4 grid-flow-col">
             <div class="col-start-1 col-span-6">
               @foreach($comments->where('student_id', $student->id)->whereNotNull('mentor_id') as $comment)
@@ -102,7 +142,7 @@
                 </div>
               @endforeach
             </div>
-          </div>
+          </div> --}}
           <div class="form">
             <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/chat" method="post" id="form-chat" enctype="multipart/form-data">
             @csrf
