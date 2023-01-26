@@ -46,7 +46,7 @@
           $no = 1;
         @endphp
         @foreach($project_sections as $project_section)
-        {{-- {{ $no }} --}}
+        {{ $no }}
         {{-- <br> --}}
           @if ($now->gte($appliedDate) || in_array($project_section->id, $submissions->where('section_id',$project_section->id)->where('student_id',$student->id)->pluck('section_id')->toArray()))
             <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
@@ -55,18 +55,18 @@
                   <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
               </a>
             </div>
-          @endif
           @php
-            $appliedDate = $appliedDate->addDays(10);
+            $appliedDate = $appliedDate->addDays(11);
           @endphp
+          @endif
         @endforeach
         {{-- @dd($now->gte($appliedDate)) --}}
-        @if($projectsections->count() > 0 && $submissions->count() > 0 && $appliedDate >= $now)
+        @if($projectsections->count() > 0 && $submissions->count() > 0 && $now <= $appliedDate)
         @foreach($projectsections as $pro_section)
             <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
                 <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$pro_section->id}}" class="flex justify-between items-center">
                     Task {{$no}}: {{substr($pro_section->title,0,60)}}...
-                    <span class="text-sm font-normal">{{ $appliedDate->addDays(10)->format('dS M,Y') }}</span>
+                    <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
                 </a>
             </div>
         @endforeach
