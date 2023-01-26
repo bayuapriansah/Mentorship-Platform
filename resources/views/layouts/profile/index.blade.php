@@ -97,7 +97,7 @@
   </div>
 
   <main class="bg-profile-grey ">
-    @yield('content')
+    @yield('content') 
   </main>
 
   <footer class="w-full bg-lightest-blue relative z-30">
