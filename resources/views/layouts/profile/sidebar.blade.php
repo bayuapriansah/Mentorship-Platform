@@ -23,6 +23,8 @@
       <p class="text-black font-normal text-sm text-center">Internship Status:
         @if($student->is_confirm == 0)
           <span class="text-light-blue">Not Started</span>
+        @elseif($student->is_confirm == 1)
+        <span class="text-green">Complete</span>
         @else
         <span class="text-[#F8AC2A]">Ongoing</span>
         @endif 
@@ -44,9 +46,37 @@
     </div>
   </div>
   <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
+    {{-- SECTION TO SHOW TASK PROGRESS --}}
+    @if(Route::is('student.enrolledDetail') || Route::is('student.taskDetail'))
     <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
+      
+      <p class="text-black text-xs">{{$task_clear}}</p>
+      @endif
+      <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2">
+        {{-- $dataDate is a function to calculate --}}
+        <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ $taskProgress }}%"></div>
+        <div class="text-center">{{ $taskProgress }}%</div>
+      </div>
+      {{-- <div class="flex-col ">
+        <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
+        <p class="text-black text-[6px]">{{$student->end_date}}</p>
+      </div> --}}
+      @if($student->is_confirm == 1)
+        <p class="text-black text-xs">{{$total_task}}</p>
+      @endif
+    </div>
+    @if($student->is_confirm == 0)
+      <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
+    @endif
+    {{-- SECTION TO SHOW TASK PROGRESS --}}
+    @else
+    {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
+    <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
+    <div class="flex justify-between">
+      @if($student->is_confirm == 1)
+      
       <p class="text-black text-xs">{{$start_date}}</p>
       @endif
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2">
@@ -63,6 +93,8 @@
     </div>
     @if($student->is_confirm == 0)
       <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
+    @endif
+    {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
     @endif
   </div>
   @if(Route::is('student.taskDetail'))
