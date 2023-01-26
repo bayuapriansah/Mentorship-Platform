@@ -71,7 +71,11 @@
                   </div>
                 </div>
                 <p class="text-[14px] text-right text-[#585858]">
-                  {{$comment->created_at}}
+                  @php
+                      $sent_date =   \Carbon\Carbon::parse($comment->created_at);
+                      $sent_date = $sent_date->format('d-m-y, G:ia');
+                  @endphp
+                  {{$sent_date}}
                 </p>
                 @else
                 <div class="flex ">
@@ -87,7 +91,11 @@
                   </div>
                 </div>
                 <p class="text-[14px] text-[#585858]">
-                  {{$comment->created_at}}
+                  @php
+                      $sent_date =   \Carbon\Carbon::parse($comment->created_at);
+                      $sent_date = $sent_date->format('d-m-y, G:ia');
+                  @endphp
+                  {{$sent_date}}
                 </p>
                 @endif
                 
