@@ -46,22 +46,22 @@
           $no = 1;
           $nn = 1;
           $total_submission = $submissions->count();
-
-          if($total_submission == 0){
-            $total_submission += 1;
-            $project_sections = $project_sections->take($total_submission);
-          }elseif($total_submission > 0) {
-            $total_submission += 1;
-            $project_sections = $project_sections->take($total_submission);
-          }
+          // dd($total_submission);
+          // if($total_submission == 0){
+          //   $total_submission += 1;
+          //   $project_sections = $project_sections->take($total_submission);
+          // }elseif($total_submission > 0) {
+          //   $total_submission += 1;
+          //   $project_sections = $project_sections->take($total_submission);
+          // }
           @endphp
           @foreach($project_sections as $project_section)
-                  <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
-                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                        Task {{$no++}}: {{substr($project_section->title,0,60)}}...
-                        <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
-                    </a>
-                  </div>
+              <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
+                <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                    Task {{$no++}}: {{substr($project_section->title,0,60)}}...
+                    <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+                </a>
+              </div>
               @php
                 $appliedDate = $appliedDate->addDays(10);
               @endphp

@@ -213,8 +213,8 @@ class ProjectController extends Controller
         $enrolled_project = new EnrolledProject;
         $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('is_submited', 0)->latest()->first();
-        $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
-                                            ->where('is_submited', 1)->first();
+        // $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
+        //                                     ->where('is_submited', 1)->first();
         // dd($already_enrolled);
         if(Auth::guard('student')->check()){
             if($already_enrolled == null ){

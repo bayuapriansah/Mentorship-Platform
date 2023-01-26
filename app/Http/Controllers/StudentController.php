@@ -199,10 +199,11 @@ class StudentController extends Controller
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        // dd($project_sections->first());
 
         // To Check if there's data in submission inputed from Project_section
-        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
-        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['section_id',$project_id], ['is_complete', 1]])->get();
+        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
+        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
 
         // To Check if The Project_Section not in the Submission Table then Show the data but limit data to only One
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
@@ -242,16 +243,15 @@ class StudentController extends Controller
         
         // The prerequisite for count task progress
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
+        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
         
         // Total Task in Section
         $total_task = $project_sections->count();
-
         // Total task cleared
         $task_clear = $submissions->count();
-
         // Progress Bar for Task
         $taskProgress = (100 / $total_task) * $task_clear;
+        // dd($taskProgress);
         return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','taskProgress','total_task','task_clear'));
     }
 
@@ -267,6 +267,7 @@ class StudentController extends Controller
         $submission = new Submission;
         $submission->section_id = $task_id;
         $submission->student_id = $student_id;
+        $submission->project_id = $project_id;
         $submission->is_complete = 1;
         if($request->hasFile('file')){
             $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
