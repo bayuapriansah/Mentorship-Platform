@@ -6,7 +6,7 @@
       <h2 class="intelOne text-white font-bold text-4xl leading-11">Join <span class="text-light-brown">Simulated Internship</span> Program And Get Yourself <span class="text-light-brown">Industry Ready!</span></h2>
       <span class="intelOne text-white py-6 font-thin text-lg leading-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</span>
       <div class="flex">
-        <button class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-16 py-3.5 rounded-full">Get Started</button>
+        <a href="/otp/login" class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-16 py-3.5 rounded-full">Get Started</a>
       </div>
     </div>
     <div class="col-start-7 col-span-6 relative">
@@ -33,7 +33,7 @@
     <img src="{{asset('assets/img/image 6.png')}}" alt="">
     <img src="{{asset('assets/img/image 7.png')}}" alt="">
   </div>
-  <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col">
+  <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col" id="AiForFuture">
     <div class="col-span-6 flex my-auto">
       <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
     </div>
@@ -73,7 +73,7 @@
   <div class="container mx-auto">
     <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 flex ">
       <div class="">
-        <h2 class="intelOne text-dark-blue font-bold text-3xl">Active Internships Program</h2>
+        <h2 class="intelOne text-dark-blue font-bold text-3xl">Active Internships Projects</h2>
       </div>
       {{-- untuk arrow --}}
     </div>
@@ -131,46 +131,9 @@
       </div>
   </div>  
     {{-- END CARD CAROUSEL --}}
-    <div class="max-w-[1366px] mx-auto px-36 pt-12 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
+    <div class="max-w-[1366px] mx-auto px-36 pt-12 mb-2 grid grid-cols-12 gap-3 grid-flow-col">
       <div class="col-end-13 col-span-2">
-        <button class="intelOnetext-sm font-normal border-2 border-solid border-dark-blue text-darker-blue hover:bg-dark-blue hover:text-white px-3 py-2 rounded-full">View Internship</button>
-      </div>
-    </div>
-  </div>
-  <div class="w-full bg-lightest-blue">
-    <div class="max-w-[1366px] mx-auto px-16 mt-12 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
-      <div class="col-span-3 my-auto">
-        <img src="{{asset('assets/img/Ellipse2.png')}}" class="absolute z-10 w-[482px] -translate-x-1/3 -translate-y-1/4 " alt="">
-        <p class="intelOne text-3xl rounded-full font-bold text-white relative z-20 m-0">What <br> Students Love</p>
-      </div>
-      <div class="col-start-5 gap-7 col-span-8 flex">
-        <div class="relative max-w-md mx-auto flex flex-col py-6 px-8 bg-white rounded-lg shadow-lg">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRreh9Fwfj6mP6s9CINDCpfUXmi6OrRXJoD8fFI7BV01mzbbC1FhW5MLGQZYgH9PJ8UhC0&usqp=CAU"
-            alt=""
-            class="absolute rounded-full w-[75px] h-[75px] right-8 -translate-x-1/4 -top-6"
-            />
-          <p class="text-grey font-normal text-sm pt-12 m-0">
-            “On the Windows talking painted pasture yet its express parties
-            use. Sure last upon he same as knew next. Of believed or
-            diverted no.”
-          </p>
-          <p class="mt-6 mb-2 text-right text-dark-blue font-medium text-sm intelOne m-0" >Mike taylor</p>
-        </div>
-        <div class="relative max-w-md mx-auto flex flex-col py-6 px-8 bg-white rounded-lg shadow-lg">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRreh9Fwfj6mP6s9CINDCpfUXmi6OrRXJoD8fFI7BV01mzbbC1FhW5MLGQZYgH9PJ8UhC0&usqp=CAU"
-            alt=""
-            class="absolute rounded-full w-[75px] h-[75px] right-8 -translate-x-1/4 -top-6"
-            />
-          <p class="text-grey intelOne font-normal pt-12 m-0">
-            “On the Windows talking painted pasture yet its express parties
-            use. Sure last upon he same as knew next. Of believed or
-            diverted no.”
-          </p>
-          <p class="mt-10 mb-2 text-right text-dark-blue font-medium text-sm intelOne m-0">Mike taylor</p>
-        </div>
-        
+        <a href="/projects" class="intelOnetext-sm font-normal border-2 border-solid border-dark-blue text-darker-blue hover:bg-dark-blue hover:text-white px-3 py-2 rounded-full">View Internship</a>
       </div>
     </div>
   </div>

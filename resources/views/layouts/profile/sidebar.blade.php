@@ -97,6 +97,7 @@
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
     @endif
   </div>
+  
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
       @if($submission == null)
@@ -110,5 +111,13 @@
       </div>
       @endif
     </div>
+  @else
+  <div class="flex flex-col">
+    <p class="text-dark-blue font-medium text-sm text-center my-3">Complete 3 Months project to unlock</p>
+   
+    <a href="#" class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-default">Download Certificate</a>
+    {{-- <a href="#" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
+
+  </div>
   @endif
 </aside>
