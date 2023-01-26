@@ -202,10 +202,33 @@ class StudentController extends Controller
 
         // To Check if there's data in submission inputed from Project_section
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
-        // dd($submissions->count());
+        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['section_id',$project_id], ['is_complete', 1]])->get();
+
         // To Check if The Project_Section not in the Submission Table then Show the data but limit data to only One
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections'));
+
+        // Change is_submited in enrolled_project
+        if($submissions->count() == $project_sections->count()){
+            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+            $success_project->is_submited = 1;
+            $success_project->save();
+        }else{
+        // Revert back if in the development data deleted directly
+            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+            $success_project->is_submited = 0;
+            $success_project->save();
+        }
+        
+        // Total Task in Section
+        $total_task = $project_sections->count();
+
+        // Total task cleared
+        $task_clear = $submissions->count();
+
+        // Progress Bar for Task
+        $taskProgress = (100 / $total_task) * $task_clear;
+
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear'));
     }
 
     public function taskDetail($student_id, $project_id, $task_id)
@@ -216,7 +239,20 @@ class StudentController extends Controller
         $task = ProjectSection::find($task_id);
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->get();
         $submission = Submission::where('student_id',$student_id)->where('section_id', $task_id)->first();
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission'));
+        
+        // The prerequisite for count task progress
+        $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
+        
+        // Total Task in Section
+        $total_task = $project_sections->count();
+
+        // Total task cleared
+        $task_clear = $submissions->count();
+
+        // Progress Bar for Task
+        $taskProgress = (100 / $total_task) * $task_clear;
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','taskProgress','total_task','task_clear'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
