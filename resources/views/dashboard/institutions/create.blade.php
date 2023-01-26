@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col">
       <div class="card p-4">
-        <form action="{{ route('dashboard.institutions.store') }}" method="post">
+        <form action="{{ route('dashboard.institutions.store') }}" method="post" enctype="multipart/form-data">
           @csrf
           <div class="mb-3">
             <label for="inputname" class="form-label">Institution Name</label>
@@ -43,6 +43,18 @@
               <option>State</option>
             </select>
             @error('state')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="inputlogo" class="form-label">Institution logo *max file size is 5MB</label>
+            <input type="file" class="form-control-file" id="inputlogo" name="logo">
+            <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
+            <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>
+
+            @error('logo')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>

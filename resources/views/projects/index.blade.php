@@ -74,6 +74,8 @@
       <div class="col-span-6 my-auto">
         <h2 class="intelOne text-white font-bold text-4xl leading-11">Search <span class="text-light-brown">Internships</span></h2>
         <p class="intelOne font-light text-white text-lg leading-6 py-6 m-0">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        @if(!Auth::guard('student')->check())
+        
         <form action="/projects/search" method="get">
           @csrf
           <div class="flex justify-between">
@@ -92,6 +94,7 @@
           <div class="flex">
           </div>
         </form>
+        @endif
       </div>
       <div class="col-start-7 col-span-6 relative">
         <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->

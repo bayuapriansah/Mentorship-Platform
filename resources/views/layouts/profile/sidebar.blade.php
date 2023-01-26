@@ -18,7 +18,8 @@
     <div class="mx-auto">
       <img src="{{asset('assets/img/icon/profile/pp.png')}}" class="w-[100px] h-[100px]  mx-auto"  alt="message">
       <p class="text-dark-blue font-normal text-xl text-center ">{{$student->first_name}} {{$student->last_name}}</p>
-      <p class="text-black font-normal text-sm text-center">4th Year, B.Tech in Computer Science & Engineering </p>
+      <p class="text-black font-normal text-sm text-center">{{$student->year_of_study}} Year, {{$student->study_program}} </p>
+      <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mx-auto" alt="">
       <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
       <p class="text-black font-normal text-sm text-center">Internship Status:
         @if($student->is_confirm == 0)
@@ -97,6 +98,7 @@
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
     @endif
   </div>
+  
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
       @if($submission == null)
@@ -110,5 +112,13 @@
       </div>
       @endif
     </div>
+  @else
+  <div class="flex flex-col">
+    <p class="text-dark-blue font-medium text-sm text-center my-3">Complete 3 Months project to unlock</p>
+   
+    <a href="#" class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-default">Download Certificate</a>
+    {{-- <a href="#" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
+
+  </div>
   @endif
 </aside>

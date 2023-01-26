@@ -97,7 +97,7 @@
   </div>
 
   <main class="bg-profile-grey ">
-    @yield('content')
+    @yield('content') 
   </main>
 
   <footer class="w-full bg-lightest-blue relative z-30">
@@ -108,25 +108,22 @@
       </div>
       <div class="col-start-6 col-span-2 flex flex-col">
         <ul class="text-dark-blue text-xs font-normal">
-          <li class="pb-3"><a href="">About Us</a></li>
-          <li class="pb-3"><a href="">For Industry Partners</a></li>
-          <li class="pb-3"><a href="">For Institution</a></li>
-          <li class="pb-3"><a href="">For Students</a></li>
+          <li class="pb-3"><a href="/#AiForFuture">About Us</a></li>
+          <li class="pb-3"><a href="/#AiForFuture">For Industry Partners</a></li>
+          <li class="pb-3"><a href="/#AiForFuture">For Institution</a></li>
+          <li class="pb-3"><a href="/#AiForFuture">For Students</a></li>
         </ul>
       </div>
       <div class="col-start-8 col-span-2 flex flex-col">
         <ul class="text-dark-blue text-xs font-normal">
           <li class="pb-3"><a href="/faq">FAQs</a></li>
           <li class="pb-3"><a href="">Contact Us</a></li>
-          <li class="pb-3"><a href="">Help and Support</a></li>
         </ul>
       </div>
       <div class="col-start-10 col-span-2 flex flex-col">
         <ul class="text-dark-blue intelOne text-xs font-normal">
           <li class="pb-3"><a href="/terms-of-use">Terms & Conditions</a></li>
           <li class="pb-3"><a href="/privacy-policy">Privacy Policies</a></li>
-          <li class="pb-3"><a href="">Site Map</a></li>
-          <li class="pb-3"><a href="">Cookie Settings</a></li>
         </ul>
       </div>
     </div>
@@ -137,6 +134,7 @@
         </div>
       </div>
     </div>
+    
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script>
 

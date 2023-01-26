@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col">
       <div class="card p-4">
-        <form action="{{ route('dashboard.institutions.update',[$id]) }}" method="post">
+        <form action="{{ route('dashboard.institutions.update',[$id]) }}" method="post" enctype="multipart/form-data">
           @csrf
           @method('PATCH')
           <div class="mb-3">
@@ -47,6 +47,18 @@
               <option value="{{$institutions->state}}" selected>{{$institutions_view->states}}</option>
             </select>
             @error('state')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="inputlogo" class="form-label">Company logo</label><br>
+            <img src="{{asset('storage/'.$institutions->logo)}}" alt="" style="width: 350px; height: 230px;">
+            <input type="file" class="form-control-file" id="inputlogo" name="logo">
+            <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
+            <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>
+            @error('logo')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>

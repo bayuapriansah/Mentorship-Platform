@@ -156,7 +156,7 @@ class StudentController extends Controller
         if($id != Auth::guard('student')->user()->id ){
             abort(403);
         }
-        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('is_submited', 0)->get();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $student = Student::where('id', $id)->first();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 

@@ -85,6 +85,39 @@
           @enderror
         </div>
 
+        @php
+          $study_programs = ['Artificial Intelligence and Machine Learning', 'Computer Science Education','Computing Systems', 'Human-Centered Computing', 'Networks and Security', 'Software Engineering', 'General Computer Science'];
+        @endphp
+        <select id="inputStudy" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="study_program" required>
+          <option value="">Institution Name</option>
+          @foreach($study_programs as $study_program)
+          <option value="{{$study_program}}">{{$study_program}}</option>
+          @endforeach
+          <option value="other">Other</option>
+        </select><br>
+        @error('study_program')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror 
+
+        <input type="study_program_form" id="study_program_form" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('study_program_form') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{old('study_program_form')}}" placeholder="Study Program" id="study_program_form" name="study_program_form">
+        
+        <select id="year_of_study" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="year_of_study" required>
+          <option value="">Year of study *</option>
+          <option value="1st">1st</option>
+          <option value="2st">2nd</option>
+          <option value="3rd">3rd</option>
+          <option value="4th">4th</option>
+          <option value="4th+">4th+</option>
+        </select><br>
+        @error('year_of_study')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+        
+
         <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required><br>
         @error('email')
             <p class="text-red-600 text-sm mt-1">
@@ -141,6 +174,16 @@
                 $('#ForState').val(result.states);
               }
           });
+      });
+
+      $('#study_program_form').hide();
+      $("#inputStudy").change(function(){
+        var values = $("#inputStudy option:selected").val();
+        if(values=='other'){
+          $('#study_program_form').show();
+        }else{
+          $('#study_program_form').hide();
+        }
       });
   });
 </script>
