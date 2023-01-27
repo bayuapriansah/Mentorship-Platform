@@ -20,7 +20,10 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $students = Student::get();
@@ -140,9 +143,9 @@ class StudentController extends Controller
     public function allProjects($id)
     {
         // dd(Auth::guard('student')->user()->id);
-        if($id != Auth::guard('student')->user()->id ){
-            abort(403);
-        }
+        // if($id != Auth::guard('student')->user()->id ){
+        //     abort(403);
+        // }
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
@@ -211,9 +214,12 @@ class StudentController extends Controller
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
 // dd($projectsections);
         // Change is_submited in enrolled_project
+        // dd($submissions);
+
         if($submissions->count() == $project_sections->count()){
             $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
             $success_project->is_submited = 1;
+            $success_project->flag_checkpoint = $dataDate;
             $success_project->save();
         }
         
