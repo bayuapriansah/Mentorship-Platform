@@ -231,7 +231,7 @@ class StudentController extends Controller
     public function taskDetail($student_id, $project_id, $task_id)
     {
         $student = Student::where('id', $student_id)->first();
-        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project_id)->get();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::find($task_id);
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->get();

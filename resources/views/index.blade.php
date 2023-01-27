@@ -1,5 +1,15 @@
 @extends('layouts.index')
 @section('content')
+@mobile
+    <script>
+      alert('The website is more supported on dekstop');
+    </script>
+@endmobile
+@tablet
+  <script>
+    alert('The website is more supported on dekstop');
+  </script>
+@endtablet
 <div class="w-full bg-darker-blue">
   <div class="max-w-[1366px] mx-auto px-16 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
     <div class="flex flex-col col-span-6 my-auto">

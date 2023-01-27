@@ -67,7 +67,9 @@
       $initialDate  = \Carbon\Carbon::parse($appliedDate)->format('Y-m-d');
       $endDate      = \Carbon\Carbon::parse($appliedDate->addMonths($project->period))->format('Y-m-d');
       $finalDate    = $todayDate->diffInDays($initialDate);
+
       $totalDate    = floor(abs(strtotime($endDate) - strtotime($initialDate))/86400);
+      // dd($appliedDate->format('Y-m-d'));
 
       if ($totalDate < 0) {
         $totalDate = abs($totalDate);
@@ -80,7 +82,7 @@
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
       
-      <p class="text-black text-xs">{{$appliedD->format('dS M Y')}}</p>
+      <p class="text-black text-xs">{{$appliedDate->format('dS M Y')}}</p>
       @endif
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2">
         {{-- $dataDate is a function to calculate --}}
@@ -92,7 +94,7 @@
         <p class="text-black text-[6px]">{{$student->end_date}}</p>
       </div> --}}
       @if($student->is_confirm == 1)
-        <p class="text-black text-xs">{{$appliedD->addMonths($project->period)->format('dS M Y')}}</p>
+        <p class="text-black text-xs">{{$appliedDate->addMonths($project->period)->format('dS M Y')}}</p>
       @endif
     </div>
     @if($student->is_confirm == 0)
