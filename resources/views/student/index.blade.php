@@ -9,7 +9,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
       <div class="col-span-12">
-        <div class="text-sm font-medium text-center text-light-blue border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+        <div class="text-sm font-medium text-center text-light-blue border-b border-gray-200 ">
           <ul class="flex flex-wrap -mb-px">
               <li class="mr-2">
                 {{-- {{}} --}}
