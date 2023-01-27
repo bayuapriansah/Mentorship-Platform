@@ -54,7 +54,6 @@
     <div>
   @php
    $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d-m-Y');
-   $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
   @endphp
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Completed</p>
@@ -63,6 +62,9 @@
   <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
     {{-- SECTION TO SHOW TASK PROGRESS --}}
     @if(Route::is('student.enrolledDetail') || Route::is('student.taskDetail'))
+    @php
+         $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
+    @endphp
     <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
