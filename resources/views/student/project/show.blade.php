@@ -23,7 +23,7 @@
           @php
           $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
           $enrolledDate = $appliedDate->format('dS M,Y'); 
-          $now = \Carbon\Carbon::now();
+          $now = \Carbon\Carbon::now()->startOfDay();
           @endphp
           <p class="font-normal text-sm text-right">Enrolled On <br> {{$enrolledDate}}</p>
           
@@ -55,17 +55,42 @@
           //   $project_sections = $project_sections->take($total_submission);
           // }
           @endphp
+          
           @foreach($project_sections as $project_section)
-              <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
-                <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                    Task {{$no++}}: {{substr($project_section->title,0,60)}}...
-                    <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
-                </a>
-              </div>
-              @php
-                $appliedDate = $appliedDate->addDays(10);
-              @endphp
+            @if ($now->gte($appliedDate))
+              {{-- @if($projectsections->count() > 0 && $submissions->count() > 0) --}}
+                  <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
+                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
+                        Task {{$no++}}: {{substr($project_section->title,0,60)}}...
+                        <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+                    </a>
+                  </div>
+                  @php
+                    $appliedDate = $appliedDate->addDays(10);
+                  @endphp
+              {{-- @endif --}}
+            @endif
           @endforeach
+          {{-- @foreach($projectsections as $proj) --}}
+            {{-- @if ($now->gte($appliedDate)) --}}
+            {{-- @dd($projectsections->count() - 1) --}}
+              @if($projectsections->count() - 1 > 0 && $now->lt($appliedDate))
+              {{ $projectsections->count() > 0 }}
+              {{ 'Kondisi' }}
+              {{ $now->lt($appliedDate) }}
+                  <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
+                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$projectsections[0]->id}}" class="flex justify-between items-center">
+                        Task {{$no++}}: {{substr($projectsections[0]->title,0,60)}}...
+                        <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+                    </a>
+                  </div>
+                  @php
+                    $appliedDate = $appliedDate->addDays(1);
+                  @endphp
+              @endif
+            {{-- @endif --}}
+          {{-- @endforeach --}}
+
         {{-- @if($projectsections->count() > 0 && $submissions->count() > 0 && $now <= $appliedDate)
           @if ($now >= $appliedDate)
             @php
