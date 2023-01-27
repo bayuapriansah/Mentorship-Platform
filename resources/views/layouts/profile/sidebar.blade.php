@@ -39,8 +39,7 @@
     </div>
     <div>
   @php
-   $start_date =   \Carbon\Carbon::parse($student->created_at);
-   $start_date = $start_date->format('d-m-Y');
+    $start_date   = \Carbon\Carbon::parse($student->created_at)->format('dS M Y');
   @endphp
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Completed</p>
@@ -49,23 +48,37 @@
   <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
     {{-- SECTION TO SHOW TASK PROGRESS --}}
     @if(Route::is('student.enrolledDetail') || Route::is('student.taskDetail'))
+    @php
+      $todayDate    = \Carbon\Carbon::now()->startOfDay();
+      $initialDate  = \Carbon\Carbon::parse($appliedDate)->format('Y-m-d');
+      $endDate      = \Carbon\Carbon::parse($appliedDate->addMonths($project->period))->format('Y-m-d');
+      $finalDate    = $todayDate->diffInDays($initialDate);
+      $totalDate    = floor(abs(strtotime($endDate) - strtotime($initialDate))/86400);
+
+      if ($totalDate < 0) {
+        $totalDate = abs($totalDate);
+      } else {
+        $totalDate = $totalDate;
+      }
+      $percentageDay = ($finalDate/$totalDate) * 100;
+    @endphp
     <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
       
-      <p class="text-black text-xs">{{$task_clear}}</p>
+      <p class="text-black text-xs">{{$appliedD->format('dS M Y')}}</p>
       @endif
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-2">
         {{-- $dataDate is a function to calculate --}}
-        <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ $taskProgress }}%"></div>
-        <div class="text-center">{{ $taskProgress }}%</div>
+        <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ $percentageDay }}%"></div>
+        <div class="text-center">{{ round($percentageDay) }}%</div>
       </div>
       {{-- <div class="flex-col ">
         <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
         <p class="text-black text-[6px]">{{$student->end_date}}</p>
       </div> --}}
       @if($student->is_confirm == 1)
-        <p class="text-black text-xs">{{$total_task}}</p>
+        <p class="text-black text-xs">{{$appliedD->addMonths($project->period)->format('dS M Y')}}</p>
       @endif
     </div>
     @if($student->is_confirm == 0)
