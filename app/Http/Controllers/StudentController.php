@@ -143,9 +143,9 @@ class StudentController extends Controller
     public function allProjects($id)
     {
         // dd(Auth::guard('student')->user()->id);
-        // if($id != Auth::guard('student')->user()->id ){
-        //     abort(403);
-        // }
+        if($id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
@@ -197,6 +197,9 @@ class StudentController extends Controller
 
     public function enrolledDetail($student_id, $project_id)
     {
+        if($student_id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
         $student = Student::where('id', $student_id)->first();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $project = Project::find($project_id);
@@ -237,6 +240,9 @@ class StudentController extends Controller
 
     public function taskDetail($student_id, $project_id, $task_id)
     {
+        if($student_id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
         $student = Student::where('id', $student_id)->first();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
@@ -264,6 +270,9 @@ class StudentController extends Controller
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
     {
+        if($student_id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
         $task = ProjectSection::find($task_id);
         // dd($task->file_type);
         if($request->hasFile('file')==true){
@@ -292,6 +301,9 @@ class StudentController extends Controller
 
     public function allProjectsAvailable($student_id)
     {
+        if($student_id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
         $student = Student::where('id', $student_id)->first();
         $projects = Project::whereNotIn('id', function($query){
             $query->select('project_id')->from('enrolled_projects');
