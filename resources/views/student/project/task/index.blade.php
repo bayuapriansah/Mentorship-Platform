@@ -2,7 +2,7 @@
 @section('content')
 @include('flash-message')
   {{-- @dd($task->project->name); --}}
-<div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center pb-36 ">
+<div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center pb-36 min-h-[500px]">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
       <div class="col-span-6 my-auto">
@@ -50,10 +50,13 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
-      <div class="col-span-9 relative my-auto">
+      <div class="col-span-9  my-auto">
         <h1 class="text-dark-blue text-[22px] font-medium">Discussion</h1>
-        <div class="border border-light-blue p-3 rounded-xl h-[600px] overflow-y-auto">
-          <div class="chat pb-5">
+        <div class="border flex flex-col justify-end border-light-blue p-3 rounded-xl  ">
+          <div class="chat pb-5 max-h-[500px] overflow-y-auto">
+            @if ($comments->count() == 0)
+                <p class="py-4 text-center">No Comments Yet</p>
+            @endif
             @foreach($comments->where('project_id', $task->project->id)->where('project_section_id', $task->id) as $comment)
               <div class="mb-2">
                 {{-- @dd($comment->mentor_id == null) --}}
@@ -102,77 +105,25 @@
               </div>
               @endforeach
           </div>
-          {{-- <div class="chat grid grid-cols-12 gap-4 grid-flow-col">
-            <div class="col-end-13 col-span-6">
-              @foreach($comments->where('student_id', $student->id)->where('mentor_id', null) as $comment)
-                @if(Auth::guard('student')->check())
-                  <div class="mb-2">
-                    <div class=" border border-light-blue  py-3 px-5 rounded-xl  bg-white ">
-                      <div class="text-sm font-light">
-                        {{$comment->message}}
-                        @if($comment->file)
-                          <br>
-                          <a href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
-                            <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
-                            <span class="text-xs">click to download</span>
-                          </a>
-                        @endif
-                      </div>
-                    </div>
-                    <p class="text-[14px] text-right text-[#585858]">
-                      {{$comment->created_at}}
-                    </p>
-                  </div>
-                @endif
-              @endforeach
-            </div>
-          </div>
-
-          <div class="grid grid-cols-12 gap-4 grid-flow-col">
-            <div class="col-start-1 col-span-6">
-              @foreach($comments->where('student_id', $student->id)->whereNotNull('mentor_id') as $comment)
-                <div class="mb-2">
-                  <div class=" border border-light-blue  py-3 px-5 rounded-xl  bg-white ">
-                    <div class="text-sm font-light">
-                      {{$comment->message}}
-                      @if($comment->file)
-                        <br>
-                        <a href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
-                          <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
-                          <span class="text-xs">click to download</span>
-                        </a>
-                      @endif
-                    </div>
-                  </div>
-                  <p class="text-[14px]  text-[#585858]">
-                    {{$comment->created_at}}
-                  </p>
-                </div>
-              @endforeach
-            </div>
-          </div> --}}
-          <div class="form">
+          <div class="form ">
             <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/chat" method="post" id="form-chat" enctype="multipart/form-data">
             @csrf
             <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
-            <div class="px-4 py-2 bg-white rounded-t-lg ">
-                <label for="comment" class="sr-only">Your comment</label>
-                <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" required></textarea>
-            </div>
-            <div class="flex items-center justify-between px-3 py-2 bg-white ">
-                <div class="flex pl-0 space-x-1 sm:pl-2">
-
-                    <label for="file-chat-input" type="button" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 ">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"></path></svg>
-                        <span class="sr-only"></span>
-                    </label>
-                    <div id="chatFileName"></div>
-                    <input id="file-chat-input" class="hidden" type="file" name="file" />
-                </div>
-                <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-800">
-                  Post comment
-                </button>
-            </div>
+              <div class="px-4 py-2 bg-white rounded-t-lg ">
+                  <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" required></textarea>
+              </div>
+              <div class="flex items-center justify-between px-3 py-2 bg-white ">
+                  <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
+                      <label for="file-chat-input" type="button" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 ">
+                        <img src="{{asset('assets/img/icon/clip.svg')}}" class="w-[10px]" alt="">
+                      </label>
+                      <div id="chatFileName"></div>
+                      <input id="file-chat-input" class="hidden" type="file" name="file" />
+                  </div>
+                  <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white focus:ring-4 focus:ring-blue-200">
+                    <img src="{{asset('assets/img/icon/send.png')}}" class="w-[15px]" alt="">
+                  </button>
+              </div>
             </div>
             </form>
           </div>

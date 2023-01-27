@@ -1,7 +1,7 @@
 @extends('layouts.profile.index')
 @section('content')
-<div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center pb-[150px]">
-  <div class="col-span-8">
+<div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center ">
+  <div class="col-span-8 min-h-[600px]">
     @if ($message = Session::get('error'))
       <div id="toast-danger" class="flex flex-grow items-center w-full p-4 mb-4 text-gray-500 rounded-lg bg-red-200" role="alert">
         <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg ">
