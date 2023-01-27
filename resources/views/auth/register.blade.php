@@ -42,7 +42,7 @@
           @enderror
           
           <select id="sex" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" name="sex" required>
-            <option value="">Sex *</option>
+            <option value="" class="">Sex *</option>
             <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
             <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
           </select><br>
@@ -86,10 +86,10 @@
         </div>
 
         @php
-          $study_programs = ['Artificial Intelligence and Machine Learning', 'Computer Science Education','Computing Systems', 'Human-Centered Computing', 'Networks and Security', 'Software Engineering', 'General Computer Science'];
+          $study_programs = ['Artificial Intelligence and Machine Learning', 'Computer Science','Computing Systems', 'Software Engineering'];
         @endphp
         <select id="inputStudy" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="study_program" required>
-          <option value="">Institution Name</option>
+          <option value="">Study Name</option>
           @foreach($study_programs as $study_program)
           <option value="{{$study_program}}">{{$study_program}}</option>
           @endforeach
