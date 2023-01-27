@@ -140,8 +140,8 @@ class StudentController extends Controller
     public function allProjects($id)
     {
         // dd($id);
-        $newMessage = Comment::where('student_id',$id)->get();
-        dd($newMessage);
+        $newMessage = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        // dd($newMessage);
         // dd(Auth::guard('student')->user()->id);
         if($id != Auth::guard('student')->user()->id ){
             abort(403);
@@ -150,7 +150,7 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        return view('student.index', compact('enrolled_projects', 'student','dataDate'));
+        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
     }
     
     public function ongoingProjects($id)
@@ -228,8 +228,9 @@ class StudentController extends Controller
 
         // Progress Bar for Task
         $taskProgress = (100 / $total_task) * $task_clear;
-
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate'));
+        $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        // dd($newMessage->count());
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage'));
     }
 
     public function taskDetail($student_id, $project_id, $task_id)
@@ -256,7 +257,8 @@ class StudentController extends Controller
         // Progress Bar for Task
         $taskProgress = (100 / $total_task) * $task_clear;
         // dd($taskProgress);
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','taskProgress','total_task','task_clear','taskDate','project'));
+        $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','taskProgress','total_task','task_clear','taskDate','project','newMessage'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
