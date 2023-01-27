@@ -1,0 +1,1000 @@
+ 1047  php artisan make:controller Admin/DashboardController
+ 1048  php artisan serve
+ 1049  ls
+ 1050  php artisan migrate
+ 1051  php artisan make:migration add_role_as_
+ 1052  php artisan migrate
+ 1053  php artisan make:middleware AdminMiddleware
+ 1054  php artisan make:controller Fronted/FrontedController
+ 1055  sudo apt upadate
+ 1056  sudo apt update
+ 1057  ls
+ 1058  history
+ 1059  ls
+ 1060  cd ..
+ 1061  ls
+ 1062  curl https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js
+ 1063  ls
+ 1064  cd coffeesite/
+ 1065  ls
+ 1066  cd public/
+ 1067  ls
+ 1068  cd assets/
+ 1069  ls
+ 1070  cd js/
+ 1071  ls
+ 1072  curl https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js >> bootstrap.bundle.min.js
+ 1073  ls
+ 1074  tree bootstrap.bundle.min.js 
+ 1075  cat bootstrap.bundle.min.js 
+ 1076  clear
+ 1077  ping A loxhart.tech
+ 1078  dig A loxhart.tech
+ 1079  ls
+ 1080  ping loxhart.tech
+ 1081  ls
+ 1082  nano .bashrc 
+ 1083  source .bashrc 
+ 1084  cyberloxa
+ 1085  ls
+ 1086  ls Downloads/ || *.pem
+ 1087  grep Downloads/ || *.pem
+ 1088  cd Downloads/
+ 1089  ls
+ 1090  history
+ 1091  cd ..
+ 1092  ssh -i mypanel.pem ubuntu@13.229.203.81
+ 1093  nano .bashrc 
+ 1094  source .bashrc 
+ 1095  cyberloxa
+ 1096  sudo snap install whatsapp-for-linux
+ 1097  mysql -u root -p
+ 1098  ssh -i mypanel.pem ubuntu@13.229.203.81
+ 1099  ls
+ 1100  cd
+ 1101  cd Downloads/
+ 1102  wget https://github.com/beekeeper-studio/ultimate-releases/releases/download/v3.6.6/Beekeeper-Studio-Ultimate-3.6.6.AppImage
+ 1103  wget https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+ 1104  ssh -i mypanel.pem ubuntu@13.229.203.81
+ 1105  ssh -i ~/mypanel.pem ubuntu@13.229.203.81
+ 1106  ls
+ 1107  wget https://www.valentina-db.com/en/all-downloads/vstudio/current/vstudio_x64_lin_deb?format=raw 
+ 1108  rm vstudio_x64_lin_deb\?format\=raw 
+ 1109  wget "https://www.valentina-db.com/en/all-downloads/vstudio/current/vstudio_x64_lin_deb?format=raw"
+ 1110  rm vstudio_x64_lin_deb\?format\=raw 
+ 1111  wget "https://www.valentina-db.com/en/all-downloads/vstudio/current/vstudio_x64_lin_deb?format=raw" -o vstudio_x64_linux.deb
+ 1112  wget "https://www.valentina-db.com/en/all-downloads/vstudio/current/vstudio_x64_lin_deb?format=raw" -O vstudio_x64_linux.deb
+ 1113  ls -la
+ 1114  find . -name "*.deb"
+ 1115  find . -name "*.deb" | ls -la
+ 1116  ls -la | find . -name "*.deb"
+ 1117  ls -a | find . -name "*.deb"
+ 1118  find . -name "*.deb"
+ 1119  sudo dpkg -i dbeaver-ce_latest_amd64.deb 
+ 1120  find . -name "*.deb"
+ 1121  find . -name "*.AppImage"
+ 1122  chmod u+x Beekeeper-Studio-Ultimate-3.6.6.AppImage 
+ 1123  ./Beekeeper-Studio-Ultimate-3.6.6.AppImage 
+ 1124  wget https://github.com/beekeeper-studio/beekeeper-studio/releases/download/v3.6.2/beekeeper-studio_3.6.2_amd64.deb
+ 1125  sudo dpkg -i beekeeper-studio_3.6.2_amd64.deb 
+ 1126  ssh -i ~/mypanel.pem ubuntu@13.229.203.81
+ 1127  find . -name "*.deb"
+ 1128  sudo dpkg -i ./vstudio_x64_linux.deb
+ 1129  ls /usr/share/application/
+ 1130  sudo ls /usr/share/application/
+ 1131  sudo su -
+ 1132  sudo dpkg -i vstudio_x64_linux.deb
+ 1133  history
+ 1134  php artisan serve
+ 1135  ssh -i ~/mypanel.pem ubuntu@13.229.203.81
+ 1136  npm -V
+ 1137  npm -v
+ 1138  node -v
+ 1139  ls
+ 1140  mkdir nodeApp
+ 1141  cd nodeApp/
+ 1142  vim
+ 1143  sudo apt install vim
+ 1144  vim contoh.txt
+ 1145  vim index.php
+ 1146  php index.php 
+ 1147  vim index.php
+ 1148  ls
+ 1149  rm *
+ 1150  ls
+ 1151  vim server.js
+ 1152  node server.js 
+ 1153  vim server.js
+ 1154  node server.js 
+ 1155  vim server.js
+ 1156  node server.js 
+ 1157  vim server.js
+ 1158  node server.js 
+ 1159  vim server.js
+ 1160  rm server.js 
+ 1161  vim server.js
+ 1162  rm server.js 
+ 1163  vim server.js
+ 1164  node server.js 
+ 1165  vim server.js
+ 1166  node server.js 
+ 1167  sudo node server.js 
+ 1168  vim server.js
+ 1169  node server.js 
+ 1170  vim server.js
+ 1171  node server.js 
+ 1172  cd ..
+ 1173  rm -rf nodeApp/
+ 1174  ls
+ 1175  mkdir project
+ 1176  cd project/
+ 1177  composer global require laravel/installer
+ 1178  laravel portal-berita
+ 1179  laravel
+ 1180  exit
+ 1181  laravel
+ 1182  nano ~/.bash_profile 
+ 1183  source .bash_profile 
+ 1184  laravel
+ 1185  ls -la
+ 1186  composer global require laravel/installer
+ 1187  nano ~/.bash_profile 
+ 1188  source .bash_profile 
+ 1189  laravel
+ 1190  laravel new portal-berita
+ 1191  ls
+ 1192  rm -rf portal-berita/
+ 1193  cd project/
+ 1194  laravel new portal-berita
+ 1195  php artisan serve
+ 1196  ls
+ 1197  cd portal-berita/
+ 1198  php artisan serve
+ 1199  cd ..
+ 1200  laravel new laract9
+ 1201  sudo apt-get install lsb-release ca-certificates apt-transport-https software-properties-common -y
+ 1202  sudo add-apt-repository ppa:ondrej/php
+ 1203  sudo apt-get install php8.0
+ 1204  systemctl status nginx 
+ 1205  systemctl status apache2
+ 1206  systemctl stop nginx
+ 1207  systemctl stop apache2
+ 1208  systemctl status apache2
+ 1209  systemctl stop apache2
+ 1210  systemctl status apache2
+ 1211  systemctl status nginx
+ 1212  systemctl status apache2
+ 1213  sudo systemctl stop nginx
+ 1214  systemctl status apache2
+ 1215  sudo ufw allow 'Apache' sudo systemctl status apache2
+ 1216  sudo ufw allow 'Apache' && sudo systemctl status apache2
+ 1217  sudo apt-get --purge remove apache2 sudo apt-get autoremove
+ 1218  sudo apt --purge remove apache2 sudo apt-get autoremove
+ 1219  sudo apt --purge remove apache2 && sudo apt autoremove
+ 1220  systemctl start nginx
+ 1221  systemctl status nginx
+ 1222  sudo apt --purge remove nginx && sudo apt autoremove
+ 1223  sudo apt install apache2
+ 1224  ufw list app
+ 1225  ufw list
+ 1226  ufw app list
+ 1227  sudo ufw app list
+ 1228  sudo ufw enable Apache Full
+ 1229  sudo ufw allow Apache Full
+ 1230  sudo ufw allow "Apache Full"
+ 1231  systemctl status nginx
+ 1232  systemctl stop nginx
+ 1233  sudo apt-get purge nginx nginx-common
+ 1234  systemctl stop nginx
+ 1235  systemctl status nginx
+ 1236  systemctl status apache2
+ 1237  systemctl stop apache2
+ 1238  systemctl start apache2
+ 1239  systemctl status apache2
+ 1240  sudo apt-get install lsb-release ca-certificates apt-transport-https software-properties-common -y
+ 1241  sudo apt-get install php8.0-cli php8.0-common php8.0-imap php8.0-redis php8.0-snmp php8.0-xml php8.0-imagick php8.0-intl php8.0-fpm php8.0-imap
+ 1242  a2enmod proxy_fcgi setenvif
+ 1243  sudo a2enmod proxy_fcgi setenvif
+ 1244  sudo systemctl restart apache2
+ 1245  sudo a2enconf php8.0-fpm
+ 1246  sudo systemctl reload apache2
+ 1247  php
+ 1248  php -v
+ 1249  ls
+ 1250  rm -rf laract9/ udo\ ufw\ allow\ Apache\ sudo\ systemctl\ status\ apache2 
+ 1251  ls
+ 1252  laravel new laract9
+ 1253  sudo apt install openssl php-common php-curl php-json php-mbstring php-mysql php-xml php-zip
+ 1254  laravel new laract9
+ 1255  rm -rf laract9/
+ 1256  laravel new laract9
+ 1257  cd laract9/
+ 1258  php artisan serve
+ 1259  composer require laravel/breeze -dev
+ 1260  composer -d
+ 1261  laravel require laravel/breeze -dev
+ 1262  laravel laravel/breeze -dev
+ 1263  ls
+ 1264  cd app/
+ 1265  ls
+ 1266  cd ..
+ 1267  ls
+ 1268  composer -V
+ 1269  composer global require laravel/breeze
+ 1270  composer global require laravel/breeze -w
+ 1271  composer require laravel/breeze -dev
+ 1272  cd ..
+ 1273  rm -rf laract9/
+ 1274  composer create-project laravel/laravel laract9 --prefer-dist
+ 1275  composer require laravel/breeze -dev
+ 1276  ls
+ 1277  cd laract9/
+ 1278  composer require laravel/breeze -dev
+ 1279  npm install -g npm
+ 1280  sudo npm install -g npm
+ 1281  composer require laravel/breeze -dev
+ 1282  composer require laravel/breeze --dev
+ 1283  php artisan breeze:install
+ 1284  npm -v
+ 1285  node -v
+ 1286  nvm
+ 1287  sudo n latest
+ 1288  sudo npn latest
+ 1289  sudo npm latest
+ 1290  php artisan breeze:install
+ 1291  sudo apt install npm
+ 1292  sudo apt install node
+ 1293  sudo apt install nodejs
+ 1294  sudo apt install npm
+ 1295  cd ~
+ 1296  curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
+ 1297  nano /tmp/nodesource_setup.sh
+ 1298  sudo bash /tmp/nodesource_setup.sh
+ 1299  sudo apt-get install -y nodejs
+ 1300  sudo apt-get install gcc g++ make
+ 1301  sudo apt autoremove
+ 1302  curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+ 1303  node -v
+ 1304  cd project/
+ 1305  ls
+ 1306  cd laract9/
+ 1307  php artisan breeze:install
+ 1308  npm install && npm run dev
+ 1309  php artisan breeze:install react
+ 1310  npm install
+ 1311  npm run dev
+ 1312  cd ..
+ 1313  rm -rf laract9/
+ 1314  laravel new laract9
+ 1315  sudo apt install libnss3-tools jq xsel
+ 1316  sudo apt install php8.1-cli php8.1-common php8.1-curl php8.1-json php8.1-mbstring php8.1-mcrypt php8.1-opcache php8.1-readline php8.1-xml php8.1-zip unzip
+ 1317  composer global require cpriego/valet-linux
+ 1318  valet
+ 1319  valet install
+ 1320  ls
+ 1321  cd laract9/
+ 1322  valet park
+ 1323  sudo systemctl stop apache2
+ 1324  sudo systemctl status apache2
+ 1325  sudo apt --purge apache2
+ 1326  sudo apt purge apache2
+ 1327  sudo systemctl status nginx
+ 1328  sudo systemctl status apache2
+ 1329  sudo systemctl restart nginx
+ 1330  sudo systemctl status apache2
+ 1331  sudo systemctl status nginx
+ 1332  sudo service apache2 stop
+ 1333  sudo apt-get autoremove
+ 1334  whereis apache2
+ 1335  sudo rm -rf /usr/sbin/apache2 /usr/lib/apache2 /etc/apache2 /usr/share/man/man8/apache2.8.gz
+ 1336  sudo systemctl restart nginx
+ 1337  cd ..
+ 1338  valet park
+ 1339  exit
+ 1340  sudo nano /etc/php/8.0/cli/php.ini
+ 1341  php artisan serve
+ 1342  exit
+ 1343  ls -la
+ 1344  cd ..
+ 1345  ls -la
+ 1346  cd .config/
+ 1347  ls
+ 1348  ip a
+ 1349  php artisan migrate
+ 1350  mysql -u root -p
+ 1351  ls
+ 1352  mysql -u root -p
+ 1353  mysql -u root -pdfmdecimo10 mabac < mabac.sql
+ 1354  mysql -u root -p
+ 1355  php -S localhost:8080
+ 1356  source .bashrc
+ 1357  aaloxa2
+ 1358  laravel
+ 1359  cat .bashrc 
+ 1360  ping 18.142.226.120
+ 1361  aaloxa
+ 1362  cat .bashrc
+ 1363  source .bashrc 
+ 1364  aaloxa
+ 1365  sudo pro attach C13GhtUFMRaQio8sNMuiB7V541xt7G
+ 1366  aaloxa
+ 1367  vim .bashrc 
+ 1368  ping 13.229.73.54
+ 1369  aaloxa
+ 1370  vim .bashrc 
+ 1371  aaloxa
+ 1372  fing . -name "siswa"
+ 1373  find . -name "siswa"
+ 1374  history | grep composer
+ 1375  find -name "*.sql"
+ 1376  mysql -u root
+ 1377  mysql -u root -p
+ 1378  find -name "raport"
+ 1379  find -name "*raport*"
+ 1380  sudo apt update && sudo apt upgrade -y
+ 1381  ip a
+ 1382  sudo su -
+ 1383  mysql -u root
+ 1384  mysql -u root -p
+ 1385  php artisan migrate
+ 1386  php artisan migrate:fresh
+ 1387  php artisan db:seed
+ 1388  php artisan migrate:fresh
+ 1389  php artisan migrate
+ 1390  git pull
+ 1391  php artisan migrate
+ 1392  sudo su -
+ 1393  mysql -u root -p
+ 1394  php artisan migrate:reset
+ 1395  php artisan migrate:install
+ 1396  php artisan migrate
+ 1397  mysql -u root
+ 1398  mysql -u root -p
+ 1399  php artisan migrate
+ 1400  mysql -u root -p
+ 1401  php artisan migrate:install
+ 1402  php artisan migrate:fresh
+ 1403  php artisan migrate:install
+ 1404  php artisan make:migration
+ 1405  php artisan make:migration coba
+ 1406  php artisan migrate
+ 1407  php artisan migrateL
+ 1408  php artisan migrate:status
+ 1409  git stash
+ 1410  git
+ 1411  git reset
+ 1412  cd ..
+ 1413  rm Simulated-Internship
+ 1414  rm -rf Simulated-Internship
+ 1415  cd Simulated-Internship/
+ 1416  git pull
+ 1417  php artisan migrate
+ 1418  mysql -u root
+ 1419  mysql -u root -p
+ 1420  php artisan migrate
+ 1421  php artisan migrate:fresh
+ 1422  composer install
+ 1423  php artisan migrate:fresh
+ 1424  mysql -u root -p
+ 1425  php artisan migrate:fresh
+ 1426  php artisan migrate
+ 1427  mysql -u root -p
+ 1428  mysqladmin
+ 1429  mysqladmin -u root -pType_in_your_current_password_here password ''
+ 1430  mysqladmin -u root -pdfmdecimo10 password ''
+ 1431  mysql -u root -p
+ 1432  mysqladmin -u root -pdfmdecimo10 password ''
+ 1433  mysql -u root -p
+ 1434  mysql -u root -pdfmdecimo10
+ 1435  mysqladmin -u root -pdfmdecimo10 password ''
+ 1436  mysql -u root -pdfmdecimo10
+ 1437  mysqladmin -u root -pdfmdecimo10 password ''
+ 1438  mysql -u root -pdfmdecimo10
+ 1439  mysqladmin -u root -pdfmdecimo10 password ''
+ 1440  mysql -u root -pdfmdecimo10
+ 1441  sudo service mysql restart
+ 1442  mysqladmin -u root -pdfmdecimo10 password ''
+ 1443  mysql -u root -pdfmdecimo10
+ 1444  mysql -V
+ 1445  mysql
+ 1446  mysql -p
+ 1447  mysql -u root -pdfmdecimo10
+ 1448  sudo apt remove --purge mysql-server
+ 1449  sudo apt purge mysql-server
+ 1450  sudo apt autoremove
+ 1451  sudo apt autoclean
+ 1452  sudo apt remove dbconfig-mysql
+ 1453  sudo apt autoremove
+ 1454  sudo apt remove dbconfig-mysql
+ 1455  sudo systemctl stop mysql
+ 1456  sudo apt purge mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*
+ 1457  sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
+ 1458  sudo apt autoremove
+ 1459  sudo apt autoclean
+ 1460  sudo apt update
+ 1461  sudo apt upgrade
+ 1462  sudo apt install mariadb-server
+ 1463  ls -al ~/.ssh
+ 1464  ls -al ~/.ssh/config 
+ 1465  cd ~/.ssh/
+ 1466  ls
+ 1467  cd co
+ 1468  ls -la
+ 1469  cat config 
+ 1470  cat known_hosts 
+ 1471  ssh-keygen -t ed25519 -C "bayuapriansah10@gmail.com"
+ 1472  eval "$(ssh-agent -s)"
+ 1473  ssh-add ~/.ssh/id_ed25519
+ 1474  cat ~/.ssh/id_ed25519.pub
+ 1475  cd ..
+ 1476  ls
+ 1477  ls -la
+ 1478  ls
+ 1479  ls -l
+ 1480  mkdir "[Kerja]"
+ 1481  cd \[Kerja\]/
+ 1482  git clone https://github.com/bayuapriansah/Simulated-Internship.git
+ 1483  git config --global user.name "bayuaprinsah"
+ 1484  git config --global user.email bayuapriansah10@gmail.com
+ 1485  git config --list
+ 1486  git remote add origin git@github.com:bayuapriansah/Simulated-Internship.git
+ 1487  git init
+ 1488  git remote add origin git@github.com:bayuapriansah/Simulated-Internship.git
+ 1489  git pull
+ 1490  git clone https://github.com/bayuapriansah/Simulated-Internship.git
+ 1491  git push -u origin master
+ 1492  gh auth login
+ 1493  sudo snap install gh
+ 1494  gh auth login
+ 1495  git clone https://github.com/bayuapriansah/Simulated-Internship.git
+ 1496  git remote add origin git@github.com:bayuapriansah/Simulated-Internship.git
+ 1497  ls
+ 1498  ls -la
+ 1499  git pull
+ 1500  git push origin master
+ 1501  ls -la
+ 1502  rm -rf .git/
+ 1503  ls
+ 1504  ls -la
+ 1505  wget --header="Host: codeload.github.com" --header="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" --header="Accept-Language: en-US,en;q=0.9" --header="Referer: https://github.com/" --header="Cookie: _octo=GH1.1.1900860476.1662167340; preferred_color_mode=light; tz=Asia%2FJakarta; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; logged_in=yes; dotcom_user=bayuapriansah" --header="Connection: keep-alive" "https://codeload.github.com/bayuapriansah/Simulated-Internship/zip/refs/heads/master?token=ANE45X3GQKQRJ6DGR57VQ73DWTPOI" -c -O 'Simulated-Internship-master.zip'
+ 1506  ls
+ 1507  unzip Simulated-Internship-master.zip 
+ 1508  ls
+ 1509  mv Simulated-Internship-master Simulated-Internship
+ 1510  cd Simulated-Internship/
+ 1511  ls
+ 1512  git pull
+ 1513  ls -la
+ 1514  git init
+ 1515  git pull
+ 1516  git pull origin master
+ 1517  git remote set-url origin https://github.com/bayuapriansah/Simulated-Internship.git
+ 1518  git remote set-url master https://github.com/bayuapriansah/Simulated-Internship.git
+ 1519  git remote add origin https://github.com/bayuapriansah/Simulated-Internship.git
+ 1520  git remote set-url origin https://github.com/bayuapriansah/Simulated-Internship.git
+ 1521  git pull
+ 1522  git@github.com:bayuapriansah/Simulated-Internship.git
+ 1523  git clone git@github.com:bayuapriansah/Simulated-Internship.git
+ 1524  ls
+ 1525  cd ..
+ 1526  ls
+ 1527  ls -la
+ 1528  rm -rf Simulated-Internship
+ 1529  git clone https://github.com/bayuapriansah/Simulated-Internship.git
+ 1530  git clone git@github.com:bayuapriansah/Simulated-Internship.git
+ 1531  ls
+ 1532  cd Simulated-Internship/
+ 1533  ls
+ 1534  ls -la
+ 1535  git pull
+ 1536  composer install
+ 1537  git pull
+ 1538  git log
+ 1539  php artisan serve
+ 1540  git stash
+ 1541  sudo apt install mariadb-server
+ 1542  kill 44047
+ 1543  sudokill 44047
+ 1544  sudo kill 44047
+ 1545  sudo apt install mariadb-server
+ 1546  ps aux | grep -i apt
+ 1547  sudo killall apt apt-get
+ 1548  sudo apt install mariadb-server
+ 1549  sudo lsof /var/lib/dpkg/lock
+ 1550  sudo lsof /var/lib/apt/lists/lock
+ 1551  sudo lsof /var/cache/apt/archives/lock
+ 1552  ps aux | grep -i apt
+ 1553  sudo kill 45707 apt
+ 1554  sudo kill 45707
+ 1555  ps aux | grep -i apt
+ 1556  clear
+ 1557  ps aux | grep -i apt
+ 1558  ps aux | grep -i pid
+ 1559  ps aux | grep -i apt
+ 1560  sudo apt install mariadb-server
+ 1561  sudo rm /var/lib/dpkg/lock
+ 1562  sudo apt install mariadb-server
+ 1563  sudo dpkg --configure -a
+ 1564  sudo apt install mariadb-server
+ 1565  sudo apt purge mariadb-server
+ 1566  sudo apt-get install -f
+ 1567  sudo apt autoremove
+ 1568  sudo ls -l /var/lib/dpkg/info | grep -i mariadb
+ 1569  sudo mv /var/lib/dpkg/info/mariadb.* /tmp
+ 1570  sudo mv /var/lib/dpkg/info/mariadb-* /tmp
+ 1571  sudo apt-get update
+ 1572  sudo apt install mariadb-server
+ 1573  ls
+ 1574  cd ,,
+ 1575  cd ..
+ 1576  ls
+ 1577  cd Simulated-Internship/
+ 1578  ls
+ 1579  sudo apt install mariadb-server
+ 1580  mariadb -u linx -pdfmdecimo laravel_intern_app < laravel_intern_app.sql 
+ 1581  exit
+ 1582  sudo su
+ 1583  composer global require "laravel/installer"
+ 1584  laravel new test
+ 1585  ls
+ 1586  cd test
+ 1587  ls
+ 1588  cd ..
+ 1589  cd tests
+ 1590  ls
+ 1591  cd ..
+ 1592  cd test
+ 1593  ls
+ 1594  php artisan make:migration coba
+ 1595  ls
+ 1596  vim .env
+ 1597  php artisan migrate
+ 1598  php artisan migrate:install
+ 1599  php artisan migrate
+ 1600  php artisan migrate --path=database/migrations/
+ 1601  php artisan migrate database/migrations/
+ 1602  php artisan migrate --help
+ 1603  php artisan migrate --path=database/migrations/
+ 1604  php artisan migrate --path=/database/migrations/
+ 1605  php artisan migrate --path=database/migrations/
+ 1606  php artisan migrate --path=database/migrations
+ 1607  php artisan migrate --path=database/migrations/
+ 1608  php artisan migrate --path=database/migrations
+ 1609  php artisan migrate:refresh --seed
+ 1610  CREATE USER 'laravel_user'@'localhost' IDENTIFIED BY 'pass';
+ 1611  php artisan migrate
+ 1612  exit
+ 1613  ip a
+ 1614  php artisan migrate
+ 1615  sudo php artisan migrate
+ 1616  php artisan migrate
+ 1617  git pull
+ 1618  git stash
+ 1619  php artisan migrate
+ 1620  php artisan migrate:reset
+ 1621  php artisan migrate:fresh
+ 1622  php artisan make:migration create_students_table
+ 1623  php artisan migrate
+ 1624  composer install
+ 1625  php artisan
+ 1626  php artisan migrate
+ 1627  php artisan migrate --path="database/migrations/"
+ 1628  php artisan migrate --path="database/migrations/2023_01_04_065124_create_students_table.php"
+ 1629  php artisan migrate --path="database/migrations/*"
+ 1630  php artisan config:cache
+ 1631  php artisan migrate
+ 1632  php artisan migrate:
+ 1633  php artisan migrate:fresh
+ 1634  php artisan migrate:reset
+ 1635  mariadb -u laravel_user -ppass
+ 1636  php artisan migrate
+ 1637  sudo mariadb -u laravel_user -ppass laravel_intern_app < laravel_intern_app.sql
+ 1638  sudo mariadb -u laravel_user -ppass
+ 1639  sudo mariadb -u laravel_user -ppass laravel_intern_app < laravel_intern_app.sql
+ 1640  nautilus
+ 1641  sudo nautius
+ 1642  sudo nautilus
+ 1643  cd ..
+ 1644  cd ~
+ 1645  ls
+ 1646  cd \[Kerja\]/
+ 1647  ls
+ 1648  cd Simulated-Internship/
+ 1649  ip a
+ 1650  cd ..
+ 1651  vim note_simulated_internship.txt
+ 1652  mysql
+ 1653  mysql -u root -p
+ 1654  mysql -u root
+ 1655  sudo mysql -u root
+ 1656  cd \[Kerja\]/
+ 1657  cd Simulated-Internship/
+ 1658  ls
+ 1659  php artisan migrate
+ 1660  sudo php artisan migrate
+ 1661  mariadb -u root
+ 1662  sudo mariadb -u root
+ 1663  mysql -u root
+ 1664  sudo mysql -u root
+ 1665  clear
+ 1666  sudo mariadb -u root
+ 1667  mariadb -u linx
+ 1668  mariadb -u linx -p
+ 1669  php artisan migrate
+ 1670  mariadb -u linx -p
+ 1671  sudo apt purge nginx nginx-common nginx-core
+ 1672  sudo apt autoremove -y
+ 1673  ls -l /etc/nginx/ /usr/share/nginx/
+ 1674  sudo apt-get purge mariadb-*  -y
+ 1675  sudo apt autoremove
+ 1676  phpsystemctl restart apache2.service
+ 1677  systemctl status apache2.service
+ 1678  systemctl status nginx.service
+ 1679  sudo apt-get purge php7.*
+ 1680  sudo apt-get purge php8.*
+ 1681  sudo apt autoremove -y
+ 1682  php
+ 1683  sudo apt install apache2
+ 1684  sudo systemctl start apache2
+ 1685  sudo systemctl enable apache2
+ 1686  sudo systemctl status apache2
+ 1687  sudo apt update
+ 1688  sudo apt upgrade -y
+ 1689  sudo apt install software-properties-common
+ 1690  sudo add-apt-repository ppa:ondrej/php
+ 1691  sudo add-apt-repository ppa:ondrej/apache2
+ 1692  sudo apt update
+ 1693  sudo apt upgrade -y
+ 1694  sudo apt install php8.1
+ 1695  sudo apt install php8.1-common php8.1-mysql php8.1-xml php8.1-xmlrpc php8.1-curl php8.1-gd php8.1-imagick php8.1-cli php8.1-dev php8.1-imap php8.1-mbstring php8.1-opcache php8.1-soap php8.1-zip php8.1-redis php8.1-intl -y
+ 1696  php -v
+ 1697  sudo nano /etc/php/8.1/apache2/php.ini
+ 1698  exit
+ 1699  sudo nano /etc/php/8.1/apache2/php.ini
+ 1700  sudo service apache2 restart
+ 1701  sudo apt install libapache2-mod-php8.1 php8.1-mbstring php8.1-cli php8.1-bcmath php8.1-json php8.1-xml php8.1-zip php8.1-pdo php8.1-common php8.1-tokenizer php8.1-mysql
+ 1702  sudo apt install libapache2-mod-php8.1 php8.1-mbstring php8.1-cli php8.1-bcmath php-json php8.1-xml php8.1-zip php8.1-pdo php8.1-common php8.1-tokenizer php8.1-mysql
+ 1703  php
+ 1704  php -v
+ 1705  sudo apt install php8.2-common php8.2-mysql php8.2-xml php8.2-xmlrpc php8.2-curl php8.2-gd php8.2-imagick php8.2-cli php8.2-dev php8.2-imap php8.2-mbstring php8.2-opcache php8.2-soap php8.2-zip php8.2-redis php8.2-intl
+ 1706  sudo apt install dh-php
+ 1707  sudo apt install mariadb-server
+ 1708  sudo mysql -u root -p
+ 1709  curl -sS https://getcomposer.org/installer | php
+ 1710  sudo mv composer.phar /usr/local/bin/composer
+ 1711  sudo chmod +x /usr/local/bin/composer
+ 1712  composer --version
+ 1713  cd /var/www/html
+ 1714  sudo composer create-project laravel/laravel laravelapp
+ 1715  composer create-project laravel/laravel laravelapp
+ 1716  sudo composer create-project laravel/laravel laravelapp
+ 1717  sudo chown -R www-data:www-data /var/www/html/laravelapp
+ 1718  sudo chmod -R 775 /var/www/html/laravelapp/storage
+ 1719  cd laravelapp
+ 1720  php artisan
+ 1721  sudo vim /etc/apache2/sites-available/laravel.conf
+ 1722  sudo a2ensite laravel.conf
+ 1723  sudo a2enmod rewrite
+ 1724  sudo systemctl restart apache2
+ 1725  php artisan make:migration create_table_cobasaja
+ 1726  sudo php artisan make:migration create_table_cobasaja
+ 1727  ls
+ 1728  sudo vim .env
+ 1729  sudo php artisan migrate
+ 1730  sudo php artisan migrate:fresh
+ 1731  sudo php artisan migrate:reset
+ 1732  sudo vim .env
+ 1733  sudo php artisan migrate:reset
+ 1734  sudo php artisan migrate
+ 1735  sudo php artisan migrate:reset
+ 1736  sudo php artisan migrate
+ 1737  sudo maridb -u laravel_user
+ 1738  sudo mariadb -u laravel_user
+ 1739  sudo mariadb -u laravel_user -ppass
+ 1740  sudo apt install gdebi-core wget
+ 1741  wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+ 1742  cd /home/loxa/
+ 1743  rm discord.deb 
+ 1744  wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+ 1745  wget -c -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+ 1746  ping 1.1.1.1
+ 1747  wget -c -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+ 1748  wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+ 1749  ls
+ 1750  rm discord.deb 
+ 1751  wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+ 1752  sudo gdebi discord.deb 
+ 1753  cd /var/www/html/laravelapp
+ 1754  ls
+ 1755  sudo apt update
+ 1756  npm install -D @tailwindcss/forms
+ 1757  git add .
+ 1758  git commit -m "change SimintEncryption controller to Camel Case to prevent problem in unix environment, will check others"
+ 1759  git push
+ 1760  php artisan db:seed
+ 1761  php artisan route:list
+ 1762  git pull
+ 1763  php artisan make:controller testFungsi
+ 1764  php artisan make:controller testFungsiController
+ 1765  git add .
+ 1766  git commit -m "add function to count days"
+ 1767  git push origin master
+ 1768  git logs
+ 1769  git log
+ 1770  php artisan route:list
+ 1771  git add .
+ 1772  git commit -m "fix some error in registration, and make some menu for invited mentor"
+ 1773  git push origin master
+ 1774  git pull
+ 1775  git push origin master
+ 1776  php artisan migrate:make add_institution_to_students
+ 1777  php artisan make:migration add_institution_to_students
+ 1778  git pull
+ 1779  npm run dev
+ 1780  npm install
+ 1781  npm run dev
+ 1782  php artisan migrate:fresh
+ 1783  git pull
+ 1784  php artisan serve
+ 1785  sudo apt update
+ 1786  sudo apt upgrade
+ 1787  sudo apt update
+ 1788  sudo apt upgrade
+ 1789  sudo apt update
+ 1790  sudo apt upgrade
+ 1791  cd /var/www/html/laravelapp/
+ 1792  git pull
+ 1793  sudo su -
+ 1794  mysql -u root -p
+ 1795  mysql -u laravel_user -ppass
+ 1796  composer require nnjeim/world
+ 1797  sudo composer require nnjeim/world
+ 1798  php artisan vendor:publish --tag=world
+ 1799  sudo su -
+ 1800  sudo apt update
+ 1801  sudo apt upgrade
+ 1802  ls
+ 1803  mkdir spHeylink
+ 1804  cd spHeylink/
+ 1805  nano sp1.py
+ 1806  cp sp1.py cp2.py
+ 1807  nano cp2.py 
+ 1808  nano proxylist1.txt
+ 1809  cp proxylist1.txt proxylist2.txt
+ 1810  nano proxylist2.txt
+ 1811  rm proxylist2.txt 
+ 1812  nano proxylist2.txt
+ 1813  python3 sp1.py
+ 1814  nano sp1.py 
+ 1815  pip install requests
+ 1816  python sp1.py 
+ 1817  python3 sp1.py
+ 1818  clear
+ 1819  rm proxylist*
+ 1820  ls
+ 1821  nano proxylist1.txt
+ 1822  nano proxylist2.txt
+ 1823  python3 sp1.py 
+ 1824  echo
+ 1825  pip3 install requests
+ 1826  pip3 install --upgrade requests
+ 1827  python3.8 sp1.py 
+ 1828  nano sp1.py 
+ 1829  code sp1.py 
+ 1830  python3.8 sp1.py 
+ 1831  code sp1.py 
+ 1832  python3.8 sp1.py 
+ 1833  code proxylist1.txt 
+ 1834  code proxylist2.txt 
+ 1835  color a
+ 1836  clear
+ 1837  python3 sp1.py 
+ 1838  sudo apt update
+ 1839  sudo apt upgrade
+ 1840  kill
+ 1841  kill teamviewer
+ 1842  kill -l teamviewer
+ 1843  kill -s teamviewer
+ 1844  python3.8 cp2.py 
+ 1845  code cp2.py 
+ 1846  python3.8 cp2.py 
+ 1847  code cp2.py 
+ 1848  python3.8 cp2.py 
+ 1849  sudo su -
+ 1850  sudo nautilus
+ 1851  sudo su
+ 1852  git pull
+ 1853  git remote add origin https://github.com/bayuapriansah/Simulated-Internship.git/
+ 1854  git remote add bayu https://github.com/bayuapriansah/Simulated-Internship.git/
+ 1855  git pull
+ 1856  git remote -v
+ 1857  ssh-keygen -t ed25519 -C "bayuapriansah10@gmail.com"
+ 1858  eval "$(ssh-agent -s)"
+ 1859  ssh-add ~/.ssh/id_ed25519
+ 1860  gh
+ 1861  gh ssh-key add ~/.ssh/id_ed25519.pub
+ 1862  sudo gh ssh-key add ~/.ssh/id_ed25519.pub
+ 1863  gh auth login
+ 1864  git pull
+ 1865  git
+ 1866  git help -g
+ 1867  git help -a
+ 1868  ls
+ 1869  ls -a
+ 1870  ls -la
+ 1871  php artisan migrate
+ 1872  cp ../Simulated-Internship/.env .env
+ 1873  ls
+ 1874  cat .env
+ 1875  php artisan migrate
+ 1876  git push
+ 1877  git pull
+ 1878  git config --global user.name
+ 1879  git config
+ 1880  git remote -v
+ 1881  git remove bayu https://github.com/bayuapriansah/Simulated-Internship.git/
+ 1882  git remote remove bayu https://github.com/bayuapriansah/Simulated-Internship.git/
+ 1883  git remote remove bayu
+ 1884  git remote -v
+ 1885  git remote add origin https://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:x-oauth-basic@github.com/bayuapriansah/Simulated-Internship.git/
+ 1886  git remote remove origin
+ 1887  git remote -v
+ 1888  git remote add origin https://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:x-oauth-basic@github.com/bayuapriansah/Simulated-Internship.git/
+ 1889  git pull
+ 1890  git pull origin master
+ 1891  git stash
+ 1892  git pull origin master
+ 1893  php artisan migrate
+ 1894  nano .env
+ 1895  sudo mysql -u root -p
+ 1896  php artisan migrate
+ 1897  sudo mysql -u root -p
+ 1898  php artisan migrate
+ 1899  composer install
+ 1900  composer
+ 1901  php artisan
+ 1902  php artisan down
+ 1903  php artisan up
+ 1904  git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+ 1905  git config --global alias.logline "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+ 1906  git logline
+ 1907  git pull
+ 1908  git clone https://github.com/bayuapriansah/Simulated-Internship.git
+ 1909  ping 1.1.1.1
+ 1910  sudo apt update
+ 1911  E: Could not get lock /var/lib/apt/lists/lock. It is held by process 2269 (packagekitd)
+ 1912  N: Be aware that removing the lock file is not a solution and may break your system.
+ 1913  E: Unable to lock directory /var/lib/apt/lists/
+ 1914  sudo kill 2269
+ 1915  sudo apt update
+ 1916  sudo apt upgrade
+ 1917  sudo apt update
+ 1918  kill -p 128779
+ 1919  sudo kill -p 128779
+ 1920  sudo kill pid 128779
+ 1921  sudo kill 128779
+ 1922  sudo apt update
+ 1923  sudo su -
+ 1924  composer
+ 1925  composer update
+ 1926  php artisan route:cl
+ 1927  php artisan view:cl
+ 1928  git add .
+ 1929  git commit -m "put upload section in task when click button Make Final Submission"
+ 1930  git push origin master
+ 1931  git pull
+ 1932  git push origin master
+ 1933  php artisan route:cl
+ 1934  php artisan view:cl
+ 1935  php artisan route:list
+ 1936  git add .
+ 1937  git commit -m "working on injection card"
+ 1938  git pull
+ 1939  npm run dev
+ 1940  l
+ 1941  ls
+ 1942  s
+ 1943  l
+ 1944  clear
+ 1945  ls
+ 1946  php artisan serve
+ 1947  sudo apt update
+ 1948  sudo apt upgrade
+ 1949  sudo apt autoremove
+ 1950  git add .
+ 1951  git commit -m "add alert on otp, fix some conflict in pull repo"
+ 1952  git push origin master
+ 1953  git pull
+ 1954  git push origin master
+ 1955  npm run dev
+ 1956  php artisan migrate --path=database/migration/2023_01_24_092813_create_comments_table.php
+ 1957  php artisan migrate --path=database/migrations/2023_01_24_092813_create_comments_table.php
+ 1958  php artisatan route:cl
+ 1959  php artisan route:cl
+ 1960  php artisan view:cl
+ 1961  php artisan route:lost
+ 1962  php artisan route:list
+ 1963  git add .
+ 1964  git commit -m "injection card logic to next task after submited into submission and fix google recaptcha error in login student with otp"
+ 1965  git push origin master
+ 1966  git add .
+ 1967  git commit -m "minor change $validator to $request in AuthOtpController"
+ 1968  git push origin master
+ 1969  git add .
+ 1970  git commit -m "final fix for google recaptcha in login otp"
+ 1971  git push origin master
+ 1972  git pull origin master
+ 1973  php artisan storage:link
+ 1974  git add .
+ 1975  git commit -m "fix patch for farhan"
+ 1976  git push origin master
+ 1977  php artisan cache:clear
+ 1978  php artisan route:cl
+ 1979  php artisan view:cl
+ 1980  git add .
+ 1981  git commit -m "sucessfully(for now, we never know when bug will appear LOL :D), implemented injection card will show when date or when after submited task done and status on enrrolled_project changed from 0 to 1 in is_submited"
+ 1982  git push origin master
+ 1983  php artisan route:list
+ 1984  git logline
+ 1985  php artisan route:list
+ 1986  git add .
+ 1987  git commit -m "add progress bar using how much task already cleared and show the task cleared and total task need to clear"
+ 1988  git push origin master
+ 1989  git add .
+ 1990  git commit -m "fix problem in injection card date"
+ 1991  git push origin master
+ 1992  git pull
+ 1993  git push origin master
+ 1994  php artisan migrate
+ 1995* php artisan migrate --path=2023_01_26_073638_add_project_id_to_submissions_table.php
+ 1996  php artisan serve
+ 1997  git add .
+ 1998  git commit -m "injection card fix again"
+ 1999  git push origin master
+ 2000  git add .
+ 2001  git commit -m "delete number and addDays to 10"
+ 2002  git push origin master
+ 2003* 
+ 2004  php artisan migrate --path=database/migrations/2023_01_26_073638_add_start_date_to_submissions_table.php
+ 2005  php artisan route:list
+ 2006  git add .
+ 2007  git commit -m "injection card not finish rollback to start"
+ 2008  git pull
+ 2009  git push origin master
+ 2010  php artisan migrate --path=database/migrations/2023_01_26_043250_add_study_program_and_year_of_study_to_student_table.php
+ 2011  php artisan migrate --path=database/migrations/2023_01_26_072347_add_logo_to_users_table.php
+ 2012  php artisan migrate --path=database/migrations/2023_01_26_073638_add_project_id_to_submissions_table.php
+ 2013  php artisan route:list
+ 2014  git add .
+ 2015  git commit -m "fix is_submit in project and make injection card not dynamic base on date or completion for now"
+ 2016  git push origin master
+ 2017  git add .
+ 2018  git commit -m "task detail and enrolled project change from task completion into date duration"
+ 2019  git push origin master
+ 2020  php artisan route:list
+ 2021  git add .
+ 2022  git commit -m "fix date timeline progress"
+ 2023  git push origin master
+ 2024  git pull
+ 2025  git push origin master
+ 2026* 
+ 2027  git push origin master
+ 2028  git pull
+ 2029  git add.
+ 2030  git add .
+ 2031  git commit -m "fix conflict in datetimeline"
+ 2032  git push origin master
+ 2033  php artisan route:list
+ 2034  git add .
+ 2035  git commit -m "fix unresolve $project not placed on if statement sidebar"
+ 2036  git pull
+ 2037  git push origin master
+ 2038  git pull
+ 2039  git push origin master
+ 2040  php artisan route:list
+ 2041  git checkout -b "notification"
+ 2042  git branch
+ 2043  git add .
+ 2044  git commit -m "notification mentor new message in student sidebar"
+ 2045  sudo apt autoremove
+ 2046  history >> history_27012023.txt

@@ -9,15 +9,31 @@
   @endforeach --}}
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
-      <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel">
+      <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" alt="notification_bel">
+        <svg class="w-6 h-6"  aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="sr-only">Notifications Bell</span>
+        {{-- <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div> --}}
+        </button>
     </div>
     <div class="col-span-1">
-      <img src="{{asset('assets/img/icon/profile/message.png')}}" alt="message">
+      <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" alt="message">
+      <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="sr-only">Notifications Message</span>
+      <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div>
+      </button>
     </div>
     <div class="col-end-13">
       <form class="inline" method="post" action="{{ route('logout') }}">
         @csrf
-        <button type="submit" class=""><img src="{{asset('assets/img/icon/profile/logout.png')}}" alt="Logout"></button>
+        <button type="submit" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" alt="Logout">
+        <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        </button>
       </form>
       
     </div>
@@ -52,7 +68,7 @@
     </div>
     <div>
   @php
-   $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d-m-Y');
+   $start_date  = \Carbon\Carbon::parse($student->created_at)->format('dS M Y');
   @endphp
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Completed</p>
