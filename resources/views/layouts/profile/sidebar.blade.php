@@ -17,7 +17,6 @@
         <span class="sr-only">Notifications Bell</span>
         {{-- <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div> --}}
         </button>
-      {{-- <img src="{{asset('assets/img/icon/profile/bel.png')}}" alt="notification_bel"> --}}
     </div>
     <div class="col-span-1">
       <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" alt="message">
@@ -35,7 +34,6 @@
         <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
-        {{-- <img src="{{asset('assets/img/icon/profile/logout.png')}}" alt="Logout"> --}}
         </button>
       </form>
       
