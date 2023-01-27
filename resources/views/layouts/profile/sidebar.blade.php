@@ -1,4 +1,4 @@
-<aside class="bg-white fixed top-5 w-1/4 rounded-xl border border-light-blue p-5">
+<aside class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
   {{-- @dd($enrolled_projects->where('is_submited',1)) --}}
   {{-- @foreach ($enrolled_projects as $enrolled_project)
       @if($enrolled_projects->where('is_submited',1))
