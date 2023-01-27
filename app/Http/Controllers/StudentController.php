@@ -163,8 +163,8 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
-        
-        return view('student.index', compact('enrolled_projects', 'student','dataDate'));
+        $newMessage = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
     }
     
     public function completedProjects($id)
@@ -177,8 +177,8 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
-        
-        return view('student.index', compact('enrolled_projects', 'student', 'dataDate'));
+        $newMessage = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        return view('student.index', compact('enrolled_projects', 'student', 'dataDate', 'newMessage'));
     }
 
     public function enrolledDetails($student_id, $project_id)
