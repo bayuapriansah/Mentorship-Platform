@@ -66,7 +66,7 @@
                     </a>
                   </div>
                   @php
-                    $appliedDate = $appliedDate->addDays(10);
+                    $appliedDate = $appliedDate->addDays(4);
                   @endphp
               {{-- @endif --}}
             @endif

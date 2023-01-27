@@ -199,9 +199,10 @@ class StudentController extends Controller
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-        $appliedDate  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
-        $appliedD  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
-
+        $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
+        $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
+        $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
+        
         // To Check if there's data in submission inputed from Project_section
         // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
@@ -230,7 +231,7 @@ class StudentController extends Controller
         // Progress Bar for Task
         $taskProgress = (100 / $total_task) * $task_clear;
 
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','appliedDate','appliedD'));
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate'));
     }
 
     public function taskDetail($student_id, $project_id, $task_id)
@@ -242,9 +243,9 @@ class StudentController extends Controller
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->get();
         $submission = Submission::where('student_id',$student_id)->where('section_id', $task_id)->first();
         $project = Project::find($project_id);
-        // dd($project);
-        $appliedDate  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
-        $appliedD  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
+        $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
+        $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
+        $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
 
         // The prerequisite for count task progress
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
@@ -257,7 +258,7 @@ class StudentController extends Controller
         // Progress Bar for Task
         $taskProgress = (100 / $total_task) * $task_clear;
         // dd($taskProgress);
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','taskProgress','total_task','task_clear','appliedDate','appliedD','project'));
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','taskProgress','total_task','task_clear','taskDate','project'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
