@@ -139,6 +139,9 @@ class StudentController extends Controller
     // STUDENT PROFILE
     public function allProjects($id)
     {
+        // dd($id);
+        $newMessage = Comment::where('student_id',$id)->get();
+        dd($newMessage);
         // dd(Auth::guard('student')->user()->id);
         if($id != Auth::guard('student')->user()->id ){
             abort(403);

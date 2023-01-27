@@ -53,7 +53,7 @@
     </div>
     <div>
   @php
-   $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d-m-Y');
+   $start_date  = \Carbon\Carbon::parse($student->created_at)->format('dS M Y');
   @endphp
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Completed</p>
