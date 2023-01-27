@@ -157,7 +157,7 @@
             <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
             <div class="px-4 py-2 bg-white rounded-t-lg ">
                 <label for="comment" class="sr-only">Your comment</label>
-                <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none dark:text-white dark:placeholder-gray-400" name="message" required></textarea>
+                <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" required></textarea>
             </div>
             <div class="flex items-center justify-between px-3 py-2 bg-white ">
                 <div class="flex pl-0 space-x-1 sm:pl-2">
@@ -186,15 +186,15 @@
             <!-- Modal content -->
             <div class="relative border border-light-blue border-inherit shadow drop-shadow-2xl hover:drop-shadow-xl bg-white rounded-lg  ">
                 <!-- Modal header -->
-                <div class="flex items-start justify-between p-4  dark:border-gray-600">
+                <div class="flex items-start justify-between p-4  ">
                     
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="staticModal">
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-hide="staticModal">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
                     </button>
                 </div>
                 <!-- Modal body -->
                 <div class="px-6 py-2 ">
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    <p class="text-base leading-relaxed text-gray-500 ">
                       <div class="pb-20">
                         <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
                         <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}" method="POST" enctype="multipart/form-data">
@@ -209,7 +209,7 @@
                                         <p class="mt-1 text-sm text-gray-600">
                                           Click to upload or drag and drop
                                         </p>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">.{{$task->file_type}} (MAX. 5MB)</p>
+                                        <p class="text-xs text-gray-500 ">.{{$task->file_type}} (MAX. 5MB)</p>
                                         {{-- <p class="mt-2 text-sm text-gray-600" id="file-name"></p> --}}
                                     </div>
                                 </div>

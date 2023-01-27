@@ -74,7 +74,7 @@
       <div class="col-span-6 my-auto">
         <h2 class="intelOne text-white font-bold text-4xl leading-11">Search <span class="text-light-brown">Internships</span></h2>
         <p class="intelOne font-light text-white text-lg leading-6 py-6 m-0">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-        @if(!Auth::guard('student')->check())
+        {{-- @if(!Auth::guard('student')->check())
         
         <form action="/projects/search" method="get">
           @csrf
@@ -85,16 +85,11 @@
               <i class="fa-solid fa-magnifying-glass"></i>
             </div>
           </div>
-          {{-- <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne ml-5" type="submit">Search</button> --}}
-
           </div>
-          {{-- <div class="mt-4">
-            @include('flash-message')
-          </div> --}}
           <div class="flex">
           </div>
         </form>
-        @endif
+        @endif --}}
       </div>
       <div class="col-start-7 col-span-6 relative">
         <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
