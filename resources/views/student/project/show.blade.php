@@ -47,17 +47,17 @@
           $nn = 1;
           $total_submission = $submissions->count();
           // dd($total_submission);
-          // if($total_submission == 0){
-          //   $total_submission += 1;
-          //   $project_sections = $project_sections->take($total_submission);
-          // }elseif($total_submission > 0) {
-          //   $total_submission += 1;
-          //   $project_sections = $project_sections->take($total_submission);
-          // }
+          if($total_submission == 0){
+            $total_submission += 1;
+            $project_sections = $project_sections->take($total_submission);
+          }elseif($total_submission > 0) {
+            $total_submission += 1;
+            $project_sections = $project_sections->take($total_submission);
+          }
           @endphp
           
           @foreach($project_sections as $project_section)
-            @if ($now->gte($appliedDate))
+            {{-- @if ($now->gte($appliedDate)) --}}
               {{-- @if($projectsections->count() > 0 && $submissions->count() > 0) --}}
                   <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
                     <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
@@ -66,10 +66,10 @@
                     </a>
                   </div>
                   @php
-                    $appliedDate = $appliedDate->addDays(3);
+                    $appliedDate = $appliedDate->addDays(2);
                   @endphp
               {{-- @endif --}}
-            @endif
+            {{-- @endif --}}
           @endforeach
           {{-- @foreach($projectsections as $proj) --}}
             {{-- @if ($now->gte($appliedDate)) --}}
@@ -85,27 +85,11 @@
                     </a>
                   </div>
                   @php
-                    $appliedDate = $appliedDate->addDays(3);
+                    $appliedDate = $appliedDate->addDays(2);
                   @endphp
               @endif
             {{-- @endif --}}
           {{-- @endforeach --}}
-
-        {{-- @if($projectsections->count() > 0 && $submissions->count() > 0 && $now <= $appliedDate)
-          @if ($now >= $appliedDate)
-            @php
-              $appliedDate = $appliedDate->addDays(10);
-            @endphp
-            @foreach($projectsections as $pro_section)
-              <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
-                  <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$pro_section->id}}" class="flex justify-between items-center">
-                      Task {{$no}}: {{substr($pro_section->title,0,60)}}...
-                      <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
-                  </a>
-              </div>
-            @endforeach
-          @endif
-        @endif --}}
       </div>
   </div>
     </div>
