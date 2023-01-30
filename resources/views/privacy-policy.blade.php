@@ -18,7 +18,7 @@
     <div class="col-span-12 text-sm font-normal">
       <div class="space-y-3">
         <p>
-          Sustainable Living Lab Pte Ltd is committed to protecting and respecting your privacy. This Privacy Policy governs the manner in which Sustainable Living Lab Pte Ltd collects, uses, maintains and discloses information collected from users (each, a “User”) of the sustainablelivinglab.org website (“Site”). This privacy policy applies to the Site and all products and services offered by Sustainable Living Lab. Please read the following carefully to understand our views and practices regarding your personal data and how we will treat it.
+          Anna Unna Charitable Trust (AUCT) is committed to protecting and respecting your privacy. This Privacy Policy governs the manner in which Anna Unna Charitable Trust (AUCT) collects, uses, maintains and discloses information collected from users (each, a “User”) of the sustainablelivinglab.org website (“Site”). This privacy policy applies to the Site and all products and services offered by Anna Unna Charitable Trust (AUCT). Please read the following carefully to understand our views and practices regarding your personal data and how we will treat it.
         </p>
         <p>
           If you are under 18, please do not send any personal data about yourself to us, except with full parental permission.
@@ -189,10 +189,9 @@
           </li>
         </ul>
         <p>You may exercise your opt-out right by notifying us if you wish to object to the use of your personal data for direct marketing purposes. In accordance with the terms of the PDPA, we have the right to and may charge a minimum fee for processing any data access request. Please send requests for such objections, access to data, correction of data, information regarding policies and practices and kinds of data held, questions or complaints to:</p>
-        <p>Sustainable Living Lab <br>
-          Community Lab@UWCSEA,<br>
-          1 Tampines Street 73, 528704 <br>  
-          contact@sustainablelivinglab.org</p>
+        <p>Anna Unna Charitable Trust (AUCT) <br>
+          5, Arimalam - Pudukkottai Rd, Alangudi, Tamil Nadu 622201, India <br>  
+          mgt@annaunnatrust.org</p>
       </div>
 
       <div class="space-y-3">

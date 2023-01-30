@@ -23,7 +23,7 @@
     <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col ">
       <div class="col-span-5">
         <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Login</h1>
-        <p class="intelOne font-light text-black text-lg leading-6 py-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <p class="intelOne font-light text-black text-lg leading-6 py-6">Sign in to your account to continue.</p>
         <form action="{{ route('otp.generate') }}" method="post" id="register">
           @csrf
           <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder focus:border focus:outline-none  focus:border-light-blue focus:ring-light-blue leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required>
@@ -70,7 +70,7 @@
     <div class="col-start-6 col-span-7 space-y-4 my-auto">
       <h3 class="intelOne text-black text-2xl font-semibold">Quick start video to get you going</h3>
       <p class="intelOne text-black text-base font-normal">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity.
       </p>
     </div>
   </div>

@@ -13,8 +13,9 @@
 <div class="w-full bg-darker-blue">
   <div class="max-w-[1366px] mx-auto px-16 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
     <div class="flex flex-col col-span-6 my-auto">
-      <h2 class="intelOne text-white font-bold text-4xl leading-11">Join <span class="text-light-brown">Simulated Internship</span> Program And Get Yourself <span class="text-light-brown">Industry Ready!</span></h2>
-      <span class="intelOne text-white py-6 font-thin text-lg leading-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</span>
+      <h2 class="intelOne text-white font-bold text-4xl leading-11">
+        <span class="text-light-brown">Simulated Internship</span> Platform for <span class="text-light-brown">Industry Readiness</span></h2>
+      <span class="intelOne text-white py-6 font-thin text-lg leading-6">Join today to kickstart to work on real-world projects and kick start your career!.</span>
       <div class="flex">
         <a href="/otp/login" class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-16 py-3.5 rounded-full">Get Started</a>
       </div>
@@ -33,7 +34,7 @@
 <div class="w-full">
   <div class="max-w-[1366px] mx-auto px-16 pt-16 pb-7 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
     <div class="col-span-12 text-center">
-      <p class="font-normal inteOne text-base text-black m-0">More than <span class="text-dark-blue">10,000+</span> Simulated Internships provided by our partners</p>
+      <p class="font-normal inteOne text-base text-black m-0">Our Esteemed Industry Partners</p>
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-36 mb-0 flex justify-between items-center ">
@@ -48,9 +49,7 @@
       <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
     </div>
     <div class="col-end-13 col-span-6">
-      <p class="m-0 text-black">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-      <br>
-      <p class="m-0 text-black">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus ea temporibus similique neque quam sapiente facilis molestiae nesciunt officia, alias inventore deleniti modi perspiciatis voluptatum repudiandae quibusdam illo dolore eligendi.</p>
+      <p class="m-0 text-black text-justify">Intel® AI For Workforce is a global AI skilling program for vocational students for building an AI-ready workforce. The program aims to address the AI skill crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the necessary skills for employability in the digital economy. The program offers comprehensive, modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
       <br>
       <img src="{{asset('assets/img/intelss.png')}}" class="relative z-20" alt="">
     </div>
@@ -62,21 +61,21 @@
       <div class="flex flex-col">
         <img src="{{asset('assets/img/for_students.png')}}" class="relative z-20" alt="for students">
         <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
-        <p class="text-black font-normal text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium, debitis fugit fuga harum commodi nihil ea veniam dolore ipsam ex?</p>
+        <p class="text-black font-normal text-sm">Acquire Employability Skills, Gain Industry Experience, Strengthen Project Portfolio</p>
       </div>
     </div>
     <div class="col-span-4">
       <div class="flex flex-col">
         <img src="{{asset('assets/img/for_institution.png')}}" class="relative z-20 mt-5" alt="for students">
-        <h1 class="text-dark-blue text-2xl font-bold py-3">For Institutes</h1>
-        <p class="text-black font-normal text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium, debitis fugit fuga harum commodi nihil ea veniam dolore ipsam ex?</p>
+        <h1 class="text-dark-blue text-2xl font-bold py-3 -mt-4">For Institutes</h1>
+        <p class="text-black font-normal text-sm">Enhanced Student Employability, Collaborate with Industry leaders, Supervise Real-World AI Projects</p>
       </div>
     </div>
     <div class="col-span-4">
       <div class="flex flex-col">
         <img src="{{asset('assets/img/for_industries.png')}}" class="relative z-20" alt="for students">
         <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
-        <p class="text-black font-normal text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium, debitis fugit fuga harum commodi nihil ea veniam dolore ipsam ex?</p>
+        <p class="text-black font-normal text-sm">Identify Top Future Talents, Collaborate with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
       </div>
     </div>
   </div>
