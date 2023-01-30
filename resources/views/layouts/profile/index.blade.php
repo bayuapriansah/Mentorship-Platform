@@ -136,6 +136,16 @@
     </div>
     
   </footer>
+
+  @php
+      $top = exec("top -bn1 | grep 'Cpu(s)'");
+      preg_match_all("/\s+([0-9\.]+)%\s+id/", $top, $cores);
+      $cores = $cores[1];
+      foreach ($cores as $index => $usage) {
+        echo "Core " . ($index + 1) . ": " . $usage . "%<br>";
+      }
+  @endphp
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}
 

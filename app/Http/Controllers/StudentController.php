@@ -317,8 +317,9 @@ class StudentController extends Controller
         })->where('institution_id', $student->institution_id)->where('status', 'publish')->get();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-
-        return view('student.project.available.index', compact('student','projects','enrolled_projects','dataDate'));
+        $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        // dd($newMessage);
+        return view('student.project.available.index', compact('student','projects','enrolled_projects','dataDate','newMesaage'));
     }
 
     public function availableProjectDetail($student_id, $project_id)
