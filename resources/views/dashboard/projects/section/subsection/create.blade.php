@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Create Subtask </h1>
+    <h1 class="h3 mb-0 text-gray-800">Create Attachment </h1>
   </div>
 
   <div class="row">
@@ -83,7 +83,7 @@
             <label for="inputfile3" class="form-label">File 3</label>
             <input type="file" class="form-control-file" id="inputfile3" name="file3">
           </div>
-          <div class="mb-3">
+          {{-- <div class="mb-3">
             <label for="inputvideolink" class="form-label">Video</label>
             <input type="text" class="form-control" id="inputvideolink" name="video_link" value="{{old('video_link')}}">
             @error('video_link')
@@ -91,7 +91,7 @@
                   {{$message}}
                 </p>
             @enderror
-          </div>
+          </div> --}}
 
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -102,7 +102,7 @@
 @endsection
 
 @section('more-js')
-<script>
+{{-- <script>
    $(document).ready(function(){
     // $('#inviteMentors').hide();
     $('#filetype').hide();
@@ -115,5 +115,5 @@
       }
     });
   });
-</script>
+</script> --}}
 @endsection
