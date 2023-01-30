@@ -22,7 +22,7 @@
           {{-- <button  class="intelOne text-white text-sm font-normal bg-darker-blue px-12 py-2 rounded-full absolute cursor-default ">Enrolled</button>  --}}
           @php
           $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
-          $enrolledDate = $appliedDate->format('dS M,Y'); 
+          $enrolledDate = $appliedDate->format('d M Y'); 
           $now = \Carbon\Carbon::now()->startOfDay();
           @endphp
           <p class="font-normal text-sm text-right">Enrolled On <br> {{$enrolledDate}}</p>
@@ -66,7 +66,7 @@
                     </a>
                   </div>
                   @php
-                    $appliedDate = $appliedDate->addDays(4);
+                    $appliedDate = $appliedDate->addDays(3);
                   @endphp
               {{-- @endif --}}
             @endif
@@ -85,7 +85,7 @@
                     </a>
                   </div>
                   @php
-                    $appliedDate = $appliedDate->addDays(1);
+                    $appliedDate = $appliedDate->addDays(3);
                   @endphp
               @endif
             {{-- @endif --}}
