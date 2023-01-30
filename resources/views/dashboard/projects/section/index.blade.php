@@ -45,12 +45,21 @@
             <select class="form-control form-select" id="inputfiletype" aria-label="Default select example" name="inputfiletype">
               <option value="">--Select File type--</option>
               <option value="zip" {{old('inputfiletype') == 'zip' ? 'selected': ''}}>.zip</option>
-              <option value="ipynb" {{old('inputfiletype') == 'ipynb' ? 'selected': ''}}>.ipynb</option>
               <option value="pdf" {{old('inputfiletype') == 'pdf' ? 'selected': ''}}>.pdf</option>
-              <option value="doc" {{old('inputfiletype') == 'doc' ? 'selected': ''}}>.doc or docx</option>
-              <option value="ppt" {{old('inputfiletype') == 'ppt' ? 'selected': ''}}>.ppt or pptx</option>
+              <option value="docx" {{old('inputfiletype') == 'doc' ? 'selected': ''}}>.docx</option>
+              <option value="pptx" {{old('inputfiletype') == 'ppt' ? 'selected': ''}}>.pptx</option>
             </select>
             @error('inputfiletype')
+                <p class="text-danger text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
+          </div>
+
+          <div class="mb-3">
+            <label for="inputsection" class="form-label">Task Duration</label>
+            <input type="number" class="form-control" id="" name="duration" value="{{old('duration')}}">
+            @error('duration')
                 <p class="text-danger text-sm mt-1">
                   {{$message}}
                 </p>
@@ -79,6 +88,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Submission type</th>
+            <th>Duration</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -121,7 +131,7 @@
               </div>
             </td>
             <td>{{$project_section->file_type}}</td>
-
+            <td>{{$project_section->duration}}</td>
             <td>
 
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/edit" >Edit</a>

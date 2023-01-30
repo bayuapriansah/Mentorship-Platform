@@ -246,7 +246,8 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'title' => ['required'],
             'description' => ['required'],
-            'inputfiletype' => ['required']
+            'inputfiletype' => ['required'],
+            'duration' => ['required']
         ]);
         $project_section = new ProjectSection;
         $latest_item = ProjectSection::where('project_id', $project_id)->orderByDesc('section')->first();
@@ -259,6 +260,7 @@ class ProjectController extends Controller
         $project_section->title = $validated['title'];
         $project_section->description = $validated['description'];
         $project_section->file_type = $validated['inputfiletype'];
+        $project_section->duration = $validated['duration'];
         $project_section->save();
 
         return redirect('dashboard/projects/'.$project_id.'/section')->with('success','Project section has been created');
