@@ -125,8 +125,8 @@
             <td>
 
               <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/edit" >Edit</a>
-              <a class="btn btn-labele btn-primary " data-toggle="collapse" href="#collapseExample{{$no}}" role="button" aria-expanded="false" aria-controls="collapseExample">Show available subtask</a>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage Subtask</a>
+              <a class="btn btn-labele btn-primary " data-toggle="collapse" href="#collapseExample{{$no}}" role="button" aria-expanded="false" aria-controls="collapseExample">Show available attachment</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}/subsection" >Manage attachment</a>
               <form method="POST" action="/dashboard/projects/{{$project->id}}/section/{{$project_section->id}}" >
                 @csrf
                 @method('DELETE')

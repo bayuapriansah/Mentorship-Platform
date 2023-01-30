@@ -7,8 +7,8 @@
       <a href="/dashboard/projects/{{$project->id}}/section" class="text-decoration-none"><i class="fa-solid fa-arrow-left"></i> Back</a>
   </div>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Subtask</h1>
-      <a href="create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Subsection</a>
+      <h1 class="h3 mb-0 text-gray-800">Attachment</h1>
+      <a href="create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-regular fa-plus"></i> Add Attachment</a>
   </div>
 
   <!-- Content Row -->
@@ -25,7 +25,7 @@
             <th>File 1</th>
             <th>File 2</th>
             <th>File 3</th>
-            <th>Video link</th>
+            {{-- <th>Video link</th> --}}
             {{-- <th>Status</th> --}}
             <th>Actions</th>
           </tr>
@@ -59,7 +59,7 @@
                 [None]
               @endif
               </td>
-            <td>{{$project_subsection->video_link ? $project_subsection->video_link : "None"}}</td>
+            {{-- <td>{{$project_subsection->video_link ? $project_subsection->video_link : "None"}}</td> --}}
             {{-- <td>{{$project->is_submit}}</td> --}}
             <td>
 

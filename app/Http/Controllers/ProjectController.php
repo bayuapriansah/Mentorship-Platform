@@ -364,7 +364,7 @@ class ProjectController extends Controller
             ]);
         }elseif($request->category == 'task'){
             $validated = $request->validate([
-                'inputfiletype'=>'required',
+                // 'inputfiletype'=>'required',
                 'category' => 'required',
                 'title' => 'required',
                 'file1' => 'required',
