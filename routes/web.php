@@ -61,7 +61,7 @@ Route::get('/register', [AuthController::class, 'register'])->name('registerPage
 Route::post('/register', [AuthController::class, 'store'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/sendmail', [MailController::class, 'index']);
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/admin', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
 // mentor register

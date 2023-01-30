@@ -142,13 +142,17 @@
       @if($student->is_confirm == 1)
       <p class="text-black text-xs">{{$start_date}}</p>
       @endif
-      <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2  ">
+      <div class="w-full relative">
         {{-- $dataDate is a function to calculate --}}
-        <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%"></div>
         
-        @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
-            <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" style="margin-left: {{$enrolled_project->flag_checkpoint}}%">
-        @endforeach
+          @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$enrolled_project->flag_checkpoint}}%">
+          @endforeach
+
+        <div class="bg-gray-200 rounded-full h-1.5 mb-4 mt-4 ">
+          <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%"></div>
+        </div>
+        
 
       </div>
       {{-- <div class="flex-col ">
