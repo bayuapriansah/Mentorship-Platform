@@ -7,7 +7,6 @@
         <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" class="ml-[{{$dataDate}}%]">
       @endif
   @endforeach --}}
-
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" alt="notification_bel">
@@ -145,10 +144,10 @@
       @endif
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2  ">
         {{-- $dataDate is a function to calculate --}}
-        <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%">
-        </div>
+        <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%"></div>
+        
         @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
-            <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" class="ml-[{{$dataDate}}%]">
+            <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" style="margin-left: {{$enrolled_project->flag_checkpoint}}%">
         @endforeach
 
       </div>

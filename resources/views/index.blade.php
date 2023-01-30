@@ -2,12 +2,12 @@
 @section('content')
 @mobile
     <script>
-      alert('The website is more supported on dekstop');
+      alert('Please use this website on a desktop for an optimum experience');
     </script>
 @endmobile
 @tablet
   <script>
-    alert('The website is more supported on dekstop');
+    alert('Please use this website on a desktop for an optimum experience');
   </script>
 @endtablet
 <div class="w-full bg-darker-blue">
@@ -37,7 +37,7 @@
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-36 mb-0 flex justify-between items-center ">
-    <img src="{{asset('assets/img/imagesl.png')}}" alt="">
+    <img src="{{asset('assets/img/image 3.png')}}" alt="">
     <img src="{{asset('assets/img/image 4.png')}}" alt="">
     <img src="{{asset('assets/img/image 5.png')}}" alt="">
     <img src="{{asset('assets/img/image 6.png')}}" alt="">
