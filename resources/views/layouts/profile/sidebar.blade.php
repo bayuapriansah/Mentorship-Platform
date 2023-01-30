@@ -18,7 +18,7 @@
         </button>
     </div>
     <div class="col-span-1">
-      <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" alt="message">
+      <button type="button" data-modal-target="message-modal" data-modal-toggle="message-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" alt="message">
       <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
@@ -38,6 +38,36 @@
       
     </div>
   </div>
+
+  {{-- Modals --}}
+  <!-- Top Right Modal -->
+  <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+    <div class="relative w-full h-full max-w-sm md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                    Message Notification
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="message-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
+
   <div class="flex flex-col mt-8 ">
     <div class="mx-auto">
       <img src="{{asset('assets/img/icon/profile/pp.png')}}" class="w-[100px] h-[100px]  mx-auto"  alt="message">
@@ -68,7 +98,7 @@
     </div>
     <div>
   @php
-   $start_date  = \Carbon\Carbon::parse($student->created_at)->format('dS M Y');
+   $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d M Y');
   @endphp
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Completed</p>
@@ -84,7 +114,7 @@
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
       
-      <p class="text-black text-xs">{{$dateApply->format('dS M Y')}}</p>
+      <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
       @endif
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2">
         {{-- $dataDate is a function to calculate --}}
@@ -96,7 +126,7 @@
         <p class="text-black text-[6px]">{{$student->end_date}}</p>
       </div> --}}
       @if($student->is_confirm == 1)
-        <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('dS M Y')}}</p>
+        <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
       @endif
     </div>
     @if($student->is_confirm == 0)
@@ -126,7 +156,7 @@
         <p class="text-black text-[6px]">{{$student->end_date}}</p>
       </div> --}}
       @if($student->is_confirm == 1)
-        <p class="text-black text-xs">{{$student->end_date}}</p>
+        <p class="text-black text-xs">{{\Carbon\Carbon::parse($student->end_date)->format('d M Y')}}</p>
       @endif
     </div>
     @if($student->is_confirm == 0)
