@@ -4,6 +4,7 @@
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
       <div class="col-span-6 my-auto">
+        <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue"><i class="fa-solid fa-arrow-left pr-2"></i>back</a>
         <h2 class="text-dark-blue text-2xl font-medium mb-3">{{$project->name}}</h2>
         <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">{{$project->project_domain}}</span>
       </div>
@@ -61,8 +62,13 @@
               {{-- @if($projectsections->count() > 0 && $submissions->count() > 0) --}}
                   <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
                     <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                        Task {{$no++}}: {{substr($project_section->title,0,60)}}...
+                        Task {{$no++}}: {{substr($project_section->title,0,30)}}...
                         <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+                        @foreach ($project_section->submissions as $submission)
+                          @if ($submission->is_complete == 1)
+                          <i class="fa-solid fa-circle-check text-dark-blue"></i>
+                          @endif
+                        @endforeach
                     </a>
                   </div>
                   @php
@@ -82,6 +88,7 @@
                     <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$projectsections[0]->id}}" class="flex justify-between items-center">
                         Task {{$no++}}: {{substr($projectsections[0]->title,0,60)}}...
                         <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+                        {{-- <i class="fa-solid fa-circle-check"></i> --}}
                     </a>
                   </div>
                   @php
