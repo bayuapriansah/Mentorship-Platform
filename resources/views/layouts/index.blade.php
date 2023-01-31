@@ -93,7 +93,7 @@
         <li class="text-dark-blue intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-500">Internship Projects</a></li>
         <li data-tooltip-target="tooltip-hover" data-tooltip-trigger="hover" class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Industry Partners</a></li>
         <div id="tooltip-hover" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            Cooming Soon
+            Coming Soon
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>        
       </ul>
