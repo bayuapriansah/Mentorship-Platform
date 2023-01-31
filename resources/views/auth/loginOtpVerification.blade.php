@@ -111,6 +111,7 @@
       button.classList.remove("text-grey");
       button.classList.add("text-dark-blue");
       button.disabled = false;
+      input.removeAttribute("required");
     }
   }, 1000);
 </script>
