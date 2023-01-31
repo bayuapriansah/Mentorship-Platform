@@ -34,7 +34,7 @@
           @csrf
           <input type="hidden" name="user_id" value="{{$user_id}}">
           <input class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}}" name="email" value="{{$email}}" placeholder="Email *" id="email" name="email" required>
-          <input class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " placeholder="Enter OTP*" id="otp" name="otp" required>
+          <input type="text" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight " placeholder="Enter OTP*" id="otp" name="otp">
           {{-- <div class="bg-red-alert intelOne text-sm p-4 w-2/3 rounded-lg mt-4 flex" role="alert">
             <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
             This email address is already registered!
@@ -43,14 +43,14 @@
             <div class="mt-2">
               @include('flash-message')
             </div>
-            <div id="countdown" class="flex justify-end my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue"></div>
             <div class="grid grid-cols-1">
             <div class="flex justify-end mb-4">
-              <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue" disabled>Resend OTP</button>
+              <button name="action" value="otp" type="submit" class="my-auto mx-2.5 mt-1 font-normal text-sm intelOn text-grey" disabled>Resend OTP</button>
             </div>
-            <div class="flex justify-end mt-1">
+            <div id="countdown" class="flex justify-end my-auto mr-2.5 font-normal text-sm intelOn text-dark-blue"></div>
+            {{-- <div class="flex justify-end mt-1">
               <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue"></button>
-            </div>
+            </div> --}}
             </div>
           </div>
           <div class="flex mt-4">
@@ -69,9 +69,6 @@
       </div>
     </div>
   </div>
-  
-  
-
   <div class="max-w-[1366px] mx-auto px-36 py-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col">
     <div class="col-span-5 flex ">
       <iframe width="361" height="240" src="https://www.youtube.com/embed/aZLE-c7I7uk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -90,6 +87,15 @@
   var countDownDate = new Date();
   countDownDate.setMinutes(countDownDate.getMinutes() + 2);
   var button = document.querySelector('button[value="otp"]');
+  var input = document.querySelector('input[name="otp"]');
+  var verifyButton = document.querySelector('button[value="login"]');
+
+  verifyButton.addEventListener("click", function(e) {
+    if (input.value === "") {
+      e.preventDefault();
+      input.setAttribute("required", true);
+    }
+  });
 
   var x = setInterval(function() {
     var now = new Date().getTime();
@@ -97,12 +103,12 @@
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    document.getElementById("countdown").innerHTML = "0" + minutes + ":" + seconds + "";
+    document.getElementById("countdown").innerHTML = "0" + minutes + ":" + seconds;
 
     if (distance < 0) {
       clearInterval(x);
       document.getElementById("countdown").innerHTML = "00:00";
-      button.classList.remove("text-dark-grey");
+      button.classList.remove("text-grey");
       button.classList.add("text-dark-blue");
       button.disabled = false;
     }
