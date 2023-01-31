@@ -64,7 +64,7 @@
                     <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="grid grid-cols-12 gap-4 grid-flow-col">
                         <div class="col-span-6">Task {{$no++}}: {{substr($project_section->title,0,30)}}...</div>
                         <span class="col-start-7 col-span-4 text-sm font-normal text-right ">{{ $appliedDate->format('dS M,Y') }} {{ $appliedDate->format('g:ia') }}</span>
-                        @foreach ($project_section->submissions as $submission)
+                        @foreach ($project_section->submissions->where('student_id',Auth::guard('student')->user()->id) as $submission)
                           @if ($submission->is_complete == 1)
                           <i class="fa-solid fa-circle-check text-dark-blue col-start-12 col-span-2"></i>
                           @endif
