@@ -17,7 +17,7 @@
           <button class="bg-light-blue flex mx-auto py-2 px-6 mt-[18px] rounded-full text-white" type="button">Change photo</button>
           <input type="file" id="profilePicture">
         </label> --}}
-        <label for="file-upload" class="bg-light-blue flex mx-auto py-2 px-auto justify-center cursor-pointer mt-[18px] rounded-full text-white w-1/3">
+        <label for="file-upload" class="bg-light-blue hover:bg-dark-blue flex mx-auto py-2 px-auto justify-center cursor-pointer mt-[18px] rounded-full text-white w-1/3">
           Change photo
           <input id="file-upload" name="profile_picture" type="file" hidden/>
         </label>
