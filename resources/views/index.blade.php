@@ -41,7 +41,7 @@
     <div class="col-end-13 col-span-6">
       <p class="m-0 text-black text-justify">Intel® AI For Workforce is a global AI skilling program for vocational students for building an AI-ready workforce. The program aims to address the AI skill crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the necessary skills for employability in the digital economy. The program offers comprehensive, modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
       <br>
-      <img src="{{asset('assets/img/intelss.png')}}" class="relative z-20" alt="">
+      <iframe width="525" height="300" class="relative z-20 rounded-lg" src="https://www.youtube.com/embed/K9iflwQqVsA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-36 pt-20 mb-0 grid grid-cols-12 gap-11 grid-flow-col  relative">
@@ -72,7 +72,7 @@
   <div class="container mx-auto">
     <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 flex ">
       <div class="">
-        <h2 class="intelOne text-dark-blue font-bold text-3xl">Active Internships Program</h2>
+        <h2 class="intelOne text-dark-blue font-bold text-3xl">Active Internship Projects</h2>
       </div>
       {{-- untuk arrow --}}
     </div>
@@ -96,7 +96,15 @@
             </div>
             <div class="flex justify-between">
             <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-medium">2 Months</span></p>
-            <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
+            
+            {{-- {{Auth::guard('company')->check()? '/projects/{{$project->id}}' : route('otp.login')}} --}}
+            <a href="
+              @if (Auth::guard('student')->check())
+                  /projects/{{$project->id}}
+              @else
+                /otp/login
+              @endif
+            " class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
             </div>
           </div>
         </div>
@@ -115,7 +123,8 @@
     <div class="max-w-[1366px] mx-auto px-16  pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container relative">
       <div class="absolute z-10 w-20 h-20 bg-light-brown top-72 left-10 rounded-[10px]"></div>
       <div class="col-span-5">
-        <img src="{{asset('assets/img/learningneverstops.png')}}" class=" relative z-30" alt="learning never stops">
+        <iframe width="428" height="236" class="relative z-30 rounded-lg" src="https://www.youtube.com/embed/cUq-sTaxXks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        {{-- <img src="{{asset('assets/img/learningneverstops.png')}}" class=" relative z-30" alt="learning never stops"> --}}
       </div>
       <div class="col-span-7">
         <h1 class="font-bold text-2xl text-dark-blue">Learning Never Stops</h1>
