@@ -68,7 +68,7 @@
                     {{$comment->message}}
                     @if($comment->file)
                       <br>
-                      <a href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
+                      <a download="image.jpg" href="{{asset('storage/'.$comment->file)}}" class="flex items-center">
                         <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
                         <span class="text-xs">click to download</span>
                       </a>
@@ -112,7 +112,7 @@
             @csrf
             <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
               <div class="px-4 py-2 bg-white rounded-t-lg ">
-                  <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" required></textarea>
+                  <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" placeholder="Type Here" required></textarea>
               </div>
               <div class="flex items-center justify-between px-3 py-2 bg-white ">
                   <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
