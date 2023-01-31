@@ -108,7 +108,7 @@ td .es-button-border-1:hover {
                       <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/component_3.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
                      </tr>
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:45px">Confirm your email address to get started on Simulated Internships.</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:45px">Confirm your email address to get started with Simulated Internships Platform.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -121,7 +121,7 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Once you’ve confirmed that {{ $data['body'] }} is your email address, we will help you find internship programs to join.</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Once you’ve confirmed that {{ $data['body'] }} is your email address, we will help you find internship projects to join.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -165,7 +165,7 @@ td .es-button-border-1:hover {
            </table></td>
          </tr>
        </table>
-       <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+       {{-- <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
          <tr>
           <td align="center" style="padding:0;Margin:0">
            <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#E4E7FF" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#e4e7ff;width:810px">
@@ -256,7 +256,8 @@ td .es-button-border-1:hover {
              </tr>
            </table></td>
          </tr>
-       </table></td>
+       </table> --}}
+      </td>
      </tr>
    </table>
   </div>
