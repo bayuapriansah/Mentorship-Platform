@@ -42,6 +42,9 @@
           <div class="grid grid-cols-[300px_minmax(200px,_1fr)_100px]">
             <div class="mt-2">
               @include('flash-message')
+              <div class="alert alert-success alert-dismissible fade show" role="alert" id="pleaseOtp" style="display: none;">
+                Please Enter your OTP First
+              </div>
             </div>
             <div class="grid grid-cols-1">
             <div class="flex justify-end mb-4">
@@ -94,6 +97,9 @@
     if (input.value === "") {
       e.preventDefault();
       input.setAttribute("required", true);
+      document.getElementById("pleaseOtp").style.display = "block";
+    } else {
+      document.getElementById("pleaseOtp").style.display = "none";
     }
   });
 
@@ -111,7 +117,6 @@
       button.classList.remove("text-grey");
       button.classList.add("text-dark-blue");
       button.disabled = false;
-      input.removeAttribute("required");
     }
   }, 1000);
 </script>
