@@ -22,7 +22,8 @@ module.exports = {
         'profile-grey': '#F8F8F8',
         'red-alert': '#F4D2D5',
         'ligt-black' : '#1E1E1E',
-        'light-green': '#1CD22E'
+        'light-green': '#1CD22E',
+        'lighter-green': '#D4F9CB',
       },
       fontSize: {
         sm: '0.938rem',
