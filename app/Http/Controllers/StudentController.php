@@ -140,7 +140,7 @@ class StudentController extends Controller
             }
         }
         $student->save();
-        return redirect('/profile/'.$id.'/edit')->with('success','Company has been edited');
+        return redirect('/profile/'.$id.'/edit')->with('successTailwind','Profile updated successfully');
 
     }
     

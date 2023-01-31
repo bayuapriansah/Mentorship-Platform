@@ -2,8 +2,13 @@
 @section('content')
 <div class="container py-6  mx-auto px-16">
   <div class="bg-white py-8 px-14 rounded-xl">
-    <p class="text-2xl text-dark-blue font-medium">Edit Profile</p>
+    <div class="flex justify-between">
+      <p class="text-2xl text-dark-blue font-medium">Edit Profile</p>
+      @include('flash-message')
+    </div>
+    
     <div class="flex flex-col justify-center items-center">
+      
       <form action="/profile/{{Auth::guard('student')->user()->id}}" method="post" enctype="multipart/form-data">
         @method('patch')
         @csrf
