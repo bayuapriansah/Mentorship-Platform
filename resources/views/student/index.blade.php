@@ -28,9 +28,9 @@
               </li>
               <li class="mr-2">
                 @if(Route::is('student.completedProjects'))
-                  <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-medium">Completed Project</a>
+                  <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4  border-b-2 text-black border-dark-blue rounded-t-lg active font-medium">Completed Projects</a>
                 @else
-                  <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-lighter-blue hover:border-gray-300 font-normal">Completed Project</a>
+                  <a href="/profile/{{Auth::guard('student')->user()->id}}/completedProjects" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-lighter-blue hover:border-gray-300 font-normal">Completed Projects</a>
                 @endif
               </li>
           </ul>
