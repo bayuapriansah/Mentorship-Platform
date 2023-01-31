@@ -97,13 +97,12 @@
             @enderror
           </div>
           @endif
-
           {{-- add institution dropdown --}}
           @if(Auth::guard('web')->check())
           <div class="mb-3">
             <label for="inputvalid" class="form-label">Institution</label>
             <select class="form-control form-select" id="inputInstitution" aria-label="Default select example" name="institution_id">
-              <option value="{{$project->institution_id}}" hidden></option>
+              <option value="{{$project->institution_id}}">{{ $GetInstituionData->where('id',$project->institution_id)->first()->institutions }}</option>
               @forelse($GetInstituionData as $ins)
               <option value="{{$ins->id}}">{{$ins->institutions}}</option>
               @empty
