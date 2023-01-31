@@ -4,7 +4,6 @@
   <div class="p-5 mb-4 text-center">
     <img src="{{asset('assets/img/image.png')}}" alt="" width="100%" height="250px">
   </div>
-
   @include('flash-message')
   <div class="row">
     <div class="col-9">

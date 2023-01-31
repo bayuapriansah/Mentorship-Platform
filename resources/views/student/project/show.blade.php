@@ -61,12 +61,12 @@
             {{-- @if ($now->gte($appliedDate)) --}}
               {{-- @if($projectsections->count() > 0 && $submissions->count() > 0) --}}
                   <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
-                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="flex justify-between items-center">
-                        Task {{$no++}}: {{substr($project_section->title,0,30)}}...
-                        <span class="text-sm font-normal">{{ $appliedDate->format('dS M,Y') }}</span>
+                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="grid grid-cols-12 gap-4 grid-flow-col">
+                        <div class="col-span-6">Task {{$no++}}: {{substr($project_section->title,0,30)}}...</div>
+                        <span class="col-start-7 col-span-4 text-sm font-normal text-right ">{{ $appliedDate->format('dS M,Y') }}</span>
                         @foreach ($project_section->submissions as $submission)
                           @if ($submission->is_complete == 1)
-                          <i class="fa-solid fa-circle-check text-dark-blue"></i>
+                          <i class="fa-solid fa-circle-check text-dark-blue col-start-12 col-span-2"></i>
                           @endif
                         @endforeach
                     </a>
