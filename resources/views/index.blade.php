@@ -5,7 +5,7 @@
     <div class="flex flex-col col-span-6 my-auto">
       <h2 class="intelOne text-white font-bold text-4xl leading-11">
         <span class="text-light-brown">Simulated Internship</span> Platform for <span class="text-light-brown">Industry Readiness</span></h2>
-      <span class="intelOne text-white py-6 font-thin text-lg leading-6">Join today to kickstart to work on real-world projects and kick start your career!.</span>
+      <span class="intelOne text-white py-6 font-thin text-lg leading-6">Join today to work on real-world projects and kick-start your career!</span>
       <div class="flex">
         <a href="/otp/login" class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-16 py-3.5 rounded-full">Get Started</a>
       </div>
