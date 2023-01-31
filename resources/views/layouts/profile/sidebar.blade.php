@@ -177,8 +177,13 @@
       <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submission->created_at}}</p>
       <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
         <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
-        <a href="{{asset('storage/'.$submission->file)}}">Your Submission file</a>
-        <img src="{{asset('assets/img/icon/download.png')}}" alt="">
+        Your Submission file</a>
+        @php
+          $ekstension = substr($submission->file, strpos($submission->file, ".") + 1);
+        @endphp
+        <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submission->file)}}">
+          <img  src="{{asset('assets/img/icon/download.png')}}" alt="">
+        </a>
       </div>
       @endif
     </div>
