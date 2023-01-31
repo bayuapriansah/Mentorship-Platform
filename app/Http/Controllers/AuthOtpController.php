@@ -16,6 +16,18 @@ use Illuminate\Support\Facades\Validator;
 class AuthOtpController extends Controller
 {
     public function login(){
+        if(Auth::guard('company')->check()){
+            return back();
+        }
+        if(Auth::guard('web')->check()){
+            return back();
+        }
+        if(Auth::guard('mentor')->check()){
+            return back();
+        }
+        if(Auth::guard('student')->check()){
+            return back();
+        }
         return view('auth.loginOtp');
     }
 

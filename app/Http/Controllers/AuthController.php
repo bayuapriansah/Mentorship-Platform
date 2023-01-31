@@ -17,6 +17,18 @@ class AuthController extends Controller
 {
     public function register()
     {
+        if(Auth::guard('company')->check()){
+            return back();
+        }
+        if(Auth::guard('web')->check()){
+            return back();
+        }
+        if(Auth::guard('mentor')->check()){
+            return back();
+        }
+        if(Auth::guard('student')->check()){
+            return back();
+        }
         $GetInstituionData = (new InstitutionController)->GetInstituionData();
         return view('auth.register', compact('GetInstituionData'));
     }
