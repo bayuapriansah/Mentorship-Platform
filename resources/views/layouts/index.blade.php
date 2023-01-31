@@ -73,6 +73,16 @@
     <!-- Custom styles for this template -->
   </head>
 <body>
+@mobile
+  <script>
+    alert('Please use this website on a desktop for an optimum experience');
+  </script>
+@endmobile
+@tablet
+  <script>
+    alert('Please use this website on a desktop for an optimum experience');
+  </script>
+@endtablet
   <div class="w-full bg-white">
     <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
       <a href="/" class="col-span-3">
