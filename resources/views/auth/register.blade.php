@@ -104,7 +104,7 @@
         <select id="year_of_study" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="year_of_study" required>
           <option value="" hidden>Year of study *</option>
           <option value="1st">1st</option>
-          <option value="2st">2nd</option>
+          <option value="2nd">2nd</option>
           <option value="3rd">3rd</option>
           <option value="4th">4th</option>
           <option value="5th+">5th+</option>

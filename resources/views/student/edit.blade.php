@@ -104,10 +104,10 @@
           <select id="year_of_study" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="year_of_study" required>
             <option value="" hidden >Year of study *</option>
             <option value="1st" {{$student->year_of_study == '1st' ? 'selected' : ''}}>1st</option>
-            <option value="2st" {{$student->year_of_study == '2nd' ? 'selected' : ''}}>2nd</option>
+            <option value="2nd" {{$student->year_of_study == '2nd' ? 'selected' : ''}}>2nd</option>
             <option value="3rd" {{$student->year_of_study == '3rd' ? 'selected' : ''}}>3rd</option>
             <option value="4th" {{$student->year_of_study == '4th' ? 'selected' : ''}}>4th</option>
-            <option value="5th+" {{$student->year_of_study == '5th' ? 'selected' : ''}}>5th+</option>
+            <option value="5th+" {{$student->year_of_study == '5th+' ? 'selected' : ''}}>5th+</option>
           </select><br>
           @error('year_of_study')
               <p class="text-red-600 text-sm mt-1">
