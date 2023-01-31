@@ -80,7 +80,13 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        if($student->id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
+        $student = Student::find($student->id);
+        $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+
+        return view('student.edit', compact('student','newMessage'));
     }
 
     /**

@@ -85,6 +85,8 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
     // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
+
+    Route::get('/profile/{student}/edit', [StudentController::class, 'edit'])->name('student.edit');
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){
