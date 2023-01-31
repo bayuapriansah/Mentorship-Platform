@@ -21,7 +21,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $students }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-regular fa-user fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mentors }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            <i class="fas fa-regular fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $eProjects }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-duotone fa-list-check fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $companies }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            <i class="fas fa-solid fa-landmark fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

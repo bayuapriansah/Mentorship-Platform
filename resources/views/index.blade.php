@@ -96,7 +96,7 @@
             </div>
             <div class="flex justify-between">
             <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-medium">2 Months</span></p>
-            <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
+            <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Project</a>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@
     <div class="max-w-[1366px] mx-auto px-36 pt-12 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
       <div class="col-end-13 col-span-2">
         <button  class="intelOnetext-sm font-normal border-2 border-solid border-dark-blue text-darker-blue hover:bg-dark-blue hover:text-white px-3 py-2 rounded-full">
-          <a href="/projects">View Internship</a>
+          <a href="/projects">View Project</a>
         </button>
       </div>
     </div>
