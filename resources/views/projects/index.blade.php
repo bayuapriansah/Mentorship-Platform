@@ -72,7 +72,7 @@
   <div class="bg-darker-blue">
     <div class="max-w-[1366px] mx-auto px-16 pt-0 grid grid-cols-12 gap-11 grid-flow-col ">
       <div class="col-span-6 my-auto">
-        <h2 class="intelOne text-white font-bold text-4xl leading-11">Search <span class="text-light-brown">Internships</span></h2>
+        <h2 class="intelOne text-white font-bold text-4xl leading-11">Internship <span class="text-light-brown">Projects</span></h2>
         <p class="intelOne font-light text-white text-lg leading-6 py-6 m-0">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
         {{-- @if(!Auth::guard('student')->check())
         
