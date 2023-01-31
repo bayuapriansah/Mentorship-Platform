@@ -42,26 +42,26 @@
             </button>
             
           <div id="popup-modal" tabindex="-1" class="fixed z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-                <div class="relative w-3/6 h-full max-w-4xl md:h-auto border-[3px] border-light-blue rounded-2xl">
-                    <div class="relative bg-white rounded-xl shadow-2xl">
-                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 text-sm p-1.5 ml-auto inline-flex items-center z-30" data-modal-hide="popup-modal">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                        <div class="p-6 text-left space-x-4">
-                            <img src="{{asset('assets/img/dots-1.png')}}" class="absolute top-0 right-0 w-[233px] h-[108px]" alt="">
-                            <img src="{{asset('assets/img/dots-1.png')}}" class="absolute bottom-0 z-10 left-0 w-[233px] h-[108px]" alt="">
-                            <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to enrol in the project - Automated Attendance System offered by Google?</h3>
-                            <div class="relative z-30">
-                              <button data-modal-hide="popup-modal" type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full shadow-xl">
-                                Yes, Enroll Me
-                            </button>
-                            <button data-modal-hide="popup-modal" type="button" class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 rounded-full shadow-xl">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              <div class="relative w-3/6 h-full max-w-4xl md:h-auto border-[3px] border-light-blue rounded-2xl">
+                  <div class="relative bg-white rounded-xl shadow-2xl">
+                      <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 text-sm p-1.5 ml-auto inline-flex items-center z-30" data-modal-hide="popup-modal">
+                          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          <span class="sr-only">Close modal</span>
+                      </button>
+                      <div class="p-6 text-left space-x-4">
+                          <img src="{{asset('assets/img/dots-1.png')}}" class="absolute top-0 right-0 w-[233px] h-[108px]" alt="">
+                          {{-- <img src="{{asset('assets/img/dots-1.png')}}" class="absolute bottom-0 z-10 left-0 w-[233px] h-[108px]" alt=""> --}}
+                          <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to enroll {{$project->name}} project</h3>
+                          <div class="relative z-30">
+                            <button data-modal-hide="popup-modal" type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full shadow-xl">
+                              Yes
+                          </button>
+                          <button data-modal-hide="popup-modal" type="button" class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 rounded-full shadow-xl">Cancel</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
             <div class="border border-light-blue rounded-[10px] bg-white p-2 absolute mt-14  flex items-center space-x-3">
               <i class="fa-regular fa-calendar"></i>
