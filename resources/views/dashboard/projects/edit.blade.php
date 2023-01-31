@@ -103,7 +103,7 @@
           <div class="mb-3">
             <label for="inputvalid" class="form-label">Institution</label>
             <select class="form-control form-select" id="inputInstitution" aria-label="Default select example" name="institution_id">
-              <option value="{{$project->institution_id}}" selected></option>
+              <option value="{{$project->institution_id}}" hidden></option>
               @forelse($GetInstituionData as $ins)
               <option value="{{$ins->id}}">{{$ins->institutions}}</option>
               @empty
