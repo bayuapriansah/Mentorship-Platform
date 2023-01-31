@@ -43,7 +43,7 @@ class MentorController extends Controller
 // fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
     public function sendInvite(Request $request,$company_id)
     {   
-        dd($request->all());
+        //dd($request->all());
         $checkMentor = Mentor::where('email', $request->email)->first();   
         if($checkMentor){
             $checkMentorProject = MentorProject::where('mentor_id', )->where('project_id', $request->project_id)->first();

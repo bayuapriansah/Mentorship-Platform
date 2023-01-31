@@ -18,13 +18,14 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         \App\Models\User::factory()->create([
-            'name' => 'farhan',
+            'name' => 'admin',
             'email' => 'admin@mail.com',
         ]);
 
         Company::create([
             'name' => fake()->name(),
-            'email' => 'company@mail.com',
+	    'email' => 'company@mail.com',
+	    'logo' => 'image.jpg',
             'address' => fake()->address(),
         ]);
 
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => fake()->firstname(),
             'last_name' => fake()->lastname(),
             'email' => 'student@mail.com',
-            'gender' => 'male',
+            'sex' => 'male',
             'state' => 'medan',
             'country' => 'indonesia',
             'is_confirm' => 1
