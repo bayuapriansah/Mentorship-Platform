@@ -104,7 +104,7 @@
   </div>
   <div class="max-w-[1366px] mx-auto px-16 pt-24 mb-0 grid grid-cols-12 gap-8 grid-flow-col" id="#projectsSection">
     <div class="col-span-8 space-y-4">
-      <h3 class="intelOne text-dark-blue text-2xl font-semibold">Internships Projects</h3>
+      <h3 class="intelOne text-dark-blue text-2xl font-semibold">Internship Projects</h3>
     </div>
     
   </div>
