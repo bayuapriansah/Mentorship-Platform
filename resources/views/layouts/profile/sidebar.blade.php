@@ -114,12 +114,13 @@
       @if($student->is_confirm == 1)
       
       <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
-      @endif
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2">
         {{-- $dataDate is a function to calculate --}}
         <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
         <div class="text-center">{{ round($taskDate) }}%</div>
       </div>
+      @endif
+
       {{-- <div class="flex-col ">
         <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
         <p class="text-black text-[6px]">{{$student->end_date}}</p>
