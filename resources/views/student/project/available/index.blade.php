@@ -11,7 +11,7 @@
       {{-- <p>Sort</p> --}}
     </div>
   </div>
-  <div class="max-w-[1366px] mx-auto px-16 grid grid-cols-12 gap-8 grid-flow-col items-center" id="searchBar">
+  {{-- <div class="max-w-[1366px] mx-auto px-16 grid grid-cols-12 gap-8 grid-flow-col items-center" id="searchBar">
     <div class="col-span-8 relative">
       <form action="/projects/search" method="get">
         @csrf
@@ -21,7 +21,7 @@
         </div>
       </form>
     </div>
-  </div>
+  </div> --}}
   <div class="max-w-[1366px] mx-auto px-16 pt-5 grid grid-cols-12 gap-8 grid-flow-col items-center">
     <div class="col-span-8 min-h-[500px]">
       @forelse($projects as $project)
