@@ -50,8 +50,8 @@ class MailController extends Controller
     {
         $data = [
             'subject' => 'Invitation to be a Mentor',
-            'body' => $urlInvitation,
-            'body2' => '',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
             'body3' => '',
             'body4' => '',
             'body5'=> '',
@@ -60,7 +60,7 @@ class MailController extends Controller
             // 'body3' => $urlInvitation,
             // 'body4' => 'Best regards,',
             // 'body5'=> 'Simulated Internship Team ❤️',
-            'type' => 'welcome',
+            'type' => 'mentor',
         ];
         try
         {
@@ -75,12 +75,12 @@ class MailController extends Controller
     {
         $data = [
             'subject' => 'Registration Completed',
-            'body' => 'Your registration as Mentor is Completed',
-            'body2' => 'You can Login, and Choose the Projet that you mentored.',
-            'body3' => 'if you still have a question related about this, please contact us : support@simulatedinternship.com',
-            'body4' => 'Best regards,',
-            'body5'=> 'Simulated Internship Team ❤️',
-            'type' => 'welcome',
+            'body' => $mailto,
+            'body2' => 'otp/login',
+            // 'body3' => 'if you still have a question related about this, please contact us : support@simulatedinternship.com',
+            // 'body4' => 'Best regards,',
+            // 'body5'=> 'Simulated Internship Team ❤️',
+            'type' => 'mentor',
         ];
         try
         {
