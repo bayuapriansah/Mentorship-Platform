@@ -106,7 +106,7 @@
     <div class="max-w-[1366px] mx-auto px-36 pt-12 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
       <div class="col-end-13 col-span-2">
         <button  class="intelOnetext-sm font-normal border-2 border-solid border-dark-blue text-darker-blue hover:bg-dark-blue hover:text-white px-3 py-2 rounded-full">
-          <a href="/projects">View All Project</a>
+          <a href="/projects">View All Projects</a>
         </button>
       </div>
     </div>
