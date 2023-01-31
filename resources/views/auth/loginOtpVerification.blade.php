@@ -43,9 +43,10 @@
             <div class="mt-2">
               @include('flash-message')
             </div>
+            <div id="countdown" class="flex justify-end my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue"></div>
             <div class="grid grid-cols-1">
             <div class="flex justify-end mb-4">
-              <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue">Resend OTP</button>
+              <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue" disabled>Resend OTP</button>
             </div>
             <div class="flex justify-end mt-1">
               <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue"></button>
@@ -83,4 +84,28 @@
     </div>
   </div>
 </section>
+@endsection
+@section('more-js')
+<script>
+  var countDownDate = new Date();
+  countDownDate.setMinutes(countDownDate.getMinutes() + 2);
+  var button = document.querySelector('button[value="otp"]');
+
+  var x = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML = "0" + minutes + ":" + seconds + "";
+
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("countdown").innerHTML = "00:00";
+      button.classList.remove("text-dark-grey");
+      button.classList.add("text-dark-blue");
+      button.disabled = false;
+    }
+  }, 1000);
+</script>
 @endsection
