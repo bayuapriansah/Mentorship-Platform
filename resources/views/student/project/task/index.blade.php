@@ -6,9 +6,10 @@
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
       <div class="col-span-6 my-auto">
+        {{-- @dd($task) --}}
         <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$task->project->id}}/detail" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue"><i class="fa-solid fa-arrow-left pr-2"></i>back</a>
 
-        <h2 class="text-dark-blue text-2xl font-medium mb-3">{{$task->project->name}}</h2>
+        <h2 class="text-dark-blue text-2xl font-medium mb-3">Task {{$task->section}} : {{$task->project->name}}</h2>
         <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">{{$task->project->project_domain}}</span>
       </div>
       <div class="col-span-6 relative">
