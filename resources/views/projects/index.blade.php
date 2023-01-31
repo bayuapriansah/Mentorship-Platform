@@ -104,7 +104,7 @@
   </div>
   <div class="max-w-[1366px] mx-auto px-16 pt-24 mb-0 grid grid-cols-12 gap-8 grid-flow-col" id="#projectsSection">
     <div class="col-span-8 space-y-4">
-      <h3 class="intelOne text-dark-blue text-2xl font-semibold">Internships Projects</h3>
+      <h3 class="intelOne text-dark-blue text-2xl font-semibold">Internship Projects</h3>
     </div>
     
   </div>
@@ -133,12 +133,12 @@
           @else
             /otp/login
           @endif
-          " class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Internship Details</a>
+          " class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Project Details</a>
         </div>
       </div>
       @empty
         <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
-        <p class="intelOne text-lg text-center">No Internship Found</p>
+        <p class="intelOne text-lg text-center">No Project Found</p>
       @endforelse
     </div>
     <div class="col-span-4">

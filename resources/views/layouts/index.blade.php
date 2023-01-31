@@ -91,7 +91,11 @@
       <ul class="col-start-5 col-span-4 flex justify-between text-black">
         <li class="text-dark-blue intelOne font-light text-sm"><a href="/" class="hover:text-neutral-500">Home</a></li>
         <li class="text-dark-blue intelOne font-light text-sm"><a href="{{route('projects.index')}}" class="hover:text-neutral-500">Internship Projects</a></li>
-        <li class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Industry Partners</a></li>
+        <li data-tooltip-target="tooltip-hover" data-tooltip-trigger="hover" class="text-dark-blue intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Industry Partners</a></li>
+        <div id="tooltip-hover" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Coming Soon
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>        
       </ul>
       <div class="col-start-9 col-span-4 flex relative {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
         @if(Auth::guard('student')->check())

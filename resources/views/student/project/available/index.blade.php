@@ -40,7 +40,7 @@
           <div class="flex justify-between mt-2">
             <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$project->period}} Months</span></p>
             <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjectsAvailable/{{$project->id}}/detail"
-               class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Internship</a>
+               class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Project</a>
           </div>
         </div>
         @empty
