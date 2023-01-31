@@ -8,7 +8,7 @@
         <img src="{{asset('assets/img/icon/magGlass.png')}}" class="pl-2 my-auto cursor-pointer" alt="Magnifying glass" id="search">
         @endif
       </h1>
-      <p>Sort</p>
+      {{-- <p>Sort</p> --}}
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-16 grid grid-cols-12 gap-8 grid-flow-col items-center" id="searchBar">
@@ -36,7 +36,7 @@
               <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
             </div>
           </div>
-          <div class="intelOne text-grey font-normal text-sm py-2 m-0">{!! substr($project->problem,0,245) !!}...</div>
+          <div class="intelOne text-grey font-normal text-sm py-2 m-0">{!! substr($project->problem,0,250) !!}...</div>
           <div class="flex justify-between mt-2">
             <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$project->period}} Months</span></p>
             <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjectsAvailable/{{$project->id}}/detail"
