@@ -99,9 +99,9 @@
       </ul>
       <div class="col-start-9 col-span-4 flex relative {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
         @if(Auth::guard('student')->check())
-        <ul class="space-x-9 flex items-end text-black ">
+        <ul class="space-x-16 flex items-end text-black ">
           <li class="text-dark-blue intelOne font-light text-sm my-auto">
-            <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="py-2 px-12 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-dark-blue hover:text-white font-light text-sm intelOne ml-10">
+            <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="py-2 px-12 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-dark-blue hover:text-white font-light text-sm intelOne">
               Profile
             </a>
           </li>
