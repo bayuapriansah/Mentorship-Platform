@@ -96,42 +96,52 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $email)
+    public function update($id, Request $request)
     {
         // dd($request->all());
-        // dd($email);
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'date_of_birth' => 'required',
-            'gender' => 'required',
-            'state' => 'required',
-            'country' => 'required',
-            'institution' => 'required',
-            'g-recaptcha-response' => function ($attribute, $value, $fail) {
-                $secretkey = config('services.recaptcha.secret');
-                $response = $value;
-                $userIP = $_SERVER['REMOTE_ADDR'];
-                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
-                $response = \file_get_contents($url);
-                $response = json_decode($response);
-                // dd($response);
-                if(!$response->success){
-                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    Session::flash('alert-class', 'alert-danger');
-                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-                } 
-            },
-        ]);
-        $student = Student::where('email',$email)->first();
-        // dd($student);
-        $student->first_name = $valiresult['state'];
-        $student->country = $validated['country'];
-        $student->institution = $validated['institution'];
-        $student->is_confirm = 1;
+        $student = Student::find($id);
+        $student->first_name = $request->first_name;
+        $student->last_name = $request->last_name;
+        $student->date_of_birth = $request->date_of_birth;
+        $student->sex = $request->sex;
+        $student->country = $request->country;
+        $student->state = $request->state;
+        if($request->study_program =='other'){
+            $student->study_program = $request->study_program_form;
+        }else{
+            $student->study_program = $request->study_program;
+        }
+        $student->year_of_study = $request->year_of_study;
+        if($request->hasFile('profile_picture')){
+            if($student->profile_picture == null){
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                    $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
+                    $student->profile_picture = $profile_picture;
+                }else{
+                    return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
+                }
+            }
+            
+            // save the new image
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                if(Storage::path($student->profile_picture)) {
+                    Storage::disk('public')->delete($student->profile_picture);
+                }
+                $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
+                $student->profile_picture = $profile_picture;
+            }else{
+                return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
+            }
+        }
         $student->save();
-        $message = "Profile Updated";
-        return redirect()->route('student.register',[$email])->with('success', $message);
+        return redirect('/profile/'.$id.'/edit')->with('success','Company has been edited');
+
     }
     
     /**

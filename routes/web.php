@@ -70,7 +70,6 @@ Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update']
 
 // student register
 Route::get('/student/register/{email}', [StudentController::class, 'register'])->name('student.register');
-Route::post('/student/register/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 
 // bay
 Route::group(['middleware'=>'auth:student'], function(){
@@ -87,6 +86,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 
     Route::get('/profile/{student}/edit', [StudentController::class, 'edit'])->name('student.edit');
+    Route::patch('/profile/{student}', [StudentController::class, 'update'])->name('student.update');
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){

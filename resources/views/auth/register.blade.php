@@ -40,7 +40,7 @@
           @enderror
           
           <select id="sex" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" name="sex" required>
-            <option value="" class="" id="emptySex" hidden>Sex *</option>
+            <option value="" class="" hidden>Sex *</option>
             <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
             <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
           </select><br>
@@ -159,9 +159,6 @@
 @section('more-js')
 <script>
   $(document).ready(function () {
-      $('#sex').on('change', function(){
-        
-      });
       $('#inputInstitution').on('change', function () {
           var institutionVal = this.value;
           var base_url = window.location.origin;
