@@ -14,6 +14,11 @@
   src: url(/public/assets/intelOneFont/intelone-display-medium.woff2);
   font-weight: 500;
 }
+@font-face {
+  font-family: 'IntelOne';
+  src: url(/public/assets/intelOneFont/intelone-display-light.woff2);
+  font-weight: 300;
+}
 *{
   font-family: 'IntelOne';
 }
