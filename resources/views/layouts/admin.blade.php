@@ -25,9 +25,11 @@
     tinymce.init({
         selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
         height: 350,
-        plugins: 'media, image',
+        plugins: 'media image paste lists',
         menubar: 'insert image or video',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
         images_upload_url: 'postAcceptor.php',
+        paste_as_text: true,
         automatic_uploads: false
         //  plugins: 'powerpaste advcode table lists checklist',
         //  toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table'
