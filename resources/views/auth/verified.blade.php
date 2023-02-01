@@ -7,6 +7,7 @@
         <img src="{{asset('assets/img/icons8-verified-account.gif')}}" alt="" class="mx-auto">
         <h1 class="intelOne text-dark-blue font-bold text-3xl">Email address verified successfully!</h1>
         <p class="intelOne text-dark-blue text-xl">Thank you for signing up to Simulated Internship Platform for Industry Readiness. We are happy to have you. </p>
+        <p></p>
         {{-- <p class="intelOne text-ligt-black text-xl pb-14">Your mail has been verified successfully...</p> --}}
         <a href="{{route('otp.login')}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-16 py-3.5 mt-20 rounded-full">Click here to login</a>
 

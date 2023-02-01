@@ -153,16 +153,16 @@ class AuthController extends Controller
     }
     public function verified($email)
     {
-        $email = (new SimintEncryption)->decData($email);
-        $registeredEmail = Student::where('email', $email)->where('is_confirm', 0)->first();
-        if($registeredEmail){
-            $registeredEmail->is_confirm = 1;
-            $registeredEmail->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
-            $registeredEmail->save();
+        // $email = (new SimintEncryption)->decData($email);
+        // $registeredEmail = Student::where('email', $email)->where('is_confirm', 0)->first();
+        // if($registeredEmail){
+        //     $registeredEmail->is_confirm = 1;
+        //     $registeredEmail->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+        //     $registeredEmail->save();
             return view('auth.verified');
-        }else{
-            return abort(403);
-        }
+        // }else{
+        //     return abort(403);
+        // }
     }
 
 
