@@ -143,16 +143,30 @@
       <p class="text-black text-xs">{{$start_date}}</p>
       @endif
       <div class="w-full relative">
-        {{-- $dataDate is a function to calculate --}}
-        
-          @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$enrolled_project->flag_checkpoint}}%">
-          @endforeach
+        @php $tipNumber = 1 @endphp
+        @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
+          <img data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover" src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$enrolled_project->flag_checkpoint}}%">
+          <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+            {{$enrolled_project->project->name}}
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+
+          @php $tipNumber++ @endphp
+        @endforeach
 
         <div class="bg-gray-200 rounded-full h-1.5 mb-4 mt-4 ">
           <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%"></div>
         </div>
-        
+        <div class="text-center">
+          @php $no=1 @endphp
+          @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
+            <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$enrolled_project->flag_checkpoint-10}}%">Project {{$no}}</p>
+            <p class="absolute font-normal text-[8px]" style="left: {{$enrolled_project->flag_checkpoint-11}}%">{{\Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
+            @php
+              $no++
+            @endphp
+          @endforeach
+        </div>
 
       </div>
       {{-- <div class="flex-col ">
