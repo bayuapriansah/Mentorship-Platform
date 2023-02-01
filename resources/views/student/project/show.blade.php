@@ -23,10 +23,22 @@
           {{-- <button  class="intelOne text-white text-sm font-normal bg-darker-blue px-12 py-2 rounded-full absolute cursor-default ">Enrolled</button>  --}}
           @php
           $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
-          $enrolledDate = $appliedDate->format('d M Y'); 
+          $enrolledDate = $appliedDate->format('d M Y');
+
+          $completedDate =  \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->updated_at)->startOfDay()->format('d M Y');
+          // $co
+
           $now = \Carbon\Carbon::now()->startOfDay();
           @endphp
-          <p class="font-normal text-sm text-right">Enrolled On <br> {{$enrolledDate}}</p>
+          {{-- @dd($completedDate) --}}
+          <p class="font-normal text-sm text-right">
+            @if ($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->where('is_submited', 1)->first())
+              Completed On <br> {{$completedDate}}
+            @else
+              Enrolled On <br> {{$enrolledDate}}
+            @endif
+          
+          </p>
           
       </div>
     </div>
