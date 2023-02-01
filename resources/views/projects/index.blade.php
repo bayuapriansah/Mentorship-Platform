@@ -146,12 +146,12 @@
         <div class="space-y-5">
           <iframe width="361" height="240" src="https://www.youtube.com/embed/aZLE-c7I7uk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           <h5 class=" font-bold text-xl ">Quick start video to get you going</h5>
-          <p class="text-grey font-normal text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus possimus laborum quis aliquid facilis, nostrum maxime ab error quo unde eos illum repudiandae. Hic nobis accusantium quis ratione. Facilis, tempora?</p>
+          <p class="text-grey font-normal text-sm">Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity.</p>
         </div>
         <div class="space-y-5 mt-10">
           <img src="{{asset('assets/img/image19.png')}}" alt="">
           <h5 class=" font-bold text-xl ">About intel digital readliness</h5>
-          <p class="text-grey font-normal text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus possimus laborum quis aliquid facilis, nostrum maxime ab error quo unde eos illum repudiandae. Hic nobis accusantium quis ratione. Facilis, tempora?</p>
+          <p class="text-grey font-normal text-sm">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
         </div>
 
       </div>

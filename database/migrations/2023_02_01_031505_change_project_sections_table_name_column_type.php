@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('project_sections', function (Blueprint $table) {
             $table->longText('description')->change();
-
         });
     }
 
