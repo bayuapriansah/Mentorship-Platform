@@ -29,7 +29,7 @@
       <div class="col-span-5">
         <a href="/otp/login" class="intelOne text-dark-blue font-normal text-base"><i class="fa-solid fa-arrow-left"></i> Go back</a>
         <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Login</h1>
-        <p class="intelOne font-light text-black text-lg leading-6 py-6">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <p class="intelOne font-light text-black text-lg leading-6 py-6">We have sent a One Time Password (OTP) to your email address. Please enter it below.</p>
         <form action="{{ route('otp.getlogin') }}" method="post" id="register">
           @csrf
           <input type="hidden" name="user_id" value="{{$user_id}}">
@@ -41,7 +41,7 @@
           </div> --}}
           <div class="grid grid-cols-[300px_minmax(200px,_1fr)_100px]">
             <div class="mt-2">
-              @include('flash-message')
+              {{-- @include('flash-message') --}}
               <div class="alert alert-success alert-dismissible fade show" role="alert" id="pleaseOtp" style="display: none;">
                 Please Enter your OTP First
               </div>
