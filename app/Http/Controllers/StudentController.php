@@ -306,15 +306,16 @@ class StudentController extends Controller
         $submission->is_complete = 1;
         if($request->hasFile('file')){
             $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
-            // dd($uploadedFileType);
             if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
                 $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
                 $submission->file = $file;
             }else{
                 return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong');
             }
+            $submission->save();
+        }else{
+            return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
-        $submission->save();
 
         if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
             $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
