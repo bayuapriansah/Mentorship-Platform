@@ -60,7 +60,7 @@
             @if ($comments->count() == 0)
                 <p class="py-4 text-center">No Comments Yet</p>
             @endif
-            @foreach($comments->where('project_id', $task->project->id)->where('project_section_id', $task->id) as $comment)
+            @foreach($comments->where('project_id', $task->project->id)->where('project_section_id', $task->id)->where('student_id', Auth::guard('student')->user()->id) as $comment)
               <div class="mb-2">
                 {{-- @dd($comment->mentor_id == null) --}}
                 @if ($comment->mentor_id == null)
