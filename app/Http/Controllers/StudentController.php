@@ -235,17 +235,9 @@ class StudentController extends Controller
 
         // To Check if The Project_Section not in the Submission Table then Show the data but limit data to only One
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
-// dd($projectsections);
+        // dd($projectsections);
         // Change is_submited in enrolled_project
-        // dd($submissions);
-
-        if($submissions->count() == $project_sections->count()){
-            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-            $success_project->is_submited = 1;
-            $success_project->flag_checkpoint = $dataDate;
-            $success_project->save();
-        }
-        
+      
         // Total Task in Section
         $total_task = $project_sections->count();
 
@@ -292,6 +284,11 @@ class StudentController extends Controller
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
     {
+        $student = Student::where('id', $student_id)->first();
+        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+        $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
+        $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first()->is_submited;
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
@@ -318,6 +315,13 @@ class StudentController extends Controller
             }
         }
         $submission->save();
+
+        if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
+            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+            $success_project->is_submited = 1;
+            $success_project->flag_checkpoint = $dataDate;
+            $success_project->save();
+        }
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
 

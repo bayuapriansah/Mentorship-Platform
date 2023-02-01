@@ -3,7 +3,7 @@
   {{ $message }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-@endif 
+@endif
 
 @if($message = Session::get('successTailwind'))
 <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-lighter-green rounded-lg shadow " role="alert">
