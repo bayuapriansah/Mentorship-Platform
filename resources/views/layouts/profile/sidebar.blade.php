@@ -109,7 +109,7 @@
     @php
          $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
     @endphp
-    <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
+    <p class="text-black text-xs font-normal">Projects Timeline</p>
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
       
@@ -135,7 +135,7 @@
     {{-- SECTION TO SHOW TASK PROGRESS --}}
     @else
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
-    <p class="text-black text-xs font-normal">Internship Projects Timeline</p>
+    <p class="text-black text-xs font-normal">Internship Timeline</p>
     {{-- <span>s</span> --}}
 
     <div class="flex justify-between">

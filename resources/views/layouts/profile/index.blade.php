@@ -76,9 +76,9 @@
       </a>
       <ul class="col-start-4 col-span-5 flex justify-between text-black">
         @if(Route::is('student.allProjects') || Route::is('student.ongoingProjects') || Route::is('student.completedProjects'))
-          <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Project</a></li>
+          <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Projects</a></li>
         @else
-          <li class="text-black intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Project</a></li>
+          <li class="text-black intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Projects</a></li>
         @endif
 
         @if(Route::is('student.allProjectsAvailable') || Route::is('student.availableProjectDetail'))
