@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        
+
       </form>
     </div>
   </div>
@@ -114,6 +114,7 @@
     
     <p class="text-black text-xs font-normal">Projects Timeline</p>
     {{-- @dd($submissions) --}}
+
     {{-- @dd($enrolled_projects->where('project_id', $project_id)->get()) --}}
     {{-- @php $tipNumber = 1 @endphp --}}
     

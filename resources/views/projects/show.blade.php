@@ -150,9 +150,8 @@
       <img src="{{asset('assets/img/certificate.png')}}" alt="" class="relative mt-20 w-[305] h-[236]">
     </div> 
   </div>
-
   {{--  --}}
-  <div class="max-w-[1366px] mx-auto px-16 pb-16 grid grid-cols-12 gap-11 grid-flow-col bg-white">
+  {{-- <div class="max-w-[1366px] mx-auto px-16 pb-16 grid grid-cols-12 gap-11 grid-flow-col bg-white">
     <div class="col-span-7">
       <h1 class="text-xl font-semibold text-dark-blue pb-6">FAQs</h1>
       <div id="accordion-collapse" data-accordion="collapse" class="">
@@ -199,7 +198,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
   {{-- @if(Auth::guard('student')->check())
   <div class="max-w-[1366px] mx-auto px-16 pb-16 grid grid-cols-12 gap-11 grid-flow-col bg-white">
     <div class="col-span-7">
@@ -241,8 +240,5 @@
     </div>
   </div>
   @endif --}}
-  
-
-
 </section>
 @endsection

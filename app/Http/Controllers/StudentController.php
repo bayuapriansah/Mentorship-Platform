@@ -285,6 +285,12 @@ class StudentController extends Controller
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
     {
+        // For Submission
+        $project = Project::find($project_id);
+        $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
+        $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
+        $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
+        // 
         $student = Student::where('id', $student_id)->first();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
@@ -304,18 +310,20 @@ class StudentController extends Controller
         $submission->section_id = $task_id;
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;
+        $submission->flag_checkpoint = $taskDate;
         $submission->is_complete = 1;
         if($request->hasFile('file')){
             $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
-            // dd($uploadedFileType);
             if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
                 $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
                 $submission->file = $file;
             }else{
                 return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong');
             }
+            $submission->save();
+        }else{
+            return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
-        $submission->save();
 
         if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
             $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
