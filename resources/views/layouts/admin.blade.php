@@ -25,11 +25,12 @@
     tinymce.init({
         selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
         height: 350,
-        plugins: 'media image paste',
-        menubar: 'insert image or video',
+        plugins: 'media image lists paste',
+        menubar: 'file edit insert view format table tools help',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
         images_upload_url: 'postAcceptor.php',
-        paste_as_text: true,
-        automatic_uploads: false
+        automatic_uploads: false,
+        paste_as_text: true
         //  plugins: 'powerpaste advcode table lists checklist',
         //  toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table'
     });
