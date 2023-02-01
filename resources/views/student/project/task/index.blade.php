@@ -5,14 +5,14 @@
 <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center pb-36 min-h-[500px]">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
-      <div class="col-span-6 my-auto">
+      <div class="col-span-8 my-auto">
         {{-- @dd($task) --}}
         <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$task->project->id}}/detail" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue"><i class="fa-solid fa-arrow-left pr-2"></i>back</a>
 
-        <h2 class="text-dark-blue text-2xl font-medium mb-3">Task {{$task->section}} : {{$task->project->name}}</h2>
+        <h2 class="text-dark-blue text-2xl font-medium mt-4 mb-3">{{$task->project->name}}</h2>
         <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">{{$task->project->project_domain}}</span>
       </div>
-      <div class="col-span-6 relative">
+      <div class="col-span-4 relative">
         <img src="{{asset('assets/img/icon/profile/dots.png')}}" class="absolute z-10 right-0 -top-3 ">
         <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-10 top-10 ">
           <img src="{{asset('storage/'.$task->project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
@@ -21,7 +21,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
       <div class="col-span-7 relative my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium">{{$task->title}}</h1>
+        <h1 class="text-dark-blue text-[22px] font-medium">Task {{$task->section}} : {{$task->title}}</h1>
       </div>
       {{-- <div class="col-start-10 col-span-3">
           <span class="intelOne text-black text-sm font-normal">due date</span> 
