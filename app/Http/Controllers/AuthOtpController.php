@@ -88,7 +88,7 @@ class AuthOtpController extends Controller
             'user_id' => $data_user->id,
             'email' => $email,
             'otp' => rand(1111, 9999),
-            'expired_at' => $now->addMinutes(5) // Otp Only Last 5 minutes
+            'expired_at' => $now->addMinutes(2) // Otp Only Last 2 minutes
         ]);
     }
 
@@ -118,6 +118,7 @@ class AuthOtpController extends Controller
             }
             
             $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
+            // dd(!$data_user->email == 'student@mail.test');
             if(!$data_user){
                 $data_user = Mentor::where('id', $encId)->where('email', $encEmail)->first();
                 $verificationCode->update([
@@ -126,9 +127,11 @@ class AuthOtpController extends Controller
                 Auth::guard('mentor')->login($data_user);
                 return redirect('/')->with('success', 'You are logged in');
             }else{
-                $verificationCode->update([
-                    'expired_at' => $now
-                ]);
+                if(!$data_user->email == 'student@mail.test'){
+                    $verificationCode->update([
+                        'expired_at' => $now
+                    ]);
+                }
                 Auth::guard('student')->login($data_user);
                 return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjects')->with('success', 'You are logged in');
             }
