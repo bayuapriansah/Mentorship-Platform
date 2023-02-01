@@ -211,7 +211,7 @@ class StudentController extends Controller
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::orderBy('id','DESC')->where('project_id', $project_id)->get();
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submission'));
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions'));
     }
 
     public function enrolledDetail($student_id, $project_id)
@@ -261,6 +261,7 @@ class StudentController extends Controller
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::find($task_id);
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->get();
+        $submissions = Submission::where([['student_id', $student_id] ,['project_id',$project_id], ['is_complete', 1]])->get();
         $submission = Submission::where('student_id',$student_id)->where('section_id', $task_id)->first();
         $project = Project::find($project_id);
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
@@ -279,7 +280,7 @@ class StudentController extends Controller
         $taskProgress = (100 / $total_task) * $task_clear;
         // dd($taskProgress);
         $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','taskProgress','total_task','task_clear','taskDate','project','newMessage'));
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submission','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
