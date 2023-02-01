@@ -104,7 +104,6 @@
         justify-end
       @endif
       {{-- {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}} --}}
-      
       ">
         @if(Auth::guard('student')->check())
         <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="py-2 px-12 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-dark-blue hover:text-white font-light text-sm intelOne ml-10">
@@ -162,7 +161,7 @@
           </li>
         </ul>       
         @else
-        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne ml-10">Login</a>
+        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne mr-10">Login</a>
         <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-dark-blue bg-dark-blue text-center capitalize bg-orange text-white hover:bg-darker-blue font-normal text-sm intelOne">Register</a>
         @endif
         
