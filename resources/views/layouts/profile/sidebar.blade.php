@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        
+
       </form>
     </div>
   </div>
@@ -111,7 +111,7 @@
     @php
          $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
     @endphp
-    <p class="text-black text-xs font-normal">Projects Timeline</p>
+    <p class="text-black text-xs font-normal">Project Timeline</p>
     {{-- @dd($project) --}}
     {{-- @dd($enrolled_projects->where('project_id', $project_id)->get()) --}}
     @php $tipNumber = 1 @endphp
