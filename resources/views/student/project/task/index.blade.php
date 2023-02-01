@@ -170,9 +170,10 @@
                               </div>
                             </label>
                             <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
-
                             </div>
-                            <button class="text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="submit">Confirm Submission</button>
+                            <a class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
+                            <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>
+                            <button class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" style="display: none;" id="submit"type="submit">Yes, Submit</button>
                           </div>
                         </form>
                     </div>
@@ -191,6 +192,20 @@ const fileInput = document.getElementById('file-input')
 const fileName = document.getElementById('file-name')
 const fileChatInput = document.getElementById('file-chat-input')
 const chatFileName = document.getElementById('chatFileName')
+
+// Submission Button
+document.querySelector('#confirm').addEventListener('click', function () {
+  document.querySelector('#confirm').style.display = 'none';
+  document.querySelector('#cancel').style.display = 'block';
+  document.querySelector('#submit').style.display = 'block';
+});
+
+document.querySelector('#cancel').addEventListener('click', function () {
+  document.querySelector('#confirm').style.display = 'block';
+  document.querySelector('#cancel').style.display = 'none';
+  document.querySelector('#submit').style.display = 'none';
+});
+
 
 // Listen for file drag-and-drop events
 dropArea.addEventListener('dragover', e => {
