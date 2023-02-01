@@ -23,7 +23,7 @@
     <script src="https://cdn.tiny.cloud/1/7d3zd697fxtkpnuq9ikxrj7hpewm4ce4a12ubsk671xmqykc/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
     tinymce.init({
-        selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
+        selector: 'textarea', // Replace this CSS selector to match the placeholder element for TinyMCE
         height: 350,
         plugins: 'media image paste lists',
         menubar: 'insert image or video',
