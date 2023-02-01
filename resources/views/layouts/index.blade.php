@@ -97,10 +97,24 @@
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>        
       </ul>
-      <div class="col-start-9 col-span-4 flex relative {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
+      <div class="col-start-9 col-span-4 flex relative 
+      @if (Auth::guard('student')->check())
+        justify-between 
+      @else
+        justify-end
+      @endif
+      {{-- {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}} --}}
+      ">
         @if(Auth::guard('student')->check())
-        <ul class="space-x-16 flex items-end text-black ">
-          <li class="text-dark-blue intelOne font-light text-sm my-auto">
+        <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="py-2 px-12 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-dark-blue hover:text-white font-light text-sm intelOne ml-10">
+          Profile
+        </a>
+        <form class="inline" method="post" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button>
+        </form>
+        {{-- <ul class="flex  text-black ">
+          <li class="text-dark-blue justify-between intelOne font-light text-sm my-auto">
             <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="py-2 px-12 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-dark-blue hover:text-white font-light text-sm intelOne">
               Profile
             </a>
@@ -109,7 +123,7 @@
             @csrf
             <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>
           </form>
-        </ul>
+        </ul> --}}
         @elseif(Auth::guard('web')->check())
         <ul class="text-left z-40">
           <li>
@@ -147,7 +161,7 @@
           </li>
         </ul>       
         @else
-        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne ml-10">Login</a>
+        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne mr-10">Login</a>
         <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-dark-blue bg-dark-blue text-center capitalize bg-orange text-white hover:bg-darker-blue font-normal text-sm intelOne">Register</a>
         @endif
         
@@ -161,7 +175,7 @@
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
       <div class="col-span-4">
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
-        <p class="text-grey font-normal text-[10px] pt-2 ">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal <span class="text-black">Notices and Disclaimers</span>. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See <span class="text-black">Intel's Global Human Rights Principles</span>. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
+        <p class="text-grey font-normal text-[10px] pt-2 ">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal <a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C" class="text-black">Notices and Disclaimers</a>. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See <a href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html" class="text-black">Intel's Global Human Rights Principles</a>. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
       </div>
       <div class="col-start-6 col-span-2 flex flex-col">
         <ul class="text-dark-blue text-xs font-normal">

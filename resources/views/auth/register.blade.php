@@ -87,7 +87,7 @@
           $study_programs = ['Artificial Intelligence and Machine Learning', 'Computer Science','Computing Systems', 'Software Engineering'];
         @endphp
         <select id="inputStudy" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="study_program" required>
-          <option value="" hidden>Study Name</option>
+          <option value="" hidden>Study Program</option>
           @foreach($study_programs as $study_program)
           <option value="{{$study_program}}">{{$study_program}}</option>
           @endforeach
