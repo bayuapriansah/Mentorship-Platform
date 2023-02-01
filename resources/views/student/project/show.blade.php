@@ -69,6 +69,7 @@
           }
           @endphp
           
+          {{-- @dd($project_sections) --}}
           @foreach($project_sections as $project_section)
             {{-- @if ($now->gte($appliedDate)) --}}
               {{-- @if($projectsections->count() > 0 && $submissions->count() > 0) --}}

@@ -73,7 +73,7 @@
   <div class="container mx-auto">
     <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 flex ">
       <div class="">
-        <h2 class="intelOne text-dark-blue font-bold text-3xl">Active Internship Projects</h2>
+        <h2 class="intelOne text-dark-blue font-bold text-3xl">Internship Projects</h2>
       </div>
       {{-- untuk arrow --}}
     </div>

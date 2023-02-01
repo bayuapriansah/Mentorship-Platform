@@ -112,10 +112,22 @@
          $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
     @endphp
     <p class="text-black text-xs font-normal">Projects Timeline</p>
+    {{-- @dd($project) --}}
+    {{-- @dd($enrolled_projects->where('project_id', $project_id)->get()) --}}
+    @php $tipNumber = 1 @endphp
+    {{-- @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
+      <img data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover" src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$enrolled_project->flag_checkpoint}}%">
+      <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+        {{$enrolled_project->project->name}}
+        <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+      @php $tipNumber++ @endphp
+    @endforeach  --}}
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
-      
+        
       <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
+      
       <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2">
         {{-- $dataDate is a function to calculate --}}
         <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
