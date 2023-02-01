@@ -97,10 +97,25 @@
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>        
       </ul>
-      <div class="col-start-9 col-span-4 flex relative {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}}">
+      <div class="col-start-9 col-span-4 flex relative 
+      @if (Auth::guard('student')->check())
+        justify-between 
+      @else
+        justify-end
+      @endif
+      {{-- {{Auth::guard('web')->check() || Auth::guard('student')->check() ? 'justify-end':'justify-between'}} --}}
+      
+      ">
         @if(Auth::guard('student')->check())
-        <ul class="space-x-16 flex items-end text-black ">
-          <li class="text-dark-blue intelOne font-light text-sm my-auto">
+        <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="py-2 px-12 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-dark-blue hover:text-white font-light text-sm intelOne ml-10">
+          Profile
+        </a>
+        <form class="inline" method="post" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button>
+        </form>
+        {{-- <ul class="flex  text-black ">
+          <li class="text-dark-blue justify-between intelOne font-light text-sm my-auto">
             <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="py-2 px-12 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-dark-blue hover:text-white font-light text-sm intelOne">
               Profile
             </a>
@@ -109,7 +124,7 @@
             @csrf
             <li><button type="submit" class="py-2 px-11 rounded-full border-2 border-solid border-light-grey bg-light-grey text-center capitalize bg-orange text-darker-blue font-normal text-sm intelOne">Log Out</button></li>
           </form>
-        </ul>
+        </ul> --}}
         @elseif(Auth::guard('web')->check())
         <ul class="text-left z-40">
           <li>
