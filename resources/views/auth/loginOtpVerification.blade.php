@@ -51,9 +51,6 @@
               <button name="action" value="otp" type="submit" class="my-auto mx-2.5 mt-1 font-normal text-sm intelOn text-grey" disabled>Resend OTP</button>
             </div>
             <div id="countdown" class="flex justify-end my-auto mr-2.5 font-normal text-sm intelOn text-dark-blue"></div>
-            {{-- <div class="flex justify-end mt-1">
-              <button name="action" value="otp" type="submit" class="my-auto mx-2.5 font-normal text-sm intelOn text-dark-blue"></button>
-            </div> --}}
             </div>
           </div>
           <div class="flex mt-4">
