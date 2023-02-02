@@ -17,9 +17,9 @@ return [
 
     'default' => env('CACHE_DRIVER', 'file'),
     
-    'headers' => [
-        'Cache-Control' => 'public, max-age=3600',
-    ],
+    // 'headers' => [
+    //     'Cache-Control' => 'public, max-age=3600',
+    // ],
     /*
     |--------------------------------------------------------------------------
     | Cache Stores
