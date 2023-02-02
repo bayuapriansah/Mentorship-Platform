@@ -73,7 +73,7 @@
             </div>
             @empty
               <div class="mt-20 text-sm text-center space-y-4 mb-52">
-                <p class="text-dark-blue">Get started with Simulated Internships platform. Enrol in your first project today!</p>
+                <p class="text-dark-blue">Get started with Simulated Internships platform. Enroll in your first project today!</p>
                 <p class="text-black">Click on the link below to select projects</p>
                 <p><a href="/projects" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-8 py-3 rounded-full">View All Available Projects</a></p>
               </div>
