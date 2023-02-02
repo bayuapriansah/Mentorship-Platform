@@ -35,7 +35,8 @@
             <td>{!! substr($project->problem,0,250) !!}</td>
             <td>{{ Str::upper($project->project_domain) }}</td>
             <td>
-              <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/assigned_projects/{{$project->id}}/section" >Project Section</a>
+              {{-- <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/assigned_projects/{{$project->id}}/section" >Project Section</a> --}}
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="{{ route('dashboard.chat.section',[$project->id]) }}" >Project Section</a>
               {{-- <a class="btn btn-labeled bg-primary editbtn text-white" href="" >Project Section</a> --}}
             </td>
           </tr>

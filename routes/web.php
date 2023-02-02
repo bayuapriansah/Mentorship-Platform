@@ -136,7 +136,11 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // All Project Assigned
         Route::get('/all_assigned_projects',[DashboardController::class, 'allAssignedProjects'])->name('chat.allAssignedProjects');
-
+        Route::get('/all_assigned_projects/{project}/section', [DashboardController::class, 'sectionProjectAssign'])->name('chat.section');
+        Route::get('/all_assigned_projects/{project}/section/{section}/subsection', [DashboardController::class, 'subsectionProjectAssign'])->name('chat.projectSubsection');
+        Route::get('/all_assigned_projects/{project}/section/{section}/chat', [DashboardController::class, 'showAllStudentsChats'])->name('chat.showAllStudentsChats');
+        Route::get('/all_assigned_projects/{project}/section/{section}/student/{student}', [DashboardController::class, 'singleStudentChat'])->name('chat.singleStudentChat');
+        Route::post('{mentor}/all_assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('chat.SendComment');
         // Project
         Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
         Route::get('/projects/draft', [ProjectController::class, 'draftIndex'])->name('projects.draft');
@@ -176,7 +180,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         
         Route::get('/assigned_projects/{project}/section/{section}/chat', [MentorController::class, 'showAllStudentsChats'])->name('assigned.showAllStudentsChats');
         Route::get('/assigned_projects/{project}/section/{section}/student/{student}', [MentorController::class, 'singleStudentChat'])->name('assigned.singleStudentChat');
-        Route::post('{mentor}/assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'mentorSendComment'])->name('assigned.mentorSendComment');
+        Route::post('{mentor}/assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('assigned.SendComment');
         // Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 
     }); 
