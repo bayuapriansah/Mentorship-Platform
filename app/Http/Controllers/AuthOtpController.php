@@ -52,6 +52,7 @@ class AuthOtpController extends Controller
         ]);
 
         if($validator->fails()){
+            Session::flash('email', 'Email is empty');
             return redirect()->route('otp.login')->withErrors($validator)->withInput();
         }
 

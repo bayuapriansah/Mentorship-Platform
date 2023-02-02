@@ -111,30 +111,51 @@
     @php
          $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
     @endphp
-    <p class="text-black text-xs font-normal">Project Timeline</p>
-    {{-- @dd($project) --}}
+    
+    <p class="text-black text-xs font-normal">Projects Timeline</p>
+    {{-- @dd($submissions) --}}
+
     {{-- @dd($enrolled_projects->where('project_id', $project_id)->get()) --}}
-    @php $tipNumber = 1 @endphp
-    {{-- @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
-      <img data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover" src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$enrolled_project->flag_checkpoint}}%">
-      <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
-        {{$enrolled_project->project->name}}
-        <div class="tooltip-arrow" data-popper-arrow></div>
-      </div>
-      @php $tipNumber++ @endphp
-    @endforeach  --}}
+    {{-- @php $tipNumber = 1 @endphp --}}
+    
+    {{-- <div class="relative">
+      @foreach ($submissions as $submission)
+        <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0 left-5"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+        @php $tipNumber++ @endphp
+      @endforeach 
+    </div> --}}
+
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
-        
       <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
-      
-      <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2">
-        {{-- $dataDate is a function to calculate --}}
-        <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
-        <div class="text-center">{{ round($taskDate) }}%</div>
-      </div>
       @endif
+      <div class="w-full relative">
+        @php $tipNumber = 1 @endphp
+        @foreach ($submissions as $submission)
+          <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+          @php $tipNumber++ @endphp
+        @endforeach 
 
+        <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-3">
+          <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
+          {{-- <div class="text-center mt-7">{{ round($taskDate) }}%</div> --}}
+        </div>
+
+        @php $no=1 @endphp
+        @foreach ($submissions as $submission)
+        <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$submission->flag_checkpoint-4}}%">Task {{$no}}</p>
+        <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
+          @php $no++ @endphp
+        @endforeach 
+        {{-- @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
+          <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$enrolled_project->flag_checkpoint-10}}%">Project {{$no}}</p>
+          <p class="absolute font-normal text-[8px]" style="left: {{$enrolled_project->flag_checkpoint-11}}%">{{\Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
+          @php
+            $no++
+          @endphp
+        @endforeach --}}
+
+      </div>
       {{-- <div class="flex-col ">
         <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
         <p class="text-black text-[6px]">{{$student->end_date}}</p>
@@ -143,6 +164,19 @@
         <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
       @endif
     </div>
+    {{-- <div class="flex justify-between">
+      @if($student->is_confirm == 1)
+      <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
+      @endif
+        <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2">
+          <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
+          <div class="text-center">{{ round($taskDate) }}%</div>
+        </div>
+      
+      @if($student->is_confirm == 1)
+        <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
+      @endif
+    </div> --}}
     @if($student->is_confirm == 0)
       <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
     @endif
