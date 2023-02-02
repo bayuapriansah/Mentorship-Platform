@@ -134,6 +134,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     Route::middleware(['auth:web,company'])->group(function(){
         Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
+        // All Project Assigned
+        Route::get('/all_assigned_projects',[DashboardController::class, 'allAssignedProjects'])->name('chat.allAssignedProjects');
+
         // Project
         Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
         Route::get('/projects/draft', [ProjectController::class, 'draftIndex'])->name('projects.draft');

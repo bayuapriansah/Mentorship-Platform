@@ -204,6 +204,7 @@ class MentorController extends Controller
     public function indexAssigned()
     {   
         $mentor = Mentor::find(Auth::guard('mentor')->user()->id);
+        // dd($mentor);
         return view('dashboard.mentors.assigned.index', compact('mentor'));      
     }
 
