@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Student;
 use App\Models\Mentor;
+use App\Models\Comment;
 use App\Models\EnrolledProject;
 use App\Models\Company;
+use App\Models\ProjectSection;
+use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -50,5 +53,34 @@ class DashboardController extends Controller
       $projects = Project::all();
       $enrolledProjects = EnrolledProject::all();
       return view('dashboard.admin.assignedProjects', compact('projects', 'enrolledProjects'));
+    }
+
+    public function sectionProjectAssign($project_id)
+    {
+        $project = Project::find($project_id);
+        $project_sections =  ProjectSection::where('project_id', $project_id)->get();
+        return view('dashboard.admin.assigned.section.index', compact(['project', 'project_sections']));      
+    }
+
+    public function subsectionProjectAssign($project_id, $section_id)
+    {
+        $project = Project::find($project_id);
+        $project_section = ProjectSection::find($section_id);
+        $project_subsections =  SectionSubsection::where('project_section_id', $section_id)->get();
+        // dd($project_subsections->submission);
+        return view('dashboard.admin.assigned.section.subsection.index', compact(['project' ,'project_section', 'project_subsections']));      
+    }
+
+    public function showAllStudentsChats($project_id, $section_id)
+    {
+        $enrolled_students = EnrolledProject::where('project_id', $project_id)->get();
+        // dd($enrolled_students);
+        return view('dashboard.admin.assigned.section.chat.index', compact(['project_id','section_id','enrolled_students']));
+    }
+
+    public function singleStudentChat($project_id, $section_id, $student_id)
+    {
+        $comments = Comment::where('project_id', $project_id)->where('project_section_id', $section_id)->get();
+        return view('dashboard.admin.assigned.section.chat.show', compact(['project_id','section_id','student_id','comments']));
     }
 }
