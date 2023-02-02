@@ -27,11 +27,11 @@
         <form action="{{ route('otp.generate') }}" method="post" id="register">
           @csrf
           <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder focus:border focus:outline-none  focus:border-light-blue focus:ring-light-blue leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required>
-          @error('email')
+          @if (Session::has('email'))
               <p class="text-red-600 text-sm mt-1">
-                {{$message}}
+                {{ Session::get('email') }}
               </p>
-          @enderror
+          @endif
 
           <div class="g-recaptcha mt-4" data-sitekey="{{config('services.recaptcha.key')}}"></div>
             @if(Session::has('g-recaptcha-response'))
