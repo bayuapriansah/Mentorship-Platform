@@ -233,17 +233,19 @@
   
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
-      @if($submission == null)
+      {{-- @dd($submissionData); --}}
+
+      @if($submissionData == null)
       <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
       @else
-      <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submission->created_at}}</p>
+      <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
       <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
         <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
         Your Submission file</a>
         @php
-          $ekstension = substr($submission->file, strpos($submission->file, ".") + 1);
+          $ekstension = substr($submissionData->file, strpos($submissionData->file, ".") + 1);
         @endphp
-        <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submission->file)}}">
+        <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}">
           <img  src="{{asset('assets/img/icon/download.png')}}" alt="">
         </a>
       </div>
