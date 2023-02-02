@@ -128,7 +128,9 @@
     </div>
     <div class="col-start-8 col-span-5">
       <h1 class="text-xl font-medium text-dark-blue pb-6">Quick Guides</h1>
-      <img src="{{asset('assets/img/guides.png')}}" alt="">
+      {{-- <img src="{{asset('assets/img/guides.png')}}" alt=""> --}}
+      <iframe width="451" height="300" src="https://www.youtube.com/embed/aZLE-c7I7uk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      
     </div>
   </div>
 </section>
