@@ -47,6 +47,9 @@ Route::get('/privacy-policy', function () {
 Route::get('/terms-of-use', function () {
     return view('terms-of-use');
 })->name('terms-of-use');
+Route::get('/adminpage', function () {
+    return view('adminpage');
+})->name('adminpage');
 // Home Page
 // Route::get('/', function () {
 //     return view('index');
@@ -165,7 +168,6 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     });
     Route::middleware(['auth:mentor'])->group(function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
-
         Route::get('/assigned_projects',[MentorController::class, 'indexAssigned'])->name('assigned.index');
         Route::get('/assigned_projects/{project}/section', [MentorController::class, 'sectionProjectAssign'])->name('assigned.projectSection');
         Route::get('/assigned_projects/{project}/section/{section}/subsection', [MentorController::class, 'subsectionProjectAssign'])->name('assigned.projectSubsection');
