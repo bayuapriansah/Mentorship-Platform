@@ -1,5 +1,5 @@
 {{-- @dd($mentor->projects); --}}
-@extends('layouts.admin')
+@extends('layouts.admin2')
 @section('content')
 <div class="container-fluid">
 
@@ -12,7 +12,7 @@
   <!-- Content Row -->
   <div class="row">
     <div class="col">
-      <table id="myTable" class="display responsive w-100" style="width: 100%">
+      <table id="dataTable" class="display responsive w-100" style="width: 100%">
         <thead>
           <tr>
             <th>No</th>
