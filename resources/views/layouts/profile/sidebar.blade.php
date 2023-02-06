@@ -113,18 +113,6 @@
     @endphp
     
     <p class="text-black text-xs font-normal">Projects Timeline</p>
-    {{-- @dd($submissions) --}}
-
-    {{-- @dd($enrolled_projects->where('project_id', $project_id)->get()) --}}
-    {{-- @php $tipNumber = 1 @endphp --}}
-    
-    {{-- <div class="relative">
-      @foreach ($submissions as $submission)
-        <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0 left-5"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
-        @php $tipNumber++ @endphp
-      @endforeach 
-    </div> --}}
-
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
       <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
@@ -138,7 +126,6 @@
 
         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-3">
           <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
-          {{-- <div class="text-center mt-7">{{ round($taskDate) }}%</div> --}}
         </div>
 
         @php $no=1 @endphp
@@ -147,36 +134,11 @@
         <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
           @php $no++ @endphp
         @endforeach 
-        {{-- @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
-          <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$enrolled_project->flag_checkpoint-10}}%">Project {{$no}}</p>
-          <p class="absolute font-normal text-[8px]" style="left: {{$enrolled_project->flag_checkpoint-11}}%">{{\Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
-          @php
-            $no++
-          @endphp
-        @endforeach --}}
-
       </div>
-      {{-- <div class="flex-col ">
-        <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
-        <p class="text-black text-[6px]">{{$student->end_date}}</p>
-      </div> --}}
       @if($student->is_confirm == 1)
         <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
       @endif
     </div>
-    {{-- <div class="flex justify-between">
-      @if($student->is_confirm == 1)
-      <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
-      @endif
-        <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-2">
-          <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
-          <div class="text-center">{{ round($taskDate) }}%</div>
-        </div>
-      
-      @if($student->is_confirm == 1)
-        <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
-      @endif
-    </div> --}}
     @if($student->is_confirm == 0)
       <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
     @endif
@@ -216,10 +178,6 @@
         </div>
 
       </div>
-      {{-- <div class="flex-col ">
-        <i class="fa-solid fa-calendar-days bg-[#11BF61] text-white p-2 rounded-full"></i>
-        <p class="text-black text-[6px]">{{$student->end_date}}</p>
-      </div> --}}
       @if($student->is_confirm == 1)
         <p class="text-black text-xs">{{\Carbon\Carbon::parse($student->end_date)->format('d M Y')}}</p>
       @endif
@@ -233,7 +191,6 @@
   
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
-      {{-- @dd($submissionData); --}}
 
       @if($submissionData == null)
       <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
@@ -256,7 +213,6 @@
     <p class="text-dark-blue font-medium text-sm text-center my-3">Complete 3 Months project to unlock</p>
    
     <a href="#" class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-default">Download Certificate</a>
-    {{-- <a href="#" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
 
   </div>
   @endif

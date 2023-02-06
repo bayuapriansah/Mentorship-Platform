@@ -63,7 +63,7 @@
             @foreach($comments->where('project_id', $task->project->id)->where('project_section_id', $task->id)->where('student_id', Auth::guard('student')->user()->id) as $comment)
               <div class="mb-2">
                 {{-- @dd($comment->mentor_id == null) --}}
-                @if ($comment->mentor_id == null)
+                @if ($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
                 <div class="flex flex-row-reverse">
                   <div class="w-1/2 border border-light-blue  p-2 rounded-xl  bg-white ">
                     {{$comment->message}}

@@ -18,21 +18,20 @@ return new class extends Migration
         //     $table->timestamps();
         // });
         \DB::statement("
-        CREATE VIEW institution_world_data_views 
-        AS
         SELECT
-            institutions.id, 
-            institutions.name AS institutions, 
-            countries.name AS countries, 
-            states.name AS states
+        institutions.id AS id,
+        institutions.name AS institutions,
+        institutions.logo AS logo,
+        countries.name AS countries,
+        states.name AS states,
+        institutions.created_at AS created_at,
+        institutions.updated_at AS updated_at
         FROM
-            institutions,
-            countries,
-            states
+            (( institutions JOIN countries ) JOIN states ) 
         WHERE
-            institutions.country = countries.id AND
-            countries.id = states.country_id AND
-            institutions.state = states.id
+        institutions.country = countries.id 
+        AND countries.id = states.country_id 
+        AND institutions.state = states.id
         ");
     }
 

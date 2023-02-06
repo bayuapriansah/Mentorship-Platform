@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Company;
+use App\Models\Institution;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,10 +13,10 @@ class Mentor extends Authenticatable
     use HasFactory;
     
     protected $guard = 'mentor';
-
-    public function company()
+// change to institution hasMany
+    public function institution()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Institution::class);
     }
 
     public function projects()
