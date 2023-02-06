@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Institution;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\institution_world_data_view;;
@@ -27,9 +28,10 @@ class InstitutionController extends Controller
      */
     public function index()
     {
-        // $institutionss = Institution::get();
-        $institutions = institution_world_data_view::get();
-        return view('dashboard.institutions.index', compact('institutions'));
+        $institutions = Institution::get();
+        // $institutions = institution_world_data_view::get();
+        $companies = Company::get();
+        return view('dashboard.institutions.index', compact('institutions', 'companies'));
     }
 
     /**

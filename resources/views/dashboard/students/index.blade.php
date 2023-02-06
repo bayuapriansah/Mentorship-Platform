@@ -16,6 +16,7 @@
   </div>
 </td> --}}
 <!-- Content Row -->
+
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -46,7 +47,7 @@
           Not Active Yet
         @endif
       </td>
-      <td>
+      <td class="text-center">
         <button class="view-details space-y-7" 
                 data-student-id="{{ $student->id }}"
                 data-student-dob="{{ $student->date_of_birth }}"
@@ -56,7 +57,7 @@
                 data-student-study_program="{{ $student->study_program }}"
                 data-student-year_of_study="{{ $student->year_of_study }}"
                 data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
-        >View</button>
+        ><i class="fa-solid fa-chevron-down"></i></button>
       </td>
     </tr>
     @php $no++ @endphp
@@ -64,14 +65,13 @@
   </tbody>
 </table>
 
-
 @endsection
 @section('more-js')
 <script>
   $(document).ready(function() {
     let table = $('#dataTable').DataTable({
-      // DataTables configuration options
     });
+    // $('.view-details').html('<i class="fa-solid fa-chevron-down"></i>');
 
     $('#dataTable tbody').on('click', 'button.view-details', function() {
       let tr = $(this).closest('tr');
@@ -86,11 +86,14 @@
       let studentJoin = $(this).data('student-join');
 
       if (row.child.isShown()) {
+        $(this).html('<i class="fa-solid fa-chevron-down"></i>');
         row.child.hide();
+
       } else {
+        $(this).html('<i class="fa-solid fa-chevron-up"></i>');
         row.child.show();
 
-        // Insert the content into the table using the specific data for each row
+
         row.child(`
           <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
             <div class = "flex justify-between">

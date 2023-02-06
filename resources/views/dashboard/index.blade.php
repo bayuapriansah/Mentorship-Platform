@@ -18,7 +18,7 @@
             <p class="text-right text-dark-blue text-3xl">{{$eProjects}}</p>
         </div>
 
-        <div class="border border-light-blu bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+        <div class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
             <p class="font-normal text-[18px] text-left">Total Partner</p>
             <p class="text-right text-dark-blue text-3xl">{{$companies}}</p>
         </div>

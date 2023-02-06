@@ -13,6 +13,13 @@
       <a href="/dashboard/students">Students</a>
     @endif
   </li>
+  <li class="hover:font-medium">
+    @if(Route::is('dashboard.institutions.index'))
+      <a href="/dashboard/institutions" class="font-medium">Institutions & Partner</a>
+    @else
+      <a href="/dashboard/institutions">Institutions & Partner</a>
+    @endif
+  </li>
   {{-- <li class="hover:font-medium">
     <a href="/dashboard"></a>
   </li> --}}
