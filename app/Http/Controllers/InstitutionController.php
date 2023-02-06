@@ -65,11 +65,13 @@ class InstitutionController extends Controller
             'name' => ['required'],
             'countries' => ['required'],
             'state' => ['required'],
-            'logo' => ['required']
+            'logo' => ['required'],
+            'email'=>['required']
         ]);
 
         $institutions = new Institution;
         $institutions->name = $validated['name'];
+        $institutions->email = $validated['email'];
         $institutions->country = $validated['countries'];
         $institutions->state = $validated['state'];
         if($request->hasFile('logo')){
@@ -81,12 +83,12 @@ class InstitutionController extends Controller
                 $logo = Storage::disk('public')->put('institutions', $validated['logo']);
                 $institutions->logo = $logo;
             }else{
-                return redirect('dashboard/institutions/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
             
         }
         $institutions->save();
-        return redirect()->route('dashboard.institutions.index');
+        return redirect()->route('dashboard.institutions_partners');
     }
 
     /**
@@ -147,12 +149,21 @@ class InstitutionController extends Controller
                 $logo = Storage::disk('public')->put('institutions', $request->logo);
                 $institutions->logo = $logo;
             }else{
-                return redirect('dashboard/institutions/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
         }
         $institutions->save();
         $message = "Successfully Edited Institution Data";
-        return redirect()->route('dashboard.institutions.index')->with('success', $message);
+        return redirect()->route('dashboard.institutions_partners')->with('success', $message);
+    }
+    public function suspendInstitution($id)
+    {
+        $institution = Institution::find($id);
+        $institution->status = 0;
+        $institution->save();
+        $message = "Successfully Deactive Data";
+        return redirect()->route('dashboard.institutions_partners')->with('success', $message);
+
     }
 
     /**
@@ -163,6 +174,7 @@ class InstitutionController extends Controller
      */
     public function destroy($id)
     {
+        dd($id);
         $institution = Institution::find($id);
         $institution->delete();
         return redirect('dashboard/institutions');

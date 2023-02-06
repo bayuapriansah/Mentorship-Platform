@@ -15,7 +15,7 @@ class Student extends Authenticatable
     protected $guard = 'student';
 
     protected $fillable = ['name', 'email', 'password'];
-
+    
     public function projects()
     {
         return $this->hasMany(Project::class);
@@ -23,7 +23,7 @@ class Student extends Authenticatable
 
     public function institution()
     {
-        return $this->belongsTo(Institution::class);
+        return $this->belongsTo(Institution::class, 'id', 'institution_id');
     }
 
     public function comment()

@@ -1,77 +1,66 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 @section('content')
-<div class="container-fluid">
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Institutions</h1>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="card p-4">
-        <form action="{{ route('dashboard.institutions.update',[$id]) }}" method="post" enctype="multipart/form-data">
-          @csrf
-          @method('PATCH')
-          <div class="mb-3">
-            <label for="inputname" class="form-label">Institution Name</label>
-            {{-- <input type="hidden" name="id" value="{{$id}}"> --}}
-            <input type="text" class="form-control" id="inputname" name="name" value="{{$institutions_view->institutions}}">
-            @error('name')
-                <p class="text-danger text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div>
-          {{-- @dd($countries) --}}
-          <div class="mb-3">
-            <label for="inputCountries" class="form-label">Country</label>
-            <select class="form-control form-select" id="inputCountries" name="countries">
-              <option>Select Country</option>
-              <option value="{{$institutions->country}}" selected>{{$institutions_view->countries}}</option>
-              @forelse($countries as $country)
-              <option value="{{$country['id']}}">{{$country['name']}}</option>
-              @empty
-              <p>There is no Country Data</p>
-              @endforelse
-            </select>
-            @error('countries')
-                <p class="text-danger text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div>
-
-          <div class="mb-3">
-            <label for="inputState" class="form-label">State</label>
-            <select class="form-control form-select" id="inputState" name="state">
-              <option>Select State</option>
-              <option value="{{$institutions->state}}" selected>{{$institutions_view->states}}</option>
-            </select>
-            @error('state')
-                <p class="text-danger text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div>
-          <div class="mb-3">
-            <label for="inputlogo" class="form-label">Company logo</label><br>
-            <img src="{{asset('storage/'.$institutions->logo)}}" alt="" style="width: 350px; height: 230px;">
-            <input type="file" class="form-control-file" id="inputlogo" name="logo">
-            <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
-            <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>
-            @error('logo')
-                <p class="text-danger text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div>
-          <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+<div class="flex justify-between mb-10">
+  <h3 class="text-dark-blue font-medium text-xl">Institutions</h3>
 </div>
+
+
+<form action="{{ route('dashboard.institutions.update',[$id]) }}" method="post" enctype="multipart/form-data">
+  @csrf
+  @method('PATCH')
+  <div class="mb-3">
+    {{-- <input type="hidden" name="id" value="{{$id}}"> --}}
+    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="name" type="text" value="{{$institutions_view->institutions}}" placeholder="Institution Name" name="name" required>
+    @error('name')
+        <p class="text-danger text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
+  {{-- @dd($countries) --}}
+  <div class="mb-3">
+    <select class="text w-3/4 border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none" id="inputCountries" name="countries">
+      <option>Select Country</option>
+      <option value="{{$institutions->country}}" selected>{{$institutions_view->countries}}</option>
+      @forelse($countries as $country)
+      <option value="{{$country['id']}}">{{$country['name']}}</option>
+      @empty
+      <p>There is no Country Data</p>
+      @endforelse
+    </select>
+    @error('countries')
+        <p class="text-danger text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
+
+  <div class="mb-3">
+    <select class="text w-3/4 border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none" id="inputState" name="state">
+      <option>Select State</option>
+      <option value="{{$institutions->state}}" selected>{{$institutions_view->states}}</option>
+    </select>
+    @error('state')
+        <p class="text-danger text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
+  <div class="mb-3">
+    <img src="{{asset('storage/'.$institutions->logo)}}" alt="" style="width: 350px; height: 230px;">
+    <input type="file" class="block w-1/2 text-sm text-gray-900 border border-light-blue rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none " id="inputlogo" name="logo">
+    <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
+    <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>
+    @error('logo')
+        <p class="text-danger text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
+  <div class="mb-3">
+    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Institution</button>
+  </div>
+</form>
 <script>
   $(document).ready(function () {
       $('#inputCountries').on('change', function () {

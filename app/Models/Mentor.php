@@ -16,7 +16,7 @@ class Mentor extends Authenticatable
 // change to institution hasMany
     public function institution()
     {
-        return $this->belongsTo(Institution::class);
+        return $this->belongsTo(Institution::class, 'id', 'institution_id');
     }
 
     public function projects()
