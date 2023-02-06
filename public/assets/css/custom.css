@@ -2,3 +2,11 @@
   pointer-events: none;
   color: crimson !important;
 }
+
+.dataTables_filter{
+  margin-bottom:18px !important;
+}
+
+.hidden {
+  display: none;
+}

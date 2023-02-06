@@ -19,9 +19,7 @@
   <hr class="sidebar-divider">
 
   <!-- Heading -->
-  {{-- <div class="sidebar-heading">
-      Interface
-  </div> --}}
+
 
   <!-- Nav Item - Pages Collapse Menu -->
   @if(Auth::guard('web')->check())
@@ -51,18 +49,6 @@
         <span>Institutions</span>
     </a>
 </li>
-
-  {{-- <li class="nav-item">
-      <a class="nav-link collapsed" href="{{route('dashboard.companies.index')}}">
-          <i class="fa-solid fa-handshake"></i>
-          <span>Partner Companies</span>
-      </a> --}}
-      {{-- <div id="collapsePartner" class="collapse" aria-labelledby="partnerPage" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="{{route('dashboard.companies.index')}}">All companies</a>
-          </div>
-      </div> --}}
-  {{-- </li> --}}
   @endif
 
   @if(Auth::guard('company')->check() ||Auth::guard('web')->check() )

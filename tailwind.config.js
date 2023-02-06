@@ -24,6 +24,8 @@ module.exports = {
         'ligt-black' : '#1E1E1E',
         'light-green': '#1CD22E',
         'lighter-green': '#D4F9CB',
+        'dark-yellow': '#CB9713',
+        'dark-red': '#B52809'
       },
       fontSize: {
         sm: '0.938rem',

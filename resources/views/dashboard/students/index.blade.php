@@ -1,55 +1,126 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 @section('content')
-<div class="container-fluid">
-
-  <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Confirmed students</h1>
-      {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Add Students</a> --}}
-  </div>
-
-  <!-- Content Row -->
-  <div class="row">
-    <div class="col">
-      <table id="myTable" class="display responsive w-100" style="width: 100%">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Date of birth</th>
-            <th>Github Link</th>
-            <th>State</th>
-            <th>Join since</th>
-            <th>Country</th>
-          </tr>
-        </thead>
-        <tbody>
-          @php $no=1 @endphp
-          @foreach($students as $student)
-          <tr>
-            <td>{{$no}}</td>
-            <td>{{$student->first_name}}</td>
-            <td>{{$student->last_name}}</td>
-            <td>{{$student->email}}</td>
-            <td>{{$student->gender}}</td>
-            <td>{{$student->date_of_birth}}</td>
-            <td>{{$student->github_link}}</td>
-            <td>{{$student->state}}</td>
-            <td>{{$student->created_at->format('m-d-Y')}}</td>
-            <td>{{$student->country}}</td>
-          </tr>
-          @php $no++ @endphp
-          @endforeach
-        </tbody>
-      </table>
-    </div>
-  </div>
-
+<div class="flex justify-between mb-10">
+  <h3 class="text-dark-blue font-medium text-xl">Students</h3>
+  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
+
+{{-- <td>
+  <div class="flex justify-between">
+    <div class="">
+      <a href="dashboard/students/{student}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
+      <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
+      <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
+    </div>
+    <div class="text-right">tsts</div>
+  </div>
+</td> --}}
+<!-- Content Row -->
+
+<table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
+  <thead class="text-dark-blue">
+    <tr>
+      <th>No</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Institute Name</th>
+      <th>Status</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+    @php $no=1 @endphp
+    @foreach($students as $student)
+    <tr>
+      <td>{{$no}}</td>
+      <td>{{$student->first_name}}</td>
+      <td>{{$student->last_name}}</td>
+      <td>{{$student->email}}</td>
+      <td>{{$student->institution->name}}</td>
+      <td>
+        @if ($student->is_confirm == 1)
+          <span class="text-green-600">Active</span>
+        @elseif($student->is_confirm == 2)
+          <span class="text-red-600">Suspended</span>
+        @else
+          Not Active Yet
+        @endif
+      </td>
+      <td class="text-center">
+        <button class="view-details space-y-7" 
+                data-student-id="{{ $student->id }}"
+                data-student-dob="{{ $student->date_of_birth }}"
+                data-student-sex="{{ $student->sex }}"
+                data-student-state="{{ $student->state }}"
+                data-student-country="{{ $student->country }}"
+                data-student-study_program="{{ $student->study_program }}"
+                data-student-year_of_study="{{ $student->year_of_study }}"
+                data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
+        ><i class="fa-solid fa-chevron-down"></i></button>
+      </td>
+    </tr>
+    @php $no++ @endphp
+    @endforeach
+  </tbody>
+</table>
+
 @endsection
 @section('more-js')
+<script>
+  $(document).ready(function() {
+    let table = $('#dataTable').DataTable({
+    });
+    // $('.view-details').html('<i class="fa-solid fa-chevron-down"></i>');
 
+    $('#dataTable tbody').on('click', 'button.view-details', function() {
+      let tr = $(this).closest('tr');
+      let row = table.row(tr);
+      let studentId = $(this).data('student-id');
+      let studentDob = $(this).data('student-dob');
+      let studentSex = $(this).data('student-sex');
+      let studentState = $(this).data('student-state');
+      let studentCountry = $(this).data('student-country');
+      let studentStudyProgram = $(this).data('student-study_program');
+      let studentYear = $(this).data('student-year_of_study');
+      let studentJoin = $(this).data('student-join');
+
+      if (row.child.isShown()) {
+        $(this).html('<i class="fa-solid fa-chevron-down"></i>');
+        row.child.hide();
+
+      } else {
+        $(this).html('<i class="fa-solid fa-chevron-up"></i>');
+        row.child.show();
+
+
+        row.child(`
+          <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
+            <div class = "flex justify-between">
+              <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
+              <p class="text-dark-blue font-mediun">Sex: <span class="text-black font-normal">${studentSex}</span></p>
+              <p class="text-dark-blue font-mediun">State: <span class="text-black font-normal">${studentState}</span></p>
+              <p class="text-dark-blue font-mediun">Country: <span class="text-black font-normal">${studentCountry}</span></p>
+            </div>
+            <div class = "flex space-x-10">
+              <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
+              <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
+            </div>
+            <div class="flex justify-between">
+              <div class="space-x-7">
+                <a href="dashboard/students/${studentId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
+                <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
+                <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
+              </div>
+              <div class="text-right">
+                <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${studentJoin}</span></p>
+              </div>
+            </div>
+          </div>
+          
+          `).show();
+      }
+    });
+  });
+</script>
 @endsection

@@ -207,7 +207,7 @@
     </div>
     
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}
 
     <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>

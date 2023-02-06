@@ -1,88 +1,27 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 @section('content')
-<div class="container-fluid">
+<div class="container">
+    <h3 class="text-dark-blue font-medium text-xl">Dashboard</h3>
+    <div class="flex justify-between space-x-7 mt-4">
+        <div class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <p class="font-normal text-[18px] text-left">Total Student</p>
+            <p class="text-right text-dark-blue text-3xl">{{$students}}</p>
+        </div>
 
-  <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-      {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
-  </div>
+        <div class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <p class="font-normal text-[18px] text-left">Total Supervisor</p>
+            <p class="text-right text-dark-blue text-3xl">{{$mentors}}</p>
+        </div>
 
-  <!-- Content Row -->
-  <div class="row">
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Students</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $students }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-regular fa-user fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="border border-light-blue bg-gradient-to-r from-[#CFF8D8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <p class="font-normal text-[18px] text-left">Projects Enrolled</p>
+            <p class="text-right text-dark-blue text-3xl">{{$eProjects}}</p>
         </div>
-    
-        <!-- Earnings (Annual) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Total Mentors</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mentors }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-regular fa-users fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Enrolled Projects</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $eProjects }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-duotone fa-list-check fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Earnings (Annual) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Partners / Companies</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $companies }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-solid fa-landmark fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-  </div>
 
+        <div class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <p class="font-normal text-[18px] text-left">Total Partner</p>
+            <p class="text-right text-dark-blue text-3xl">{{$companies}}</p>
+        </div>
+    </div>
 </div>
 @endsection
