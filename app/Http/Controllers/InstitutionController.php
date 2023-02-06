@@ -26,10 +26,17 @@ class InstitutionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function institutions_partners()
+    {
+        $institutions = institution_world_data_view::get();
+        $companies = Company::get();
+        return view('dashboard.institutions.index', compact('institutions', 'companies'));
+    }
     public function index()
     {
-        $institutions = Institution::get();
-        // $institutions = institution_world_data_view::get();
+        // $institutions = Institution::get();
+        $institutions = institution_world_data_view::get();
         $companies = Company::get();
         return view('dashboard.institutions.index', compact('institutions', 'companies'));
     }

@@ -120,6 +120,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
+        Route::get('institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
         Route::resource('institutions', InstitutionController::class);
 
         // Mentors
@@ -129,9 +130,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::resource('mentors', MentorController::class);
 
         // Company/partner/supervisor
-        Route::get('companies/{company_id}/inviteMentors', [MentorController::class, 'invite'])->name('mentors.invite');
-        Route::post('companies/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
-        Route::resource('companies', CompanyController::class);
+        // Route::get('companies/{company_id}/inviteMentors', [MentorController::class, 'invite'])->name('mentors.invite');
+        // Route::post('companies/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
+        Route::post('/partners/{company_id}/suspend', [CompanyController::class, 'suspendCompany'])->name('companies.suspend');
+        Route::resource('partners', CompanyController::class);
     });
     
     Route::middleware(['auth:web,company'])->group(function(){

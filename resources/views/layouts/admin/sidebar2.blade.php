@@ -14,10 +14,10 @@
     @endif
   </li>
   <li class="hover:font-medium">
-    @if(Route::is('dashboard.institutions.index'))
-      <a href="/dashboard/institutions" class="font-medium">Institutions & Partner</a>
+    @if(Route::is('dashboard.institutions_partners'))
+      <a href="/dashboard/institutions_partners" class="font-medium">Institutions & Partner</a>
     @else
-      <a href="/dashboard/institutions">Institutions & Partner</a>
+      <a href="/dashboard/institutions_partners">Institutions & Partner</a>
     @endif
   </li>
   {{-- <li class="hover:font-medium">

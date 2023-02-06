@@ -23,7 +23,7 @@
       <td>{{$institution->institutions}}</td>
       <td>contact@ {{$institution->institutions}}</td>
       <td>{{$institution->countries}}</td>
-      <td>{{ $institution->created_at}}</td>
+      <td>{{ $institution->states}}</td>
       <td>
         <button class="view-details space-y-7" 
           {{-- data-institution-logo=' <img src=`{{asset(`storage/`.$institution->logo)}}`  style=`width: 88px; height: 230px;`>' --}}
@@ -38,14 +38,14 @@
   </tbody>
 </table>
 
-{{-- <td>
+<td>
   <div class = "flex justify-between items-center py-4 px-10 bg-[#EBEDFF] rounded-3xl">
     <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4">
       <img src="{{asset('assets/img/image 3.png')}}" class="w-16 h-9 object-scale-down mx-auto" alt="">
     </div>
     <div class="flex-col my-auto space-y-3">
       <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${companyJoin}</p>
-      <p class="text-dark-blue font-mediun">Active Project: <span class="text-black font-normal">${companyProjects}</p>
+      <p class="text-dark-blue font-mediun">Status: <span class="text-green-600 font-normal">Active</p>
     </div>
     <div class="">
       <a href="dashboard/students/{student}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
@@ -53,10 +53,10 @@
       <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
     </div>
   </div>
-</td> --}}
+</td>
 <div class="mt-12 flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Partners</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Partner</a>
+  <a href="/dashboard/partners/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Partner</a>
 </div>
 <table id="dataTable2" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
@@ -117,18 +117,25 @@
         row.child(`
         <div class = "flex justify-between items-center py-4 px-10 bg-[#EBEDFF] rounded-3xl">
           <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4">
-            <img src="{{asset('assets/img/image 3.png')}}" class="w-16 h-9 object-scale-down mx-auto" alt="">
+            ${companyLogo}
           </div>
           <div class="flex-col my-auto space-y-3">
             <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${companyJoin}</p>
             <p class="text-dark-blue font-mediun">Active Project: <span class="text-green-600 font-normal">${companyProjects}</p>
           </div>
           <div class="flex space-x-4">
-            <a href="/dashboard/companies/${companyId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
-            <a href="/dashboard/companies/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
-            {!! Form::open(['route' => ['dashboard.companies.destroy', [$company->id]], 'method'=>'DELETE']) !!}
+            <a href="/dashboard/partners/${companyId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
+            <form method="POST" action="/dashboard/partners/${companyId}/suspend" >
+              @csrf
+              @method('PUT')
+              <button type="submit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
+            </form>
+            
+            <form method="POST" action="/dashboard/partners/${companyId}" >
+              @csrf
+              @method('DELETE')
               <button type="submit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
-            {!! Form::close() !!}
+            </form>
           </div>
         </div>
           `).show();
