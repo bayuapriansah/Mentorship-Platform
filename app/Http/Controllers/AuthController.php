@@ -125,6 +125,7 @@ class AuthController extends Controller
             'email' => ['required'],
             'password' => ['required']
         ]);
+        // dd($request->all());
         if(Auth::guard('student')->attempt($validated)){
             $request->session()->regenerate();
             return redirect('/')->with('success','Logged in');
