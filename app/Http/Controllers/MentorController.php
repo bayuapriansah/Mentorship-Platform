@@ -6,6 +6,7 @@ use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Project;
+use App\Models\Institution;
 use Illuminate\Http\Request;
 use App\Models\MentorProject;
 use App\Models\ProjectSection;
@@ -21,10 +22,10 @@ class MentorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Institution $institution)
     {
-        $mentors = Mentor::where('is_confirm', 1)->get();
-        return view('dashboard.mentors.index', compact('mentors'));
+        $mentors = Mentor::where('institution_id', $institution->id)->get();
+        return view('dashboard.mentors.index', compact('mentors', 'institution'));
     }
 
     public function registered()

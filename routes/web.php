@@ -121,6 +121,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
         Route::get('institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
+        Route::get('/institutions/{institution}/students', [InstitutionController::class, 'institutionStudents'])->name('institutionStudents');
+        Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
         Route::post('/institutions/{institution}/suspend', [InstitutionController::class, 'suspendInstitution'])->name('institutions.suspend');
         Route::resource('institutions', InstitutionController::class);
 

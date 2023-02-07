@@ -133,8 +133,8 @@
               </div>
             </div>
             <div class="space-x-8">
-              <a href="#" class="text-white font-normal bg-dark-blue px-8 py-2 rounded-lg">List of Students</a>
-              <a href="#" class="text-white font-normal bg-light-blue px-8 py-2 rounded-lg">List of Supervisors</a>
+              <a href="/dashboard/institutions/${institutionId}/students" class="text-white font-normal bg-dark-blue hover:bg-darker-blue px-8 py-2 rounded-lg">List of Students</a>
+              <a href="/dashboard/institutions/${institutionId}/supervisors" class="text-white font-normal bg-[#4753BA] hover:bg-light-blue px-8 py-2 rounded-lg">List of Supervisors</a>
             </div>
           </div>
             `).show();

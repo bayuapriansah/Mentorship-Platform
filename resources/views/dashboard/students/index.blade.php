@@ -1,28 +1,54 @@
 @extends('layouts.admin2')
 @section('content')
+@if (Route::is('dashboard.institutionStudents'))
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/institutions_partners"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
+@endif
+
+@if (Route::is('dashboard.institutionStudents'))
+<div class="flex justify-between mb-10">
+  <h3 class="text-dark-blue font-medium text-xl">Institutions <i class="fa-solid fa-chevron-right"></i> Students</h3>
+  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
+</div>
+@else
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Students</h3>
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
+@endif
 
-{{-- <td>
-  <div class="flex justify-between">
-    <div class="">
-      <a href="dashboard/students/{student}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
-      <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
-      <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
+<td>
+  <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
+    <div class = "flex justify-between">
+      <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
+      <p class="text-dark-blue font-mediun">Sex: <span class="text-black font-normal">${studentSex}</span></p>
+      <p class="text-dark-blue font-mediun">State: <span class="text-black font-normal">${studentState}</span></p>
+      <p class="text-dark-blue font-mediun">Country: <span class="text-black font-normal">${studentCountry}</span></p>
     </div>
-    <div class="text-right">tsts</div>
+    <div class = "flex space-x-10">
+      <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
+      <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
+    </div>
+    <div class="flex justify-between">
+      <div class="space-x-7">
+        <a href="dashboard/students/${studentId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
+        <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
+        <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
+      </div>
+      <div class="text-right">
+        <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${studentJoin}</span></p>
+      </div>
+    </div>
   </div>
-</td> --}}
+</td>
 <!-- Content Row -->
 
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
       <th>No</th>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th>Full Name</th>
       <th>Email</th>
       <th>Institute Name</th>
       <th>Status</th>
@@ -34,8 +60,7 @@
     @foreach($students as $student)
     <tr>
       <td>{{$no}}</td>
-      <td>{{$student->first_name}}</td>
-      <td>{{$student->last_name}}</td>
+      <td>{{$student->first_name}} {{$student->last_name}}</td>
       <td>{{$student->email}}</td>
       <td>{{$student->institution->name}}</td>
       <td>
@@ -117,7 +142,6 @@
               </div>
             </div>
           </div>
-          
           `).show();
       }
     });

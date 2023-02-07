@@ -23,7 +23,7 @@ class Student extends Authenticatable
 
     public function institution()
     {
-        return $this->belongsTo(Institution::class, 'id', 'institution_id');
+        return $this->belongsTo(Institution::class);
     }
 
     public function comment()

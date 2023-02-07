@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 @section('content')
 <div class="container-fluid">
 
@@ -11,13 +11,13 @@
   <!-- Content Row -->
   <div class="row">
     <div class="col">
-      <table id="myTable" class="display responsive w-100" style="width: 100%">
+      <table id="dataTable" class="display responsive w-100" style="width: 100%">
         <thead>
           <tr>
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
-            <th>gender</th>
+            <th>Sex</th>
             <th>Institution Name</th>
             <th>Position</th>
             <th>State</th>
@@ -29,10 +29,10 @@
           @foreach($mentors as $mentor)
           <tr>
             <td>{{$no}}</td>
-            <td>{{$mentor->name}}</td>
+            <td>{{$mentor->first_name}} {{$mentor->last_name}}</td>
             <td>{{$mentor->email}}</td>
             <td>{{$mentor->gender}}</td>
-            <td>{{$mentor->institution_name}}</td>
+            <td>{{$mentor->institution->name}}</td>
             <td>{{$mentor->position}}</td>
             <td>{{$mentor->state}}</td>
             <td>{{$mentor->country}}</td>

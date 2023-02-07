@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Institution;
 use App\Models\Company;
+use App\Models\Student;
+use App\Models\Institution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\institution_world_data_view;;
@@ -156,6 +157,14 @@ class InstitutionController extends Controller
         $message = "Successfully Edited Institution Data";
         return redirect()->route('dashboard.institutions_partners')->with('success', $message);
     }
+
+    public function institutionStudents(Institution $institution)
+    {
+        $students = Student::where('institution_id', $institution->id)->get();
+        return view('dashboard.students.index', compact('students', 'institution'));
+    }
+
+
     public function suspendInstitution($id)
     {
         $institution = Institution::find($id);
@@ -163,9 +172,8 @@ class InstitutionController extends Controller
         $institution->save();
         $message = "Successfully Deactive Data";
         return redirect()->route('dashboard.institutions_partners')->with('success', $message);
-
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
