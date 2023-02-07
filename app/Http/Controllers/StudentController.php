@@ -27,7 +27,10 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::get();
-        return view('dashboard.students.index', compact('students'));
+        $enrolled_projects = EnrolledProject::get();
+        // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+
+        return view('dashboard.students.index', compact('students', 'enrolled_projects'));
     }
 
     public function register($email)

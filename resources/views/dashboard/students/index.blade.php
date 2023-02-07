@@ -18,32 +18,14 @@
 </div>
 @endif
 
-<td>
-  <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
-    <div class = "flex justify-between">
-      <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
-      <p class="text-dark-blue font-mediun">Sex: <span class="text-black font-normal">${studentSex}</span></p>
-      <p class="text-dark-blue font-mediun">State: <span class="text-black font-normal">${studentState}</span></p>
-      <p class="text-dark-blue font-mediun">Country: <span class="text-black font-normal">${studentCountry}</span></p>
-    </div>
-    <div class = "flex space-x-10">
-      <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
-      <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
-    </div>
-    <div class="flex justify-between">
-      <div class="space-x-7">
-        <a href="dashboard/students/${studentId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
-        <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
-        <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
-      </div>
-      <div class="text-right">
-        <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${studentJoin}</span></p>
-      </div>
-    </div>
-  </div>
-</td>
-<!-- Content Row -->
 
+<!-- Content Row -->
+{{-- @foreach($students as $student)
+@php
+    $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d M Y');
+@endphp
+
+@endforeach --}}
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -82,6 +64,9 @@
                 data-student-study_program="{{ $student->study_program }}"
                 data-student-year_of_study="{{ $student->year_of_study }}"
                 data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
+                data-student-is_confirm="{{ $student->is_confirm }}"
+                data-student-start="{{ $student->created_at->format('d M Y') }}"
+
         ><i class="fa-solid fa-chevron-down"></i></button>
       </td>
     </tr>
@@ -109,7 +94,9 @@
       let studentStudyProgram = $(this).data('student-study_program');
       let studentYear = $(this).data('student-year_of_study');
       let studentJoin = $(this).data('student-join');
-
+      let studentIs_confirm = $(this).data('student-is_confirm');
+      let studentStart = $(this).data('student-start');
+        console.log(studentIs_confirm);
       if (row.child.isShown()) {
         $(this).html('<i class="fa-solid fa-chevron-down"></i>');
         row.child.hide();
@@ -118,30 +105,29 @@
         $(this).html('<i class="fa-solid fa-chevron-up"></i>');
         row.child.show();
 
-
         row.child(`
-          <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
-            <div class = "flex justify-between">
-              <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
-              <p class="text-dark-blue font-mediun">Sex: <span class="text-black font-normal">${studentSex}</span></p>
-              <p class="text-dark-blue font-mediun">State: <span class="text-black font-normal">${studentState}</span></p>
-              <p class="text-dark-blue font-mediun">Country: <span class="text-black font-normal">${studentCountry}</span></p>
+        <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
+          <div class = "flex justify-between">
+            <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
+            <p class="text-dark-blue font-mediun">Sex: <span class="text-black font-normal">${studentSex}</span></p>
+            <p class="text-dark-blue font-mediun">State: <span class="text-black font-normal">${studentState}</span></p>
+            <p class="text-dark-blue font-mediun">Country: <span class="text-black font-normal">${studentCountry}</span></p>
+          </div>
+          <div class = "flex space-x-10">
+            <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
+            <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
+          </div>
+          <div class="flex justify-between">
+            <div class="space-x-7">
+              <a href="dashboard/students/${studentId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
+              <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
+              <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
             </div>
-            <div class = "flex space-x-10">
-              <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
-              <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
-            </div>
-            <div class="flex justify-between">
-              <div class="space-x-7">
-                <a href="dashboard/students/${studentId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
-                <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
-                <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
-              </div>
-              <div class="text-right">
-                <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${studentJoin}</span></p>
-              </div>
+            <div class="text-right">
+              <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${studentJoin}</span></p>
             </div>
           </div>
+        </div>
           `).show();
       }
     });
