@@ -160,6 +160,7 @@ class InstitutionController extends Controller
 
     public function institutionStudents(Institution $institution)
     {
+        // dd('tes');
         $students = Student::where('institution_id', $institution->id)->get();
         return view('dashboard.students.index', compact('students', 'institution'));
     }

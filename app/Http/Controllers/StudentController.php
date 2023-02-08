@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
 use App\Models\Submission;
+use App\Models\Institution;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
@@ -35,7 +36,7 @@ class StudentController extends Controller
 
     public function register($email)
     {
-        $checkStudent = Student::where('email', $email)->first();
+        $checkStudent = Student::where('email', $email)->where('is_confirm',0)->first();
         if(!$checkStudent){
             return redirect()->route('index');
         }elseif($checkStudent){
@@ -43,6 +44,48 @@ class StudentController extends Controller
             return view('student.index', compact(['checkStudent']));
         }
     }
+
+    public function inviteFromInstitution(Institution $institution)
+    {
+        return view('dashboard.students.institution.invite', compact('institution'));
+    }
+
+    public function sendInviteFromInstitution(Request $request,$institution_id)
+    {
+        $checkStudent = Student::where('email', $request->email)->first();  
+        if(!$checkStudent){
+            $link = route('student.register', [$request->email]);
+            if($institution_id){
+                $student = $this->addStudentToInstitution($request,$institution_id);
+            }else{
+                $student= $this->addStudent($request);
+            }
+            $sendmail = (new MailController)->EmailMentorInvitation($student->email,$link);
+            $message = "Successfully Send Invitation to Mentor";
+            return redirect()->route('dashboard.students.institutionStudents', ['institution'=>$institution_id])->with('success', $message);
+        }
+        
+        
+    }
+
+    public function addStudentToInstitution($request,$institution_id){
+        $student = new Student;
+        $student->email = $request->email;
+        $student->institution_id = $institution_id;
+        $student->is_confirm = 0;
+        $student->save();
+
+        return $student;
+    }
+
+    public function addStudent($request){
+        $student= new Student;
+        $student->email = $request->email;
+        $student->save();
+
+        return $student;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

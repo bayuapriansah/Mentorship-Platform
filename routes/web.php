@@ -73,6 +73,8 @@ Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update']
 
 // student register
 Route::get('/student/register/{email}', [StudentController::class, 'register'])->name('student.register');
+Route::post('/mentor/register/{email}/auth', [StudentController::class, 'update'])->name('mentor.registerAuth');
+
 
 // bay
 Route::group(['middleware'=>'auth:student'], function(){
@@ -121,7 +123,11 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
         Route::get('institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
-        Route::get('/institutions/{institution}/students', [InstitutionController::class, 'institutionStudents'])->name('institutionStudents');
+        Route::get('/institutions/{institution}/students', [InstitutionController::class, 'institutionStudents'])->name('students.institutionStudents');
+
+        Route::get('/institutions/{institution}/students/invite', [StudentController::class, 'inviteFromInstitution'])->name('students.inviteFromInstitution');
+        Route::post('/institutions/{institution}/students', [StudentController::class, 'sendInviteFromInstitution'])->name('students.sendInviteFromInstitution');
+
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
         Route::get('/institutions/{institution}/supervisors/invite', [MentorController::class, 'invite'])->name('institutionSupervisorInvite');
         Route::post('/institutions/{institution}/supervisors', [MentorController::class, 'sendInvite'])->name('mentors.institutionSupervisorSendInvite');
