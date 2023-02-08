@@ -182,7 +182,7 @@
             </div>
           </div>
           <div class="space-x-8">
-            <a href="#" class="text-white font-normal bg-dark-blue px-8 py-2 rounded-lg">List of Projects</a>
+            <a href="/dashboard/partners/${companyId}/projects" class="text-white font-normal bg-dark-blue px-8 py-2 rounded-lg">List of Projects</a>
             <a href="#" class="text-white font-normal bg-light-blue px-8 py-2 rounded-lg">List of Members</a>
           </div>
         </div>

@@ -119,6 +119,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
         Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
+        Route::get('/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
+        Route::patch('/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
+        Route::post('/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
         Route::resource('students', StudentController::class);
 
         // Institution

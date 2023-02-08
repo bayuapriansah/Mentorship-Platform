@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
@@ -123,7 +124,59 @@ class StudentController extends Controller
     {
         //
     }
+    public function manage(Student $student)
+    {
+        $mentors = Mentor::where('institution_id', $student->institution_id)->get();
+        return view('dashboard.students.edit', compact('student', 'mentors'));
+    }
 
+    public function managepatch($id, Request $request)
+    {
+        $student = Student::find($id);
+        $student->first_name = $request->first_name;
+        $student->last_name = $request->last_name;
+        $student->date_of_birth = $request->date_of_birth;
+        $student->sex = $request->sex;
+        $student->country = $request->country;
+        $student->state = $request->state;
+        $student->mentor_id = $request->mentor_id;
+        if($request->study_program =='other'){
+            $student->study_program = $request->study_program_form;
+        }else{
+            $student->study_program = $request->study_program;
+        }
+        $student->year_of_study = $request->year_of_study;
+        if($request->hasFile('profile_picture')){
+            if($student->profile_picture == null){
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                    $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
+                    $student->profile_picture = $profile_picture;
+                }else{
+                    return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
+                }
+            }
+            
+            // save the new image
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                if(Storage::path($student->profile_picture)) {
+                    Storage::disk('public')->delete($student->profile_picture);
+                }
+                $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
+                $student->profile_picture = $profile_picture;
+            }else{
+                return redirect('/dashboard/students/'.$id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+            }
+        }
+        $student->save();
+        return redirect('/dashboard/students/'.$id.'/manage')->with('successTailwind','Profile updated successfully');
+
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -141,6 +194,15 @@ class StudentController extends Controller
         return view('student.edit', compact('student','newMessage'));
     }
 
+    public function suspendAccount($id)
+    {
+        $students = Student::find($id);
+        $students->is_confirm = 2;
+        $students->save();
+        $message = "Successfully Deactive Account";
+        return redirect()->route('dashboard.students.index')->with('success', $message);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -150,7 +212,7 @@ class StudentController extends Controller
      */
     public function update($id, Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $student = Student::find($id);
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
@@ -204,7 +266,9 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student = Student::find($student->id);
+        $student->delete();
+        return redirect('dashboard/students');
     }
     
     // STUDENT PROFILE

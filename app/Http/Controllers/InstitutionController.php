@@ -183,7 +183,6 @@ class InstitutionController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $institution = Institution::find($id);
         $institution->delete();
         return redirect('dashboard/institutions');

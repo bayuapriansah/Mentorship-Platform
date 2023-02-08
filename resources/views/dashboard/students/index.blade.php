@@ -124,10 +124,17 @@
             <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
           </div>
           <div class="flex justify-between">
-            <div class="space-x-7">
-              <a href="dashboard/students/${studentId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
-              <a href="dashboard/students/{student}/edit" class="bg-dark-yellow px-6 py-2 text-white rounded-lg"> Suspend Account</a>
-              <a href="dashboard/students/{student}/edit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</a>
+            <div class="flex space-x-4">
+              <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
+              <form method="POST" action="/dashboard/students/${studentId}/suspend" >
+                @csrf
+                <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">Suspend Account</button>
+              </form>
+              <form method="POST" action="/dashboard/students/${studentId}" >
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</button>
+              </form>
             </div>
             <div class="text-right">
               <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${studentJoin}</span></p>

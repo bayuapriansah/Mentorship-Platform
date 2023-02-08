@@ -67,12 +67,12 @@ class CompanyController extends Controller
                 $logo = Storage::disk('public')->put('companies', $validated['logo']);
                 $company->logo = $logo;
             }else{
-                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
             
         }
         $company->save();
-        return redirect('dashboard/companies/')->with('success','Company has been added');
+        return redirect('dashboard/institutions_partners/')->with('success','Company has been added');
     }
 
     /**
