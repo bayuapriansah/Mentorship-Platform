@@ -32,6 +32,9 @@ class AuthOtpController extends Controller
     }
 
     public function generate(Request $request){
+        if(Auth::guard('student') || Auth::guard('web')){
+            abort(403);
+        }
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required',
