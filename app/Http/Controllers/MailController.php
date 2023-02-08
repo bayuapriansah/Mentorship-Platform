@@ -110,4 +110,29 @@ class MailController extends Controller
             return response()->json(['Sorry Something went wrong']);
         }
     }
+
+    public function EmailStudentInvitation($mailto,$urlInvitation) //Email, urlInvitation
+    {
+        $data = [
+            'subject' => 'Invitation to be a Student',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            'body3' => '',
+            'body4' => '',
+            'body5'=> '',
+            // 'body' => 'We would like to invite you to be a Mentor, and put you on project that you can mentor.',
+            // 'body2' => 'Please click the link below to fill the form and register as a Mentor.',
+            // 'body3' => $urlInvitation,
+            // 'body4' => 'Best regards,',
+            // 'body5'=> 'Simulated Internship Team ❤️',
+            'type' => 'student',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Invitation  Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
 }

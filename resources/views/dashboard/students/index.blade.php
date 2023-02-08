@@ -61,7 +61,7 @@
         @endif
       </td>
       <td class="text-center">
-        <button class="view-details space-y-7" 
+        <button class="view-details space-y-7"
                 data-student-id="{{ $student->id }}"
                 data-student-dob="{{ $student->date_of_birth }}"
                 data-student-sex="{{ $student->sex }}"
