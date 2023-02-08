@@ -36,7 +36,7 @@ class Project extends Model
 
     public function enrolled_project()
     {
-        return $this->hasOne(EnrolledProject::class);
+        return $this->hasMany(EnrolledProject::class);
     }
 
     public function institution()
