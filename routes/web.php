@@ -123,13 +123,16 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
         Route::get('/institutions/{institution}/students', [InstitutionController::class, 'institutionStudents'])->name('institutionStudents');
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
+        Route::get('/institutions/{institution}/supervisors/invite', [MentorController::class, 'invite'])->name('institutionSupervisorInvite');
+        Route::post('/institutions/{institution}/supervisors', [MentorController::class, 'sendInvite'])->name('mentors.institutionSupervisorSendInvite');
+
+
         Route::post('/institutions/{institution}/suspend', [InstitutionController::class, 'suspendInstitution'])->name('institutions.suspend');
         Route::resource('institutions', InstitutionController::class);
 
         // Mentors
         Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
         // Route::get('mentors/registered/{company_id}/invite', [MentorController::class, 'invite'])->name('mentors.invite');
-        // Route::post('mentors/registered/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
         Route::resource('mentors', MentorController::class);
 
         // Company/partner/supervisor

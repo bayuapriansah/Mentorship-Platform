@@ -6,7 +6,7 @@
 </div>
 @endif
 
-@if (Route::is('dashboard.institutionStudents'))
+@if (Route::is('dashboard.institutionSupervisors'))
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Institutions <i class="fa-solid fa-chevron-right"></i> Students</h3>
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
