@@ -124,15 +124,15 @@ class StudentController extends Controller
     {
         //
     }
-    public function manage(Student $student)
+    public function manage(Institution $institution,Student $student)
     {
         $mentors = Mentor::where('institution_id', $student->institution_id)->get();
-        return view('dashboard.students.edit', compact('student', 'mentors'));
+        return view('dashboard.students.edit', compact('student', 'mentors', 'institution'));
     }
 
-    public function managepatch($id, Request $request)
+    public function managepatch($institution_id, $student_id, Request $request)
     {
-        $student = Student::find($id);
+        $student = Student::find($student_id);
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
@@ -152,10 +152,10 @@ class StudentController extends Controller
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
-                    $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
+                    $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
                     $student->profile_picture = $profile_picture;
                 }else{
-                    return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
+                    return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
                 }
             }
             
@@ -167,14 +167,14 @@ class StudentController extends Controller
                 if(Storage::path($student->profile_picture)) {
                     Storage::disk('public')->delete($student->profile_picture);
                 }
-                $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
+                $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
                 $student->profile_picture = $profile_picture;
             }else{
-                return redirect('/dashboard/students/'.$id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
             }
         }
         $student->save();
-        return redirect('/dashboard/students/'.$id.'/manage')->with('successTailwind','Profile updated successfully');
+        return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('successTailwind','Profile updated successfully');
 
     }
     /**
@@ -194,13 +194,13 @@ class StudentController extends Controller
         return view('student.edit', compact('student','newMessage'));
     }
 
-    public function suspendAccount($id)
+    public function suspendAccount($institution_id,$student_id)
     {
-        $students = Student::find($id);
+        $students = Student::find($student_id);
         $students->is_confirm = 2;
         $students->save();
         $message = "Successfully Deactive Account";
-        return redirect()->route('dashboard.students.index')->with('success', $message);
+        return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
     }
 
     /**

@@ -162,7 +162,7 @@ class InstitutionController extends Controller
     {
         // dd('tes');
         $students = Student::where('institution_id', $institution->id)->get();
-        return view('dashboard.students.index', compact('students', 'institution'));
+        return view('dashboard.institutions.students.index', compact('students', 'institution'));
     }
 
 

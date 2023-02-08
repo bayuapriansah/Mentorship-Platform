@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -139,11 +140,6 @@ class CompanyController extends Controller
         
     }
 
-    public function suspendCompany($id)
-    {
-        dd($id);
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -156,5 +152,11 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->delete();
         return redirect('dashboard/institutions');
+    }
+
+    public function partnerProjects(Company $partner)
+    {
+        $projects = Project::where('company_id', $partner->id)->get();
+        return view('dashboard.projects.index', compact('partner', 'projects'));
     }
 }

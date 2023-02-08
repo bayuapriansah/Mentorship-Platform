@@ -119,9 +119,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
         Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
-        Route::get('/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
-        Route::patch('/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
-        Route::post('/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
+        Route::get('/institutions/{institution}/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
+        Route::patch('/institutions/{institution}/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
+        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
         Route::resource('students', StudentController::class);
 
         // Institution
@@ -149,7 +149,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Company/partner/supervisor
         // Route::get('companies/{company_id}/inviteMentors', [MentorController::class, 'invite'])->name('mentors.invite');
         // Route::post('companies/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
-        Route::POST('/partners/{company_id}/suspend', [CompanyController::class, 'suspendCompany'])->name('companies.suspend');
+        Route::get('partners/{partner}/projects', [CompanyController::class, 'partnerProjects'])->name('partner.partnerProjects');
         Route::resource('partners', CompanyController::class);
     });
     

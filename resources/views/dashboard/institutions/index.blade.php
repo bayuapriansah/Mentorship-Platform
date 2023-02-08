@@ -170,26 +170,21 @@
             </div>
             <div class="flex space-x-4">
               <a href="/dashboard/partners/${companyId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
-                <form method="POST" action="/dashboard/partners/${companyId}/suspend" >
-                  @csrf
-                  <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">Suspend Institution</button>
-                </form>
-                <form method="POST" action="/dashboard/partners/${companyId}" >
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Institution</button>
-                </form>
+              <form method="POST" action="/dashboard/partners/${companyId}" >
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Partner</button>
+              </form>
             </div>
           </div>
           <div class="space-x-8">
-            <a href="/dashboard/partners/${companyId}/projects" class="text-white font-normal bg-dark-blue px-8 py-2 rounded-lg">List of Projects</a>
-            <a href="#" class="text-white font-normal bg-light-blue px-8 py-2 rounded-lg">List of Members</a>
+            <a href="/dashboard/partners/${companyId}/projects" class="text-white font-normal bg-dark-blue hover:bg-darker-blue bg px-8 py-2 rounded-lg">List of Projects</a>
+            <a href="#" class="text-white font-normal bg-[#4753BA] hover:bg-light-blue px-8 py-2 rounded-lg">List of Members</a>
           </div>
         </div>
           `).show();
       }
     });
-
   });
 </script>
 @endsection

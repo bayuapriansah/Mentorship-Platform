@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 @section('content')
 <div class="container-fluid">
 
@@ -32,7 +32,9 @@
             <td>{{$no}}</td>
             <td>{{$project->name}}</td>
             <td>{{$project->project_domain}}</td>
-            <td>{{$project->company->name}}</td>
+            <td>
+              {{$project->company->name}}
+            </td>
             <td>{{$project->type}}</td>
             <td>{{$project->period}} Month</td>
             <td>{{$project->status}}</td>

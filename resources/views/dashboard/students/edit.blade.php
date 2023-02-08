@@ -1,10 +1,12 @@
 @extends('layouts.admin2')
 @section('content')
+@if(Route::is('dashboard.students.manage'))
 <div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/students"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+  <a href="/dashboard/institutions/{{$institution->id}}/students"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
+@endif
 
-<form action="/dashboard/students/{{$student->id}}/managepatch" method="post" enctype="multipart/form-data">
+<form action="/dashboard/institutions/{{$institution->id}}/students/{{$student->id}}/managepatch" method="post" enctype="multipart/form-data">
   @method('patch')
   @csrf
   <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('assets/img/placeholder_pp.png') }}" class="w-[145px] h-[145px] mx-auto mt-14 rounded-full object-cover" id="profile_img"  alt="message">
