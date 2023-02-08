@@ -14,6 +14,8 @@ use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\InstitutionController;
 
 class StudentController extends Controller
 {
@@ -24,8 +26,9 @@ class StudentController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
+
     public function index()
     {
         $students = Student::get();
@@ -37,12 +40,16 @@ class StudentController extends Controller
 
     public function register($email)
     {
+        $email = (new SimintEncryption)->decData($email);
+        $regState = 0;
         $checkStudent = Student::where('email', $email)->where('is_confirm',0)->first();
+        // dd($checkStudent->institution_id->institution_world_data_view);
         if(!$checkStudent){
             return redirect()->route('index');
         }elseif($checkStudent){
-            // @dd($checkStudent);
-            return view('student.index', compact(['checkStudent']));
+            $GetInstituionData = (new InstitutionController)->GetInstituionData();
+            $regState = 1;
+            return view('auth.register', compact(['checkStudent','GetInstituionData','regState']));
         }
     }
 
@@ -53,11 +60,12 @@ class StudentController extends Controller
 
     public function sendInvite(Request $request)
     {
-        $checkStudent = Student::where('email', $request->email)->first();  
+        $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
-            $link = route('student.register', [$request->email]);
+            $encEmail = (new SimintEncryption)->encData($request->email);
+            $link = route('student.register', [$encEmail]);
             $student= $this->addStudent($request);
-            $sendmail = (new MailController)->EmailMentorInvitation($student->email,$link);
+            $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Student";
             return redirect()->route('dashboard.students.index')->with('success', $message);
         }
@@ -65,11 +73,12 @@ class StudentController extends Controller
 
     public function sendInviteFromInstitution(Request $request,$institution_id)
     {
-        $checkStudent = Student::where('email', $request->email)->first();  
+        $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
-            $link = route('student.register', [$request->email]);
+            $encEmail = (new SimintEncryption)->encData($request->email);
+            $link = route('student.register', [$encEmail]);
             $student = $this->addStudentToInstitution($request,$institution_id);
-            $sendmail = (new MailController)->EmailMentorInvitation($student->email,$link);
+            $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.students.institutionStudents', ['institution'=>$institution_id])->with('success', $message);
         }
@@ -213,6 +222,8 @@ class StudentController extends Controller
     public function update($id, Request $request)
     {
         dd($request->all());
+        // jangan lupa di validasi ya di bagian sini
+        // dd($request->all());
         $student = Student::find($id);
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
@@ -228,7 +239,7 @@ class StudentController extends Controller
         $student->year_of_study = $request->year_of_study;
         if($request->hasFile('profile_picture')){
             if($student->profile_picture == null){
-                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
@@ -238,9 +249,9 @@ class StudentController extends Controller
                     return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
                 }
             }
-            
+
             // save the new image
-             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
@@ -255,9 +266,71 @@ class StudentController extends Controller
         }
         $student->save();
         return redirect('/profile/'.$id.'/edit')->with('successTailwind','Profile updated successfully');
-
     }
-    
+
+    /**
+     *
+     *
+     */
+    public function completedRegister($email, Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'date_of_birth' => ['required'],
+            'sex' => ['required'],
+            'institution' => ['required'],
+            'country' => ['required'],
+            'state' => ['required'],
+            'study_program' => ['required'],
+            'year_of_study' => ['required'],
+            'email' => ['required'],
+            'g-recaptcha-response' => function ($attribute, $value, $fail) {
+                $secretkey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                // dd($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    Session::flash('alert-class', 'alert-danger');
+                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
+                }
+            },
+            'tnc' => ['required']
+        ]);
+
+        if($validator->fails()){
+            return redirect()->route('student.register',[$email])->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        // to get randomly id mentors
+        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->first();
+        $regStudent = Student::where('email',$validated['email'])->first();
+        $regStudent->first_name = $validated['first_name'];
+        $regStudent->last_name = $validated['last_name'];
+        $regStudent->email = $validated['email'];
+        $regStudent->sex = $validated['sex'];
+        $regStudent->state = $validated['state'];
+        $regStudent->country = $validated['country'];
+        $regStudent->date_of_birth = $validated['date_of_birth'];
+        $regStudent->institution_id = $validated['institution'];
+        $regStudent->study_program = $validated['study_program'];
+        $regStudent->year_of_study = $validated['year_of_study'];
+        // just for note, is confirm and the end_date we dont need to set in here because when we enter the route verified the is confirm and the end_date  will be handled by the route
+        // $regStudent->is_confirm = 1;
+        // $regStudent->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+        $regStudent->mentor_id = $mentor->id;
+        $regStudent->save();
+        $emailEnc = (new SimintEncryption)->encData($validated['email']);
+        return redirect()->route('verified',[$emailEnc]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -270,7 +343,7 @@ class StudentController extends Controller
         $student->delete();
         return redirect('dashboard/students');
     }
-    
+
     // STUDENT PROFILE
     public function allProjects($id)
     {
@@ -287,7 +360,7 @@ class StudentController extends Controller
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
     }
-    
+
     public function ongoingProjects($id)
     {
         // dd(Auth::guard('student')->user()->id);
@@ -301,7 +374,7 @@ class StudentController extends Controller
         $newMessage = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
     }
-    
+
     public function completedProjects($id)
     {
         // dd(Auth::guard('student')->user()->id);
@@ -344,7 +417,7 @@ class StudentController extends Controller
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
-        
+
         // To Check if there's data in submission inputed from Project_section
         // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
@@ -353,7 +426,7 @@ class StudentController extends Controller
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
         // dd($projectsections);
         // Change is_submited in enrolled_project
-      
+
         // Total Task in Section
         $total_task = $project_sections->count();
 
@@ -387,7 +460,7 @@ class StudentController extends Controller
         // The prerequisite for count task progress
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-        
+
         // Total Task in Section
         $total_task = $project_sections->count();
         // Total task cleared
@@ -406,7 +479,7 @@ class StudentController extends Controller
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
-        // 
+        //
         $student = Student::where('id', $student_id)->first();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();

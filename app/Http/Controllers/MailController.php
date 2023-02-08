@@ -55,11 +55,6 @@ class MailController extends Controller
             'body3' => '',
             'body4' => '',
             'body5'=> '',
-            // 'body' => 'We would like to invite you to be a Mentor, and put you on project that you can mentor.',
-            // 'body2' => 'Please click the link below to fill the form and register as a Mentor.',
-            // 'body3' => $urlInvitation,
-            // 'body4' => 'Best regards,',
-            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'mentor',
         ];
         try
@@ -77,9 +72,6 @@ class MailController extends Controller
             'subject' => 'Registration Completed',
             'body' => $mailto,
             'body2' => 'otp/login',
-            // 'body3' => 'if you still have a question related about this, please contact us : support@simulatedinternship.com',
-            // 'body4' => 'Best regards,',
-            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'mentor',
         ];
         try
@@ -120,11 +112,6 @@ class MailController extends Controller
             'body3' => '',
             'body4' => '',
             'body5'=> '',
-            // 'body' => 'We would like to invite you to be a Mentor, and put you on project that you can mentor.',
-            // 'body2' => 'Please click the link below to fill the form and register as a Mentor.',
-            // 'body3' => $urlInvitation,
-            // 'body4' => 'Best regards,',
-            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'student',
         ];
         try

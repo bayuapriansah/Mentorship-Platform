@@ -73,7 +73,8 @@ Route::get('/mentor/register/{email}', [MentorController::class, 'register'])->n
 Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update'])->name('mentor.registerAuth');
 
 // student register
-Route::get('/student/register/{email}', [StudentController::class, 'register'])->name('student.register');
+Route::get('/register/student/{email}', [StudentController::class, 'register'])->name('student.register');
+Route::post('/register/student/{email}', [StudentController::class, 'completedRegister'])->name('student.register.completed');
 Route::post('/mentor/register/{email}/auth', [StudentController::class, 'update'])->name('mentor.registerAuth');
 
 
@@ -86,7 +87,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/detail', [StudentController::class, 'enrolledDetail'])->name('student.enrolledDetail');
     Route::get('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskDetail'])->name('student.taskDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskSubmit'])->name('student.taskSubmit');
-    
+
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
     // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
@@ -115,7 +116,7 @@ Route::get('/theworld', [TheWorldController::class, 'index']);
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
-    
+
     Route::middleware(['auth:web'])->group(function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
@@ -156,7 +157,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
         Route::resource('partners', CompanyController::class);
     });
-    
+
     Route::middleware(['auth:web,company'])->group(function(){
         Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
@@ -185,7 +186,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::delete('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexDestroySection'])->name('projects.DestroySection');
         Route::post('/projects/{project}/section/{section}/up', [ProjectController::class, 'dashboardIndexSectionUp'])->name('projects.SectionUp');
         Route::post('/projects/{project}/section/{section}/down', [ProjectController::class, 'dashboardIndexSectionDown'])->name('projects.SectionDown');
-        
+
         //subsection
         Route::get('/projects/{project}/section/{section}/subsection', [ProjectController::class, 'dashboardIndexSubsection'])->name('projects.subsection');
         Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.createSubsection');
@@ -193,7 +194,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/section/{section}/subsection/{subsection}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('projects.EditSubsection');
         Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
         Route::delete('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardDestroySubsection'])->name('projects.DestroySubsection');
-   
+
         // Assign Project to institution
     });
     Route::middleware(['auth:mentor'])->group(function(){
@@ -202,20 +203,21 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/assigned_projects/{project}/section', [MentorController::class, 'sectionProjectAssign'])->name('assigned.projectSection');
         Route::get('/assigned_projects/{project}/section/{section}/subsection', [MentorController::class, 'subsectionProjectAssign'])->name('assigned.projectSubsection');
         Route::post('/grade/{submission}', [GradeController::class, 'subsectionProjectGradeAssign'])->name('assigned.projectSubsectionGrade');
-        
+
         Route::get('/assigned_projects/{project}/section/{section}/chat', [MentorController::class, 'showAllStudentsChats'])->name('assigned.showAllStudentsChats');
         Route::get('/assigned_projects/{project}/section/{section}/student/{student}', [MentorController::class, 'singleStudentChat'])->name('assigned.singleStudentChat');
         Route::post('{mentor}/assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('assigned.SendComment');
         // Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 
-    }); 
+    });
 });
 
 Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');
-    Route::post('/otp/generate', 'generate')->name('otp.generate');
+    // This will allow both GET and POST requests to the "otp/generate" route and prevent the "405 Method Not Allowed" error from occurring.
+    Route::match(['get', 'post'], '/otp/generate', 'generate')->name('otp.generate');
     Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');
     Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin');
 });
