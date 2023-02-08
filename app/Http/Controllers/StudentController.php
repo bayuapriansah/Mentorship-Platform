@@ -52,11 +52,11 @@ class StudentController extends Controller
 
     public function sendInvite(Request $request)
     {
-        $checkStudent = Student::where('email', $request->email)->first();  
+        $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
             $link = route('student.register', [$request->email]);
             $student= $this->addStudent($request);
-            $sendmail = (new MailController)->EmailMentorInvitation($student->email,$link);
+            $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Student";
             return redirect()->route('dashboard.students.index')->with('success', $message);
         }
@@ -64,11 +64,11 @@ class StudentController extends Controller
 
     public function sendInviteFromInstitution(Request $request,$institution_id)
     {
-        $checkStudent = Student::where('email', $request->email)->first();  
+        $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
             $link = route('student.register', [$request->email]);
             $student = $this->addStudentToInstitution($request,$institution_id);
-            $sendmail = (new MailController)->EmailMentorInvitation($student->email,$link);
+            $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.students.institutionStudents', ['institution'=>$institution_id])->with('success', $message);
         }
@@ -166,7 +166,7 @@ class StudentController extends Controller
         $student->year_of_study = $request->year_of_study;
         if($request->hasFile('profile_picture')){
             if($student->profile_picture == null){
-                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
@@ -176,9 +176,9 @@ class StudentController extends Controller
                     return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
                 }
             }
-            
+
             // save the new image
-             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
@@ -195,7 +195,7 @@ class StudentController extends Controller
         return redirect('/profile/'.$id.'/edit')->with('successTailwind','Profile updated successfully');
 
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -206,7 +206,7 @@ class StudentController extends Controller
     {
         //
     }
-    
+
     // STUDENT PROFILE
     public function allProjects($id)
     {
@@ -223,7 +223,7 @@ class StudentController extends Controller
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
     }
-    
+
     public function ongoingProjects($id)
     {
         // dd(Auth::guard('student')->user()->id);
@@ -237,7 +237,7 @@ class StudentController extends Controller
         $newMessage = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
     }
-    
+
     public function completedProjects($id)
     {
         // dd(Auth::guard('student')->user()->id);
@@ -280,7 +280,7 @@ class StudentController extends Controller
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
-        
+
         // To Check if there's data in submission inputed from Project_section
         // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
@@ -289,7 +289,7 @@ class StudentController extends Controller
         $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
         // dd($projectsections);
         // Change is_submited in enrolled_project
-      
+
         // Total Task in Section
         $total_task = $project_sections->count();
 
@@ -323,7 +323,7 @@ class StudentController extends Controller
         // The prerequisite for count task progress
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-        
+
         // Total Task in Section
         $total_task = $project_sections->count();
         // Total task cleared
@@ -342,7 +342,7 @@ class StudentController extends Controller
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
-        // 
+        //
         $student = Student::where('id', $student_id)->first();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
