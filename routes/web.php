@@ -190,7 +190,7 @@ Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');
-    Route::post('/otp/generate', 'generate')->name('otp.generate');
+    Route::match(['get', 'post'], '/otp/generate', 'generate')->name('otp.generate');
     Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');
     Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin');
 });
