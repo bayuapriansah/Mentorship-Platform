@@ -118,15 +118,17 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     Route::middleware(['auth:web'])->group(function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
+        Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
         Route::resource('students', StudentController::class);
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
-        Route::get('institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
+        Route::get('/institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
         Route::get('/institutions/{institution}/students', [InstitutionController::class, 'institutionStudents'])->name('students.institutionStudents');
 
         Route::get('/institutions/{institution}/students/invite', [StudentController::class, 'inviteFromInstitution'])->name('students.inviteFromInstitution');
         Route::post('/institutions/{institution}/students', [StudentController::class, 'sendInviteFromInstitution'])->name('students.sendInviteFromInstitution');
+        Route::post('/institutions/students', [StudentController::class, 'sendInvite'])->name('students.sendInvite');
 
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
         Route::get('/institutions/{institution}/supervisors/invite', [MentorController::class, 'invite'])->name('institutionSupervisorInvite');

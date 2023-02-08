@@ -50,22 +50,28 @@ class StudentController extends Controller
         return view('dashboard.students.institution.invite', compact('institution'));
     }
 
+    public function sendInvite(Request $request)
+    {
+        $checkStudent = Student::where('email', $request->email)->first();  
+        if(!$checkStudent){
+            $link = route('student.register', [$request->email]);
+            $student= $this->addStudent($request);
+            $sendmail = (new MailController)->EmailMentorInvitation($student->email,$link);
+            $message = "Successfully Send Invitation to Student";
+            return redirect()->route('dashboard.students.index')->with('success', $message);
+        }
+    }
+
     public function sendInviteFromInstitution(Request $request,$institution_id)
     {
         $checkStudent = Student::where('email', $request->email)->first();  
         if(!$checkStudent){
             $link = route('student.register', [$request->email]);
-            if($institution_id){
-                $student = $this->addStudentToInstitution($request,$institution_id);
-            }else{
-                $student= $this->addStudent($request);
-            }
+            $student = $this->addStudentToInstitution($request,$institution_id);
             $sendmail = (new MailController)->EmailMentorInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.students.institutionStudents', ['institution'=>$institution_id])->with('success', $message);
         }
-        
-        
     }
 
     public function addStudentToInstitution($request,$institution_id){
@@ -81,8 +87,8 @@ class StudentController extends Controller
     public function addStudent($request){
         $student= new Student;
         $student->email = $request->email;
+        $student->is_confirm = 0;
         $student->save();
-
         return $student;
     }
 

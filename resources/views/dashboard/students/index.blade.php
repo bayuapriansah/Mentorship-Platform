@@ -14,7 +14,7 @@
 @else
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Students</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
+  <a href="{{route('dashboard.students.invite')}}" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
 @endif
 
@@ -44,14 +44,20 @@
       <td>{{$no}}</td>
       <td>{{$student->first_name}} {{$student->last_name}}</td>
       <td>{{$student->email}}</td>
-      <td>{{$student->institution->name}}</td>
+      <td>
+        @if($student->institution)
+        {{$student->institution->name}}
+        @else
+        Not Registered Yet
+        @endif
+      </td>
       <td>
         @if ($student->is_confirm == 1)
           <span class="text-green-600">Active</span>
         @elseif($student->is_confirm == 2)
           <span class="text-red-600">Suspended</span>
         @else
-          Not Active Yet
+          <span class="text-[#D89B33]">Pending</span>
         @endif
       </td>
       <td class="text-center">
