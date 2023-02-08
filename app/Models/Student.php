@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;   
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
 class Student extends Authenticatable
@@ -15,7 +15,7 @@ class Student extends Authenticatable
     protected $guard = 'student';
 
     protected $fillable = ['name', 'email', 'password'];
-    
+
     public function projects()
     {
         return $this->hasMany(Project::class);

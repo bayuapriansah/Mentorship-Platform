@@ -30,10 +30,11 @@ class AuthController extends Controller
             return back();
         }
         $GetInstituionData = (new InstitutionController)->GetInstituionData();
-        return view('auth.register', compact('GetInstituionData'));
+        $regState = 0;
+        return view('auth.register', compact('GetInstituionData','regState'));
     }
 
-    public function store(Request $request){ 
+    public function store(Request $request){
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'first_name' => ['required'],
@@ -58,7 +59,7 @@ class AuthController extends Controller
                     Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
                     Session::flash('alert-class', 'alert-danger');
                     $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-                } 
+                }
             },
         ]);
 
@@ -100,7 +101,7 @@ class AuthController extends Controller
         Auth::guard()->logout();
         $request->session()->flush();
         $request->session()->regenerate();
-    
+
         return redirect('/');
     }
 

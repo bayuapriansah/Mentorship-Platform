@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
@@ -13,6 +14,8 @@ use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\InstitutionController;
 
 class StudentController extends Controller
 {
@@ -23,8 +26,9 @@ class StudentController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
+
     public function index()
     {
         $students = Student::get();
@@ -36,12 +40,16 @@ class StudentController extends Controller
 
     public function register($email)
     {
+        $email = (new SimintEncryption)->decData($email);
+        $regState = 0;
         $checkStudent = Student::where('email', $email)->where('is_confirm',0)->first();
+        // dd($checkStudent->institution_id->institution_world_data_view);
         if(!$checkStudent){
             return redirect()->route('index');
         }elseif($checkStudent){
-            // @dd($checkStudent);
-            return view('student.index', compact(['checkStudent']));
+            $GetInstituionData = (new InstitutionController)->GetInstituionData();
+            $regState = 1;
+            return view('auth.register', compact(['checkStudent','GetInstituionData','regState']));
         }
     }
 
@@ -54,7 +62,8 @@ class StudentController extends Controller
     {
         $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
-            $link = route('student.register', [$request->email]);
+            $encEmail = (new SimintEncryption)->encData($request->email);
+            $link = route('student.register', [$encEmail]);
             $student= $this->addStudent($request);
             $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Student";
@@ -66,7 +75,8 @@ class StudentController extends Controller
     {
         $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
-            $link = route('student.register', [$request->email]);
+            $encEmail = (new SimintEncryption)->encData($request->email);
+            $link = route('student.register', [$encEmail]);
             $student = $this->addStudentToInstitution($request,$institution_id);
             $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Mentor";
@@ -150,6 +160,7 @@ class StudentController extends Controller
      */
     public function update($id, Request $request)
     {
+        // jangan lupa di validasi ya di bagian sini
         // dd($request->all());
         $student = Student::find($id);
         $student->first_name = $request->first_name;
@@ -193,7 +204,69 @@ class StudentController extends Controller
         }
         $student->save();
         return redirect('/profile/'.$id.'/edit')->with('successTailwind','Profile updated successfully');
+    }
 
+    /**
+     *
+     *
+     */
+    public function completedRegister($email, Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'date_of_birth' => ['required'],
+            'sex' => ['required'],
+            'institution' => ['required'],
+            'country' => ['required'],
+            'state' => ['required'],
+            'study_program' => ['required'],
+            'year_of_study' => ['required'],
+            'email' => ['required'],
+            'g-recaptcha-response' => function ($attribute, $value, $fail) {
+                $secretkey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+                // dd($response);
+                if(!$response->success){
+                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+                    Session::flash('alert-class', 'alert-danger');
+                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
+                }
+            },
+            'tnc' => ['required']
+        ]);
+
+        if($validator->fails()){
+            return redirect()->route('student.register',[$email])->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        // to get randomly id mentors
+        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->first();
+        $regStudent = Student::where('email',$validated['email'])->first();
+        $regStudent->first_name = $validated['first_name'];
+        $regStudent->last_name = $validated['last_name'];
+        $regStudent->email = $validated['email'];
+        $regStudent->sex = $validated['sex'];
+        $regStudent->state = $validated['state'];
+        $regStudent->country = $validated['country'];
+        $regStudent->date_of_birth = $validated['date_of_birth'];
+        $regStudent->institution_id = $validated['institution'];
+        $regStudent->study_program = $validated['study_program'];
+        $regStudent->year_of_study = $validated['year_of_study'];
+        // just for note, is confirm and the end_date we dont need to set in here because when we enter the route verified the is confirm and the end_date  will be handled by the route
+        // $regStudent->is_confirm = 1;
+        // $regStudent->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+        $regStudent->mentor_id = $mentor->id;
+        $regStudent->save();
+        $emailEnc = (new SimintEncryption)->encData($validated['email']);
+        return redirect()->route('verified',[$emailEnc]);
     }
 
     /**
