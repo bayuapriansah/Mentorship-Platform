@@ -148,7 +148,6 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $company = Company::find($id);
         $company->delete();
         return redirect('dashboard/institutions');
