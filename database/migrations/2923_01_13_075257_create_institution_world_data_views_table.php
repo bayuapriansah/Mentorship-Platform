@@ -21,16 +21,18 @@ return new class extends Migration
         SELECT
         institutions.id AS id,
         institutions.name AS institutions,
+        institutions.email,
         institutions.logo AS logo,
         countries.name AS countries,
         states.name AS states,
+        institutions.status,
         institutions.created_at AS created_at,
         institutions.updated_at AS updated_at
         FROM
-            (( institutions JOIN countries ) JOIN states ) 
+        (( institutions JOIN countries ) JOIN states )
         WHERE
-        institutions.country = countries.id 
-        AND countries.id = states.country_id 
+        institutions.country = countries.id
+        AND countries.id = states.country_id
         AND institutions.state = states.id
         ");
     }
