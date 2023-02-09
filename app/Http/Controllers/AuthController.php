@@ -47,27 +47,16 @@ class AuthController extends Controller
             'institution' => ['required'],
             'study_program' => ['required'],
             'year_of_study' => ['required'],
-            'g-recaptcha-response' => function ($attribute, $value, $fail) {
-                $secretkey = config('services.recaptcha.secret');
-                $response = $value;
-                $userIP = $_SERVER['REMOTE_ADDR'];
-                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
-                $response = \file_get_contents($url);
-                $response = json_decode($response);
-                // dd($response);
-                if(!$response->success){
-                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    Session::flash('alert-class', 'alert-danger');
-                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-                }
-            },
+            'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
         if($validator->fails()){
+            Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
             return redirect('/register')->withErrors($validator)->withInput();
         }
         $validated = $validator->validated();
         $existing_student = Student::where('email',$validated['email'])->first();
+        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->first();
         if($existing_student == null){
             $student = new Student;
             $student->first_name = $validated['first_name'];
@@ -86,6 +75,7 @@ class AuthController extends Controller
             $student->year_of_study = $validated['year_of_study'];
             $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $student->is_confirm = 0;
+            $student->mentor_id = $mentor->id;
             $student->save();
             $sendmail = (new MailController)->emailregister($validated['email']);
             $emailEnc = (new SimintEncryption)->encData($validated['email']);

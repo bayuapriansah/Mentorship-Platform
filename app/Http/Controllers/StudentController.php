@@ -224,24 +224,12 @@ class StudentController extends Controller
             'study_program' => ['required'],
             'year_of_study' => ['required'],
             'email' => ['required'],
-            'g-recaptcha-response' => function ($attribute, $value, $fail) {
-                $secretkey = config('services.recaptcha.secret');
-                $response = $value;
-                $userIP = $_SERVER['REMOTE_ADDR'];
-                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
-                $response = \file_get_contents($url);
-                $response = json_decode($response);
-                // dd($response);
-                if(!$response->success){
-                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    Session::flash('alert-class', 'alert-danger');
-                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-                }
-            },
+            'g-recaptcha-response' => 'required|recaptcha',
             'tnc' => ['required']
         ]);
 
         if($validator->fails()){
+            Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
             return redirect()->route('student.register',[$email])->withErrors($validator)->withInput();
         }
 

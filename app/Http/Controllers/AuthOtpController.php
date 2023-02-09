@@ -16,46 +16,29 @@ use Illuminate\Support\Facades\Validator;
 class AuthOtpController extends Controller
 {
     public function login(){
-        if(Auth::guard('company')->check()){
-            return back();
-        }
-        if(Auth::guard('web')->check()){
-            return back();
-        }
-        if(Auth::guard('mentor')->check()){
-            return back();
-        }
-        if(Auth::guard('student')->check()){
-            return back();
+        $guards = ['company', 'web', 'mentor', 'student'];
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return back();
+            }
         }
         return view('auth.loginOtp');
     }
 
     public function generate(Request $request){
-        if(Auth::guard('student') || Auth::guard('web')){
-            abort(403);
+        if ($request->isMethod('get')) {
+            return redirect()->route('otp.login')->with('email', 'Please use registered Email');
         }
+
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required',
-            'g-recaptcha-response' => function ($attribute, $value, $fail) {
-                $secretkey = config('services.recaptcha.secret');
-                $response = $value;
-                $userIP = $_SERVER['REMOTE_ADDR'];
-                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
-                $response = \file_get_contents($url);
-                $response = json_decode($response);
-                // dd($response);
-                if(!$response->success){
-                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    Session::flash('alert-class', 'alert-danger');
-                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-                }
-            },
+            'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
         if($validator->fails()){
-            Session::flash('email', 'Email is empty');
+            // Session::flash('email', 'Email is empty');
+            Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
             return redirect()->route('otp.login')->withErrors($validator)->withInput();
         }
 
