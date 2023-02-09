@@ -569,4 +569,137 @@ class ProjectController extends Controller
         $submission->save();
         return redirect('/projects/'.$student_id.'/applied/'.$project_id.'/detail')->with('success','Project has been submited');
     }
+
+    public function partnerProjects(Company $partner)
+    {
+        $projects = Project::where('company_id', $partner->id)->get();
+        return view('dashboard.projects.index', compact('partner', 'projects'));
+    }
+
+    public function partnerProjectsCreate(Company $partner)
+    {
+        return view('dashboard.projects.create', compact('partner'));
+    }
+
+    public function partnerProjectsStore(Request $request,Company $partner)
+    {
+        // dd($request->input('addInjectionCard'));
+            // dd($request->all());
+
+        // if ($request->input('Add Injection Card')){
+        // }
+        $validated = $request->validate([
+            'name' => ['required'],
+            'domain' => ['required'],
+            'period' => ['required'],
+            'problem' => ['required'],
+            // 'type' => ['required'],
+            // 'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
+            // 'institution_id' => ['required'],
+        ],
+        [
+            'name.required' => 'Project name is required',
+            'domain.required' => 'Project domain is required',
+            'period.required' => 'Project period is required',
+            'problem.required' => 'Project problem is required',
+        ]);
+        $project = new Project;
+        $project->name = $validated['name'];
+        $project->project_domain = $validated['domain'];
+        $project->period = $validated['period'];
+        $project->problem = $validated['problem'];
+        $project->type = 'monthly';
+        $project->status = 'draft';
+        $project->company_id = $partner->id;
+        $project->overview = $request->overview;
+        $project->save();
+        
+        if($request->input('addInjectionCard')){
+            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
+            // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
+        }else{
+            return redirect('/dashboard/partners/'.$partner->id.'/projects');
+        }
+    }
+    public function partnerProjectsEdit(Company $partner, Project $project)
+    {
+        $project = Project::find($project->id);
+        $cards = ProjectSection::where('project_id', $project->id)->get();
+        return view('dashboard.projects.edit', compact('partner', 'project', 'cards'));
+    }
+
+    public function partnerProjectsInjection(Company $partner, Project $project)
+    {
+        return view('dashboard.projects.injection.index', compact('partner', 'project'));
+    }
+
+    public function partnerProjectsInjectionStore(Request $request, Company $partner, Project $project)
+    {
+        $validated = $request->validate([
+            'title' => ['required'],
+            'inputfiletype' => ['required'],
+            'duration' => ['required'],
+            'description' => ['required'],
+        ],
+        [
+            'title.required' => 'Title is required',
+            'inputfiletype.required' => 'File Type is required',
+            'duration.required' => 'Duration is required',
+            'description.required' => 'Description is required',
+        ]);
+
+        $section  = new ProjectSection;
+        $section->project_id = $project->id;
+        $section->title = $validated['title'];
+        $section->file_type = $validated['inputfiletype'];
+        $section->duration = $validated['duration'];
+        $section->section = 0;
+        $section->description = $validated['description'];
+        if($request->hasFile('file')){
+            $file = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file);
+            $section->file1 = $file;
+        }
+        $section->save();
+        return redirect()->back();
+    }
+
+    public function partnerProjectsInjectionEdit(Company $partner, Project $project, ProjectSection $injection)
+    {
+        $injection = ProjectSection::find($injection->id);
+        return view('dashboard.projects.injection.edit', compact('partner', 'project', 'injection'));
+    }
+
+    public function partnerProjectsInjectionUpdate(Request $request, Company $partner, Project $project, ProjectSection $injection)
+    {
+        $validated = $request->validate([
+            'title' => ['required'],
+            'inputfiletype' => ['required'],
+            'duration' => ['required'],
+            'description' => ['required'],
+        ],
+        [
+            'title.required' => 'Title is required',
+            'inputfiletype.required' => 'File Type is required',
+            'duration.required' => 'Duration is required',
+            'description.required' => 'Description is required',
+        ]);
+
+        $section = ProjectSection::findOrFail($injection->id);
+        $section->title = $validated['title'];
+        $section->file_type = $validated['inputfiletype'];
+        $section->duration = $validated['duration'];
+        $section->description = $validated['description'];
+        if($request->hasFile('file')){
+            if(Storage::path($section->file1)) {
+                Storage::disk('public')->delete($section->file1);
+            }
+            // save the new image
+            $file = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file);
+            $section->file1 = $file;
+        }
+        $section->save();
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+    }
+
+    
 }   

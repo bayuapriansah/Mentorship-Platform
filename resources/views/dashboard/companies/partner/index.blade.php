@@ -18,7 +18,7 @@
       <th>Last Name</th>
       <th>Email</th>
       <th>Sex</th>
-      <th>Last Login</th>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -32,7 +32,15 @@
       <td>{{$member->last_name}}</td>
       <td>{{$member->email}}</td>
       <td>{{$member->gender}}</td>
-      <td>1/1/23</td>
+      <td>
+        @if ($member->is_confirm == 1)
+          <span class="text-green-600">Active</span>
+        @elseif($member->is_confirm == 2)
+          <span class="text-red-600">Suspended</span>
+        @else
+          <span class="text-[#D89B33]">Pending</span>
+        @endif
+      </td>
       <td>
         <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover{{$no}}" data-dropdown-trigger="hover" class="text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
         <!-- Dropdown menu -->
