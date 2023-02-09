@@ -231,7 +231,10 @@ Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');
     // This will allow both GET and POST requests to the "otp/generate" route and prevent the "405 Method Not Allowed" error from occurring.
-    Route::match(['get', 'post'], '/otp/generate', 'generate')->name('otp.generate');
+    // Route::match(['get', 'post'], '/otp/generate', 'generate')->name('otp.generate');
+    // Route::get('/otp/generate', 'generateCheck')->name('otp.generate.check');
+    Route::get('/otp/generate', 'generate')->name('otp.generate.check');
+    Route::post('/otp/generate', 'generate')->name('otp.generate');
     Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');
     Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin');
 });

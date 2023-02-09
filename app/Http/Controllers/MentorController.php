@@ -44,9 +44,9 @@ class MentorController extends Controller
     }
 // fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
     public function sendInvite(Request $request,$institution_id)
-    {   
-        $checkMentor = Mentor::where('email', $request->email)->first();   
-        
+    {
+        $checkMentor = Mentor::where('email', $request->email)->first();
+
         if(!$checkMentor){
             $link = route('mentor.register', [$request->email]);
             $mentors = $this->addMentor($request,$institution_id);
@@ -146,20 +146,7 @@ class MentorController extends Controller
             'country' => 'required',
             'gender' => 'required',
             'position' => 'required',
-            'g-recaptcha-response' => function ($attribute, $value, $fail) {
-                $secretkey = config('services.recaptcha.secret');
-                $response = $value;
-                $userIP = $_SERVER['REMOTE_ADDR'];
-                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
-                $response = \file_get_contents($url);
-                $response = json_decode($response);
-                // dd($response);
-                if(!$response->success){
-                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    Session::flash('alert-class', 'alert-danger');
-                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-                } 
-            },
+            'g-recaptcha-response' => 'required|recaptcha',
         ]);
         $mentor = Mentor::where('email',$email)->first();
         $mentor->first_name = $validated['first_name'];
@@ -202,17 +189,17 @@ class MentorController extends Controller
     // Assigned mentor project
 
     public function indexAssigned()
-    {   
+    {
         $mentor = Mentor::find(Auth::guard('mentor')->user()->id);
         // dd($mentor);
-        return view('dashboard.mentors.assigned.index', compact('mentor'));      
+        return view('dashboard.mentors.assigned.index', compact('mentor'));
     }
 
     public function sectionProjectAssign($project_id)
     {
         $project = Project::find($project_id);
         $project_sections =  ProjectSection::where('project_id', $project_id)->get();
-        return view('dashboard.mentors.assigned.section.index', compact(['project', 'project_sections']));      
+        return view('dashboard.mentors.assigned.section.index', compact(['project', 'project_sections']));
     }
 
     public function subsectionProjectAssign($project_id, $section_id)
@@ -221,7 +208,7 @@ class MentorController extends Controller
         $project_section = ProjectSection::find($section_id);
         $project_subsections =  SectionSubsection::where('project_section_id', $section_id)->get();
         // dd($project_subsections->submission);
-        return view('dashboard.mentors.assigned.section.subsection.index', compact(['project' ,'project_section', 'project_subsections']));      
+        return view('dashboard.mentors.assigned.section.subsection.index', compact(['project' ,'project_section', 'project_subsections']));
     }
 
     public function showAllStudentsChats($project_id, $section_id)
@@ -236,5 +223,5 @@ class MentorController extends Controller
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $section_id)->get();
         return view('dashboard.mentors.assigned.section.chat.show', compact(['project_id','section_id','student_id','comments']));
     }
-    
+
 }
