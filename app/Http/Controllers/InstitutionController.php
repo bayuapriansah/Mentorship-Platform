@@ -162,7 +162,7 @@ class InstitutionController extends Controller
     {
         // dd('tes');
         $students = Student::where('institution_id', $institution->id)->get();
-        return view('dashboard.students.index', compact('students', 'institution'));
+        return view('dashboard.institutions.students.index', compact('students', 'institution'));
     }
 
 
@@ -183,7 +183,6 @@ class InstitutionController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $institution = Institution::find($id);
         $institution->delete();
         return redirect('dashboard/institutions');

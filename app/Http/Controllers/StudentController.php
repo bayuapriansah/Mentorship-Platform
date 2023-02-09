@@ -133,7 +133,59 @@ class StudentController extends Controller
     {
         //
     }
+    public function manage(Institution $institution,Student $student)
+    {
+        $mentors = Mentor::where('institution_id', $student->institution_id)->get();
+        return view('dashboard.students.edit', compact('student', 'mentors', 'institution'));
+    }
 
+    public function managepatch($institution_id, $student_id, Request $request)
+    {
+        $student = Student::find($student_id);
+        $student->first_name = $request->first_name;
+        $student->last_name = $request->last_name;
+        $student->date_of_birth = $request->date_of_birth;
+        $student->sex = $request->sex;
+        $student->country = $request->country;
+        $student->state = $request->state;
+        $student->mentor_id = $request->mentor_id;
+        if($request->study_program =='other'){
+            $student->study_program = $request->study_program_form;
+        }else{
+            $student->study_program = $request->study_program;
+        }
+        $student->year_of_study = $request->year_of_study;
+        if($request->hasFile('profile_picture')){
+            if($student->profile_picture == null){
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                    $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
+                    $student->profile_picture = $profile_picture;
+                }else{
+                    return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+                }
+            }
+            
+            // save the new image
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                if(Storage::path($student->profile_picture)) {
+                    Storage::disk('public')->delete($student->profile_picture);
+                }
+                $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
+                $student->profile_picture = $profile_picture;
+            }else{
+                return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+            }
+        }
+        $student->save();
+        return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('successTailwind','Profile updated successfully');
+
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -151,6 +203,15 @@ class StudentController extends Controller
         return view('student.edit', compact('student','newMessage'));
     }
 
+    public function suspendAccount($institution_id,$student_id)
+    {
+        $students = Student::find($student_id);
+        $students->is_confirm = 2;
+        $students->save();
+        $message = "Successfully Deactive Account";
+        return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -160,6 +221,7 @@ class StudentController extends Controller
      */
     public function update($id, Request $request)
     {
+        dd($request->all());
         // jangan lupa di validasi ya di bagian sini
         // dd($request->all());
         $student = Student::find($id);
@@ -265,7 +327,9 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student = Student::find($student->id);
+        $student->delete();
+        return redirect('dashboard/students');
     }
 
     // STUDENT PROFILE

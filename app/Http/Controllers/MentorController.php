@@ -124,9 +124,9 @@ class MentorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Mentor $mentor)
     {
-        //
+        dd($mentor->first_name);
     }
 
     /**

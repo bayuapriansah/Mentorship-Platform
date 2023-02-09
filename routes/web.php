@@ -16,6 +16,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TheWorldController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
@@ -120,6 +121,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
         Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
+        Route::get('/institutions/{institution}/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
+        Route::patch('/institutions/{institution}/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
+        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
         Route::resource('students', StudentController::class);
 
         // Institution
@@ -147,7 +151,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Company/partner/supervisor
         // Route::get('companies/{company_id}/inviteMentors', [MentorController::class, 'invite'])->name('mentors.invite');
         // Route::post('companies/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
-        Route::POST('/partners/{company_id}/suspend', [CompanyController::class, 'suspendCompany'])->name('companies.suspend');
+        Route::get('partners/{partner}/projects', [CompanyController::class, 'partnerProjects'])->name('partner.partnerProjects');
+        Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
+        Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
+        Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
         Route::resource('partners', CompanyController::class);
     });
 

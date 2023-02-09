@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -67,12 +68,12 @@ class CompanyController extends Controller
                 $logo = Storage::disk('public')->put('companies', $validated['logo']);
                 $company->logo = $logo;
             }else{
-                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
             
         }
         $company->save();
-        return redirect('dashboard/companies/')->with('success','Company has been added');
+        return redirect('dashboard/institutions_partners/')->with('success','Company has been added');
     }
 
     /**
@@ -139,11 +140,6 @@ class CompanyController extends Controller
         
     }
 
-    public function suspendCompany($id)
-    {
-        dd($id);
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -152,9 +148,14 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $company = Company::find($id);
         $company->delete();
         return redirect('dashboard/institutions');
+    }
+
+    public function partnerProjects(Company $partner)
+    {
+        $projects = Project::where('company_id', $partner->id)->get();
+        return view('dashboard.projects.index', compact('partner', 'projects'));
     }
 }

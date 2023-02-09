@@ -1,22 +1,13 @@
 @extends('layouts.admin2')
 @section('content')
-@if (Route::is('dashboard.students.institutionStudents'))
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/institutions_partners"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
-@endif
 
-@if (Route::is('dashboard.students.institutionStudents'))
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Institutions <i class="fa-solid fa-chevron-right"></i> Students</h3>
   <a href="/dashboard/institutions/{{$institution->id}}/students/invite" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
-@else
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Students</h3>
-  <a href="{{route('dashboard.students.invite')}}" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
-</div>
-@endif
 
 
 <!-- Content Row -->
@@ -62,6 +53,7 @@
       </td>
       <td class="text-center">
         <button class="view-details space-y-7"
+                data-institution-id="{{ $institution->id }}"
                 data-student-id="{{ $student->id }}"
                 data-student-dob="{{ $student->date_of_birth }}"
                 data-student-sex="{{ $student->sex }}"
@@ -92,6 +84,7 @@
     $('#dataTable tbody').on('click', 'button.view-details', function() {
       let tr = $(this).closest('tr');
       let row = table.row(tr);
+      let institutionId = $(this).data('institution-id');
       let studentId = $(this).data('student-id');
       let studentDob = $(this).data('student-dob');
       let studentSex = $(this).data('student-sex');
@@ -125,8 +118,8 @@
           </div>
           <div class="flex justify-between">
             <div class="flex space-x-4">
-              <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
-              <form method="POST" action="/dashboard/students/${studentId}/suspend" >
+              <a href="/dashboard/institutions/${institutionId}/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
+              <form method="POST" action="/dashboard/institutions/${institutionId}/students/${studentId}/suspend" >
                 @csrf
                 <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">Suspend Account</button>
               </form>
