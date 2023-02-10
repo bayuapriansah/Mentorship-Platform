@@ -288,7 +288,6 @@
 @section('more-js')
 <script>
   $(document).ready(function () {
-@if ($regState == 0)
       $('#inputInstitution').on('change', function () {
           var institutionVal = this.value;
           var base_url = window.location.origin;
@@ -302,22 +301,12 @@
                 $('#ForState').val(result.states);
               }
           });
+@if ($regState == 0)
       });
 @elseif ($regState == 1)
-      $('#inputInstitution').on('change', function () {
-            var institutionVal = this.value;
-            var base_url = window.location.origin;
-            $.ajax({
-                url: base_url+"/api/institution/"+institutionVal,
-                contentType: "application/json",
-                dataType: 'json',
-                success: function (result) {
-                    $('#ForCountry').val(result.countries);
-                    $('#ForState').val(result.states);
-                }
-            });
-        }).trigger('change'); // Trigger the change event to make the AJAX request on page load
+      }).trigger('change'); // Trigger the change event to make the AJAX request on page load
 @endif
+
       $('#study_program_form').hide();
       $("#inputStudy").change(function(){
         var values = $("#inputStudy option:selected").val();

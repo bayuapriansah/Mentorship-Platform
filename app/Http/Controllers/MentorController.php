@@ -14,6 +14,7 @@ use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class MentorController extends Controller
 {
@@ -36,10 +37,6 @@ class MentorController extends Controller
 
     public function invite(Institution $institution)
     {
-        // dd($institution->name);
-        // $projects = Project::where('company_id', $company_id)->get();
-        // $company = Company::find($company_id);
-        // $mentor = Mentor::where('company_id', $company_id)->get();
         return view('dashboard.mentors.invite', compact('institution'));
     }
 // fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
@@ -48,26 +45,13 @@ class MentorController extends Controller
         $checkMentor = Mentor::where('email', $request->email)->first();
 
         if(!$checkMentor){
-            $link = route('mentor.register', [$request->email]);
+            $encEmail = (new SimintEncryption)->encData($request->email);
+            $link = route('mentor.register', [$encEmail]);
             $mentors = $this->addMentor($request,$institution_id);
-            // $dataMentor = $this->addMentorToProject($mentors,$request);
             $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('success', $message);
         }
-        // elseif($checkMentorProject){
-        //     $message = "Mentor Already Exist in this Project";
-        //     return redirect()->route('dashboard.mentors.invite', [$company_id])->with('error', $message);
-        // }elseif($checkMentor->company_id != $company_id){
-        //     $message = "Mentor can't be assigned to different project in different company";
-        //     return redirect()->route('dashboard.mentors.invite', [$company_id])->with('error', $message);
-        // }elseif($checkMentor && $checkMentor->is_confirm == 1 && $checkMentor->company_id == $company_id){
-        //     $projects = Project::where('id', $request->project_id)->first();
-        //     $mentors = $this->addMentorToProject($checkMentor,$request);
-        //     $sendmail = (new MailController)->EmailMentor($checkMentor->email,$projects->name);
-        //     $message = "Successfully Send Invitation to Mentor";
-        //     return redirect()->route('dashboard.mentors.invite', [$company_id])->with('success', $message);
-        // }
     }
 
     public function addMentor($request,$institution_id){
@@ -80,12 +64,14 @@ class MentorController extends Controller
         return $mentor;
     }
 
+    // dont need it but dont stash the function
     public function addMentorToProject($mentor,$request){
         $mentorProject = new MentorProject;
         $mentorProject->mentor_id = $mentor->id;
         $mentorProject->project_id = $request->project_id;
         $mentorProject->save();
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -138,28 +124,40 @@ class MentorController extends Controller
      */
     public function update(Request $request, $email)
     {
-        // dd($id);
-        $validated = $request->validate([
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
             'first_name' => 'required',
             'last_name' => 'required',
-            'state' => 'required',
+            'sex' => 'required',
+            'institution' => 'required',
             'country' => 'required',
-            'gender' => 'required',
-            'position' => 'required',
+            'state' => 'required',
+            'password' => 'required|confirmed|min:8|',
             'g-recaptcha-response' => 'required|recaptcha',
+            'tnc' => 'required',
         ]);
-        $mentor = Mentor::where('email',$email)->first();
-        $mentor->first_name = $validated['first_name'];
-        $mentor->last_name = $validated['last_name'];
-        $mentor->state = $validated['state'];
-        $mentor->country = $validated['country'];
-        $mentor->gender = $validated['gender'];
-        $mentor->position = $validated['position'];
-        $mentor->is_confirm = 1;
-        $mentor->save();
-        $sendmail = (new MailController)->EmailMentorRegister($mentor->email);
-        $message = "Successfully Register as Mentor, Now you can login to your account";
-        return redirect()->route('otp.login')->with('success', $message);
+
+        $validated = $validator->validated();
+        $emails = (new SimintEncryption)->decData($email);
+        if($validated){
+            $mentor = Mentor::where('email',$emails)->first();
+            $mentor->email = $validated['email'];
+            $mentor->first_name = $validated['first_name'];
+            $mentor->last_name = $validated['last_name'];
+            $mentor->sex = $validated['sex'];
+            $mentor->institution_id = $validated['institution'];
+            $mentor->country = $validated['country'];
+            $mentor->state = $validated['state'];
+            $mentor->password = $validated['password'];
+            $mentor->is_confirm = 1;
+            $mentor->save();
+            $sendmail = (new MailController)->EmailMentorRegister($validated['email']);
+            $message = "Successfully Register as Mentor, Now you can login to your account";
+            return redirect()->route('otp.login')->with('success', $message);
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -176,13 +174,13 @@ class MentorController extends Controller
     // Register mentor
     public function register($email)
     {
-        $checkMentor = Mentor::where('email', $email)->where('is_confirm',0)->first();
+        $emails = (new SimintEncryption)->decData($email);
+        $checkMentor = Mentor::where('email', $emails)->where('is_confirm',0)->first();
         if(!$checkMentor){
             return redirect()->route('index');
         }elseif($checkMentor){
-            $checkCompany = Company::where('id', $checkMentor->company_id)->first();
-            // dd($checkCompany);
-            return view('mentor.index', compact(['checkMentor','checkCompany']));
+            $GetInstituionData = (new InstitutionController)->GetInstituionData();
+            return view('mentor.index', compact(['checkMentor','GetInstituionData','email']));
         }
     }
 

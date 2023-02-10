@@ -72,10 +72,10 @@ Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('aut
 Route::get('/mentor/register/{email}', [MentorController::class, 'register'])->name('mentor.register');
 Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update'])->name('mentor.registerAuth');
 
-// student register
+// student register - bayu - there's 2 route for now 09/02/2023
 Route::get('/register/student/{email}', [StudentController::class, 'register'])->name('student.register');
 Route::post('/register/student/{email}', [StudentController::class, 'completedRegister'])->name('student.register.completed');
-Route::post('/mentor/register/{email}/auth', [StudentController::class, 'update'])->name('mentor.registerAuth');
+// Route::post('/register/student/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 
 
 // bay
@@ -216,9 +216,6 @@ Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');
-    // This will allow both GET and POST requests to the "otp/generate" route and prevent the "405 Method Not Allowed" error from occurring.
-    // Route::match(['get', 'post'], '/otp/generate', 'generate')->name('otp.generate');
-    // Route::get('/otp/generate', 'generateCheck')->name('otp.generate.check');
     Route::get('/otp/generate', 'generate')->name('otp.generate.check');
     Route::post('/otp/generate', 'generate')->name('otp.generate');
     Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');

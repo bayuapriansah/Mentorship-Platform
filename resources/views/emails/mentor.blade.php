@@ -148,12 +148,12 @@ td .es-button-border-1:hover {
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
                       <td align="left" style="padding:0;Margin:0;padding-left:40px"><!--[if mso]><a href="" target="_blank" hidden>
-	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="" 
+	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href=""
                 style="height:64px; v-text-anchor:middle; width:261px" arcsize="50%" stroke="f"  fillcolor="#000f8a">
 		<w:anchorlock></w:anchorlock>
 		<center style='color:#ffffff; font-family: 'IntelOne Display', arial, "helvetica neue", helvetica, sans-serif; font-size:20px; font-weight:400; line-height:20px;  mso-text-raise:1px'>Confirm Email Addess</center>
 	</v:roundrect></a>
-<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ route('verified',[$data['body2']]) }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 30px 20px 30px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Confirm Email Addess</a></span><!--<![endif]--></td>
+<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ $data['body2']   }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 30px 20px 30px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Confirm Email Addess</a></span><!--<![endif]--></td>
                      </tr>
                      <tr>
                       <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">If you didn’t request this email, there is nothing to worry about - you can safely ignore it</p></td>
@@ -183,7 +183,7 @@ td .es-button-border-1:hover {
                </table></td>
              </tr>
              <tr>
-              <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0" 
+              <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0"
                         cellspacing="0"><tr><td style="width:300px" valign="top"><![endif]-->
                <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
                  <tr>

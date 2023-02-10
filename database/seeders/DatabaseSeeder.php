@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
 
         Company::create([
             'name' => fake()->name(),
-	    'email' => 'company@mail.com',
-	    'logo' => 'image.jpg',
+	        'email' => 'company@mail.com',
+	        'logo' => 'image.jpg',
             'address' => fake()->address(),
         ]);
 
