@@ -80,7 +80,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/detail', [StudentController::class, 'enrolledDetail'])->name('student.enrolledDetail');
     Route::get('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskDetail'])->name('student.taskDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskSubmit'])->name('student.taskSubmit');
-    
+
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
     // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
@@ -109,7 +109,7 @@ Route::get('/theworld', [TheWorldController::class, 'index']);
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
-    
+
     Route::middleware(['auth:web'])->group(function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student
@@ -130,7 +130,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('companies/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
         Route::resource('companies', CompanyController::class);
     });
-    
+
     Route::middleware(['auth:web,company'])->group(function(){
         Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
@@ -139,7 +139,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/all_assigned_projects/{project}/section', [DashboardController::class, 'sectionProjectAssign'])->name('chat.section');
         Route::get('/all_assigned_projects/{project}/section/{section}/subsection', [DashboardController::class, 'subsectionProjectAssign'])->name('chat.projectSubsection');
         Route::get('/all_assigned_projects/{project}/section/{section}/chat', [DashboardController::class, 'showAllStudentsChats'])->name('chat.showAllStudentsChats');
+        Route::get('/all_assigned_projects/{project}/section/{section}/submission', [DashboardController::class, 'showAllStudentsSubmission'])->name('chat.showAllStudentsSubmission');
         Route::get('/all_assigned_projects/{project}/section/{section}/student/{student}', [DashboardController::class, 'singleStudentChat'])->name('chat.singleStudentChat');
+        Route::get('/all_assigned_projects/{project}/section/{section}/student/{student}', [DashboardController::class, 'singleStudentSubmission'])->name('chat.singleStudentSubmission');
         Route::post('{mentor}/all_assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('chat.SendComment');
         // Project
         Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
@@ -159,7 +161,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::delete('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexDestroySection'])->name('projects.DestroySection');
         Route::post('/projects/{project}/section/{section}/up', [ProjectController::class, 'dashboardIndexSectionUp'])->name('projects.SectionUp');
         Route::post('/projects/{project}/section/{section}/down', [ProjectController::class, 'dashboardIndexSectionDown'])->name('projects.SectionDown');
-        
+
         //subsection
         Route::get('/projects/{project}/section/{section}/subsection', [ProjectController::class, 'dashboardIndexSubsection'])->name('projects.subsection');
         Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.createSubsection');
@@ -167,7 +169,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/section/{section}/subsection/{subsection}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('projects.EditSubsection');
         Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
         Route::delete('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardDestroySubsection'])->name('projects.DestroySubsection');
-   
+
         // Assign Project to institution
     });
     Route::middleware(['auth:mentor'])->group(function(){
@@ -177,13 +179,13 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/assigned_projects/{project}/section', [MentorController::class, 'sectionProjectAssign'])->name('assigned.projectSection');
         Route::get('/assigned_projects/{project}/section/{section}/subsection', [MentorController::class, 'subsectionProjectAssign'])->name('assigned.projectSubsection');
         Route::post('/grade/{submission}', [GradeController::class, 'subsectionProjectGradeAssign'])->name('assigned.projectSubsectionGrade');
-        
+
         Route::get('/assigned_projects/{project}/section/{section}/chat', [MentorController::class, 'showAllStudentsChats'])->name('assigned.showAllStudentsChats');
         Route::get('/assigned_projects/{project}/section/{section}/student/{student}', [MentorController::class, 'singleStudentChat'])->name('assigned.singleStudentChat');
         Route::post('{mentor}/assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('assigned.SendComment');
         // Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 
-    }); 
+    });
 });
 
 Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);

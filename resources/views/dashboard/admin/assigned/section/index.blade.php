@@ -31,6 +31,7 @@
             <td>
               <a class="btn btn-labeled bg-success editbtn text-white" href="{{ route('dashboard.chat.showAllStudentsChats',[$project->id,$project_section->id]) }}" >View Student chat</a>
               <a class="btn btn-labeled bg-primary editbtn text-white" href="{{ route('dashboard.chat.projectSubsection',[$project->id,$project_section->id]) }}" >Manage Attachment</a>
+              <a class="btn btn-labeled bg-primary editbtn text-white" href="{{ route('dashboard.chat.showAllStudentsSubmission',[$project->id,$project_section->id]) }}" >Submission</a>
             </td>
           </tr>
           @php $no++ @endphp
