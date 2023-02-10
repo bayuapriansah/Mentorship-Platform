@@ -57,17 +57,23 @@ class AuthOtpController extends Controller
         }
 
         $validated = $validator->validated();
-        $user_id = Student::where('email', $request->email)->first();
-        if(!$user_id){
-            $user_id = Mentor::where('email', $request->email)->first();
+        $user_id = Student::where('email', $validated['email'])->first();
+
+        if($user_id == null){
+            $user_id = Mentor::where('email', $validated['email'])->first();
         }
-        $verificationCode = $this->generateOtp($request->email);
-        $otp = $verificationCode->otp;
-        $encId = (new SimintEncryption)->encData($user_id->id);
-        $encEmail = (new SimintEncryption)->encData($request->email);
-        // $message = "We have sent a One Time Password (OTP) to your email address. Please enter it below";
-        $sendmail = (new MailController)->otplogin($request->email,$otp);
-        return redirect()->route('otp.verification', [$encId,$encEmail]);
+
+        if(!$user_id == null){
+            $verificationCode = $this->generateOtp($validated['email']);
+
+            $otp = $verificationCode->otp;
+            $encId = (new SimintEncryption)->encData($user_id->id);
+            $encEmail = (new SimintEncryption)->encData($validated['email']);
+            $sendmail = (new MailController)->otplogin($validated['email'],$otp);
+            return redirect()->route('otp.verification', [$encId,$encEmail]);
+        }else{
+            return redirect()->route('otp.login')->with('email', 'Please use registered Email');
+        }
     }
 
     public function generateOtp($email){
