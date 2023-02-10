@@ -144,14 +144,28 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::resource('institutions', InstitutionController::class);
 
         // Mentors
-        Route::get('mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
+        Route::get('/mentors/registered', [MentorController::class, 'registered'])->name('mentors.registered');
         // Route::get('mentors/registered/{company_id}/invite', [MentorController::class, 'invite'])->name('mentors.invite');
         Route::resource('mentors', MentorController::class);
 
         // Company/partner/supervisor
         // Route::get('companies/{company_id}/inviteMentors', [MentorController::class, 'invite'])->name('mentors.invite');
         // Route::post('companies/{company_id}/invite', [MentorController::class, 'sendInvite'])->name('mentors.sendinvite');
-        Route::get('partners/{partner}/projects', [CompanyController::class, 'partnerProjects'])->name('partner.partnerProjects');
+
+        // ==============PARTNER CREATE PROJECT=========
+        Route::get('/partners/{partner}/projects', [ProjectController::class, 'partnerProjects'])->name('partner.partnerProjects');
+        Route::get('/partners/{partner}/projects/create', [ProjectController::class, 'partnerProjectsCreate'])->name('partner.partnerProjectsCreate');
+        Route::post('/partners/{partner}/projects', [ProjectController::class, 'partnerProjectsStore'])->name('partner.partnerProjectsStore');
+        Route::post('/partners/{partner}/projects/{project}', [ProjectController::class, 'partnerProjectsInjectionStore'])->name('partner.partnerProjectsInjectionStore');
+        Route::get('/partners/{partner}/projects/{project}/edit', [ProjectController::class, 'partnerProjectsEdit'])->name('partner.partnerProjectsEdit');
+        
+        Route::get('/partners/{partner}/projects/{project}/injection', [ProjectController::class, 'partnerProjectsInjection'])->name('partner.partnerProjectsInjection');
+                    // /partners/{{$partner->id}}/project/{{$project->id}}/injection/{{$card->id}}/edit
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/edit',[ProjectController::class, 'partnerProjectsInjectionEdit'])->name('partner.partnerProjectsInjectionEdit');
+        Route::patch('/partners/{partner}/projects/{project}/injection/{injection}',[ProjectController::class, 'partnerProjectsInjectionUpdate'])->name('partner.partnerProjectsInjectionUpdate');
+
+        
+
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');

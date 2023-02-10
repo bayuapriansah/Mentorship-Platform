@@ -151,11 +151,5 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->delete();
         return redirect('dashboard/institutions');
-    }
-
-    public function partnerProjects(Company $partner)
-    {
-        $projects = Project::where('company_id', $partner->id)->get();
-        return view('dashboard.projects.index', compact('partner', 'projects'));
-    }
+    }   
 }

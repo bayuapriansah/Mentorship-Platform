@@ -10,7 +10,7 @@
 @if (Route::is('dashboard.partner.partnerProjects'))
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Projects</h3>
-  <a href="/dashboard/partner/{{$partner->id}}/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Project</a>
+  <a href="/dashboard/partners/{{$partner->id}}/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Project</a>
 </div>
 @else
 <div class="flex justify-between mb-10">
