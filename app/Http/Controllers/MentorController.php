@@ -13,6 +13,7 @@ use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,6 +52,8 @@ class MentorController extends Controller
             $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('success', $message);
+        }else{
+            return redirect()->back()->with('error', 'Email already invited');
         }
     }
 
@@ -149,12 +152,17 @@ class MentorController extends Controller
             $mentor->institution_id = $validated['institution'];
             $mentor->country = $validated['country'];
             $mentor->state = $validated['state'];
-            $mentor->password = $validated['password'];
             $mentor->is_confirm = 1;
+            $menpwd = $validated['password'];
+            $menpwdhash = Hash::make($menpwd) ;
+            $mentor->password = $menpwdhash;
+            if (!Hash::check($menpwd, $menpwdhash)) {
+                return redirect()->back();
+            }
             $mentor->save();
-            $sendmail = (new MailController)->EmailMentorRegister($validated['email']);
+            $sendmail = (new MailController)->EmailMentorRegister($mentor->email);
             $message = "Successfully Register as Mentor, Now you can login to your account";
-            return redirect()->route('otp.login')->with('success', $message);
+            return redirect()->route('login')->with('success', $message);
         }else{
             return redirect()->back();
         }

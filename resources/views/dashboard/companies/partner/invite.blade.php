@@ -9,7 +9,7 @@
   <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Member <i class="fa-solid fa-chevron-right"></i> Invite</h3>
 </div>
 
-<form action="/dashboard/partners/{{$partner->id}}/members/sendInvitePartner" method="post" enctype="multipart/form-data">
+<form action="{{ route('dashboard.partner.sendInvitePartner',[$partner->id]) }}" method="post" enctype="multipart/form-data">
   @csrf
   <div class="mb-3">
     <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Member Email" name="email" required><br>

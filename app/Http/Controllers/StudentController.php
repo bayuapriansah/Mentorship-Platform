@@ -81,6 +81,8 @@ class StudentController extends Controller
             $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
             $message = "Successfully Send Invitation to Mentor";
             return redirect()->route('dashboard.students.institutionStudents', ['institution'=>$institution_id])->with('success', $message);
+        }else{
+            return redirect()->back()->with('error', 'Email already invited');
         }
     }
 
