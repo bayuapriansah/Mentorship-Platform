@@ -25,9 +25,6 @@ class CommentController extends Controller
         }
         $comment->save();
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
-        
-
-        
     }
 
     public function SendComment(Request $request, $sender_id, $project_id, $task_id, $student_id)
@@ -59,6 +56,9 @@ class CommentController extends Controller
         }
         else{
             if($request->hasFile('file')){
+                // dd($request->hasFile('file'));
+                // dd($file = $request->file('file')->getClientOriginalName());
+                // dd($file = $request->file('file'));
                 $file = Storage::disk('public')->put('comments/mentor/'.$sender_id.'/project/'.$project_id.'/task/'.$task_id, $request->file);
                 $comment->file = $file;
             }
