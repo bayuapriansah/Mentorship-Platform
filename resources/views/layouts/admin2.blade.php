@@ -6,13 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Admin</title>
   <link rel="icon" type="image/x-icon" href="{{asset('assets/img/icon/favicon.ico')}}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
   @vite('resources/css/app.css')
 
+  <script src="https://kit.fontawesome.com/f845b2d56c.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
   <script src="https://cdn.tiny.cloud/1/7d3zd697fxtkpnuq9ikxrj7hpewm4ce4a12ubsk671xmqykc/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -54,7 +53,7 @@
           @include('layouts.admin.sidebar2')
         </div>
       </div>
-    
+
       <div class="w-full bg-profile-grey mx-auto py-11 px-10 relative">
         <div class="flex flex-row-reverse">
           <div class="space-x-9">
@@ -73,8 +72,8 @@
               <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3"></div>
             </button>
 
-            
-            
+
+
             <a href="#" type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path>

@@ -158,13 +158,24 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/partners/{partner}/projects', [ProjectController::class, 'partnerProjectsStore'])->name('partner.partnerProjectsStore');
         Route::post('/partners/{partner}/projects/{project}', [ProjectController::class, 'partnerProjectsInjectionStore'])->name('partner.partnerProjectsInjectionStore');
         Route::get('/partners/{partner}/projects/{project}/edit', [ProjectController::class, 'partnerProjectsEdit'])->name('partner.partnerProjectsEdit');
-        
+
+
         Route::get('/partners/{partner}/projects/{project}/injection', [ProjectController::class, 'partnerProjectsInjection'])->name('partner.partnerProjectsInjection');
                     // /partners/{{$partner->id}}/project/{{$project->id}}/injection/{{$card->id}}/edit
         Route::get('/partners/{partner}/projects/{project}/injection/{injection}/edit',[ProjectController::class, 'partnerProjectsInjectionEdit'])->name('partner.partnerProjectsInjectionEdit');
         Route::patch('/partners/{partner}/projects/{project}/injection/{injection}',[ProjectController::class, 'partnerProjectsInjectionUpdate'])->name('partner.partnerProjectsInjectionUpdate');
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/delete',[ProjectController::class, 'partnerProjectsInjectionDelete'])->name('partner.partnerProjectsInjectionDelete');
 
-        
+
+        // =======Partner create project injection card attachment
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachment'])->name('partner.partnerProjectsInjectionAttachment');
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/edit', [ProjectController::class, 'partnerProjectsInjectionAttachmentEdit'])->name('partner.partnerProjectsInjectionAttachmentEdit');
+        Route::patch('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}', [ProjectController::class, 'partnerProjectsInjectionAttachmentUpdate'])->name('partner.partnerProjectsInjectionAttachmentUpdate');
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/delete/{key}', [ProjectController::class, 'partnerProjectsInjectionAttachmentDelete'])->name('partner.partnerProjectsInjectionAttachmentDelete');
+
+        Route::post('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachmentStore'])->name('partner.partnerProjectsInjectionAttachmentStore');
+
+
 
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
