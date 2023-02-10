@@ -46,6 +46,43 @@ class MailController extends Controller
         }
     }
 
+    public function EmailMemberInvitation($mailto,$urlInvitation) //Email, urlInvitation
+    {
+        $data = [
+            'subject' => 'Invitation to be a Member',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            'body3' => '',
+            'body4' => '',
+            'body5'=> '',
+            'type' => 'member',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Member Invitation  Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+    public function EmailMemberRegister($mailto) //Email
+    {
+        $data = [
+            'subject' => 'Registration Completed',
+            'body' => $mailto,
+            // 'body2' => 'otp/login',
+            'type' => 'member',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Registration Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
     public function EmailMentorInvitation($mailto,$urlInvitation) //Email, urlInvitation
     {
         $data = [
