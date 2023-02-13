@@ -135,10 +135,66 @@ class StudentController extends Controller
     {
         //
     }
+
     public function manage(Institution $institution,Student $student)
     {
         $mentors = Mentor::where('institution_id', $student->institution_id)->get();
         return view('dashboard.students.edit', compact('student', 'mentors', 'institution'));
+    }
+    // manage students in sidebar menu
+    public function manageStudent(Student $student)
+    {
+        $institutions = Institution::get();
+        return view('dashboard.students.edit', compact('student', 'institutions'));
+    }
+
+    public function manageStudentpatch(Request $request, Student $student)
+    {
+        $student = Student::find($student->id);
+        $student->first_name = $request->first_name;
+        $student->last_name = $request->last_name;
+        $student->date_of_birth = $request->date_of_birth;
+        $student->sex = $request->sex;
+        $student->institution_id = $request->institution;
+        $student->country = $request->country;
+        $student->state = $request->state;
+        $student->email = $request->email;
+        if($request->study_program =='other'){
+            $student->study_program = $request->study_program_form;
+        }else{
+            $student->study_program = $request->study_program;
+        }
+        $student->year_of_study = $request->year_of_study;
+        if($request->hasFile('profile_picture')){
+            if($student->profile_picture == null){
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                    $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
+                    $student->profile_picture = $profile_picture;
+                }else{
+                    return redirect('/dashboard/students/'.$student->id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+                }
+            }
+            
+            // save the new image
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
+                $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
+                ){
+                if(Storage::path($student->profile_picture)) {
+                    Storage::disk('public')->delete($student->profile_picture);
+                }
+                $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
+                $student->profile_picture = $profile_picture;
+            }else{
+                return redirect('/dashboard/students/'.$student->id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+            }
+        }
+        $student->save();
+        return redirect('/dashboard/students/'.$student->id.'/manage')->with('successTailwind','Profile updated successfully');
+
     }
 
     public function managepatch($institution_id, $student_id, Request $request)

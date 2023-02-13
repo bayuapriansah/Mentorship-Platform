@@ -634,6 +634,26 @@ class ProjectController extends Controller
         return view('dashboard.projects.edit', compact('partner', 'project', 'cards'));
     }
 
+    public function publishDraft(Company $partner, Project $project)
+    {
+        $project = Project::find($project->id);
+        if($project->status == 'publish'){
+            $project->status = 'draft';
+        }else{
+            $project->status = 'publish';
+        }
+        $project->save();
+        return redirect('/dashboard/partners/'.$partner->id.'/projects');
+
+    }
+
+    public function destroy(Company $partner, Project $project)
+    {
+        $project = Project::find($project->id);
+        $project->delete();
+        return redirect('/dashboard/partners/'.$partner->id.'/projects');
+    }
+
     public function partnerProjectsInjection(Company $partner, Project $project)
     {
         return view('dashboard.projects.injection.index', compact('partner', 'project'));

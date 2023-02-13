@@ -29,6 +29,7 @@
       <th>Project domain</th>
       <th>Total Enrollment</th>
       <th>Added On</th>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -42,6 +43,13 @@
       <td>{{$project->project_domain}}</td>
       <td>{{count($project->enrolled_project)}}</td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
+      <td class="">
+        @if ($project->status == 'publish')
+          <span class="text-green-600">{{$project->status}}</span>
+        @else
+          <span class="text-[#D89B33]">{{$project->status}}</span>
+        @endif
+      </td>
       <td>
         <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover{{$no}}" data-dropdown-trigger="hover" class="text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
         <!-- Dropdown menu -->
@@ -51,10 +59,22 @@
                 <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
               </li>
               <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Deactivate</a>
+                <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/publishDraft" method="post">
+                  @method('patch')
+                  @csrf
+                  @if ($project->status == 'publish')
+                    <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Draft">
+                  @else
+                    <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Publish">
+                  @endif
+                </form>
               </li>
               <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Delete</a>
+                <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post">
+                  @method('delete')
+                  @csrf
+                  <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
+                </form>
               </li>
             </ul>
         </div>
@@ -82,6 +102,8 @@
     @endforeach
   </tbody>
 </table>
+<div class="mt-12"></div>
+
 @endsection
 @section('more-js')
 

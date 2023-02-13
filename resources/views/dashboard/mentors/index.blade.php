@@ -30,6 +30,7 @@
       <th>Institution Name</th>
       <th>State</th>
       <th>Country</th>
+      <th>Active</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -40,23 +41,40 @@
       <td>{{$no}}</td>
       <td>{{$mentor->first_name}} {{$mentor->last_name}}</td>
       <td>{{$mentor->email}}</td>
-      <td>{{$mentor->gender}}</td>
+      <td>{{$mentor->sex}}</td>
       <td>{{$mentor->institution->name}}</td>
       <td>{{$mentor->state}}</td>
       <td>{{$mentor->country}}</td>
       <td>
-        <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+        @if ($mentor->is_confirm == 1)
+          <span class="text-green-600">Active</span>
+        @else
+          <span class="text-[#D89B33]">Pending</span>
+        @endif
+      </td>
+      <td>
+        <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover{{$no}}" data-dropdown-trigger="hover" class="text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
         <!-- Dropdown menu -->
-        <div id="dropdownHover" class="z-10 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        <div id="dropdownHover{{$no}}" class="z-10 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
               <li>
                 <a href="/dashboard/institutions/{{$institution->id}}/supervisors/{{$mentor->id}}/edit" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit Details</a>
               </li>
               <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deactivate</a>
+                <a href="/dashboard/institutions/{{$institution->id}}/supervisors/{{$mentor->id}}/suspend" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  @if($mentor->is_confirm == 1)
+                  Deactivate
+                  @else
+                  Activate
+                  @endif
+                </a>
               </li>
               <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                <form action="/dashboard/institutions/{{$institution->id}}/supervisors/{{$mentor->id}}" method="post">
+                  @method('delete')
+                  @csrf
+                  <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
+                </form>
               </li>
             </ul>
         </div>
@@ -67,7 +85,7 @@
   </tbody>
 </table>
 
-</div>
+<div class="mt-12"></div>
 @endsection
 @section('more-js')
 
