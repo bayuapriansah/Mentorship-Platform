@@ -4,9 +4,17 @@
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/institutions/{{$institution->id}}/students"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
+@else
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/students"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
 @endif
 
+@if(Route::is('dashboard.students.manage'))
 <form action="/dashboard/institutions/{{$institution->id}}/students/{{$student->id}}/managepatch" method="post" enctype="multipart/form-data">
+@else
+<form action="/dashboard/students/{{$student->id}}/managepatch" method="post" enctype="multipart/form-data">
+@endif  
   @method('patch')
   @csrf
   <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('assets/img/placeholder_pp.png') }}" class="w-[145px] h-[145px] mx-auto mt-14 rounded-full object-cover" id="profile_img"  alt="message">
@@ -49,9 +57,18 @@
       @enderror
     </div>
     
-    <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight bg-gray-300 invalid:text-black text-black cursor-not-allowed focus:outline-none" name="institution" disabled>
-      <option value="" hidden class="text-black">{{$student->institution->name}}</option>
-    </select><br>
+    @if(Route::is('dashboard.students.manage'))
+      <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight bg-gray-300 invalid:text-black text-black cursor-not-allowed focus:outline-none" name="institution" disabled>
+        <option value="" hidden class="text-black">{{$student->institution->name}}</option>
+      </select><br>
+    @else
+      <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight  invalid:text-black text-black  focus:outline-none" name="institution">
+        <option value="" hidden class="text-black">Institution</option>
+        @foreach ($institutions as $institution)
+          <option value="{{$institution->id}}" {{$institution->id == $student->institution->id ? 'selected': ''}} class="text-black">{{$institution->name}}</option>
+        @endforeach
+      </select><br>
+    @endif
     @error('institution')
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
@@ -75,6 +92,13 @@
           </p>
       @enderror
     </div>
+
+    <input class="border w-full border-light-blue rounded-lg mt-4 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="firstname" type="text" value="{{$student->email}}" placeholder="First Name *" name="email" required><br>
+    @error('email')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
 
     @php
       $study_programs = ['Artificial Intelligence and Machine Learning', 'Computer Science','Computing Systems', 'Software Engineering'];
@@ -108,6 +132,7 @@
         </p>
     @enderror
 
+  @if(Route::is('dashboard.students.manage'))
     <select id="mentor_id" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="mentor_id" required>
       <option value="" hidden >Mentor</option>
       @foreach ($mentors as $mentor)
@@ -119,6 +144,7 @@
           {{$message}}
         </p>
     @enderror
+  @endif
 
   <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne flex mx-auto" type="submit">Update Student</button>
 
