@@ -235,6 +235,7 @@ class StudentController extends Controller
                     Storage::disk('public')->delete($student->profile_picture);
                 }
                 $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
+                // dd($profile_picture);
                 $student->profile_picture = $profile_picture;
             }else{
                 return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');

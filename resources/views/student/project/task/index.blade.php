@@ -24,7 +24,7 @@
         <h1 class="text-dark-blue text-[22px] font-medium">Task {{$task->section}} : {{$task->title}}</h1>
       </div>
       {{-- <div class="col-start-10 col-span-3">
-          <span class="intelOne text-black text-sm font-normal">due date</span> 
+          <span class="intelOne text-black text-sm font-normal">due date</span>
       </div> --}}
     </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-3">
@@ -104,7 +104,7 @@
                   {{$sent_date}}
                 </p>
                 @endif
-                
+
               </div>
               @endforeach
           </div>
@@ -125,7 +125,7 @@
                   </div>
                   <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white focus:ring-4 focus:ring-blue-200">
                     <img src="{{asset('assets/img/icon/send.png')}}" class="w-[15px]" alt="">
-                  </button>
+                  </button>removeelement
               </div>
             </div>
             </form>
@@ -141,9 +141,9 @@
             <div class="relative border border-light-blue border-inherit shadow drop-shadow-2xl hover:drop-shadow-xl bg-white rounded-lg  ">
                 <!-- Modal header -->
                 <div class="flex items-start justify-between p-4  ">
-                    
+
                     <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-hide="staticModal">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     </button>
                 </div>
                 <!-- Modal body -->
@@ -233,6 +233,7 @@ dropArea.addEventListener('drop', e => {
         resetUI();
     });
 })
+
 fileChatInput.addEventListener('change', e =>{
   // console.log('${e.target.files[0].name}');
   chatFileName.innerHTML = `${e.target.files[0].name} <i class="fas fa-times"></i> `

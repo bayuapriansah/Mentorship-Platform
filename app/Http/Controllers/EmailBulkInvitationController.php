@@ -4,33 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\BulkEmailInvitation;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class EmailBulkInvitationController extends Controller
 {
-    public function upload(Request $request)
+
+    public function index()
+    {
+        return view('test.upload');
+    }
+// $emailBulk = new BulkEmailInvitation;
+    public function sendInviteFromInstitution(Request $request)
     {
         if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension();
+            $uploadedFile = $request->file('file');
+            $extension = $uploadedFile->getClientOriginalExtension();
             if ($extension == 'csv' || $extension == 'xls' || $extension == 'xlsx') {
-                $path = $file->store('public');
-                $file = Storage::get($path);
+                $path = Storage::disk('public')->put('invitation', $uploadedFile);
+                $filePath = Storage::disk('public')->path($path);
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filePath);
                 $emails = [];
                 if ($extension == 'csv') {
-                    $emails = array_map('str_getcsv', explode("\n", $file));
+                    $fileContents = Storage::disk('public')->get($path);
+                    $emails = array_map('str_getcsv', explode("\n", $fileContents));
                 } else {
-                    $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader(ucfirst($extension));
-                    $spreadsheet = $reader->load($path);
                     $worksheet = $spreadsheet->getActiveSheet();
                     $emails = $worksheet->toArray();
                 }
-                return view('emails', compact('emails'));
+                return response()->json(['success' => true, 'emails' => $emails]);
             } else {
-                return redirect()->back()->with('error', 'Invalid file type');
+                return response()->json(['success' => false, 'error' => 'Invalid file type']);
             }
         } else {
-            return redirect()->back()->with('error', 'File not found');
+            return response()->json(['success' => false, 'error' => 'File not found']);
         }
     }
+
 }

@@ -28,7 +28,7 @@
       <td>{{$institution->countries}}</td>
       <td>{{$institution->created_at->format('d/m/ Y') }}</td>
       <td>
-        <button class="view-details space-y-7" 
+        <button class="view-details space-y-7"
         data-institution-id="{{$institution->id}}"
         data-institution-logo='<img src="{{asset('storage/'.$institution->logo)}}" alt="" class="w-[188px] h-[53px] object-scale-down mx-auto">'
         data-institution-join="{{$institution->created_at->format('d/m/ Y') }}"
@@ -69,7 +69,7 @@
       <td>{{$company->address}}</td>
       <td>{{$company->created_at->format('d/m/ Y')}}</td>
       <td>
-        <button class="view-details space-y-7" 
+        <button class="view-details space-y-7"
                 data-company-id="{{$company->id}}"
                 data-company-logo='<img src="{{asset('storage/'.$company->logo)}}" alt="" class="w-[188px] h-[53px] object-scale-down mx-auto">'
                 data-company-projects="{{count($company->projects)}}"
