@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 
@@ -44,9 +45,11 @@ class SubmissionController extends Controller
      * @param  \App\Models\Submission  $submission
      * @return \Illuminate\Http\Response
      */
-    public function show(Submission $submission)
+    // project task submission list
+    public function show(Project $project)
     {
-        //
+        $submissions = Submission::where('project_id', $project->id)->get();
+        return view('dashboard.submissions.index', compact('project', 'submissions'));
     }
 
     /**

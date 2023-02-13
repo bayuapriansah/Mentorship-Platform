@@ -13,11 +13,16 @@ class Submission extends Model
 
     public function projectSection()
     {
-        return $this->belongsTo(ProjectSection::class);
+        return $this->belongsTo(ProjectSection::class,'section_id','id');
     }
 
     public function grade()
     {
         return $this->hasOne(Grade::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
     }
 }

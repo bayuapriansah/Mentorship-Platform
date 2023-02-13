@@ -19,6 +19,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TheWorldController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\InstitutionController;
 
@@ -194,6 +195,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
         Route::resource('partners', CompanyController::class);
+
+        // Submission
+        Route::get('/submissions/project/{project}', [SubmissionController::class, 'show'])->name('submission.show');
     });
 
     Route::middleware(['auth:web,company'])->group(function(){
