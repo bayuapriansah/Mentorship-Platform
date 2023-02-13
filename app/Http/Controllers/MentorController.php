@@ -117,9 +117,32 @@ class MentorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mentor $mentor)
+    // edit mentor dari dashboard
+    public function edit(Institution $institution, Mentor $supervisor)
     {
-        dd($mentor->first_name);
+        return view('dashboard.mentors.edit', compact('institution', 'supervisor'));        
+    }
+    // update mentor dari dashboard
+    public function updateMentorDashboard(Request $request, Institution $institution, Mentor $supervisor)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'sex' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+        ]);
+
+        $supervisor = Mentor::find($supervisor->id);
+        $supervisor->email = $validated['email'];
+        $supervisor->first_name = $validated['first_name'];
+        $supervisor->last_name = $validated['last_name'];
+        $supervisor->sex = $validated['sex'];
+        $supervisor->country = $validated['country'];
+        $supervisor->state = $validated['state'];
+        $supervisor->save();
+        return redirect()->back();
     }
 
     /**
@@ -172,15 +195,28 @@ class MentorController extends Controller
         }
     }
 
+    public function suspendSupervisorDashboard(Institution $institution, Mentor $supervisor)
+    {
+        $supervisor = Mentor::find($supervisor->id);
+        if($supervisor->is_confirm == 1){
+            $supervisor->is_confirm = 0;
+        }else{
+            $supervisor->is_confirm = 1;
+        }
+        $supervisor->save();
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors');
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Institution $institution, Mentor $supervisor)
     {
-        //
+        $supervisor = Mentor::find($supervisor->id);
+        $supervisor->delete();
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors');
     }
 
     // Register mentor

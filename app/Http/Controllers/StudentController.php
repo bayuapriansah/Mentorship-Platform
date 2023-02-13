@@ -279,7 +279,7 @@ class StudentController extends Controller
      */
     public function update($id, Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         // jangan lupa di validasi ya di bagian sini
         // dd($request->all());
         $student = Student::find($id);

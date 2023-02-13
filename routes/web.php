@@ -147,7 +147,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
         Route::get('/institutions/{institution}/supervisors/invite', [MentorController::class, 'invite'])->name('institutionSupervisorInvite');
         Route::post('/institutions/{institution}/supervisors', [MentorController::class, 'sendInvite'])->name('mentors.institutionSupervisorSendInvite');
-        Route::get('/institutions/{institution}/supervisors/{supervisor}/edit', [MentorController::class, 'editSupervisor'])->name('mentors.institutionSupervisorEdit');
+        Route::get('/institutions/{institution}/supervisors/{supervisor}/edit', [MentorController::class, 'edit'])->name('mentors.institutionSupervisorEdit');
+        Route::patch('/institutions/{institution}/supervisors/{supervisor}', [MentorController::class, 'updateMentorDashboard'])->name('mentors.institutionSupervisorUpdate');
+        Route::get('/institutions/{institution}/supervisors/{supervisor}/suspend', [MentorController::class, 'suspendSupervisorDashboard'])->name('mentors.suspendSupervisorDashboard');
+        Route::delete('/institutions/{institution}/supervisors/{supervisor}', [MentorController::class, 'destroy'])->name('mentors.deleteSupervisor');
 
 
         Route::post('/institutions/{institution}/suspend', [InstitutionController::class, 'suspendInstitution'])->name('institutions.suspend');
@@ -167,6 +170,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/partners/{partner}/projects/create', [ProjectController::class, 'partnerProjectsCreate'])->name('partner.partnerProjectsCreate');
         Route::post('/partners/{partner}/projects', [ProjectController::class, 'partnerProjectsStore'])->name('partner.partnerProjectsStore');
         Route::post('/partners/{partner}/projects/{project}', [ProjectController::class, 'partnerProjectsInjectionStore'])->name('partner.partnerProjectsInjectionStore');
+        Route::patch('/partners/{partner}/projects/{project}/publishDraft', [ProjectController::class, 'publishDraft'])->name('partner.partnerProjectspublishDraft');
+        Route::delete('/partners/{partner}/projects/{project}', [ProjectController::class, 'destroy'])->name('partner.partnerProjectsDestroy');
         Route::get('/partners/{partner}/projects/{project}/edit', [ProjectController::class, 'partnerProjectsEdit'])->name('partner.partnerProjectsEdit');
 
         Route::get('/partners/{partner}/projects/{project}/injection', [ProjectController::class, 'partnerProjectsInjection'])->name('partner.partnerProjectsInjection');
