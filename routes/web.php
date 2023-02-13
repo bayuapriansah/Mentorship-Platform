@@ -21,6 +21,7 @@ use App\Http\Controllers\TheWorldController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\EmailBulkInvitationController;
 
 /*
 |--------------------------------------(------------------------------------
@@ -57,7 +58,10 @@ Route::get('/adminpage', function () {
 // })->name('index');
 Route::get('/', [IndexController::class, 'index'])->name('index');
 // for debugging temp
-Route::get('/ccc/{student}/{project}', [ProjectController::class, 'appliedDetail'])->name('ccc');
+// Route::get('/ccc/{student}/{project}', [ProjectController::class, 'appliedDetail'])->name('ccc');
+Route::get('/viewbulk', [EmailBulkInvitationController::class, 'index'])->name('view.bulk.email');
+Route::post('emailsbulk', [EmailBulkInvitationController::class, 'upload'])->name('bulk.upload.email');
+
 // register
 Route::get('/verify/{email}', [AuthController::class, 'verifyEmail'])->name('verify');
 Route::get('/verified/{email}', [AuthController::class, 'verified'])->name('verified');
