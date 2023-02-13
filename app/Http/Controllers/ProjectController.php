@@ -21,7 +21,7 @@ use App\Models\Institution;
 class ProjectController extends Controller
 {
     public function index()
-    {   
+    {
         if(Auth::guard('student')->check()){
             $projects = Project::whereNotIn('id', function($query){
                 $query->select('project_id')->from('enrolled_projects');
@@ -30,7 +30,7 @@ class ProjectController extends Controller
         }else{
             $projects = Project::get();
         }
-        
+
         return view('projects.index', compact('projects'));
     }
 
@@ -57,7 +57,7 @@ class ProjectController extends Controller
         $project_sections = ProjectSection::where('project_id', $id)->get();
         return view('projects.show', compact(['project','project_sections']));
     }
-    
+
     public function dashboardIndex()
     {
         $projects = Project::with(['student', 'company'])->where('status','publish')->get();
@@ -79,7 +79,7 @@ class ProjectController extends Controller
         }
         return view('dashboard.projects.create');
     }
-    
+
     public function dashboardIndexStore(Request $request)
     {
         // dd($request->all());
@@ -228,7 +228,7 @@ class ProjectController extends Controller
             }
         }else{
             return redirect('auth.otplogin');
-        }                                          
+        }
     }
 
     // SECTION
@@ -311,7 +311,7 @@ class ProjectController extends Controller
         }else{
             return back();
         }
-        
+
         $project_section->save();
         return back();
     }
@@ -331,7 +331,7 @@ class ProjectController extends Controller
         }else{
             return back();
         }
-        
+
         $project_section->save();
         return back();
     }
@@ -354,8 +354,8 @@ class ProjectController extends Controller
     }
 
     public function dashboardStoreSubsection($project_id, $section_id, Request $request)
-    {   
-        
+    {
+
         if($request->category == 'video'){
             $validated = $request->validate([
                 'video_link' => 'required',
@@ -443,18 +443,18 @@ class ProjectController extends Controller
         $section_subsection->title = $validated['title'];
         $section_subsection->description = $validated['description'];
         if($request->hasFile('file1')){
-        
+
             if(Storage::path($section_subsection->file1)) {
                 Storage::disk('public')->delete($section_subsection->file1);
             }
-        
+
             // save the new image
             $file1 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file1);
             $section_subsection->file1 = $file1;
         }
         if($request->hasFile('file2')){
 
-            // user intends to replace the current image for the category.  
+            // user intends to replace the current image for the category.
             // delete existing (if set)
             if($section_subsection->file2 != null){
                 if(Storage::path($section_subsection->file2)) {
@@ -467,15 +467,15 @@ class ProjectController extends Controller
         }
         if($request->hasFile('file3')){
 
-            // user intends to replace the current image for the category.  
+            // user intends to replace the current image for the category.
             // delete existing (if set)
-        
+
             if($section_subsection->file3 != null){
                 if(Storage::path($section_subsection->file3)) {
                     Storage::disk('public')->delete($section_subsection->file3);
                 }
             }
-        
+
             // save the new image
             $file3 = Storage::disk('public')->put('projects/section/'.$section_id.'/subsection', $request->file3);
             $section_subsection->file3 = $file3;
@@ -552,7 +552,7 @@ class ProjectController extends Controller
                 'submission' => ['required'],
             ]);
         }
-        
+
         $subsection = SectionSubsection::find($subsection_id);
         // EnrolledProject::where('student_id',$student_id)
         //                 ->where('project_id',$project_id)
@@ -578,7 +578,8 @@ class ProjectController extends Controller
 
     public function partnerProjectsCreate(Company $partner)
     {
-        return view('dashboard.projects.create', compact('partner'));
+        $institutions = Institution::get();
+        return view('dashboard.projects.create', compact('partner', 'institutions'));
     }
 
     public function partnerProjectsStore(Request $request,Company $partner)
@@ -593,6 +594,7 @@ class ProjectController extends Controller
             'domain' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
+            'projectType' => ['required']
             // 'type' => ['required'],
             // 'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
             // 'institution_id' => ['required'],
@@ -602,6 +604,7 @@ class ProjectController extends Controller
             'domain.required' => 'Project domain is required',
             'period.required' => 'Project period is required',
             'problem.required' => 'Project problem is required',
+            'projectType.required' => 'Project type is required'
         ]);
         $project = new Project;
         $project->name = $validated['name'];
@@ -611,9 +614,12 @@ class ProjectController extends Controller
         $project->type = 'monthly';
         $project->status = 'draft';
         $project->company_id = $partner->id;
+        if ($validated['projectType'] == 'private') {
+            $project->institution_id = $request->institution_id;
+        }
         $project->overview = $request->overview;
         $project->save();
-        
+
         if($request->input('addInjectionCard')){
             return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
             // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
@@ -655,18 +661,26 @@ class ProjectController extends Controller
         $section->duration = $validated['duration'];
         $section->section = 0;
         $section->description = $validated['description'];
-        if($request->hasFile('file')){
-            $file = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file);
-            $section->file1 = $file;
-        }
         $section->save();
-        return redirect()->back();
+
+        if($request->input('addInjectionCard')){
+            // return redirect()->back();
+            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+
+            // return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
+            // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
+        }else{
+            // /partners/{partner}/projects/{project}/injection/{injection}/attachment
+            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$section->id.'/attachment');
+        }
     }
 
     public function partnerProjectsInjectionEdit(Company $partner, Project $project, ProjectSection $injection)
     {
         $injection = ProjectSection::find($injection->id);
-        return view('dashboard.projects.injection.edit', compact('partner', 'project', 'injection'));
+        $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
+        $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
+        return view('dashboard.projects.injection.edit', compact('partner', 'project', 'injection', 'attachments', 'attachment_id'));
     }
 
     public function partnerProjectsInjectionUpdate(Request $request, Company $partner, Project $project, ProjectSection $injection)
@@ -701,5 +715,116 @@ class ProjectController extends Controller
         return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
     }
 
-    
-}   
+    public function partnerProjectsInjectionDelete(Company $partner, Project $project, ProjectSection $injection)
+    {
+        $injection=ProjectSection::find($injection->id);
+        $injection->delete();
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+    }
+
+    public function partnerProjectsInjectionAttachment(Company $partner, Project $project, ProjectSection $injection)
+    {
+        $attachment = SectionSubsection::where('project_section_id', $injection->id)->first();
+        return view('dashboard.projects.injection.attachment.index', compact('partner', 'project', 'injection', 'attachment'));
+    }
+
+    public function partnerProjectsInjectionAttachmentStore(Request $request, Company $partner, Project $project, ProjectSection $injection)
+    {
+        $validated = $request->validate([
+            'file_input1' => ['required'],
+        ],
+        [
+            'file_input1.required' => 'Attachment 1 is required',
+        ]);
+        // dd($injection->id);
+        $attachment  = new SectionSubsection;
+        $attachment->project_section_id = $injection->id;
+        if($request->hasFile('file_input1')){
+            $file1 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $validated['file_input1']);
+            $attachment->file1 = $file1;
+        }
+        if($request->hasFile('file_input2')){
+            $file2 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file('file_input2'));
+            $attachment->file2 = $file2;
+        }
+        if($request->hasFile('file_input3')){
+            $file3 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file('file_input3'));
+            $attachment->file3 = $file3;
+        }
+        $attachment->save();
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$injection->id.'/edit');
+    }
+
+    public function partnerProjectsInjectionAttachmentEdit(Company $partner, Project $project, ProjectSection $injection, SectionSubsection $attachment)
+    {
+        return view('dashboard.projects.injection.attachment.edit', compact('partner', 'project', 'injection', 'attachment'));
+    }
+
+    public function partnerProjectsInjectionAttachmentUpdate(Request $request, Company $partner, Project $project, ProjectSection $injection, SectionSubsection $attachment)
+    {
+
+        $attachment = SectionSubsection::find($attachment->id);
+
+        if($request->hasFile('file_input1')){
+
+            if(Storage::path($attachment->file1)) {
+                Storage::disk('public')->delete($attachment->file1);
+            }
+
+            // save the new image
+            $file1 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file_input1);
+            $attachment->file1 = $file1;
+        }
+        if($request->hasFile('file_input2')){
+
+            // user intends to replace the current image for the category.
+            // delete existing (if set)
+            if($attachment->file2 != null){
+                if(Storage::path($attachment->file2)) {
+                    Storage::disk('public')->delete($attachment->file2);
+                }
+            }
+            // save the new image
+            $file2 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file_input2);
+            $attachment->file2 = $file2;
+        }
+        if($request->hasFile('file_input3')){
+
+            // user intends to replace the current image for the category.
+            // delete existing (if set)
+
+            if($attachment->file3 != null){
+                if(Storage::path($attachment->file3)) {
+                    Storage::disk('public')->delete($attachment->file3);
+                }
+            }
+
+            // save the new image
+            $file3 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $request->file_input3);
+            $attachment->file3 = $file3;
+        }
+        $attachment->save();
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$injection->id.'/edit');
+    }
+
+    public function partnerProjectsInjectionAttachmentDelete(Company $partner, Project $project, ProjectSection $injection, SectionSubsection $attachment, $key)
+    {
+        $attachment = SectionSubsection::find($attachment->id);
+        if($key==1){
+            return back();
+        }elseif($key==2){
+            if(Storage::path($attachment->file2)) {
+                Storage::disk('public')->delete($attachment->file2);
+            }
+            $attachment->file2 = null;
+        }elseif($key==3){
+            if(Storage::path($attachment->file3)) {
+                Storage::disk('public')->delete($attachment->file3);
+            }
+            $attachment->file3 == null;
+        }
+        $attachment->save();
+        return back();
+    }
+
+}

@@ -69,13 +69,18 @@ Route::get('/admin', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
 // mentor register
-Route::get('/mentor/register/{email}', [MentorController::class, 'register'])->name('mentor.register');
-Route::post('/mentor/register/{email}/auth', [MentorController::class, 'update'])->name('mentor.registerAuth');
+Route::get('/register/mentor/{email}', [MentorController::class, 'register'])->name('mentor.register');
+Route::post('/register/mentor/{email}', [MentorController::class, 'update'])->name('mentor.registerAuth');
 
-// student register
+// student register - bayu - there's 2 route for now 09/02/2023
 Route::get('/register/student/{email}', [StudentController::class, 'register'])->name('student.register');
 Route::post('/register/student/{email}', [StudentController::class, 'completedRegister'])->name('student.register.completed');
-Route::post('/mentor/register/{email}/auth', [StudentController::class, 'update'])->name('mentor.registerAuth');
+
+// customer register - bayu - there's 2 route for now 09/02/2023
+Route::get('/register/customer/{email}', [CustomerController::class, 'register'])->name('customer.register');
+Route::post('/register/customer/{email}', [CustomerController::class, 'completedRegister'])->name('customer.register.completed');
+
+// Route::post('/register/student/{email}/auth', [StudentController::class, 'update'])->name('student.registerAuth');
 
 
 // bay
@@ -163,13 +168,21 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/partners/{partner}/projects', [ProjectController::class, 'partnerProjectsStore'])->name('partner.partnerProjectsStore');
         Route::post('/partners/{partner}/projects/{project}', [ProjectController::class, 'partnerProjectsInjectionStore'])->name('partner.partnerProjectsInjectionStore');
         Route::get('/partners/{partner}/projects/{project}/edit', [ProjectController::class, 'partnerProjectsEdit'])->name('partner.partnerProjectsEdit');
-        
+
         Route::get('/partners/{partner}/projects/{project}/injection', [ProjectController::class, 'partnerProjectsInjection'])->name('partner.partnerProjectsInjection');
                     // /partners/{{$partner->id}}/project/{{$project->id}}/injection/{{$card->id}}/edit
         Route::get('/partners/{partner}/projects/{project}/injection/{injection}/edit',[ProjectController::class, 'partnerProjectsInjectionEdit'])->name('partner.partnerProjectsInjectionEdit');
         Route::patch('/partners/{partner}/projects/{project}/injection/{injection}',[ProjectController::class, 'partnerProjectsInjectionUpdate'])->name('partner.partnerProjectsInjectionUpdate');
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/delete',[ProjectController::class, 'partnerProjectsInjectionDelete'])->name('partner.partnerProjectsInjectionDelete');
 
-        
+
+        // =======Partner create project injection card attachment
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachment'])->name('partner.partnerProjectsInjectionAttachment');
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/edit', [ProjectController::class, 'partnerProjectsInjectionAttachmentEdit'])->name('partner.partnerProjectsInjectionAttachmentEdit');
+        Route::patch('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}', [ProjectController::class, 'partnerProjectsInjectionAttachmentUpdate'])->name('partner.partnerProjectsInjectionAttachmentUpdate');
+        Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/delete/{key}', [ProjectController::class, 'partnerProjectsInjectionAttachmentDelete'])->name('partner.partnerProjectsInjectionAttachmentDelete');
+
+        Route::post('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachmentStore'])->name('partner.partnerProjectsInjectionAttachmentStore');
 
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
@@ -235,9 +248,6 @@ Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');
-    // This will allow both GET and POST requests to the "otp/generate" route and prevent the "405 Method Not Allowed" error from occurring.
-    // Route::match(['get', 'post'], '/otp/generate', 'generate')->name('otp.generate');
-    // Route::get('/otp/generate', 'generateCheck')->name('otp.generate.check');
     Route::get('/otp/generate', 'generate')->name('otp.generate.check');
     Route::post('/otp/generate', 'generate')->name('otp.generate');
     Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');

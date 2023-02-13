@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('email');
             $table->unsignedBigInteger('company_id');
-            $table->string('state')->nullable();
-            $table->string('country')->nullable();
             $table->string('gender')->nullable();
             $table->string('position')->nullable();
             $table->string('is_confirm');

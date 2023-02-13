@@ -15,10 +15,10 @@
     <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
       <div class="col-span-6">
           {{-- reg state 1 if we access register from email completion register --}}
-          <form action="{{ route('mentor.registerAuth',[$email]) }}" method="post" id="register">
+          <form action="{{ route('customer.register.completed',[$email]) }}" method="post" id="register">
               @csrf
 
-              <input type="email" class="text w-full border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{ $checkMentor->email }}" placeholder="Email *" id="email" name="email" readonly><br>
+              <input type="email" class="text w-full border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{ $checkCustomer->email }}" placeholder="Email *" id="email" name="email" readonly><br>
               @error('email')
                   <p class="text-red-600 text-sm mt-1">
                     {{$message}}
@@ -52,32 +52,14 @@
                     </p>
                 @enderror
 
-              <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution" required>
-                <option value="{{ $checkMentor->institution_id }}" selected>{{ $checkMentor->institution->name }}</option>
+              <select id="inputCompany" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="company" required>
+                <option value="{{ $checkCustomer->company_id }}" selected>{{ $checkCustomer->company->name }}</option>
               </select><br>
-              @error('institution')
+              @error('company')
                   <p class="text-red-600 text-sm mt-1">
                     {{ $message}}
                   </p>
               @enderror
-
-              <div class="flex justify-between mt-4">
-                <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
-                <br>
-                @error('country')
-                    <p class="text-red-600 text-sm mt-1">
-                      {{$message}}
-                    </p>
-                @enderror
-
-                <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight bg-gray-300 cursor-not-allowed focus:outline-none" id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
-                <br>
-                @error('state')
-                    <p class="text-red-600 text-sm mt-1">
-                      {{$message}}
-                    </p>
-                @enderror
-              </div>
 
               <input type="password" class="text w-full border border-light-blue rounded-lg h-11 py-2 mt-4 px-4 text-lightest-grey::placeholder leading-tight {{old('password') != null ? 'border-red-500' : ''}} focus:outline-none"" placeholder="Password" id="password" name="password"><br>
               @error('password')
@@ -125,21 +107,6 @@
 @section('more-js')
 <script>
   $(document).ready(function () {
-      $('#inputInstitution').on('change', function () {
-          var institutionVal = this.value;
-          var base_url = window.location.origin;
-          $.ajax({
-              url: base_url+"/api/institution/"+institutionVal,
-              contentType: "application/json",
-              dataType: 'json',
-              success: function (result) {
-                // console.log(institutionVal);
-                $('#ForCountry').val(result.countries);
-                $('#ForState').val(result.states);
-              }
-          });
-        }).trigger('change'); // Trigger the change event to make the AJAX request on page load
-
         $('#password_confirmation').on('input', function() {
         var password = $('#password').val();
         var password_confirmation = $(this).val();

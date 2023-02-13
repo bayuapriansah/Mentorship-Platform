@@ -44,7 +44,7 @@
           {{$message}}
         </p>
     @enderror
-    
+
 
     <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
       <option value="" hidden>Project Duration *</option>
@@ -58,7 +58,7 @@
         </p>
     @enderror
   </div>
-  
+
   <div class="mb-3">
     <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
       <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
@@ -79,6 +79,24 @@
         </p>
     @enderror
   </div>
+
+  <div class="mb-3">
+    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
+        <option value="" hidden>Project type</option>
+        <option value="public">Public to all institution</option>
+        <option value="private">Private to specific institution</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputinstitution"  name="institution_id" >
+        <option value="" hidden>Select Institution</option>
+        @foreach ($institutions as $institution)
+        <option value="{{$institution->id}}" >{{$institution->name}}</option>
+        @endforeach
+    </select>
+  </div>
+
   <div class="mb-3">
     <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Brief Project Overview (Optional)" id="inputoverview" name="overview" value="{{old('overview')}}">
     @error('overview')
@@ -172,6 +190,16 @@
                 $('#ForState').val(result.states);
               }
           });
+      });
+
+      $('#inputinstitution').hide();
+      $("#inputprojecttype").change(function(){
+        var values = $("#inputprojecttype option:selected").val();
+        if(values=='private'){
+          $('#inputinstitution').show();
+        }else{
+          $('#inputinstitution').hide();
+        }
       });
   });
 </script>
