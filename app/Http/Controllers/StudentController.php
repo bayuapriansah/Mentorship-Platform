@@ -73,6 +73,7 @@ class StudentController extends Controller
 
     public function sendInviteFromInstitution(Request $request,$institution_id)
     {
+        dd($request->all());
         $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
             $encEmail = (new SimintEncryption)->encData($request->email);
@@ -167,7 +168,7 @@ class StudentController extends Controller
         $student->year_of_study = $request->year_of_study;
         if($request->hasFile('profile_picture')){
             if($student->profile_picture == null){
-                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
@@ -177,9 +178,9 @@ class StudentController extends Controller
                     return redirect('/dashboard/students/'.$student->id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
                 }
             }
-            
+
             // save the new image
-             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){

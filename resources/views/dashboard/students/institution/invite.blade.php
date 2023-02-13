@@ -15,11 +15,12 @@
 </div>
 
 @if (Route::is('dashboard.students.inviteFromInstitution'))
-<form action="{{ route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]) }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]) }}" id="submitForm" method="post" enctype="multipart/form-data">
 @else
 <form action="{{route('dashboard.students.sendInvite')}}" method="post" enctype="multipart/form-data">
 @endif
   @csrf
+
   <div class="mb-3">
     <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Student Email" name="email" required><br>
     <div class="w-3/4 mt-4">
@@ -51,8 +52,13 @@
         </p>
     @enderror
   </div>
+  <p></p>
   <div class="mb-3">
     <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Student</button>
+    <!-- Select all button -->
+    <a id="selectAllBtn" class="cursor-pointer py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" style="display: none;">Select All</a>
+    <!-- Unselect all button -->
+    <a id="unselectAllBtn" class="cursor-pointer py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" style="display: none;">Unselect All</a>
   </div>
   <div class="w-3/4">
     <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
@@ -73,11 +79,19 @@
 @section('more-js')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
 <script>
-
 const dropArea = document.getElementById('drop-area')
 const fileInput = document.getElementById('file-input')
 const fileName = document.getElementById('file-name')
 const emailInput = document.getElementById('email')
+const selectAllBtn = document.getElementById('selectAllBtn')
+const unselectAllBtn = document.getElementById('unselectAllBtn')
+
+$('#dataTable').DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+        searching:false,
+    });
 
 // Listen for file drag-and-drop events
 dropArea.addEventListener('dragover', e => {
@@ -93,6 +107,8 @@ dropArea.addEventListener('dragleave', e => {
 dropArea.addEventListener('drop', e => {
     emailInput.setAttribute('readonly', true);
     emailInput.removeAttribute('required');
+    selectAllBtn.removeAttribute("style");
+    unselectAllBtn.removeAttribute("style");
     let file = e.dataTransfer.files[0];
     let reader = new FileReader();
     reader.readAsBinaryString(file);
@@ -109,7 +125,7 @@ dropArea.addEventListener('drop', e => {
             let row = `<tr>
                 <td>${i + 1}</td>
                 <td>${email.email}</td>
-                <td><input type="checkbox" class="checkbox"></td>
+                <td><input value="${email.email}" type="checkbox" class="checkbox" name="checkbox[]"></td>
             </tr>`;
             tableBody.append(row);
         }
@@ -137,8 +153,9 @@ dropArea.addEventListener('drop', e => {
 fileInput.addEventListener('change', e => {
     emailInput.setAttribute('readonly', true);
     emailInput.removeAttribute('required');
-
-    let file = e.dataTransfer.files[0];
+    selectAllBtn.removeAttribute("style");
+    unselectAllBtn.removeAttribute("style");
+    let file = e.target.files[0];
     let reader = new FileReader();
     reader.readAsBinaryString(file);
     reader.onload = function(e) {
@@ -154,7 +171,7 @@ fileInput.addEventListener('change', e => {
             let row = `<tr>
                 <td>${i + 1}</td>
                 <td>${email.email}</td>
-                <td><input type="checkbox" class="checkbox"></td>
+                <td><input value="${email.email}" type="checkbox" class="checkbox" name="checkbox[]"></td>
             </tr>`;
             tableBody.append(row);
         }
@@ -183,14 +200,34 @@ function handleUpload(files) {
 
 // Example function for resetting the UI
 function resetUI() {
+    // Do something to reset the UI
     console.log('Resetting UI');
     document.querySelector('#hideornot').style.display = 'none';
     emailInput.setAttribute('required',true);
     emailInput.removeAttribute('readonly');
     let tableBody = $('#tableBody');
     tableBody.empty();
-    // Do something to reset the UI
+    selectAllBtn.style.display = 'none';
+    unselectAllBtn.style.display = 'none';
 }
+
+document.getElementById("selectAllBtn").addEventListener("click", function() {
+    // Get all the checkboxes
+    var checkboxes = document.querySelectorAll(".checkbox");
+    // Loop through all the checkboxes and set the checked property to true
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = true;
+    }
+});
+
+document.getElementById("unselectAllBtn").addEventListener("click", function() {
+    // Get all the checkboxes
+    var checkboxes = document.querySelectorAll(".checkbox");
+    // Loop through all the checkboxes and set the checked property to false
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+    }
+});
 
 </script>
 @endsection
