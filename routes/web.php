@@ -170,6 +170,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/partners/{partner}/projects/create', [ProjectController::class, 'partnerProjectsCreate'])->name('partner.partnerProjectsCreate');
         Route::post('/partners/{partner}/projects', [ProjectController::class, 'partnerProjectsStore'])->name('partner.partnerProjectsStore');
         Route::post('/partners/{partner}/projects/{project}', [ProjectController::class, 'partnerProjectsInjectionStore'])->name('partner.partnerProjectsInjectionStore');
+        Route::patch('/partners/{partner}/projects/{project}', [ProjectController::class, 'partnerProjectsUpdate'])->name('partner.partnerProjectsUpdate');
         Route::patch('/partners/{partner}/projects/{project}/publishDraft', [ProjectController::class, 'publishDraft'])->name('partner.partnerProjectspublishDraft');
         Route::delete('/partners/{partner}/projects/{project}', [ProjectController::class, 'destroy'])->name('partner.partnerProjectsDestroy');
         Route::get('/partners/{partner}/projects/{project}/edit', [ProjectController::class, 'partnerProjectsEdit'])->name('partner.partnerProjectsEdit');

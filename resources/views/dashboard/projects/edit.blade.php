@@ -81,6 +81,24 @@
         </p>
     @enderror
   </div>
+
+  <div class="mb-3">
+    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
+        <option value="" hidden>Project type</option>
+        <option value="public" >Public to all institution</option>
+        <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputinstitution"  name="institution_id" >
+        <option value="" hidden>Select Institution</option>
+        @foreach ($institutions as $institution)
+        <option value="{{$institution->id}}" >{{$institution->name}}</option>
+        @endforeach
+    </select>
+  </div>
+
   <div class="mb-3">
     <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Brief Project Overview (Optional)" id="inputoverview" name="overview" value="{{$project->overview}}">
     @error('overview')
@@ -125,6 +143,15 @@
     @enderror
   </div>
   @endif --}}
+  <div class="mb-3 mt-7">
+    <h3 class="text-dark-blue font-medium text-xl">Add Dataset <span class="text-red-600">*</span></h3>
+    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" id="inputdataset" name="dataset" value="{{$project->dataset}}">
+    @error('dataset')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
     <div class="text-xl text-dark-blue">
@@ -162,4 +189,19 @@
   </div>
   <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Project</button>
 </form>
+@endsection
+@section('more-js')
+<script>
+  $(document).ready(function () {
+    $('#inputinstitution').hide();
+      $("#inputprojecttype").change(function(){
+        var values = $("#inputprojecttype option:selected").val();
+        if(values=='private'){
+          $('#inputinstitution').show();
+        }else{
+          $('#inputinstitution').hide();
+        }
+      });
+    });
+</script>
 @endsection

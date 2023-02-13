@@ -160,6 +160,16 @@
     @enderror
   </div>
   @endif --}}
+  <div class="mb-3 mt-7">
+    <h3 class="text-dark-blue font-medium text-xl">Add Dataset <span class="text-red-600">*</span></h3>
+    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" id="inputdataset" name="dataset" value="{{old('dataset')}}">
+    @error('dataset')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
+
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
     <div class="text-xl text-dark-blue">

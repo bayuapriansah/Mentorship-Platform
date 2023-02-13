@@ -584,27 +584,21 @@ class ProjectController extends Controller
 
     public function partnerProjectsStore(Request $request,Company $partner)
     {
-        // dd($request->input('addInjectionCard'));
-            // dd($request->all());
-
-        // if ($request->input('Add Injection Card')){
-        // }
         $validated = $request->validate([
             'name' => ['required'],
             'domain' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
-            'projectType' => ['required']
-            // 'type' => ['required'],
-            // 'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
-            // 'institution_id' => ['required'],
+            'projectType' => ['required'],
+            'dataset' => ['required'],
         ],
         [
             'name.required' => 'Project name is required',
             'domain.required' => 'Project domain is required',
             'period.required' => 'Project period is required',
             'problem.required' => 'Project problem is required',
-            'projectType.required' => 'Project type is required'
+            'projectType.required' => 'Project type is required',
+            'dataset.required' => 'Project dataset is required',
         ]);
         $project = new Project;
         $project->name = $validated['name'];
@@ -617,6 +611,7 @@ class ProjectController extends Controller
         if ($validated['projectType'] == 'private') {
             $project->institution_id = $request->institution_id;
         }
+        $project->dataset = $request->dataset;
         $project->overview = $request->overview;
         $project->save();
 
@@ -627,11 +622,48 @@ class ProjectController extends Controller
             return redirect('/dashboard/partners/'.$partner->id.'/projects');
         }
     }
+
+    public function partnerProjectsUpdate(Request $request, Company $partner, Project $project)
+    {
+        
+        $validated = $request->validate([
+            'name' => ['required'],
+            'project_domain' => ['required'],
+            'period' => ['required'],
+            'problem' => ['required'],
+            'projectType' => ['required'],
+            'dataset' => ['required'],
+        ],
+        [
+            'name.required' => 'Project name is required',
+            'project_domain.required' => 'Project domain is required',
+            'period.required' => 'Project period is required',
+            'problem.required' => 'Project problem is required',
+            'projectType.required' => 'Project type is required',
+            'dataset.required' => 'Project dataset is required',
+        ]);
+
+        $project = Project::find($project->id);
+        $project->name = $validated['name'];
+        $project->project_domain = $validated['project_domain'];
+        $project->period = $validated['period'];
+        if ($validated['projectType'] == 'public') {
+            $project->institution_id = null;
+        }else{
+            $project->institution_id = $request->institution_id;
+        }
+        $project->overview = $request->overview;
+        $project->dataset = $validated['dataset'];
+        $project->save();
+        return redirect('/dashboard/partners/'.$partner->id.'/projects');
+    }
+
     public function partnerProjectsEdit(Company $partner, Project $project)
     {
         $project = Project::find($project->id);
         $cards = ProjectSection::where('project_id', $project->id)->get();
-        return view('dashboard.projects.edit', compact('partner', 'project', 'cards'));
+        $institutions = Institution::get();
+        return view('dashboard.projects.edit', compact('partner', 'project', 'cards', 'institutions'));
     }
 
     public function publishDraft(Company $partner, Project $project)
