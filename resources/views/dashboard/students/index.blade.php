@@ -13,7 +13,7 @@
 </div>
 @else
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Students</h3>
+  <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Students</h3>
   <a href="{{route('dashboard.students.invite')}}" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
 @endif
@@ -85,8 +85,10 @@
 @section('more-js')
 <script>
   $(document).ready(function() {
+    
     let table = $('#dataTable').DataTable({
     });
+    // SuspendActiveBtn
     // $('.view-details').html('<i class="fa-solid fa-chevron-down"></i>');
 
     $('#dataTable tbody').on('click', 'button.view-details', function() {
@@ -102,6 +104,10 @@
       let studentJoin = $(this).data('student-join');
       let studentIs_confirm = $(this).data('student-is_confirm');
       let studentStart = $(this).data('student-start');
+      // if(studentIs_confirm == 1){
+        // $('#BitTitle').html('activate');
+      //   $('#SuspendActiveBtn').html('tes');
+      // }
         console.log(studentIs_confirm);
       if (row.child.isShown()) {
         $(this).html('<i class="fa-solid fa-chevron-down"></i>');
@@ -128,7 +134,7 @@
               <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
               <form method="POST" action="/dashboard/students/${studentId}/suspend" >
                 @csrf
-                <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">Suspend Account</button>
+                <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg" id='SuspendActiveBtn'>Suspend Account</button>
               </form>
               <form method="POST" action="/dashboard/students/${studentId}" >
                 @csrf

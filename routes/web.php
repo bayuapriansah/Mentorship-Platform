@@ -142,6 +142,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
         Route::get('/institutions/{institution}/supervisors/invite', [MentorController::class, 'invite'])->name('institutionSupervisorInvite');
         Route::post('/institutions/{institution}/supervisors', [MentorController::class, 'sendInvite'])->name('mentors.institutionSupervisorSendInvite');
+        Route::get('/institutions/{institution}/supervisors/{supervisor}/edit', [MentorController::class, 'editSupervisor'])->name('mentors.institutionSupervisorEdit');
 
 
         Route::post('/institutions/{institution}/suspend', [InstitutionController::class, 'suspendInstitution'])->name('institutions.suspend');

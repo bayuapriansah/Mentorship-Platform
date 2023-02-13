@@ -86,6 +86,11 @@ class MentorController extends Controller
         $mentorProject->project_id = $request->project_id;
         $mentorProject->save();
     }
+
+    public function editSupervisor(Institution $institution, Mentor $supervisor)
+    {
+        dd($supervisor->id);
+    }
     /**
      * Show the form for creating a new resource.
      *
