@@ -44,11 +44,11 @@
       <td>{{$project->project_domain}}</td>
       <td>{{count($project->enrolled_project)}}</td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
-      <td class="">
+      <td class="capitalize">
         @if ($project->status == 'publish')
-          <span class="text-green-600">{{$project->status}}</span>
+          <span class="text-green-600 ">{{$project->status}}</span>
         @else
-          <span class="text-[#D89B33]">{{$project->status}}</span>
+          <span class="text-[#D89B33] ">{{$project->status}}</span>
         @endif
       </td>
       <td>

@@ -125,7 +125,7 @@
                   </div>
                   <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white focus:ring-4 focus:ring-blue-200">
                     <img src="{{asset('assets/img/icon/send.png')}}" class="w-[15px]" alt="">
-                  </button>removeelement
+                  </button>
               </div>
             </div>
             </form>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
 use App\Models\Project;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SubmissionController extends Controller
 {
@@ -48,10 +50,40 @@ class SubmissionController extends Controller
     // project task submission list
     public function show(Project $project)
     {
-        $submissions = Submission::where('project_id', $project->id)->get();
+        $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
         return view('dashboard.submissions.index', compact('project', 'submissions'));
     }
 
+    public function singleSubmission(Project $project, Submission $submission)
+    {
+        return view('dashboard.submissions.show', compact('project', 'submission'));
+    }
+
+    public function adminGrade(Request $request, Project $project, Submission $submission)
+    {
+        if($request->message){
+            $comment = new Comment;
+            $comment->student_id = $submission->student_id;
+            $comment->project_id = $project->id;
+            $comment->project_section_id = $submission->projectSection->id;
+            $comment->read_message = 0;
+            $comment->user_id = Auth::guard('web')->user()->id;
+            $comment->message = $request->message;
+            $comment->save();
+        }
+        $grade = new Grade;
+        $grade->user_id = Auth::guard('web')->user()->id;
+        $grade->submission_id = $submission->id;
+        if($request->input('pass')){
+            $grade->status = 1;
+        }elseif($request->input('resubmission')=='resubmission'){
+            $grade->status = 2;
+        }elseif($request->input('revision')=='revision'){
+            $grade->status = 0;
+        }
+        $grade->save();
+        return back();
+    }
     /**
      * Show the form for editing the specified resource.
      *

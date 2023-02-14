@@ -202,6 +202,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // Submission
         Route::get('/submissions/project/{project}', [SubmissionController::class, 'show'])->name('submission.show');
+        Route::get('/submissions/project/{project}/view/{submission}', [SubmissionController::class, 'singleSubmission'])->name('submission.singleSubmission');
+        Route::post('/submissions/project/{project}/view/{submission}/adminGrade', [SubmissionController::class, 'adminGrade'])->name('submission.adminGrade');
+        // /dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade
     });
 
     Route::middleware(['auth:web,company'])->group(function(){

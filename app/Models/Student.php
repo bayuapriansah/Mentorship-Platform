@@ -30,4 +30,9 @@ class Student extends Authenticatable
     {
         return $this->belongsTo(Comment::class);
     }
+
+    public function mentor()
+    {
+        return $this->belongsTo(Mentor::class);
+    }
 }
