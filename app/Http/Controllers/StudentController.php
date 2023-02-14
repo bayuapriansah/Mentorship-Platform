@@ -71,24 +71,27 @@ class StudentController extends Controller
         }
     }
 
-    public function sendInviteFromInstitution(Request $request,$institution_id)
+    public function sendInviteFromInstitution(Request $request, $institution_id)
     {
-        $checkStudent = Student::where('email', $request->email)->first();
-        if(!$checkStudent){
-            $encEmail = (new SimintEncryption)->encData($request->email);
-            $link = route('student.register', [$encEmail]);
-            $student = $this->addStudentToInstitution($request,$institution_id);
-            $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
-            $message = "Successfully Send Invitation to Mentor";
-            return redirect()->route('dashboard.students.institutionStudents', ['institution'=>$institution_id])->with('success', $message);
-        }else{
-            return redirect()->back()->with('error', 'Email already invited');
+        $message = "Successfully Send Invitation to Student";
+        foreach (array_filter($request->email) as $email) {
+            $checkStudent = Student::where('email', $email)->first();
+            if (!$checkStudent) {
+                $encEmail = (new SimintEncryption)->encData($email);
+                $link = route('student.register', [$encEmail]);
+                $student = $this->addStudentToInstitution($email, $institution_id);
+                $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
+                $message .= "\n$email";
+            }
         }
+
+        return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('success', $message);
     }
 
-    public function addStudentToInstitution($request,$institution_id){
+    public function addStudentToInstitution($email,$institution_id){
+        // dd($email);
         $student = new Student;
-        $student->email = $request->email;
+        $student->email = $email;
         $student->institution_id = $institution_id;
         $student->is_confirm = 0;
         $student->save();
@@ -167,7 +170,7 @@ class StudentController extends Controller
         $student->year_of_study = $request->year_of_study;
         if($request->hasFile('profile_picture')){
             if($student->profile_picture == null){
-                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+                if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
@@ -177,9 +180,9 @@ class StudentController extends Controller
                     return redirect('/dashboard/students/'.$student->id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
                 }
             }
-            
+
             // save the new image
-             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 || 
+             if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
