@@ -22,7 +22,7 @@
   @csrf
 
   <div class="mb-3">
-    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Student Email" name="email" required><br>
+    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Student Email" name="email[]" required><br>
     <div class="w-3/4 mt-4">
             <div class="relative cursor-pointer " id="drop-area">
             <label for="file-input">
@@ -61,7 +61,7 @@
     <a id="unselectAllBtn" class="cursor-pointer py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" style="display: none;">Unselect All</a>
   </div>
   <div class="w-3/4">
-    <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
+    <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16" style="display: none">
         <thead class="text-dark-blue">
             <tr>
                 <th>No</th>
@@ -85,6 +85,7 @@ const fileName = document.getElementById('file-name')
 const emailInput = document.getElementById('email')
 const selectAllBtn = document.getElementById('selectAllBtn')
 const unselectAllBtn = document.getElementById('unselectAllBtn')
+const dataTableVisibility = document.getElementById('dataTable')
 
 $('#dataTable').DataTable({
         paging: false,
@@ -109,6 +110,7 @@ dropArea.addEventListener('drop', e => {
     emailInput.removeAttribute('required');
     selectAllBtn.removeAttribute("style");
     unselectAllBtn.removeAttribute("style");
+    dataTableVisibility.removeAttribute("style");
     let file = e.dataTransfer.files[0];
     let reader = new FileReader();
     reader.readAsBinaryString(file);
@@ -125,7 +127,7 @@ dropArea.addEventListener('drop', e => {
             let row = `<tr>
                 <td>${i + 1}</td>
                 <td>${email.email}</td>
-                <td><input value="${email.email}" type="checkbox" class="checkbox" name="checkbox[]"></td>
+                <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
             </tr>`;
             tableBody.append(row);
         }
@@ -155,6 +157,7 @@ fileInput.addEventListener('change', e => {
     emailInput.removeAttribute('required');
     selectAllBtn.removeAttribute("style");
     unselectAllBtn.removeAttribute("style");
+    dataTableVisibility.removeAttribute("style");
     let file = e.target.files[0];
     let reader = new FileReader();
     reader.readAsBinaryString(file);
@@ -171,7 +174,7 @@ fileInput.addEventListener('change', e => {
             let row = `<tr>
                 <td>${i + 1}</td>
                 <td>${email.email}</td>
-                <td><input value="${email.email}" type="checkbox" class="checkbox" name="checkbox[]"></td>
+                <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
             </tr>`;
             tableBody.append(row);
         }
@@ -209,6 +212,7 @@ function resetUI() {
     tableBody.empty();
     selectAllBtn.style.display = 'none';
     unselectAllBtn.style.display = 'none';
+    dataTableVisibility.style.display = 'none';
 }
 
 document.getElementById("selectAllBtn").addEventListener("click", function() {
