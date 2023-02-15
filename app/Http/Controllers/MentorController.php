@@ -43,23 +43,27 @@ class MentorController extends Controller
 // fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
     public function sendInvite(Request $request,$institution_id)
     {
-        $checkMentor = Mentor::where('email', $request->email)->first();
-
-        if(!$checkMentor){
-            $encEmail = (new SimintEncryption)->encData($request->email);
-            $link = route('mentor.register', [$encEmail]);
-            $mentors = $this->addMentor($request,$institution_id);
-            $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
-            $message = "Successfully Send Invitation to Mentor";
-            return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('success', $message);
-        }else{
-            return redirect()->back()->with('error', 'Email already invited');
+        $message = "Successfully Send Invitation to Student";
+        foreach (array_filter($request->email) as $email) {
+            $checkMentor = Mentor::where('email', $email)->first();
+            if (!$checkMentor) {
+                $encEmail = (new SimintEncryption)->encData($email);
+                $link = route('mentor.register', [$encEmail]);
+                $mentors = $this->addMentor($email,$institution_id);
+                $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
+                $message .= "\n$email";
+            }
+            // else{
+            //     return redirect()->back()->with('error', 'Email already invited');
+            // }
         }
+
+        return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('success', $message);
     }
 
-    public function addMentor($request,$institution_id){
+    public function addMentor($email,$institution_id){
         $mentor = new Mentor;
-        $mentor->email = $request->email;
+        $mentor->email = $email;
         $mentor->institution_id = $institution_id;
         $mentor->is_confirm = 0;
         $mentor->save();
@@ -120,7 +124,7 @@ class MentorController extends Controller
     // edit mentor dari dashboard
     public function edit(Institution $institution, Mentor $supervisor)
     {
-        return view('dashboard.mentors.edit', compact('institution', 'supervisor'));        
+        return view('dashboard.mentors.edit', compact('institution', 'supervisor'));
     }
     // update mentor dari dashboard
     public function updateMentorDashboard(Request $request, Institution $institution, Mentor $supervisor)

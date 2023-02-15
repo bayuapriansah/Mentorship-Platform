@@ -20,7 +20,7 @@
         Only xlsx, xls, and csv file extensions are allowed.{{-- <ahref="#"class="font-semiboldunderlinehover:no-underline">examplelink</a>.Giveitaclickifyoulike. --}}
     </div>
     <button type="button" class="border border-red-300 ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 bg-gray-800 text-red-400 hover:bg-gray-700" data-dismiss-target="#alert-file" aria-label="Close">
-      <span class="sr-only">Close</span>
+      <span class="sr-only">Close</span>.
       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
     </button>
   </div>
@@ -33,6 +33,9 @@
 
   <div class="mb-3">
     <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Student Email" name="email[]" required><br>
+    <div class="mb-3">
+        <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Student</button>
+      </div>
     <div class="w-3/4 mt-4">
             <div class="relative cursor-pointer " id="drop-area">
             <label for="file-input">
@@ -64,19 +67,18 @@
   </div>
   <p></p>
   <div class="mb-3">
-    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Student</button>
     <!-- Select all button -->
     <a id="selectAllBtn" class="cursor-pointer py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" style="display: none;">Select All</a>
     <!-- Unselect all button -->
     <a id="unselectAllBtn" class="cursor-pointer py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" style="display: none;">Unselect All</a>
   </div>
-  <div class="w-3/4">
+  <div class="w-1/4">
     <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16" style="display: none">
         <thead class="text-dark-blue">
             <tr>
                 <th>No</th>
-                <th>Email</th>
                 <th>Select</th>
+                <th>Email</th>
             </tr>
         </thead>
             <tbody id="tableBody">
@@ -146,8 +148,8 @@ dropArea.addEventListener('drop', e => {
                 let email = emails[i];
                 let row = `<tr>
                     <td>${i + 1}</td>
-                    <td>${email.email}</td>
                     <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
+                    <td>${email.email}</td>
                 </tr>`;
                 tableBody.append(row);
 
@@ -210,8 +212,8 @@ fileInput.addEventListener('change', e => {
                 let email = emails[i];
                 let row = `<tr>
                     <td>${i + 1}</td>
-                    <td>${email.email}</td>
                     <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
+                    <td>${email.email}</td>
                 </tr>`;
                 tableBody.append(row);
 
