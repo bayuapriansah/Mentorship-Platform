@@ -17,7 +17,12 @@
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
+@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachment'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment" class="w-3/4" enctype="multipart/form-data" method="post">
+@else
+<form action="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment" class="w-3/4" enctype="multipart/form-data" method="post">
+@endif
+
     @csrf
     <div class="mb-5">
         <label class="block mb-2 text-sm font-medium text-dark-blue" for="file_input">Upload Attachment 1<span class="text-red-600">*</span></label>

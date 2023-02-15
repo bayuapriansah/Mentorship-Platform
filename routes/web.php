@@ -192,9 +192,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/edit', [ProjectController::class, 'partnerProjectsInjectionAttachmentEdit'])->name('partner.partnerProjectsInjectionAttachmentEdit');
         Route::patch('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}', [ProjectController::class, 'partnerProjectsInjectionAttachmentUpdate'])->name('partner.partnerProjectsInjectionAttachmentUpdate');
         Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/delete/{key}', [ProjectController::class, 'partnerProjectsInjectionAttachmentDelete'])->name('partner.partnerProjectsInjectionAttachmentDelete');
-
         Route::post('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachmentStore'])->name('partner.partnerProjectsInjectionAttachmentStore');
 
+        // Customer
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
@@ -204,6 +204,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/submissions/project/{project}', [SubmissionController::class, 'show'])->name('submission.show');
         Route::get('/submissions/project/{project}/view/{submission}', [SubmissionController::class, 'singleSubmission'])->name('submission.singleSubmission');
         Route::post('/submissions/project/{project}/view/{submission}/adminGrade', [SubmissionController::class, 'adminGrade'])->name('submission.adminGrade');
+        Route::get('/submissions/project/{project}/view/{submission}/grade/{grade}', [SubmissionController::class, 'edit'])->name('submission.editSubmissionGrade');
+
+        // Projects
+
         // /dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade
     });
 
@@ -224,25 +228,31 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/projects', [ProjectController::class, 'dashboardIndexStore'])->name('projects.store');
         Route::get('/projects/{project}/edit', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
         Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
-        Route::patch('projects/{project}/publish', [ProjectController::class, 'publish'])->name('project.publish');
+        // Route::patch('projects/{project}/publish', [ProjectController::class, 'dashboardpublish'])->name('project.publish');
+        Route::patch('/projects/{project}/publishDraft', [ProjectController::class, 'dashboardpublishDraft'])->name('projects.publishDraft');
+
         Route::delete('/projects/{project}', [ProjectController::class, 'dashboardIndexDestroy'])->name('projects.destroy');
 
         //section
-        Route::get('/projects/{project}/section', [ProjectController::class, 'dashboardIndexSection'])->name('projects.section');
+        Route::get('/projects/{project}/injection', [ProjectController::class, 'dashboardIndexSection'])->name('projects.section');
         Route::post('/projects/{project}', [ProjectController::class, 'dashboardIndexStoreSection'])->name('projects.storeSection');
-        Route::get('/projects/{project}/section/{section}/edit', [ProjectController::class, 'dashboardIndexEditSection'])->name('projects.EditSection');
-        Route::patch('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexUpdateSection'])->name('projects.UpdateSection');
-        Route::delete('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardIndexDestroySection'])->name('projects.DestroySection');
-        Route::post('/projects/{project}/section/{section}/up', [ProjectController::class, 'dashboardIndexSectionUp'])->name('projects.SectionUp');
-        Route::post('/projects/{project}/section/{section}/down', [ProjectController::class, 'dashboardIndexSectionDown'])->name('projects.SectionDown');
+        Route::get('/projects/{project}/injection/{injection}/edit', [ProjectController::class, 'dashboardIndexEditSection'])->name('projects.EditSection');
+        Route::patch('/projects/{project}/injection/{injection}', [ProjectController::class, 'dashboardIndexUpdateSection'])->name('projects.UpdateSection');
+        Route::get('/projects/{project}/injection/{injection}/delete', [ProjectController::class, 'dashboardIndexDestroySection'])->name('projects.DestroySection');
 
         //subsection
-        Route::get('/projects/{project}/section/{section}/subsection', [ProjectController::class, 'dashboardIndexSubsection'])->name('projects.subsection');
+        Route::get('/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'dashboardIndexSubsection'])->name('projects.subsection');
+        Route::post('/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'dashboardStoreSubsection'])->name('partner.storeSubsection');
+        Route::get('/projects/{project}/injection/{injection}/attachment/{attachment}/delete/{key}', [ProjectController::class, 'dashboardDestroySubsection'])->name('partner.DestroySubsection');
+        Route::get('/projects/{project}/injection/{injection}/attachment/{attachment}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('partner.EditSubsection');
+        Route::patch('/projects/{project}/injection/{injection}/attachment/{attachment}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('partner.UpdateSubsection');
+        
+
+
         Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.createSubsection');
-        Route::post('/projects/{project}/section/{section}', [ProjectController::class, 'dashboardStoreSubsection'])->name('projects.storeSubsection');
         Route::get('/projects/{project}/section/{section}/subsection/{subsection}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('projects.EditSubsection');
-        Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
-        Route::delete('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardDestroySubsection'])->name('projects.DestroySubsection');
+        // Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
+        // Route::delete('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardDestroySubsection'])->name('projects.DestroySubsection');
 
         // Assign Project to institution
     });

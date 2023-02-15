@@ -4,6 +4,10 @@
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
+@else
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
 @endif
 
 @if (Route::is('dashboard.partner.partnerProjectsInjectionAttachment'))
@@ -17,7 +21,12 @@
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
+@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachment'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment->id}}" class="w-3/4" enctype="multipart/form-data" method="post">
+@else
+<form action="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment->id}}" class="w-3/4" enctype="multipart/form-data" method="post">
+@endif
+   
     @csrf
     @method('patch')
     <div class="mb-5">

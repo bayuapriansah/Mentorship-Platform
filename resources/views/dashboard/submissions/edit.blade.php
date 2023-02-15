@@ -3,11 +3,9 @@
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/submissions/project/{{$project->id}}"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
-
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Review Submission</h3>
 </div>
-
 <div class="w-3/5 space-y-10">
   <div class="space-y-6">
     <div class="flex justify-between">
@@ -59,9 +57,6 @@
   </div>
   <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
     @csrf
-    <div class="px-4 py-2 bg-white rounded-lg border border-light-blue">
-        <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" placeholder="Add Comments (Optional)"></textarea>
-    </div>
     <div class="flex space-x-6">
       {{-- data-modal-target="defaultModal" data-modal-toggle="defaultModal" --}}
       
@@ -100,5 +95,4 @@
     </div>
   </form>
 </div>
-
 @endsection

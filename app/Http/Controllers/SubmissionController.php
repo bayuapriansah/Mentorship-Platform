@@ -77,8 +77,6 @@ class SubmissionController extends Controller
         $grade->submission_id = $submission->id;
         if($request->input('pass')){
             $grade->status = 1;
-        }elseif($request->input('resubmission')=='resubmission'){
-            $grade->status = 2;
         }elseif($request->input('revision')=='revision'){
             $grade->status = 0;
         }
@@ -91,9 +89,9 @@ class SubmissionController extends Controller
      * @param  \App\Models\Submission  $submission
      * @return \Illuminate\Http\Response
      */
-    public function edit(Submission $submission)
+    public function edit(Project $project,Submission $submission, Grade $grade)
     {
-        //
+        return view('dashboard.submissions.edit', compact('project','submission', 'grade'));
     }
 
     /**

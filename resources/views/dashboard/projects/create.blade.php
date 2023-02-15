@@ -60,9 +60,18 @@
   </div>
 
   <div class="mb-3">
-    <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
-      <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
-    </select>
+    @if (Route::is('dashboard.partner.partnerProjectsCreate'))
+      <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
+        <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
+      </select>
+    @else
+      <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
+        <option value="" hidden>Select Partner</option>
+        @foreach ($partners as $partner)
+          <option value="{{$partner->id}}" >{{$partner->name}}</option>
+          @endforeach
+      </select>
+    @endif
     @error('partner')
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
@@ -178,7 +187,7 @@
     </div>
   </div>
   <div class="mb-3">
-    <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" name="addProject" value="Add Project">
+    <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Add Project">
   </div>
 </form>
 @endsection

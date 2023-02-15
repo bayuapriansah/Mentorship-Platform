@@ -20,6 +20,13 @@
       <a href="/dashboard/institutions_partners">Institutions & Partner</a>
     @endif
   </li>
+  <li class="hover:font-medium">
+    @if(Route::is('dashboard.projects.index'))
+      <a href="/dashboard/projects" class="font-medium">Projects</a>
+    @else
+      <a href="/dashboard/projects">Projects</a>
+    @endif
+  </li>
 
   @if(Auth::guard('mentor')->check())
   <li class="nav-item">

@@ -4,6 +4,10 @@
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
+@else
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/projects/{{$project->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
 @endif
 @if (Route::is('dashboard.partner.partnerProjectsInjection'))
 <div class="flex justify-between mb-10">
@@ -12,12 +16,16 @@
 </div>
 @else
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
+  <h3 class="text-dark-blue font-medium text-xl">Add Project <i class="fa-solid fa-chevron-right"></i> Injection Card</h3>
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
 
+@if (Route::is('dashboard.partner.partnerProjectsInjection'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
+@else
+<form action="/dashboard/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
+@endif
   @csrf
   <div class="mb-3">
     <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Injection Card Title *" id="inputtitle" name="title" value="{{old('title')}}">
@@ -79,7 +87,7 @@
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">File Attachment</h3>
     <div class="text-xl text-dark-blue">
-      <i class="fa-solid fa-circle-xmark"></i>
+      <i class="fa-solid fa-circle-plus"></i>
       <input type="submit" class="cursor-pointer" name="addInjectionCardAttachment" value="Add Attachment">
     </div>
   </div>

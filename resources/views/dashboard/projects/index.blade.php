@@ -15,7 +15,7 @@
 @else
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Project</a>
+  <a href="/dashboard/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Project</a>
 </div>
 @endif
 <!-- Content Row -->
@@ -60,10 +60,18 @@
         <div id="dropdownHover{{$no}}" class="z-10 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
               <li>
-                <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
+                @if (Route::is('dashboard.partner.partnerProjects'))
+                  <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
+                @else
+                  <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
+                @endif
               </li>
               <li>
+                @if (Route::is('dashboard.partner.partnerProjects'))
                 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/publishDraft" method="post">
+                @else
+                <form action="/dashboard/projects/{{$project->id}}/publishDraft" method="post">
+                @endif
                   @method('patch')
                   @csrf
                   @if ($project->status == 'publish')
@@ -74,7 +82,11 @@
                 </form>
               </li>
               <li>
+                @if (Route::is('dashboard.partner.partnerProjects'))
                 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post">
+                @else
+                <form action="/dashboard/projects/{{$project->id}}" method="post">
+                @endif
                   @method('delete')
                   @csrf
                   <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">

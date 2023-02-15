@@ -31,7 +31,7 @@
         @if ($submission->grade)
           @if ($submission->grade->status==1)
             <span class="text-[#11BF61]">PASS</span>
-          @elseif($submission->grade->status==2)
+          @elseif($submission->grade->status==0)
             <span class="text-[#EA0202]">REVISE</span>
           @endif
         @else
@@ -44,10 +44,11 @@
         <div id="dropdownHover{{$no}}" class="z-10 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
               <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}" >View Submission</a>
-              </li>
-              <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                <a href="#" >Enable Re-submisson</a>
+                @if ($submission->grade)
+                  <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/grade/{{$submission->grade->id}}" >View Submission</a>
+                @else
+                  <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}" >View Submission</a>
+                @endif
               </li>
             </ul>
         </div>

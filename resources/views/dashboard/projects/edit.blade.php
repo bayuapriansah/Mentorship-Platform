@@ -4,6 +4,10 @@
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/partners/{{$partner->id}}/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
+@else
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
 @endif
 
 @if (Route::is('dashboard.partner.partnerProjectsEdit'))
@@ -14,7 +18,7 @@
 @else
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
+  <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
 
@@ -62,9 +66,18 @@
   </div>
 
   <div class="mb-3">
-    <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
-      <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
+    @if (Route::is('dashboard.partner.partnerProjectsEdit'))
+      <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
+        <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
+      </select>
+    @else
+    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
+      <option value="" hidden>Select Partner</option>
+      @foreach ($partners as $partner)
+        <option value="{{$partner->id}}" {{$project->company_id == $partner->id?'selected':''}} >{{$partner->name}}</option>
+        @endforeach
     </select>
+    @endif
     @error('partner')
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
@@ -85,7 +98,7 @@
   <div class="mb-3">
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
-        <option value="public" >Public to all institution</option>
+        <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institution</option>
         <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution</option>
     </select>
   </div>
@@ -156,7 +169,12 @@
     <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
     <div class="text-xl text-dark-blue">
       {{-- <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card"> --}}
-      <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-xmark"></i> Add Injection Card</a>
+      @if (Route::is('dashboard.partner.partnerProjectsEdit'))
+        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
+      @else
+      <a href="/dashboard/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
+
+      @endif
     </div>
   </div>
   <div class="mb-3 space-y-2">
@@ -175,9 +193,14 @@
         <span class="text-xs text-dark-blue">{{$card->created_at->format('d/m/Y')}}</span>
       </div>
       <div class="space-x-5">
-        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/edit"><i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i></a>
-        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/delete"><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
-      </div>
+        @if (Route::is('dashboard.partner.partnerProjectsEdit'))
+          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/edit"><i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i></a>
+          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/delete"><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
+        @else
+          <a href="/dashboard/projects/{{$project->id}}/injection/{{$card->id}}/edit"><i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i></a>
+          <a href="/dashboard/projects/{{$project->id}}/injection/{{$card->id}}/delete"><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
+        @endif
+        </div>
       {{-- <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 text-dark-blue">
         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
       </svg> --}}

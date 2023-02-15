@@ -4,6 +4,10 @@
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
+@else
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/projects/{{$project->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
 @endif
 
 @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
@@ -13,14 +17,14 @@
 </div>
 @else
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
+  <h3 class="text-dark-blue font-medium text-xl">Project <i class="fa-solid fa-chevron-right"></i> Add Project <i class="fa-solid fa-chevron-right"></i> Injection Card</h3>
+  <a href="/dashboard/projects/{{$project->id}}/edit" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
 @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
-<form action="#" method="post" enctype="multipart/form-data" class="w-3/4">
+<form action="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @endif
   @method('PATCH')
   @csrf
@@ -112,10 +116,10 @@
     <h3 class="text-dark-blue font-medium text-xl">File Attachment</h3>
     <div class="text-xl text-dark-blue">
       {{-- <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-xmark"></i> Add File Attachment</a> --}}
-      @if ($attachment_id)
-        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-xmark"></i> Add Attachment</a>
+      @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
+        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
       @else
-        <a href="#"><i class="fa-solid fa-circle-xmark"></i> Add Attachment</a>
+        <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
       @endif
     </div>
   </div>
@@ -125,14 +129,23 @@
         <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
         <a href="{{asset('storage/'.$attachment->file1)}}" target="_blank" class="text-base">Attachment File 1</a>
         {{-- /dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit --}}
-        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+        @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
+          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+        @else
+        <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+          
+        @endif
     </div>
 
     @if ($attachment->file2)
         <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
             <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
             <a href="{{asset('storage/'.$attachment->file2)}}" target="_blank" class="text-base">Attachment File 2</a>
-            <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{2}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+            @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
+              <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{2}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+            @else
+            <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{2}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+            @endif
         </div>
     @endif
 
@@ -140,13 +153,17 @@
         <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
             <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
             <a href="{{asset('storage/'.$attachment->file3)}}" target="_blank" class="text-base">Attachment File 3</a>
-            <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{3}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+            @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
+              <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{3}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+            @else
+              <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{3}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
+            @endif
         </div>
     @endif
     @endforeach
   </div>
   <div class="mb-3">
-    <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" value="Submit">
+    <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" value="Submit">
   </div>
 </form>
 @endsection
