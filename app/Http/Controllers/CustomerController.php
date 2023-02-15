@@ -23,18 +23,22 @@ class CustomerController extends Controller
 
     public function sendInvitePartner(Request $request,$partner_id)
     {
-        $checkCustomer = Customer::where('email', $request->email)->first();
-        if(!$checkCustomer){
-            $encEmail = (new SimintEncryption)->encData($request->email);
-            $link = route('mentor.register', [$encEmail]);
-            $student = $this->addCustomerToPartner($request,$partner_id);
-            $sendmail = (new MailController)->EmailMemberInvitation($student->email,$link);
-            $message = "Successfully Send Invitation to Members";
-            // return redirect('/dashboard/partners/'.$partner_id.'/members')->with('success', $message);
-            return redirect()->route('dashboard.partner.partnerMember', [$partner_id])->with('success', $message);
-        }else{
-            return redirect()->back()->with('error', 'Email already invited');
+        $message = "Successfully Send Invitation to Student";
+        foreach (array_filter($request->email) as $email) {
+            $checkCustomer = Customer::where('email', $email)->first();
+            if(!$checkCustomer){
+                $encEmail = (new SimintEncryption)->encData($email);
+                $link = route('mentor.register', [$encEmail]);
+                $student = $this->addCustomerToPartner($email,$partner_id);
+                $sendmail = (new MailController)->EmailMemberInvitation($student->email,$link);
+                $message .= "\n$email";
+            }
+            // else{
+            //     return redirect()->back()->with('error', 'Email already invited');
+            // }
         }
+
+        return redirect()->route('dashboard.partner.partnerMember', [$partner_id])->with('success', $message);
     }
 
     // Register customer
@@ -89,12 +93,12 @@ class CustomerController extends Controller
         }
     }
 
-    public function addCustomerToPartner($request,$partner_id){
-        $customer = new Customer;
-        $customer->email = $request->email;
-        $customer->company_id = $partner_id;
-        $customer->is_confirm = 0;
-        $customer->save();
+    public function addCustomerToPartner($email,$partner_id){
+        $customer = Customer::create([
+            'email' => $email,
+            'company_id' => $partner_id,
+            'is_confirm' => 0
+        ]);
 
         return $customer;
     }

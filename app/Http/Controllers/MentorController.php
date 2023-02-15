@@ -62,11 +62,11 @@ class MentorController extends Controller
     }
 
     public function addMentor($email,$institution_id){
-        $mentor = new Mentor;
-        $mentor->email = $email;
-        $mentor->institution_id = $institution_id;
-        $mentor->is_confirm = 0;
-        $mentor->save();
+        $mentor = Mentor::create([
+            'email' => $email,
+            'institution_id' => $institution_id,
+            'is_confirm' => 0
+        ]);
 
         return $mentor;
     }

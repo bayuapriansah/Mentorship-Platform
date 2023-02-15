@@ -93,11 +93,11 @@ class StudentController extends Controller
 
     public function addStudentToInstitution($email,$institution_id){
         // dd($email);
-        $student = new Student;
-        $student->email = $email;
-        $student->institution_id = $institution_id;
-        $student->is_confirm = 0;
-        $student->save();
+        $student = Student::create([
+            'email' => $email,
+            'institution_id' => $institution_id,
+            'is_confirm' => 0
+        ]);
 
         return $student;
     }
