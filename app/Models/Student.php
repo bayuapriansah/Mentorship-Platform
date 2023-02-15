@@ -28,7 +28,7 @@ class Student extends Authenticatable
 
     public function comment()
     {
-        return $this->belongsTo(Comment::class);
+        return $this->belongsTo(Comment::class,'id','student_id');
     }
 
     public function mentor()

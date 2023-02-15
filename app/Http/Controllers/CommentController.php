@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Project;
+use App\Models\Student;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Models\ProjectSection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -70,5 +74,27 @@ class CommentController extends Controller
         else{
             return back();
         }
+    }
+
+    public function index()
+    {
+        $messages = Comment::get();
+        $injections = ProjectSection::whereHas('comment')->get();
+        return view('dashboard.messages.index', compact('messages','injections'));
+    }
+
+    public function taskMessage(ProjectSection $injection)
+    {
+        $participants = Student::whereHas('comment')->get();
+        $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
+        $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
+        return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
+    }
+
+    public function single(ProjectSection $injection, Student $participant)
+    {
+        $comments = Comment::where('project_section_id', $injection->id)->where('student_id', $participant->id)->get();
+        // dd($comments);
+        return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments'));
     }
 }

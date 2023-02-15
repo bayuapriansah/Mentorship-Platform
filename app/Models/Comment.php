@@ -10,18 +10,22 @@ class Comment extends Model
     use HasFactory;
 
     public function student(){
-        return $this->hasOne(Student::class);
+        return $this->belongsTo(Student::class);
     }
 
     public function project(){
-        return $this->hasOne(Project::class);
+        return $this->belongsTo(Project::class);
     }
 
     public function project_section(){
-        return $this->hasOne(ProjectSection::class);
+        return $this->belongsTo(ProjectSection::class);
     }
 
     public function mentor(){
-        return $this->hasOne(Mentor::class);
+        return $this->belongsTo(Mentor::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
