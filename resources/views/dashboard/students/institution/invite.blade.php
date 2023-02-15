@@ -13,7 +13,17 @@
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">{{$institution->name}} <i class="fa-solid fa-chevron-right"></i> Students <i class="fa-solid fa-chevron-right"></i> Invite</h3>
 </div>
-
+<div id="alert-file" class="border border-red-300 w-3/4 flex p-4 mb-4 text-red-800 rounded-lg bg-red-50 bg-gray-800 text-red-400 hidden" role="alert">
+    <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+    <span class="sr-only">Info</span>
+    <div class="ml-3 text-sm font-medium">
+        Only xlsx, xls, and csv file extensions are allowed.{{-- <ahref="#"class="font-semiboldunderlinehover:no-underline">examplelink</a>.Giveitaclickifyoulike. --}}
+    </div>
+    <button type="button" class="border border-red-300 ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 bg-gray-800 text-red-400 hover:bg-gray-700" data-dismiss-target="#alert-file" aria-label="Close">
+      <span class="sr-only">Close</span>
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+    </button>
+  </div>
 @if (Route::is('dashboard.students.inviteFromInstitution'))
 <form action="{{ route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]) }}" id="submitForm" method="post" enctype="multipart/form-data">
 @else
@@ -86,6 +96,7 @@ const emailInput = document.getElementById('email')
 const selectAllBtn = document.getElementById('selectAllBtn')
 const unselectAllBtn = document.getElementById('unselectAllBtn')
 const dataTableVisibility = document.getElementById('dataTable')
+const alertfileVisibility = document.getElementById('alert-file')
 
 $('#dataTable').DataTable({
         paging: false,
@@ -106,105 +117,139 @@ dropArea.addEventListener('dragleave', e => {
 })
 
 dropArea.addEventListener('drop', e => {
-    emailInput.setAttribute('readonly', true);
-    emailInput.removeAttribute('required');
-    selectAllBtn.removeAttribute("style");
-    unselectAllBtn.removeAttribute("style");
-    dataTableVisibility.removeAttribute("style");
     let file = e.dataTransfer.files[0];
-    let reader = new FileReader();
-    reader.readAsBinaryString(file);
-    reader.onload = function(e) {
-    let data = e.target.result;
-    let workbook = XLSX.read(data, {type: 'binary'});
-    let emailSheet = workbook.Sheets[workbook.SheetNames[0]];
-    let emails = XLSX.utils.sheet_to_json(emailSheet);
-    let tableBody = $('#tableBody');
-    tableBody.empty();
-        for (let i = 0; i < emails.length; i++)
-        {
-            let email = emails[i];
-            let row = `<tr>
-                <td>${i + 1}</td>
-                <td>${email.email}</td>
-                <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
-            </tr>`;
-            tableBody.append(row);
-        }
-    };
+    let fileNames = file.name;
+    let fileExtension = fileNames.substr((fileNames.lastIndexOf('.') + 1)).toLowerCase();
+    if (fileExtension !== 'xlsx' && fileExtension !== 'xls' && fileExtension !== 'csv') {
+        // alert('Only xlsx, xls, and csv file extensions are allowed.');
+        alertfileVisibility.classList.remove('hidden');
+        alertfileVisibility.classList.add('opacity-100');
+        return;
+    }else{
+        emailInput.setAttribute('readonly', true);
+        emailInput.removeAttribute('required');
+        selectAllBtn.removeAttribute("style");
+        unselectAllBtn.removeAttribute("style");
+        dataTableVisibility.removeAttribute("style");
 
-    e.preventDefault()
-    dropArea.classList.remove('bg-gray-200')
-    fileInput.files = e.dataTransfer.files
-    let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-    fileName.classList.add(...classesToAdd);
-    fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
-    // You can handle the files here.
-    handleUpload(e.dataTransfer.files)
-    document.querySelector('#hideornot').style.display = 'block';
-    const fileClear = document.querySelector('.fa-times')
-    fileClear.addEventListener('click', e => {
-        e.preventDefault();
-        fileName.textContent = '';
-        fileInput.value = '';
-        resetUI();
-    });
+        let reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+        let data = e.target.result;
+        let workbook = XLSX.read(data, {type: 'binary'});
+        let emailSheet = workbook.Sheets[workbook.SheetNames[0]];
+        let emails = XLSX.utils.sheet_to_json(emailSheet);
+        let tableBody = $('#tableBody');
+        tableBody.empty();
+            for (let i = 0; i < emails.length; i++)
+            {
+                let email = emails[i];
+                let row = `<tr>
+                    <td>${i + 1}</td>
+                    <td>${email.email}</td>
+                    <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
+                </tr>`;
+                tableBody.append(row);
+
+                if (i === emails.length - 1) {
+                    var checkboxes = document.querySelectorAll(".checkbox");
+                    for (var j = 0; j < checkboxes.length; j++) {
+                        checkboxes[j].checked = true;
+                    }
+                }
+            }
+        };
+
+        e.preventDefault()
+        dropArea.classList.remove('bg-gray-200')
+        fileInput.files = e.dataTransfer.files
+        let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
+        fileName.classList.add(...classesToAdd);
+        fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
+        // You can handle the files here.
+        handleUpload(e.dataTransfer.files)
+        document.querySelector('#hideornot').style.display = 'block';
+        const fileClear = document.querySelector('.fa-times')
+        fileClear.addEventListener('click', e => {
+            e.preventDefault();
+            fileName.textContent = '';
+            fileInput.value = '';
+            resetUI();
+        });
+    }
 })
 
 // Listen for file input change events
 fileInput.addEventListener('change', e => {
-    emailInput.setAttribute('readonly', true);
-    emailInput.removeAttribute('required');
-    selectAllBtn.removeAttribute("style");
-    unselectAllBtn.removeAttribute("style");
-    dataTableVisibility.removeAttribute("style");
     let file = e.target.files[0];
-    let reader = new FileReader();
-    reader.readAsBinaryString(file);
-    reader.onload = function(e) {
-    let data = e.target.result;
-    let workbook = XLSX.read(data, {type: 'binary'});
-    let emailSheet = workbook.Sheets[workbook.SheetNames[0]];
-    let emails = XLSX.utils.sheet_to_json(emailSheet);
-    let tableBody = $('#tableBody');
-    tableBody.empty();
-        for (let i = 0; i < emails.length; i++)
-        {
-            let email = emails[i];
-            let row = `<tr>
-                <td>${i + 1}</td>
-                <td>${email.email}</td>
-                <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
-            </tr>`;
-            tableBody.append(row);
-        }
-    };
+    let fileNames = file.name;
+    let fileExtension = fileNames.substr((fileNames.lastIndexOf('.') + 1)).toLowerCase();
+    if (fileExtension !== 'xlsx' && fileExtension !== 'xls' && fileExtension !== 'csv') {
+        // alert('Only xlsx, xls, and csv file extensions are allowed.');
+        alertfileVisibility.classList.remove('hidden');
+        alertfileVisibility.classList.add('opacity-100');
+        return;
+    }else{
+        emailInput.setAttribute('readonly', true);
+        emailInput.removeAttribute('required');
+        selectAllBtn.removeAttribute("style");
+        unselectAllBtn.removeAttribute("style");
+        dataTableVisibility.removeAttribute("style");
 
-    fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
-    // You can handle the files here.
-    handleUpload(e.target.files)
-    let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-    fileName.classList.add(...classesToAdd);
-    document.querySelector('#hideornot').style.display = 'block';
-    const fileClear = document.querySelector('.fa-times')
-    fileClear.addEventListener('click', e => {
-        e.preventDefault();
-        fileName.textContent = '';
-        fileInput.value = '';
-        resetUI();
-    });
+        let reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+        let data = e.target.result;
+        let workbook = XLSX.read(data, {type: 'binary'});
+        let emailSheet = workbook.Sheets[workbook.SheetNames[0]];
+        let emails = XLSX.utils.sheet_to_json(emailSheet);
+        let tableBody = $('#tableBody');
+        tableBody.empty();
+            for (let i = 0; i < emails.length; i++)
+            {
+                let email = emails[i];
+                let row = `<tr>
+                    <td>${i + 1}</td>
+                    <td>${email.email}</td>
+                    <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
+                </tr>`;
+                tableBody.append(row);
+
+                if (i === emails.length - 1) {
+                    var checkboxes = document.querySelectorAll(".checkbox");
+                    for (var j = 0; j < checkboxes.length; j++) {
+                        checkboxes[j].checked = true;
+                    }
+                }
+            }
+        };
+
+        fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
+        // You can handle the files here.
+        handleUpload(e.target.files)
+        let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
+        fileName.classList.add(...classesToAdd);
+        document.querySelector('#hideornot').style.display = 'block';
+        const fileClear = document.querySelector('.fa-times')
+        fileClear.addEventListener('click', e => {
+            e.preventDefault();
+            fileName.textContent = '';
+            fileInput.value = '';
+            resetUI();
+        });
+    }
 })
 
 // Example function for handling file uploads
 function handleUpload(files) {
-    console.log('Uploading files:', files)
+    // console.log('Uploading files:', files)
     // Do something with the files here
 }
 
 // Example function for resetting the UI
 function resetUI() {
     // Do something to reset the UI
-    console.log('Resetting UI');
+    // console.log('Resetting UI');
     document.querySelector('#hideornot').style.display = 'none';
     emailInput.setAttribute('required',true);
     emailInput.removeAttribute('readonly');
