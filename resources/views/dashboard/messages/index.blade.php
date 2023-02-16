@@ -2,7 +2,7 @@
 @section('content')
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">All Messages</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-envelope"></i> New Message</a>
+  <a href="/dashboard/messages/create" class="text-xl text-dark-blue"><i class="fa-solid fa-envelope"></i> New Message</a>
 </div>
 
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">

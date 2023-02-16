@@ -31,56 +31,21 @@ class CommentController extends Controller
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
 
-    public function SendComment(Request $request, $sender_id, $project_id, $task_id, $student_id)
-    {
-        $validated = $request->validate([
-            'message' => 'required',
-        ]);
-        $comment = new Comment;
-        if(Auth::guard('student')->check()){
-            $comment->student_id = $sender_id;
-        }elseif(Auth::guard('web')->check()){
-            $comment->user_id = $sender_id;
-            $comment->student_id = $student_id;
-        }elseif(Auth::guard('companies')->check()){
-            $comment->companies_id = $sender_id;
-            $comment->student_id = $student_id;
-        }else{
-            $comment->mentor_id = $sender_id;
-            $comment->student_id = $student_id;
-        }
-        $comment->project_id = $project_id;
-        $comment->project_section_id = $task_id;
-        $comment->message = $validated['message'];
-        if(Auth::guard('student')->check()){
-            if($request->hasFile('file')){
-                $file = Storage::disk('public')->put('comments/'.$sender_id.'/project/'.$project_id.'/task/'.$task_id, $request->file);
-                $comment->file = $file;
-            }
-        }
-        else{
-            if($request->hasFile('file')){
-                // dd($request->hasFile('file'));
-                // dd($file = $request->file('file')->getClientOriginalName());
-                // dd($file = $request->file('file'));
-                $file = Storage::disk('public')->put('comments/mentor/'.$sender_id.'/project/'.$project_id.'/task/'.$task_id, $request->file);
-                $comment->file = $file;
-            }
-        }
-        $comment->save();
-        if(Auth::guard('student')->check()){
-            return redirect('/profile/'.$sender_id.'/enrolled/'.$project_id.'/task/'.$task_id);
-        }
-        else{
-            return back();
-        }
-    }
+    
 
     public function index()
     {
         $messages = Comment::get();
         $injections = ProjectSection::whereHas('comment')->get();
         return view('dashboard.messages.index', compact('messages','injections'));
+    }
+
+    public function create()
+    {
+        $projects = Project::get();
+        $projectSections = ProjectSection::get();
+        $students = Student::get();
+        return view('dashboard.messages.create', compact('projects', 'projectSections', 'students'));
     }
 
     public function taskMessage(ProjectSection $injection)
@@ -96,5 +61,70 @@ class CommentController extends Controller
         $comments = Comment::where('project_section_id', $injection->id)->where('student_id', $participant->id)->get();
         $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
         return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments', 'customer_participants'));
+    }
+
+    public function adminReply(ProjectSection $injection, Student $participant)
+    {
+        $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
+        return view('dashboard.messages.replyMessage', compact('injection', 'participant', 'customer_participants'));
+    }
+
+    public function adminSendMessage (Request $request,ProjectSection $injection, Student $participant)
+    {
+        // dd($request->all());
+        $validated = $request->validate([
+            'message' => 'required',
+        ]);
+        $comment = new Comment;
+        if(Auth::guard('web')->check()){
+            $comment->user_id = Auth::guard('web')->user()->id;
+            $comment->student_id = $participant->id;
+        }elseif(Auth::guard('companies')->check()){
+            $comment->companies_id = $Auth::guard('companies')->user()->id;
+            $comment->student_id = $participant->id;
+        }else{
+            $comment->mentor_id = 1;
+            $comment->student_id = $participant->id;
+        }
+        $comment->project_id = $injection->project->id;
+        $comment->project_section_id = $injection->id;
+        $comment->message = $validated['message'];
+        if($request->hasFile('file')){
+            $file = Storage::disk('public')->put('message/project/'.$injection->project->id.'/task/'.$injection->id, $request->file);
+            $comment->file = $file;
+        }
+        $comment->save();
+        return redirect('/dashboard/messages/'.$injection->id.'/single/'.$participant->id);
+    }
+
+    public function adminSendMessageGlobal(Request $request)
+    {
+        // dd($request->all());
+        $validated = $request->validate([
+            'project' => 'required',
+            'injection' => 'required',
+            'student' => 'required',
+            'message' => 'required',
+        ]);
+        $comment = new Comment;
+        if(Auth::guard('web')->check()){
+            $comment->user_id = Auth::guard('web')->user()->id;
+            $comment->student_id = $validated['student'];
+        }elseif(Auth::guard('companies')->check()){
+            $comment->companies_id = $Auth::guard('companies')->user()->id;
+            $comment->student_id = $validated['student'];
+        }else{
+            $comment->mentor_id = 1;
+            $comment->student_id = $validated['student'];
+        }
+        $comment->project_id = $validated['project'];
+        $comment->project_section_id = $validated['injection'];
+        $comment->message = $validated['message'];
+        if($request->hasFile('file')){
+            $file = Storage::disk('public')->put('message/project/'.$validated['project'].'/task/'.$validated['injection'], $request->file);
+            $comment->file = $file;
+        }
+        $comment->save();
+        return redirect('/dashboard/messages/'.$validated['injection'].'/single/'.$validated['student']);
     }
 }
