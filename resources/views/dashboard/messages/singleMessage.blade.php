@@ -13,46 +13,55 @@
 <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
   @php $no=1;  @endphp
   @foreach ($comments as $comment)
-  <h2 id="accordion-collapse-heading-{{$no}}">
-    <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-black  border-b-2 border-gray-200" data-accordion-target="#accordion-collapse-body-{{$no}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$no}}">
-      <div class="flex items-center space-x-4">
-        <i class="text-dark-blue fa-solid fa-circle"></i>
-        <div class="flex-col">
-          <span class="font-medium">
-            @if ($comment->mentor_id)
-              {{$comment->mentor->first_name}} {{$comment->mentor->last_name}}
-            @elseif ($comment->user_id)
-              {{$comment->user->name}}
-            @else
-            {{$comment->student->first_name}} {{$comment->student->last_name}}
-            @endif
-          </span><br>
-          <span class="font-light">{{substr($comment->message,0,99)}} {{strlen($comment->message)>=99?'...':''}}</span>
+    <h2 id="accordion-collapse-heading-{{$no}}">
+      <button type="button" id="accordion-{{$no}}" class="flex items-center justify-between w-full p-5 font-medium text-left text-black  border-b-2 border-gray-200" data-accordion-target="#accordion-collapse-body-{{$no}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$no}}">
+        <div class="flex items-center space-x-4">
+          <i class="text-dark-blue fa-solid fa-circle"></i>
+          <div class="flex-col">
+            <span class="font-medium">
+              @if ($comment->mentor_id)
+                {{$comment->mentor->first_name}} {{$comment->mentor->last_name}}
+              @elseif ($comment->user_id)
+                {{$comment->user->name}}
+              @else
+                {{$comment->student->first_name}} {{$comment->student->last_name}}
+              @endif
+            </span><br>
+            <span class="font-light message-top">{{substr($comment->message,0,99)}} {{strlen($comment->message)>=99?'...':''}}</span><br>
+            <span class="font-light">
+             @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
+              to: {{$comment->student->mentor->first_name}}, 
+              @foreach ($customer_participants as $customer)
+                {{$customer->first_name}} {{$customer->last_name}},
+              @endforeach
+             @else
+              in else
+             @endif
+            </span>
+          </div>
         </div>
-      </div>
 
-      <div class="text-xs text-light-blue font-light">
-        {{$comment->created_at->format('d M Y')}}
-        <i class="fa-sharp fa-solid fa-reply"></i>
+        <div class="text-xs text-light-blue font-light">
+          {{$comment->created_at->format('d M Y')}}
+          <i class="fa-sharp fa-solid fa-reply"></i>
+        </div>
+      </button>
+    </h2>
+    <div id="accordion-collapse-body-{{$no}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$no}}">
+      <div class="p-5 font-light ">
+        <p class="mb-2 text-base text-black ">{{$comment->message}}</p>
+        @if($comment->file)
+          <br>
+          <a download="image.jpg" href="{{asset('storage/'.$comment->file)}}" class="flex w-1/2 py-2 px-4 rounded-xl justify-between items-center border border-light-blue">
+            <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+            <span class="text-xs  font-normal text-black">click to download (.{{substr($comment->file, strpos($comment->file, ".") + 1)}})</span>
+            <img src="{{asset('assets/img/icon/download.png')}}" alt="">
+          </a>
+        @endif
       </div>
-    </button>
-  </h2>
-  <div id="accordion-collapse-body-{{$no}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$no}}">
-    <div class="p-5 font-light border border-b-0 border-gray-200">
-      <p class="mb-2 text-gray-500 ">{{$comment->message}}</p>
-      @if($comment->file)
-        <br>
-        <a download="image.jpg" href="{{asset('storage/'.$comment->file)}}" class="flex w-1/2 py-2 px-4 rounded-xl justify-between items-center border border-light-blue">
-          <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
-          <span class="text-xs  font-normal text-black">click to download (.{{substr($comment->file, strpos($comment->file, ".") + 1)}})</span>
-          <img src="{{asset('assets/img/icon/download.png')}}" alt="">
-        </a>
-      @endif
     </div>
-  </div>
-  @php $no++ @endphp
+    @php $no++ @endphp
   @endforeach
-
 </div>
   {{-- <h2 id="accordion-collapse-heading-2">
     <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-collapse-body-2" aria-expanded="false" aria-controls="accordion-collapse-body-2">
@@ -83,4 +92,16 @@
       </ul>
     </div>
   </div> --}}
+@endsection
+@section('more-js')
+<script>
+  $(document).ready(function() {
+    $('[id^=accordion-]').on('click', function() {
+      var messageTop = $(this).closest('button').find('.message-top');
+      messageTop.toggle();
+    });
+  });
+
+
+</script>
 @endsection

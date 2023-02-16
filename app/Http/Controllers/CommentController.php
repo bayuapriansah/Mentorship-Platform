@@ -94,7 +94,7 @@ class CommentController extends Controller
     public function single(ProjectSection $injection, Student $participant)
     {
         $comments = Comment::where('project_section_id', $injection->id)->where('student_id', $participant->id)->get();
-        // dd($comments);
-        return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments'));
+        $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
+        return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments', 'customer_participants'));
     }
 }
