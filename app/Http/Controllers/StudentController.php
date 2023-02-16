@@ -83,6 +83,9 @@ class StudentController extends Controller
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
                 $message .= "\n$email";
             }
+            // else{
+            //     return redirect()->back()->with('error', 'Email already invited');
+            // }
         }
 
         return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('success', $message);
@@ -90,11 +93,11 @@ class StudentController extends Controller
 
     public function addStudentToInstitution($email,$institution_id){
         // dd($email);
-        $student = new Student;
-        $student->email = $email;
-        $student->institution_id = $institution_id;
-        $student->is_confirm = 0;
-        $student->save();
+        $student = Student::create([
+            'email' => $email,
+            'institution_id' => $institution_id,
+            'is_confirm' => 0
+        ]);
 
         return $student;
     }
