@@ -65,6 +65,26 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+
+    /* Hide the default scrollbar */
+    ::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Show the custom scrollbar on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    }
     </style>
     <!-- Custom styles for this template -->
   </head>
@@ -157,7 +177,7 @@
             </div>
           </div>
         @endif
-        
+
       </div>
     </nav>
   </div>
@@ -179,15 +199,15 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <p class="text-base leading-relaxed text-gray-500">
-                  No notifications.
-                </p>
+                <div class="mt-4 max-h-60 overflow-y-auto">
+                    <p class="text-sm leading-5 text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut nulla nec ex viverra volutpat. Nulla eleifend purus vitae enim luctus finibus. Donec vitae massa euismod, pharetra ipsum vel, faucibus dolor. Fusce dictum velit id turpis interdum, vel varius sapien ultrices. Nunc id odio vel libero finibus venenatis. Sed varius eros quis turpis dignissim feugiat. Ut semper leo vel convallis placerat. Integer porta suscipit dolor, at posuere odio sagittis eget. Curabitur quis pharetra quam. Fusce varius ligula vel ligula vehicula, vel blandit est cursus. Donec euismod commodo nunc, sit amet sollicitudin elit commodo nec. Nulla at nisi mauris. Aliquam vitae lectus vel ex suscipit pulvinar. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab doloremque maiores officiis iusto harum asperiores cum corrupti delectus. Consequuntur dolorem alias rerum sapiente sed temporibus nemo reiciendis maxime, accusantium consequatur? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga nulla nobis iste dicta beatae exercitationem quae porro placeat! Facilis, cumque. Laudantium maxime sunt quisquam dolore ullam maiores incidunt reprehenderit veniam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam, dignissimos ducimus quidem culpa, fugiat deserunt mollitia quo laudantium nulla excepturi ut reprehenderit natus, aut provident doloribus vitae possimus quae dicta? Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde sit natus hic eum et voluptatibus, aliquid deserunt laboriosam ex delectus labore accusamus ut iusto dicta. Dolore laborum ut non quis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, suscipit eos, illum officia at facilis nam aliquam inventore magni ipsam quae dolorum veniam id repellat exercitationem nesciunt alias reprehenderit quam? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur corrupti eos animi architecto incidunt, magni repellendus adipisci vero? Maiores quibusdam ad minus aperiam a recusandae earum fuga impedit eos eius. Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae odio vitae culpa cum repudiandae omnis temporibus assumenda quis quos dolores, vero enim error eaque, odit ratione doloribus, quasi quod! Tenetur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eius delectus officiis aspernatur facere omnis eveniet minima magni, dignissimos corrupti accusamus, porro aperiam quo provident odit. Nostrum est quibusdam ex? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente est, odit nemo harum iusto, rem culpa molestiae ipsum, facere doloremque deleniti adipisci! Soluta, veritatis error doloribus iusto voluptas accusamus magni! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur placeat, dicta eius, doloribus sit blanditiis aut nihil ea porro alias assumenda! Rem, velit maxime? Id mollitia facere officiis possimus totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, excepturi. Quasi eum ipsum laudantium eveniet, aspernatur architecto nulla esse cum excepturi, corrupti unde itaque tempora laborum mollitia tenetur vero. Atque? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum officia asperiores nesciunt atque rem harum quae reiciendis quos doloribus nemo perspiciatis quia, cumque necessitatibus iste repellendus voluptas nam, autem eos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum sunt iure officiis dolore, labore libero porro pariatur placeat enim nihil accusantium unde facere sint corporis necessitatibus distinctio, provident earum. Consequatur!</p>
+                  </div>
             </div>
         </div>
     </div>
   </div>
   <main class="bg-profile-grey ">
-    @yield('content') 
+    @yield('content')
   </main>
 
   <footer class="w-full bg-lightest-blue relative z-30">
@@ -224,7 +244,7 @@
         </div>
       </div>
     </div>
-    
+
   </footer>
 
   @php
@@ -235,7 +255,7 @@
         echo "Core " . ($index + 1) . ": " . $usage . "%<br>";
       }
   @endphp
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}
 
