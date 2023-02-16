@@ -9,12 +9,12 @@
   @endforeach --}}
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
-      <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
+      <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
         <svg class="w-6 h-6"  aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
         <span class="sr-only">Notifications Bell</span>
-        {{-- <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div> --}}
+        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div>
         </button>
     </div>
     <div class="col-span-2">
@@ -111,7 +111,7 @@
     @php
          $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
     @endphp
-    
+
     <p class="text-black text-xs font-normal">Projects Timeline</p>
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
@@ -122,7 +122,7 @@
         @foreach ($submissions as $submission)
           <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
           @php $tipNumber++ @endphp
-        @endforeach 
+        @endforeach
 
         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-3">
           <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
@@ -133,7 +133,7 @@
         <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$submission->flag_checkpoint-4}}%">Task {{$no}}</p>
         <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
           @php $no++ @endphp
-        @endforeach 
+        @endforeach
       </div>
       @if($student->is_confirm == 1)
         <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
@@ -161,7 +161,7 @@
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
           @php $tipNumber++ @endphp
-        @endforeach 
+        @endforeach
 
         <div class="bg-gray-200 rounded-full h-1.5 mb-4 mt-4 ">
           <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%"></div>
@@ -188,7 +188,7 @@
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
     @endif
   </div>
-  
+
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
 
@@ -211,7 +211,7 @@
   @else
   <div class="flex flex-col">
     <p class="text-dark-blue font-medium text-sm text-center my-3">Complete 3 Months project to unlock</p>
-   
+
     <a href="#" class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-default">Download Certificate</a>
 
   </div>

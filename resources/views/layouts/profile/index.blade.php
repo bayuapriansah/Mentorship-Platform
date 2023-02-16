@@ -118,12 +118,12 @@
           <div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-4">
             <div class="grid grid-cols-12 gap-2 grid-flow-col">
               <div class="col-span-2">
-                <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
+                <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
                   <svg class="w-6 h-6"  aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   <span class="sr-only">Notifications Bell</span>
-                  {{-- <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div> --}}
+                  <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div>
                   </button>
               </div>
               <div class="col-span-2">
@@ -182,7 +182,7 @@
     </nav>
   </div>
     {{-- Modals --}}
-  <!-- Top Right Modal -->
+    {{-- Message Modal --}}
   <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
     <div class="relative w-full h-full max-w-sm md:h-auto">
         <!-- Modal content -->
@@ -199,13 +199,104 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <div class="mt-4 max-h-60 overflow-y-auto">
-                    <p class="text-sm leading-5 text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut nulla nec ex viverra volutpat. Nulla eleifend purus vitae enim luctus finibus. Donec vitae massa euismod, pharetra ipsum vel, faucibus dolor. Fusce dictum velit id turpis interdum, vel varius sapien ultrices. Nunc id odio vel libero finibus venenatis. Sed varius eros quis turpis dignissim feugiat. Ut semper leo vel convallis placerat. Integer porta suscipit dolor, at posuere odio sagittis eget. Curabitur quis pharetra quam. Fusce varius ligula vel ligula vehicula, vel blandit est cursus. Donec euismod commodo nunc, sit amet sollicitudin elit commodo nec. Nulla at nisi mauris. Aliquam vitae lectus vel ex suscipit pulvinar. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab doloremque maiores officiis iusto harum asperiores cum corrupti delectus. Consequuntur dolorem alias rerum sapiente sed temporibus nemo reiciendis maxime, accusantium consequatur? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga nulla nobis iste dicta beatae exercitationem quae porro placeat! Facilis, cumque. Laudantium maxime sunt quisquam dolore ullam maiores incidunt reprehenderit veniam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam, dignissimos ducimus quidem culpa, fugiat deserunt mollitia quo laudantium nulla excepturi ut reprehenderit natus, aut provident doloribus vitae possimus quae dicta? Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde sit natus hic eum et voluptatibus, aliquid deserunt laboriosam ex delectus labore accusamus ut iusto dicta. Dolore laborum ut non quis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, suscipit eos, illum officia at facilis nam aliquam inventore magni ipsam quae dolorum veniam id repellat exercitationem nesciunt alias reprehenderit quam? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur corrupti eos animi architecto incidunt, magni repellendus adipisci vero? Maiores quibusdam ad minus aperiam a recusandae earum fuga impedit eos eius. Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae odio vitae culpa cum repudiandae omnis temporibus assumenda quis quos dolores, vero enim error eaque, odit ratione doloribus, quasi quod! Tenetur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eius delectus officiis aspernatur facere omnis eveniet minima magni, dignissimos corrupti accusamus, porro aperiam quo provident odit. Nostrum est quibusdam ex? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente est, odit nemo harum iusto, rem culpa molestiae ipsum, facere doloremque deleniti adipisci! Soluta, veritatis error doloribus iusto voluptas accusamus magni! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur placeat, dicta eius, doloribus sit blanditiis aut nihil ea porro alias assumenda! Rem, velit maxime? Id mollitia facere officiis possimus totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, excepturi. Quasi eum ipsum laudantium eveniet, aspernatur architecto nulla esse cum excepturi, corrupti unde itaque tempora laborum mollitia tenetur vero. Atque? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum officia asperiores nesciunt atque rem harum quae reiciendis quos doloribus nemo perspiciatis quia, cumque necessitatibus iste repellendus voluptas nam, autem eos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum sunt iure officiis dolore, labore libero porro pariatur placeat enim nihil accusantium unde facere sint corporis necessitatibus distinctio, provident earum. Consequatur!</p>
-                  </div>
+                <div class="max-h-60 overflow-y-auto">
+                    {{-- code comment here --}}
+                    {{-- Start Her --}}
+                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                        <div class="flex">
+                            <div class="ml-3 text-sm font-normal">
+                                <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                <p>
+                                <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- END HERE --}}
+                    {{-- Start Her --}}
+                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                        <div class="flex">
+                            <div class="ml-3 text-sm font-normal">
+                                <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                <p>
+                                <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- END HERE --}}
+                    {{-- Start Her --}}
+                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                        <div class="flex">
+                            <div class="ml-3 text-sm font-normal">
+                                <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                <p>
+                                <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- END HERE --}}
+                </div>
             </div>
         </div>
     </div>
   </div>
+
+    {{-- Notification Modal --}}
+    <div id="notification-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+        <div class="relative w-full h-full max-w-sm md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-5 border-b rounded-t">
+                    <h3 class="text-xl font-medium text-gray-900">
+                        Activity Notification
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="message-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                    <div class="max-h-60 overflow-y-auto">
+                        {{-- code comment here --}}
+                        {{-- Start Her --}}
+                        <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                            <div class="flex">
+                                <div class="ml-3 text-sm font-normal">
+                                    <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                    <p>
+                                    <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- END HERE --}}
+                        {{-- Start Her --}}
+                        <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                            <div class="flex">
+                                <div class="ml-3 text-sm font-normal">
+                                    <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                    <p>
+                                    <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- END HERE --}}
+                        {{-- Start Her --}}
+                        <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                            <div class="flex">
+                                <div class="ml-3 text-sm font-normal">
+                                    <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                    <p>
+                                    <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- END HERE --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
   <main class="bg-profile-grey ">
     @yield('content')
   </main>
