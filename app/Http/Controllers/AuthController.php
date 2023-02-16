@@ -143,6 +143,7 @@ class AuthController extends Controller
         }
         return view('auth.verifyEmail', compact(['email']));
     }
+
     public function verified($email)
     {
         $email = (new SimintEncryption)->decData($email);
@@ -155,6 +156,11 @@ class AuthController extends Controller
         }else{
             return abort(403);
         }
+    }
+
+    public function forgotPassword()
+    {
+        dd('tes');
     }
 
 
