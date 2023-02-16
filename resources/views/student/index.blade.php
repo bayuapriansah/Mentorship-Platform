@@ -41,7 +41,7 @@
           @if(Route::is('student.allProjects'))
           {{-- @dd($enrolled_projects) --}}
             @forelse($enrolled_projects as $enrolled_project)
-            <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl">
+            <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
               <div class="flex space-x-2">
                 <div class=" my-auto border border-light-blue rounded-xl py-4 px-2 mr-2 relative">
                   @if($enrolled_project->is_submited == 0)
@@ -117,7 +117,7 @@
             @endforelse
           @else
             @forelse ($enrolled_projects->where('is_submited', 1) as $enrolled_project)
-              <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl">
+              <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
                 <div class="flex space-x-2">
                   <div class=" my-auto border border-light-blue rounded-xl py-4 px-2 mr-2 relative">
                     @if($enrolled_project->is_submited == 0)
