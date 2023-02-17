@@ -271,7 +271,7 @@
                 <div class="px-6 py-2 ">
                     <p class="text-base leading-relaxed text-gray-500 ">
                       <div class="pb-20">
-                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
+                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignments</h1>
                         <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}" method="POST" enctype="multipart/form-data">
                           @csrf
                           <div class="relative cursor-pointer " id="drop-area">
@@ -291,6 +291,10 @@
                               </div>
                             </label>
                             <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
+                            </div>
+                            <div>
+                              <h1 class="text-dark-blue font-medium text-sm mb-1">Add Datasets <span class="font-normal">(Optional)</span></h1>
+                              <input class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Add Dataset Link" name="dataset"><br>
                             </div>
                             <a class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
                             <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>

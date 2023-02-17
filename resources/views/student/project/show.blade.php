@@ -43,8 +43,32 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-8 grid-flow-col mt-14">
-      <div class="col-span-10 problem text-justify">
-        {!!$project->problem!!}
+      <div class="col-span-10 text-justify">
+        <div class="problem">
+          {!!$project->problem!!}
+        </div>
+        @if ($project->overview)
+        <div class="mb-6">
+          <h1 class="text-dark-blue text-[22px] font-medium">Overview</h1>
+          <p class="text-grey text-sm">
+            {{$project->overview}}
+          </p>
+        </div>   
+        @endif
+        @if ($project->dataset)
+          @php 
+            $datasets_array = explode(';',$project->dataset);
+            $no=1;
+          @endphp
+          <div class="mb-6">
+          <h1 class="text-dark-blue text-[22px] font-medium mb-1">Dataset</h1>
+            @foreach ($datasets_array as $dataset_array)
+                <a href="{{$dataset_array}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
+            @php $no++ @endphp
+            @endforeach
+          </div>
+
+        @endif
       </div>
       <div class="col-start-11 col-span-3">
         <div class="border border-light-blue rounded-[10px] bg-white p-2 absolute mt-14  flex  float-right space-x-3 ">
@@ -75,13 +99,24 @@
               {{-- @if($projectsections->count() > 0 && $submissions->count() > 0) --}}
                   <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
                     <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$project->id}}/task/{{$project_section->id}}" class="grid grid-cols-12 gap-4 grid-flow-col">
-                        <div class="col-span-6">Task {{$no++}}: {{substr($project_section->title,0,30)}}...</div>
-                        <span class="col-start-7 col-span-4 text-sm font-normal text-right ">{{ $appliedDate->format('dS M,Y') }} {{ $appliedDate->format('g:ia') }}</span>
-                        @foreach ($project_section->submissions->where('student_id',Auth::guard('student')->user()->id) as $submission)
-                          @if ($submission->is_complete == 1)
-                          <i class="fa-solid fa-circle-check text-dark-blue col-start-12 col-span-2"></i>
-                          @endif
-                        @endforeach
+                        <div class="col-span-5">Task {{$no++}}: {{substr($project_section->title,0,30)}}...</div>
+                        <span class="col-start-6 col-span-3 text-sm font-normal text-right ">{{ $appliedDate->format('dS M,Y') }} {{ $appliedDate->format('g:ia') }}</span>
+                        <div class="col-start-9 col-span-2 items-center">
+                          @foreach ($project_section->submissions->where('student_id',Auth::guard('student')->user()->id) as $submission)
+                            @if($submission->grade)
+                              @if ($submission->grade->status==1)
+                                <span class="text-[#11BF61]"><i class="fa-solid fa-circle text-[#11BF61] fa-xs mr-2"></i> Compete</span>
+                              @elseif($submission->grade->status==0)
+                                <span class="text-[#EA0202]"><i class="fa-solid fa-circle text-[#EA0202] fa-xs mr-2"></i> Revise</span>
+                              @endif
+                            @else
+                              <span class="text-light-brown"><i class="fa-solid fa-circle text-light-brown fa-xs mr-2"></i> In Review</span>
+                            @endif
+                          @endforeach
+                        </div>
+                        <div class="col-start-12 col-span-2">
+                          <i class="fa-solid fa-chevron-right text-dark-blue"></i>
+                        </div>
                     </a>
                   </div>
                   @php
