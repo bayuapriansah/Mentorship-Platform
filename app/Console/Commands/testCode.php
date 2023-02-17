@@ -43,9 +43,12 @@ class testCode extends Command
     public function handle()
     {
         // return Command::SUCCESS;
-        $notif = "hai";
-        $newMessage = Grade::where('student_id',14)->where('read_message',0)->where('mentor_id',!NULL)->get();
-        dd($newMessage);
+        $newMessage = Submission::where('student_id',14)->get();
+        foreach ($newMessage as $mesd) {
+            // print_r($mesd->grade->submission);
+            dd($mesd->grade->readornot);
+        }
+        // dd($newMessage);
         // return $notif;
     }
 }

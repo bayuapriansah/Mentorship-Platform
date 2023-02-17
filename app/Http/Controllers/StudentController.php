@@ -263,9 +263,10 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::find($student->id);
-        $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
-
-        return view('student.edit', compact('student','newMessage'));
+        // $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        $newMessage = $this->newCommentForSidebarMenu($student_id);
+        $newActivityNotifs = $this->newNotificationActivity($student_id);
+        return view('student.edit', compact('student','newMessage','newActivityNotifs'));
     }
 
     public function suspendAccount($institution_id,$student_id)
@@ -399,15 +400,13 @@ class StudentController extends Controller
 
     // STUDENT PROFILE
 
-    public function newNotificationActivity(){
-        $notif = "hai";
-        dd($notif);
-        return $notif;
+    public function newNotificationActivity($id){
+        $notifActivity = Submission::where('student_id',$id)->get();
+        return $notifActivity;
     }
 
     public function newCommentForSidebarMenu($id){
         $newMessage = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
-
         return $newMessage;
     }
 
@@ -415,6 +414,7 @@ class StudentController extends Controller
     {
         // dd($id);
         $newMessage = $this->newCommentForSidebarMenu($id);
+        $newActivityNotifs = $this->newNotificationActivity($id);
         // dd($newMessage);
         // dd(Auth::guard('student')->user()->id);
         if($id != Auth::guard('student')->user()->id ){
@@ -424,7 +424,7 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
+        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage', 'newActivityNotifs'));
     }
 
     public function ongoingProjects($id)
@@ -438,7 +438,8 @@ class StudentController extends Controller
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
         $newMessage = $this->newCommentForSidebarMenu($id);
-        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage'));
+        $newActivityNotifs = $this->newNotificationActivity($id);
+        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage', 'newActivityNotifs'));
     }
 
     public function completedProjects($id)
@@ -452,7 +453,8 @@ class StudentController extends Controller
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
         $newMessage = $this->newCommentForSidebarMenu($id);
-        return view('student.index', compact('enrolled_projects', 'student', 'dataDate', 'newMessage'));
+        $newActivityNotifs = $this->newNotificationActivity($id);
+        return view('student.index', compact('enrolled_projects', 'student', 'dataDate', 'newMessage', 'newActivityNotifs'));
     }
 
     public function enrolledDetails($student_id, $project_id)
@@ -501,9 +503,11 @@ class StudentController extends Controller
 
         // Progress Bar for Task
         $taskProgress = (100 / $total_task) * $task_clear;
-        $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        $newMessage = $this->newCommentForSidebarMenu($student_id);
+        $newActivityNotifs = $this->newNotificationActivity($student_id);
         // dd($newMessage->count());
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage'));
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs'));
     }
 
     public function taskDetail($student_id, $project_id, $task_id)
@@ -534,8 +538,9 @@ class StudentController extends Controller
         // Progress Bar for Task
         $taskProgress = (100 / $total_task) * $task_clear;
         // dd($taskProgress);
-        $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage'));
+        $newMessage = $this->newCommentForSidebarMenu($student_id);
+        $newActivityNotifs = $this->newNotificationActivity($student_id);
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
@@ -601,9 +606,11 @@ class StudentController extends Controller
         })->where('institution_id', $student->institution_id)->where('status', 'publish')->get();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        $newMessage = $this->newCommentForSidebarMenu($student_id);
+        $newActivityNotifs = $this->newNotificationActivity($student_id);
         // dd($newMessage);
-        return view('student.project.available.index', compact('student','projects','enrolled_projects','dataDate','newMessage'));
+        return view('student.project.available.index', compact('student','projects','enrolled_projects','dataDate','newMessage','newActivityNotifs'));
     }
 
     public function availableProjectDetail($student_id, $project_id)
@@ -615,7 +622,9 @@ class StudentController extends Controller
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
-        return view('student.project.available.show', compact('student','project','enrolled_projects', 'dataDate','newMessage'));
+        // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        $newMessage = $this->newCommentForSidebarMenu($student_id);
+        $newActivityNotifs = $this->newNotificationActivity($student_id);
+        return view('student.project.available.show', compact('student','project','enrolled_projects', 'dataDate','newMessage','newActivityNotifs'));
     }
 }

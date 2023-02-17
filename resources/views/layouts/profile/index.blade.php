@@ -239,7 +239,10 @@
         </div>
     </div>
   </div>
-
+  {{-- @dd($newActivityNotif) --}}
+{{-- @foreach ($newActivityNotifs as $newActivityNotif) --}}
+    {{-- {{ $newActivityNotif->grade->submission->student_id }} --}}
+{{-- @endforeach --}}
     {{-- Notification Modal --}}
     <div id="notification-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-sm md:h-auto">
@@ -259,39 +262,27 @@
                 <div class="p-6 space-y-6">
                     <div class="max-h-60 overflow-y-auto">
                         {{-- code comment here --}}
+                        @foreach ($newActivityNotifs as $newActivityNotif)
                         {{-- Start Her --}}
-                        <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                        <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow {{ $newActivityNotif->grade->status == 0 ? 'bg-red-900' : 'bg-green-900' }} text-gray-400 mt-4" role="alert">
                             <div class="flex">
                                 <div class="ml-3 text-sm font-normal">
-                                    <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                    <span class="mb-1 text-sm font-semibold text-white">Task : {{ $newActivityNotif->grade->submission->projectSection->title }}</span>
                                     <p>
-                                    <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                                    <a href="{{ route('student.taskDetail',[$newActivityNotif->grade->submission->student_id,$newActivityNotif->grade->submission->project_id,$newActivityNotif->grade->submission->section_id]) }}" class="mb-2 text-sm font-normal text-white">Hi {{$student->first_name}} {{$student->last_name}},
+                                        @if($newActivityNotif->grade->status == 0)
+                                            {{ 'Sorry but you need to revise the Task' }}
+                                        @elseif($newActivityNotif->grade->status == 1)
+                                            {{ 'Great you Pass the Task' }}
+                                        @else
+                                            {{ 'Nothing' }}
+                                        @endif
+                                    .</a>
                                 </div>
                             </div>
                         </div>
                         {{-- END HERE --}}
-                        {{-- Start Her --}}
-                        <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
-                            <div class="flex">
-                                <div class="ml-3 text-sm font-normal">
-                                    <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
-                                    <p>
-                                    <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- END HERE --}}
-                        {{-- Start Her --}}
-                        <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
-                            <div class="flex">
-                                <div class="ml-3 text-sm font-normal">
-                                    <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
-                                    <p>
-                                    <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- END HERE --}}
+                        @endforeach
                     </div>
                 </div>
             </div>
