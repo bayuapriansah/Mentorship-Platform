@@ -267,7 +267,7 @@
                                 <div class="ml-3 text-sm font-normal">
                                     <span class="mb-1 text-sm font-semibold text-white">Task : {{ $newActivityNotif->grade->submission->projectSection->title }}</span>
                                     <p>
-                                    <a href="{{ route('student.taskDetail',[$newActivityNotif->grade->submission->student_id,$newActivityNotif->grade->submission->project_id,$newActivityNotif->grade->submission->section_id]) }}" class="mb-2 text-sm font-normal text-white">Hi {{$student->first_name}} {{$student->last_name}},
+                                    <a href="{{ route('student.readActivity',[$newActivityNotif->grade->submission->student_id,$newActivityNotif->grade->submission->project_id,$newActivityNotif->grade->submission->section_id,$newActivityNotif->grade->submission->id]) }}" class="mb-2 text-sm font-normal text-white">Hi {{$student->first_name}} {{$student->last_name}},
                                         @if($newActivityNotif->grade->status == 0)
                                             {{ 'Sorry but you need to revise the Task' }}
                                         @elseif($newActivityNotif->grade->status == 1)
