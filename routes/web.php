@@ -103,6 +103,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/detail', [StudentController::class, 'enrolledDetail'])->name('student.enrolledDetail');
     Route::get('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskDetail'])->name('student.taskDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskSubmit'])->name('student.taskSubmit');
+    Route::post('/profile/{student}/enrolled/{project}/task/{task}/readNotif', [StudentController::class, 'readActivity'])->name('student.readActivity');
 
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
     // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
@@ -252,7 +253,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/injection/{injection}/attachment/{attachment}/delete/{key}', [ProjectController::class, 'dashboardDestroySubsection'])->name('partner.DestroySubsection');
         Route::get('/projects/{project}/injection/{injection}/attachment/{attachment}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('partner.EditSubsection');
         Route::patch('/projects/{project}/injection/{injection}/attachment/{attachment}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('partner.UpdateSubsection');
-        
+
         // Route::get('/projects/{project}/section/{section}/create', [ProjectController::class, 'dashboardCreateSubsection'])->name('projects.createSubsection');
         // Route::get('/projects/{project}/section/{section}/subsection/{subsection}/edit', [ProjectController::class, 'dashboardEditSubsection'])->name('projects.EditSubsection');
         // Route::patch('/projects/{project}/section/{section}/subsection/{subsection}', [ProjectController::class, 'dashboardUpdateSubsection'])->name('projects.UpdateSubsection');
@@ -279,7 +280,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         Route::get('/assigned_projects/{project}/section/{section}/chat', [MentorController::class, 'showAllStudentsChats'])->name('assigned.showAllStudentsChats');
         Route::get('/assigned_projects/{project}/section/{section}/student/{student}', [MentorController::class, 'singleStudentChat'])->name('assigned.singleStudentChat');
-        
+
         Route::post('{mentor}/assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('assigned.SendComment');
         // Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 
