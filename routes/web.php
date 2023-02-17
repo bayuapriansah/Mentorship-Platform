@@ -72,7 +72,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/sendmail', [MailController::class, 'index']);
 Route::get('/admin', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+// forgot password
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
+Route::post('/forgot-password', [AuthController::class, 'submitForgotPassword'])->name('submitForgotPassword');
+Route::get('/password/reset/{token}', [AuthController::class, 'showResetForm'])->name('showResetForm');
+Route::post('/password/reset/', [AuthController::class, 'resetPassword'])->name('resetPassword');
+
 
 // mentor register
 Route::get('/register/mentor/{email}', [MentorController::class, 'register'])->name('mentor.register');
@@ -212,7 +217,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // /dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade
     });
 
-    Route::middleware(['auth:web,company'])->group(function(){
+    Route::middleware(['auth:web,customer'])->group(function(){
         Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
         // All Project Assigned

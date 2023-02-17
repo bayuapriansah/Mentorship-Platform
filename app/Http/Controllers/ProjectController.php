@@ -166,7 +166,7 @@ class ProjectController extends Controller
                 $project->save();
                 return redirect('dashboard/projects/draft')->with('success','Project has been edited');
             };
-        }elseif(Auth::guard('company')->check()){
+        }elseif(Auth::guard('customer')->check()){
             $project->name = $validated['name'];
             $project->project_domain = $validated['project_domain'];
             $project->problem = $validated['problem'];

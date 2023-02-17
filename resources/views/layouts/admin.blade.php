@@ -117,8 +117,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                    @if(Auth::guard('company')->check())
-                                        {{Auth::guard('company')->user()->name}}
+                                    @if(Auth::guard('customer')->check())
+                                        {{Auth::guard('customer')->user()->name}}
                                     @elseif(Auth::guard('web')->check())
                                         {{Auth::guard('web')->user()->name}}
                                     @endif

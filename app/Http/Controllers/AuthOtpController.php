@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthOtpController extends Controller
 {
     public function login(){
-        $guards = ['company', 'web', 'mentor', 'student'];
+        $guards = ['customer', 'web', 'mentor', 'student'];
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 return back();

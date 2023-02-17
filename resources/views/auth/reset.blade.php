@@ -2,40 +2,46 @@
 @section('content')
 <section id="login" class="w-full">
   <div class="w-full bg-lightest-blue">
-    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col ">
-      <div class="col-span-5">
-        <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Forgot Password</h1>
-        <p class="intelOne font-light text-black text-lg leading-6 py-6">Don't worry, it happens to the best of us. Please enter your email address below and we'll send you a link to reset your password.</p>
-        <form action="/forgot-password" method="post" id="register">
+    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-11 grid-flow-col ">
+      <div class="col-span-6">
+        <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Reset password</h1>
+        <p class="intelOne font-light text-black text-lg leading-6 py-6">Please enter your new password below to reset your account password</p>
+        <form action="{{route('resetPassword')}}" method="post" id="register">
           @csrf
-          <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder focus:border focus:outline-none  focus:border-light-blue focus:ring-light-blue leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required>
+          <input type="hidden" name="token" value="{{$token}}">
+          <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" value="{{$email ?? old('email')}}" placeholder="Email" id="email" name="email" readonly>
           @error('email')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
+          <input type="password" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Password" id="password" name="password" required>
+          @error('password')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
+          <input type="password" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"  placeholder="Confirm password" name="password_confirmation" required>
+          @error('password_confirmation')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
 
-          
           <div class="mt-4">
             @include('flash-message')
           </div>
-          {{-- <div class="bg-red-alert intelOne text-sm p-4 w-2/3 rounded-lg mt-4 flex" role="alert">
-            <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
-            This email address is already registered!
-          </div> --}}
+
           <div class="flex">
-            <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Send Reset Link</button>
+            <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Reset Password</button>
           </div>
-          <p class="font-light text-black text-sm leading-6 py-6">*If you don't receive the email within a few minutes, please check your spam folder.</p>
         </form>
       </div>
       <div class="col-start-7 col-span-6 relative">
-        <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
         <img src="{{asset('assets/img/home1.png')}}" class="relative z-20" alt="">
 
         <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
         <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
-        <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
 
       </div>
     </div>

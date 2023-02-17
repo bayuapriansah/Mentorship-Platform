@@ -66,6 +66,29 @@ class MailController extends Controller
         }
     }
 
+    public function emailResetPassword($mailto, $urlInvitation) //Just Email
+    {
+        $data = [
+            'subject' => 'Reset Password',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            // 'body' => 'Your registration as Student is Completed',
+            // 'body2' => 'You can Login, and Choose the Projet that Available.',
+            // 'body3' => 'If you still have a question related about this, please contact us.',
+            // 'body4'=> 'Best regards,',
+            // 'body5'=> 'Simulated Internship Team ❤️',
+            'type' => 'reset',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Registration Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+
     public function EmailMemberRegister($mailto) //Email
     {
         $data = [
