@@ -587,6 +587,7 @@ class StudentController extends Controller
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;
         $submission->flag_checkpoint = $taskDate;
+        $submission->dataset = $request->dataset;
         $submission->is_complete = 1;
         if($request->hasFile('file')){
             $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
