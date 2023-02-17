@@ -1,12 +1,4 @@
 <aside class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
-  {{-- @dd($enrolled_projects->where('is_submited',1)) --}}
-  {{-- @foreach ($enrolled_projects as $enrolled_project)
-      @if($enrolled_projects->where('is_submited',1))
-      @dd('tes')
-
-        <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" class="ml-[{{$dataDate}}%]">
-      @endif
-  @endforeach --}}
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
@@ -14,7 +6,7 @@
           <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
         <span class="sr-only">Notifications Bell</span>
-        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newActivityNotifs->count() }}</div>
+        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $notifActivityCountgi->count() }}</div>
         </button>
     </div>
     <div class="col-span-2">
