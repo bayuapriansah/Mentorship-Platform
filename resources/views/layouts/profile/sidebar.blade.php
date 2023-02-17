@@ -206,9 +206,9 @@
         
         @if($submissionData->grade)
           @if ($submissionData->grade->status==1)
-            sdwd
+            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">COMPLETE</span></p>
           @elseif($submissionData->grade->status==0)
-            xx
+            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">REVISE</span></p>
           @endif
         @else
           <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-light-brown">IN REVIEW</span></p>
