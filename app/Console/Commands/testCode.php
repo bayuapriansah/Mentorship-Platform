@@ -43,12 +43,19 @@ class testCode extends Command
     public function handle()
     {
         // return Command::SUCCESS;
-        $newMessage = Submission::where('student_id',14)->get();
-        foreach ($newMessage as $mesd) {
-            // print_r($mesd->grade->submission);
-            dd($mesd->grade->readornot);
-        }
+        // $newMessage = Submission::where('student_id',14)->get();
+        // foreach ($newMessage as $mesd) {
+        //     // print_r($mesd->grade->submission);
+        //     dd($mesd->grade->readornot);
+        // }
         // dd($newMessage);
         // return $notif;
+        // $notifActivity = Submission::withCount('grade')->where('student_id', 14)->get();
+        $submissions = Submission::select('submissions.id as submission_id', 'students.id as student_id')
+        ->join('grades', 'submissions.id', '=', 'grades.submission_id')
+        ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', 14)
+        ->get();
+
+        dd($submissions->count());
     }
 }
