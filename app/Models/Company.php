@@ -21,4 +21,9 @@ class Company extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
 }

@@ -72,6 +72,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/sendmail', [MailController::class, 'index']);
 Route::get('/admin', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
 
 // mentor register
 Route::get('/register/mentor/{email}', [MentorController::class, 'register'])->name('mentor.register');
@@ -220,7 +221,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/all_assigned_projects/{project}/section/{section}/subsection', [DashboardController::class, 'subsectionProjectAssign'])->name('chat.projectSubsection');
         Route::get('/all_assigned_projects/{project}/section/{section}/chat', [DashboardController::class, 'showAllStudentsChats'])->name('chat.showAllStudentsChats');
         Route::get('/all_assigned_projects/{project}/section/{section}/student/{student}', [DashboardController::class, 'singleStudentChat'])->name('chat.singleStudentChat');
-        Route::post('{mentor}/all_assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('chat.SendComment');
+        // Route::post('{mentor}/all_assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('chat.SendComment');
         // Project
         Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
         Route::get('/projects/draft', [ProjectController::class, 'draftIndex'])->name('projects.draft');
@@ -255,8 +256,14 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Message
 
         Route::get('/messages', [CommentController::class, 'index'])->name('messages.index');
+        Route::get('/messages/create', [CommentController::class, 'create'])->name('messages.create');
         Route::get('/messages/{injection}', [CommentController::class, 'taskMessage'])->name('messages.taskMessage');
         Route::get('/messages/{injection}/single/{participant}', [CommentController::class, 'single'])->name('messages.single');
+        Route::get('/messages/{injection}/reply/{participant}', [CommentController::class, 'adminReply'])->name('messages.adminReply');
+        // Route::get('/messages/{injection}/reply/{participant}', [CommentController::class, 'adminReply'])->name('messages.adminReply');
+        Route::post('/messages/{injection}/reply/{participant}/sendMessage', [CommentController::class, 'adminSendMessage'])->name('messages.adminSendMessage');
+        Route::post('/messages', [CommentController::class, 'adminSendMessageGlobal'])->name('messages.adminSendMessageGlobal');
+
     });
     Route::middleware(['auth:mentor'])->group(function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
@@ -267,6 +274,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         Route::get('/assigned_projects/{project}/section/{section}/chat', [MentorController::class, 'showAllStudentsChats'])->name('assigned.showAllStudentsChats');
         Route::get('/assigned_projects/{project}/section/{section}/student/{student}', [MentorController::class, 'singleStudentChat'])->name('assigned.singleStudentChat');
+        
         Route::post('{mentor}/assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('assigned.SendComment');
         // Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 
