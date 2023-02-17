@@ -570,8 +570,8 @@ class StudentController extends Controller
         $student = Student::where('id', $student_id)->first();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
         $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first()->is_submited;
+        // dd($enrolled_project_completed_or_no);
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
@@ -600,12 +600,15 @@ class StudentController extends Controller
         }else{
             return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
-
+        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
+        // dd($submissions->count());
+        // dd($project_sections->count());
         if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
             $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
             $success_project->is_submited = 1;
             $success_project->flag_checkpoint = $dataDate;
             $success_project->save();
+            // dd($success_project);
         }
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
