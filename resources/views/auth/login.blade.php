@@ -47,12 +47,9 @@
             <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
             This email address is already registered!
           </div> --}}
-          <div class="text-right">
-            <a href="/forgot-password" class="text-sm text-dark-blue hover:text-darker-blue text-right">Forgot password?</a>
-          </div>
-
-          <div class="flex">
+          <div class="flex justify-between items-center">
             <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Login</button>
+            <a href="/forgot-password" class="text-sm text-dark-blue hover:text-darker-blue text-right">Forgot password?</a>
           </div>
         </form>
       </div>

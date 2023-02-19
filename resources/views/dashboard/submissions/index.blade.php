@@ -31,12 +31,12 @@
       <td>
         @if ($submission->grade)
           @if ($submission->grade->status==1)
-            <span class="text-[#11BF61]">PASS</span>
+            <span class="text-[#11BF61]">Pass</span>
           @elseif($submission->grade->status==0)
-            <span class="text-[#EA0202]">REVISE</span>
+            <span class="text-[#EA0202]">Revise</span>
           @endif
         @else
-          <span class="text-light-brown">IN REVIEW</span>
+          <span class="text-light-brown">In Review</span>
         @endif
       </td>
       <td>

@@ -61,6 +61,10 @@
         @endif
       </td>
       <td class="text-center">
+        @php
+            // $collection = collect(['name' => 'Desk', 'price' => 200]);
+            $collection = collect([['name' => 'Desk', 'price' => 200], ['name' => 'Desk', 'price' => 200]]);
+        @endphp
         <button class="view-details space-y-7"
                 data-student-id="{{ $student->id }}"
                 data-student-dob="{{ $student->date_of_birth }}"
@@ -72,10 +76,12 @@
                 data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
                 data-student-is_confirm="{{ $student->is_confirm }}"
                 data-student-start="{{ $student->created_at->format('d M Y') }}"
+                data-timeline="{{$collection->toJson()}}"
 
         ><i class="fa-solid fa-chevron-down"></i></button>
       </td>
     </tr>
+    
     @php $no++ @endphp
     @endforeach
   </tbody>
@@ -83,6 +89,21 @@
 
 @endsection
 @section('more-js')
+
+<div id="timelines"></div>
+    <script>
+        let strings = `<div>`
+        strings += `<div timeline><ul>`
+        const timeline = ['1', '2', '3']
+        timeline.forEach(element => {
+            strings += `<li>${element}</li>`
+        });
+        strings += `</ul></div></div>`
+
+        document.getElementById('timelines').innerHTML = strings
+    </script>
+
+
 <script>
   $(document).ready(function() {
     
@@ -104,31 +125,35 @@
       let studentJoin = $(this).data('student-join');
       let studentIs_confirm = $(this).data('student-is_confirm');
       let studentStart = $(this).data('student-start');
+      let timeline = $(this).data('timeline');
+      // console.log(timeline);
       // if(studentIs_confirm == 1){
         // $('#BitTitle').html('activate');
       //   $('#SuspendActiveBtn').html('tes');
       // }
-        console.log(studentIs_confirm);
-      if (row.child.isShown()) {
-        $(this).html('<i class="fa-solid fa-chevron-down"></i>');
-        row.child.hide();
-
-      } else {
-        $(this).html('<i class="fa-solid fa-chevron-up"></i>');
-        row.child.show();
-
-        row.child(`
-        <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
+      // let timeline = [1, 2, 3, 4, 5];
+        let rowData = `
+      <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
           <div class = "flex justify-between">
             <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
             <p class="text-dark-blue font-mediun">Sex: <span class="text-black font-normal">${studentSex}</span></p>
             <p class="text-dark-blue font-mediun">State: <span class="text-black font-normal">${studentState}</span></p>
             <p class="text-dark-blue font-mediun">Country: <span class="text-black font-normal">${studentCountry}</span></p>
           </div>
+          <div class="timeline"><ul>`
+             // masukin loop nya di dalem ini
+
+          rowData +=`
           <div class = "flex space-x-10">
             <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
             <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
           </div>
+          `
+          timeline.forEach(element => {
+                rowData += `<li>${element.name}</li>`
+            });
+          rowData += `</ul></div>`
+          rowData +=`
           <div class="flex justify-between">
             <div class="flex space-x-4">
               <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
@@ -147,7 +172,17 @@
             </div>
           </div>
         </div>
-          `).show();
+      `
+        console.log(studentIs_confirm);
+      if (row.child.isShown()) {
+        $(this).html('<i class="fa-solid fa-chevron-down"></i>');
+        row.child.hide();
+
+      } else {
+        $(this).html('<i class="fa-solid fa-chevron-up"></i>');
+        row.child.show();
+
+        row.child(rowData).show();
       }
     });
   });

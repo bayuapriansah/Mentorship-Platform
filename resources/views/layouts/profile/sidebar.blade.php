@@ -206,12 +206,12 @@
         
         @if($submissionData->grade)
           @if ($submissionData->grade->status==1)
-            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">COMPLETE</span></p>
+            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">Complete</span></p>
           @elseif($submissionData->grade->status==0)
-            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">REVISE</span></p>
+            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">Revise</span></p>
           @endif
         @else
-          <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-light-brown">IN REVIEW</span></p>
+          <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-light-brown">In Review</span></p>
         @endif
       @endif
     </div>

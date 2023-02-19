@@ -294,7 +294,7 @@
                             </div>
                             <div>
                               <h1 class="text-dark-blue font-medium text-sm mb-1">Add Datasets <span class="font-normal">(Optional)</span></h1>
-                              <input class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Add Dataset Link" name="dataset"><br>
+                              <input class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Add Data set URLs separated by semi-colon (;)" name="dataset"><br>
                             </div>
                             <a class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
                             <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>
