@@ -561,6 +561,12 @@ class StudentController extends Controller
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
     {
+        $dataset_array = json_decode($request->dataset, true);
+        $dataset_values = array_column($dataset_array, 'value');
+        $dataset_result = implode(';', $dataset_values);
+        // dd($request->all());
+
+        // dd(implode(';',$request->dataset));
         // For Submission
         $project = Project::find($project_id);
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
@@ -587,7 +593,7 @@ class StudentController extends Controller
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;
         $submission->flag_checkpoint = $taskDate;
-        $submission->dataset = $request->dataset;
+        $submission->dataset = $dataset_result;
         $submission->is_complete = 1;
         if($request->hasFile('file')){
             $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);

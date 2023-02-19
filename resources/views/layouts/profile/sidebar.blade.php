@@ -198,9 +198,17 @@
           </a>
         </div>
         @if($submissionData->dataset)
-        <div class="text-center my-4">
+          @php 
+            $datasets = explode(';',$submissionData->dataset);
+            $no=1;
+          @endphp
+        <div class="flex flex-col text-center my-4">
           <h1 class="text-dark-blue font-medium text-sm text-center">Dataset</h1>
-          <a href="{{$submissionData->dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2" target="_blank">Dataset <i class="fa-solid fa-chevron-right"></i></a>
+          <div class="flex flex-wrap justify-start pt-2">
+            @foreach ($datasets as $dataset)
+              <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset <i class="fa-solid fa-chevron-right"></i></a>
+            @endforeach
+          </div>
         </div>
         @endif
         
