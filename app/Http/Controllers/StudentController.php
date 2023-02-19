@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Grade;
 use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Project;
@@ -627,6 +628,74 @@ class StudentController extends Controller
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
 
+    public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
+    {
+        // dd($request->all());
+        // dd($submission_id);
+        // dataset tag implode
+        $dataset_array = json_decode($request->dataset, true);
+        $dataset_values = array_column($dataset_array, 'value');
+        $dataset_result = implode(';', $dataset_values);
+
+        // checkpoint
+        $project = Project::find($project_id);
+        $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
+        $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
+        $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
+
+        $student = Student::where('id', $student_id)->first();
+        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+        $project_sections = ProjectSection::where('project_id', $project_id)->get();
+        $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first()->is_submited;
+        // dd($enrolled_project_completed_or_no);
+        if($student_id != Auth::guard('student')->user()->id ){
+            abort(403);
+        }
+        $task = ProjectSection::find($task_id);
+        // dd($task->file_type);
+        if($request->hasFile('file')==true){
+            $validated = $request->validate([
+                'file' => ['required'],
+            ]);
+        }
+
+        $submission = Submission::find($submission_id);
+        $submission->flag_checkpoint = $taskDate;
+        $submission->dataset = $dataset_result;
+        // dd($dataset_result);
+        if($request->hasFile('file')){
+
+            if(Storage::path($submission->file)) {
+                Storage::disk('public')->delete($submission->file);
+            }
+
+            $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
+            if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
+                $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
+                $submission->file = $file;
+            }else{
+                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong');
+            }
+            $submission->save();
+        }else{
+            return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
+        }
+
+        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
+        // dd($submissions->count());
+        // dd($project_sections->count());
+        if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
+            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+            $success_project->is_submited = 1;
+            $success_project->flag_checkpoint = $dataDate;
+            $success_project->save();
+            // dd($success_project);
+        }
+        $grade = Grade::where('submission_id', $submission_id)->first();
+        $grade->delete();
+        return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
+
+    }
     public function allProjectsAvailable($student_id)
     {
         if($student_id != Auth::guard('student')->user()->id ){

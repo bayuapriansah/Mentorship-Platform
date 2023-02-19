@@ -257,6 +257,7 @@
     <!-- Modal toggle -->
     <!-- Main modal -->
     <div id="staticModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+      
         <div class="relative w-full h-full max-w-2xl md:h-auto">
             <!-- Modal content -->
             <div class="relative border border-light-blue border-inherit shadow drop-shadow-2xl hover:drop-shadow-xl bg-white rounded-lg  ">
@@ -271,8 +272,15 @@
                 <div class="px-6 py-2 ">
                     <p class="text-base leading-relaxed text-gray-500 ">
                       <div class="pb-20">
-                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignments</h1>
-                        <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}" method="POST" enctype="multipart/form-data">
+                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignments </h1>
+                        @if($submissionData == null)
+                          <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}" method="POST" enctype="multipart/form-data">
+                        
+                        @else
+                          <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/submission/{{$submissionData->id}}" method="POST" enctype="multipart/form-data">
+                          @method('patch')
+                        
+                        @endif
                           @csrf
                           <div class="relative cursor-pointer " id="drop-area">
                             <label for="file-input">
@@ -309,6 +317,9 @@
             </div>
         </div>
     </div>
+
+    {{-- Resubmit Modal --}}
+
 
 </div>
 @endsection
