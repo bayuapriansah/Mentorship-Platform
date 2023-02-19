@@ -40,7 +40,7 @@
     <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
       <div class="col-span-9">
         @foreach($task->sectionSubsections as $subsection)
-        <div class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium ">
+        <div class="border border-dark-blue bg-white px-7 py-4 rounded-xl mb-2 font-medium ">
           <a href="{{asset('storage/'.$subsection->file1)}}" class="flex justify-between items-center">
             <div class=" flex ">
               <img src="{{asset("assets/img/icon/Vector.png")}}" alt="" class="pr-8">
@@ -109,7 +109,7 @@
                         @endforeach
                       @endif --}}
                     </span>
-                    <span class="font-light message-top">{{$mess = substr($comment->message,0,39)}} {{strlen($mess)>38?'...':''}}</span>
+                    <span class="font-light message-top">{!!$mess = substr($comment->message,0,39)!!} {{strlen($mess)>38?'...':''}}</span>
                   </div>
                 </div>
         
@@ -121,7 +121,7 @@
             </h2>
             <div id="accordion-collapse-body-{{$no}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$no}}">
               <div class="p-5 font-light ">
-                <p class="mb-2 text-base text-black ">{{$comment->message}}</p>
+                <p class="mb-2 text-base text-black ">{!!$comment->message!!}</p>
                 @if($comment->file)
                   <br>
                   <a download="image.jpg" href="{{asset('storage/'.$comment->file)}}" class="flex w-1/2 py-2 px-4 rounded-xl justify-between items-center border border-light-blue">

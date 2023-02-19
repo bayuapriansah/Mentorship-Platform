@@ -11,6 +11,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://cdn.tiny.cloud/1/7d3zd697fxtkpnuq9ikxrj7hpewm4ce4a12ubsk671xmqykc/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+    tinymce.init({
+        selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 350,
+        plugins: 'lists paste',
+        menubar: '',
+        toolbar: 'undo redo | styleselect | bold italic ',
+        automatic_uploads: false,
+        paste_as_text: true,
+        setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    }
+    });
+
+    
+    // tinymce.init({
+    //     selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
+    //     height: 350,
+    //     plugins: 'media image lists paste',
+    //     menubar: 'file edit insert view format table tools help',
+    //     toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
+    //     images_upload_url: 'postAcceptor.php',
+    //     automatic_uploads: false,
+    //     paste_as_text: true
+    // });
+    // tinymce.init({
+    //     selector: 'textarea#sectionDescDisable', // Replace this CSS selector to match the placeholder element for TinyMCE
+    //     height: 300,
+    //     readonly : true
+    // });
+    </script>
     @vite('resources/css/app.css')
     {{-- font --}}
     <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet">
