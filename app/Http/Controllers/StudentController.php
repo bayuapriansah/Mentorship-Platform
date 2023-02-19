@@ -416,7 +416,10 @@ class StudentController extends Controller
     }
 
     public function newCommentForSidebarMenu($id){
-        $newMessage = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        $newMessage1 = Comment::where('student_id',$id)->where('read_message',0)->where('user_id',!NULL)->get();
+        $newMessage2 = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+        $newMessage3 = Comment::where('student_id',$id)->where('read_message',0)->where('companies_id',!NULL)->get();
+        $newMessage = $newMessage1->count() + $newMessage2->count() + $newMessage3->count();
         return $newMessage;
     }
 
@@ -522,6 +525,10 @@ class StudentController extends Controller
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         // dd($newMessage->count());
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount'));
+    }
+
+    public function readActivity($student_id, $project_id, $task_id){
+        // $notif_grade_from_task = Grade::where();
     }
 
     public function taskDetail($student_id, $project_id, $task_id)

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
+use Illuminate\Support\Facades\Crypt;
 
 class testCode extends Command
 {
@@ -51,11 +52,11 @@ class testCode extends Command
         // dd($newMessage);
         // return $notif;
         // $notifActivity = Submission::withCount('grade')->where('student_id', 14)->get();
-        $submissions = Submission::select('submissions.id as submission_id', 'students.id as student_id')
-        ->join('grades', 'submissions.id', '=', 'grades.submission_id')
-        ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', 14)
-        ->get();
-
-        dd($submissions->count());
+        // $submissions = Submission::select('submissions.id as submission_id', 'students.id as student_id')
+        // ->join('grades', 'submissions.id', '=', 'grades.submission_id')
+        // ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', 14)
+        // ->get();
+        $encrypted = Crypt::encryptString('qujufaze@decabg.eu');
+        dd($encrypted);
     }
 }
