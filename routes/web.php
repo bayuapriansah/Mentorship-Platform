@@ -157,6 +157,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         Route::get('/institutions/{institution}/students/invite', [StudentController::class, 'inviteFromInstitution'])->name('students.inviteFromInstitution');
         Route::post('/institutions/{institution}/students', [StudentController::class, 'sendInviteFromInstitution'])->name('students.sendInviteFromInstitution');
+
         Route::post('/institutions/students', [StudentController::class, 'sendInvite'])->name('students.sendInvite');
 
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
@@ -281,7 +282,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         Route::get('/students', [StudentController::class, 'index'])->name('students.index');
         Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
-        Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInvite');
+        Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
 
         // Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
         // Route::resource('students', StudentController::class);
