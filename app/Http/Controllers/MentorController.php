@@ -67,7 +67,6 @@ class MentorController extends Controller
             'institution_id' => $institution_id,
             'is_confirm' => 0
         ]);
-
         return $mentor;
     }
 

@@ -118,20 +118,16 @@ class StudentController extends Controller
     }
 
     public function addStudentToInstitution($email,$institution_id){
-        // dd($email);
         $student = Student::create([
             'email' => $email,
             'institution_id' => $institution_id,
-            'is_confirm' => 0,
         ]);
-
         return $student;
     }
 
     public function addStudent($email){
         $student = Student::create([
             'email' => $email,
-            'is_confirm' => 0,
         ]);
 
         return $student;
