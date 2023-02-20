@@ -23,6 +23,7 @@ class CustomerController extends Controller
 
     public function sendInvitePartner(Request $request,$partner_id)
     {
+        // dd($request->all());
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkCustomer = Customer::where('email', $email)->first();

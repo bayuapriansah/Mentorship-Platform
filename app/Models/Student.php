@@ -14,7 +14,7 @@ class Student extends Authenticatable
 
     protected $guard = 'student';
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'institution_id'];
 
     public function projects()
     {

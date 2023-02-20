@@ -40,7 +40,7 @@ class StudentController extends Controller
             $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get();
             $enrolled_projects = EnrolledProject::get();
         }
-        
+
         // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
         return view('dashboard.students.index', compact('students', 'enrolled_projects'));
@@ -69,15 +69,32 @@ class StudentController extends Controller
     public function sendInvite(Request $request)
     {
         // dd($request->all());
-        $checkStudent = Student::where('email', $request->email)->first();
-        if(!$checkStudent){
-            $encEmail = (new SimintEncryption)->encData($request->email);
-            $link = route('student.register', [$encEmail]);
-            $student= $this->addStudent($request);
-            $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
-            $message = "Successfully Send Invitation to Student";
-            return redirect()->route('dashboard.students.index')->with('success', $message);
+        // $checkStudent = Student::where('email', $request->email)->first();
+        // if(!$checkStudent){
+        //     $encEmail = (new SimintEncryption)->encData($request->email);
+        //     $link = route('student.register', [$encEmail]);
+        //     $student= $this->addStudent($request);
+        //     $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
+        //     $message = "Successfully Send Invitation to Student";
+        //     return redirect()->route('dashboard.students.index')->with('success', $message);
+        // }
+
+        $message = "Successfully Send Invitation to Student";
+        foreach (array_filter($request->email) as $email) {
+            $checkStudent = Student::where('email', $email)->first();
+            if (!$checkStudent) {
+                $encEmail = (new SimintEncryption)->encData($email);
+                $link = route('student.register', [$encEmail]);
+                $student = $this->addStudent($email);
+                $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
+                $message .= "\n$email";
+            }
+            // else{
+            //     return redirect()->back()->with('error', 'Email already invited');
+            // }
         }
+
+        return redirect()->route('dashboard.students.index')->with('success', $message);
     }
 
     public function sendInviteFromInstitution(Request $request, $institution_id)
@@ -101,21 +118,18 @@ class StudentController extends Controller
     }
 
     public function addStudentToInstitution($email,$institution_id){
-        // dd($email);
         $student = Student::create([
             'email' => $email,
             'institution_id' => $institution_id,
-            'is_confirm' => 0
         ]);
-
         return $student;
     }
 
-    public function addStudent($request){
-        $student= new Student;
-        $student->email = $request->email;
-        $student->is_confirm = 0;
-        $student->save();
+    public function addStudent($email){
+        $student = Student::create([
+            'email' => $email,
+        ]);
+
         return $student;
     }
 
