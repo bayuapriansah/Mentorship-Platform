@@ -23,10 +23,12 @@
     @endif
   </li>
   <li class="hover:font-medium">
-    @if(Route::is('dashboard.institutions_partners'))
-      <a href="/dashboard/institutions_partners" class="font-medium">Institutions & Partner</a>
-    @else
-      <a href="/dashboard/institutions_partners">Institutions & Partner</a>
+    @if(Auth::guard('web')->check())
+      @if(Route::is('dashboard.institutions_partners'))
+        <a href="/dashboard/institutions_partners" class="font-medium">Institutions & Partner</a>
+      @else
+        <a href="/dashboard/institutions_partners">Institutions & Partner</a>
+      @endif
     @endif
   </li>
   <li class="hover:font-medium">
