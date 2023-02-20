@@ -257,6 +257,7 @@
     <!-- Modal toggle -->
     <!-- Main modal -->
     <div id="staticModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+      
         <div class="relative w-full h-full max-w-2xl md:h-auto">
             <!-- Modal content -->
             <div class="relative border border-light-blue border-inherit shadow drop-shadow-2xl hover:drop-shadow-xl bg-white rounded-lg  ">
@@ -271,8 +272,15 @@
                 <div class="px-6 py-2 ">
                     <p class="text-base leading-relaxed text-gray-500 ">
                       <div class="pb-20">
-                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
-                        <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}" method="POST" enctype="multipart/form-data">
+                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignments </h1>
+                        @if($submissionData == null)
+                          <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}" method="POST" enctype="multipart/form-data">
+                        
+                        @else
+                          <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/submission/{{$submissionData->id}}" method="POST" enctype="multipart/form-data">
+                          @method('patch')
+                        
+                        @endif
                           @csrf
                           <div class="relative cursor-pointer " id="drop-area">
                             <label for="file-input">
@@ -292,6 +300,12 @@
                             </label>
                             <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
                             </div>
+                            <div>
+                              <h1 class="text-dark-blue font-medium text-sm mb-1">Add Datasets <span class="font-normal">(Optional)</span></h1>
+                              <input class="border border-light-blue rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Add Dataset Link" name="dataset">
+                              <p class="text-xs text-dark-blue">*You can add more than one dataset by separating them with commas(,) </p><br>
+                              {{-- <input type="text" class="w-full px-4 py-6 text-sm border border-gray-300 rounded outline-none"  name="tags"  value="Alpine Js, Tailwind CSS, PHP8.0" autofocus/> --}}
+                            </div>
                             <a class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
                             <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>
                             <button class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" style="display: none;" id="submit"type="submit">Yes, Submit</button>
@@ -303,6 +317,9 @@
             </div>
         </div>
     </div>
+
+    {{-- Resubmit Modal --}}
+
 
 </div>
 @endsection
@@ -424,6 +441,19 @@ function resetUI() {
     // Do something to reset the UI
 }
 
+// dataset as tags
+// var input = document.querySelector('input[name=dataset]')
+// var tagify = new Tagify(input, {
+//   whitelist: ["foo", "bar", "baz"],
+//   dropdown: {
+//     position: "input",
+//   }
+// })
+var input = document.querySelector('input[name=dataset]');
+// initialize Tagify on the above input node reference
+const tagify = new Tagify(input, {
+  delimiter: ',',
+});
 </script>
 
 @endsection
