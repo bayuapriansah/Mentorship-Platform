@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\Student;
 use App\Models\Submission;
 use App\Models\Institution;
+use App\Models\Grade;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
@@ -413,7 +414,7 @@ class StudentController extends Controller
     public function newNotificationActivityCount($id){
         $notifActivityCount = Submission::select('submissions.id as submission_id', 'students.id as student_id')
         ->join('grades', 'submissions.id', '=', 'grades.submission_id')
-        ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)
+        ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)->where('readornot', 0)
         ->get();
         return $notifActivityCount;
     }
@@ -535,8 +536,11 @@ class StudentController extends Controller
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount'));
     }
 
-    public function readActivity($student_id, $project_id, $task_id){
-        // $notif_grade_from_task = Grade::where();
+    public function readActivity($student_id, $project_id, $task_id, $submission_id){
+        $notif_grade_from_task = Grade::where('submission_id',$submission_id)->first();
+        $notif_grade_from_task->readornot = 1;
+        $notif_grade_from_task->save();
+        return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
     }
 
     public function taskDetail($student_id, $project_id, $task_id)
