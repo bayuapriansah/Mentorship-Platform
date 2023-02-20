@@ -126,9 +126,17 @@ class StudentController extends Controller
     }
 
     public function addStudent($email){
-        $student = Student::create([
-            'email' => $email,
-        ]);
+        if(Auth::guard('web')->check()){
+            $student = Student::create([
+                'email' => $email,
+            ]);
+        }elseif(Auth::guard('mentor')->check()){
+            $student = Student::create([
+                'email' => $email,
+                'institution_id' => Auth::guard('mentor')->user()->institution_id,
+            ]);
+        }
+        
 
         return $student;
     }
