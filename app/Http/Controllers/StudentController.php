@@ -33,8 +33,14 @@ class StudentController extends Controller
 
     public function index()
     {
-        $students = Student::get();
-        $enrolled_projects = EnrolledProject::get();
+        if(Auth::guard('web')->check()){
+            $students = Student::get();
+            $enrolled_projects = EnrolledProject::get();
+        }elseif(Auth::guard('mentor')->check()){
+            $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get();
+            $enrolled_projects = EnrolledProject::get();
+        }
+        
         // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
         return view('dashboard.students.index', compact('students', 'enrolled_projects'));
@@ -62,6 +68,7 @@ class StudentController extends Controller
 
     public function sendInvite(Request $request)
     {
+        // dd($request->all());
         $checkStudent = Student::where('email', $request->email)->first();
         if(!$checkStudent){
             $encEmail = (new SimintEncryption)->encData($request->email);
