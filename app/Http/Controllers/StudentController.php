@@ -136,8 +136,6 @@ class StudentController extends Controller
                 'institution_id' => Auth::guard('mentor')->user()->institution_id,
             ]);
         }
-        
-
         return $student;
     }
 

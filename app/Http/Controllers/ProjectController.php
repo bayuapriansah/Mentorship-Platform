@@ -212,6 +212,13 @@ class ProjectController extends Controller
         // }
     }
 
+    public function dashboardIndexShow(Project $project)
+    {
+        $cards = ProjectSection::where('project_id', $project->id)->get();
+
+        return view('dashboard.projects.show', compact('project','cards'));
+    }
+
     public function dashboardpublishDraft(Company $partner, Project $project)
     {
         $project = Project::find($project->id);
@@ -322,6 +329,12 @@ class ProjectController extends Controller
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
         return view('dashboard.projects.injection.edit', compact(['project','injection', 'attachment_id','attachments']));
+    }
+
+    public function dashboardIndexShowSection(Project $project, ProjectSection $injection)
+    {
+        $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
+        return view('dashboard.projects.injection.show', compact(['project','injection','attachments']));
     }
 
     public function dashboardIndexUpdateSection(Request $request,Project $project, ProjectSection $injection)

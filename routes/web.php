@@ -236,6 +236,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/create', [ProjectController::class, 'dashboardIndexCreate'])->name('projects.create');
         Route::post('/projects', [ProjectController::class, 'dashboardIndexStore'])->name('projects.store');
         Route::get('/projects/{project}/edit', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
+        Route::get('/projects/{project}/show', [ProjectController::class, 'dashboardIndexShow'])->name('projects.show');
         Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
         // Route::patch('projects/{project}/publish', [ProjectController::class, 'dashboardpublish'])->name('project.publish');
         Route::patch('/projects/{project}/publishDraft', [ProjectController::class, 'dashboardpublishDraft'])->name('projects.publishDraft');
@@ -246,6 +247,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/injection', [ProjectController::class, 'dashboardIndexSection'])->name('projects.section');
         Route::post('/projects/{project}', [ProjectController::class, 'dashboardIndexStoreSection'])->name('projects.storeSection');
         Route::get('/projects/{project}/injection/{injection}/edit', [ProjectController::class, 'dashboardIndexEditSection'])->name('projects.EditSection');
+        Route::get('/projects/{project}/injection/{injection}/show', [ProjectController::class, 'dashboardIndexShowSection'])->name('projects.ShowSection');
         Route::patch('/projects/{project}/injection/{injection}', [ProjectController::class, 'dashboardIndexUpdateSection'])->name('projects.UpdateSection');
         Route::get('/projects/{project}/injection/{injection}/delete', [ProjectController::class, 'dashboardIndexDestroySection'])->name('projects.DestroySection');
 
