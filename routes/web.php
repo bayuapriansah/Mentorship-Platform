@@ -220,7 +220,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // /dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade
     });
 
-    Route::middleware(['auth:web,customer'])->group(function(){
+    Route::middleware(['auth:web,customer,mentor'])->group(function(){
         Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
         // All Project Assigned
@@ -273,7 +273,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/messages', [CommentController::class, 'adminSendMessageGlobal'])->name('messages.adminSendMessageGlobal');
 
     });
-    Route::middleware(['auth:mentor'])->group(function(){
+    Route::middleware(['auth:web,mentor'])->group(function(){
                 // Student in sidebar menu
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
 
