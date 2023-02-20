@@ -40,7 +40,7 @@
     {{-- @dd($project->enrolled_project) --}}
     <tr>
       <td>{{$no}}</td>
-      <td>{{$project->name}}</td>
+      <td>{{$project->name}} {{$project->institution_id == null ?'(Public)':'(Private)'}}</td>
       <td>{{$project->project_domain}}</td>
       <td>{{count($project->enrolled_project)}}</td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>

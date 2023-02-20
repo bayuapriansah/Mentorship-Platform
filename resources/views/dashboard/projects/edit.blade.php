@@ -25,10 +25,20 @@
 @if (Route::is('dashboard.partner.partnerProjectsEdit'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
+
+  {{-- @if ($errors->any())
+  <div class="alert alert-danger">
+      <ul>
+          @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+          @endforeach
+      </ul>
+  </div>
+  @endif --}}
 <form action="/dashboard/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @endif
-  @csrf
   @method('PATCH')
+  @csrf
   {{-- <input type="hidden" value="{{$project->id}}" name="id"> --}}
   <div class="mb-3">
     <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="inputname" name="name" value="{{$project->name}}">
@@ -40,13 +50,13 @@
   </div>
 
   <div class="mb-3 flex justify-between">
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain" aria-label="Default select example" name="project_domain">
+    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain" aria-label="Default select example" name="domain">
       <option value="" hidden>Select Project Domain *</option>
       <option value="nlp" {{$project->project_domain == 'nlp'? 'selected':''}}>NLP</option>
       <option value="statistical" {{$project->project_domain == 'statistical'? 'selected':''}}>Statistical</option>
       <option value="computer_vision" {{$project->project_domain == 'computer_vision'? 'selected':''}}>Computer Vision</option>
     </select>
-    @error('project_domain')
+    @error('domain')
         <p class="text-danger text-sm mt-1">
           {{$message}}
         </p>
@@ -99,7 +109,11 @@
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
         <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institution</option>
-        <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution</option>
+        @if(Auth::guard('web')->check())
+          <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution</option>
+        @elseif(Auth::guard('mentor')->check())
+          <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+        @endif
     </select>
   </div>
 
@@ -165,18 +179,20 @@
         </p>
     @enderror
   </div>
-  <div class="mb-3 mt-10 flex justify-between">
-    <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
-    <div class="text-xl text-dark-blue">
-      {{-- <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card"> --}}
-      @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
-      @else
-      <a href="/dashboard/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
+  @if (Auth::guard('web')->check())
+    <div class="mb-3 mt-10 flex justify-between">
+      <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
+      <div class="text-xl text-dark-blue">
+        {{-- <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card"> --}}
+        @if (Route::is('dashboard.partner.partnerProjectsEdit'))
+          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
+        @else
+        <a href="/dashboard/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
 
-      @endif
+        @endif
+      </div>
     </div>
-  </div>
+  @endif
   <div class="mb-3 space-y-2">
     @php
         $no = 1
@@ -210,21 +226,36 @@
     @endphp
     @endforeach
   </div>
-  <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Project</button>
+  @if (Auth::guard('web')->check())
+    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Project</button>
+  @elseif(Auth::guard('mentor')->check())
+    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Proposed Project</button>
+  @endif
 </form>
 @endsection
-@section('more-js')
-<script>
-  $(document).ready(function () {
-    $('#inputinstitution').hide();
-      $("#inputprojecttype").change(function(){
-        var values = $("#inputprojecttype option:selected").val();
-        if(values=='private'){
-          $('#inputinstitution').show();
-        }else{
-          $('#inputinstitution').hide();
-        }
+@if (Auth::guard('web')->check())
+  @section('more-js')
+  <script>
+    $(document).ready(function () {
+      $('#inputinstitution').hide();
+        $("#inputprojecttype").change(function(){
+          var values = $("#inputprojecttype option:selected").val();
+          if(values=='private'){
+            $('#inputinstitution').show();
+          }else{
+            $('#inputinstitution').hide();
+          }
+        });
       });
-    });
-</script>
-@endsection
+  </script>
+  @endsection
+@elseif(Auth::guard('mentor')->check())
+  @section('more-js')
+    <script>
+      $(document).ready(function () {
+        $('#inputinstitution').hide();
+         
+        });
+    </script>
+  @endsection
+@endif
