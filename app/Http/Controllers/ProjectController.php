@@ -154,7 +154,7 @@ class ProjectController extends Controller
 
     public function dashboardIndexUpdate(Request $request, Project $project)
     {
-        // dd($project->id);
+        // dd($request->all());
 
         $validated = $request->validate([
             'name' => ['required'],
@@ -186,6 +186,8 @@ class ProjectController extends Controller
             }elseif(Auth::guard('mentor')->check()){
                 $project->institution_id = Auth::guard('mentor')->user()->institution_id;
             }
+        }elseif($validated['projectType'] == 'public'){
+            $project->institution_id = null;
         }
         $project->type = 'monthly';
         $project->save();
