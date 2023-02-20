@@ -10,7 +10,6 @@ use App\Models\Project;
 use App\Models\Student;
 use App\Models\Submission;
 use App\Models\Institution;
-use App\Models\Grade;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
@@ -99,7 +98,7 @@ class StudentController extends Controller
         $student = Student::create([
             'email' => $email,
             'institution_id' => $institution_id,
-            'is_confirm' => 0
+            'is_confirm' => 0,
         ]);
 
         return $student;
