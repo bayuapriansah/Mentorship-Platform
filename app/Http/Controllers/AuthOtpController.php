@@ -56,6 +56,7 @@ class AuthOtpController extends Controller
             $encId = (new SimintEncryption)->encData($user_id->id);
             $encEmail = (new SimintEncryption)->encData($validated['email']);
             // $message = "We have sent a One Time Password (OTP) to your email address. Please enter it below";
+
             $sendmail = (new MailController)->otplogin($validated['email'],$otp);
             return redirect()->route('otp.verification', [$encId,$encEmail]);
         }else{
