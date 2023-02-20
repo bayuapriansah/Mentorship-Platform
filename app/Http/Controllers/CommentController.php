@@ -80,11 +80,8 @@ class CommentController extends Controller
         if(Auth::guard('web')->check()){
             $comment->user_id = Auth::guard('web')->user()->id;
             $comment->student_id = $participant->id;
-        }elseif(Auth::guard('companies')->check()){
-            $comment->companies_id = $Auth::guard('companies')->user()->id;
-            $comment->student_id = $participant->id;
-        }else{
-            $comment->mentor_id = 1;
+        }elseif(Auth::guard('mentor')->check()){
+            $comment->mentor_id = Auth::guard('mentor')->user()->id;
             $comment->student_id = $participant->id;
         }
         $comment->project_id = $injection->project->id;
@@ -111,11 +108,8 @@ class CommentController extends Controller
         if(Auth::guard('web')->check()){
             $comment->user_id = Auth::guard('web')->user()->id;
             $comment->student_id = $validated['student'];
-        }elseif(Auth::guard('companies')->check()){
-            $comment->companies_id = $Auth::guard('companies')->user()->id;
-            $comment->student_id = $validated['student'];
-        }else{
-            $comment->mentor_id = 1;
+        }elseif(Auth::guard('mentor')->check()){
+            $comment->mentor_id = Auth::guard('mentor')->user()->id;
             $comment->student_id = $validated['student'];
         }
         $comment->project_id = $validated['project'];

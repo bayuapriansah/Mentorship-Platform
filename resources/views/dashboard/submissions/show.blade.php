@@ -57,6 +57,7 @@
         {{-- <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a> --}}
       </div>
   </div>
+  @if(Auth::guard('web')->check())
   <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
     @csrf
     <div class="px-4 py-2 bg-white rounded-lg border border-light-blue">
@@ -99,6 +100,7 @@
       </div>
     </div>
   </form>
+  @endif
 </div>
 
 @endsection
