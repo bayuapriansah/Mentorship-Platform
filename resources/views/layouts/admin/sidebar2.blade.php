@@ -1,10 +1,19 @@
 <ul class="font-light space-y-5">
   <li class="hover:font-medium">
-    @if(Route::is('dashboard.admin'))
-      <a href="/dashboard/admin" class="font-medium">Dashboard</a>
-    @else
-      <a href="/dashboard/admin">Dashboard</a>
+    @if(Auth::guard('web')->check())
+      @if(Route::is('dashboard.admin'))
+        <a href="/dashboard/admin" class="font-medium">Dashboard</a>
+      @else
+        <a href="/dashboard/admin">Dashboard</a>
+      @endif
+    @elseif(Auth::guard('mentor')->check())
+      @if(Route::is('dashboard.mentor'))
+        <a href="/dashboard/mentor" class="font-medium">Dashboard</a>
+      @else
+        <a href="/dashboard/mentor">Dashboard</a>
+      @endif
     @endif
+    
   </li>
   <li class="hover:font-medium">
     @if(Route::is('dashboard.students.index'))

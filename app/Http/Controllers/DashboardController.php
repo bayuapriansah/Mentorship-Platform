@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
-use App\Models\Student;
 use App\Models\Mentor;
 use App\Models\Comment;
-use App\Models\EnrolledProject;
 use App\Models\Company;
+use App\Models\Project;
+use App\Models\Student;
+use App\Models\Submission;
+use Illuminate\Http\Request;
 use App\Models\ProjectSection;
+use App\Models\EnrolledProject;
+
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
-
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -32,11 +33,12 @@ class DashboardController extends Controller
 
     public function indexMentor()
     {
-      $students   = Student::get()->count();
-      $mentors    = Mentor::get()->count();
-      $eProjects  = EnrolledProject::get()->count();
-      $companies  = Company::get()->count();
-      return view('dashboard.index', compact('students','mentors','eProjects','companies'));
+      $students   = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
+      $assign_students   = Student::where('mentor_id', Auth::guard('mentor')->user()->id)->get()->count();
+      $mentors    = Mentor::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
+      // dd($mentors);
+      $student_submissions = Submission::get()->count();
+      return view('dashboard.index', compact('students','assign_students','mentors','student_submissions'));
     }
 
     public function allAssignedProjectsBEST()

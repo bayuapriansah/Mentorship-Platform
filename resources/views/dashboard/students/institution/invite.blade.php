@@ -11,7 +11,12 @@
 @endif
 
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">{{$institution->name}} <i class="fa-solid fa-chevron-right"></i> Students <i class="fa-solid fa-chevron-right"></i> Invite</h3>
+    @if(Auth::guard('web')->check())
+        <h3 class="text-dark-blue font-medium text-xl">{{$institution->name}} <i class="fa-solid fa-chevron-right"></i> Students <i class="fa-solid fa-chevron-right"></i> Invite</h3>
+    @elseif(Auth::guard('mentor')->check())
+        <h3 class="text-dark-blue font-medium text-xl">Invite Students</h3>
+        <a href="/dashboard/students/" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
+    @endif
 </div>
 <div id="alert-file" class="border border-red-300 w-3/4 flex p-4 mb-4 text-red-800 rounded-lg bg-red-50 bg-gray-800 text-red-400 hidden" role="alert">
     <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
@@ -27,7 +32,11 @@
 @if (Route::is('dashboard.students.inviteFromInstitution'))
 <form action="{{ route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]) }}" id="submitForm" method="post" enctype="multipart/form-data">
 @else
-<form action="{{route('dashboard.students.sendInvite')}}" method="post" enctype="multipart/form-data">
+    @if(Auth::guard('web')->check())
+        <form action="{{route('dashboard.students.sendInvite')}}" method="post" enctype="multipart/form-data">
+    @elseif(Auth::guard('mentor')->check())
+        <form action="/dashboard/students/invite" method="post" enctype="multipart/form-data">
+    @endif
 @endif
   @csrf
 
