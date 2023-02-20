@@ -103,11 +103,9 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/detail', [StudentController::class, 'enrolledDetail'])->name('student.enrolledDetail');
     Route::get('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskDetail'])->name('student.taskDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskSubmit'])->name('student.taskSubmit');
-<<<<<<< HEAD
     Route::patch('/profile/{student}/enrolled/{project}/task/{task}/submission/{submission}', [StudentController::class, 'taskResubmit'])->name('student.taskSubmit');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}/readNotif/{id}', [StudentController::class, 'readActivity'])->name('student.readActivity');
-=======
->>>>>>> 0f3e56e68aecd225ea89c8d54d3cf3193e1219f2
+
 
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
     // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
@@ -219,11 +217,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // /dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade
     });
 
-<<<<<<< HEAD
     Route::middleware(['auth:web,customer,mentor'])->group(function(){
-=======
-    Route::middleware(['auth:web,company'])->group(function(){
->>>>>>> 0f3e56e68aecd225ea89c8d54d3cf3193e1219f2
+
         Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
         // All Project Assigned
@@ -233,12 +228,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/all_assigned_projects/{project}/section/{section}/chat', [DashboardController::class, 'showAllStudentsChats'])->name('chat.showAllStudentsChats');
         Route::get('/all_assigned_projects/{project}/section/{section}/submission', [DashboardController::class, 'showAllStudentsSubmission'])->name('chat.showAllStudentsSubmission');
         Route::get('/all_assigned_projects/{project}/section/{section}/student/{student}', [DashboardController::class, 'singleStudentChat'])->name('chat.singleStudentChat');
-<<<<<<< HEAD
         // Route::post('{mentor}/all_assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('chat.SendComment');
-=======
-        Route::get('/all_assigned_projects/{project}/section/{section}/student/{student}', [DashboardController::class, 'singleStudentSubmission'])->name('chat.singleStudentSubmission');
-        Route::post('{mentor}/all_assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('chat.SendComment');
->>>>>>> 0f3e56e68aecd225ea89c8d54d3cf3193e1219f2
+
         // Project
         Route::get('/projects', [ProjectController::class, 'dashboardIndex'])->name('projects.index');
         Route::get('/projects/draft', [ProjectController::class, 'draftIndex'])->name('projects.draft');
