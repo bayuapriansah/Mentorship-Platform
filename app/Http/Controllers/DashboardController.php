@@ -152,7 +152,9 @@ class DashboardController extends Controller
         $mentor->last_name = $validated['last_name'];
         $mentor->sex = $validated['sex'];
         $mentor->position = $validated['position'];
+        if(!empty($validated['password'])){
         $mentor->password = \Hash::make($validated['password']);
+        }
         $mentor->save();
         return back()->with('successTailwind', 'Profile Edited');
       }elseif(Auth::guard('customer')->check()){
