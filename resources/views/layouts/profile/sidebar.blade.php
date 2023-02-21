@@ -185,7 +185,7 @@
     <div class="flex flex-col mt-8 ">
       @if($submissionData == null)
         <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
-      
+
       @else
         <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
         <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
@@ -199,7 +199,7 @@
           </a>
         </div>
         @if($submissionData->dataset)
-          @php 
+          @php
             $datasets = explode(';',$submissionData->dataset);
             $no=1;
           @endphp
@@ -212,7 +212,7 @@
           </div>
         </div>
         @endif
-        
+
         @if($submissionData->grade)
           @if ($submissionData->grade->status==1)
             <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">Complete</span></p>
@@ -238,4 +238,3 @@
   </div>
   @endif
 </aside>
-$ekstension
