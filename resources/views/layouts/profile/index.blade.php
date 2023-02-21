@@ -10,6 +10,42 @@
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://cdn.tiny.cloud/1/7d3zd697fxtkpnuq9ikxrj7hpewm4ce4a12ubsk671xmqykc/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+    tinymce.init({
+        selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 350,
+        plugins: 'lists paste',
+        menubar: '',
+        toolbar: 'undo redo | styleselect | bold italic ',
+        automatic_uploads: false,
+        paste_as_text: true,
+        setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    }
+    });
+
+
+    // tinymce.init({
+    //     selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
+    //     height: 350,
+    //     plugins: 'media image lists paste',
+    //     menubar: 'file edit insert view format table tools help',
+    //     toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
+    //     images_upload_url: 'postAcceptor.php',
+    //     automatic_uploads: false,
+    //     paste_as_text: true
+    // });
+    // tinymce.init({
+    //     selector: 'textarea#sectionDescDisable', // Replace this CSS selector to match the placeholder element for TinyMCE
+    //     height: 300,
+    //     readonly : true
+    // });
+    </script>
     @vite('resources/css/app.css')
     {{-- font --}}
     <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet">
@@ -65,6 +101,26 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+
+    /* Hide the default scrollbar */
+    ::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Show the custom scrollbar on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    }
     </style>
     <!-- Custom styles for this template -->
   </head>
@@ -98,12 +154,12 @@
           <div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-4">
             <div class="grid grid-cols-12 gap-2 grid-flow-col">
               <div class="col-span-2">
-                <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
+                <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
                   <svg class="w-6 h-6"  aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   <span class="sr-only">Notifications Bell</span>
-                  {{-- <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div> --}}
+                  <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $notifActivityCount->count() }}</div>
                   </button>
               </div>
               <div class="col-span-2">
@@ -157,12 +213,12 @@
             </div>
           </div>
         @endif
-        
+
       </div>
     </nav>
   </div>
     {{-- Modals --}}
-  <!-- Top Right Modal -->
+    {{-- Message Modal --}}
   <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
     <div class="relative w-full h-full max-w-sm md:h-auto">
         <!-- Modal content -->
@@ -179,15 +235,103 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <p class="text-base leading-relaxed text-gray-500">
-                  No notifications.
-                </p>
+                <div class="max-h-60 overflow-y-auto">
+                    {{-- code comment here --}}
+                    {{-- Start Her --}}
+                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                        <div class="flex">
+                            <div class="ml-3 text-sm font-normal">
+                                <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                <p>
+                                <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- END HERE --}}
+                    {{-- Start Her --}}
+                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                        <div class="flex">
+                            <div class="ml-3 text-sm font-normal">
+                                <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                <p>
+                                <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- END HERE --}}
+                    {{-- Start Her --}}
+                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow bg-blue-900 text-gray-400 mt-4" role="alert">
+                        <div class="flex">
+                            <div class="ml-3 text-sm font-normal">
+                                <span class="mb-1 text-sm font-semibold text-white">Task 1</span>
+                                <p>
+                                <a href="#" class="mb-2 text-sm font-normal text-white">Hi Neil, thanks for sharing your thoughts regarding Flowbite.</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- END HERE --}}
+                </div>
             </div>
         </div>
     </div>
   </div>
+
+    {{-- Notification Modal --}}
+    <div id="notification-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+        <div class="relative w-full h-full max-w-sm md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-5 border-b rounded-t">
+                    <h3 class="text-xl font-medium text-gray-900">
+                        Activity Notification
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="notification-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                    <div class="max-h-60 overflow-y-auto">
+                        {{-- code comment here --}}
+                    @if($notifActivityCount->count() > 0)
+                            @foreach ($newActivityNotifs as $newActivityNotif)
+                            {{-- Start Her --}}
+                            @if ($newActivityNotif->grade == !NULL)
+                                @if ($newActivityNotif->grade->readornot != 1)
+                                {{-- {{ $newActivityNotif->grade->readornot != 1 }} --}}
+                                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow {{ $newActivityNotif->grade->status == 0 ? 'bg-red-900' : 'bg-green-900' }} text-gray-400 mt-4" role="alert">
+                                        <div class="flex">
+                                            <div class="ml-3 text-sm font-normal">
+                                                <span class="mb-1 text-sm font-semibold text-white">Task : {{ $newActivityNotif->grade->submission->projectSection->title }}</span>
+                                                <p>
+                                                <a href="{{ route('student.readActivity',[$newActivityNotif->grade->submission->student_id,$newActivityNotif->grade->submission->project_id,$newActivityNotif->grade->submission->section_id,$newActivityNotif->grade->submission->id]) }}" class="mb-2 text-sm font-normal text-white">Hi {{$student->first_name}} {{$student->last_name}},
+                                                    @if($newActivityNotif->grade->status == 0)
+                                                        {{ 'Sorry but you need to revise the Task' }}
+                                                    @elseif($newActivityNotif->grade->status == 1)
+                                                        {{ 'Great you Pass the Task' }}
+                                                    @else
+                                                        {{ 'Nothing' }}
+                                                    @endif
+                                                .</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+                            {{-- END HERE --}}
+                            @endforeach
+                        @else
+{{ 'No Notification' }}
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
   <main class="bg-profile-grey ">
-    @yield('content') 
+    @yield('content')
   </main>
 
   <footer class="w-full bg-lightest-blue relative z-30">
@@ -224,7 +368,7 @@
         </div>
       </div>
     </div>
-    
+
   </footer>
 
   @php
@@ -235,10 +379,12 @@
         echo "Core " . ($index + 1) . ": " . $usage . "%<br>";
       }
   @endphp
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

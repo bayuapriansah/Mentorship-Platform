@@ -21,9 +21,9 @@ class Company extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
-    public function mentors()
+    public function customers()
     {
-        return $this->hasMany(Mentor::class);
+        return $this->hasMany(Customer::class);
     }
 
 }

@@ -16,58 +16,52 @@ use Illuminate\Support\Facades\Validator;
 class AuthOtpController extends Controller
 {
     public function login(){
-        if(Auth::guard('company')->check()){
-            return back();
-        }
-        if(Auth::guard('web')->check()){
-            return back();
-        }
-        if(Auth::guard('mentor')->check()){
-            return back();
-        }
-        if(Auth::guard('student')->check()){
-            return back();
+        $guards = ['customer', 'web', 'mentor', 'student'];
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return back();
+            }
         }
         return view('auth.loginOtp');
     }
 
     public function generate(Request $request){
+        if ($request->isMethod('get')) {
+            return redirect()->route('otp.login')->with('email', 'Please use registered Email');
+        }
+
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required',
-            'g-recaptcha-response' => function ($attribute, $value, $fail) {
-                $secretkey = config('services.recaptcha.secret');
-                $response = $value;
-                $userIP = $_SERVER['REMOTE_ADDR'];
-                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userIP";
-                $response = \file_get_contents($url);
-                $response = json_decode($response);
-                // dd($response);
-                if(!$response->success){
-                    Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
-                    Session::flash('alert-class', 'alert-danger');
-                    $fail($attribute.'Google reCAPTCHA validation failed, please try again.');
-                } 
-            },
+            'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
         if($validator->fails()){
-            Session::flash('email', 'Email is empty');
+            // Session::flash('email', 'Email is empty');
+            Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
             return redirect()->route('otp.login')->withErrors($validator)->withInput();
         }
 
         $validated = $validator->validated();
-        $user_id = Student::where('email', $request->email)->first();
-        if(!$user_id){
-            $user_id = Mentor::where('email', $request->email)->first();
+        $user_id = Student::where('email', $validated['email'])->first();
+
+        if($user_id == null){
+            $user_id = Mentor::where('email', $validated['email'])->first();
         }
-        $verificationCode = $this->generateOtp($request->email);
-        $otp = $verificationCode->otp;
-        $encId = (new SimintEncryption)->encData($user_id->id);
-        $encEmail = (new SimintEncryption)->encData($request->email);
-        // $message = "We have sent a One Time Password (OTP) to your email address. Please enter it below";
-        $sendmail = (new MailController)->otplogin($request->email,$otp);
-        return redirect()->route('otp.verification', [$encId,$encEmail]);
+
+        if(!$user_id == null){
+            $verificationCode = $this->generateOtp($validated['email']);
+
+            $otp = $verificationCode->otp;
+            $encId = (new SimintEncryption)->encData($user_id->id);
+            $encEmail = (new SimintEncryption)->encData($validated['email']);
+            // $message = "We have sent a One Time Password (OTP) to your email address. Please enter it below";
+
+            $sendmail = (new MailController)->otplogin($validated['email'],$otp);
+            return redirect()->route('otp.verification', [$encId,$encEmail]);
+        }else{
+            return redirect()->route('otp.login')->with('email', 'Please use registered Email');
+        }
     }
 
     public function generateOtp($email){
@@ -75,10 +69,9 @@ class AuthOtpController extends Controller
         if(!$data_user){
             $data_user = Mentor::where('email', $email)->first();
         }
-
+        // dd($data_user == null);
         // check email does not have otp code
         $verificationCode = VerificationCode::where('user_id', $data_user->id)->latest()->first();
-
         $now = Carbon::now();
 
         if($verificationCode && $now->isBefore($verificationCode->expired_at)){
@@ -117,11 +110,11 @@ class AuthOtpController extends Controller
             }elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
                 return redirect()->route('otp.login')->with('error', 'Your verification code has expired');
             }
-            
+
             $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
             $data = $now->format('Y-m-d') > $data_user->end_date;
-            
-            //check if internship already end or not 
+
+            //check if internship already end or not
             if($data_user->is_confirm == 2){
                 return redirect()->route('otp.login')->with('error', 'Your internship already ended and You can\'t login again because the account is suspended');
             }elseif($data == TRUE){
@@ -151,7 +144,7 @@ class AuthOtpController extends Controller
             $this->generate($request);
             return back();
         }else{
-            return abort(403, 'Unauthorized action.');   
+            return abort(403, 'Unauthorized action.');
         }
     }
 }

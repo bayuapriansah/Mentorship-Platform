@@ -47,6 +47,10 @@
             <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
             This email address is already registered!
           </div> --}}
+          <div class="text-right">
+            <a href="/forgot-password" class="text-sm text-dark-blue hover:text-darker-blue text-right">Forgot password?</a>
+          </div>
+
           <div class="flex">
             <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Login</button>
           </div>
@@ -59,7 +63,7 @@
         <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
         <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
         <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
-        
+
       </div>
     </div>
   </div>

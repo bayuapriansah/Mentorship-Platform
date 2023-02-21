@@ -46,6 +46,66 @@ class MailController extends Controller
         }
     }
 
+    public function EmailMemberInvitation($mailto,$urlInvitation) //Email, urlInvitation
+    {
+        $data = [
+            'subject' => 'Invitation to be a Member',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            'body3' => '',
+            'body4' => '',
+            'body5'=> '',
+            'type' => 'member',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Member Invitation  Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+    public function emailResetPassword($mailto, $urlInvitation) //Just Email
+    {
+        $data = [
+            'subject' => 'Reset Password',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            // 'body' => 'Your registration as Student is Completed',
+            // 'body2' => 'You can Login, and Choose the Projet that Available.',
+            // 'body3' => 'If you still have a question related about this, please contact us.',
+            // 'body4'=> 'Best regards,',
+            // 'body5'=> 'Simulated Internship Team ❤️',
+            'type' => 'reset',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Registration Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+
+    public function EmailMemberRegister($mailto) //Email
+    {
+        $data = [
+            'subject' => 'Registration Completed',
+            'body' => $mailto,
+            // 'body2' => 'otp/login',
+            'type' => 'member',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Registration Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
     public function EmailMentorInvitation($mailto,$urlInvitation) //Email, urlInvitation
     {
         $data = [
@@ -55,11 +115,6 @@ class MailController extends Controller
             'body3' => '',
             'body4' => '',
             'body5'=> '',
-            // 'body' => 'We would like to invite you to be a Mentor, and put you on project that you can mentor.',
-            // 'body2' => 'Please click the link below to fill the form and register as a Mentor.',
-            // 'body3' => $urlInvitation,
-            // 'body4' => 'Best regards,',
-            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'mentor',
         ];
         try
@@ -77,9 +132,6 @@ class MailController extends Controller
             'subject' => 'Registration Completed',
             'body' => $mailto,
             'body2' => 'otp/login',
-            // 'body3' => 'if you still have a question related about this, please contact us : support@simulatedinternship.com',
-            // 'body4' => 'Best regards,',
-            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'mentor',
         ];
         try
@@ -106,6 +158,23 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Mentor Assignment Project Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+    public function EmailStudentInvitation($mailto,$urlInvitation) //Email, urlInvitation
+    {
+        $data = [
+            'subject' => 'Invitation to be a Student',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            'type' => 'welcome',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Invitation  Email sent successfully']);
         } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }

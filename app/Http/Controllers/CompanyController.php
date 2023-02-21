@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::get();
-        return view('dashboard.companies.index', compact('companies'));
+        return view('dashboard.partners.index', compact('companies'));
     }
 
     public function registered()
@@ -67,12 +68,12 @@ class CompanyController extends Controller
                 $logo = Storage::disk('public')->put('companies', $validated['logo']);
                 $company->logo = $logo;
             }else{
-                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
             
         }
         $company->save();
-        return redirect('dashboard/companies/')->with('success','Company has been added');
+        return redirect('dashboard/institutions_partners/')->with('success','Company has been added');
     }
 
     /**
@@ -92,8 +93,9 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit($id)
     {
+        $company= Company::find($id);
         return view('dashboard.companies.edit', compact('company'));
     }
 
@@ -130,27 +132,12 @@ class CompanyController extends Controller
                 $logo = Storage::disk('public')->put('companies', $request->logo);
                 $company->logo = $logo;
             }else{
-                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
         }
         $company->save();
-        return redirect('dashboard/companies')->with('success','Company has been edited');
+        return redirect('dashboard/institutions_partners')->with('success','Company has been edited');
         
-        // 
-        if($request->hasFile('logo')){
-            // 5000000
-            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
-                $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
-                $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
-                ){
-                $logo = Storage::disk('public')->put('companies', $validated['logo']);
-                $company->logo = $logo;
-            }else{
-                return redirect('dashboard/companies/')->with('error', 'file extension is not png, jpg or jpeg');
-            }
-            
-        }
-        // 
     }
 
     /**
@@ -163,7 +150,6 @@ class CompanyController extends Controller
     {
         $company = Company::find($id);
         $company->delete();
-        return redirect('dashboard/companies');
-
-    }
+        return redirect('dashboard/institutions');
+    }   
 }

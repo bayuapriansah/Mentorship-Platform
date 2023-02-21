@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\Student;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,11 +27,19 @@ class InstitutionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function institutions_partners()
+    {
+        $institutions = institution_world_data_view::get();
+        $companies = Company::get();
+        return view('dashboard.institutions.index', compact('institutions', 'companies'));
+    }
     public function index()
     {
-        // $institutionss = Institution::get();
+        // $institutions = Institution::get();
         $institutions = institution_world_data_view::get();
-        return view('dashboard.institutions.index', compact('institutions'));
+        $companies = Company::get();
+        return view('dashboard.institutions.index', compact('institutions', 'companies'));
     }
 
     /**
@@ -56,28 +66,30 @@ class InstitutionController extends Controller
             'name' => ['required'],
             'countries' => ['required'],
             'state' => ['required'],
-            'logo' => ['required']
+            'logo' => ['required'],
+            'email'=>['required']
         ]);
 
         $institutions = new Institution;
         $institutions->name = $validated['name'];
+        $institutions->email = $validated['email'];
         $institutions->country = $validated['countries'];
         $institutions->state = $validated['state'];
         if($request->hasFile('logo')){
             // 5000000
-            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
                 ){
                 $logo = Storage::disk('public')->put('institutions', $validated['logo']);
                 $institutions->logo = $logo;
             }else{
-                return redirect('dashboard/institutions/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
-            
+
         }
         $institutions->save();
-        return redirect()->route('dashboard.institutions.index');
+        return redirect()->route('dashboard.institutions_partners');
     }
 
     /**
@@ -125,25 +137,42 @@ class InstitutionController extends Controller
         $institutions->country = $validated['countries'];
         $institutions->state = $validated['state'];
         if($request->hasFile('logo')){
-        
+
             if(Storage::path($institutions->logo)) {
                 Storage::disk('public')->delete($institutions->logo);
             }
-        
+
             // save the new image
-             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
                 ){
                 $logo = Storage::disk('public')->put('institutions', $request->logo);
                 $institutions->logo = $logo;
             }else{
-                return redirect('dashboard/institutions/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
         }
         $institutions->save();
         $message = "Successfully Edited Institution Data";
-        return redirect()->route('dashboard.institutions.index')->with('success', $message);
+        return redirect()->route('dashboard.institutions_partners')->with('success', $message);
+    }
+
+    public function institutionStudents(Institution $institution)
+    {
+        // dd('tes');
+        $students = Student::where('institution_id', $institution->id)->get();
+        return view('dashboard.institutions.students.index', compact('students', 'institution'));
+    }
+
+
+    public function suspendInstitution($id)
+    {
+        $institution = Institution::find($id);
+        $institution->status = 0;
+        $institution->save();
+        $message = "Successfully Deactive Data";
+        return redirect()->route('dashboard.institutions_partners')->with('success', $message);
     }
 
     /**

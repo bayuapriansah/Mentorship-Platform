@@ -1,20 +1,12 @@
 <aside class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
-  {{-- @dd($enrolled_projects->where('is_submited',1)) --}}
-  {{-- @foreach ($enrolled_projects as $enrolled_project)
-      @if($enrolled_projects->where('is_submited',1))
-      @dd('tes')
-
-        <img src="{{asset('assets/img/icon/flag.png')}}"  alt="" class="ml-[{{$dataDate}}%]">
-      @endif
-  @endforeach --}}
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
-      <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
+      <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
         <svg class="w-6 h-6"  aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
         <span class="sr-only">Notifications Bell</span>
-        {{-- <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div> --}}
+        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $notifActivityCount->count() }}</div>
         </button>
     </div>
     <div class="col-span-2">
@@ -23,7 +15,7 @@
         <path d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
       <span class="sr-only">Notifications Message</span>
-      <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage->count() }}</div>
+      <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $newMessage }}</div>
       </button>
     </div>
     <div class="col-span-2">
@@ -111,7 +103,7 @@
     @php
          $dateApply   = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
     @endphp
-    
+
     <p class="text-black text-xs font-normal">Projects Timeline</p>
     <div class="flex justify-between">
       @if($student->is_confirm == 1)
@@ -122,7 +114,7 @@
         @foreach ($submissions as $submission)
           <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
           @php $tipNumber++ @endphp
-        @endforeach 
+        @endforeach
 
         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-3">
           <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
@@ -133,7 +125,7 @@
         <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$submission->flag_checkpoint-4}}%">Task {{$no}}</p>
         <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
           @php $no++ @endphp
-        @endforeach 
+        @endforeach
       </div>
       @if($student->is_confirm == 1)
         <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
@@ -161,7 +153,7 @@
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
           @php $tipNumber++ @endphp
-        @endforeach 
+        @endforeach
 
         <div class="bg-gray-200 rounded-full h-1.5 mb-4 mt-4 ">
           <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%"></div>
@@ -188,30 +180,59 @@
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
     @endif
   </div>
-  
+
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
-
       @if($submissionData == null)
-      <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
+        <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
+
       @else
-      <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
-      <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
-        <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
-        Your Submission file</a>
-        @php
-          $ekstension = substr($submissionData->file, strpos($submissionData->file, ".") + 1);
-        @endphp
-        <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}">
-          <img  src="{{asset('assets/img/icon/download.png')}}" alt="">
-        </a>
-      </div>
+        <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
+        <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
+          <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+          Your Submission file</a>
+          @php
+            $ekstension = substr($submissionData->file, strpos($submissionData->file, ".") + 1);
+          @endphp
+          <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}">
+            <img  src="{{asset('assets/img/icon/download.png')}}" alt="">
+          </a>
+        </div>
+        @if($submissionData->dataset)
+          @php
+            $datasets = explode(';',$submissionData->dataset);
+            $no=1;
+          @endphp
+        <div class="flex flex-col text-center my-4">
+          <h1 class="text-dark-blue font-medium text-sm text-center">Dataset</h1>
+          <div class="flex flex-wrap justify-start pt-2">
+            @foreach ($datasets as $dataset)
+              <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset <i class="fa-solid fa-chevron-right"></i></a>
+            @endforeach
+          </div>
+        </div>
+        @endif
+
+        @if($submissionData->grade)
+          @if ($submissionData->grade->status==1)
+            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">Complete</span></p>
+          @elseif($submissionData->grade->status==0)
+          <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2 mt-2">Resubmit Task </button>
+
+          <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">Revise</span></p>
+          @endif
+        @else
+          <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-light-brown">In Review</span></p>
+        @endif
       @endif
+
+      {{-- grade status revise --}}
+
     </div>
   @else
   <div class="flex flex-col">
     <p class="text-dark-blue font-medium text-sm text-center my-3">Complete 3 Months project to unlock</p>
-   
+
     <a href="#" class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-default">Download Certificate</a>
 
   </div>

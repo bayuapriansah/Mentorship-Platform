@@ -36,7 +36,7 @@ class Project extends Model
 
     public function enrolled_project()
     {
-        return $this->hasOne(EnrolledProject::class);
+        return $this->hasMany(EnrolledProject::class);
     }
 
     public function institution()
@@ -46,6 +46,6 @@ class Project extends Model
 
     public function comment()
     {
-        return $this->belongsTo(Comment::class);
+        return $this->belongsTo(Comment::class,'id','project_id');
     }
 }

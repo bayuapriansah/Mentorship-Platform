@@ -11,6 +11,7 @@ module.exports = {
         'dark-blue' : '#000F8A',
         'darker-blue' : '#000864',
         'light-brown' : '#DEAA51',
+        'dark-brown' : '#B57E1D',
         'grey' : '#838383',
         'light-blue' : '#A4AADC',
         'light-black' : '#2C2C2C',
@@ -24,6 +25,8 @@ module.exports = {
         'ligt-black' : '#1E1E1E',
         'light-green': '#1CD22E',
         'lighter-green': '#D4F9CB',
+        'dark-yellow': '#CB9713',
+        'dark-red': '#B52809'
       },
       fontSize: {
         sm: '0.938rem',

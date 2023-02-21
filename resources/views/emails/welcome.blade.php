@@ -85,7 +85,7 @@ td .es-button-border-1:hover {
                   <td class="es-m-p0r" valign="top" align="center" style="padding:0;Margin:0;width:770px">
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intellogo2022_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="90" height="36"></td>
+                        <td align="left" style="padding:0;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intellogo2022_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="140" height="40"></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -108,7 +108,7 @@ td .es-button-border-1:hover {
                       <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/component_3.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
                      </tr>
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:45px">Confirm your email address to get started with Simulated Internships Platform.</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:35px;font-weight: bold;">Confirm your email address to get started with Simulated Internships Platform.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -148,12 +148,12 @@ td .es-button-border-1:hover {
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
                       <td align="left" style="padding:0;Margin:0;padding-left:40px"><!--[if mso]><a href="" target="_blank" hidden>
-	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="" 
+	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href=""
                 style="height:64px; v-text-anchor:middle; width:261px" arcsize="50%" stroke="f"  fillcolor="#000f8a">
 		<w:anchorlock></w:anchorlock>
 		<center style='color:#ffffff; font-family: 'IntelOne Display', arial, "helvetica neue", helvetica, sans-serif; font-size:20px; font-weight:400; line-height:20px;  mso-text-raise:1px'>Confirm Email Addess</center>
 	</v:roundrect></a>
-<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ route('verified',[$data['body2']]) }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 30px 20px 30px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Confirm Email Addess</a></span><!--<![endif]--></td>
+<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ route('verified',[$data['body2']]) }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 80px 20px 80px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Confirm Email Address</a></span><!--<![endif]--></td>
                      </tr>
                      <tr>
                       <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">If you didn’t request this email, there is nothing to worry about - you can safely ignore it</p></td>
@@ -166,97 +166,87 @@ td .es-button-border-1:hover {
          </tr>
        </table>
        {{-- <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
-         <tr>
-          <td align="center" style="padding:0;Margin:0">
-           <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#E4E7FF" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#e4e7ff;width:810px">
-             <tr>
-              <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px">
-               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                 <tr>
-                  <td align="center" valign="top" style="padding:0;Margin:0;width:770px">
-                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-left:40px;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intelblue_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="90" height="37"></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table></td>
-             </tr>
-             <tr>
-              <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0" 
-                        cellspacing="0"><tr><td style="width:300px" valign="top"><![endif]-->
-               <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
-                 <tr>
-                  <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:300px">
-                   <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-left:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#838383;font-size:12px">INTEL TECHNOLOGY INDIA PRIVATE LIMITED No.23/56P, Outer Ring Road, Varthur Hobli, Bellandur, Bangalore - 560103.</p></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table><!--[if mso]></td><td style="width:0px"></td><td style="width:470px" valign="top"><![endif]-->
-               <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
-                 <tr>
-                  <td align="left" style="padding-right:20px;Margin:0;width:300px">
-                   <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td style="padding:0;Margin:0">
-                       <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                         <tr class="links">
-                          <td align="center" valign="top" width="33%" id="esd-menu-id-0" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Email Preferences</a></td>
-                          <td align="center" valign="top" width="33%" id="esd-menu-id-1" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Policies</a></td>
-                          <td align="center" valign="top" width="33%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Help &amp; Support</a></td>
-                         </tr>
-                       </table></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table><!--[if mso]></td></tr></table><![endif]--></td>
-             </tr>
-             <tr>
-              <td align="left" style="padding:0;Margin:0">
-               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                 <tr>
-                  <td align="center" valign="top" style="padding:0;Margin:0;width:810px">
-                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="center" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-size:0">
-                       <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                         <tr>
-                          <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
-                         </tr>
-                       </table></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table></td>
-             </tr>
-             <tr>
-              <td align="left" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0" cellspacing="0"><tr><td style="width:515px" valign="top"><![endif]-->
-               <table cellpadding="0" cellspacing="0" class="es-left" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
-                 <tr>
-                  <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:515px">
-                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="left" style="padding-left:20px;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#838383;font-size:12px">© {{ date('Y') }} Intel Simulated Internships. All rights reserved.</p></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table><!--[if mso]></td><td style="width:0px"></td><td style="width:255px" valign="top"><![endif]-->
-               <table cellpadding="0" cellspacing="0" class="es-right" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
-                 <tr>
-                  <td align="left" style="padding:0;Margin:0;width:255px">
-                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="right" style="padding-right:20px;Margin:0;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/imagesl.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="44" height="24"></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table><!--[if mso]></td></tr></table><![endif]--></td>
-             </tr>
-           </table></td>
-         </tr>
-       </table> --}}
+        <tr>
+         <td align="center" style="padding:0;Margin:0">
+          <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#E4E7FF" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#e4e7ff;width:810px">
+            <tr>
+             <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0"
+                       cellspacing="0"><tr><td style="width:300px" valign="top"><![endif]-->
+              <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                <tr>
+                 <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:300px">
+                  <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-left:40px;font-size:0px"><img src="https://raw.githubusercontent.com/bayuapriansah/public-repo-images/main/Digitalreadiness-logo%201.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="180" height="50"></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td><td style="width:0px"></td><td style="width:470px" valign="top"><![endif]-->
+              <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                <tr>
+                 <td align="left" style="padding-right:20px;Margin:0;width:300px">
+                  <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td style="padding:0;Margin:0">
+                      <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                       <tr>
+                           <td style="color:#E4E7FF;">intel digital readiness</td>
+                       </tr>
+                        <tr class="links">
+                         <td align="center" valign="top" width="33%" id="esd-menu-id-0" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Email Preferences</a></td>
+                         <td align="center" valign="top" width="33%" id="esd-menu-id-1" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Policies</a></td>
+                         <td align="center" valign="top" width="33%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Help &amp; Support</a></td>
+                        </tr>
+                      </table></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td></tr></table><![endif]--></td>
+            </tr>
+            <tr>
+             <td align="left" style="padding:0;Margin:0">
+              <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tr>
+                 <td align="center" valign="top" style="padding:0;Margin:0;width:810px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="center" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-size:0">
+                      <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                        <tr>
+                         <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
+                        </tr>
+                      </table></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+             <td align="left" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0" cellspacing="0"><tr><td style="width:515px" valign="top"><![endif]-->
+              <table cellpadding="0" cellspacing="0" class="es-left" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                <tr>
+                 <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:515px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="left" style="padding-left:20px;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#838383;font-size:12px">© {{ date('Y') }} Intel Simulated Internships. All rights reserved.</p></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td><td style="width:0px"></td><td style="width:255px" valign="top"><![endif]-->
+              <table cellpadding="0" cellspacing="0" class="es-right" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                <tr>
+                 <td align="left" style="padding:0;Margin:0;width:255px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="right" style="padding-right:20px;Margin:0;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/imagesl.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="44" height="24"></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td></tr></table><![endif]--></td>
+            </tr>
+          </table></td>
+        </tr>
+      </table> --}}
       </td>
      </tr>
    </table>

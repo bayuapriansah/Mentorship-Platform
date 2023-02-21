@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
-use App\Models\Company;
+use App\Models\Institution;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;   
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Mentor extends Authenticatable
 {
     use HasFactory;
-    
-    protected $guard = 'mentor';
 
-    public function company()
+    protected $guard = 'mentor';
+    protected $fillable = ['email', 'institution_id', 'is_confirm'];
+// change to institution hasMany
+    public function institution()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Institution::class);
     }
 
     public function projects()

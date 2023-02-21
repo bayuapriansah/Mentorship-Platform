@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 @section('content')
 <div class="container-fluid">
 
@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col card p-4">
       @include('flash-message')
-      <table id="myTable" class="display responsive w-100" style="width: 100%">
+      <table id="dataTable" class="display responsive w-100" style="width: 100%">
         <thead>
           <tr>
             <th>No</th>
