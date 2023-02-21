@@ -1,6 +1,5 @@
 @extends('layouts.admin2')
 @section('content')
-
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Edit Profile</h3>
   @include('flash-message')
@@ -36,14 +35,26 @@
   <div class="flex justify-between mt-4">
     <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->email}}" placeholder="First Name *" name="email" readonly><br>
    
-    <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->institution->name}}" placeholder="Last Name *" name="institution" readonly><br>
+    @if(Auth::guard('mentor')->check())
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->institution->name}}" placeholder="Last Name *" name="institution" readonly><br>
+    @elseif(Auth::guard('customer')->check())
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->company->name}}" placeholder="Last Name *" name="company" readonly><br>
+    @endif
   </div>
 
-  <div class="flex justify-between mt-4">
-    <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->state}}" placeholder="First Name *" name="state" readonly><br>
-   
-    <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->country}}" placeholder="Last Name *" name="country" readonly><br>
-  </div>
+  @if(Auth::guard('mentor')->check())
+    <div class="flex justify-between mt-4">
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->state}}" placeholder="First Name *" name="state" readonly><br>
+    
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->country}}" placeholder="Last Name *" name="country" readonly><br>
+    </div>
+  @elseif(Auth::guard('customer')->check())
+    <div class="flex justify-between mt-4">
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->company->address}}" placeholder="First Name *" readonly><br>
+    
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->company->email}}" placeholder="Last Name *" readonly><br>
+    </div>
+  @endif
 
   <div class="flex justify-between mt-4">
     <select id="sex" class="border border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" name="sex" required>

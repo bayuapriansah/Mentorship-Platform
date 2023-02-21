@@ -1,7 +1,12 @@
 @extends('layouts.admin2')
 @section('content')
 <div class="text-[#6973C6] hover:text-light-blue">
+  @if(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
+  <a href="/dashboard/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+  @else
   <a href="/dashboard/institutions_partners"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+
+  @endif
 </div>
 
 <div class="flex justify-between mb-10">
