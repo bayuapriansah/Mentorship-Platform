@@ -39,7 +39,7 @@
     @endif
   </li>
 
-  @if(Auth::guard('mentor')->check())
+  {{-- @if(Auth::guard('mentor')->check())
   <li class="nav-item">
     <a class="nav-link collapsed" href="{{route('dashboard.assigned.index')}}">
         <i class="fas fa-fw fa-chart-area"></i>
@@ -53,7 +53,7 @@
         <span>Assigned Projects</span>
     </a>
   </li>
-  @endif
+  @endif --}}
   {{-- <li class="hover:font-medium">
     <a href="/dashboard"></a>
   </li> --}}

@@ -61,8 +61,13 @@ class ProjectController extends Controller
     public function dashboardIndex()
     {
         // $projects = Project::with(['student', 'company'])->where('status','publish')->get();
-        $projects = Project::with(['student', 'company'])->get();
-        return view('dashboard.projects.index', compact('projects'));
+        if(Auth::guard('web')->check()){
+            $projects = Project::with(['student', 'company'])->get();
+            return view('dashboard.projects.index', compact('projects'));
+        }elseif(Auth::guard('mentor')->check()){
+            $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->get();
+            return view('dashboard.projects.index', compact('projects'));
+        }
     }
 
     public function draftIndex()
@@ -73,24 +78,22 @@ class ProjectController extends Controller
 
     public function dashboardIndexCreate()
     {
-        if(Auth::guard('web')->check()){
-            $partners = Company::get();
-            // $institutions = (new InstitutionController)->GetInstituionData();
-            $institutions = Institution::get();
-            return view('dashboard.projects.create', compact('partners','institutions'));
-        }
-        return view('dashboard.projects.create');
+        $partners = Company::get();
+        $institutions = Institution::get();
+        return view('dashboard.projects.create', compact('partners','institutions'));
     }
 
     public function dashboardIndexStore(Request $request)
     {
+        // dd($request->all());
+        // dd(Auth::guard('mentor')->user()->institution_id);
+
         $validated = $request->validate([
             'name' => ['required'],
             'domain' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
-            'dataset' => ['required'],
         ],
         [
             'name.required' => 'Project name is required',
@@ -98,7 +101,6 @@ class ProjectController extends Controller
             'period.required' => 'Project period is required',
             'problem.required' => 'Project problem is required',
             'projectType.required' => 'Project type is required',
-            'dataset.required' => 'Project dataset is required',
         ]);
         
         $project = new Project;
@@ -107,17 +109,31 @@ class ProjectController extends Controller
         $project->period = $validated['period'];
         $project->problem = $validated['problem'];
         $project->type = 'monthly';
-        $project->status = 'draft';
+        if(Auth::guard('web')->check()){
+            $project->status = 'draft';
+        }elseif(Auth::guard('mentor')->check()){
+            $project->status = 'proposed';
+        }
+
+        if(Auth::guard('web')->check()){
+            $project->proposed_by = null;
+        }elseif(Auth::guard('mentor')->check()){
+            $project->proposed_by = Auth::guard('mentor')->user()->id;
+        }
+
         $project->company_id = $request->partner;
         if ($validated['projectType'] == 'private') {
-            $project->institution_id = $request->institution_id;
+            if(Auth::guard('web')->check()){
+                $project->institution_id = $request->institution_id;
+            }elseif(Auth::guard('mentor')->check()){
+                $project->institution_id = Auth::guard('mentor')->user()->institution_id;
+            }
         }
         $project->dataset = $request->dataset;
         $project->overview = $request->overview;
         $project->save();
         if($request->input('addInjectionCard')){
             return redirect('/dashboard/projects/'.$project->id.'/injection');
-            // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
         }else{
             return redirect('/dashboard/projects');
         }
@@ -125,64 +141,82 @@ class ProjectController extends Controller
 
     public function dashboardIndexEdit(Project $project)
     {
-        if(Auth::guard('web')->check()){
-            $partners = Company::get();
-            // $institutions = (new InstitutionController)->GetInstituionData();
-            $cards = ProjectSection::where('project_id', $project->id)->get();
+        // if(Auth::guard('web')->check()){
+        $partners = Company::get();
+        // $institutions = (new InstitutionController)->GetInstituionData();
+        $cards = ProjectSection::where('project_id', $project->id)->get();
 
-            $institutions = Institution::get();
-            return view('dashboard.projects.edit', compact(['project','partners','cards','institutions']));
-        }
-        return view('dashboard.projects.edit', compact('project'));
+        $institutions = Institution::get();
+        return view('dashboard.projects.edit', compact(['project','partners','cards','institutions']));
+        // }
+        // return view('dashboard.projects.edit', compact('project'));
     }
 
-    public function dashboardIndexUpdate(Request $request)
+    public function dashboardIndexUpdate(Request $request, Project $project)
     {
         // dd($request->all());
+
         $validated = $request->validate([
             'name' => ['required'],
-            'project_domain' => ['required'],
-            'problem' => ['required'],
-            'type' => ['required'],
+            'domain' => ['required'],
             'period' => ['required'],
-            'company_id'  => Auth::guard('web')->check() ? ['required'] : '' ,
-            'institution_id' => ['required'],
-
+            'problem' => ['required'],
+            'projectType' => ['required'],
+        ],
+        [
+            'name.required' => 'Project name is required',
+            'domain.required' => 'Project domain is required',
+            'period.required' => 'Project period is required',
+            'problem.required' => 'Project problem is required',
+            'projectType.required' => 'Project type is required',
         ]);
+        $project = Project::findOrFail($project->id);
+        // if(Auth::guard('web')->check()){
+        $project->name = $validated['name']; 
+        $project->project_domain = $validated['domain'];
+        $project->period = $validated['period'];
+        $project->company_id = $request->partner;
+        $project->problem = $validated['problem'];
+        $project->dataset = $request->dataset;
+        $project->overview = $request->overview;
 
-        $project = Project::findOrFail($request->id);
-        if(Auth::guard('web')->check()){
-            $project->name = $validated['name'];
-            $project->project_domain = $validated['project_domain'];
-            $project->problem = $validated['problem'];
-            $project->company_id = $request->company_id;
-            $project->institution_id = $validated['institution_id'];
-            $project->type = $validated['type'];
-            $project->period = $validated['period'];
-            if($project->status == 'publish'){
-                $project->save();
-                return redirect('dashboard/projects')->with('success','Project has been edited');
-            }elseif($project->status == 'draft'){
-                $project->save();
-                return redirect('dashboard/projects/draft')->with('success','Project has been edited');
-            };
-        }elseif(Auth::guard('customer')->check()){
-            $project->name = $validated['name'];
-            $project->project_domain = $validated['project_domain'];
-            $project->problem = $validated['problem'];
-            if($request->hasFile('resources')){
-                $resource = Storage::disk('public')->put('projects/resources', $request->file('resources'));
-                $project->resources = $resource;
+        if ($validated['projectType'] == 'private') {
+            if(Auth::guard('web')->check()){
+                $project->institution_id = $request->institution_id;
+            }elseif(Auth::guard('mentor')->check()){
+                $project->institution_id = Auth::guard('mentor')->user()->institution_id;
             }
-            $project->valid_time = $validated['valid_time'];
-            if($project->status == 'publish'){
-                $project->save();
-                return redirect('dashboard/projects')->with('success','Project has been edited');
-            }elseif($project->status == 'draft'){
-                $project->save();
-                return redirect('dashboard/projects/draft')->with('success','Project has been edited');
-            };
+        }elseif($validated['projectType'] == 'public'){
+            $project->institution_id = null;
         }
+        $project->type = 'monthly';
+        $project->save();
+        return redirect('dashboard/projects')->with('success','Project has been edited');
+            
+        // }elseif(Auth::guard('customer')->check()){
+        //     $project->name = $validated['name'];
+        //     $project->project_domain = $validated['project_domain'];
+        //     $project->problem = $validated['problem'];
+        //     if($request->hasFile('resources')){
+        //         $resource = Storage::disk('public')->put('projects/resources', $request->file('resources'));
+        //         $project->resources = $resource;
+        //     }
+        //     $project->valid_time = $validated['valid_time'];
+        //     if($project->status == 'publish'){
+        //         $project->save();
+        //         return redirect('dashboard/projects')->with('success','Project has been edited');
+        //     }elseif($project->status == 'draft'){
+        //         $project->save();
+        //         return redirect('dashboard/projects/draft')->with('success','Project has been edited');
+        //     };
+        // }
+    }
+
+    public function dashboardIndexShow(Project $project)
+    {
+        $cards = ProjectSection::where('project_id', $project->id)->get();
+
+        return view('dashboard.projects.show', compact('project','cards'));
     }
 
     public function dashboardpublishDraft(Company $partner, Project $project)
@@ -295,6 +329,12 @@ class ProjectController extends Controller
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
         return view('dashboard.projects.injection.edit', compact(['project','injection', 'attachment_id','attachments']));
+    }
+
+    public function dashboardIndexShowSection(Project $project, ProjectSection $injection)
+    {
+        $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
+        return view('dashboard.projects.injection.show', compact(['project','injection','attachments']));
     }
 
     public function dashboardIndexUpdateSection(Request $request,Project $project, ProjectSection $injection)

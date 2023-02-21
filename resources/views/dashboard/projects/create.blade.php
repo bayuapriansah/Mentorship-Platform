@@ -12,8 +12,12 @@
 </div>
 @else
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
+  @if(Auth::guard('web')->check())
+    <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
+  @elseif(Auth::guard('mentor')->check())
+    <h3 class="text-dark-blue font-medium text-xl">Submit Project Proposal</h3>
+  @endif
+  <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
 
@@ -93,7 +97,11 @@
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
         <option value="public">Public to all institution</option>
-        <option value="private">Private to specific institution</option>
+        @if(Auth::guard('web')->check())
+          <option value="private">Private to Your institution</option>
+        @elseif(Auth::guard('mentor')->check())
+          <option value="private">Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+        @endif
     </select>
   </div>
 
@@ -179,47 +187,81 @@
     @enderror
   </div>
 
+  @if (Auth::guard('web')->check())
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
-    <div class="text-xl text-dark-blue">
-      <i class="fa-solid fa-circle-xmark"></i>
-      <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card">
-    </div>
+      <div class="text-xl text-dark-blue">
+        <i class="fa-solid fa-circle-xmark"></i>
+        <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card">
+      </div>
   </div>
+  @endif
+
   <div class="mb-3">
-    <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Add Project">
+    @if (Auth::guard('web')->check())
+      <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Add Project">
+    @elseif(Auth::guard('mentor')->check())
+      <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Propose Project">
+
+    @endif
   </div>
 </form>
 @endsection
 
-@section('more-js')
-<script>
-  $(document).ready(function () {
-      $('#institution').on('change', function () {
-          var institutionVal = this.value;
-          var base_url = window.location.origin;
-          $("#ForState").html('');
-          $.ajax({
-              url: base_url+"/api/institution/"+institutionVal,
-              contentType: "application/json",
-              dataType: 'json',
-              success: function (result) {
-                console.log(result);
-                $('#ForCountry').val(result.countries);
-                $('#ForState').val(result.states);
-              }
-          });
-      });
+@if(Auth::guard('web')->check())
+  @section('more-js')
+  <script>
+    $(document).ready(function () {
+        $('#institution').on('change', function () {
+            var institutionVal = this.value;
+            var base_url = window.location.origin;
+            $("#ForState").html('');
+            $.ajax({
+                url: base_url+"/api/institution/"+institutionVal,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (result) {
+                  console.log(result);
+                  $('#ForCountry').val(result.countries);
+                  $('#ForState').val(result.states);
+                }
+            });
+        });
 
-      $('#inputinstitution').hide();
-      $("#inputprojecttype").change(function(){
-        var values = $("#inputprojecttype option:selected").val();
-        if(values=='private'){
-          $('#inputinstitution').show();
-        }else{
-          $('#inputinstitution').hide();
-        }
-      });
-  });
-</script>
-@endsection
+        $('#inputinstitution').hide();
+        $("#inputprojecttype").change(function(){
+          var values = $("#inputprojecttype option:selected").val();
+          if(values=='private'){
+            $('#inputinstitution').show();
+          }else{
+            $('#inputinstitution').hide();
+          }
+        });
+    });
+  </script>
+  @endsection
+@elseif(Auth::guard('mentor')->check())
+  @section('more-js')
+  <script>
+    $(document).ready(function () {
+        $('#institution').on('change', function () {
+            var institutionVal = this.value;
+            var base_url = window.location.origin;
+            $("#ForState").html('');
+            $.ajax({
+                url: base_url+"/api/institution/"+institutionVal,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (result) {
+                  console.log(result);
+                  $('#ForCountry').val(result.countries);
+                  $('#ForState').val(result.states);
+                }
+            });
+        });
+
+        $('#inputinstitution').hide();
+    });
+  </script>
+  @endsection
+@endif

@@ -40,7 +40,7 @@
     {{-- @dd($project->enrolled_project) --}}
     <tr>
       <td>{{$no}}</td>
-      <td>{{$project->name}}</td>
+      <td>{{$project->name}} {{$project->institution_id == null ?'(Public)':'(Private)'}}</td>
       <td>{{$project->project_domain}}</td>
       <td>{{count($project->enrolled_project)}}</td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
@@ -63,35 +63,48 @@
                 @if (Route::is('dashboard.partner.partnerProjects'))
                   <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
                 @else
-                  <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
-                @endif
-              </li>
-              <li>
-                @if (Route::is('dashboard.partner.partnerProjects'))
-                <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/publishDraft" method="post">
-                @else
-                <form action="/dashboard/projects/{{$project->id}}/publishDraft" method="post">
-                @endif
-                  @method('patch')
-                  @csrf
-                  @if ($project->status == 'publish')
-                    <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Draft">
-                  @else
-                    <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Publish">
+                  @if(Auth::guard('web')->check())
+                    <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
+                  @elseif(Auth::guard('mentor')->check())
+                    @if($project->status == 'proposed')
+                      <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
+                    @endif
                   @endif
-                </form>
-              </li>
-              <li>
-                @if (Route::is('dashboard.partner.partnerProjects'))
-                <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post">
-                @else
-                <form action="/dashboard/projects/{{$project->id}}" method="post">
                 @endif
-                  @method('delete')
-                  @csrf
-                  <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
-                </form>
               </li>
+              @if (Auth::guard('web')->check())
+                <li>
+                  @if (Route::is('dashboard.partner.partnerProjects'))
+                  <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/publishDraft" method="post">
+                  @else
+                  <form action="/dashboard/projects/{{$project->id}}/publishDraft" method="post">
+                  @endif
+                    @method('patch')
+                    @csrf
+                    @if ($project->status == 'publish')
+                      <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Draft">
+                    @else
+                      <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Publish">
+                    @endif
+                  </form>
+                </li>
+              
+                <li>
+                  @if (Route::is('dashboard.partner.partnerProjects'))
+                  <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post">
+                  @else
+                  <form action="/dashboard/projects/{{$project->id}}" method="post">
+                  @endif
+                    @method('delete')
+                    @csrf
+                    <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
+                  </form>
+                </li>
+              @elseif(Auth::guard('mentor')->check())
+                <a href="/dashboard/projects/{{$project->id}}/show" class="block px-4 py-2 hover:bg-gray-100">View Details</a>
+                
+              @endif
+
             </ul>
         </div>
         {{-- <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/edit" >Edit</a>
