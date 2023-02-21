@@ -203,6 +203,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/delete/{key}', [ProjectController::class, 'partnerProjectsInjectionAttachmentDelete'])->name('partner.partnerProjectsInjectionAttachmentDelete');
         Route::post('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachmentStore'])->name('partner.partnerProjectsInjectionAttachmentStore');
 
+        // Partner edit member
+        Route::get('/partners/{partner}/members/{member}/edit', [ProjectController::class, 'partnerMemberEdit'])->name('mentors.partnerMemberEdit');
+
         // Customer
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');

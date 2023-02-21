@@ -56,7 +56,11 @@
       @if(Auth::guard('customer')->check())
         <td>{{$student->student->first_name}} {{$student->student->last_name}}</td>
         <td>{{$student->student->email}}</td>
-        <td>{{$student->student->mentor->first_name}} {{$student->student->mentor->last_name}}</td>
+        @if($student->student->mentor)
+          <td>{{$student->student->mentor->first_name}} {{$student->student->mentor->last_name}}</td>
+        @else
+          <td>Mentor not registered yet</td>
+        @endif
         <td>{{$student->student->updated_at->format('d/m/Y')}}</td>
         <td class="text-center">
           <button class="view-details space-y-7"
