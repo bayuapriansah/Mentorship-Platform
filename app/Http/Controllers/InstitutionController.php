@@ -77,7 +77,7 @@ class InstitutionController extends Controller
         $institutions->state = $validated['state'];
         if($request->hasFile('logo')){
             // 5000000
-            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
                 ){
@@ -86,7 +86,7 @@ class InstitutionController extends Controller
             }else{
                 return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
             }
-            
+
         }
         $institutions->save();
         return redirect()->route('dashboard.institutions_partners');
@@ -137,13 +137,13 @@ class InstitutionController extends Controller
         $institutions->country = $validated['countries'];
         $institutions->state = $validated['state'];
         if($request->hasFile('logo')){
-        
+
             if(Storage::path($institutions->logo)) {
                 Storage::disk('public')->delete($institutions->logo);
             }
-        
+
             // save the new image
-             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
                 ){
@@ -174,7 +174,7 @@ class InstitutionController extends Controller
         $message = "Successfully Deactive Data";
         return redirect()->route('dashboard.institutions_partners')->with('success', $message);
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *

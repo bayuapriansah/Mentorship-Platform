@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class testCode extends Command
 {
@@ -48,6 +48,7 @@ class testCode extends Command
         // foreach ($newMessage as $mesd) {
         //     // print_r($mesd->grade->submission);
         //     dd($mesd->grade->readornot);
+
         // }
         // dd($newMessage);
         // return $notif;
@@ -56,7 +57,7 @@ class testCode extends Command
         // ->join('grades', 'submissions.id', '=', 'grades.submission_id')
         // ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', 14)
         // ->get();
-        $encrypted = Crypt::encryptString('qujufaze@decabg.eu');
+        $encrypted = Hash::make('bayu');
         dd($encrypted);
     }
 }

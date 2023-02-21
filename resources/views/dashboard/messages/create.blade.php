@@ -9,7 +9,7 @@
   <div class="mb-3">
     <label for="inputproject">Select Project <span class="text-red-600">*</span></label>
     <select id="inputproject" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="project" required>
-      <option value="" hidden>Select Project</option>
+      <option hidden>Select Project</option>
       @foreach($projects as $project)
       <option value="{{$project->id}}">{{$project->name}}</option>
       @endforeach
@@ -25,11 +25,11 @@
   <div class="mb-3">
     <label for="inputprojectinjection">Select Task <span class="text-red-600">*</span></label>
     <select id="inputprojectinjection" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="injection" required>
-      <option value="" hidden>Select Task</option>
-      @foreach($projectSections as $injection)
+      <option hidden>Select Task</option>
+      {{-- @foreach($projectSections as $injection)
       <option value="{{$injection->id}}">{{$injection->title}}</option>
       @endforeach
-      <option value="other">Other</option>
+      <option value="other">Other</option> --}}
     </select><br>
     @error('injection')
         <p class="text-red-600 text-sm mt-1">
@@ -41,11 +41,11 @@
   <div class="mb-3">
     <label for="inputstudent">Select Student <span class="text-red-600">*</span></label>
     <select id="inputstudent" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="student" required>
-      <option value="" hidden>Select Task</option>
-      @foreach($students as $students)
+      <option hidden>Select Student</option>
+      {{-- @foreach($students as $students)
       <option value="{{$students->id}}">{{$students->first_name}} {{$students->last_name}}</option>
       @endforeach
-      <option value="other">Other</option>
+      <option value="other">Other</option> --}}
     </select><br>
     @error('student')
         <p class="text-red-600 text-sm mt-1">
@@ -59,7 +59,7 @@
     {{-- <input type="text" class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none"> --}}
     {{-- <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none " id="inputproject"  name="project" disabled>
       <option value="{{$participant->id}}">
-        {{$participant->mentor->first_name}} {{$participant->mentor->last_name}}, 
+        {{$participant->mentor->first_name}} {{$participant->mentor->last_name}},
         @foreach ($customer_participants as $customer)
           {{$customer->first_name}} {{$customer->last_name}},
         @endforeach
@@ -113,20 +113,20 @@ fileChatInput.addEventListener('change', e =>{
 })
 
 // Listen for file input change events
-fileInput.addEventListener('change', e => {
-    fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
-    // You can handle the files here.
-    handleUpload(e.target.files)
-    let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-    fileName.classList.add(...classesToAdd);
-    const fileClear = document.querySelector('.fa-times')
-    fileClear.addEventListener('click', e => {
-        e.preventDefault();
-        fileName.textContent = '';
-        fileInput.value = '';
-        resetUI();
-    });
-})
+// fileInput.addEventListener('change', e => {
+//     fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
+//     // You can handle the files here.
+//     handleUpload(e.target.files)
+//     let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
+//     fileName.classList.add(...classesToAdd);
+//     const fileClear = document.querySelector('.fa-times')
+//     fileClear.addEventListener('click', e => {
+//         e.preventDefault();
+//         fileName.textContent = '';
+//         fileInput.value = '';
+//         resetUI();
+//     });
+// })
 
 // Example function for handling file uploads
 function handleUpload(files) {
@@ -139,6 +139,47 @@ function resetUI() {
     console.log('Resetting UI');
     // Do something to reset the UI
 }
+
+$(document).ready(function () {
+      $('#inputproject').on('change', function () {
+          var idproject = this.value;
+          var base_url = window.location.origin;
+          $("#inputprojectinjection").html('');
+          $.ajax({
+              url: base_url+"/api/comment/"+idproject,
+              contentType: "application/json",
+              dataType: 'json',
+              success: function (result) {
+                // console.log(result);
+                  $('#inputprojectinjection').html('<option hidden>Select Task</option>');
+                  $.each(result, function (key, value) {
+                      $("#inputprojectinjection").append('<option value="' + value
+                          .id + '">' + value.title + '</option>');
+                  });
+                //   $('#inputstudent').html('<option value="">Select Student</option>');
+              }
+          });
+      });
+
+      $('#inputproject').on('change', function () {
+          var idproject = this.value;
+          var base_url = window.location.origin;
+          $("#inputstudent").html('');
+          $.ajax({
+              url: base_url+"/api/student/project/"+idproject,
+              contentType: "application/json",
+              dataType: 'json',
+              success: function (result) {
+                // console.log(result);
+                  $('#inputstudent').html('<option hidden>Select Task</option>');
+                  $.each(result, function (key, value) {
+                      $("#inputstudent").append('<option value="' + value
+                          .ID + '">' + value.first_name + ' ' + value.last_name +'</option>');
+                  });
+              }
+          });
+      });
+  });
 
 </script>
 @endsection

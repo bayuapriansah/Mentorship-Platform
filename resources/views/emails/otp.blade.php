@@ -1,100 +1,217 @@
-
-<!DOCTYPE html>
-<html lang="en" >
-  <head>
-    <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simulated Internship</title>
-    {{-- <title>{{$data['subject']}}</title> --}}
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
-    @vite('resources/css/app.css')
-    {{-- font --}}
-    <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet">
-    <meta name="theme-color" content="#712cf9">
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif">
+ <head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="telephone=no" name="format-detection">
+  <title>Simulated Internship Email</title><!--[if (mso 16)]>
+    <style type="text/css">
+    a {text-decoration: none;}
     </style>
-    <!-- Custom styles for this template -->
-  </head>
-</head>
-<body>
-  <div class="w-full bg-darker-blue">
-    <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
-      <a href="/" class="col-span-3">
-        <img src="{{asset('assets/img/intel-logo-white.png')}}" class="" alt="">
-      </a>
-      </div>
-    </nav>
+    <![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]--><!--[if gte mso 9]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG></o:AllowPNG>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+<style type="text/css">
+@import url('https://fonts.cdnfonts.com/css/intelone-display');
+#outlook a {
+	padding:0;
+}
+.es-button {
+	mso-style-priority:100!important;
+	text-decoration:none!important;
+}
+a[x-apple-data-detectors] {
+	color:inherit!important;
+	text-decoration:none!important;
+	font-size:inherit!important;
+	font-family:inherit!important;
+	font-weight:inherit!important;
+	line-height:inherit!important;
+}
+.es-desk-hidden {
+	display:none;
+	float:left;
+	overflow:hidden;
+	width:0;
+	max-height:0;
+	line-height:0;
+	mso-hide:all;
+}
+[data-ogsb] .es-button {
+	border-width:0!important;
+	padding:20px 30px 20px 30px!important;
+}
+.es-button-border:hover a.es-button, .es-button-border:hover button.es-button {
+	background:#0016bc!important;
+	border-color:#0016bc!important;
+}
+.es-button-border:hover {
+	border-color:#000f8a #000f8a #000f8a #000f8a!important;
+	background:#0016bc!important;
+	border-style:solid solid solid solid!important;
+}
+td .es-button-border-1:hover {
+	border-style:solid solid solid solid!important;
+	background:#0016bc!important;
+	border-color:#0016bc #0016bc #0016bc #0016bc!important;
+}
+@media only screen and (max-width:600px) {p, ul li, ol li, a { line-height:150%!important } h1, h2, h3, h1 a, h2 a, h3 a { line-height:120% } h1 { font-size:30px!important; text-align:left } h2 { font-size:24px!important; text-align:left } h3 { font-size:20px!important; text-align:left } .es-header-body h1 a, .es-content-body h1 a, .es-footer-body h1 a { font-size:30px!important; text-align:left } .es-header-body h2 a, .es-content-body h2 a, .es-footer-body h2 a { font-size:24px!important; text-align:left } .es-header-body h3 a, .es-content-body h3 a, .es-footer-body h3 a { font-size:20px!important; text-align:left } .es-menu td a { font-size:14px!important } .es-header-body p, .es-header-body ul li, .es-header-body ol li, .es-header-body a { font-size:14px!important } .es-content-body p, .es-content-body ul li, .es-content-body ol li, .es-content-body a { font-size:14px!important } .es-footer-body p, .es-footer-body ul li, .es-footer-body ol li, .es-footer-body a { font-size:14px!important } .es-infoblock p, .es-infoblock ul li, .es-infoblock ol li, .es-infoblock a { font-size:12px!important } *[class="gmail-fix"] { display:none!important } .es-m-txt-c, .es-m-txt-c h1, .es-m-txt-c h2, .es-m-txt-c h3 { text-align:center!important } .es-m-txt-r, .es-m-txt-r h1, .es-m-txt-r h2, .es-m-txt-r h3 { text-align:right!important } .es-m-txt-l, .es-m-txt-l h1, .es-m-txt-l h2, .es-m-txt-l h3 { text-align:left!important } .es-m-txt-r img, .es-m-txt-c img, .es-m-txt-l img { display:inline!important } .es-button-border { display:inline-block!important } a.es-button, button.es-button { font-size:18px!important; display:inline-block!important } .es-adaptive table, .es-left, .es-right { width:100%!important } .es-content table, .es-header table, .es-footer table, .es-content, .es-footer, .es-header { width:100%!important; max-width:600px!important } .es-adapt-td { display:block!important; width:100%!important } .adapt-img { width:100%!important; height:auto!important } .es-m-p0 { padding:0px!important } .es-m-p0r { padding-right:0px!important } .es-m-p0l { padding-left:0px!important } .es-m-p0t { padding-top:0px!important } .es-m-p0b { padding-bottom:0!important } .es-m-p20b { padding-bottom:20px!important } .es-mobile-hidden, .es-hidden { display:none!important } tr.es-desk-hidden, td.es-desk-hidden, table.es-desk-hidden { width:auto!important; overflow:visible!important; float:none!important; max-height:inherit!important; line-height:inherit!important } tr.es-desk-hidden { display:table-row!important } table.es-desk-hidden { display:table!important } td.es-desk-menu-hidden { display:table-cell!important } .es-menu td { width:1%!important } table.es-table-not-adapt, .esd-block-html table { width:auto!important } table.es-social { display:inline-block!important } table.es-social td { display:inline-block!important } .es-desk-hidden { display:table-row!important; width:auto!important; overflow:visible!important; max-height:inherit!important } .h-auto { height:auto!important } }
+</style>
+ </head>
+ <body style="width:100%;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+  <div class="es-wrapper-color" style="background-color:#F6F6F6"><!--[if gte mso 9]>
+			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+				<v:fill type="tile" color="#f6f6f6"></v:fill>
+			</v:background>
+		<![endif]-->
+       <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
+         <tr>
+          <td align="center" style="padding:0;Margin:0">
+           <table class="es-content-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:810px">
+             <tr>
+              <td align="left" background="https://github.com/bayuapriansah/public-repo-images/raw/main/image_9.png" style="padding:0;Margin:0;padding-right:10px;padding-top:20px;padding-left:30px;background-image:url(https://github.com/bayuapriansah/public-repo-images/raw/main/image_9.png);background-repeat:no-repeat;background-position:right bottom">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                 <tr>
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:770px">
+                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                     <tr>
+                      <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-bottom:50px;padding-right:20px;padding-left:40px"><img src="https://raw.githubusercontent.com/bayuapriansah/public-repo-images/main/Digitalreadiness-logo%201.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="260" height="75"></td>
+                     </tr>
+                     <tr>
+                        <td align="justify" style="padding:0;Margin:0;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;font-size:20px;">To authenticate please use the following One time password (OTP): </p></td>
+                       </tr>
+                     <tr>
+                      <td align="justify" style="padding:0;Margin:0;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:25px;font-weight: bold;">Verification Code</p></td>
+                     </tr>
+                   </table>
+                  </td>
+                 </tr>
+               </table></td>
+             </tr>
+             <tr>
+              <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-right:20px;padding-left:40px">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                 <tr>
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
+                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                       <tr>
+                          <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:36px;font-weight: bold;">{{$data['body']}}</p></td>
+                       </tr>
+                   </table></td>
+                 </tr>
+               </table></td>
+             </tr>
+             <tr>
+              <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-right:20px;padding-left:40px">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                 <tr>
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
+                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                        <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:19px">Please note that this code is only valid for the next five minutes. If you do not use it within this time frame, you will need to request a new code to log in.We recommend that you do not share this OTP code with anyone. This code is unique to you and should only be used for accessing your account.</p></td>
+                       </tr>
+                    <tr>
+                        <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:40px;padding-left:20px;padding-right:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:19px">If you didn’t request this email, there is nothing to worry about - you can safely ignore it</p></td>
+                       </tr>
+                   </table></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table></td>
+         </tr>
+       </table>
+       <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+        <tr>
+         <td align="center" style="padding:0;Margin:0">
+          <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#E4E7FF" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#e4e7ff;width:810px">
+            <tr>
+             <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0"
+                       cellspacing="0"><tr><td style="width:300px" valign="top"><![endif]-->
+              <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                <tr>
+                 <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:300px">
+                  <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-left:40px;font-size:0px"><img src="https://raw.githubusercontent.com/bayuapriansah/public-repo-images/main/Digitalreadiness-logo%201.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="180" height="50"></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td><td style="width:0px"></td><td style="width:470px" valign="top"><![endif]-->
+              <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                <tr>
+                 <td align="left" style="padding-right:20px;Margin:0;width:300px">
+                  <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td style="padding:0;Margin:0">
+                      <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                       <tr>
+                           <td style="color:#E4E7FF;">intel digital readiness</td>
+                       </tr>
+                        <tr class="links">
+                         <td align="center" valign="top" width="33%" id="esd-menu-id-0" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Email Preferences</a></td>
+                         <td align="center" valign="top" width="33%" id="esd-menu-id-1" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Policies</a></td>
+                         <td align="center" valign="top" width="33%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Help &amp; Support</a></td>
+                        </tr>
+                      </table></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td></tr></table><![endif]--></td>
+            </tr>
+            <tr>
+             <td align="left" style="padding:0;Margin:0">
+              <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tr>
+                 <td align="center" valign="top" style="padding:0;Margin:0;width:810px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="center" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-size:0">
+                      <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                        <tr>
+                         <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
+                        </tr>
+                      </table></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+             <td align="left" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0" cellspacing="0"><tr><td style="width:515px" valign="top"><![endif]-->
+              <table cellpadding="0" cellspacing="0" class="es-left" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                <tr>
+                 <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:515px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="left" style="padding-left:20px;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#838383;font-size:12px">© {{ date('Y') }} Intel Simulated Internships. All rights reserved.</p></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td><td style="width:0px"></td><td style="width:255px" valign="top"><![endif]-->
+              <table cellpadding="0" cellspacing="0" class="es-right" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                <tr>
+                 <td align="left" style="padding:0;Margin:0;width:255px">
+                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tr>
+                     <td align="right" style="padding-right:20px;Margin:0;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/imagesl.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="44" height="24"></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table><!--[if mso]></td></tr></table><![endif]--></td>
+            </tr>
+          </table></td>
+        </tr>
+      </table>
+      </td>
+     </tr>
+   </table>
   </div>
-<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-  <div style="margin:50px auto;width:70%;padding:20px 0">
-    <div style="border-bottom:1px solid #eee">
-      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Simulated Internship</a>
-    </div>
-    <p style="font-size:1.1em">Dear User,,</p>
-    <p>This code is confidential, please do not share to anyone.</p>
-    <p>Your One Time Password(OTP):</p>
-    <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">{{$data['body']}}</h2>
-    <p>It's Only Last for 5 Minutes</p>
-    <p style="font-size:0.9em;">Best Regards,<br />Simulated Internship</p>
-    <hr style="border:none;border-top:1px solid #eee" />
-    <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-      <p>Simulated Internship</p>
-    </div>
-  </div>
-</div>
-</body>
+ </body>
 </html>

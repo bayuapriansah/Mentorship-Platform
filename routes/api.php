@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('institution/{id}', [InstitutionController::class, 'GetInstituionById'])->name('getInstitutionData');
+Route::get('comment/{id}', [CommentController::class, 'getdatacomment'])->name('getdatacomment');
+Route::get('student/project/{project}', [CommentController::class, 'getdatastudent'])->name('getdatastudent');

@@ -24,7 +24,7 @@
       <td>{{$injection->project->project_domain}}</td>
       <td>{{substr($injection->title,0,35)}} {{strlen($injection->title)>=35?"...":''}}</td>
       <td>
-        <a href="/dashboard/messages/{{$injection->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">Message 
+        <a href="/dashboard/messages/{{$injection->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">Message
         <span class="bg-[#EA0202] p-1 rounded-full">
           {{$messages->where('project_section_id', $injection->id)->count()}}
         </span>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
+use App\Models\EnrolledProject;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
@@ -32,7 +33,7 @@ class CommentController extends Controller
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
 
-    
+
 
     public function index()
     {
@@ -47,6 +48,24 @@ class CommentController extends Controller
         $projectSections = ProjectSection::get();
         $students = Student::get();
         return view('dashboard.messages.create', compact('projects', 'projectSections', 'students'));
+    }
+
+    public function getdatacomment($id)
+    {
+        $projectSections = ProjectSection::where('project_id',$id)->get();
+        return $projectSections;
+    }
+
+    public function getdatastudent($id)
+    {
+        $EnrolledProjects = EnrolledProject::where('project_id', $id)->get();
+        $students = [];
+
+        foreach ($EnrolledProjects as $EnrolledProject) {
+            $students[] = $EnrolledProject->student;
+        }
+
+        return $students;
     }
 
     public function taskMessage(ProjectSection $injection)

@@ -169,10 +169,7 @@ class MailController extends Controller
             'subject' => 'Invitation to be a Student',
             'body' => $mailto,
             'body2' => $urlInvitation,
-            'body3' => '',
-            'body4' => '',
-            'body5'=> '',
-            'type' => 'student',
+            'type' => 'welcome',
         ];
         try
         {
