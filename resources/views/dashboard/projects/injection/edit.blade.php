@@ -114,17 +114,27 @@
   </div> --}}
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">File Attachment</h3>
+    {{-- @dd($attachment_id); --}}
     <div class="text-xl text-dark-blue">
       {{-- <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-xmark"></i> Add File Attachment</a> --}}
       @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
-        <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
+        @if ($attachment_id)
+          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
+        @else
+         <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
+        @endif
       @else
-        <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
+        @if ($attachment_id)
+          <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
+        @else
+          <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
+        @endif
+        
       @endif
     </div>
   </div>
   <div class="mb-3 space-y-2">
-    @foreach ($attachments as $attachment)
+    @forelse ($attachments as $attachment)
     <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
         <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
         <a href="{{asset('storage/'.$attachment->file1)}}" target="_blank" class="text-base">Attachment File 1</a>
@@ -160,7 +170,9 @@
             @endif
         </div>
     @endif
-    @endforeach
+    @empty
+    <p>No Attachments </p>
+    @endforelse
   </div>
   <div class="mb-3">
     <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" value="Submit">

@@ -37,9 +37,23 @@ class CommentController extends Controller
 
     public function index()
     {
-        $messages = Comment::get();
-        $injections = ProjectSection::whereHas('comment')->get();
-        return view('dashboard.messages.index', compact('messages','injections'));
+        if(Auth::guard('web')->check()){
+            $messages = Comment::get();
+            $injections = ProjectSection::whereHas('comment')->get();
+            return view('dashboard.messages.index', compact('messages','injections'));
+        }elseif(Auth::guard('mentor')->check()){
+            $messages = Comment::whereHas('student', function($q){
+                $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+            })->get();
+            $injections = ProjectSection::whereHas('comment', function($q){
+                $q->whereHas('student', function($q){
+                    $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                });
+            })->get();
+
+            // dd($injections);
+            return view('dashboard.messages.index', compact('messages','injections'));
+        }
     }
 
     public function create()
@@ -70,10 +84,17 @@ class CommentController extends Controller
 
     public function taskMessage(ProjectSection $injection)
     {
-        $participants = Student::whereHas('comment')->get();
-        $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
-        $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
-        return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
+        if(Auth::guard('web')->check()){
+            $participants = Student::whereHas('comment')->get();
+            $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
+            $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
+            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
+        }elseif(Auth::guard('mentor')->check()){
+            $participants = Student::whereHas('comment')->where('mentor_id',Auth::guard('mentor')->user()->id)->get();
+            $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
+            $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
+            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
+        }
     }
 
     public function single(ProjectSection $injection, Student $participant)

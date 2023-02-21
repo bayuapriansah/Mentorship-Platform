@@ -66,7 +66,7 @@
                   @if(Auth::guard('web')->check())
                     <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
                   @elseif(Auth::guard('mentor')->check())
-                    @if($project->status == 'proposed')
+                    @if($project->status == 'draft')
                       <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
                     @endif
                   @endif

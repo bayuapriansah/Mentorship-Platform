@@ -112,7 +112,7 @@ class ProjectController extends Controller
         if(Auth::guard('web')->check()){
             $project->status = 'draft';
         }elseif(Auth::guard('mentor')->check()){
-            $project->status = 'proposed';
+            $project->status = 'draft';
         }
 
         if(Auth::guard('web')->check()){

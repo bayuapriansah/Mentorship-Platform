@@ -23,7 +23,7 @@
     <tr>
       <td>{{$no}}</td>
       <td>{{$institution->institutions}}</td>
-      <td>contact@ {{$institution->institutions}}</td>
+      <td>{{$institution->email}}</td>
       <td>{{$institution->states}}</td>
       <td>{{$institution->countries}}</td>
       <td>{{$institution->created_at->format('d/m/ Y') }}</td>
