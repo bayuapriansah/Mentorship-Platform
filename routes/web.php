@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\IndexController;
@@ -275,6 +276,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Route::get('/messages/{injection}/reply/{participant}', [CommentController::class, 'adminReply'])->name('messages.adminReply');
         Route::post('/messages/{injection}/reply/{participant}/sendMessage', [CommentController::class, 'adminSendMessage'])->name('messages.adminSendMessage');
         Route::post('/messages', [CommentController::class, 'adminSendMessageGlobal'])->name('messages.adminSendMessageGlobal');
+        
+        // Profile
+        Route::get('/profile/{profile}/edit', [DashboardController::class, 'profile'])->name('profile.edit');
+        Route::patch('/profile/{profile}/', [DashboardController::class, 'updateProfile'])->name('profile.update');
+
+    
     });
     Route::middleware(['auth:web,mentor'])->group(function(){
                 // Student in sidebar menu

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 
+use Illuminate\Validation\Rule;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,7 +38,9 @@ class DashboardController extends Controller
       $assign_students   = Student::where('mentor_id', Auth::guard('mentor')->user()->id)->get()->count();
       $mentors    = Mentor::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
       // dd($mentors);
-      $student_submissions = Submission::get()->count();
+      $student_submissions = Submission::whereHas('student', function($q){
+        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+      })->count();
       return view('dashboard.index', compact('students','assign_students','mentors','student_submissions'));
     }
 
@@ -96,5 +99,65 @@ class DashboardController extends Controller
     {
         $submission = Submission::where('project_id', $project_id)->where('section_id', $section_id)->where('student_id', $student_id)->first();
         return view('dashboard.admin.assigned.section.submission.show', compact(['project_id','section_id','student_id','submission']));
+    }
+
+    // Profile
+
+    public function profile($id){
+      if (Auth::guard('web')->check()) {
+          # code...
+      }elseif(Auth::guard('mentor')->check()){
+        $user = Mentor::find($id);
+      }elseif(Auth::guard('customer')->check()){
+
+      }
+      return view('dashboard.admin.profile.edit', compact('user'));
+    }
+
+    public function updateProfile(Request $request, $id){
+      if (Auth::guard('web')->check()) {
+        # code...
+      }elseif(Auth::guard('mentor')->check()){
+        $validated = $request->validate([
+          'first_name' => ['required'],
+          'last_name' => ['required'],
+          'email' => ['required'],
+          'institution' => ['required'],
+          'state' => ['required'],
+          'country' => ['required'],
+          'sex' => ['required'],
+          'position' => ['required'],
+          'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+            return !empty($request->input('password'));
+          })],
+          'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+              return !empty($request->input('password'));
+          })]
+        ],
+        [
+          'first_name.required' => 'First name is required',
+          'last_name.required' => 'Last name is required',
+          'email.required' => 'Email is required',
+          'institution.required' => 'Institution is required',
+          'state.required' => 'State is required',
+          'country.required' => 'Country is required',
+          'sex.required' => 'Sex is required',
+          'position.required' => 'Position is required',
+          'password.confirmed' => 'Password confirmation must be the same',
+          'password_confirmation.required'=> 'Please enter your confirmation password',
+        ]);
+        // dd($request->all());
+        $mentor = Mentor::find($id);
+        $mentor->first_name = $validated['first_name'];
+        $mentor->last_name = $validated['last_name'];
+        $mentor->sex = $validated['sex'];
+        $mentor->position = $validated['position'];
+        $mentor->password = \Hash::make($validated['password']);
+        $mentor->save();
+        return back()->with('successTailwind', 'Profile Edited');
+      }elseif(Auth::guard('customer')->check()){
+
+      }
+      return back();
     }
 }
