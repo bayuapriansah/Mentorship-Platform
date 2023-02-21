@@ -140,11 +140,12 @@
               <!-- Modal body -->
               <div class="p-6 space-y-6">
                   <p class="text-base leading-relaxed text-gray-500">
-                    @if(Auth::guard('customer')->check())
+                    {{-- @if(Auth::guard('customer')->check())
                         {{Auth::guard('customer')->user()->name}}
                     @elseif(Auth::guard('web')->check())
                         {{Auth::guard('web')->user()->email}}
-                    @endif
+                    @endif --}}
+                    Notification Feature Will be in Future Release
                   </p>
               </div>
           </div>
