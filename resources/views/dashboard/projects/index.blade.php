@@ -13,10 +13,16 @@
   <a href="/dashboard/partners/{{$partner->id}}/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Project</a>
 </div>
 @else
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  <a href="/dashboard/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Project</a>
-</div>
+  <div class="flex justify-between mb-10">
+    <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
+    <a href="/dashboard/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> 
+      @if(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
+        Submit Project Proposal
+      @else
+        Add Project
+      @endif
+    </a>
+  </div>
 @endif
 <!-- Content Row -->
 
@@ -40,7 +46,18 @@
     {{-- @dd($project->enrolled_project) --}}
     <tr>
       <td>{{$no}}</td>
-      <td>{{$project->name}} {{$project->institution_id == null ?'(Public)':'(Private)'}}</td>
+      <td>{{$project->name}}
+        @if (Auth::guard('customer')->check())
+          @if ($project->institution_id==null)
+            (Public)
+          @else
+            (Private to {{$project->institution->name}})
+          @endif
+        @else
+        {{$project->institution_id == null ?'(Public)':'(Private)'}}
+            
+        @endif
+      </td>
       <td>{{$project->project_domain}}</td>
       <td>{{count($project->enrolled_project)}}</td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
@@ -65,7 +82,7 @@
                 @else
                   @if(Auth::guard('web')->check())
                     <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
-                  @elseif(Auth::guard('mentor')->check())
+                  @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check() )
                     @if($project->status == 'draft')
                       <a href="/dashboard/projects/{{$project->id}}/edit" class="block px-4 py-2 hover:bg-gray-100">Edit Details</a>
                     @endif
@@ -100,7 +117,7 @@
                     <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
                   </form>
                 </li>
-              @elseif(Auth::guard('mentor')->check())
+              @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
                 <a href="/dashboard/projects/{{$project->id}}/show" class="block px-4 py-2 hover:bg-gray-100">View Details</a>
                 
               @endif
