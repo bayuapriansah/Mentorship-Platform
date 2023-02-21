@@ -69,12 +69,19 @@
         <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
       </select>
     @else
-      <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
-        <option value="" hidden>Select Partner</option>
-        @foreach ($partners as $partner)
-          <option value="{{$partner->id}}" >{{$partner->name}}</option>
-          @endforeach
-      </select>
+      @if (Auth::guard('customer')->check())
+        {{Auth::guard('customer')->user()->company->name}}
+        <select class="border bg-gray-300 border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" disabled >
+            <option value="{{Auth::guard('customer')->user()->company_id}}" >{{Auth::guard('customer')->user()->company->name}}</option>
+        </select>
+      @else
+        <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
+          <option value="" hidden>Select Partner</option>
+          @foreach ($partners as $partner)
+            <option value="{{$partner->id}}" >{{$partner->name}}</option>
+            @endforeach
+        </select>
+      @endif
     @endif
     @error('partner')
         <p class="text-red-600 text-sm mt-1">
@@ -97,7 +104,7 @@
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
         <option value="public">Public to all institution</option>
-        @if(Auth::guard('web')->check())
+        @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
           <option value="private">Private to Your institution</option>
         @elseif(Auth::guard('mentor')->check())
           <option value="private">Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
@@ -200,15 +207,14 @@
   <div class="mb-3">
     @if (Auth::guard('web')->check())
       <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Add Project">
-    @elseif(Auth::guard('mentor')->check())
+    @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
       <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Propose Project">
-
     @endif
   </div>
 </form>
 @endsection
 
-@if(Auth::guard('web')->check())
+@if(Auth::guard('web')->check() || Auth::guard('customer')->check())
   @section('more-js')
   <script>
     $(document).ready(function () {

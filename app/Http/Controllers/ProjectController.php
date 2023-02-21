@@ -67,6 +67,9 @@ class ProjectController extends Controller
         }elseif(Auth::guard('mentor')->check()){
             $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->get();
             return view('dashboard.projects.index', compact('projects'));
+        }elseif(Auth::guard('customer')->check()){
+            $projects = Project::where('company_id', Auth::guard('customer')->user()->company_id)->with(['student', 'company'])->get();
+            return view('dashboard.projects.index', compact('projects'));
         }
     }
 
@@ -109,21 +112,20 @@ class ProjectController extends Controller
         $project->period = $validated['period'];
         $project->problem = $validated['problem'];
         $project->type = 'monthly';
-        if(Auth::guard('web')->check()){
+        if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
             $project->status = 'draft';
-        }elseif(Auth::guard('mentor')->check()){
-            $project->status = 'draft';
-        }
-
-        if(Auth::guard('web')->check()){
             $project->proposed_by = null;
         }elseif(Auth::guard('mentor')->check()){
+            $project->status = 'draft';
             $project->proposed_by = Auth::guard('mentor')->user()->id;
         }
-
-        $project->company_id = $request->partner;
+        if(Auth::guard('customer')->check()){
+            $project->company_id = Auth::guard('customer')->user()->company_id;
+        }else{
+            $project->company_id = $request->partner;
+        }
         if ($validated['projectType'] == 'private') {
-            if(Auth::guard('web')->check()){
+            if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
                 $project->institution_id = $request->institution_id;
             }elseif(Auth::guard('mentor')->check()){
                 $project->institution_id = Auth::guard('mentor')->user()->institution_id;

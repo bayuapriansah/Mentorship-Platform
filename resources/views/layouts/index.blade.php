@@ -159,6 +159,24 @@
                 </ul>
             </div>
           </li>
+        </ul>
+        @elseif(Auth::guard('customer')->check())
+        <ul class="text-left z-40">
+          <li>
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="intelOne text-darker-blue bg-light-grey  hover:bg-neutral-200 focus:ring-4 focus:outline-none focus:ring-light-grey font-medium rounded-lg text-sm px-11 py-2 text-center inline-flex items-center " type="button">{{Auth::guard('customer')->user()->email}} <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+      <!-- Dropdown menu -->
+            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
+                <ul class="py-1 text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="{{route('dashboard.customer')}}" class="block px-4 py-2 hover:text-dark-blue hover:font-semibold">Dashboard</a>
+                  </li>
+                  <form class="inline" method="post" action="{{ route('logout') }}" class="hover:bg-gray-100">
+                    @csrf
+                    <li><button type="submit" class="block px-4 py-2 hover:text-dark-blue hover:font-semibold intelOne">Log Out</button></li>
+                  </form>
+                </ul>
+            </div>
+          </li>
         </ul>       
         @else
         <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne mr-10">Login</a>

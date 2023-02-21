@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\IndexController;
@@ -139,16 +140,13 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     Route::middleware(['auth:web'])->group(function(){
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student in institutions
-        Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
         Route::get('/institutions/{institution}/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
         Route::patch('/institutions/{institution}/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
         Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
 
         Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
-        Route::resource('students', StudentController::class);
         Route::patch('/students/{student}/managepatch', [StudentController::class, 'manageStudentpatch' ])->name('students.manageStudentpatch');
-
-
+        
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
@@ -275,14 +273,23 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Route::get('/messages/{injection}/reply/{participant}', [CommentController::class, 'adminReply'])->name('messages.adminReply');
         Route::post('/messages/{injection}/reply/{participant}/sendMessage', [CommentController::class, 'adminSendMessage'])->name('messages.adminSendMessage');
         Route::post('/messages', [CommentController::class, 'adminSendMessageGlobal'])->name('messages.adminSendMessageGlobal');
+        
+        // Profile
+        Route::get('/profile/{profile}/edit', [DashboardController::class, 'profile'])->name('profile.edit');
+        Route::patch('/profile/{profile}/', [DashboardController::class, 'updateProfile'])->name('profile.update');
+
+        // Student
+        Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
+        Route::resource('students', StudentController::class);
+        Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
+    
     });
     Route::middleware(['auth:web,mentor'])->group(function(){
-                // Student in sidebar menu
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
 
-        Route::get('/students', [StudentController::class, 'index'])->name('students.index');
-        Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
-        Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
+        // Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+        // Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
+        // Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
 
         // Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
         // Route::resource('students', StudentController::class);
@@ -299,6 +306,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('{mentor}/assigned_projects/{project}/section/{section}/student/{student}/sendComment', [CommentController::class, 'SendComment'])->name('assigned.SendComment');
         Route::post('/profile/{student}/enrolled/{project}/task/{task}/chat', [CommentController::class, 'store'])->name('comment.store');
 
+    });
+
+    Route::middleware(['auth:web,customer'])->group(function(){
+        Route::get('/customer', [DashboardController::class, 'indexCustomer'])->name('customer');
     });
 });
 
