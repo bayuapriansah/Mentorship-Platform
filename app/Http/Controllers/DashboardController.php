@@ -27,7 +27,7 @@ class DashboardController extends Controller
       return view('dashboard.index', compact('students','mentors','eProjects','companies'));
     }
 
-    public function indexCompany()
+    public function indexCustomer()
     {
       return view('dashboard.index');
     }

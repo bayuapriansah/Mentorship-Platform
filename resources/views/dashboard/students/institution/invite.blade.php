@@ -34,7 +34,7 @@
 @else
     @if(Auth::guard('web')->check())
         <form action="{{route('dashboard.students.sendInvite')}}" method="post" enctype="multipart/form-data">
-    @elseif(Auth::guard('mentor')->check())
+    @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
         <form action="/dashboard/students/invite" method="post" enctype="multipart/form-data">
     @endif
 @endif

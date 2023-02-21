@@ -12,6 +12,12 @@
       @else
         <a href="/dashboard/mentor">Dashboard</a>
       @endif
+    @elseif(Auth::guard('customer')->check())
+      @if(Route::is('dashboard.customer'))
+        <a href="/dashboard/customer" class="font-medium">Dashboard</a>
+      @else
+        <a href="/dashboard/customer">Dashboard</a>
+      @endif
     @endif
     
   </li>

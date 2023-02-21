@@ -39,6 +39,9 @@ class StudentController extends Controller
         }elseif(Auth::guard('mentor')->check()){
             $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get();
             $enrolled_projects = EnrolledProject::get();
+        }elseif(Auth::guard('customer')->check()){
+            $students = EnrolledProject::whereHas('student')->get();
+            $enrolled_projects = EnrolledProject::get();
         }
 
         // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
@@ -126,7 +129,7 @@ class StudentController extends Controller
     }
 
     public function addStudent($email){
-        if(Auth::guard('web')->check()){
+        if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
             $student = Student::create([
                 'email' => $email,
             ]);

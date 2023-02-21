@@ -107,24 +107,6 @@
 
             </ul>
         </div>
-        {{-- <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/edit" >Edit</a>
-        <a class="btn btn-labeled bg-primary editbtn text-white" href="/dashboard/projects/{{$project->id}}/section" >Manage Task</a>
-
-        <form method="POST" action="/dashboard/projects/{{ $project->id }}" >
-          @csrf
-          @method('DELETE')
-          <div class="control">
-          <button type="submit" class="btn btn-danger ms-2" onClick="return confirm('Delete this project?')">Delete</button>
-        </form>
-
-        @if($project->status == 'draft')
-        <form method="POST" action="/dashboard/projects/{{ $project->id }}/publish" >
-          @csrf
-          @method('PATCH')
-          <div class="control">
-          <button type="submit" class="btn btn-success ms-2" onClick="return confirm('Publish this project??')">Publish</button>
-        </form>
-        @endif --}}
       </td>
     </tr>
     @php $no++ @endphp
