@@ -6,7 +6,7 @@
 
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Member</h3>
-  <a href="/dashboard/partners/{{$partner->id}}/members/invite" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Invite Member</a>
+  <a href="/dashboard/partners/{{$partner->id}}/members/invite" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Invite member</a>
 </div>
 
 @include('flash-message')
@@ -14,10 +14,9 @@
   <thead class="text-dark-blue">
     <tr>
       <th>No</th>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th>First name</th>
+      <th>Last name</th>
       <th>Email</th>
-      <th>Sex</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
@@ -31,7 +30,6 @@
       <td>{{$member->first_name}}</td>
       <td>{{$member->last_name}}</td>
       <td>{{$member->email}}</td>
-      <td>{{$member->gender}}</td>
       <td>
         @if ($member->is_confirm == 1)
           <span class="text-green-600">Active</span>
@@ -50,10 +48,20 @@
                 <a href="/dashboard/partners/{{$partner->id}}/members/{{$member->id}}/edit" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit Details</a>
               </li>
               <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deactivate</a>
+                <a href="/dashboard/partners/{{$partner->id}}/members/{{$member->id}}/suspend" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  @if($member->is_confirm == 1)
+                  Deactivate
+                  @else
+                  Activate
+                  @endif
+                </a>
               </li>
               <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                <form action="/dashboard/partners/{{$partner->id}}/members/{{$member->id}}" method="post">
+                  @method('delete')
+                  @csrf
+                  <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
+                </form>
               </li>
             </ul>
         </div>

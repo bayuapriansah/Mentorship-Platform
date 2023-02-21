@@ -16,6 +16,39 @@ class CustomerController extends Controller
         return view('dashboard.companies.partner.index', compact('members','partner'));
     }
 
+    public function partnerMemberEdit(Company $partner, Customer $member)
+    {
+        return view('dashboard.companies.partner.edit',compact('partner', 'member'));
+    }
+
+    public function partnerMemberUpdate(Request $request, Company $partner, Customer $member)
+    {
+        $member = Customer::find($member->id);
+        $member->email = $request->email;
+        $member->first_name = $request->first_name;
+        $member->last_name = $request->last_name;
+        $member->save();
+        return redirect()->back();
+    }
+    public function partnerMemberSuspend(Company $partner, Customer $member)
+    {
+        $member = Customer::find($member->id);
+        if($member->is_confirm == 1){
+            $member->is_confirm = 0;
+        }else{
+            $member->is_confirm = 1;
+        }
+        $member->save();
+        return redirect('/dashboard/partners/'.$partner->id.'/members');
+    }
+    public function destroy(Company $partner, Customer $member)
+    {
+        $member = Customer::find($member->id);
+        $member->delete();
+        return redirect('/dashboard/partners/'.$partner->id.'/members');
+
+    }
+    
     public function invite(Company $partner)
     {
         return view('dashboard.companies.partner.invite', compact('partner'));

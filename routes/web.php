@@ -156,7 +156,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/institutions/{institution}/students/invite', [StudentController::class, 'inviteFromInstitution'])->name('students.inviteFromInstitution');
         Route::post('/institutions/{institution}/students', [StudentController::class, 'sendInviteFromInstitution'])->name('students.sendInviteFromInstitution');
 
-        Route::post('/institutions/students', [StudentController::class, 'sendInvite'])->name('students.sendInvite');
+        // Route::post('/institutions/students', [StudentController::class, 'sendInvite'])->name('students.sendInvite');
 
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
         Route::get('/institutions/{institution}/supervisors/invite', [MentorController::class, 'invite'])->name('institutionSupervisorInvite');
@@ -204,11 +204,16 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachmentStore'])->name('partner.partnerProjectsInjectionAttachmentStore');
 
         // Partner edit member
-        Route::get('/partners/{partner}/members/{member}/edit', [ProjectController::class, 'partnerMemberEdit'])->name('mentors.partnerMemberEdit');
 
         // Customer
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
+        Route::get('/partners/{partner}/members/{member}/edit', [CustomerController::class, 'partnerMemberEdit'])->name('partner.partnerMemberEdit');
+        Route::patch('/parners/{partner}/members/{member}', [CustomerController::class, 'partnerMemberUpdate'])->name('partner.partnerMemberUpdate');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
+        // /dashboard/partners/{{$partner->id}}/members/{{$member->id}}/suspend
+        Route::get('/partners/{partner}/members/{member}/suspend', [CustomerController::class, 'partnerMemberSuspend'])->name('mentors.partnerMemberSuspend');
+        Route::delete('/partners/{partner}/members/{member}', [CustomerController::class, 'destroy'])->name('mentors.partnerMemberDelete');
+        
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
         Route::resource('partners', CompanyController::class);
 
