@@ -297,6 +297,7 @@ class StudentController extends Controller
         $student = Student::find($student->id);
         // $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student->id);
+        
         $newActivityNotifs = $this->newNotificationActivity($student->id);
         $notifActivityCount = $this->newNotificationActivityCount($student->id);
         return view('student.edit', compact('student','newMessage','newActivityNotifs','notifActivityCount'));

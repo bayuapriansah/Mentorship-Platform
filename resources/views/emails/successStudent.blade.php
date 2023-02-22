@@ -17,7 +17,6 @@
     <o:PixelsPerInch>96</o:PixelsPerInch>
     </o:OfficeDocumentSettings>
 </xml>
-{{-- l --}}
 <![endif]-->
 <style type="text/css">
 @import url('https://fonts.cdnfonts.com/css/intelone-display');
@@ -86,7 +85,7 @@ td .es-button-border-1:hover {
                   <td class="es-m-p0r" valign="top" align="center" style="padding:0;Margin:0;width:770px">
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intellogo2022_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="90" height="36"></td>
+                      <td align="left" style="padding:0;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intellogo2022_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="140" height="40"></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -109,7 +108,10 @@ td .es-button-border-1:hover {
                       <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/component_3.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
                      </tr>
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:45px">Reset Your Password.</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:45px;font-weight: bold;">Welcome on Board!</p></td>
+                     </tr>
+                     <tr>
+                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:0px;color:#000f8a;font-size:45px;font-weight: bold;">Let's get Started.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -122,12 +124,7 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">We received a request to reset your password. To reset your password, please click on the following link or copy and paste it into your browser:</p></td>
-                     </tr>
-                     <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">
-                        {{$data['body2']}}
-                      </td>
+                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Find out all the available internship oppurtunities below.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -137,12 +134,7 @@ td .es-button-border-1:hover {
               <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-right:20px;padding-left:40px">
                <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                  <tr>
-                  <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
-                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-top:40px;padding-bottom:40px;padding-left:20px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Click on the button below to reset password,</p></td>
-                     </tr>
-                   </table></td>
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:750px"></td>
                  </tr>
                </table></td>
              </tr>
@@ -154,15 +146,16 @@ td .es-button-border-1:hover {
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
                       <td align="left" style="padding:0;Margin:0;padding-left:40px"><!--[if mso]><a href="" target="_blank" hidden>
-	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="" 
+	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href=""
                 style="height:64px; v-text-anchor:middle; width:261px" arcsize="50%" stroke="f"  fillcolor="#000f8a">
 		<w:anchorlock></w:anchorlock>
 		<center style='color:#ffffff; font-family: 'IntelOne Display', arial, "helvetica neue", helvetica, sans-serif; font-size:20px; font-weight:400; line-height:20px;  mso-text-raise:1px'>Confirm Email Addess</center>
 	</v:roundrect></a>
-<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{$data['body2']}}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 30px 20px 30px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Reset Password</a></span><!--<![endif]--></td>
+<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ route('projects.index') }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 80px 20px 80px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Join a Program</a></span><!--<![endif]--></td>
                      </tr>
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">If you didn’t request this email, there is nothing to worry about - you can safely ignore it</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">Quick start video to get you going <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><iframe width="300" height="170" src="https://www.youtube.com/embed/OSCdZCfD8P8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -171,32 +164,20 @@ td .es-button-border-1:hover {
            </table></td>
          </tr>
        </table>
-       {{-- <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+       {{-- Start Footer --}}
+       <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
          <tr>
           <td align="center" style="padding:0;Margin:0">
            <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#E4E7FF" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#e4e7ff;width:810px">
              <tr>
-              <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px">
-               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                 <tr>
-                  <td align="center" valign="top" style="padding:0;Margin:0;width:770px">
-                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-left:40px;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intelblue_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="90" height="37"></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table></td>
-             </tr>
-             <tr>
-              <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0" 
+              <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px"><!--[if mso]><table style="width:770px" cellpadding="0"
                         cellspacing="0"><tr><td style="width:300px" valign="top"><![endif]-->
                <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
                  <tr>
                   <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:300px">
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-left:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#838383;font-size:12px">INTEL TECHNOLOGY INDIA PRIVATE LIMITED No.23/56P, Outer Ring Road, Varthur Hobli, Bellandur, Bangalore - 560103.</p></td>
+                      <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-left:40px;font-size:0px"><img src="https://raw.githubusercontent.com/bayuapriansah/public-repo-images/main/Digitalreadiness-logo%201.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="180" height="50"></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -208,6 +189,9 @@ td .es-button-border-1:hover {
                      <tr>
                       <td style="padding:0;Margin:0">
                        <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                        <tr>
+                            <td style="color:#E4E7FF;">intel digital readiness</td>
+                        </tr>
                          <tr class="links">
                           <td align="center" valign="top" width="33%" id="esd-menu-id-0" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Email Preferences</a></td>
                           <td align="center" valign="top" width="33%" id="esd-menu-id-1" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:10px;padding-bottom:10px;border:0"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;color:#000f8a;font-size:10px">Policies</a></td>
@@ -262,7 +246,8 @@ td .es-button-border-1:hover {
              </tr>
            </table></td>
          </tr>
-       </table> --}}
+       </table>
+       {{-- End Footer --}}
       </td>
      </tr>
    </table>
