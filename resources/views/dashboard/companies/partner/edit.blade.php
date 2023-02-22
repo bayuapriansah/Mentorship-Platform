@@ -1,14 +1,28 @@
 @extends('layouts.admin2')
 @section('content')
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/partners/{{$partner->id}}/members"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-</div>
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Edit Supervisor </h3>
-  <a href="/dashboard/partners/{{$partner->id}}/members" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
-</div>
+@if (Auth::guard('customer')->check())
+  <div class="text-[#6973C6] hover:text-light-blue">
+    <a href="/dashboard/customers"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+  </div>
+  <div class="flex justify-between mb-10">
+    <h3 class="text-dark-blue font-medium text-xl">{{Auth::guard('customer')->user()->company->name}} <i class="fa-solid fa-chevron-right"></i> Member</h3>
+    <a href="/dashboard/customers" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
+  </div>
+@else
+  <div class="text-[#6973C6] hover:text-light-blue">
+    <a href="/dashboard/partners/{{$partner->id}}/members"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+  </div>
+  <div class="flex justify-between mb-10">
+    <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Edit Supervisor </h3>
+    <a href="/dashboard/partners/{{$partner->id}}/members" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
+  </div>
+@endif
 
-<form action="/dashboard/parners/{{$partner->id}}/members/{{$member->id}}" method="post" class="w-3/4">
+@if (Auth::guard('customer')->check())
+  <form action="/dashboard/customers/{{$member->id}}" method="post" class="w-3/4">
+@else
+  <form action="/dashboard/parners/{{$partner->id}}/members/{{$member->id}}" method="post" class="w-3/4">
+@endif
   @method('patch')
   @csrf
   <input type="email" class="text w-full border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" value="{{ $member->email }}" placeholder="Email *" id="email" name="email" ><br>

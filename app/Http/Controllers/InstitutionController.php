@@ -169,7 +169,11 @@ class InstitutionController extends Controller
     public function suspendInstitution($id)
     {
         $institution = Institution::find($id);
-        $institution->status = 0;
+        if($institution->status==1){
+            $institution->status = 0;
+        }else{
+            $institution->status = 1;
+        }
         $institution->save();
         $message = "Successfully Deactive Data";
         return redirect()->route('dashboard.institutions_partners')->with('success', $message);

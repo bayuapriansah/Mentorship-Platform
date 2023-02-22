@@ -303,13 +303,28 @@ class StudentController extends Controller
         return view('student.edit', compact('student','newMessage','newActivityNotifs','notifActivityCount'));
     }
 
-    public function suspendAccount($institution_id,$student_id)
+    public function suspendAccountInstitution($institution_id,$student_id)
     {
         $students = Student::find($student_id);
         $students->is_confirm = 2;
         $students->save();
         $message = "Successfully Deactive Account";
-        return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
+        // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
+        return back()->with('success', $message);
+    }
+
+    public function suspendAccount($student_id)
+    {
+        $student = Student::find($student_id);
+        if($student->is_confirm == 1){
+            $student->is_confirm = 2;
+        }else{
+            $student->is_confirm = 1;
+        }
+        $student->save();
+        $message = "Successfully Deactive Account";
+        // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
+        return back()->with('success', $message);
     }
 
     /**

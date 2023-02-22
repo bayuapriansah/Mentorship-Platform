@@ -142,11 +142,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Student in institutions
         Route::get('/institutions/{institution}/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
         Route::patch('/institutions/{institution}/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
-        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
+        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccountInstitution' ])->name('students.suspendAccountInstitution');
 
         Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
         Route::patch('/students/{student}/managepatch', [StudentController::class, 'manageStudentpatch' ])->name('students.manageStudentpatch');
-        
+        Route::post('/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
+
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
@@ -318,6 +319,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
     Route::middleware(['auth:web,customer'])->group(function(){
         Route::get('/customer', [DashboardController::class, 'indexCustomer'])->name('customer');
+        Route::get('/customers', [DashboardController::class, 'allCustomer'])->name('customers.index');
+        Route::get('/customers/{member}/edit', [DashboardController::class, 'allCustomerEdit'])->name('customers.allCustomerEdit');
+        Route::get('/customers/invite', [CustomerController::class, 'invite'])->name('customers.invite');
+        Route::post('/customer/sendInvitePartner/{partner}', [CustomerController::class, 'sendInvitePartner'])->name('customers.sendInvitePartner');
+
+
     });
 });
 

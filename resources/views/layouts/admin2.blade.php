@@ -40,6 +40,21 @@
       height: 300,
       readonly : true
   });
+
+  tinymce.init({
+      selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
+      height: 350,
+      plugins: 'lists paste',
+      menubar: '',
+      toolbar: 'undo redo | styleselect | bold italic ',
+      automatic_uploads: false,
+      paste_as_text: true,
+      setup: function (editor) {
+      editor.on('change', function () {
+          tinymce.triggerSave();
+      });
+  }
+  });
   </script>
 </head>
 <body>

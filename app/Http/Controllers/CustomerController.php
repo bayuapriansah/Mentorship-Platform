@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,13 +52,16 @@ class CustomerController extends Controller
     
     public function invite(Company $partner)
     {
-        return view('dashboard.companies.partner.invite', compact('partner'));
+        if (!Auth::guard('customer')) {
+            return view('dashboard.companies.partner.invite', compact('partner'));
+        } else {
+            return view('dashboard.companies.partner.invite');
+        }
     }
 
     public function sendInvitePartner(Request $request,$partner_id)
     {
-        // dd($request->all());
-        $message = "Successfully Send Invitation to Student";
+        $message = "Invitation sented successfully";
         foreach (array_filter($request->email) as $email) {
             $checkCustomer = Customer::where('email', $email)->first();
             if(!$checkCustomer){

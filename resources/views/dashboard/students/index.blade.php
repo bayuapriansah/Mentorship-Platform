@@ -17,8 +17,10 @@
     <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">{{Auth::guard('mentor')->user()->institution->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
   @elseif(Auth::guard('customer')->check())
     <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">{{Auth::guard('customer')->user()->company->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
+  @elseif(Auth::guard('web')->check())
+    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle"> Students</h3>
+
   @endif
-  
   <a href="{{route('dashboard.students.invite')}}" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
 @endif
@@ -108,7 +110,7 @@
                   data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
                   data-student-is_confirm="{{ $student->is_confirm }}"
                   data-student-start="{{ $student->created_at->format('d M Y') }}"
-  
+                  data-student-btn="{{$student->is_confirm == 1 ? 'Deactive': 'Activate'}}"
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
@@ -144,6 +146,7 @@
         let studentJoin = $(this).data('student-join');
         let studentIs_confirm = $(this).data('student-is_confirm');
         let studentStart = $(this).data('student-start');
+        let studentBtn = $(this).data('student-btn');
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -174,7 +177,7 @@
                 <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
                 <form method="POST" action="/dashboard/students/${studentId}/suspend" >
                   @csrf
-                  <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg" id='SuspendActiveBtn'>Suspend Account</button>
+                  <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg" id='SuspendActiveBtn'>${studentBtn} Account</button>
                 </form>
                 <form method="POST" action="/dashboard/students/${studentId}" >
                   @csrf

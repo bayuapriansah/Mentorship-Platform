@@ -44,6 +44,16 @@
       <a href="/dashboard/projects">Projects</a>
     @endif
   </li>
+  @if(Auth::guard('customer')->check())
+    <li class="hover:font-medium">
+        @if(Route::is('dashboard.customers.index'))
+          <a href="/dashboard/customers" class="font-medium">Customers</a>
+        @else
+          <a href="/dashboard/customers">Customers</a>
+        @endif    
+    </li>
+  @endif
+
 
   {{-- @if(Auth::guard('mentor')->check())
   <li class="nav-item">

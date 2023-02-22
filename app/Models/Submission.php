@@ -25,4 +25,9 @@ class Submission extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
