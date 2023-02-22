@@ -132,7 +132,6 @@ class MentorController extends Controller
             'email' => 'required|email',
             'first_name' => 'required',
             'last_name' => 'required',
-            'sex' => 'required',
             'country' => 'required',
             'state' => 'required',
         ]);
@@ -141,7 +140,6 @@ class MentorController extends Controller
         $supervisor->email = $validated['email'];
         $supervisor->first_name = $validated['first_name'];
         $supervisor->last_name = $validated['last_name'];
-        $supervisor->sex = $validated['sex'];
         $supervisor->country = $validated['country'];
         $supervisor->state = $validated['state'];
         $supervisor->save();
