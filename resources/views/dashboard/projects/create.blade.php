@@ -14,7 +14,7 @@
 <div class="flex justify-between mb-10">
   @if(Auth::guard('web')->check())
     <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  @elseif(Auth::guard('mentor')->check())
+  @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
     <h3 class="text-dark-blue font-medium text-xl">Submit Project Proposal</h3>
   @endif
   <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
@@ -40,7 +40,7 @@
     <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain"  name="domain">
       <option value="" hidden>Select Project Domain *</option>
       <option value="nlp" {{old('domain') == 'nlp' ? 'selected': ''}}>NLP</option>
-      <option value="statistical" {{old('domain') == 'statistical' ? 'selected': ''}}>Statistical</option>
+      <option value="statistical" {{old('domain') == 'statistical' ? 'selected': ''}}>Statistical Data</option>
       <option value="computer_vision" {{old('domain') == 'computer_vision' ? 'selected': ''}}>Computer Vision</option>
     </select>
     @error('domain')

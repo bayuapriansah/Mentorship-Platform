@@ -319,6 +319,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
     Route::middleware(['auth:web,customer'])->group(function(){
         Route::get('/customer', [DashboardController::class, 'indexCustomer'])->name('customer');
+        Route::get('/customers', [DashboardController::class, 'allCustomer'])->name('customers.index');
+        Route::get('/customers/{member}/edit', [DashboardController::class, 'allCustomerEdit'])->name('customers.allCustomerEdit');
+        Route::get('/customers/invite', [CustomerController::class, 'invite'])->name('customers.invite');
+        Route::post('/customer/sendInvitePartner/{partner}', [CustomerController::class, 'sendInvitePartner'])->name('customers.sendInvitePartner');
+
+
     });
 });
 

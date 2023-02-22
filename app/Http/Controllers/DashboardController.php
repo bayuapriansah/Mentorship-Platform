@@ -47,6 +47,17 @@ class DashboardController extends Controller
       return view('dashboard.index', compact('internshipsTotal', 'internshipsOngoing', 'customerTotal', 'student_submissions'));
     }
 
+    public function allCustomer()
+    {
+      $members = Customer::where('company_id', Auth::guard('customer')->user()->company_id)->get();
+      return view('dashboard.companies.partner.index', compact('members'));
+    }
+
+    public function allCustomerEdit(Customer $member)
+    {
+      return view('dashboard.companies.partner.edit',compact('member'));
+    }
+
     public function indexMentor()
     {
       $students   = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();

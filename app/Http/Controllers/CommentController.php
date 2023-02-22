@@ -53,11 +53,11 @@ class CommentController extends Controller
             return view('dashboard.messages.index', compact('messages','injections'));
         }elseif(Auth::guard('customer')->check()){
             $messages = Comment::whereHas('project', function($q){
-                $q->where('company_id', Auth::guard('customer')->user()->id);
+                $q->where('company_id', Auth::guard('customer')->user()->company_id);
             })->get();
             $injections = ProjectSection::whereHas('comment', function($q){
                 $q->whereHas('project', function($q){
-                    $q->where('company_id', Auth::guard('customer')->user()->id);
+                    $q->where('company_id', Auth::guard('customer')->user()->company_id);
                 });
             })->get();
             return view('dashboard.messages.index', compact('messages','injections'));
@@ -104,7 +104,7 @@ class CommentController extends Controller
             return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
         }elseif(Auth::guard('customer')->check()){
             $participants = Student::whereHas('comment')->get();
-            $customer_participants = Customer::where('company_id',Auth::guard('customer')->user()->id)->get();
+            $customer_participants = Customer::where('company_id',Auth::guard('customer')->user()->company_id)->get();
             $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
             return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
         }
