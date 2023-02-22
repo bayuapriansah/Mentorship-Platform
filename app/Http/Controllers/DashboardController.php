@@ -30,7 +30,21 @@ class DashboardController extends Controller
 
     public function indexCustomer()
     {
-      return view('dashboard.index');
+      $internshipsTotal  = EnrolledProject::whereHas('project', function($q){
+        $q->where('company_id', Auth::guard('customer')->user()->company_id);
+      })->get()->count();
+
+      $internshipsOngoing = EnrolledProject::where('is_submited', 0)->whereHas('project', function($q){
+        $q->where('company_id', Auth::guard('customer')->user()->company_id);
+      })->get()->count();
+      
+      $customerTotal = Customer::where('company_id', Auth::guard('customer')->user()->company_id)->get()->count();
+
+      $student_submissions = Submission::whereHas('project', function($q){
+        $q->where('company_id', Auth::guard('customer')->user()->company_id);
+      })->count();
+
+      return view('dashboard.index', compact('internshipsTotal', 'internshipsOngoing', 'customerTotal', 'student_submissions'));
     }
 
     public function indexMentor()

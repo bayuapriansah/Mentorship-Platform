@@ -17,6 +17,9 @@
     <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">{{Auth::guard('mentor')->user()->institution->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
   @elseif(Auth::guard('customer')->check())
     <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">{{Auth::guard('customer')->user()->company->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
+  @elseif(Auth::guard('web')->check())
+    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle"> Students</h3>
+
   @endif
   <a href="{{route('dashboard.students.invite')}}" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
