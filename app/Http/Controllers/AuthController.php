@@ -243,7 +243,13 @@ class AuthController extends Controller
             $mentorsExist = Mentor::where('email',$request->email)->first();
             $customerExist = Customer::where('email',$request->email)->first();
             if($usersExist){
+                User::where('email',$request->email)->update([
+                    'password' =>\Hash::make($request->password)
+                ]);
 
+                \DB::table('password_resets')->where([
+                    'email'=>$request->email
+                ])->delete();
             }elseif($mentorsExist){
                 Mentor::where('email',$request->email)->update([
                     'password' =>\Hash::make($request->password)
@@ -253,7 +259,13 @@ class AuthController extends Controller
                     'email'=>$request->email
                 ])->delete();
             }elseif($customerExist){
+                Customer::where('email',$request->email)->update([
+                    'password' =>\Hash::make($request->password)
+                ]);
 
+                \DB::table('password_resets')->where([
+                    'email'=>$request->email
+                ])->delete();
             }
         }
 
