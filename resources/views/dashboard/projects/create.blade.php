@@ -105,9 +105,9 @@
         <option value="" hidden>Project type</option>
         <option value="public">Public to all institution</option>
         @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
-          <option value="private">Private to Your institution</option>
+          <option value="private">Private to one institution</option>
         @elseif(Auth::guard('mentor')->check())
-          <option value="private">Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+          <option value="private">Private to your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
         @endif
     </select>
   </div>
