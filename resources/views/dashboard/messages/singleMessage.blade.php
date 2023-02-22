@@ -22,6 +22,8 @@
                 {{$comment->mentor->first_name}} {{$comment->mentor->last_name}} (Supervisor)
               @elseif ($comment->user_id)
                 {{$comment->user->name}} (Platform Admin)
+              @elseif ($comment->customer_id)
+                {{$comment->customer->first_name}} {{$comment->customer->last_name}} (Customer)
               @else
                 {{$comment->student->first_name}} {{$comment->student->last_name}} (Student)
               @endif
