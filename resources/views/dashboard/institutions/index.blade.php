@@ -35,6 +35,7 @@
         data-institution-supervisor="{{count($institution->mentors)}}"
         data-institution-student="{{count($institution->students)}}"
         data-institution-status="{{$institution->status == 1 ? 'Active' : 'Deactive'}}"
+        data-institution-btn-text="{{$institution->status == 1 ? 'Deactive' : 'Activate'}}"
         >
           <i class="fa-solid fa-chevron-down"></i>
         </button>
@@ -101,6 +102,7 @@
         let institutionSupervisor = $(this).data('institution-supervisor');
         let institutionStudent = $(this).data('institution-student');
         let institutionStatus = $(this).data('institution-status');
+        let institutionBtn = $(this).data('institution-btn-text')
         if (row.child.isShown()) {
           $(this).html('<i class="fa-solid fa-chevron-down"></i>');
           row.child.hide();
@@ -122,7 +124,7 @@
                 <a href="/dashboard/institutions/${institutionId}/edit" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
                 <form method="POST" action="/dashboard/institutions/${institutionId}/suspend" >
                   @csrf
-                  <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">Deactive Institution</button>
+                  <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">${institutionBtn} Institution</button>
                 </form>
 
                 <form method="POST" action="/dashboard/institutions/${institutionId}" >

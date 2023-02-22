@@ -142,10 +142,11 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Student in institutions
         Route::get('/institutions/{institution}/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
         Route::patch('/institutions/{institution}/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
-        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
+        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccountInstitution' ])->name('students.suspendAccountInstitution');
 
         Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
         Route::patch('/students/{student}/managepatch', [StudentController::class, 'manageStudentpatch' ])->name('students.manageStudentpatch');
+        Route::post('/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
 
 
         // Institution
