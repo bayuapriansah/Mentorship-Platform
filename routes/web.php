@@ -81,8 +81,8 @@ Route::post('/password/reset/', [AuthController::class, 'resetPassword'])->name(
 
 
 // mentor register
-Route::get('/register/mentor/{email}', [MentorController::class, 'register'])->name('mentor.register');
-Route::post('/register/mentor/{email}', [MentorController::class, 'update'])->name('mentor.registerAuth');
+Route::get('/register/supervisor/{email}', [MentorController::class, 'register'])->name('supervisor.register');
+Route::post('/register/supervisor/{email}', [MentorController::class, 'update'])->name('supervisor.registerAuth');
 
 // student register - bayu - there's 2 route for now 09/02/2023
 Route::get('/register/student/{email}', [StudentController::class, 'register'])->name('student.register');
@@ -146,7 +146,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
         Route::patch('/students/{student}/managepatch', [StudentController::class, 'manageStudentpatch' ])->name('students.manageStudentpatch');
-        
+
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
@@ -273,7 +273,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Route::get('/messages/{injection}/reply/{participant}', [CommentController::class, 'adminReply'])->name('messages.adminReply');
         Route::post('/messages/{injection}/reply/{participant}/sendMessage', [CommentController::class, 'adminSendMessage'])->name('messages.adminSendMessage');
         Route::post('/messages', [CommentController::class, 'adminSendMessageGlobal'])->name('messages.adminSendMessageGlobal');
-        
+
         // Profile
         Route::get('/profile/{profile}/edit', [DashboardController::class, 'profile'])->name('profile.edit');
         Route::patch('/profile/{profile}/', [DashboardController::class, 'updateProfile'])->name('profile.update');
@@ -282,7 +282,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
         Route::resource('students', StudentController::class);
         Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
-    
+
     });
     Route::middleware(['auth:web,mentor'])->group(function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');

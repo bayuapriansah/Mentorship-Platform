@@ -15,7 +15,7 @@
     <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
       <div class="col-span-6">
           {{-- reg state 1 if we access register from email completion register --}}
-          <form action="{{ route('mentor.registerAuth',[$email]) }}" method="post" id="register">
+          <form action="{{ route('supervisor.registerAuth',[$email]) }}" method="post" id="register">
               @csrf
 
               <input type="email" class="text w-full border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{ $checkMentor->email }}" placeholder="Email *" id="email" name="email" readonly><br>

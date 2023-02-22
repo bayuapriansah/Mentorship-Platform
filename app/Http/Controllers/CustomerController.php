@@ -29,7 +29,7 @@ class CustomerController extends Controller
             $checkCustomer = Customer::where('email', $email)->first();
             if(!$checkCustomer){
                 $encEmail = (new SimintEncryption)->encData($email);
-                $link = route('mentor.register', [$encEmail]);
+                $link = route('supervisor.register', [$encEmail]);
                 $student = $this->addCustomerToPartner($email,$partner_id);
                 $sendmail = (new MailController)->EmailMemberInvitation($student->email,$link);
                 $message .= "\n$email";

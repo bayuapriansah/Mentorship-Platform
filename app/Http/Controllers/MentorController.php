@@ -48,7 +48,7 @@ class MentorController extends Controller
             $checkMentor = Mentor::where('email', $email)->first();
             if (!$checkMentor) {
                 $encEmail = (new SimintEncryption)->encData($email);
-                $link = route('mentor.register', [$encEmail]);
+                $link = route('supervisor.register', [$encEmail]);
                 $mentors = $this->addMentor($email,$institution_id);
                 $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
                 $message .= "\n$email";
