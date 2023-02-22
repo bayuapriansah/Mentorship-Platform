@@ -276,45 +276,49 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
-                    <div class="max-h-60 overflow-y-auto">
-                        {{-- code comment here --}}
+                  <div class="max-h-60 overflow-y-auto">
+                      {{-- code comment here --}}
                     @if($notifActivityCount->count() > 0)
-                            @foreach ($newActivityNotifs as $newActivityNotif)
-                            {{-- Start Her --}}
-                            @if ($newActivityNotif->grade == !NULL)
-                                @if ($newActivityNotif->grade->readornot != 1)
-                                {{-- {{ $newActivityNotif->grade->readornot != 1 }} --}}
-                                    <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow {{ $newActivityNotif->grade->status == 0 ? 'bg-red-900' : 'bg-green-900' }} text-gray-400 mt-4" role="alert">
-                                        <div class="flex">
-                                            <div class="ml-3 text-sm font-normal">
-                                                <span class="mb-1 text-sm font-semibold text-white">Task : {{ $newActivityNotif->grade->submission->projectSection->title }}</span>
-                                                <p>
-                                                <a href="
-                                                    {{ route('student.readActivity',
-                                                    [$newActivityNotif->grade->submission->student_id,
-                                                    $newActivityNotif->grade->submission->project_id,
-                                                    $newActivityNotif->grade->submission->section_id,
-                                                    $newActivityNotif->grade->submission->id]) }}" class="mb-2 text-sm font-normal text-white">Hi {{$student->first_name}} {{$student->last_name}},
-                                                    @if($newActivityNotif->grade->status == 0)
-                                                        {{ 'Sorry but you need to revise the Task' }}
-                                                    @elseif($newActivityNotif->grade->status == 1)
-                                                        {{ 'Great you Pass the Task' }}
-                                                    @else
-                                                        {{ 'Nothing' }}
-                                                    @endif
-                                                .</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endif
-                            {{-- END HERE --}}
-                            @endforeach
-                        @else
-{{ 'No Notification' }}
-                        @endif
-                    </div>
+                        @foreach ($newActivityNotifs as $newActivityNotif)
+                          {{-- Start Her --}}
+                          @if ($newActivityNotif->grade == !NULL)
+                              @if ($newActivityNotif->grade->readornot != 1)
+                              {{-- {{ $newActivityNotif->grade->readornot != 1 }} --}}
+                                  <div id="toast-message-cta" class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow {{ $newActivityNotif->grade->status == 0 ? 'bg-red-900' : 'bg-green-900' }} text-gray-400 mt-4" role="alert">
+                                      <div class="flex">
+                                          <div class="ml-3 text-sm font-normal">
+                                              <span class="mb-1 text-sm font-semibold text-white">Task : {{ $newActivityNotif->grade->submission->projectSection->title }}</span>
+                                              <p>
+                                              <a href="
+                                                  {{ route('student.readActivity',
+                                                  [$newActivityNotif->grade->submission->student_id,
+                                                  $newActivityNotif->grade->submission->project_id,
+                                                  $newActivityNotif->grade->submission->section_id,
+                                                  $newActivityNotif->grade->submission->id]) }}" class="mb-2 text-sm font-normal text-white">Hi {{$student->first_name}} {{$student->last_name}},
+                                                  @if($newActivityNotif->grade->status == 0)
+                                                      {{ 'Sorry but you need to revise the Task' }}
+                                                  @elseif($newActivityNotif->grade->status == 1)
+                                                      {{ 'Great you Pass the Task' }}
+                                                  @else
+                                                      {{ 'Nothing' }}
+                                                  @endif
+                                              .</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              @endif
+                          @endif
+                        {{-- END HERE --}}
+                        @endforeach
+                    @else
+                      {{ 'No Notification' }}
+                    @endif
+                  </div>
+                  <div class="border-t border-light-blue ">
+                    <a href="#" class="text-[#6973C6] text-xs">View All Notifications</a>
+                  </div>
                 </div>
+                
             </div>
         </div>
       </div>

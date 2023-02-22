@@ -70,7 +70,6 @@
       </select>
     @else
       @if (Auth::guard('customer')->check())
-        {{Auth::guard('customer')->user()->company->name}}
         <select class="border bg-gray-300 border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" disabled >
             <option value="{{Auth::guard('customer')->user()->company_id}}" >{{Auth::guard('customer')->user()->company->name}}</option>
         </select>
@@ -103,7 +102,7 @@
   <div class="mb-3">
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
-        <option value="public">Public to all institution</option>
+        <option value="public">Public to all institutions</option>
         @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
           <option value="private">Private to one institution</option>
         @elseif(Auth::guard('mentor')->check())
