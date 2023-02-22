@@ -71,6 +71,7 @@ td .es-button-border-1:hover {
 				<v:fill type="tile" color="#f6f6f6"></v:fill>
 			</v:background>
 		<![endif]-->
+{{-- This is the Header        --}}
    <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top;background-color:#F6F6F6">
      <tr>
       <td valign="top" style="padding:0;Margin:0">
@@ -87,13 +88,17 @@ td .es-button-border-1:hover {
                      <tr>
                         <td align="left" style="padding:0;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intellogo2022_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="140" height="40"></td>
                      </tr>
-                   </table></td>
+                   </table>
+                  </td>
                  </tr>
-               </table></td>
+               </table>
+              </td>
              </tr>
-           </table></td>
+           </table>
+          </td>
          </tr>
        </table>
+{{-- This is the Header        --}}
        <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
          <tr>
           <td align="center" style="padding:0;Margin:0">
@@ -165,7 +170,9 @@ td .es-button-border-1:hover {
            </table></td>
          </tr>
        </table>
-       {{-- <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+
+{{-- This is The Footer --}}
+       <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
         <tr>
          <td align="center" style="padding:0;Margin:0">
           <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#E4E7FF" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#e4e7ff;width:810px">
@@ -246,7 +253,8 @@ td .es-button-border-1:hover {
             </tr>
           </table></td>
         </tr>
-      </table> --}}
+      </table>
+{{-- End Of Footer --}}
       </td>
      </tr>
    </table>

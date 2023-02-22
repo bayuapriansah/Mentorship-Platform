@@ -62,12 +62,11 @@ class MentorController extends Controller
     }
 
     public function addMentor($email,$institution_id){
-        $mentor = Mentor::create([
+        return Mentor::create([
             'email' => $email,
             'institution_id' => $institution_id,
             'is_confirm' => 0
         ]);
-        return $mentor;
     }
 
     // dont need it but dont stash the function

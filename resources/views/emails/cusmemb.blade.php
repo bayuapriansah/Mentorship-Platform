@@ -105,12 +105,12 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:770px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/component_3.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
+                      <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://raw.githubusercontent.com/bayuapriansah/public-repo-images/main/simulated_cusmem.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
                      </tr>
                      <tr>
                       <!-- <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:38px;font-weight: bold;">You are invited to the Intel Simulated Internship. To get started with the platform, please confirm your email address.</p></td> -->
                       <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px">
-                        <div style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:30px;font-weight: bold;">You’ve been invited to join <div style="color: #DEAA51; display: inline;">Simulated Internship</div> Platform for <div style="color: #DEAA51; display: inline;">Industry Readiness</div> as a Partner Member.</div></td>
+                        <div style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:30px;font-weight: bold;">You are invited to the Simulated Internship Platform. To join the platform, please verify your email address.</div></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -123,7 +123,7 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">After you confirm your email address is {{$data['body'] }}, you will be redirected to the platform and can proceed with registration by filling out your personal information.</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">After verifying your email address, you will be redirected to the registration page to fill in your personal information.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -136,7 +136,7 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-top:40px;padding-bottom:40px;padding-left:20px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Please click on the link below to accept invitation and proceed to the registration page.</p></td>
+                      <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-bottom:40px;padding-left:20px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Please click on the button below to confirm that {{$data['body'] }} is your email address and proceed to the registration page.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -167,7 +167,7 @@ td .es-button-border-1:hover {
            </table></td>
          </tr>
        </table>
-       {{-- <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+       <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
         <tr>
          <td align="center" style="padding:0;Margin:0">
           <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#E4E7FF" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#e4e7ff;width:810px">
@@ -248,7 +248,7 @@ td .es-button-border-1:hover {
             </tr>
           </table></td>
         </tr>
-      </table> --}}
+      </table>
       </td>
      </tr>
    </table>

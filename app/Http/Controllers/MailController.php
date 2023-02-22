@@ -8,17 +8,37 @@ use App\Mail\MailNotify;
 use Exception;
 class MailController extends Controller
 {
+
+    // Used Function
+
+    /*
+    /
+    /   Function used when platform admin using single invitation or bulk invitation
+    /
+    */
+    public function EmailMentorInvitation($mailto,$urlInvitation) //Email, urlInvitation
+    {
+        $data = [
+            'subject' => 'Invitation to be a Mentor',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            'type' => 'cusmemb',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Invitation  Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
     public function emailregister($mailto) //Just Email
     {
         $data = [
             'subject' => 'Registration Completed',
             'body' => $mailto,
             'body2' => (new SimintEncryption)->encData($mailto),
-            // 'body' => 'Your registration as Student is Completed',
-            // 'body2' => 'You can Login, and Choose the Projet that Available.',
-            // 'body3' => 'If you still have a question related about this, please contact us.',
-            // 'body4'=> 'Best regards,',
-            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'welcome',
         ];
         try
@@ -72,11 +92,6 @@ class MailController extends Controller
             'subject' => 'Reset Password',
             'body' => $mailto,
             'body2' => $urlInvitation,
-            // 'body' => 'Your registration as Student is Completed',
-            // 'body2' => 'You can Login, and Choose the Projet that Available.',
-            // 'body3' => 'If you still have a question related about this, please contact us.',
-            // 'body4'=> 'Best regards,',
-            // 'body5'=> 'Simulated Internship Team ❤️',
             'type' => 'reset',
         ];
         try
@@ -101,26 +116,6 @@ class MailController extends Controller
         {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Mentor Registration Email sent successfully']);
-        } catch (\Exception $th) {
-            return response()->json(['Sorry Something went wrong']);
-        }
-    }
-
-    public function EmailMentorInvitation($mailto,$urlInvitation) //Email, urlInvitation
-    {
-        $data = [
-            'subject' => 'Invitation to be a Mentor',
-            'body' => $mailto,
-            'body2' => $urlInvitation,
-            'body3' => '',
-            'body4' => '',
-            'body5'=> '',
-            'type' => 'mentor',
-        ];
-        try
-        {
-            Mail::to($mailto)->send(new MailNotify($data));
-            return response()->json(['Mentor Invitation  Email sent successfully']);
         } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
