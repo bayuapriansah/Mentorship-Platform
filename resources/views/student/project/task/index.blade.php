@@ -269,8 +269,9 @@
                               {{-- <input type="text" class="w-full px-4 py-6 text-sm border border-gray-300 rounded outline-none"  name="tags"  value="Alpine Js, Tailwind CSS, PHP8.0" autofocus/> --}}
                             </div>
                             <a class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
-                            <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>
-                            <button class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full shadow-xl float-right" style="display: none;" id="submit"type="submit">Yes, Submit</button>
+                            <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-8 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>
+                            <button class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-8 py-3 mt-5 items-end rounded-full shadow-xl float-right" style="display: none;" id="submit"type="submit">Yes, Submit</button>
+                            <h1 id="text-confirm" class="intelOne text-dark-blue text-sm font-bold py-3 mt-5 items-end float-left cursor-text" style="display: none;">Are you sure you want to make the final submission?</h1>
                           </div>
                         </form>
                     </div>
@@ -332,12 +333,14 @@ document.querySelector('#confirm').addEventListener('click', function () {
   document.querySelector('#confirm').style.display = 'none';
   document.querySelector('#cancel').style.display = 'block';
   document.querySelector('#submit').style.display = 'block';
+  document.querySelector('#text-confirm').style.display = 'block';
 });
 
 document.querySelector('#cancel').addEventListener('click', function () {
   document.querySelector('#confirm').style.display = 'block';
   document.querySelector('#cancel').style.display = 'none';
   document.querySelector('#submit').style.display = 'none';
+  document.querySelector('#text-confirm').style.display = 'none';
 });
 
 
