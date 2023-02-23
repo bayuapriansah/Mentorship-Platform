@@ -26,13 +26,7 @@
 @endif
 
 
-<!-- Content Row -->
-{{-- @foreach($students as $student)
-@php
-    $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d M Y');
-@endphp
-
-@endforeach --}}
+@include('flash-message')
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -182,7 +176,7 @@
                 <form method="POST" action="/dashboard/students/${studentId}" >
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</button>
+                  <button type="submit" onClick="return confirm('Delete this student?')" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</button>
                 </form>
               </div>
               <div class="text-right">
