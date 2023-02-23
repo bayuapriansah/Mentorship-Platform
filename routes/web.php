@@ -114,6 +114,11 @@ Route::group(['middleware'=>'auth:student'], function(){
 
     Route::get('/profile/{student}/edit', [StudentController::class, 'edit'])->name('student.edit');
     Route::patch('/profile/{student}', [StudentController::class, 'update'])->name('student.update');
+
+    // Bell Notification
+    // /profile/{{$student->id}}/all-notification
+    // Route::get('/profile/{student}/allNotification')
+
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){

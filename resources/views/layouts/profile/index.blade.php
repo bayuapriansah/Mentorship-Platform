@@ -258,6 +258,7 @@
         </div>
     </div>
   </div>
+  {{-- @dd($newActivityNotifs); --}}
 
     {{-- Notification Modal --}}
     <div id="notification-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
@@ -315,7 +316,7 @@
                     @endif
                   </div>
                   <div class="border-t border-light-blue ">
-                    <a href="#" class="text-[#6973C6] text-xs">View All Notifications</a>
+                    <a href="/profile/{{$student->id}}/all-notification" class="text-[#6973C6] text-xs">View All Notifications</a>
                   </div>
                 </div>
                 
