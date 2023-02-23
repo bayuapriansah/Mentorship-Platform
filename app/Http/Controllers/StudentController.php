@@ -450,10 +450,12 @@ class StudentController extends Controller
     // STUDENT PROFILE
 
     public function newNotificationActivityCount($id){
-        $notifActivityCount = Submission::select('submissions.id as submission_id', 'students.id as student_id')
+        $notifActivityCounts = Submission::select('submissions.id as submission_id', 'students.id as student_id')
         ->join('grades', 'submissions.id', '=', 'grades.submission_id')
         ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)->where('readornot', 0)
         ->get();
+        $notif = (new NotificationController)->count_total_all_notification_available();
+        $notifActivityCount = $notifActivityCounts->count() + $notif->count();
         return $notifActivityCount;
     }
 

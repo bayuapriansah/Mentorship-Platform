@@ -225,18 +225,15 @@ class ProjectController extends Controller
 
     public function dashboardpublishDraft(Company $partner, Project $project)
     {
-        Notification::create([
-            'project_id' => $project->id,
-        ]);
+        $notification = (new NotificationController)->project_notification($project);
 
-
-       $project = Project::find($project->id);
-       if($project->status == 'publish'){
-           $project->status = 'draft';
-       }else{
-           $project->status = 'publish';
-       }
-       $project->save();
+        $project = Project::find($project->id);
+        if($project->status == 'publish'){
+            $project->status = 'draft';
+        }else{
+            $project->status = 'publish';
+        }
+        $project->save();
        return redirect('/dashboard/projects');
 
     }
