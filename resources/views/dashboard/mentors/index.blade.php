@@ -26,7 +26,6 @@
       <th>No</th>
       <th>Name</th>
       <th>Email</th>
-      <th>Sex</th>
       <th>Institution Name</th>
       <th>State</th>
       <th>Country</th>
@@ -41,7 +40,6 @@
       <td>{{$no}}</td>
       <td>{{$mentor->first_name}} {{$mentor->last_name}}</td>
       <td>{{$mentor->email}}</td>
-      <td>{{$mentor->sex}}</td>
       <td>{{$mentor->institution->name}}</td>
       <td>{{$mentor->state}}</td>
       <td>{{$mentor->country}}</td>

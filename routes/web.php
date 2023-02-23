@@ -23,6 +23,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\EmailBulkInvitationController;
 
 /*
@@ -117,7 +118,7 @@ Route::group(['middleware'=>'auth:student'], function(){
 
     // Bell Notification
     // /profile/{{$student->id}}/all-notification
-    // Route::get('/profile/{student}/allNotification')
+    Route::get('/profile/{student}/allNotification', [NotificationController::class, 'index'])->name('student.allNotification');
 
 });
 // Student projects page

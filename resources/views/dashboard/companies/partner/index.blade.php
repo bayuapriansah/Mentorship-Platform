@@ -1,12 +1,12 @@
 @extends('layouts.admin2')
 @section('content')
-@if(!Auth::guard('customer'))
+@if(!Auth::guard('customer')->check())
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/institutions_partners"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
 @endif
 
-@if(Auth::guard('customer'))
+@if(Auth::guard('customer')->check())
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">{{Auth::guard('customer')->user()->company->name}} <i class="fa-solid fa-chevron-right"></i> Customers</h3>
   <a href="/dashboard/customers/invite" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i>Invite Customer</a>
@@ -28,6 +28,9 @@
       <th>Last name</th>
       <th>Email</th>
       <th>Status</th>
+      @if(!Auth::guard('customer')->check())
+      <th>View</th>
+      @endif
     </tr>
   </thead>
   <tbody>
@@ -48,7 +51,7 @@
           <span class="text-[#D89B33]">Pending</span>
         @endif
       </td>
-      @if(!Auth::guard('customer'))
+      @if(!Auth::guard('customer')->check())
         <td>
           <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover{{$no}}" data-dropdown-trigger="hover" class="text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
           <!-- Dropdown menu -->
