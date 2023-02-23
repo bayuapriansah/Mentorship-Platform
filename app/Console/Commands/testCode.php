@@ -61,8 +61,17 @@ class testCode extends Command
 //        $encrypted = Hash::make('bayu');
 //        dd($encrypted);
 
-        $student_id = 1;
-        $notif = Notification::get();
-        dd($notif->count());
+        // $student_id = 1;
+        // $notif = Notification::get();
+        // dd($notif->count());
+
+        $notifActivity = Notification::get();
+        $nop = [];
+        foreach($notifActivity as $no){
+            $nop[] = $no->project;
+        }
+        dd($nop);
+        // dd(count($nop));
+        // dd($notif->count() + $notifActivityCount);
     }
 }
