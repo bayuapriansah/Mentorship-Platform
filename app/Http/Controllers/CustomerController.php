@@ -55,7 +55,8 @@ class CustomerController extends Controller
         if (!Auth::guard('customer')) {
             return view('dashboard.companies.partner.invite', compact('partner'));
         } else {
-            return view('dashboard.companies.partner.invite');
+            // need to put partner here for a while @farhanfarhan9
+            return view('dashboard.companies.partner.invite', compact('partner'));
         }
     }
 

@@ -6,6 +6,7 @@
     </div>
 @else
     <div class="text-[#6973C6] hover:text-light-blue">
+        {{-- @dd($partner) --}}
         <a href="/dashboard/partners/{{$partner->id}}/members"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
     </div>
 @endif
