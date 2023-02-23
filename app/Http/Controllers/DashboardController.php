@@ -153,7 +153,6 @@ class DashboardController extends Controller
           'institution' => ['required'],
           'state' => ['required'],
           'country' => ['required'],
-          'sex' => ['required'],
           'position' => ['required'],
           'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
             return !empty($request->input('password'));
@@ -169,7 +168,6 @@ class DashboardController extends Controller
           'institution.required' => 'Institution is required',
           'state.required' => 'State is required',
           'country.required' => 'Country is required',
-          'sex.required' => 'Sex is required',
           'position.required' => 'Position is required',
           'password.confirmed' => 'Password confirmation must be the same',
           'password_confirmation.required'=> 'Please enter your confirmation password',
@@ -178,7 +176,6 @@ class DashboardController extends Controller
         $mentor = Mentor::find($id);
         $mentor->first_name = $validated['first_name'];
         $mentor->last_name = $validated['last_name'];
-        $mentor->sex = $validated['sex'];
         $mentor->position = $validated['position'];
         if(!empty($validated['password'])){
         $mentor->password = \Hash::make($validated['password']);
@@ -191,7 +188,6 @@ class DashboardController extends Controller
           'last_name' => ['required'],
           'email' => ['required'],
           'company' => ['required'],
-          'sex' => ['required'],
           'position' => ['required'],
           'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
             return !empty($request->input('password'));
@@ -214,7 +210,6 @@ class DashboardController extends Controller
         $customer = Customer::find($id);
         $customer->first_name = $validated['first_name'];
         $customer->last_name = $validated['last_name'];
-        $customer->sex = $validated['sex'];
         $customer->position = $validated['position'];
         if(!empty($validated['password'])){
         $customer->password = \Hash::make($validated['password']);

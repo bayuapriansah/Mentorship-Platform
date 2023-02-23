@@ -56,19 +56,8 @@
     </div>
   @endif
 
-  <div class="flex justify-between mt-4">
-    <select id="sex" class="border border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" name="sex" required>
-      <option value="" class="" hidden>Sex *</option>
-      <option value="male" {{$user->sex == 'male' ? 'selected' : ''}}>Male</option>
-      <option value="female" {{$user->sex == 'female' ? 'selected' : ''}}>Female</option>
-    </select><br>
-    @error('sex')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-   
-    <input class="border border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="" type="text" value="{{$user->position}}" placeholder="Position" name="position" required><br>
+  <div class="flex mt-4">
+    <input class="border border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="" type="text" value="{{$user->position}}" placeholder="Position" name="position" required><br>
     @error('position')
         <p class="text-red-600 text-sm mt-1">
           {{$message}}

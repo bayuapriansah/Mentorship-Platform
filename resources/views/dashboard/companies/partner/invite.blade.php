@@ -1,6 +1,6 @@
 @extends('layouts.admin2')
 @section('content')
-@if(Auth::guard('customer'))
+@if(Auth::guard('customer')->check())
     <div class="text-[#6973C6] hover:text-light-blue">
         <a href="/dashboard/customers"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
     </div>
@@ -10,7 +10,7 @@
     </div>
 @endif
 
-@if(Auth::guard('customer'))
+@if(Auth::guard('customer')->check())
     <div class="flex justify-between mb-10">
         <h3 class="text-dark-blue font-medium text-xl">{{Auth::guard('customer')->user()->company->name}} <i class="fa-solid fa-chevron-right"></i> Invite</h3>
     </div>
@@ -20,20 +20,20 @@
     </div>
 @endif
 
-@if(Auth::guard('customer'))
+@if(Auth::guard('customer')->check())
     <form action="/dashboard/customer/sendInvitePartner/{{Auth::guard('customer')->user()->company_id}}" method="post" enctype="multipart/form-data">
 @else
     <form action="{{ route('dashboard.partner.sendInvitePartner',[$partner->id]) }}" method="post" enctype="multipart/form-data">
 @endif
     @csrf
   <div class="mb-3">
-    @if(Auth::guard('customer'))
+    @if(Auth::guard('customer')->check())
         <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Customer Email" name="email[]" required><br>
     @else
         <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Member Email" name="email[]" required><br>
     @endif
     <div class="mb-3">
-        @if(Auth::guard('customer'))
+        @if(Auth::guard('customer')->check())
             <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Customer</button>
         @else
             <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Member</button>
