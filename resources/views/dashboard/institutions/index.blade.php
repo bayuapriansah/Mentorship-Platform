@@ -180,7 +180,7 @@
               <form method="POST" action="/dashboard/partners/${companyId}" >
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Partner</button>
+                <button type="submit" onClick="return confirm('Delete this Partner?')" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Partner</button>
               </form>
             </div>
           </div>

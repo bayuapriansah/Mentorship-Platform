@@ -73,7 +73,7 @@
                   <form action="/dashboard/partners/{{$partner->id}}/members/{{$member->id}}" method="post">
                     @method('delete')
                     @csrf
-                    <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
+                    <input type="submit" onClick="return confirm('Delete this member?')" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
                   </form>
                 </li>
               </ul>

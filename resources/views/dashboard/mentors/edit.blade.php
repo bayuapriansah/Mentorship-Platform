@@ -61,6 +61,7 @@
     @enderror
   </div>
   <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Update</button>
+  <a href="/dashboard/institutions/{{$institution->id}}/supervisors" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-dark-red border-solid border-dark-red text-center capitalize bg-orange text-white font-light text-sm intelOne">Cancel</a>
 
 </form>
 @endsection

@@ -8,6 +8,7 @@
   <h3 class="text-dark-blue font-medium text-xl">Partners</h3>
 </div>
 
+@include('flash-message')
 <form action="/dashboard/partners" method="post" enctype="multipart/form-data">
   @csrf
   <div class="mb-3">

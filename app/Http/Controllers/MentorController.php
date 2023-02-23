@@ -43,7 +43,7 @@ class MentorController extends Controller
 // fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
     public function sendInvite(Request $request,$institution_id)
     {
-        $message = "Successfully Send Invitation to Student";
+        $message = "Successfully Send Invitation to Supervisor";
         foreach (array_filter($request->email) as $email) {
             $checkMentor = Mentor::where('email', $email)->first();
             if (!$checkMentor) {
@@ -58,7 +58,7 @@ class MentorController extends Controller
             // }
         }
 
-        return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('success', $message);
+        return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('successTailwind', $message);
     }
 
     public function addMentor($email,$institution_id){
@@ -142,7 +142,8 @@ class MentorController extends Controller
         $supervisor->country = $validated['country'];
         $supervisor->state = $validated['state'];
         $supervisor->save();
-        return redirect()->back();
+        $message = "Successfully updated mentor data";
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message );
     }
 
     /**
@@ -200,11 +201,13 @@ class MentorController extends Controller
         $supervisor = Mentor::find($supervisor->id);
         if($supervisor->is_confirm == 1){
             $supervisor->is_confirm = 0;
+            $message = "Successfully Pending Account";
         }else{
             $supervisor->is_confirm = 1;
+            $message = "Successfully Activate Account";
         }
         $supervisor->save();
-        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors');
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message);
     }
     /**
      * Remove the specified resource from storage.
@@ -216,7 +219,8 @@ class MentorController extends Controller
     {
         $supervisor = Mentor::find($supervisor->id);
         $supervisor->delete();
-        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors');
+        $message = "Successfully Delete Account";
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message);
     }
 
     // Register mentor
