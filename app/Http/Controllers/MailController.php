@@ -31,7 +31,7 @@ class MailController extends Controller
         } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
-    }
+
 
     public function emailregister($mailto) //Just Email
     {

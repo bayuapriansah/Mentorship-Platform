@@ -413,7 +413,7 @@ class StudentController extends Controller
         $validated = $validator->validated();
 
         // to get randomly id mentors
-        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->first();
+        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->where('is_confirm',1)->first();
         $regStudent = Student::where('email',$validated['email'])->first();
         $regStudent->first_name = $validated['first_name'];
         $regStudent->last_name = $validated['last_name'];

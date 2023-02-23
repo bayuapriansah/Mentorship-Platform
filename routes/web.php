@@ -61,8 +61,8 @@ Route::get('/adminpage', function () {
 Route::get('/', [IndexController::class, 'index'])->name('index');
 // for debugging temp
 // Route::get('/ccc/{student}/{project}', [ProjectController::class, 'appliedDetail'])->name('ccc');
-Route::get('/viewbulk', [EmailBulkInvitationController::class, 'index'])->name('view.bulk.email');
-Route::post('emailsbulk', [EmailBulkInvitationController::class, 'upload'])->name('bulk.upload.email');
+// Route::get('/viewbulk', [EmailBulkInvitationController::class, 'index'])->name('view.bulk.email');
+// Route::post('emailsbulk', [EmailBulkInvitationController::class, 'upload'])->name('bulk.upload.email');
 
 // register
 Route::get('/verify/{email}', [AuthController::class, 'verifyEmail'])->name('verify');
@@ -333,7 +333,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     });
 });
 
-Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
+// Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');

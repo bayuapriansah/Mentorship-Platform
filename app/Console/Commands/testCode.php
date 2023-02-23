@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Grade;
 use App\Models\Project;
 use App\Models\Student;
+use App\Models\Notification;
 use App\Models\Submission;
 use App\Models\Institution;
 use Illuminate\Http\Request;
@@ -57,7 +58,11 @@ class testCode extends Command
         // ->join('grades', 'submissions.id', '=', 'grades.submission_id')
         // ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', 14)
         // ->get();
-        $encrypted = Hash::make('bayu');
-        dd($encrypted);
+//        $encrypted = Hash::make('bayu');
+//        dd($encrypted);
+
+        $student_id = 1;
+        $notif = Notification::get();
+        dd($notif->count());
     }
 }

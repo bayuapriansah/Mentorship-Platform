@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->renameColumn('companies_id', 'customer_id');
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id();
+            // $table->unsignedBigInteger('user_id');
+            // $table->string('message');
+            $table->unsignedBigInteger('project_id')->nullable();
+            // $table->boolean('is_read')->default(false);
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->renameColumn('customer_id', 'companies_id');
-        });
+        Schema::dropIfExists('notifications');
     }
 };

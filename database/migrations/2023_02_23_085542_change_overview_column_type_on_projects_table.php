@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->renameColumn('companies_id', 'customer_id');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->longText('overview')->change();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->renameColumn('customer_id', 'companies_id');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->string('overview')->change();
         });
     }
 };

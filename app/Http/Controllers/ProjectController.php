@@ -7,6 +7,7 @@ use App\Models\Search;
 use App\Models\Company;
 use App\Models\Project;
 use App\Models\Submission;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
@@ -105,7 +106,7 @@ class ProjectController extends Controller
             'problem.required' => 'Project problem is required',
             'projectType.required' => 'Project type is required',
         ]);
-        
+
         $project = new Project;
         $project->name = $validated['name'];
         $project->project_domain = $validated['domain'];
@@ -174,7 +175,7 @@ class ProjectController extends Controller
         ]);
         $project = Project::findOrFail($project->id);
         // if(Auth::guard('web')->check()){
-        $project->name = $validated['name']; 
+        $project->name = $validated['name'];
         $project->project_domain = $validated['domain'];
         $project->period = $validated['period'];
         $project->company_id = $request->partner;
@@ -194,7 +195,7 @@ class ProjectController extends Controller
         $project->type = 'monthly';
         $project->save();
         return redirect('dashboard/projects')->with('success','Project has been edited');
-            
+
         // }elseif(Auth::guard('customer')->check()){
         //     $project->name = $validated['name'];
         //     $project->project_domain = $validated['project_domain'];
@@ -223,14 +224,19 @@ class ProjectController extends Controller
 
     public function dashboardpublishDraft(Company $partner, Project $project)
     {
-        $project = Project::find($project->id);
-        if($project->status == 'publish'){
-            $project->status = 'draft';
-        }else{
-            $project->status = 'publish';
-        }
-        $project->save();
-        return redirect('/dashboard/projects');
+        Notification::create([
+            'project_id' => $project->id,
+        ]);
+
+
+       $project = Project::find($project->id);
+       if($project->status == 'publish'){
+           $project->status = 'draft';
+       }else{
+           $project->status = 'publish';
+       }
+       $project->save();
+       return redirect('/dashboard/projects');
 
     }
 
@@ -639,7 +645,7 @@ class ProjectController extends Controller
 
     public function partnerProjectsUpdate(Request $request, Company $partner, Project $project)
     {
-        
+
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],

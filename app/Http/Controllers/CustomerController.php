@@ -49,7 +49,7 @@ class CustomerController extends Controller
         return redirect('/dashboard/partners/'.$partner->id.'/members');
 
     }
-    
+
     public function invite(Company $partner)
     {
         if (!Auth::guard('customer')) {
@@ -132,12 +132,10 @@ class CustomerController extends Controller
     }
 
     public function addCustomerToPartner($email,$partner_id){
-        $customer = Customer::create([
+        return Customer::create([
             'email' => $email,
             'company_id' => $partner_id,
             'is_confirm' => 0
         ]);
-
-        return $customer;
     }
 }
