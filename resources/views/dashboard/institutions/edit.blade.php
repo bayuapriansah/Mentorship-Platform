@@ -17,6 +17,14 @@
         </p>
     @enderror
   </div>
+  <div class="mb-3">
+    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="name" type="text" value="{{$institutions_view->email}}" placeholder="Institution Name" name="email" required>
+    @error('email')
+        <p class="text-danger text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
   {{-- @dd($countries) --}}
   <div class="mb-3">
     <select class="text w-3/4 border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none" id="inputCountries" name="countries">
@@ -47,7 +55,7 @@
     @enderror
   </div>
   <div class="mb-3">
-    <img src="{{asset('storage/'.$institutions->logo)}}" alt="" style="width: 350px; height: 230px;">
+    <img src="{{asset('storage/'.$institutions->logo)}}" alt="" class="object-scale-down" style="width: 350px; height: 230px;">
     <input type="file" class="block w-1/2 text-sm text-gray-900 border border-light-blue rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none " id="inputlogo" name="logo">
     <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
     <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>
