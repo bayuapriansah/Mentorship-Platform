@@ -175,11 +175,11 @@ class InstitutionController extends Controller
         if($institution->status==1){
             $institution->status = 0;
             $message = "Successfully Deactive Institution";
-            Student::where('institution_id',$id)->update(['is_confirm' => 2]);
+            Student::where('institution_id',$id)->where('is_confirm',1)->update(['is_confirm' => 2]);
         }else{
             $institution->status = 1;
             $message = "Successfully Activate Institution";
-            Student::where('institution_id',$id)->update(['is_confirm' => 1]);
+            Student::where('institution_id',$id)->where('is_confirm',2)->update(['is_confirm' => 1]);
 
         }
         $institution->save();
