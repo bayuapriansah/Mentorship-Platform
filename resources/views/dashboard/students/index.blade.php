@@ -180,7 +180,7 @@
                 </form>
               </div>
               <div class="text-right">
-                <p class="text-dark-blue font-mediun">Join Since: <span class="text-black font-normal">${studentJoin}</span></p>
+                <p class="text-dark-blue font-mediun">Join Date: <span class="text-black font-normal">${studentJoin}</span></p>
               </div>
             </div>
           </div>
