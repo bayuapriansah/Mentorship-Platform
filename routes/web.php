@@ -137,7 +137,6 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::post('/projects/{project}/apply', [ProjectController::class, 'applyProject'])->name('projects.apply');
 });
 
-
 Route::get('/theworld', [TheWorldController::class, 'index']);
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
