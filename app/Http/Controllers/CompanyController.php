@@ -53,8 +53,6 @@ class CompanyController extends Controller
             'logo' => 'required'
         ]);
 
-        
-
         $company = new Company;
         $company->name = $validated['name'];
         $company->address = $validated['address'];
@@ -68,12 +66,12 @@ class CompanyController extends Controller
                 $logo = Storage::disk('public')->put('companies', $validated['logo']);
                 $company->logo = $logo;
             }else{
-                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
+                return back()->with('error', 'file extension is not png, jpg or jpeg');
             }
             
         }
         $company->save();
-        return redirect('dashboard/institutions_partners/')->with('success','Company has been added');
+        return redirect('dashboard/institutions_partners/')->with('successTailwind','Partner has been added');
     }
 
     /**
@@ -136,7 +134,7 @@ class CompanyController extends Controller
             }
         }
         $company->save();
-        return redirect('dashboard/institutions_partners')->with('success','Company has been edited');
+        return redirect('dashboard/institutions_partners')->with('successTailwind','Partner has been edited');
         
     }
 
@@ -150,6 +148,6 @@ class CompanyController extends Controller
     {
         $company = Company::find($id);
         $company->delete();
-        return redirect('dashboard/institutions');
+        return redirect('dashboard/institutions')->with('successTailwind','Partner has been deleted');
     }   
 }

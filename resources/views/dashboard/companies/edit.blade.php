@@ -1,9 +1,14 @@
 @extends('layouts.admin2')
 @section('content')
+@if (Route::is('dashboard.partners.edit'))
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/institutions_partners"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
+@endif
+
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Partners</h3>
 </div>
-
 
 <form action="/dashboard/partners/{{$company->id}}" method="post" enctype="multipart/form-data">
   @csrf
@@ -51,7 +56,8 @@
     @enderror
   </div>
   <div class="mb-3">
-    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Partner</button>
+    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Confirm</button>
+    <a href="/dashboard/institutions_partners" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-dark-red border-solid border-dark-red text-center capitalize bg-orange text-white font-light text-sm">Cancel</a>
 
   </div>
 </form>

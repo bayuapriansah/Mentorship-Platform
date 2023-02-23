@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Mentor;
 use App\Models\Company;
+use App\Models\Student;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,24 +32,28 @@ class CustomerController extends Controller
         $member->first_name = $request->first_name;
         $member->last_name = $request->last_name;
         $member->save();
-        return redirect()->back();
+        $message = "Successfully Updated Account";
+        return redirect('/dashboard/partners/'.$partner->id.'/members')->with('successTailwind', $message);
     }
     public function partnerMemberSuspend(Company $partner, Customer $member)
     {
         $member = Customer::find($member->id);
         if($member->is_confirm == 1){
             $member->is_confirm = 0;
+            $message = "Successfully deactivate member account";
         }else{
             $member->is_confirm = 1;
+            $message = "Successfully activate member account";
         }
         $member->save();
-        return redirect('/dashboard/partners/'.$partner->id.'/members');
+        return redirect('/dashboard/partners/'.$partner->id.'/members')->with('successTailwind', $message);
     }
     public function destroy(Company $partner, Customer $member)
     {
         $member = Customer::find($member->id);
         $member->delete();
-        return redirect('/dashboard/partners/'.$partner->id.'/members');
+        $message = "Successfully delete member account";
+        return redirect('/dashboard/partners/'.$partner->id.'/members')->with('error', $message);
 
     }
 
@@ -65,19 +72,21 @@ class CustomerController extends Controller
         $message = "Invitation sented successfully";
         foreach (array_filter($request->email) as $email) {
             $checkCustomer = Customer::where('email', $email)->first();
-            if(!$checkCustomer){
+            $checkUser = User::where('email', $email)->first(); 
+            $checkMentor = Mentor::where('email', $email)->first(); 
+            $checkStudent = Student::where('email', $email)->first();
+            if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('supervisor.register', [$encEmail]);
                 $student = $this->addCustomerToPartner($email,$partner_id);
                 $sendmail = (new MailController)->EmailMemberInvitation($student->email,$link);
                 $message .= "\n$email";
+            }else{
+                return redirect()->back()->with('error', 'Email is already registered');
             }
-            // else{
-            //     return redirect()->back()->with('error', 'Email already invited');
-            // }
         }
 
-        return redirect()->route('dashboard.partner.partnerMember', [$partner_id])->with('success', $message);
+        return redirect()->route('dashboard.partner.partnerMember', [$partner_id])->with('successTailwind', $message);
     }
 
     // Register customer

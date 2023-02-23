@@ -9,7 +9,6 @@
   <a href="/dashboard/students/"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
 @endif
-
 <div class="flex justify-between mb-10">
     @if(Auth::guard('web')->check())
         @if($institution->id)
@@ -33,6 +32,7 @@
       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
     </button>
   </div>
+@include('flash-message')
 @if (Route::is('dashboard.students.inviteFromInstitution'))
 <form action="{{ route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]) }}" id="submitForm" method="post" enctype="multipart/form-data">
 @else
@@ -46,9 +46,18 @@
 
   <div class="mb-3">
     <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Student Email" name="email[]" required><br>
+    @if(Route::is('dashboard.students.invite'))
+        <select id="inputStudy" class="text w-3/4 border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution_id" required>
+            <option value="" hidden>Institution Name</option>
+              @foreach($allInstitutions as $institution)
+              <option value="{{$institution->id}}">{{$institution->name}}</option>
+              @endforeach
+        </select>
+    @endif
+
     <div class="mb-3">
         <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Student</button>
-      </div>
+    </div>
     <div class="w-3/4 mt-4">
             <div class="relative cursor-pointer " id="drop-area">
             <label for="file-input">

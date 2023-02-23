@@ -61,7 +61,6 @@ class InstitutionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $validated = $request->validate([
             'name' => ['required'],
             'countries' => ['required'],
@@ -89,7 +88,8 @@ class InstitutionController extends Controller
 
         }
         $institutions->save();
-        return redirect()->route('dashboard.institutions_partners');
+        $message = "Successfully Created Institution Data";
+        return redirect()->route('dashboard.institutions_partners')->with('successTailwind', $message);
     }
 
     /**
@@ -126,9 +126,9 @@ class InstitutionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $validated = $request->validate([
             'name' => 'required',
+            'email' => 'required',
             'countries' => 'required',
             'state' => 'required',
         ]);
@@ -136,6 +136,7 @@ class InstitutionController extends Controller
         $institutions->name = $validated['name'];
         $institutions->country = $validated['countries'];
         $institutions->state = $validated['state'];
+        $institutions->email = $validated['email'];
         if($request->hasFile('logo')){
 
             if(Storage::path($institutions->logo)) {
@@ -155,7 +156,7 @@ class InstitutionController extends Controller
         }
         $institutions->save();
         $message = "Successfully Edited Institution Data";
-        return redirect()->route('dashboard.institutions_partners')->with('success', $message);
+        return redirect()->route('dashboard.institutions_partners')->with('successTailwind', $message);
     }
 
     public function institutionStudents(Institution $institution)
@@ -169,14 +170,20 @@ class InstitutionController extends Controller
     public function suspendInstitution($id)
     {
         $institution = Institution::find($id);
+        // $students = Student::where('institution_id',$id)->get();
+        // dd($students->is_confirm);
         if($institution->status==1){
             $institution->status = 0;
+            $message = "Successfully Deactive Institution";
+            Student::where('institution_id',$id)->where('is_confirm',1)->update(['is_confirm' => 2]);
         }else{
             $institution->status = 1;
+            $message = "Successfully Activate Institution";
+            Student::where('institution_id',$id)->where('is_confirm',2)->update(['is_confirm' => 1]);
+
         }
         $institution->save();
-        $message = "Successfully Deactive Data";
-        return redirect()->route('dashboard.institutions_partners')->with('success', $message);
+        return redirect()->route('dashboard.institutions_partners')->with('successTailwind', $message);
     }
 
     /**
@@ -189,6 +196,8 @@ class InstitutionController extends Controller
     {
         $institution = Institution::find($id);
         $institution->delete();
-        return redirect('dashboard/institutions');
+        $message = "Successfully Delete Institution";
+
+        return redirect('dashboard/institutions')->with('errorTailwind', $message);
     }
 }

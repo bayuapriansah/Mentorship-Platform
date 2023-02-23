@@ -5,18 +5,10 @@
 </div>
 
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Institutions <i class="fa-solid fa-chevron-right"></i> Students</h3>
+  <h3 class="text-dark-blue font-medium text-xl">{{$institution->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
   <a href="/dashboard/institutions/{{$institution->id}}/students/invite" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
-
-
-<!-- Content Row -->
-{{-- @foreach($students as $student)
-@php
-    $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d M Y');
-@endphp
-
-@endforeach --}}
+@include('flash-message')
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -64,6 +56,8 @@
                 data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
                 data-student-is_confirm="{{ $student->is_confirm }}"
                 data-student-start="{{ $student->created_at->format('d M Y') }}"
+                data-student-btn="{{$student->is_confirm == 1 ? 'Suspend': 'Activate'}}"
+
 
         ><i class="fa-solid fa-chevron-down"></i></button>
       </td>
@@ -95,6 +89,7 @@
       let studentJoin = $(this).data('student-join');
       let studentIs_confirm = $(this).data('student-is_confirm');
       let studentStart = $(this).data('student-start');
+      let textBtn = $(this).data('student-btn');
         console.log(studentIs_confirm);
       if (row.child.isShown()) {
         $(this).html('<i class="fa-solid fa-chevron-down"></i>');
@@ -121,12 +116,12 @@
               <a href="/dashboard/institutions/${institutionId}/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
               <form method="POST" action="/dashboard/institutions/${institutionId}/students/${studentId}/suspend" >
                 @csrf
-                <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">Suspend Account</button>
+                <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg">${textBtn} Account</button>
               </form>
               <form method="POST" action="/dashboard/students/${studentId}" >
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</button>
+                <button type="submit" onClick="return confirm('Delete this student?')" class="bg-dark-red px-6 py-2 text-white rounded-lg"> Delete Account</button>
               </form>
             </div>
             <div class="text-right">

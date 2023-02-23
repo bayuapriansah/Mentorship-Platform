@@ -18,7 +18,7 @@
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Invite Supervisors</a>
 </div>
 @endif
-
+@include('flash-message')
   <!-- Content Row -->
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
@@ -71,7 +71,7 @@
                 <form action="/dashboard/institutions/{{$institution->id}}/supervisors/{{$mentor->id}}" method="post">
                   @method('delete')
                   @csrf
-                  <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
+                  <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onClick="return confirm('Delete this supervisor?')" value="Delete">
                 </form>
               </li>
             </ul>

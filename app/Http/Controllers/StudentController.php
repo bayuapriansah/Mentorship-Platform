@@ -8,12 +8,14 @@ use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
+use App\Models\Customer;
 use App\Models\Submission;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -65,13 +67,17 @@ class StudentController extends Controller
     }
 
     public function inviteFromInstitution(Institution $institution)
-    {
-        return view('dashboard.students.institution.invite', compact('institution'));
+    {   
+        if(Route::is('dashboard.students.invite')){
+            $allInstitutions = Institution::where('status',1)->get();
+            return view('dashboard.students.institution.invite', compact('allInstitutions', 'institution'));
+        }else{
+            return view('dashboard.students.institution.invite', compact('institution'));
+        }
     }
 
     public function sendInvite(Request $request)
     {
-        // dd($request->all());
         // $checkStudent = Student::where('email', $request->email)->first();
         // if(!$checkStudent){
         //     $encEmail = (new SimintEncryption)->encData($request->email);
@@ -85,19 +91,21 @@ class StudentController extends Controller
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();
-            if (!$checkStudent) {
+            $checkUser = User::where('email', $email)->first(); 
+            $checkMentor = Mentor::where('email', $email)->first(); 
+            $checkCustomer = Customer::where('email', $email)->first(); 
+            if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
-                $student = $this->addStudent($email);
+                $student = $this->addStudent($email, $request->institution_id);
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
                 $message .= "\n$email";
+            }else{
+                return redirect()->back()->with('error', 'Email is already registered');
             }
-            // else{
-            //     return redirect()->back()->with('error', 'Email already invited');
-            // }
         }
 
-        return redirect()->route('dashboard.students.index')->with('success', $message);
+        return redirect()->route('dashboard.students.index')->with('successTailwind', $message);
     }
 
     public function sendInviteFromInstitution(Request $request, $institution_id)
@@ -105,19 +113,21 @@ class StudentController extends Controller
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();
-            if (!$checkStudent) {
+            $checkUser = User::where('email', $email)->first(); 
+            $checkMentor = Mentor::where('email', $email)->first(); 
+            $checkCustomer = Customer::where('email', $email)->first(); 
+            if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
                 $student = $this->addStudentToInstitution($email, $institution_id);
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
                 $message .= "\n$email";
+            }else{
+                return redirect()->back()->with('error', 'Email is already registered');
             }
-            // else{
-            //     return redirect()->back()->with('error', 'Email already invited');
-            // }
         }
 
-        return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('success', $message);
+        return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('successTailwind', $message);
     }
 
     public function addStudentToInstitution($email,$institution_id){
@@ -128,10 +138,11 @@ class StudentController extends Controller
         return $student;
     }
 
-    public function addStudent($email){
+    public function addStudent($email, $institution_id){
         if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
             $student = Student::create([
                 'email' => $email,
+                'institution_id' => $institution_id,
             ]);
         }elseif(Auth::guard('mentor')->check()){
             $student = Student::create([
@@ -280,7 +291,7 @@ class StudentController extends Controller
             }
         }
         $student->save();
-        return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('successTailwind','Profile updated successfully');
+        return redirect('/dashboard/institutions/'.$institution_id.'/students/')->with('successTailwind','Successfully edited student data');
 
     }
     /**
@@ -306,11 +317,16 @@ class StudentController extends Controller
     public function suspendAccountInstitution($institution_id,$student_id)
     {
         $students = Student::find($student_id);
-        $students->is_confirm = 2;
+        if($students->is_confirm==1){
+            $students->is_confirm =2;
+            $message = "Successfully Suspend Account";
+        }elseif($students->is_confirm=2){
+            $students->is_confirm =1;
+            $message = "Successfully Activate Account";
+        }
         $students->save();
-        $message = "Successfully Deactive Account";
         // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
-        return back()->with('success', $message);
+        return back()->with('successTailwind', $message);
     }
 
     public function suspendAccount($student_id)
@@ -318,13 +334,14 @@ class StudentController extends Controller
         $student = Student::find($student_id);
         if($student->is_confirm == 1){
             $student->is_confirm = 2;
+            $message = "Successfully Deactive Account";
         }else{
             $student->is_confirm = 1;
+            $message = "Successfully Activate Account";
         }
         $student->save();
-        $message = "Successfully Deactive Account";
         // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
-        return back()->with('success', $message);
+        return back()->with('successTailwind', $message);
     }
 
     /**
@@ -444,7 +461,7 @@ class StudentController extends Controller
     {
         $student = Student::find($student->id);
         $student->delete();
-        return redirect('dashboard/students');
+        return back()->with('error', 'Student Deleted');
     }
 
     // STUDENT PROFILE
@@ -758,10 +775,10 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::where('id', $student_id)->first();
-        $projects = Project::whereNotIn('id', function($query){
+       $projects = Project::whereNotIn('id', function($query){
             $query->select('project_id')->from('enrolled_projects');
             $query->where('student_id',Auth::guard('student')->user()->id);
-        })->where('institution_id', $student->institution_id)->orWhere('institution_id', null)->where('status', 'publish')->get();
+        })->where('institution_id', $student->institution_id)->where('status', 'publish')->orWhere('institution_id', null)->where('status', 'publish')->get();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
