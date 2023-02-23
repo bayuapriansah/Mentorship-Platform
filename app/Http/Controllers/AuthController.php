@@ -135,7 +135,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect('/')->with('success','Logged in admin');
         }else{
-            return back()->with('error','User has not been registered');
+            return back()->with('error','Invalid Login Credentials: Your email or password is incorrect. Please review your information and try again.');
         }
     }
 

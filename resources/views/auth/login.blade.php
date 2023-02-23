@@ -1,5 +1,5 @@
-@extends('layouts.index')
-@section('content')
+{{-- @extends('layouts.index')
+@section('content') --}}
 {{-- <div class="container">
   <div class="row justify-content-center">
     <div class=" card col-6 p-4 bg-light">
@@ -78,5 +78,4 @@
     </div>
   </div>
 </section>
-@endsection
 @endsection
