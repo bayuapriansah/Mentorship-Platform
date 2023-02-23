@@ -81,6 +81,7 @@ class SubmissionController extends Controller
             $grade->status = 0;
         }
         $grade->save();
+        // return redirect('/submissions/project/'.$project->id.'/view/'.$submission->id.'/grade/'.$grade->id);
         return back();
     }
     /**

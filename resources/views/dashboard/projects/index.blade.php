@@ -33,8 +33,8 @@
       <th>No</th>
       <th>Project name</th>
       <th>Project domain</th>
-      <th>Total Enrollment</th>
-      <th>Added On</th>
+      <th>Total enrollment</th>
+      <th>Added on</th>
       <th>Status</th>
       <th>Submissions</th>
       <th>Actions</th>

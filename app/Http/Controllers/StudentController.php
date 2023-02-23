@@ -297,18 +297,34 @@ class StudentController extends Controller
         $student = Student::find($student->id);
         // $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student->id);
+        
         $newActivityNotifs = $this->newNotificationActivity($student->id);
         $notifActivityCount = $this->newNotificationActivityCount($student->id);
         return view('student.edit', compact('student','newMessage','newActivityNotifs','notifActivityCount'));
     }
 
-    public function suspendAccount($institution_id,$student_id)
+    public function suspendAccountInstitution($institution_id,$student_id)
     {
         $students = Student::find($student_id);
         $students->is_confirm = 2;
         $students->save();
         $message = "Successfully Deactive Account";
-        return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
+        // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
+        return back()->with('success', $message);
+    }
+
+    public function suspendAccount($student_id)
+    {
+        $student = Student::find($student_id);
+        if($student->is_confirm == 1){
+            $student->is_confirm = 2;
+        }else{
+            $student->is_confirm = 1;
+        }
+        $student->save();
+        $message = "Successfully Deactive Account";
+        // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
+        return back()->with('success', $message);
     }
 
     /**
@@ -449,18 +465,16 @@ class StudentController extends Controller
     public function newCommentForSidebarMenu($id){
         $newMessage1 = Comment::where('student_id',$id)->where('read_message',0)->where('user_id',!NULL)->get();
         $newMessage2 = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
-        $newMessage3 = Comment::where('student_id',$id)->where('read_message',0)->where('companies_id',!NULL)->get();
+        $newMessage3 = Comment::where('student_id',$id)->where('read_message',0)->where('customer_id',!NULL)->get();
         $newMessage = $newMessage1->count() + $newMessage2->count() + $newMessage3->count();
         return $newMessage;
     }
 
     public function allProjects($id)
     {
-        // dd($id);
         $newMessage = $this->newCommentForSidebarMenu($id);
         $newActivityNotifs = $this->newNotificationActivity($id);
         $notifActivityCount = $this->newNotificationActivityCount($id);
-        // dd($newMessage);
         // dd(Auth::guard('student')->user()->id);
         if($id != Auth::guard('student')->user()->id ){
             abort(403);
@@ -602,9 +616,12 @@ class StudentController extends Controller
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
     {
-        $dataset_array = json_decode($request->dataset, true);
-        $dataset_values = array_column($dataset_array, 'value');
-        $dataset_result = implode(';', $dataset_values);
+        if ($request->dataset) {
+            $dataset_array = json_decode($request->dataset, true);
+            $dataset_values = array_column($dataset_array, 'value');
+            $dataset_result = implode(';', $dataset_values);
+        }
+        
         // dd($request->all());
 
         // dd(implode(';',$request->dataset));
@@ -634,7 +651,11 @@ class StudentController extends Controller
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;
         $submission->flag_checkpoint = $taskDate;
-        $submission->dataset = $dataset_result;
+        if($request->dataset){
+            $submission->dataset = $dataset_result;
+        }else{
+            $submission->dataset = null;
+        }
         $submission->is_complete = 1;
         if($request->hasFile('file')){
             $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);

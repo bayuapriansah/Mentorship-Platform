@@ -12,7 +12,11 @@
 
 <div class="flex justify-between mb-10">
     @if(Auth::guard('web')->check())
-        <h3 class="text-dark-blue font-medium text-xl">{{$institution->name}} <i class="fa-solid fa-chevron-right"></i> Students <i class="fa-solid fa-chevron-right"></i> Invite</h3>
+        @if($institution->id)
+            <h3 class="text-dark-blue font-medium text-xl">{{$institution->name}} <i class="fa-solid fa-chevron-right"></i> Students <i class="fa-solid fa-chevron-right"></i> Invite</h3>
+        @else
+            <h3 class="text-dark-blue font-medium text-xl">Students <i class="fa-solid fa-chevron-right"></i> Invite</h3>
+        @endif
     @elseif(Auth::guard('mentor')->check())
         <h3 class="text-dark-blue font-medium text-xl">Invite Students</h3>
         <a href="/dashboard/students/" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
@@ -33,7 +37,7 @@
 <form action="{{ route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]) }}" id="submitForm" method="post" enctype="multipart/form-data">
 @else
     @if(Auth::guard('web')->check())
-        <form action="{{route('dashboard.students.sendInvite')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('dashboard.students.sendInviteStudent')}}" method="post" enctype="multipart/form-data">
     @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
         <form action="/dashboard/students/invite" method="post" enctype="multipart/form-data">
     @endif

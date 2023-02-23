@@ -50,11 +50,11 @@
         <div id="dropdownHover{{$no}}" class="z-10 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
               <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                @if ($submission->grade)
+                {{-- @if ($submission->grade)
                   <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/grade/{{$submission->grade->id}}" >View Submission</a>
-                @else
+                @else --}}
                   <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}" >View Submission</a>
-                @endif
+                {{-- @endif --}}
               </li>
             </ul>
         </div>

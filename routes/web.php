@@ -81,8 +81,8 @@ Route::post('/password/reset/', [AuthController::class, 'resetPassword'])->name(
 
 
 // mentor register
-Route::get('/register/mentor/{email}', [MentorController::class, 'register'])->name('mentor.register');
-Route::post('/register/mentor/{email}', [MentorController::class, 'update'])->name('mentor.registerAuth');
+Route::get('/register/supervisor/{email}', [MentorController::class, 'register'])->name('supervisor.register');
+Route::post('/register/supervisor/{email}', [MentorController::class, 'update'])->name('supervisor.registerAuth');
 
 // student register - bayu - there's 2 route for now 09/02/2023
 Route::get('/register/student/{email}', [StudentController::class, 'register'])->name('student.register');
@@ -105,7 +105,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskDetail'])->name('student.taskDetail');
     Route::post('/profile/{student}/enrolled/{project}/task/{task}', [StudentController::class, 'taskSubmit'])->name('student.taskSubmit');
     Route::patch('/profile/{student}/enrolled/{project}/task/{task}/submission/{submission}', [StudentController::class, 'taskResubmit'])->name('student.taskResubmit');
-    Route::post('/profile/{student}/enrolled/{project}/task/{task}/readNotif/{id}', [StudentController::class, 'readActivity'])->name('student.readActivity');
+    Route::get('/profile/{student}/enrolled/{project}/task/{task}/readNotif/{id}', [StudentController::class, 'readActivity'])->name('student.readActivity');
 
 
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
@@ -114,6 +114,11 @@ Route::group(['middleware'=>'auth:student'], function(){
 
     Route::get('/profile/{student}/edit', [StudentController::class, 'edit'])->name('student.edit');
     Route::patch('/profile/{student}', [StudentController::class, 'update'])->name('student.update');
+
+    // Bell Notification
+    // /profile/{{$student->id}}/all-notification
+    // Route::get('/profile/{student}/allNotification')
+
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){
@@ -142,11 +147,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Student in institutions
         Route::get('/institutions/{institution}/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
         Route::patch('/institutions/{institution}/students/{student}/managepatch', [StudentController::class, 'managepatch' ])->name('students.managepatch');
-        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
+        Route::post('/institutions/{institution}/students/{student}/suspend', [StudentController::class, 'suspendAccountInstitution' ])->name('students.suspendAccountInstitution');
 
         Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
         Route::patch('/students/{student}/managepatch', [StudentController::class, 'manageStudentpatch' ])->name('students.manageStudentpatch');
-        
+        Route::post('/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
+
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
@@ -156,7 +162,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/institutions/{institution}/students/invite', [StudentController::class, 'inviteFromInstitution'])->name('students.inviteFromInstitution');
         Route::post('/institutions/{institution}/students', [StudentController::class, 'sendInviteFromInstitution'])->name('students.sendInviteFromInstitution');
 
-        Route::post('/institutions/students', [StudentController::class, 'sendInvite'])->name('students.sendInvite');
+        // Route::post('/institutions/students', [StudentController::class, 'sendInvite'])->name('students.sendInvite');
 
         Route::get('/institutions/{institution}/supervisors', [MentorController::class, 'index'])->name('institutionSupervisors');
         Route::get('/institutions/{institution}/supervisors/invite', [MentorController::class, 'invite'])->name('institutionSupervisorInvite');
@@ -203,9 +209,17 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/partners/{partner}/projects/{project}/injection/{injection}/attachment/{attachment}/delete/{key}', [ProjectController::class, 'partnerProjectsInjectionAttachmentDelete'])->name('partner.partnerProjectsInjectionAttachmentDelete');
         Route::post('/partners/{partner}/projects/{project}/injection/{injection}/attachment', [ProjectController::class, 'partnerProjectsInjectionAttachmentStore'])->name('partner.partnerProjectsInjectionAttachmentStore');
 
+        // Partner edit member
+
         // Customer
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
+        Route::get('/partners/{partner}/members/{member}/edit', [CustomerController::class, 'partnerMemberEdit'])->name('partner.partnerMemberEdit');
+        Route::patch('/parners/{partner}/members/{member}', [CustomerController::class, 'partnerMemberUpdate'])->name('partner.partnerMemberUpdate');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
+        // /dashboard/partners/{{$partner->id}}/members/{{$member->id}}/suspend
+        Route::get('/partners/{partner}/members/{member}/suspend', [CustomerController::class, 'partnerMemberSuspend'])->name('mentors.partnerMemberSuspend');
+        Route::delete('/partners/{partner}/members/{member}', [CustomerController::class, 'destroy'])->name('mentors.partnerMemberDelete');
+        
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
         Route::resource('partners', CompanyController::class);
 
@@ -310,6 +324,12 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
     Route::middleware(['auth:web,customer'])->group(function(){
         Route::get('/customer', [DashboardController::class, 'indexCustomer'])->name('customer');
+        Route::get('/customers', [DashboardController::class, 'allCustomer'])->name('customers.index');
+        Route::get('/customers/{member}/edit', [DashboardController::class, 'allCustomerEdit'])->name('customers.allCustomerEdit');
+        Route::get('/customers/invite', [CustomerController::class, 'invite'])->name('customers.invite');
+        Route::post('/customer/sendInvitePartner/{partner}', [CustomerController::class, 'sendInvitePartner'])->name('customers.sendInvitePartner');
+
+
     });
 });
 

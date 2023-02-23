@@ -43,7 +43,7 @@
   <div class="mb-3">
     <label for="inputproject">Message <span class="text-red-600">*</span> </label>
     <div class="w-full mb-4 border border-light-blue rounded-lg  ">
-      <div class="px-4 py-2 bg-white  rounded-t-lg   ">
+      <div class="bg-white  rounded-t-lg   ">
           <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" placeholder="Type Here" required></textarea>
       </div>
       <div class="flex items-center justify-between px-3 py-2 bg-white rounded-b-lg">

@@ -9,7 +9,6 @@
   <a href="/dashboard/messages/create" class="text-xl text-dark-blue"><i class="fa-solid fa-envelope"></i> New Message</a>
 </div>
 
-
 <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
   @php $no=1;  @endphp
   @foreach ($comments as $comment)
@@ -23,6 +22,8 @@
                 {{$comment->mentor->first_name}} {{$comment->mentor->last_name}} (Supervisor)
               @elseif ($comment->user_id)
                 {{$comment->user->name}} (Platform Admin)
+              @elseif ($comment->customer_id)
+                {{$comment->customer->first_name}} {{$comment->customer->last_name}} (Customer)
               @else
                 {{$comment->student->first_name}} {{$comment->student->last_name}} (Student)
               @endif
@@ -45,7 +46,7 @@
                 @endforeach
               @endif
             </span>
-            <span class="font-light message-top">{{substr($comment->message,0,99)}} {{strlen($comment->message)>=99?'...':''}}</span>
+            <span class="font-light message-top">{!!substr($comment->message,0,99)!!} {{strlen($comment->message)>=99?'...':''}}</span>
           </div>
         </div>
 
@@ -57,7 +58,7 @@
     </h2>
     <div id="accordion-collapse-body-{{$no}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$no}}">
       <div class="p-5 font-light ">
-        <p class="mb-2 text-base text-black ">{{$comment->message}}</p>
+        <p class="mb-2 text-base text-black ">{!!$comment->message!!}</p>
         @if($comment->file)
           <br>
           <a download="image.jpg" href="{{asset('storage/'.$comment->file)}}" class="flex w-1/2 py-2 px-4 rounded-xl justify-between items-center border border-light-blue">

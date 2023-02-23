@@ -4,8 +4,8 @@
     <div class="bg-darker-blue">
       <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col ">
         <div class="col-span-7 relative">
-          <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">Complete Registration</h1>
-          <p class="m-0 text-light-blue">Fill out the form below to complete registration as supervisor.</p>
+          <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">Join As Institute Supervisor</h1>
+          <p class="m-0 text-light-blue">Fill out the registration form below to sign up for the platform.</p>
           <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-2 ">
         </div>
         <div class="col-start-10 col-span-4 relative ">
@@ -15,7 +15,7 @@
     <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
       <div class="col-span-6">
           {{-- reg state 1 if we access register from email completion register --}}
-          <form action="{{ route('mentor.registerAuth',[$email]) }}" method="post" id="register">
+          <form action="{{ route('supervisor.registerAuth',[$email]) }}" method="post" id="register">
               @csrf
 
               <input type="email" class="text w-full border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{ $checkMentor->email }}" placeholder="Email *" id="email" name="email" readonly><br>

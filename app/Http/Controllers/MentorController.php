@@ -48,7 +48,7 @@ class MentorController extends Controller
             $checkMentor = Mentor::where('email', $email)->first();
             if (!$checkMentor) {
                 $encEmail = (new SimintEncryption)->encData($email);
-                $link = route('mentor.register', [$encEmail]);
+                $link = route('supervisor.register', [$encEmail]);
                 $mentors = $this->addMentor($email,$institution_id);
                 $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
                 $message .= "\n$email";
@@ -62,12 +62,11 @@ class MentorController extends Controller
     }
 
     public function addMentor($email,$institution_id){
-        $mentor = Mentor::create([
+        return Mentor::create([
             'email' => $email,
             'institution_id' => $institution_id,
             'is_confirm' => 0
         ]);
-        return $mentor;
     }
 
     // dont need it but dont stash the function
@@ -132,7 +131,6 @@ class MentorController extends Controller
             'email' => 'required|email',
             'first_name' => 'required',
             'last_name' => 'required',
-            'sex' => 'required',
             'country' => 'required',
             'state' => 'required',
         ]);
@@ -141,7 +139,6 @@ class MentorController extends Controller
         $supervisor->email = $validated['email'];
         $supervisor->first_name = $validated['first_name'];
         $supervisor->last_name = $validated['last_name'];
-        $supervisor->sex = $validated['sex'];
         $supervisor->country = $validated['country'];
         $supervisor->state = $validated['state'];
         $supervisor->save();

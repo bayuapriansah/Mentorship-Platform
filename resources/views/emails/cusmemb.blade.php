@@ -71,7 +71,6 @@ td .es-button-border-1:hover {
 				<v:fill type="tile" color="#f6f6f6"></v:fill>
 			</v:background>
 		<![endif]-->
-{{-- This is the Header        --}}
    <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top;background-color:#F6F6F6">
      <tr>
       <td valign="top" style="padding:0;Margin:0">
@@ -88,17 +87,13 @@ td .es-button-border-1:hover {
                      <tr>
                         <td align="left" style="padding:0;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/intellogo2022_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="140" height="40"></td>
                      </tr>
-                   </table>
-                  </td>
+                   </table></td>
                  </tr>
-               </table>
-              </td>
+               </table></td>
              </tr>
-           </table>
-          </td>
+           </table></td>
          </tr>
        </table>
-{{-- This is the Header        --}}
        <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
          <tr>
           <td align="center" style="padding:0;Margin:0">
@@ -110,23 +105,12 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:770px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/component_3.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
+                      <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://raw.githubusercontent.com/bayuapriansah/public-repo-images/main/simulated_cusmem.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
                      </tr>
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:50px;color:#000f8a;font-size:35px;font-weight: bold;">Confirm your email address to get started with Simulated Internships Platform.</p></td>
-                     </tr>
-                   </table></td>
-                 </tr>
-               </table></td>
-             </tr>
-             <tr>
-              <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-right:20px;padding-left:40px">
-               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                 <tr>
-                  <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
-                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                     <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Once you’ve confirmed that {{ $data['body'] }} is your email address, we will help you find internship projects to join.</p></td>
+                      <!-- <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:38px;font-weight: bold;">You are invited to the Intel Simulated Internship. To get started with the platform, please confirm your email address.</p></td> -->
+                      <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px">
+                        <div style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:30px;font-weight: bold;">You are invited to the Simulated Internship Platform. To join the platform, please verify your email address.</div></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -139,7 +123,20 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-top:40px;padding-bottom:40px;padding-left:20px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Click on the button below to confirm,</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-left:20px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">After verifying your email address, you will be redirected to the registration page to fill in your personal information.</p></td>
+                     </tr>
+                   </table></td>
+                 </tr>
+               </table></td>
+             </tr>
+             <tr>
+              <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-right:20px;padding-left:40px">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                 <tr>
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
+                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                     <tr>
+                      <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-bottom:40px;padding-left:20px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Please click on the button below to confirm that {{$data['body'] }} is your email address and proceed to the registration page.</p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -158,7 +155,7 @@ td .es-button-border-1:hover {
 		<w:anchorlock></w:anchorlock>
 		<center style='color:#ffffff; font-family: 'IntelOne Display', arial, "helvetica neue", helvetica, sans-serif; font-size:20px; font-weight:400; line-height:20px;  mso-text-raise:1px'>Confirm Email Addess</center>
 	</v:roundrect></a>
-<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ route('verified',[$data['body2']]) }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 80px 20px 80px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Confirm Email Address</a></span><!--<![endif]--></td>
+<![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ $data['body2'] }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 80px 20px 80px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Accept Invitation</a></span><!--<![endif]--></td>
                      </tr>
                      <tr>
                       <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">If you didn’t request this email, there is nothing to worry about - you can safely ignore it</p></td>
@@ -170,8 +167,6 @@ td .es-button-border-1:hover {
            </table></td>
          </tr>
        </table>
-
-{{-- This is The Footer --}}
        <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
         <tr>
          <td align="center" style="padding:0;Margin:0">
@@ -254,7 +249,6 @@ td .es-button-border-1:hover {
           </table></td>
         </tr>
       </table>
-{{-- End Of Footer --}}
       </td>
      </tr>
    </table>

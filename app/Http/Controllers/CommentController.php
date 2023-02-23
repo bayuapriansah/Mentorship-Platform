@@ -50,8 +50,16 @@ class CommentController extends Controller
                     $q->where('mentor_id', Auth::guard('mentor')->user()->id);
                 });
             })->get();
-
-            // dd($injections);
+            return view('dashboard.messages.index', compact('messages','injections'));
+        }elseif(Auth::guard('customer')->check()){
+            $messages = Comment::whereHas('project', function($q){
+                $q->where('company_id', Auth::guard('customer')->user()->company_id);
+            })->get();
+            $injections = ProjectSection::whereHas('comment', function($q){
+                $q->whereHas('project', function($q){
+                    $q->where('company_id', Auth::guard('customer')->user()->company_id);
+                });
+            })->get();
             return view('dashboard.messages.index', compact('messages','injections'));
         }
     }
@@ -94,6 +102,11 @@ class CommentController extends Controller
             $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
             $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
             return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
+        }elseif(Auth::guard('customer')->check()){
+            $participants = Student::whereHas('comment')->get();
+            $customer_participants = Customer::where('company_id',Auth::guard('customer')->user()->company_id)->get();
+            $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
+            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
         }
     }
 
@@ -123,6 +136,9 @@ class CommentController extends Controller
         }elseif(Auth::guard('mentor')->check()){
             $comment->mentor_id = Auth::guard('mentor')->user()->id;
             $comment->student_id = $participant->id;
+        }elseif(Auth::guard('customer')->check()){
+            $comment->customer_id = Auth::guard('customer')->user()->id;
+            $comment->student_id = $participant->id;
         }
         $comment->project_id = $injection->project->id;
         $comment->project_section_id = $injection->id;
@@ -150,6 +166,9 @@ class CommentController extends Controller
             $comment->student_id = $validated['student'];
         }elseif(Auth::guard('mentor')->check()){
             $comment->mentor_id = Auth::guard('mentor')->user()->id;
+            $comment->student_id = $validated['student'];
+        }elseif(Auth::guard('customer')->check()){
+            $comment->customer_id = Auth::guard('customer')->user()->id;
             $comment->student_id = $validated['student'];
         }
         $comment->project_id = $validated['project'];

@@ -30,7 +30,7 @@
                 <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('mentor')->user()->first_name}} {{Auth::guard('mentor')->user()->last_name}}</h3>
                 <p class="font-normal text-lg">Lorem ipsum dolor sit amet is a dummy text used as a placeholder text.</p>
             </div>
-            <img src="/storage/{{Auth::guard('mentor')->user()->institution->logo}}" class="w-80 h-44" alt="">
+            <img src="/storage/{{Auth::guard('mentor')->user()->institution->logo}}" class="w-80 h-44 object-scale-down" alt="">
         </div>
         <div class="flex justify-between space-x-7 my-4">
             <div class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
@@ -54,6 +54,37 @@
             </div>
         </div>
 
+        <h3 class="text-dark-blue font-medium text-xl mt-12">Tutorial</h3>
+    @elseif(Auth::guard('customer')->check())
+        <div class="flex justify-between items-center">
+            <div class="space-y-7">
+                <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('customer')->user()->first_name}} {{Auth::guard('customer')->user()->last_name}}</h3>
+                <p class="font-normal text-lg">Lorem ipsum dolor sit amet is a dummy text used as a placeholder text.</p>
+            </div>
+            <img src="/storage/{{Auth::guard('customer')->user()->company->logo}}" class="w-80 h-44 object-scale-down" alt="">
+        </div>
+
+        <div class="flex justify-between space-x-7 my-4">
+            <div class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                <p class="font-normal text-[18px] text-left">Total Internships</p>
+                <p class="text-right text-dark-blue text-3xl">{{$internshipsTotal}}</p>
+            </div>
+
+            <div class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                <p class="font-normal text-[18px] text-left">Ongoing Internships</p>
+                <p class="text-right text-dark-blue text-3xl">{{$internshipsOngoing}}</p>
+            </div>
+
+            <div class="border border-light-blue bg-gradient-to-r from-[#CFF8D8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                <p class="font-normal text-[18px] text-left">Total Customers</p>
+                <p class="text-right text-dark-blue text-3xl">{{$customerTotal}}</p>
+            </div>
+
+            <div class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                <p class="font-normal text-[18px] text-left">New Submissions</p>
+                <p class="text-right text-dark-blue text-3xl">{{$student_submissions}}</p>
+            </div> 
+        </div>
         <h3 class="text-dark-blue font-medium text-xl mt-12">Tutorial</h3>
 
     @endif

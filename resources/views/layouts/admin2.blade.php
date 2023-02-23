@@ -40,6 +40,21 @@
       height: 300,
       readonly : true
   });
+
+  tinymce.init({
+      selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
+      height: 350,
+      plugins: 'lists paste',
+      menubar: '',
+      toolbar: 'undo redo | styleselect | bold italic ',
+      automatic_uploads: false,
+      paste_as_text: true,
+      setup: function (editor) {
+      editor.on('change', function () {
+          tinymce.triggerSave();
+      });
+  }
+  });
   </script>
 </head>
 <body>
@@ -75,7 +90,7 @@
 
 
             @if (Auth::guard('web')->check())
-              <a href="/dashboard/profile/{{Auth::guard('web')->user()->id}}/edit" type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300">
+              <a href="#" type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300">
             @elseif (Auth::guard('mentor')->check())
               <a href="/dashboard/profile/{{Auth::guard('mentor')->user()->id}}/edit" type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300">
             @elseif (Auth::guard('customer')->check())
@@ -140,11 +155,12 @@
               <!-- Modal body -->
               <div class="p-6 space-y-6">
                   <p class="text-base leading-relaxed text-gray-500">
-                    @if(Auth::guard('customer')->check())
+                    {{-- @if(Auth::guard('customer')->check())
                         {{Auth::guard('customer')->user()->name}}
                     @elseif(Auth::guard('web')->check())
                         {{Auth::guard('web')->user()->email}}
-                    @endif
+                    @endif --}}
+                    Notification Feature Will be in Future Release
                   </p>
               </div>
           </div>

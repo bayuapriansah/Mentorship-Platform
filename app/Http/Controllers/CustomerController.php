@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,20 +17,56 @@ class CustomerController extends Controller
         return view('dashboard.companies.partner.index', compact('members','partner'));
     }
 
+    public function partnerMemberEdit(Company $partner, Customer $member)
+    {
+        return view('dashboard.companies.partner.edit',compact('partner', 'member'));
+    }
+
+    public function partnerMemberUpdate(Request $request, Company $partner, Customer $member)
+    {
+        $member = Customer::find($member->id);
+        $member->email = $request->email;
+        $member->first_name = $request->first_name;
+        $member->last_name = $request->last_name;
+        $member->save();
+        return redirect()->back();
+    }
+    public function partnerMemberSuspend(Company $partner, Customer $member)
+    {
+        $member = Customer::find($member->id);
+        if($member->is_confirm == 1){
+            $member->is_confirm = 0;
+        }else{
+            $member->is_confirm = 1;
+        }
+        $member->save();
+        return redirect('/dashboard/partners/'.$partner->id.'/members');
+    }
+    public function destroy(Company $partner, Customer $member)
+    {
+        $member = Customer::find($member->id);
+        $member->delete();
+        return redirect('/dashboard/partners/'.$partner->id.'/members');
+
+    }
+    
     public function invite(Company $partner)
     {
-        return view('dashboard.companies.partner.invite', compact('partner'));
+        if (!Auth::guard('customer')) {
+            return view('dashboard.companies.partner.invite', compact('partner'));
+        } else {
+            return view('dashboard.companies.partner.invite');
+        }
     }
 
     public function sendInvitePartner(Request $request,$partner_id)
     {
-        // dd($request->all());
-        $message = "Successfully Send Invitation to Student";
+        $message = "Invitation sented successfully";
         foreach (array_filter($request->email) as $email) {
             $checkCustomer = Customer::where('email', $email)->first();
             if(!$checkCustomer){
                 $encEmail = (new SimintEncryption)->encData($email);
-                $link = route('mentor.register', [$encEmail]);
+                $link = route('supervisor.register', [$encEmail]);
                 $student = $this->addCustomerToPartner($email,$partner_id);
                 $sendmail = (new MailController)->EmailMemberInvitation($student->email,$link);
                 $message .= "\n$email";

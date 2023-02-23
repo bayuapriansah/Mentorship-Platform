@@ -33,16 +33,6 @@
     @enderror
   </div>
 
-  <select id="sex" class="border border-light-blue w-full rounded-lg mt-4 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" name="sex" required>
-    <option value="" class="" hidden>Sex *</option>
-    <option value="male" {{$supervisor->sex == 'male' ? 'selected' : ''}}>Male</option>
-    <option value="female" {{$supervisor->sex == 'female' ? 'selected' : ''}}>Female</option>
-  </select><br>
-  @error('sex')
-      <p class="text-red-600 text-sm mt-1">
-        {{$message}}
-      </p>
-  @enderror
 
   <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight bg-gray-300 invalid:text-black text-black cursor-not-allowed focus:outline-none" name="institution" disabled>
     <option value="{{ $supervisor->institution_id }}" selected>{{ $supervisor->institution->name }}</option>
