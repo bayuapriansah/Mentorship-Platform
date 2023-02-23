@@ -136,7 +136,7 @@ td .es-button-border-1:hover {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:750px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-bottom:40px;padding-left:20px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Please click on the button below to confirm that {{$data['body'] }} is your email address and proceed to the registration page.</p></td>
+                      <td align="left" style="padding:0;Margin:0;padding-top:15px;padding-bottom:40px;padding-left:20px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">Please click on the button below to confirm that {{ $data['body'] }} is your email address and proceed to the registration page.</p></td>
                      </tr>
                    </table></td>
                  </tr>
