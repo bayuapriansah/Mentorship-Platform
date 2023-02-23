@@ -18,7 +18,7 @@
     @enderror
   </div>
   <div class="mb-3">
-    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="name" type="text" value="{{$institutions_view->email}}" placeholder="Institution Name" name="email" required>
+    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="name" type="text" value="{{$institutions_view->email}}" placeholder="Institution Email" name="email" required>
     @error('email')
         <p class="text-danger text-sm mt-1">
           {{$message}}
@@ -66,7 +66,8 @@
     @enderror
   </div>
   <div class="mb-3">
-    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Institution</button>
+    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Confirm</button>
+    <a href="/dashboard/institutions_partners" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-dark-red border-solid border-dark-red text-center capitalize bg-orange text-white font-light text-sm">Cancel</a>
   </div>
 </form>
 <script>
