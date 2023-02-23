@@ -146,8 +146,17 @@
     @enderror
   @endif
 
-  <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne flex mx-auto" type="submit">Update Student</button>
+  <div class="flex justify-center gap-4">
+    <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne flex" type="submit">Update Student</button>
+    @if(Route::is('dashboard.students.manage'))
+      <a href="/dashboard/institutions/{{$institution->id}}/students" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-dark-red border-solid border-dark-red text-center capitalize bg-orange text-white font-light text-sm intelOne flex">Cancel</a>
+    @else
+      <a href="/dashboard/students" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-dark-red border-solid border-dark-red text-center capitalize bg-orange text-white font-light text-sm intelOne flex">Cancel</a>
+    @endif
 
+  </div>
+  
+  
   </div>
 </form>
 

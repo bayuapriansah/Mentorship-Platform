@@ -1,5 +1,8 @@
 @extends('layouts.admin2')
 @section('content')
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/institutions_partners"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Institutions</h3>
 </div>
