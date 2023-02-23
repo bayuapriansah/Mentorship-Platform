@@ -8,6 +8,7 @@ use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
+use App\Models\Customer;
 use App\Models\Submission;
 use App\Models\Institution;
 use Illuminate\Http\Request;
@@ -105,19 +106,21 @@ class StudentController extends Controller
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();
-            if (!$checkStudent) {
+            $checkUser = User::where('email', $email)->first(); 
+            $checkMentor = Mentor::where('email', $email)->first(); 
+            $checkCustomer = Customer::where('email', $email)->first(); 
+            if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
                 $student = $this->addStudentToInstitution($email, $institution_id);
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
                 $message .= "\n$email";
+            }else{
+                return redirect()->back()->with('error', 'Email is already registered');
             }
-            // else{
-            //     return redirect()->back()->with('error', 'Email already invited');
-            // }
         }
 
-        return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('success', $message);
+        return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('successTailwind', $message);
     }
 
     public function addStudentToInstitution($email,$institution_id){
@@ -280,7 +283,7 @@ class StudentController extends Controller
             }
         }
         $student->save();
-        return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('successTailwind','Profile updated successfully');
+        return redirect('/dashboard/institutions/'.$institution_id.'/students/')->with('successTailwind','Successfully edited student data');
 
     }
     /**
@@ -306,11 +309,16 @@ class StudentController extends Controller
     public function suspendAccountInstitution($institution_id,$student_id)
     {
         $students = Student::find($student_id);
-        $students->is_confirm = 2;
+        if($students->is_confirm==1){
+            $students->is_confirm =2;
+            $message = "Successfully Suspend Account";
+        }elseif($students->is_confirm=2){
+            $students->is_confirm =1;
+            $message = "Successfully Activate Account";
+        }
         $students->save();
-        $message = "Successfully Deactive Account";
         // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
-        return back()->with('success', $message);
+        return back()->with('successTailwind', $message);
     }
 
     public function suspendAccount($student_id)
@@ -444,7 +452,7 @@ class StudentController extends Controller
     {
         $student = Student::find($student->id);
         $student->delete();
-        return redirect('dashboard/students');
+        return back()->with('error', 'Student Deleted');
     }
 
     // STUDENT PROFILE

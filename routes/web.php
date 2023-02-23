@@ -156,7 +156,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
-        Route::patch('institutions/{institution}', [InstitutionController::class, 'update'])->name('institutions.update');
+        // Route::patch('institutions/{institution}', [InstitutionController::class, 'update'])->name('institutions.update');
         Route::get('/institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
         Route::get('/institutions/{institution}/students', [InstitutionController::class, 'institutionStudents'])->name('students.institutionStudents');
 
