@@ -136,10 +136,11 @@ class ProjectController extends Controller
         $project->dataset = $request->dataset;
         $project->overview = $request->overview;
         $project->save();
+        $message = "Successfully created a project";
         if($request->input('addInjectionCard')){
-            return redirect('/dashboard/projects/'.$project->id.'/injection');
+            return redirect('/dashboard/projects/'.$project->id.'/injection')->with('successTailwind', $message);
         }else{
-            return redirect('/dashboard/projects');
+            return redirect('/dashboard/projects')->with('successTailwind', $message);
         }
     }
 

@@ -56,6 +56,13 @@
   }
   });
   </script>
+
+  <style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        /* transform: translate(1247px, 750px); */
+      }
+  </style>
 </head>
 <body>
   <div class="max-w-[2000px] mx-auto">
@@ -216,6 +223,14 @@
       $(document).ready( function () {
           $('#dataTable').DataTable();
       });
+      const openToggle = (id)=>{
+        // document.getElementById(`dropdownHover${id}`).classList.add('hidden');
+        document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
+
+        if ( document.getElementById(`dropdownHover${id}`).classList.contains('hidden') )
+
+        document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
+      } 
   </script>
 </body>
 </html>
