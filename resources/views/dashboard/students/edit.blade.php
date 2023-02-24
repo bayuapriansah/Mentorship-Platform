@@ -9,7 +9,9 @@
   <a href="/dashboard/students"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
 @endif
-
+<div class="mt-3">
+  @include('flash-message')
+</div>
 @if(Route::is('dashboard.students.manage'))
 <form action="/dashboard/institutions/{{$institution->id}}/students/{{$student->id}}/managepatch" method="post" enctype="multipart/form-data">
 @else
@@ -63,7 +65,7 @@
       </select><br>
     @else
       <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight  invalid:text-black text-black  focus:outline-none" name="institution">
-        <option value="" hidden class="text-black">Institution</option>
+        {{-- <option value="" hidden class="tex t-black">Institution</option> --}}
         @foreach ($institutions as $institution)
           <option value="{{$institution->id}}" {{$institution->id == $student->institution->id ? 'selected': ''}} class="text-black">{{$institution->name}}</option>
         @endforeach
@@ -161,20 +163,18 @@
 @section('more-js')
 <script>
   $(document).ready(function () {
-      $('#inputInstitution').on('change', function () {
-          var institutionVal = this.value;
+          var institutionVal = $('#inputInstitution').val();
           var base_url = window.location.origin;
           $.ajax({
               url: base_url+"/api/institution/"+institutionVal,
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
-                // console.log(institutionVal);
+                console.log(result);
                 $('#ForCountry').val(result.countries);
                 $('#ForState').val(result.states);
               }
           });
-      });
 
       $('#study_program_form').hide();
       $("#inputStudy").change(function(){

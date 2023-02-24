@@ -223,7 +223,7 @@
                 <div class="p-6 space-y-6">
                   <div class="max-h-60 overflow-y-auto">
                       {{-- code comment here --}}
-                    @if($notifActivityCount > 0)
+                    @if($notifActivityCount < 0)
                         @foreach ($newActivityNotifs as $newActivityNotif)
                           {{-- Start Her --}}
                           @if ($newActivityNotif->grade == !NULL)
