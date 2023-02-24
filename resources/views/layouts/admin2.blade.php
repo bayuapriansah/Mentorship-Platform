@@ -15,47 +15,69 @@
   <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
   <script src="https://cdn.tiny.cloud/1/7d3zd697fxtkpnuq9ikxrj7hpewm4ce4a12ubsk671xmqykc/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
-  tinymce.init({
-      selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
-      height: 350,
-      plugins: 'media image lists paste',
-      menubar: 'file edit insert view format table tools help',
-      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
-      images_upload_url: 'postAcceptor.php',
-      automatic_uploads: false,
-      paste_as_text: true
-  });
-  tinymce.init({
-      selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
-      height: 350,
-      plugins: 'media image lists paste',
-      menubar: 'file edit insert view format table tools help',
-      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
-      images_upload_url: 'postAcceptor.php',
-      automatic_uploads: false,
-      paste_as_text: true
-  });
-  tinymce.init({
-      selector: 'textarea#sectionDescDisable', // Replace this CSS selector to match the placeholder element for TinyMCE
-      height: 300,
-      readonly : true
-  });
+    tinymce.init({
+        selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 350,
+        plugins: 'media image lists paste',
+        menubar: 'file edit insert view format table tools help',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
+        images_upload_url: 'postAcceptor.php',
+        automatic_uploads: false,
+        paste_as_text: true
+    });
+    tinymce.init({
+        selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 350,
+        plugins: 'media image lists paste',
+        menubar: 'file edit insert view format table tools help',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
+        images_upload_url: 'postAcceptor.php',
+        automatic_uploads: false,
+        paste_as_text: true
+    });
+    tinymce.init({
+        selector: 'textarea#sectionDescDisable', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 300,
+        readonly : true
+    });
 
-  tinymce.init({
-      selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
-      height: 350,
-      plugins: 'lists paste',
-      menubar: '',
-      toolbar: 'undo redo | styleselect | bold italic ',
-      automatic_uploads: false,
-      paste_as_text: true,
-      setup: function (editor) {
-      editor.on('change', function () {
-          tinymce.triggerSave();
-      });
-  }
-  });
+    tinymce.init({
+        selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
+        height: 350,
+        plugins: 'lists paste',
+        menubar: '',
+        toolbar: 'undo redo | styleselect | bold italic ',
+        automatic_uploads: false,
+        paste_as_text: true,
+        setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    }
+    });
   </script>
+  {{-- this style make scroll down in browser --}}
+  <style>
+    /* Hide the default scrollbar */
+    ::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Show the custom scrollbar on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  </style>
 </head>
 <body>
   <div class="max-w-[2000px] mx-auto">
