@@ -171,6 +171,7 @@
                 <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
                 <form method="POST" action="/dashboard/students/${studentId}/suspend" >
                   @csrf
+                  <input type="hidden" name="institution" value="{{ $student->institution->id }}">
                   <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg" id='SuspendActiveBtn'>${studentBtn} Account</button>
                 </form>
                 <form method="POST" action="/dashboard/students/${studentId}" >

@@ -321,14 +321,21 @@ class StudentController extends Controller
         return back()->with('successTailwind', $message);
     }
 
-    public function suspendAccount($student_id)
+    public function suspendAccount(request $request,$student_id)
     {
+        $mentor = Mentor::inRandomOrder()->where('institution_id',$request->institution)->where('is_confirm',1)->first();
         $student = Student::find($student_id);
         if($student->is_confirm == 1){
             $student->is_confirm = 2;
             $message = "Successfully Deactive Account";
         }else{
             $student->is_confirm = 1;
+            if($student->mentor_id == NULL){
+                $student->mentor_id = $mentor->id;
+            }
+            if($student->end_date == NULL){
+                $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+            }
             $message = "Successfully Activate Account";
         }
         $student->save();

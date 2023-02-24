@@ -159,7 +159,7 @@ class AuthController extends Controller
             $registeredEmail->save();
             return view('auth.verified');
         }else{
-            return abort(403);
+            return redirect()->route('index');
         }
     }
 
