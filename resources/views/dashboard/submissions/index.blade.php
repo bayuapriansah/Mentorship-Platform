@@ -45,18 +45,20 @@
         @endif
       </td>
       <td>
-        <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover{{$no}}" data-dropdown-trigger="hover" class="text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-        <!-- Dropdown menu -->
-        <div id="dropdownHover{{$no}}" class="z-10 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-            <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
-              <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                {{-- @if ($submission->grade)
-                  <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/grade/{{$submission->grade->id}}" >View Submission</a>
-                @else --}}
-                  <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}" >View Submission</a>
-                {{-- @endif --}}
-              </li>
-            </ul>
+        <div class="dropdown inline-block relative">
+          <button id="dropdownHoverButton" class="text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+          <!-- Dropdown menu -->
+          <div class="z-10 dropdown-menu absolute hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+              <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
+                <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  {{-- @if ($submission->grade)
+                    <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/grade/{{$submission->grade->id}}" >View Submission</a>
+                  @else --}}
+                    <a href="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}" >View Submission</a>
+                  {{-- @endif --}}
+                </li>
+              </ul>
+          </div>
         </div>
       </td>
     </tr>

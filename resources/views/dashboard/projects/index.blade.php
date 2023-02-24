@@ -73,7 +73,7 @@
       </td>
       <td>
         <div class="dropdown inline-block relative">
-          <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover{{$no}}" onclick="return openToggle({{$no}})" data-dropdown-trigger="click" class="inline-flex text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          <button id="dropdownHoverButton" class="inline-flex text-black bg-white font-normal rounded-lg text-sm px-4 py-2.5 text-center items-center" type="button">Option <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
         <!-- Dropdown menu -->
           <div class="z-10 dropdown-menu absolute hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44" style="transform: translate(-30px, 0px);">
@@ -116,7 +116,7 @@
                     @endif
                       @method('delete')
                       @csrf
-                      <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" value="Delete">
+                      <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="return confirm('Delete this project?')" value="Delete">
                     </form>
                   </li>
                 @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
@@ -133,19 +133,6 @@
 </table>
 <div class="mt-12"></div>
 <div class="p-10">
-
-  <div class="dropdown inline-block relative">
-    <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
-      <span class="mr-1">Dropdown</span>
-      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
-    </button>
-    <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-      <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">One</a></li>
-      <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Two</a></li>
-      <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Three is the magic number</a></li>
-    </ul>
-  </div>
-
 </div>
 @endsection
 @section('more-js')
