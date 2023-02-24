@@ -207,7 +207,7 @@
           <h1 class="text-dark-blue font-medium text-sm text-center">Dataset</h1>
           <div class="flex flex-wrap justify-start pt-2">
             @foreach ($datasets as $dataset)
-              <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Datase {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
+              <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
               @php $no++ @endphp  
             @endforeach
           </div>
