@@ -173,11 +173,11 @@ $(document).ready(function () {
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
-                // console.log(result);
+                console.log(result);
                   $('#inputstudent').html('<option hidden>Select Task</option>');
                   $.each(result, function (key, value) {
                       $("#inputstudent").append('<option value="' + value
-                          .ID + '">' + value.first_name + ' ' + value.last_name +'</option>');
+                          .id + '">' + value.first_name + ' ' + value.last_name +'</option>');
                   });
               }
           });

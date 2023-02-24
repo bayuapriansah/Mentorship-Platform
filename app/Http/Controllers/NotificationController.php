@@ -32,4 +32,7 @@ class NotificationController extends Controller
         return $notif;
     }
 
+    public function all_notif_new_task(){
+        return $this->count_total_all_notification_available();
+    }
 }
