@@ -66,9 +66,20 @@ class CommentController extends Controller
 
     public function create()
     {
+        if(Auth::guard('web')->check()){
         $projects = Project::get();
         $projectSections = ProjectSection::get();
         $students = Student::get();
+        }elseif(Auth::guard('mentor')->check()){
+        // dd(Auth::guard('mentor')->user()->institution_id);
+        $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->get();
+        $projectSections = ProjectSection::get();
+        $students = Student::get();
+        }elseif(Auth::guard('customer')->check()){
+        $projects = Project::get();
+        $projectSections = ProjectSection::get();
+        $students = Student::get();
+        }
         return view('dashboard.messages.create', compact('projects', 'projectSections', 'students'));
     }
 
