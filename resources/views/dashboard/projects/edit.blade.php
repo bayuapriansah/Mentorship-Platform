@@ -91,7 +91,7 @@
       </select>
     @else
     @if(Auth::guard('customer')->check())
-      <select class="border bg-gray-300 border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
+      <select class="border bg-gray-300 border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputpartner">
         <option value="" hidden>Select Partner</option>
         @foreach ($partners as $partner)
           <option value="{{$partner->id}}" {{$project->company_id == $partner->id?'selected':''}} >{{$partner->name}}</option>
@@ -127,8 +127,8 @@
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
         <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institutions</option>
-        @if(Auth::guard('web')->check())
-          <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution</option>
+        @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
+          <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
         @elseif(Auth::guard('mentor')->check())
           <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
         @endif
@@ -267,7 +267,7 @@
       });
   </script>
   @endsection
-@elseif(Auth::guard('mentor')->check())
+@elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
   @section('more-js')
     <script>
       $(document).ready(function () {

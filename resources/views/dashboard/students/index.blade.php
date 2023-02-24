@@ -105,6 +105,9 @@
                   data-student-is_confirm="{{ $student->is_confirm }}"
                   data-student-start="{{ $student->created_at->format('d M Y') }}"
                   data-student-btn="{{$student->is_confirm == 1 ? 'Deactive': 'Activate'}}"
+                  data-student-btn="{{$student->is_confirm == 1 ? 'Deactive': 'Activate'}}"
+                  data-student-instution-id = {{ $student->institution->id }}
+                  
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
@@ -141,6 +144,7 @@
         let studentIs_confirm = $(this).data('student-is_confirm');
         let studentStart = $(this).data('student-start');
         let studentBtn = $(this).data('student-btn');
+        let studentInstitutionId = $(this).data('student-instution-id')
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -171,7 +175,7 @@
                 <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
                 <form method="POST" action="/dashboard/students/${studentId}/suspend" >
                   @csrf
-                  <input type="hidden" name="institution" value="{{ $student->institution->id }}">
+                  <input type="hidden" name="institution" value="${studentInstitutionId}">
                   <button type="submit"  class="bg-dark-yellow px-6 py-2 text-white rounded-lg" id='SuspendActiveBtn'>${studentBtn} Account</button>
                 </form>
                 <form method="POST" action="/dashboard/students/${studentId}" >

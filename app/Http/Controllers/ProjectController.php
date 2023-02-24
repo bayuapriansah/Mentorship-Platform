@@ -187,7 +187,11 @@ class ProjectController extends Controller
 
         if ($validated['projectType'] == 'private') {
             if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
-                $project->institution_id = $request->institution_id;
+                if($request->institution_id == null){
+                    $project->institution_id = $request->existing_institute;
+                }else{
+                    $project->institution_id = $request->institution_id;
+                }
             }elseif(Auth::guard('mentor')->check()){
                 $project->institution_id = Auth::guard('mentor')->user()->institution_id;
             }
