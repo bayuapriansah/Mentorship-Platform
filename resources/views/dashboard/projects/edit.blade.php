@@ -127,10 +127,16 @@
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
         <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institutions</option>
-        @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
+        @if(Auth::guard('web')->check() )
           <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
         @elseif(Auth::guard('mentor')->check())
           <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+        @elseif(Auth::guard('customer')->check())
+          @if($project->institution_id)
+            <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
+          @else
+            <option value="private">Private to one institution</option>
+          @endif
         @endif
     </select>
   </div>
@@ -251,7 +257,7 @@
   @endif
 </form>
 @endsection
-@if (Auth::guard('web')->check())
+@if (Auth::guard('web')->check()|| Auth::guard('customer')->check())
   @section('more-js')
   <script>
     $(document).ready(function () {
@@ -267,7 +273,7 @@
       });
   </script>
   @endsection
-@elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
+@elseif(Auth::guard('mentor')->check() )
   @section('more-js')
     <script>
       $(document).ready(function () {

@@ -159,7 +159,7 @@ class ProjectController extends Controller
 
     public function dashboardIndexUpdate(Request $request, Project $project)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $validated = $request->validate([
             'name' => ['required'],
@@ -180,7 +180,11 @@ class ProjectController extends Controller
         $project->name = $validated['name'];
         $project->project_domain = $validated['project_domain'];
         $project->period = $validated['period'];
-        $project->company_id = $request->partner;
+        if(Auth::guard('customer')->check()){
+            $project->company_id = Auth::guard('customer')->user()->company_id;
+        }else{
+            $project->company_id = $request->partner;
+        }
         $project->problem = $validated['problem'];
         $project->dataset = $request->dataset;
         $project->overview = $request->overview;
