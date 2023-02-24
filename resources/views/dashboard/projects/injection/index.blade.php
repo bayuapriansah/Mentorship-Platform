@@ -20,7 +20,7 @@
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
-
+@include('flash-message')
 @if (Route::is('dashboard.partner.partnerProjectsInjection'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
@@ -112,7 +112,7 @@
   </div> --}}
 
   <div class="mb-3">
-    <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" name="addInjectionCard" value="Submit">
+    <input type="submit" class="py-2.5 cursor-pointer px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" name="addInjectionCard" value="Submit">
   </div>
 </form>
 @endsection

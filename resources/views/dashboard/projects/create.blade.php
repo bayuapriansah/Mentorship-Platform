@@ -20,7 +20,7 @@
   <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
-
+@include('flash-message')
 @if (Route::is('dashboard.partner.partnerProjectsCreate'))
 <form action="/dashboard/partners/{{$partner->id}}/projects" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
@@ -109,6 +109,11 @@
           <option value="private">Private to your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
         @endif
     </select>
+    @error('projectType')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
   </div>
 
   <div class="mb-3">
@@ -197,7 +202,7 @@
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
       <div class="text-xl text-dark-blue">
-        <i class="fa-solid fa-circle-xmark"></i>
+        <i class="fa-solid fa-circle-plus"></i>
         <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card">
       </div>
   </div>

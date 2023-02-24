@@ -230,11 +230,13 @@ class ProjectController extends Controller
         $project = Project::find($project->id);
         if($project->status == 'publish'){
             $project->status = 'draft';
+            $message = "Successfully drafted project";
         }else{
             $project->status = 'publish';
+            $message = "Successfully publish project";
         }
         $project->save();
-       return redirect('/dashboard/projects');
+       return redirect('/dashboard/projects')->with('successTailwind', $message);
 
     }
 
@@ -647,18 +649,19 @@ class ProjectController extends Controller
         $project->dataset = $request->dataset;
         $project->overview = $request->overview;
         $project->save();
+        $message = "Successfully created a project";
 
         if($request->input('addInjectionCard')){
-            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
+            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection')->with('successTailwind', $message );
             // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
         }else{
-            return redirect('/dashboard/partners/'.$partner->id.'/projects');
+            return redirect('/dashboard/partners/'.$partner->id.'/projects')->with('successTailwind', $message );
         }
     }
 
     public function partnerProjectsUpdate(Request $request, Company $partner, Project $project)
     {
-
+        // dd($request->all());
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],
@@ -680,15 +683,21 @@ class ProjectController extends Controller
         $project->name = $validated['name'];
         $project->project_domain = $validated['project_domain'];
         $project->period = $validated['period'];
+        $project->problem = $validated['problem'];
         if ($validated['projectType'] == 'public') {
             $project->institution_id = null;
-        }else{
-            $project->institution_id = $request->institution_id;
+        }elseif($validated['projectType'] == 'private'){
+            if($request->institution_id == null){
+                $project->institution_id = $request->existing_institute;
+            }else{
+                $project->institution_id = $request->institution_id;
+            }
         }
         $project->overview = $request->overview;
         $project->dataset = $validated['dataset'];
         $project->save();
-        return redirect('/dashboard/partners/'.$partner->id.'/projects');
+        $message = "Successfully updated a project";
+        return redirect('/dashboard/partners/'.$partner->id.'/projects')->with('successTailwind', $message );
     }
 
     public function partnerProjectsEdit(Company $partner, Project $project)
@@ -704,11 +713,13 @@ class ProjectController extends Controller
         $project = Project::find($project->id);
         if($project->status == 'publish'){
             $project->status = 'draft';
+            $message = "Successfully drafted project";
         }else{
             $project->status = 'publish';
+            $message = "Successfully publish project";
         }
         $project->save();
-        return redirect('/dashboard/partners/'.$partner->id.'/projects');
+        return redirect('/dashboard/partners/'.$partner->id.'/projects')->with('successTailwind', $message);
 
     }
 
@@ -747,16 +758,16 @@ class ProjectController extends Controller
         $section->section = 0;
         $section->description = $validated['description'];
         $section->save();
-
+        $message = "Successfully created an injection card";
         if($request->input('addInjectionCard')){
             // return redirect()->back();
-            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit')->with('successTailwind', $message);
 
             // return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
             // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
         }else{
             // /partners/{partner}/projects/{project}/injection/{injection}/attachment
-            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$section->id.'/attachment');
+            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$section->id.'/attachment')->with('successTailwind', $message);
         }
     }
 
@@ -797,7 +808,8 @@ class ProjectController extends Controller
             $section->file1 = $file;
         }
         $section->save();
-        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+        $message = "Successfully updated an injection card";
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit')->with('successTailwind', $message );
     }
 
     public function partnerProjectsInjectionDelete(Company $partner, Project $project, ProjectSection $injection)
@@ -837,7 +849,8 @@ class ProjectController extends Controller
             $attachment->file3 = $file3;
         }
         $attachment->save();
-        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$injection->id.'/edit');
+        $message = "Successfully added the attachment";
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$injection->id.'/edit')->with('successTailwind', $message );
     }
 
     public function partnerProjectsInjectionAttachmentEdit(Company $partner, Project $project, ProjectSection $injection, SectionSubsection $attachment)
@@ -847,7 +860,6 @@ class ProjectController extends Controller
 
     public function partnerProjectsInjectionAttachmentUpdate(Request $request, Company $partner, Project $project, ProjectSection $injection, SectionSubsection $attachment)
     {
-
         $attachment = SectionSubsection::find($attachment->id);
 
         if($request->hasFile('file_input1')){
@@ -889,14 +901,16 @@ class ProjectController extends Controller
             $attachment->file3 = $file3;
         }
         $attachment->save();
-        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$injection->id.'/edit');
+        $message = "Successfully added the attachment";
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$injection->id.'/edit')->with('successTailwind', $message);
     }
 
     public function partnerProjectsInjectionAttachmentDelete(Company $partner, Project $project, ProjectSection $injection, SectionSubsection $attachment, $key)
     {
         $attachment = SectionSubsection::find($attachment->id);
         if($key==1){
-            return back();
+            $message = "Cannot delete the first attachment";
+            return back()->with('error', $message);
         }elseif($key==2){
             if(Storage::path($attachment->file2)) {
                 Storage::disk('public')->delete($attachment->file2);
@@ -909,7 +923,8 @@ class ProjectController extends Controller
             $attachment->file3 == null;
         }
         $attachment->save();
-        return back();
+        $message = "Successfully delete an attachment";
+        return back()->with('successTailwind', $message);
     }
 
     // projects from admin dashboard sidebar menu

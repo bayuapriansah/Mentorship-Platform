@@ -1,6 +1,6 @@
 @extends('layouts.admin2')
 @section('content')
-@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachment'))
+@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachmentEdit'))
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
@@ -10,7 +10,7 @@
 </div>
 @endif
 
-@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachment'))
+@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachmentEdit'))
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Add Project <i class="fa-solid fa-chevron-right"></i> Injection Card <i class="fa-solid fa-chevron-right"></i> File Attachment</h3>
   <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/edit" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
@@ -21,7 +21,7 @@
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
-@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachment'))
+@if (Route::is('dashboard.partner.partnerProjectsInjectionAttachmentEdit'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment->id}}" class="w-3/4" enctype="multipart/form-data" method="post">
 @else
 <form action="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment->id}}" class="w-3/4" enctype="multipart/form-data" method="post">

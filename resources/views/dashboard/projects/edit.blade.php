@@ -1,5 +1,14 @@
 @extends('layouts.admin2')
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if (Route::is('dashboard.partner.partnerProjectsEdit'))
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/partners/{{$partner->id}}/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
@@ -21,7 +30,7 @@
   <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
-
+@include('flash-message')
 @if (Route::is('dashboard.partner.partnerProjectsEdit'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
@@ -50,7 +59,7 @@
   </div>
 
   <div class="mb-3 flex justify-between">
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain" aria-label="Default select example" name="domain">
+    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain" aria-label="Default select example" name="project_domain">
       <option value="" hidden>Select Project Domain *</option>
       <option value="nlp" {{$project->project_domain == 'nlp'? 'selected':''}}>NLP</option>
       <option value="statistical" {{$project->project_domain == 'statistical'? 'selected':''}}>Statistical</option>
@@ -108,7 +117,7 @@
   <div class="mb-3">
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
-        <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institution</option>
+        <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institutions</option>
         @if(Auth::guard('web')->check())
           <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution</option>
         @elseif(Auth::guard('mentor')->check())
@@ -116,7 +125,7 @@
         @endif
     </select>
   </div>
-
+  <input type="hidden" value="{{$project->institution_id}}" name="existing_institute">
   <div class="mb-3">
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputinstitution"  name="institution_id" >
         <option value="" hidden>Select Institution</option>

@@ -17,6 +17,7 @@
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
+@include('flash-message')
 @if (Route::is('dashboard.partner.partnerProjectsInjectionAttachment'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment" class="w-3/4" enctype="multipart/form-data" method="post">
 @else
