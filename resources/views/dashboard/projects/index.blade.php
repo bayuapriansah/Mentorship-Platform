@@ -54,8 +54,11 @@
             (Private to {{$project->institution->name}})
           @endif
         @else
-        {{$project->institution_id == null ?'(Public)':'(Private)'}}
-            
+          @if ($project->institution_id==null)
+            (Public)
+          @else
+            (Private to {{$project->institution->name}})
+          @endif
         @endif
       </td>
       <td>{{$project->project_domain}}</td>
