@@ -37,7 +37,7 @@
   </div>
 
   <div class="mb-3 flex justify-between">
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain"  name="domain">
+    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain"  name="project_domain">
       <option value="" hidden>Select Project Domain *</option>
       <option value="nlp" {{old('domain') == 'nlp' ? 'selected': ''}}>NLP</option>
       <option value="statistical" {{old('domain') == 'statistical' ? 'selected': ''}}>Statistical Data</option>

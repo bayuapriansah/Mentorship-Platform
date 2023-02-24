@@ -95,7 +95,7 @@ class ProjectController extends Controller
 
         $validated = $request->validate([
             'name' => ['required'],
-            'domain' => ['required'],
+            'project_domain' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
@@ -110,7 +110,7 @@ class ProjectController extends Controller
 
         $project = new Project;
         $project->name = $validated['name'];
-        $project->project_domain = $validated['domain'];
+        $project->project_domain = $validated['project_domain'];
         $project->period = $validated['period'];
         $project->problem = $validated['problem'];
         $project->type = 'monthly';
@@ -163,7 +163,7 @@ class ProjectController extends Controller
 
         $validated = $request->validate([
             'name' => ['required'],
-            'domain' => ['required'],
+            'project_domain' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
@@ -178,7 +178,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($project->id);
         // if(Auth::guard('web')->check()){
         $project->name = $validated['name'];
-        $project->project_domain = $validated['domain'];
+        $project->project_domain = $validated['project_domain'];
         $project->period = $validated['period'];
         $project->company_id = $request->partner;
         $project->problem = $validated['problem'];
@@ -196,7 +196,7 @@ class ProjectController extends Controller
         }
         $project->type = 'monthly';
         $project->save();
-        return redirect('dashboard/projects')->with('success','Project has been edited');
+        return redirect('dashboard/projects')->with('successTailwind','Project has been edited');
 
         // }elseif(Auth::guard('customer')->check()){
         //     $project->name = $validated['name'];
@@ -317,35 +317,13 @@ class ProjectController extends Controller
         $section->section = 0;
         $section->description = $validated['description'];
         $section->save();
-
+        $message = "Successfully created an injection card";
         if($request->input('addInjectionCard')){
             // return redirect()->back();
-            return redirect('/dashboard/projects/'.$project->id.'/edit');
+            return redirect('/dashboard/projects/'.$project->id.'/edit')->with('successTailwind', $message);
         }else{
-            return redirect('/dashboard/projects/'.$project->id.'/injection/'.$section->id.'/attachment');
+            return redirect('/dashboard/projects/'.$project->id.'/injection/'.$section->id.'/attachment')->with('successTailwind', $message);
         }
-
-        // $validated = $request->validate([
-        //     'title' => ['required'],
-        //     'description' => ['required'],
-        //     'inputfiletype' => ['required'],
-        //     'duration' => ['required']
-        // ]);
-        // $project_section = new ProjectSection;
-        // $latest_item = ProjectSection::where('project_id', $project_id)->orderByDesc('section')->first();
-        // if($latest_item==null){
-        //     $project_section->section    = 1;
-        // }else{
-        //     $project_section->section    = $latest_item->section+1;
-        // }
-        // $project_section->project_id = $project_id;
-        // $project_section->title = $validated['title'];
-        // $project_section->description = $validated['description'];
-        // $project_section->file_type = $validated['inputfiletype'];
-        // $project_section->duration = $validated['duration'];
-        // $project_section->save();
-
-        // return redirect('dashboard/projects/'.$project_id.'/section')->with('success','Project section has been created');
     }
 
     public function dashboardIndexEditSection(Project $project, ProjectSection $injection)
@@ -383,14 +361,16 @@ class ProjectController extends Controller
         $section->duration = $validated['duration'];
         $section->description = $validated['description'];
         $section->save();
-        return redirect('/dashboard/projects/'.$project->id.'/edit');
+        $message = "Successfully updated an injection card";
+        return redirect('/dashboard/projects/'.$project->id.'/edit')->with('successTailwind', $message);
     }
 
     public function dashboardIndexDestroySection(Project $project, ProjectSection $injection)
     {
         $injection=ProjectSection::find($injection->id);
         $injection->delete();
-        return redirect('/dashboard/projects/'.$project->id.'/edit');
+        $message = "Successfully deleted an injection card";
+        return redirect('/dashboard/projects/'.$project->id.'/edit')->with('successTailwind', $message);
     }
 
     public function dashboardIndexSectionUp(Request $request,$project_id ,$section_id)
@@ -473,7 +453,8 @@ class ProjectController extends Controller
             $attachment->file3 = $file3;
           }
           $attachment->save();
-          return redirect('/dashboard/projects/'.$project->id.'/injection/'.$injection->id.'/edit');
+          $message = "Successfully added the attachment";
+          return redirect('/dashboard/projects/'.$project->id.'/injection/'.$injection->id.'/edit')->with('successTailwind', $message);
     }
 
     public function dashboardEditSubsection(Project $project, ProjectSection $injection, SectionSubsection $attachment)
@@ -622,7 +603,7 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required'],
-            'domain' => ['required'],
+            'project_domain' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
@@ -638,7 +619,7 @@ class ProjectController extends Controller
         ]);
         $project = new Project;
         $project->name = $validated['name'];
-        $project->project_domain = $validated['domain'];
+        $project->project_domain = $validated['project_domain'];
         $project->period = $validated['period'];
         $project->problem = $validated['problem'];
         $project->type = 'monthly';
@@ -728,7 +709,8 @@ class ProjectController extends Controller
     {
         $project = Project::find($project->id);
         $project->delete();
-        return redirect('/dashboard/partners/'.$partner->id.'/projects');
+        $message = "Successfully delete a project";
+        return redirect('/dashboard/partners/'.$partner->id.'/projects')->with('successTailwind', $message);
     }
 
     public function partnerProjectsInjection(Company $partner, Project $project)
@@ -817,7 +799,8 @@ class ProjectController extends Controller
     {
         $injection=ProjectSection::find($injection->id);
         $injection->delete();
-        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+        $message = "Successfully deleted an injection card";
+        return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit')->with('successTailwind', $message );
     }
 
     public function partnerProjectsInjectionAttachment(Company $partner, Project $project, ProjectSection $injection)

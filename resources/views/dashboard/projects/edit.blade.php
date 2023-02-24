@@ -220,10 +220,10 @@
       <div class="space-x-5">
         @if (Route::is('dashboard.partner.partnerProjectsEdit'))
           <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/edit"><i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i></a>
-          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/delete"><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
+          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/delete" ><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
         @else
           <a href="/dashboard/projects/{{$project->id}}/injection/{{$card->id}}/edit"><i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i></a>
-          <a href="/dashboard/projects/{{$project->id}}/injection/{{$card->id}}/delete"><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
+          <a href="/dashboard/projects/{{$project->id}}/injection/{{$card->id}}/delete" ><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
         @endif
         </div>
       {{-- <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 text-dark-blue">
