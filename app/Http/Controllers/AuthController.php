@@ -82,8 +82,9 @@ class AuthController extends Controller
             $student->is_confirm = 0;
             $student->mentor_id = $mentor->id;
             $student->save();
-            $sendmail = (new MailController)->emailregister($validated['email']);
             $emailEnc = (new SimintEncryption)->encData($validated['email']);
+            $link = route('verified', [$emailEnc]);
+            $sendmail = (new MailController)->emailregister($validated['email'],$link);
             // $sendmail = (new MailController)->otplogin($validated['email'],$otp);
             // return redirect('/otp/login')->with('success','You\'re Success create an Student account. Thank you! 😊');
             return redirect()->route('verify',[$emailEnc]);

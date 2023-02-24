@@ -33,12 +33,13 @@ class MailController extends Controller
         }
     }
 
-    public function emailregister($mailto) //Just Email
+    public function emailregister($mailto,$urlInvitation) //Just Email
     {
         $data = [
             'subject' => 'Registration Completed',
             'body' => $mailto,
-            'body2' => (new SimintEncryption)->encData($mailto),
+            // 'body2' => (new SimintEncryption)->encData($mailto),
+            'body2' => $urlInvitation,
             'type' => 'welcome',
         ];
         try
