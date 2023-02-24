@@ -61,33 +61,34 @@
         <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Student</button>
     </div>
     <div class="w-3/4 mt-4">
-            <div class="relative cursor-pointer " id="drop-area">
-            <label for="file-input">
-                <div class="relative cursor-pointer" id="drop-area">
-                <input type="file" name="file" class="absolute opacity-0" id="file-input">
-                <div class="p-6 border-2 border-dashed hover:bg-gray-50 rounded-md border-light-blue">
-                    <div class="text-center">
-                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        <p class="mt-1 text-sm text-gray-600">
-                            Click to upload or drag and drop
-                        </p>
-                        <p class="text-xs text-gray-500 ">.{{'xlsx, xls or csv'}}</p>
-                        {{-- <p class="mt-2 text-sm text-gray-600" id="file-name"></p> --}}
-                    </div>
-                </div>
-                </div>
-            </label>
-            <div id="hideornot">
-                <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
+        <div class="relative cursor-pointer " id="drop-area">
+        <label for="file-input">
+            <div class="relative cursor-pointer" id="drop-area">
+            <input type="file" name="file" class="absolute opacity-0" id="file-input">
+            <div class="p-6 border-2 border-dashed hover:bg-gray-50 rounded-md border-light-blue">
+                <div class="text-center">
+                    <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                    <p class="mt-1 text-sm text-gray-600">
+                        Click to upload or drag and drop
+                    </p>
+                    <p class="text-xs text-gray-500 ">.{{'xlsx, xls or csv'}}</p>
+                    {{-- <p class="mt-2 text-sm text-gray-600" id="file-name"></p> --}}
                 </div>
             </div>
             </div>
+        </label>
+        <div id="hideornot">
+            <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
+            </div>
+        </div>
+        </div>
     </div>
     @error('email')
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
         </p>
     @enderror
+    <a href="{{asset('assets/bulk_email.xlsx')}}" class="text-dark-blue hover:text-darker-blue">Click to download bulk email invitation format</a>
   </div>
   <p></p>
   <div class="mb-3">

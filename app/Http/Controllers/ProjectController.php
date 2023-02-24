@@ -159,7 +159,7 @@ class ProjectController extends Controller
 
     public function dashboardIndexUpdate(Request $request, Project $project)
     {
-        // dd($request->all());
+        dd($request->all());
 
         $validated = $request->validate([
             'name' => ['required'],
@@ -186,7 +186,7 @@ class ProjectController extends Controller
         $project->overview = $request->overview;
 
         if ($validated['projectType'] == 'private') {
-            if(Auth::guard('web')->check()){
+            if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
                 $project->institution_id = $request->institution_id;
             }elseif(Auth::guard('mentor')->check()){
                 $project->institution_id = Auth::guard('mentor')->user()->institution_id;

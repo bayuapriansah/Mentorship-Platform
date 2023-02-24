@@ -14,7 +14,7 @@
     <tr>
       <td>No</td>
       <td>Student Name</td>
-      <td>Participant</td>
+      <td>Recipient</td>
       <td>Unread Message</td>
       <td>View</td>
     </tr>
