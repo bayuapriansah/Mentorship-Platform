@@ -186,6 +186,7 @@
             <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution" required>
               <option value="" hidden>Institution Name</option>
               {{-- @forelse($GetInstituionData as $ins) --}}
+              @sdd($checkStudent)
               <option value="{{$checkStudent->institution_id}}" selected>{{$checkStudent->institution->name}}</option>
               {{-- @empty --}}
               {{-- <p>There is no Country Data</p> --}}
