@@ -78,16 +78,7 @@ class StudentController extends Controller
 
     public function sendInvite(Request $request)
     {
-        // $checkStudent = Student::where('email', $request->email)->first();
-        // if(!$checkStudent){
-        //     $encEmail = (new SimintEncryption)->encData($request->email);
-        //     $link = route('student.register', [$encEmail]);
-        //     $student= $this->addStudent($request);
-        //     $sendmail = (new MailController)->EmailStudentInvitation($student->email,$link);
-        //     $message = "Successfully Send Invitation to Student";
-        //     return redirect()->route('dashboard.students.index')->with('success', $message);
-        // }
-
+        // dd('tes');
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();

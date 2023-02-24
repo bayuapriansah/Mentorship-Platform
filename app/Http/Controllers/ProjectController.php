@@ -67,7 +67,7 @@ class ProjectController extends Controller
             $projects = Project::with(['student', 'company'])->get();
             return view('dashboard.projects.index', compact('projects'));
         }elseif(Auth::guard('mentor')->check()){
-            $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->get();
+            $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->with(['student', 'company'])->get();
             return view('dashboard.projects.index', compact('projects'));
         }elseif(Auth::guard('customer')->check()){
             $projects = Project::where('company_id', Auth::guard('customer')->user()->company_id)->with(['student', 'company'])->get();
