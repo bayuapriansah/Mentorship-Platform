@@ -133,7 +133,7 @@ class CustomerController extends Controller
                 return redirect()->back();
             }
             $company->save();
-            $sendmail = (new MailController)->EmailMemberRegister($company->email);
+            // $sendmail = (new MailController)->EmailMemberRegister($company->email);
             $message = "Successfully Register as Customer, Now you can login to your account";
             return redirect()->route('login')->with('success', $message);
         }else{

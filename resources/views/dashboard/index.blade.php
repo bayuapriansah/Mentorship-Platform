@@ -28,7 +28,7 @@
         <div class="flex justify-between items-center">
             <div class="space-y-7">
                 <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('mentor')->user()->first_name}} {{Auth::guard('mentor')->user()->last_name}}</h3>
-                <p class="font-normal text-lg">Lorem ipsum dolor sit amet is a dummy text used as a placeholder text.</p>
+                <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Supervisor Dashboard.</p>
             </div>
             <img src="/storage/{{Auth::guard('mentor')->user()->institution->logo}}" class="w-80 h-44 object-scale-down" alt="">
         </div>
@@ -59,7 +59,7 @@
         <div class="flex justify-between items-center">
             <div class="space-y-7">
                 <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('customer')->user()->first_name}} {{Auth::guard('customer')->user()->last_name}}</h3>
-                <p class="font-normal text-lg">Lorem ipsum dolor sit amet is a dummy text used as a placeholder text.</p>
+                <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Customer Dashboard.</p>
             </div>
             <img src="/storage/{{Auth::guard('customer')->user()->company->logo}}" class="w-80 h-44 object-scale-down" alt="">
         </div>
