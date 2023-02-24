@@ -14,8 +14,8 @@ class NotificationController extends Controller
         $newMessage = (new StudentController)->newCommentForSidebarMenu($student->id);
         $newActivityNotifs = (new StudentController)->newNotificationActivity($student->id);
         $notifActivityCount = (new StudentController)->newNotificationActivityCount($student->id);
-
-        return view('student.notifications.index', compact('student', 'newMessage', 'newActivityNotifs','notifActivityCount'));
+        $notifNewTasks = $this->all_notif_new_task();
+        return view('student.notifications.index', compact('student', 'newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks'));
     }
 
     // inputed project_id into notification so it will count as notification
