@@ -68,6 +68,8 @@
           {{$message}}
         </p>
     @enderror
+    <a href="{{asset('assets/bulk_email.xlsx')}}" class="text-dark-blue hover:text-darker-blue">Click to download bulk email invitation format</a>
+
   </div>
   <p></p>
   <div class="mb-3">

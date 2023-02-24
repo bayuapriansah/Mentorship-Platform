@@ -90,12 +90,21 @@
         <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
       </select>
     @else
-    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
-      <option value="" hidden>Select Partner</option>
-      @foreach ($partners as $partner)
-        <option value="{{$partner->id}}" {{$project->company_id == $partner->id?'selected':''}} >{{$partner->name}}</option>
-        @endforeach
-    </select>
+    @if(Auth::guard('customer')->check())
+      <select class="border bg-gray-300 border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
+        <option value="" hidden>Select Partner</option>
+        @foreach ($partners as $partner)
+          <option value="{{$partner->id}}" {{$project->company_id == $partner->id?'selected':''}} >{{$partner->name}}</option>
+          @endforeach
+      </select>
+    @else
+      <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
+        <option value="" hidden>Select Partner</option>
+        @foreach ($partners as $partner)
+          <option value="{{$partner->id}}" {{$project->company_id == $partner->id?'selected':''}} >{{$partner->name}}</option>
+          @endforeach
+      </select>
+    @endif
     @endif
     @error('partner')
         <p class="text-red-600 text-sm mt-1">
@@ -237,7 +246,7 @@
   </div>
   @if (Auth::guard('web')->check())
     <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Project</button>
-  @elseif(Auth::guard('mentor')->check())
+  @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check() )
     <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Proposed Project</button>
   @endif
 </form>
