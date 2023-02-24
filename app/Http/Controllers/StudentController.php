@@ -612,7 +612,7 @@ class StudentController extends Controller
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::find($task_id);
-        $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->get();
+        $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->where('student_id', Auth::guard('student')->user()->id)->get();
         // $submission = Submission::get();
         $submissionData = Submission::where('student_id',$student_id)->where('section_id', $task->id)->first();
         $project = Project::find($project_id);

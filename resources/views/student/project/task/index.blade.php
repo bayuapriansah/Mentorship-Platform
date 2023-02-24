@@ -57,50 +57,7 @@
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-10  my-auto">
         <h1 class="text-dark-blue text-[22px] font-medium">Discussion</h1>
-        @if ($comments->count() == 0)
-          {{-- <div class="text-right" id="reply-btn">
-            <button type="button" class="bg-darker-blue hover:bg-dark-blue py-1 px-6 text-white rounded-full col-end" style="text-align: right"><i class="fa-sharp fa-solid fa-reply mr-2"></i>Reply</button>
-          </div> --}}
-          {{-- Create new message --}}
-          {{-- <div class="border border-light-blue p-6 rounded-xl bg-white space-y-2" id="message-form">
-            <p class="border-b-2 text-dark-blue font-medium">To: <span class="font-light text-black pl-4">{{$student->mentor->first_name}} {{$student->mentor->last_name}} (Supervisor)</span></p>
-            <p class="border-b-2 text-dark-blue font-medium">CC: 
-              <span class="pl-3">
-                @foreach ($admins as $admin)
-                  <span class="font-light text-black">{{$admin->name}}(Admin); </span>
-                @endforeach
-                @foreach ($task->project->company->customers as $customer)
-                  <span class="font-light text-black">{{$customer->first_name}} {{$customer->last_name}}({{$task->project->company->name}}); </span>
-                @endforeach
-              </span>
-            </p>
-            <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/chat" method="post" id="form-chat" enctype="multipart/form-data">
-              @csrf
-              <div class="w-full mb-4 ">
-                <div class="bg-white  rounded-t-lg   ">
-                    <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" placeholder="Type Here" required novalidate></textarea>
-                </div>
-                <div class="flex items-center justify-between bg-white rounded-b-lg">
-                    <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
-                        <label for="file-chat-input" type="button" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 ">
-                          <img src="{{asset('assets/img/icon/clip.svg')}}" class="w-[10px]" alt="">
-                        </label>
-                        <div id="chatFileName"></div>
-                        <input id="file-chat-input" class="hidden" type="file" name="file" />
-                    </div>
-                    <div>
-                      <button type="button" class="bg-[#B11313] hover:bg-red-800 px-4 py-1 rounded-full text-white text-sm" id="btn-cancel">Cancel</button>
-                      <button type="submit">
-                        <span class="bg-dark-blue hover:bg-darker-blue px-4 py-1 rounded-full text-white text-sm">
-                          Send
-                        </span>
-                      </button>
-                    </div>
-                </div>
-              </div>
-            </form>
-          </div> --}}
-        @else
+        @if ($comments->count())
         <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
           @php $no=1;  @endphp
           @foreach($comments->where('project_id', $task->project->id)->where('project_section_id', $task->id)->where('student_id', Auth::guard('student')->user()->id) as $comment)
@@ -119,9 +76,6 @@
                       @endif
                     </span><br>
                     <span class="font-light receiver text-xs">
-                      {{-- @foreach ($admins as $admin)
-                        <span class="font-light text-black">{{$admin->name}}(Admin); </span>
-                      @endforeach --}}
                       @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
                         to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}}(Supervisor), 
                         @foreach ($admins as $admin)
@@ -131,22 +85,6 @@
                           <span class="font-light text-black">{{$customer->first_name}} {{$customer->last_name}}({{$task->project->company->name}}); </span>
                         @endforeach
                       @endif
-                      {{-- @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
-                        to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}}, 
-                        @foreach ($customer_participants as $customer)
-                          {{$customer->first_name}} {{$customer->last_name}},
-                        @endforeach
-                      @elseif($comment->mentor_id !=null)
-                        to: {{$comment->student->first_name}} {{$comment->student->last_name}}, 
-                        @foreach ($customer_participants as $customer)
-                          {{$customer->first_name}} {{$customer->last_name}},
-                        @endforeach
-                      @elseif($comment->user_id !=null )
-                      to: {{$comment->student->first_name}} {{$comment->student->last_name}}, {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}},                
-                        @foreach ($customer_participants as $customer)
-                          {{$customer->first_name}} {{$customer->last_name}},
-                        @endforeach
-                      @endif --}}
                     </span>
                     <span class="font-light message-top">{!!$mess = substr($comment->message,0,39)!!} {{strlen($mess)>38?'...':''}}</span>
                   </div>
@@ -173,7 +111,7 @@
             </div>
             @php $no++ @endphp
           @endforeach
-            <button type="button" id="reply-existing-message" class="text-white bg-dark-blue hover:bg-darker-blue px-8 py-1 rounded-full">Reply</button>
+          <button type="button" id="reply-existing-message" class="text-white bg-dark-blue hover:bg-darker-blue px-8 py-1 rounded-full">Reply</button>
         </div>
         @endif
         <div class="border border-light-blue p-6 rounded-xl bg-white space-y-2" id="message-form">
@@ -287,9 +225,7 @@
 </div>
 @endsection
 @section('more-js')
-@if ($comments->count() == 0)
-
-@else
+@if ($comments->count())
   <script>
     $(document).ready( function () {
       $('#message-form').hide()
