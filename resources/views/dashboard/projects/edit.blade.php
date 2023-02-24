@@ -128,7 +128,11 @@
         <option value="" hidden>Project type</option>
         <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institutions</option>
         @if(Auth::guard('web')->check() )
-          <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
+          @if($project->institution_id)
+            <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
+          @else
+            <option value="private">Private to one institution</option>
+          @endif
         @elseif(Auth::guard('mentor')->check())
           <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
         @elseif(Auth::guard('customer')->check())
