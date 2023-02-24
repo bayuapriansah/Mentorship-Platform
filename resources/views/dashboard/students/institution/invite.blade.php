@@ -47,7 +47,7 @@
   <div class="mb-3">
     <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Student Email" name="email[]" required><br>
     @if(Route::is('dashboard.students.invite'))
-        @if(Auth::guard('web')->check())
+        @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
             <select id="inputStudy" class="text w-3/4 border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution_id" required>
                 <option value="" hidden>Institution Name</option>
                 @foreach($allInstitutions as $institution)
