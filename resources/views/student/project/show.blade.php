@@ -105,7 +105,7 @@
                           @foreach ($project_section->submissions->where('student_id',Auth::guard('student')->user()->id) as $submission)
                             @if($submission->grade)
                               @if ($submission->grade->status==1)
-                                <span class="text-[#11BF61]"><i class="fa-solid fa-circle text-[#11BF61] fa-xs mr-2"></i> Compete</span>
+                                <span class="text-[#11BF61]"><i class="fa-solid fa-circle text-[#11BF61] fa-xs mr-2"></i> Complete</span>
                               @elseif($submission->grade->status==0)
                                 <span class="text-[#EA0202]"><i class="fa-solid fa-circle text-[#EA0202] fa-xs mr-2"></i> Revise</span>
                               @endif

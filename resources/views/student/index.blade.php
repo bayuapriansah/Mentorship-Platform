@@ -64,7 +64,7 @@
                 </div>
               </div>
               <div class="intelOne text-grey font-normal text-xs py-2 m-0">
-                {!! substr($enrolled_project->project->problem,0,250) !!}...
+                {{ substr($enrolled_project->project->overview,0,250) }}...
               </div>
               <div class="flex justify-between mt-0">
                 <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Project;
+use App\Models\Student;
+use App\Models\Customer;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 use App\Models\MentorProject;
@@ -45,17 +48,19 @@ class MentorController extends Controller
     {
         $message = "Successfully Send Invitation to Supervisor";
         foreach (array_filter($request->email) as $email) {
-            $checkMentor = Mentor::where('email', $email)->first();
-            if (!$checkMentor) {
+            $checkStudent = Student::where('email', $email)->first();
+            $checkUser = User::where('email', $email)->first(); 
+            $checkMentor = Mentor::where('email', $email)->first(); 
+            $checkCustomer = Customer::where('email', $email)->first(); 
+            if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('supervisor.register', [$encEmail]);
                 $mentors = $this->addMentor($email,$institution_id);
                 $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
                 $message .= "\n$email";
+            }else{
+                return redirect()->back()->with('error', 'Email is already registered');
             }
-            // else{
-            //     return redirect()->back()->with('error', 'Email already invited');
-            // }
         }
 
         return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('successTailwind', $message);
