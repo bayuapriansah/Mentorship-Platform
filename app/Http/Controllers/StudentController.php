@@ -339,7 +339,12 @@ class StudentController extends Controller
             $message = "Successfully Deactive Account";
         }else{
             $student->is_confirm = 1;
-            $student->mentor_id = $mentor->id;
+            if($student->mentor_id == NULL){
+                $student->mentor_id = $mentor->id;
+            }
+            if($student->end_date == NULL){
+                $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+            }
             $message = "Successfully Activate Account";
         }
         $student->save();
