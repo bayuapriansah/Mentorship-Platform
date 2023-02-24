@@ -682,7 +682,7 @@ class StudentController extends Controller
         }
         $submission->is_complete = 1;
         if($request->hasFile('file')){
-            $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
+            $uploadedFileType = $request->file('file')->extension();
             if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
                 $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
                 $submission->file = $file;
