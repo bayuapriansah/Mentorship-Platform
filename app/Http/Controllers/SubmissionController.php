@@ -81,6 +81,19 @@ class SubmissionController extends Controller
             $grade->status = 0;
         }
         $grade->save();
+
+        // $submissions = Submission::whereHas('grade', function($q){
+        //     $q->where('status',1);
+        // })->where('student_id', $student_id)->get();
+        // dd($submissions);
+        // $submissions = Grade::where('submission_id',$submission)get();
+        // dd($project_sections->count());
+        // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
+        //     $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+        //     $success_project->is_submited = 1;
+        //     $success_project->flag_checkpoint = $dataDate;
+        //     $success_project->save();
+        // }
         // return redirect('/submissions/project/'.$project->id.'/view/'.$submission->id.'/grade/'.$grade->id);
         return back();
     }

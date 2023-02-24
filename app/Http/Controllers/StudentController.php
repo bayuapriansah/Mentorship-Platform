@@ -694,7 +694,7 @@ class StudentController extends Controller
             return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-        // dd($submissions->count());
+        // $submissions = Grade::where('submission_id',$submission)get();
         // dd($project_sections->count());
         if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
             $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
@@ -711,9 +711,11 @@ class StudentController extends Controller
         // dd($request->all());
         // dd($submission_id);
         // dataset tag implode
-        $dataset_array = json_decode($request->dataset, true);
-        $dataset_values = array_column($dataset_array, 'value');
-        $dataset_result = implode(';', $dataset_values);
+        if ($request->dataset) {
+            $dataset_array = json_decode($request->dataset, true);
+            $dataset_values = array_column($dataset_array, 'value');
+            $dataset_result = implode(';', $dataset_values);
+        }
 
         // checkpoint
         $project = Project::find($project_id);
@@ -739,7 +741,11 @@ class StudentController extends Controller
 
         $submission = Submission::find($submission_id);
         $submission->flag_checkpoint = $taskDate;
-        $submission->dataset = $dataset_result;
+        if($request->dataset){
+            $submission->dataset = $dataset_result;
+        }else{
+            $submission->dataset = null;
+        }
         // dd($dataset_result);
         if($request->hasFile('file')){
 
