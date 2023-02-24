@@ -65,13 +65,22 @@ class testCode extends Command
         // $notif = Notification::get();
         // dd($notif->count());
 
-        $notifActivity = Notification::get();
-        $nop = [];
-        foreach($notifActivity as $no){
-            $nop[] = $no->project;
-        }
-        dd($nop);
+        $notifActivity = $this->all_notif_new_task();
+        // $nop = [];
+        // foreach($notifActivity as $no){
+        //     $nop[] = $no->project;
+        // }
+        dd($notifActivity);
         // dd(count($nop));
         // dd($notif->count() + $notifActivityCount);
+    }
+    public function count_total_all_notification_available(){
+        $notif = Notification::get();
+
+        return $notif;
+    }
+
+    public function all_notif_new_task(){
+        return $this->count_total_all_notification_available();
     }
 }
