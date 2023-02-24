@@ -70,6 +70,23 @@
         {{-- <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a> --}}
       </div>
   </div>
+  <div>
+    @if($submission->dataset)
+    <div class="text-dark-blue font-normal">Dataset</div>
+      @php
+        $datasets = explode(';',$submission->dataset);
+        $no=1;
+      @endphp
+    <div class="flex flex-col text-center my-4">
+      <div class="flex flex-wrap justify-start pt-2">
+        @foreach ($datasets as $dataset)
+          <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
+          @php $no++ @endphp  
+        @endforeach
+      </div>
+    </div>
+    @endif
+  </div>
   @if(Auth::guard('web')->check())
     @if(!$submission->grade)
       <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
