@@ -26,7 +26,7 @@
   <div class="row mt-1">
     <div class="col">
       <p class="text-bold mb-0">Period : </p>
-      <p>{{$project->period}} Month</p>
+      <p>{{$project->period}} Months</p>
     </div>
   </div>
   <div class="row mt-4">
@@ -137,7 +137,7 @@
       </form> 
       <div class="border border-light-blue rounded-[10px] bg-white p-2 absolute right-0 top-16 flex items-center space-x-3">
         <i class="fa-regular fa-calendar"></i>
-        <p class="font-normal text-sm text-light-blue">Duration: <span class="text-dark-blue">{{$project->period}} Month</span></p>
+        <p class="font-normal text-sm text-light-blue">Duration: <span class="text-dark-blue">{{$project->period}} Months</span></p>
       </div>
     </div>
   </div>
