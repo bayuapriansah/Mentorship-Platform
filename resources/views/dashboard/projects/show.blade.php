@@ -22,7 +22,7 @@
   </div>
   <div>
     <p class="text-light-blue">Project Duration</p>
-    <p>{{$project->period}} Month</p>
+    <p>{{$project->period}} Months</p>
   </div>
   <div>
     <p class="text-light-blue">Project By</p>
