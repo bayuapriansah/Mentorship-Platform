@@ -107,7 +107,7 @@
             <option value="2nd" {{$student->year_of_study == '2nd' ? 'selected' : ''}}>2nd</option>
             <option value="3rd" {{$student->year_of_study == '3rd' ? 'selected' : ''}}>3rd</option>
             <option value="4th" {{$student->year_of_study == '4th' ? 'selected' : ''}}>4th</option>
-            <option value="5th+" {{$student->year_of_study == '5th+' ? 'selected' : ''}}>5th+</option>
+            <option value="5+" {{$student->year_of_study == '5+' ? 'selected' : ''}}>5+</option>
           </select><br>
           @error('year_of_study')
               <p class="text-red-600 text-sm mt-1">
