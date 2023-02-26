@@ -112,7 +112,7 @@
       <div class="w-full relative">
         @php $tipNumber = 1 @endphp
         @foreach ($submissions as $submission)
-          {{-- <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%"> --}}
+          <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
           @php $tipNumber++ @endphp
         @endforeach
 
