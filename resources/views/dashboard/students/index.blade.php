@@ -34,10 +34,11 @@
       <th>Full Name</th>
       <th>Email</th>
       @if(Auth::guard('customer')->check())
-      <th>Mentor Name</th>
+      <th>Supervisor Name</th>
       <th>Join Date</th>
       @else
       <th>Institute Name</th>
+      <th>Supervisor Name</th>
       <th>Status</th>
       @endif
       <th>View</th>
@@ -55,7 +56,7 @@
         @if($student->student->mentor)
           <td>{{$student->student->mentor->first_name}} {{$student->student->mentor->last_name}}</td>
         @else
-          <td>Mentor not registered yet</td>
+          <td>Supervisor not registered yet</td>
         @endif
         <td>{{$student->student->updated_at->format('d/m/Y')}}</td>
         <td class="text-center">
@@ -81,6 +82,13 @@
           {{$student->institution->name}}
           @else
           Not Registered Yet
+          @endif
+        </td>
+        <td>
+          @if($student->mentor)
+            {{$student->mentor->first_name}} {{$student->mentor->last_name}}
+          @else
+            Student not completed the registration yet
           @endif
         </td>
         <td>

@@ -112,8 +112,24 @@
       <div class="w-full relative">
         @php $tipNumber = 1 @endphp
         @foreach ($submissions as $submission)
-          <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
-          @php $tipNumber++ @endphp
+        
+          @if ($submission->grade == null)
+            <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+          @else
+            @if($submission->grade->status == 1)
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+            @endif
+          @endif
+            {{-- @if(!$submission->grade->where('status',0))
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+            @else
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+            @endif --}}
+          {{-- @else --}}
+          {{-- jika grade null --}}
+          {{-- @endif --}}
+          
+            @php $tipNumber++ @endphp
         @endforeach
 
         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-3">
@@ -122,8 +138,15 @@
 
         @php $no=1 @endphp
         @foreach ($submissions as $submission)
-        <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$submission->flag_checkpoint-4}}%">Task {{$no}}</p>
-        <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
+          @if ($submission->grade == null)
+            <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$submission->flag_checkpoint-4}}%">Task {{$no}}</p>
+            <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
+          @else
+            @if($submission->grade->status == 1)
+              <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$submission->flag_checkpoint-4}}%">Task {{$no}}</p>
+              <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
+            @endif
+          @endif
           @php $no++ @endphp
         @endforeach
       </div>
