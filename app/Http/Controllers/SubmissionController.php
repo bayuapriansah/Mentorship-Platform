@@ -51,7 +51,17 @@ class SubmissionController extends Controller
     // project task submission list
     public function show(Project $project)
     {
-        $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
+        if(Auth::guard('mentor')->check()){
+            $submissions = Submission::with('grade')
+                                    ->where('project_id', $project->id)
+                                    ->whereHas('student', function($q){
+                                        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                                    })->get();
+        }
+        else{
+            $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
+
+        }
         return view('dashboard.submissions.index', compact('project', 'submissions'));
     }
 
