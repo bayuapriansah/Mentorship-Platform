@@ -209,7 +209,7 @@
                             <a class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
                             <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-8 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>
                             <button class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-8 py-3 mt-5 items-end rounded-full shadow-xl float-right" style="display: none;" id="submit"type="submit">Yes, Submit</button>
-                            <h1 id="text-confirm" class="intelOne text-dark-blue text-sm font-bold py-3 mt-5 items-end float-left cursor-text" style="display: none;">Are you sure you want to make the final submission?</h1>
+                            <h1 id="text-confirm" class="intelOne text-dark-blue text-sm font-bold py-3 mt-5 items-end float-left cursor-text" style="display: none;">Are you sure you want to make the task submission?</h1>
                           </div>
                         </form>
                     </div>
