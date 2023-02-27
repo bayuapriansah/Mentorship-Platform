@@ -124,16 +124,16 @@
             <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
           </div>
         </div>
-        <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{!! substr($project->problem,0,200) !!}...</p>
+        <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{{ substr($project->overview,0,200) }}...</p>
         <div class="flex justify-between mt-4">
-          <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$project->period}} Months</span></p>
-          <a href="
-          @if (Auth::guard('student')->check())
-              /projects/{{$project->id}}
-          @else
-            /otp/login
-          @endif
-          " class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Project Details</a>
+          <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">
+            @if ($project->period>1)
+              {{$project->period}} Months
+            @else
+              {{$project->period}} Month
+            @endif  
+          </span></p>
+          <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Project Details</a>
         </div>
       </div>
       @empty

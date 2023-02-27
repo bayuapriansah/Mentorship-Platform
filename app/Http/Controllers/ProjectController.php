@@ -25,10 +25,14 @@ class ProjectController extends Controller
     public function index()
     {
         if(Auth::guard('student')->check()){
-            $projects = Project::whereNotIn('id', function($query){
-                $query->select('project_id')->from('enrolled_projects');
-                $query->where('student_id',Auth::guard('student')->user()->id);
-            })->where('institution_id', Auth::guard('student')->user()->institution_id)->where('status', 'publish')->orWhere('institution_id', null)->where('status', 'publish')->get();
+            $projects = Project::where('institution_id', Auth::guard('student')->user()->institution_id)
+                        ->where('status', 'publish')
+                        ->orWhere('institution_id', null)
+                        ->where('status', 'publish')
+                        ->whereNotIn('id', function($query){
+                            $query->select('project_id')->from('enrolled_projects');
+                            $query->where('student_id',Auth::guard('student')->user()->id);
+                        })->get();
         }else{
             $projects = Project::get();
         }

@@ -127,7 +127,7 @@ Route::group(['middleware'=>'auth:student'], function(){
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
 
-Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show')->middleware('auth:student');
+Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show')->middleware('auth:student,web,customer,mentor');
 Route::get('/projects/{project}/detail/{subsection}',[ProjectController::class, 'showSubsection'])->name('projects.subsection');
 // Route::get('/projects/{student}/applied', [ProjectController::class, 'applied'])->name('projects.applied');
 // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');
