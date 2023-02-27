@@ -77,7 +77,7 @@ class CustomerController extends Controller
             $checkStudent = Student::where('email', $email)->first();
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
-                $link = route('supervisor.register', [$encEmail]);
+                $link = route('customer.register', [$encEmail]);
                 $student = $this->addCustomerToPartner($email,$partner_id);
                 $sendmail = (new MailController)->EmailMemberInvitation($student->email,$link);
                 $message .= "\n$email";
