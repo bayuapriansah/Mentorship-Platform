@@ -124,7 +124,7 @@
             <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
           </div>
         </div>
-        <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{!! substr($project->problem,0,200) !!}...</p>
+        <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{{ substr($project->overview,0,200) }}...</p>
         <div class="flex justify-between mt-4">
           <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">
             @if ($project->period>1)

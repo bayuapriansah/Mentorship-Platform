@@ -786,10 +786,16 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::where('id', $student_id)->first();
-       $projects = Project::whereNotIn('id', function($query){
+        $projects = Project::where('institution_id', $student->institution_id)->where('status', 'publish')->orWhere('institution_id', null)->where('status', 'publish')->whereNotIn('id', function($query){
             $query->select('project_id')->from('enrolled_projects');
             $query->where('student_id',Auth::guard('student')->user()->id);
-        })->where('institution_id', $student->institution_id)->where('status', 'publish')->orWhere('institution_id', null)->where('status', 'publish')->get();
+        })->get();
+
+        // $projects = Project::whereNotIn('id', function($query){
+        //     $query->select('project_id')->from('enrolled_projects');
+        //     $query->where('student_id',Auth::guard('student')->user()->id);
+        // })->where('institution_id', $student->institution_id)->where('status', 'publish')->orWhere('institution_id', null)->where('status', 'publish')->get();
+
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
