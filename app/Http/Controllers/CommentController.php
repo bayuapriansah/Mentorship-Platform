@@ -164,7 +164,7 @@ class CommentController extends Controller
 
     public function adminSendMessageGlobal(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $validated = $request->validate([
             'project' => 'required',
             'injection' => 'required',
