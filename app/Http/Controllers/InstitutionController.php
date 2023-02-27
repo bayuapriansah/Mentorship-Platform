@@ -19,7 +19,7 @@ class InstitutionController extends Controller
 
     public function GetInstituionById($id)
     {
-        $GetInstitution = institution_world_data_view::where('id',$id)->orWhere('institution_id', null)->first();
+        $GetInstitution = institution_world_data_view::where('id',$id)->first();
         return $GetInstitution;
     }
     /**

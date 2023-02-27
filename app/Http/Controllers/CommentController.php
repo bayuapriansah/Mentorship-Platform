@@ -72,7 +72,7 @@ class CommentController extends Controller
         $students = Student::get();
         }elseif(Auth::guard('mentor')->check()){
         // dd(Auth::guard('mentor')->user()->institution_id);
-        $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->get();
+        $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
         $projectSections = ProjectSection::get();
         $students = Student::get();
         }elseif(Auth::guard('customer')->check()){
