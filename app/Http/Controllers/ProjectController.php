@@ -33,7 +33,10 @@ class ProjectController extends Controller
                             $query->select('project_id')->from('enrolled_projects');
                             $query->where('student_id',Auth::guard('student')->user()->id);
                         })->get();
-        }else{
+        }elseif(Auth::guard('mentor')->check()){
+            $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->where('status', 'publish')->get();
+        }
+        else{
             $projects = Project::get();
         }
 

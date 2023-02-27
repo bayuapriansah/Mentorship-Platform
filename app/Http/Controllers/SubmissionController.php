@@ -78,12 +78,20 @@ class SubmissionController extends Controller
             $comment->project_id = $project->id;
             $comment->project_section_id = $submission->projectSection->id;
             $comment->read_message = 0;
-            $comment->user_id = Auth::guard('web')->user()->id;
+            if(Auth::guard('web')->check()){
+                $comment->user_id = Auth::guard('web')->user()->id;
+            }elseif(Auth::guard('mentor')->check()){
+                $comment->mentor_id = Auth::guard('mentor')->user()->id;
+            }
             $comment->message = $request->message;
             $comment->save();
         }
         $grade = new Grade;
-        $grade->user_id = Auth::guard('web')->user()->id;
+        if(Auth::guard('web')->check()){
+            $grade->user_id = Auth::guard('web')->user()->id;
+        }elseif(Auth::guard('mentor')->check()){
+            $grade->mentor_id = Auth::guard('mentor')->user()->id;
+        }
         $grade->submission_id = $submission->id;
         if($request->input('pass')){
             $grade->status = 1;

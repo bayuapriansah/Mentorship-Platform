@@ -87,7 +87,7 @@
     </div>
     @endif
   </div>
-  @if(Auth::guard('web')->check())
+  @if(Auth::guard('web')->check() || Auth::guard('mentor')->check() )
     @if(!$submission->grade)
       <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
         @csrf
