@@ -303,7 +303,8 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($student->id);
         $notifActivityCount = $this->newNotificationActivityCount($student->id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
-        return view('student.edit', compact('student','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks'));
+        $dataMessages = (new NotificationController)->data_comment_from_admin($student->id);
+        return view('student.edit', compact('student','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function suspendAccountInstitution($institution_id,$student_id)
@@ -481,10 +482,13 @@ class StudentController extends Controller
     }
 
     public function newCommentForSidebarMenu($id){
-        $newMessage1 = Comment::where('student_id',$id)->where('read_message',0)->where('user_id',!NULL)->get();
-        $newMessage2 = Comment::where('student_id',$id)->where('read_message',0)->where('mentor_id',!NULL)->get();
-        $newMessage3 = Comment::where('student_id',$id)->where('read_message',0)->where('customer_id',!NULL)->get();
-        $newMessage = $newMessage1->count() + $newMessage2->count() + $newMessage3->count();
+        $newMessage = Comment::where('student_id', $id)
+        ->where('read_message', 0)
+        ->whereIn('user_id', [!null])
+        ->orWhereIn('mentor_id', [!null])
+        ->orWhereIn('customer_id', [!null])
+        ->count();
+
         return $newMessage;
     }
 
@@ -494,6 +498,7 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($id);
         $notifActivityCount = $this->newNotificationActivityCount($id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
+        $dataMessages = (new NotificationController)->data_comment_from_admin($id);
         // dd($notifNewTask);
         // dd(Auth::guard('student')->user()->id);
         if($id != Auth::guard('student')->user()->id ){
@@ -503,7 +508,7 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks'));
+        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function ongoingProjects($id)
@@ -520,7 +525,8 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($id);
         $notifActivityCount = $this->newNotificationActivityCount($id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
-        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks'));
+        $dataMessages = (new NotificationController)->data_comment_from_admin($id);
+        return view('student.index', compact('enrolled_projects', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function completedProjects($id)
@@ -537,7 +543,8 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($id);
         $notifActivityCount = $this->newNotificationActivityCount($id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
-        return view('student.index', compact('enrolled_projects', 'student', 'dataDate', 'newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks'));
+        $dataMessages = (new NotificationController)->data_comment_from_admin($id);
+        return view('student.index', compact('enrolled_projects', 'student', 'dataDate', 'newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function enrolledDetails($student_id, $project_id)
@@ -591,14 +598,22 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($student_id);
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
+        $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
         // dd($newMessage->count());
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks'));
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function readActivity($student_id, $project_id, $task_id, $submission_id){
         $notif_grade_from_task = Grade::where('submission_id',$submission_id)->first();
         $notif_grade_from_task->readornot = 1;
         $notif_grade_from_task->save();
+        return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
+    }
+
+    public function readComment($student_id, $project_id, $task_id, $commecnt_id){
+        $read_comment_from_admin = Comment::where('id', $commecnt_id)->where('read_message', 0)->first();
+        $read_comment_from_admin->read_message = 1;
+        $read_comment_from_admin->save();
         return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
     }
 
@@ -635,7 +650,8 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($student_id);
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks'));
+        $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
@@ -803,8 +819,9 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($student_id);
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
+        $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
         // dd($newMessage);
-        return view('student.project.available.index', compact('student','projects','enrolled_projects','dataDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks'));
+        return view('student.project.available.index', compact('student','projects','enrolled_projects','dataDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function availableProjectDetail($student_id, $project_id)
@@ -821,6 +838,7 @@ class StudentController extends Controller
         $newActivityNotifs = $this->newNotificationActivity($student_id);
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
-        return view('student.project.available.show', compact('student','project','enrolled_projects', 'dataDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks'));
+        $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
+        return view('student.project.available.show', compact('student','project','enrolled_projects', 'dataDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 }

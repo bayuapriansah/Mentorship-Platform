@@ -58,29 +58,39 @@ class testCode extends Command
         // ->join('grades', 'submissions.id', '=', 'grades.submission_id')
         // ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', 14)
         // ->get();
-//        $encrypted = Hash::make('bayu');
-//        dd($encrypted);
+        // $encrypted = Hash::make('bayu');
+        // dd($encrypted);
 
         // $student_id = 1;
         // $notif = Notification::get();
         // dd($notif->count());
 
-        $notifActivity = $this->all_notif_new_task();
-        // $nop = [];
-        // foreach($notifActivity as $no){
-        //     $nop[] = $no->project;
-        // }
-        dd($notifActivity);
-        // dd(count($nop));
-        // dd($notif->count() + $notifActivityCount);
-    }
-    public function count_total_all_notification_available(){
-        $notif = Notification::get();
+    //     $notifActivity = $this->all_notif_new_task();
+    //     // $nop = [];
+    //     // foreach($notifActivity as $no){
+    //     //     $nop[] = $no->project;
+    //     // }
+    //     dd($notifActivity);
+    //     // dd(count($nop));
+    //     // dd($notif->count() + $notifActivityCount);
+    // }
+    // public function count_total_all_notification_available(){
+    //     $notif = Notification::get();
 
-        return $notif;
-    }
+    //     return $notif;
+    // }
 
-    public function all_notif_new_task(){
-        return $this->count_total_all_notification_available();
+    // public function all_notif_new_task(){
+    //     return $this->count_total_all_notification_available();
+    // }
+
+        $newMessage = Comment::where('student_id', 11)
+        ->where('read_message', 0)
+        ->whereIn('user_id', [!null])
+        ->orWhereIn('mentor_id', [!null])
+        ->orWhereIn('customer_id', [!null])
+        ->get();
+
+        dd($newMessage);
     }
 }

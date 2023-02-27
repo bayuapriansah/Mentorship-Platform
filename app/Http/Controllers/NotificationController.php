@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Notification;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\StudentController;
 
@@ -15,7 +16,8 @@ class NotificationController extends Controller
         $newActivityNotifs = (new StudentController)->newNotificationActivity($student->id);
         $notifActivityCount = (new StudentController)->newNotificationActivityCount($student->id);
         $notifNewTasks = $this->all_notif_new_task();
-        return view('student.notifications.index', compact('student', 'newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks'));
+        $dataMessages = $this->data_comment_from_admin($student->id);
+        return view('student.notifications.index', compact('student', 'newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     // inputed project_id into notification so it will count as notification
@@ -34,5 +36,16 @@ class NotificationController extends Controller
 
     public function all_notif_new_task(){
         return $this->count_total_all_notification_available();
+    }
+
+    public function data_comment_from_admin($id){
+        $newMessage = Comment::where('student_id', $id)
+        ->where('read_message', 0)
+        ->whereIn('user_id', [!null])
+        ->orWhereIn('mentor_id', [!null])
+        ->orWhereIn('customer_id', [!null])
+        ->get();
+
+        return $newMessage;
     }
 }
