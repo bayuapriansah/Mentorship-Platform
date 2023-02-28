@@ -472,7 +472,7 @@ class StudentController extends Controller
         ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)->where('readornot', 0)
         ->get();
         $notif = (new NotificationController)->count_total_all_notification_available();
-        $notifActivityCount = $notifActivityCounts->count() + $notif->count();
+        $notifActivityCount = $notifActivityCounts->count() + $notif;
         return $notifActivityCount;
     }
 

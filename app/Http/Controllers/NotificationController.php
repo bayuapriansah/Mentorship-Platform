@@ -29,13 +29,23 @@ class NotificationController extends Controller
     }
 
     public function count_total_all_notification_available(){
-        $notif = Notification::get();
+        $notifs = Notification::get();
+        
+        foreach($notifs as $notif){
+            $dataNotif = $notif->project->where('status','publish')->count();
+        }
 
-        return $notif;
+        return $dataNotif;
+    }
+
+    public function count_total_all_notification_availables(){
+        $notifs = Notification::get();
+
+        return $notifs;
     }
 
     public function all_notif_new_task(){
-        return $this->count_total_all_notification_available();
+        return $this->count_total_all_notification_availables();
     }
 
     public function data_comment_from_admin($id){
