@@ -41,37 +41,39 @@
           @if(Route::is('student.allProjects'))
           {{-- @dd($enrolled_projects) --}}
             @forelse($enrolled_projects as $enrolled_project)
-            <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
-              <div class="flex space-x-2">
-                <div class=" my-auto border border-light-blue rounded-xl py-4 px-2 mr-2 relative">
-                  @if($enrolled_project->is_submited == 0)
-                  <div class="intelOne text-white text-sm font-normal bg-light-brown px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                    <span class="ml-2">Ongoing</span>
+              @if ($enrolled_project->project)
+                <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
+                  <div class="flex space-x-2">
+                    <div class=" my-auto border border-light-blue rounded-xl py-4 px-2 mr-2 relative">
+                      @if($enrolled_project->is_submited == 0)
+                      <div class="intelOne text-white text-sm font-normal bg-light-brown px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span class="ml-2">Ongoing</span>
+                      </div>
+                      @elseif($enrolled_project->is_submited == 1)
+                      <div class="intelOne text-white text-sm font-normal bg-light-green px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
+                        <i class="fa-solid fa-check"></i>
+                        <span class="ml-2">Completed</span>
+                      </div>
+                      @endif
+                      {{-- @dd($enrolled_project) --}}
+                      <img src="{{asset('storage/'.$enrolled_project->project->company->logo)}}" class="w-16 h-9 object-scale-down  mx-auto " alt="">
+                    </div>
+                    <div class="flex-col">
+                      <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$enrolled_project->project->name}}</p>
+                      <p class="text-black font-normal text-sm m-0">{{$enrolled_project->project->company->name}}</p>
+                      <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$enrolled_project->project->project_domain}}</p>
+                    </div>
                   </div>
-                  @elseif($enrolled_project->is_submited == 1)
-                  <div class="intelOne text-white text-sm font-normal bg-light-green px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
-                    <i class="fa-solid fa-check"></i>
-                    <span class="ml-2">Completed</span>
+                  <div class="intelOne text-grey font-normal text-xs py-2 m-0">
+                    {{ substr($enrolled_project->project->overview,0,250) }}...
                   </div>
-                  @endif
-                  {{-- @dd($enrolled_project) --}}
-                  <img src="{{asset('storage/'.$enrolled_project->project->company->logo)}}" class="w-16 h-9 object-scale-down  mx-auto " alt="">
+                  <div class="flex justify-between mt-0">
+                    <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>
+                    <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$enrolled_project->project->id}}/detail" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-2 rounded-full">View Project</a>
+                  </div>
                 </div>
-                <div class="flex-col">
-                  <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$enrolled_project->project->name}}</p>
-                  <p class="text-black font-normal text-sm m-0">{{$enrolled_project->project->company->name}}</p>
-                  <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$enrolled_project->project->project_domain}}</p>
-                </div>
-              </div>
-              <div class="intelOne text-grey font-normal text-xs py-2 m-0">
-                {{ substr($enrolled_project->project->overview,0,250) }}...
-              </div>
-              <div class="flex justify-between mt-0">
-                <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>
-                <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$enrolled_project->project->id}}/detail" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-2 rounded-full">View Project</a>
-              </div>
-            </div>
+              @endif
             @empty
               <div class="mt-20 text-sm text-center space-y-4 mb-52">
                 <p class="text-dark-blue">Get started with Simulated Internships platform. Enroll in your first project today!</p>
