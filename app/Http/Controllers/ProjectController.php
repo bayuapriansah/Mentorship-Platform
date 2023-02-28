@@ -243,10 +243,11 @@ class ProjectController extends Controller
     {        
         $project = Project::find($project->id);
         if($project->status == 'publish'){
+            $notificationDraft = (new NotificationController)->project_notification_draft($project->id);
             $project->status = 'draft';
             $message = "Successfully drafted project";
         }else{
-            $notification = (new NotificationController)->project_notification($project);
+            $notification = (new NotificationController)->project_notification($project->id);
             $project->status = 'publish';
             $message = "Successfully publish project";
         }
@@ -258,6 +259,7 @@ class ProjectController extends Controller
 
     public function dashboardIndexDestroy($id)
     {
+        $notificationDraft = (new NotificationController)->project_notification_draft($id);
         $project = Project::find($id);
         $project->delete();
         return redirect('dashboard/projects');
@@ -708,9 +710,11 @@ class ProjectController extends Controller
     {
         $project = Project::find($project->id);
         if($project->status == 'publish'){
+            $notificationDraft = (new NotificationController)->project_notification_draft($project->id);
             $project->status = 'draft';
             $message = "Successfully drafted project";
         }else{
+            $notification = (new NotificationController)->project_notification($project->id);
             $project->status = 'publish';
             $message = "Successfully publish project";
         }
@@ -721,6 +725,7 @@ class ProjectController extends Controller
 
     public function destroy(Company $partner, Project $project)
     {
+        $notificationDraft = (new NotificationController)->project_notification_draft($project->id);
         $project = Project::find($project->id);
         $project->delete();
         $message = "Successfully delete a project";
