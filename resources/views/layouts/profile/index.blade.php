@@ -315,7 +315,7 @@
                         {{-- END HERE --}}
                         @endforeach
                         {{-- For each for notification activity 2 --}}
-                        @foreach($notifNewTasks as $notifNewTask)
+                        @forelse($notifNewTasks as $notifNewTask)
                            {{-- {{ $notifNewTask->project }} --}}
                           <a href="{{ route('student.availableProjectDetail',[$student->id,$notifNewTask->project_id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
                             <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
@@ -328,7 +328,9 @@
                               </div>
                             </div>
                           </a>
-                        @endforeach
+                        @empty
+                        {{ 'No Notification' }}
+                        @endforelse
                     @else
                       {{ 'No Notification' }}
                     @endif

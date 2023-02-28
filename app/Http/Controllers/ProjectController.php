@@ -240,14 +240,13 @@ class ProjectController extends Controller
     }
 
     public function dashboardpublishDraft(Company $partner, Project $project)
-    {
-        $notification = (new NotificationController)->project_notification($project);
-
+    {        
         $project = Project::find($project->id);
         if($project->status == 'publish'){
             $project->status = 'draft';
             $message = "Successfully drafted project";
         }else{
+            $notification = (new NotificationController)->project_notification($project);
             $project->status = 'publish';
             $message = "Successfully publish project";
         }
