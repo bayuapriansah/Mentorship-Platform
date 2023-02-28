@@ -55,6 +55,7 @@
                     <span class="ml-2">Completed</span>
                   </div>
                   @endif
+                  {{-- @dd($enrolled_project) --}}
                   <img src="{{asset('storage/'.$enrolled_project->project->company->logo)}}" class="w-16 h-9 object-scale-down  mx-auto " alt="">
                 </div>
                 <div class="flex-col">
