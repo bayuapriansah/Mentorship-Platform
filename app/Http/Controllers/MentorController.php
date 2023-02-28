@@ -15,6 +15,7 @@ use App\Models\MentorProject;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -207,6 +208,16 @@ class MentorController extends Controller
         if($supervisor->is_confirm == 1){
             $supervisor->is_confirm = 0;
             $message = "Successfully Pending Account";
+
+            $mentors = Mentor::inRandomOrder()
+                        ->where('institution_id',$institution->id)->where('id', '!=', $supervisor->id)->get()->pluck('id')->toArray();
+            $students = Student::where('mentor_id', $supervisor->id)->get();
+            foreach ($students as $student) {
+                DB::table('students')
+                ->where('id', $student->id)
+                ->update(['mentor_id' => $mentors[array_rand($mentors,1)]]);
+            }
+
         }else{
             $supervisor->is_confirm = 1;
             $message = "Successfully Activate Account";
@@ -223,7 +234,19 @@ class MentorController extends Controller
     public function destroy(Institution $institution, Mentor $supervisor)
     {
         $supervisor = Mentor::find($supervisor->id);
+
+        $mentors = Mentor::inRandomOrder()
+                        ->where('institution_id',$institution->id)->where('id', '!=', $supervisor->id)->get()->pluck('id')->toArray();
+        
+        $students = Student::where('mentor_id', $supervisor->id)->get();
+        foreach ($students as $student) {
+            DB::table('students')
+            ->where('id', $student->id)
+            ->update(['mentor_id' => $mentors[array_rand($mentors,1)]]);
+        }
         $supervisor->delete();
+        
+        
         $message = "Successfully Delete Account";
         return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message);
     }
