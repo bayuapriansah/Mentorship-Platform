@@ -330,11 +330,12 @@ class ProjectController extends Controller
         ]);
 
         $section  = new ProjectSection;
+        $section_count = ProjectSection::where('project_id', $project->id);
         $section->project_id = $project->id;
         $section->title = $validated['title'];
         $section->file_type = $validated['inputfiletype'];
         $section->duration = $validated['duration'];
-        $section->section = $section->count()+1;
+        $section->section = $section_count->count()+1;
         $section->description = $validated['description'];
         $section->save();
         $message = "Successfully created an injection card";
@@ -757,11 +758,12 @@ class ProjectController extends Controller
         ]);
 
         $section  = new ProjectSection;
+        $section_count = ProjectSection::where('project_id', $project->id);
         $section->project_id = $project->id;
         $section->title = $validated['title'];
         $section->file_type = $validated['inputfiletype'];
         $section->duration = $validated['duration'];
-        $section->section = $section->count()+1;
+        $section->section = $section_count->count()+1;
 
         $section->description = $validated['description'];
         $section->save();
