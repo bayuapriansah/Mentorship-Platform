@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Grade;
 use App\Models\Comment;
 use App\Models\Project;
+use App\Models\Student;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
@@ -113,6 +114,8 @@ class SubmissionController extends Controller
         // dd($submissionData);
         // $submissions = Grade::where('submission_id',$submission)->get();
         // dd($project_sections->count());
+        $student = Student::where('id', $submission->student->id)->first();
+        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         if(($submissionData->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
             $success_project = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first();
             $success_project->is_submited = 1;
