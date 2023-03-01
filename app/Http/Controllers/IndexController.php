@@ -11,16 +11,20 @@ class IndexController extends Controller
     public function index()
     {
         if(Auth::guard('student')->check()){
-            $projects = Project::where('institution_id', Auth::guard('student')->user()->institution_id)
-                        ->where('status', 'publish')
-                        ->orWhere('institution_id', null)
-                        ->where('status', 'publish')
-                        ->whereNotIn('id', function($query){
+            $projects = Project::whereNotIn('id', function($query){
                             $query->select('project_id')->from('enrolled_projects');
                             $query->where('student_id',Auth::guard('student')->user()->id);
-                        })->take(3)->get();
+                        })->where('institution_id', Auth::guard('student')->user()->institution_id)
+                        ->where('status', 'publish')
+                        ->orWhere('institution_id', null)->whereNotIn('id', function($query){
+                            $query->select('project_id')->from('enrolled_projects');
+                            $query->where('student_id',Auth::guard('student')->user()->id);
+                        })
+                        ->where('status', 'publish')
+                        ->take(3)->get();
+            
         }else{
-            $projects = Project::take(3)->get();
+            $projects = Project::where('status', 'publish')->take(3)->get();
         }
         return view('index', compact('projects'));
     }

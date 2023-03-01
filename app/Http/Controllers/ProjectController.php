@@ -25,19 +25,22 @@ class ProjectController extends Controller
     public function index()
     {
         if(Auth::guard('student')->check()){
-            $projects = Project::where('institution_id', Auth::guard('student')->user()->institution_id)
-                        ->where('status', 'publish')
-                        ->orWhere('institution_id', null)
-                        ->where('status', 'publish')
-                        ->whereNotIn('id', function($query){
+            $projects = Project::whereNotIn('id', function($query){
                             $query->select('project_id')->from('enrolled_projects');
                             $query->where('student_id',Auth::guard('student')->user()->id);
-                        })->get();
+                        })->where('institution_id', Auth::guard('student')->user()->institution_id)
+                        ->where('status', 'publish')
+                        ->orWhere('institution_id', null)->whereNotIn('id', function($query){
+                            $query->select('project_id')->from('enrolled_projects');
+                            $query->where('student_id',Auth::guard('student')->user()->id);
+                        })
+                        ->where('status', 'publish')
+                        ->get();
         }elseif(Auth::guard('mentor')->check()){
             $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->where('status', 'publish')->get();
         }
         else{
-            $projects = Project::get();
+            $projects = Project::where('status', 'publish')->get();
         }
 
         return view('projects.index', compact('projects'));
@@ -63,8 +66,9 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $id)->get();
         $project_sections = ProjectSection::where('project_id', $id)->get();
-        return view('projects.show', compact(['project','project_sections']));
+        return view('projects.show', compact(['project','project_sections','enrolled_projects']));
     }
 
     public function dashboardIndex()
@@ -327,7 +331,6 @@ class ProjectController extends Controller
 
         $section  = new ProjectSection;
         $section_count = ProjectSection::where('project_id', $project->id);
-
         $section->project_id = $project->id;
         $section->title = $validated['title'];
         $section->file_type = $validated['inputfiletype'];

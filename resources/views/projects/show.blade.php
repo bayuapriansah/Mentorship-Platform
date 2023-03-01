@@ -24,7 +24,10 @@
       @if (Auth::guard('student')->check())
       <form method="POST" action="{{ $project->id }}/apply" class="">
         @csrf
+        @if($enrolled_projects->isEmpty())
         <button data-modal-target="popup-confirm" data-modal-toggle="popup-confirm" type="button" class="intelOne text-white w-full text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full absolute ">Enroll</button> 
+        @endif
+
         <div id="popup-confirm" tabindex="-1" class="fixed z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
             <div class="relative w-3/6 h-full max-w-4xl md:h-auto border-[3px] border-light-blue rounded-2xl">
                 <div class="relative bg-white rounded-xl shadow-2xl">
@@ -35,7 +38,7 @@
                     <div class="p-6 text-left space-x-4">
                         <img src="{{asset('assets/img/dots-1.png')}}" class="absolute top-0 right-0 w-[233px] h-[108px]" alt="">
                         {{-- <img src="{{asset('assets/img/dots-1.png')}}" class="absolute bottom-0 left-0 w-[233px] h-[108px]" alt=""> --}}
-                        <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to enroll {{$project->name}} project</h3>
+                        <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to enroll in the {{$project->name}} project</h3>
                         <div class="relative z-30">
                           <button data-modal-hide="popup-confirm" type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full shadow-xl">
                             Yes
