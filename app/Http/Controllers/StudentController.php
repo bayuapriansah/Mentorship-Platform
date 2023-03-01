@@ -710,16 +710,15 @@ class StudentController extends Controller
         }else{
             return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
-        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
+        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
         // $submissions = Grade::where('submission_id',$submission)get();
         // dd($project_sections->count());
-        if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
-            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-            $success_project->is_submited = 1;
-            $success_project->flag_checkpoint = $dataDate;
-            $success_project->save();
-            // dd($success_project);
-        }
+        // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
+        //     $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+        //     $success_project->is_submited = 1;
+        //     $success_project->flag_checkpoint = $dataDate;
+        //     $success_project->save();
+        // }
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
 
@@ -782,16 +781,13 @@ class StudentController extends Controller
             return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
 
-        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-        // dd($submissions->count());
-        // dd($project_sections->count());
-        if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
-            $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-            $success_project->is_submited = 1;
-            $success_project->flag_checkpoint = $dataDate;
-            $success_project->save();
-            // dd($success_project);
-        }
+        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
+        // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
+        //     $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
+        //     $success_project->is_submited = 1;
+        //     $success_project->flag_checkpoint = $dataDate;
+        //     $success_project->save();
+        // }
         $grade = Grade::where('submission_id', $submission_id)->first();
         $grade->delete();
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
