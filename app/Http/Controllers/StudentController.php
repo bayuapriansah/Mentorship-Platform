@@ -803,10 +803,17 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::where('id', $student_id)->first();
-        $projects = Project::where('institution_id', $student->institution_id)->where('status', 'publish')->orWhere('institution_id', null)->where('status', 'publish')->whereNotIn('id', function($query){
-            $query->select('project_id')->from('enrolled_projects');
-            $query->where('student_id',Auth::guard('student')->user()->id);
-        })->get();
+        $projects = Project::whereNotIn('id', function($query){
+                                $query->select('project_id')->from('enrolled_projects');
+                                $query->where('student_id',Auth::guard('student')->user()->id);
+                            })->where('institution_id', $student->institution_id)
+                            ->where('status', 'publish')
+                            ->orWhere('institution_id', null)->whereNotIn('id', function($query){
+                                $query->select('project_id')->from('enrolled_projects');
+                                $query->where('student_id',Auth::guard('student')->user()->id);
+                            })
+                            ->where('status', 'publish')
+                            ->get();
 
         // $projects = Project::whereNotIn('id', function($query){
         //     $query->select('project_id')->from('enrolled_projects');
@@ -831,7 +838,7 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::where('id', $student_id)->first();
-        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project_id)->get();
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
