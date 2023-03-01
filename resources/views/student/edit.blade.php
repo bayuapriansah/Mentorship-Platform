@@ -91,6 +91,9 @@
             @foreach($study_programs as $study_program)
             <option value="{{$study_program}}" {{$student->study_program == $study_program ? 'selected':''}}>{{$study_program}}</option>
             @endforeach
+            @if($student->study_program != $study_program)
+            <option value="{{$student->study_program}}" selected>{{$student->study_program}}</option>
+            @endif
             <option value="other">Other</option>
           </select><br>
           @error('study_program')
