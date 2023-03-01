@@ -11,7 +11,7 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['project_id'];
+    protected $fillable = ['project_id','status'];
 
     public function project()
     {
