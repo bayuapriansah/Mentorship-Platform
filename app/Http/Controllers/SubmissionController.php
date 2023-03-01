@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Grade;
 use App\Models\Comment;
 use App\Models\Project;
+use App\Models\Student;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use App\Models\ProjectSection;
+use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
 
 class SubmissionController extends Controller
@@ -100,18 +103,25 @@ class SubmissionController extends Controller
         }
         $grade->save();
 
-        // $submissions = Submission::whereHas('grade', function($q){
-        //     $q->where('status',1);
-        // })->where('student_id', $student_id)->get();
-        // dd($submissions);
-        // $submissions = Grade::where('submission_id',$submission)get();
+        $project_sections = ProjectSection::where('project_id', $project->id)->get();
+        $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first()->is_submited;
+        // dd($enrolled_project_completed_or_no);
+
+
+        $submissionData = Submission::whereHas('grade', function($q){
+            $q->where('status',1);
+        })->where('project_id', $project->id)->where('student_id', $submission->student->id)->get();
+        // dd($submissionData);
+        // $submissions = Grade::where('submission_id',$submission)->get();
         // dd($project_sections->count());
-        // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
-        //     $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-        //     $success_project->is_submited = 1;
-        //     $success_project->flag_checkpoint = $dataDate;
-        //     $success_project->save();
-        // }
+        $student = Student::where('id', $submission->student->id)->first();
+        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+        if(($submissionData->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
+            $success_project = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first();
+            $success_project->is_submited = 1;
+            $success_project->flag_checkpoint = $dataDate;
+            $success_project->save();
+        }
         // return redirect('/submissions/project/'.$project->id.'/view/'.$submission->id.'/grade/'.$grade->id);
         return back();
     }
