@@ -129,7 +129,11 @@
         @endif
 
         {{-- <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Certificate</a></li> --}}
-        <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
+        <li data-tooltip-target="tooltip-hover" data-tooltip-trigger="hover" class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Support</a></li>
+        <div id="tooltip-hover" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+          Coming Soon
+          <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>        
       </ul>
 
       <div class="col-start-9 col-span-4 flex relative ">
