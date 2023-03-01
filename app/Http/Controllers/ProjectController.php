@@ -330,7 +330,7 @@ class ProjectController extends Controller
         $section->title = $validated['title'];
         $section->file_type = $validated['inputfiletype'];
         $section->duration = $validated['duration'];
-        $section->section = 0;
+        $section->section = $section->count()+1;
         $section->description = $validated['description'];
         $section->save();
         $message = "Successfully created an injection card";
@@ -757,7 +757,8 @@ class ProjectController extends Controller
         $section->title = $validated['title'];
         $section->file_type = $validated['inputfiletype'];
         $section->duration = $validated['duration'];
-        $section->section = 0;
+        $section->section = $section->count()+1;
+
         $section->description = $validated['description'];
         $section->save();
         $message = "Successfully created an injection card";
