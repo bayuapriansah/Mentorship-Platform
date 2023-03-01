@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('institution/{id}', [InstitutionController::class, 'GetInstituionById'])->name('getInstitutionData');
-Route::get('comment/{id}', [CommentController::class, 'getdatacomment'])->name('getdatacomment');
-Route::get('student/project/{project}', [CommentController::class, 'getdatastudent'])->name('getdatastudent');
+Route::middleware(['auth:web,customer,mentor'])->group(function(){
+    Route::get('institution/{id}', [InstitutionController::class, 'GetInstituionById'])->name('getInstitutionData');
+    Route::get('comment/{id}', [CommentController::class, 'getdatacomment'])->name('getdatacomment');
+    Route::get('student/project/{project}', [CommentController::class, 'getdatastudent'])->name('getdatastudent');
+});
