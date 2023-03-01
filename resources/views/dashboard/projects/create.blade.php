@@ -4,6 +4,10 @@
 <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard/partners/{{$partner->id}}/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
+@else
+<div class="text-[#6973C6] hover:text-light-blue">
+  <a href="/dashboard/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+</div>
 @endif
 @if (Route::is('dashboard.partner.partnerProjectsCreate'))
 <div class="flex justify-between mb-10">

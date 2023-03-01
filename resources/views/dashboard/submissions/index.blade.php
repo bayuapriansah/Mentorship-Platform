@@ -5,7 +5,6 @@
   <a href="/dashboard/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
   @else
   <a href="/dashboard/institutions_partners"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-
   @endif
 </div>
 
