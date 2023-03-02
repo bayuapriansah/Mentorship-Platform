@@ -66,9 +66,15 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
+        if(Auth::guard('student')->check()){
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $id)->get();
+        }
         $project_sections = ProjectSection::where('project_id', $id)->get();
-        return view('projects.show', compact(['project','project_sections','enrolled_projects']));
+        if(Auth::guard('student')->check()){
+            return view('projects.show', compact(['project','project_sections','enrolled_projects']));
+        }else{
+            return view('projects.show', compact(['project','project_sections']));
+        }
     }
 
     public function dashboardIndex()
