@@ -321,8 +321,6 @@
                         
                         @foreach($notifNewTasks as $notifNewTask)
                           @if ($notifNewTask->project)
-                          {{-- student.readActivityTask --}}
-                          {{-- student.availableProjectDetail --}}
                               <a href="{{ route('student.readActivityTask',[$student->id,$notifNewTask->project_id,$notifNewTask->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
                                 <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                                   <div class="flex">
