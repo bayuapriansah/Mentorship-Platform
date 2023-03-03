@@ -109,25 +109,29 @@
       @if($student->is_confirm == 1)
       <p class="text-black text-xs">{{$dateApply->format('d M Y')}}</p>
       @endif
-      <div class="w-full relative">
+      <div class="w-full  relative">
         @php $tipNumber = 1 @endphp
         @foreach ($submissions as $submission)
-        
-          @if ($submission->grade == null)
-            <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+          {{-- @dd(array_search($submission, $submissions->toArray())) --}}
+          @if ($loop->index %2 ==0)
+            @if ($submission->grade == null)
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+            @else
+              @if($submission->grade->status == 1)
+                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+              @endif
+            @endif
           @else
-            @if($submission->grade->status == 1)
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
+            @if ($submission->grade == null)
+            <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="bottom" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+            {{-- {{$loop->index+1}} --}}
+            @else
+              @if($submission->grade->status == 1)
+                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+              @endif
             @endif
           @endif
-            {{-- @if(!$submission->grade->where('status',0))
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
-            @else
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%">
-            @endif --}}
-          {{-- @else --}}
-          {{-- jika grade null --}}
-          {{-- @endif --}}
+          
           
             @php $tipNumber++ @endphp
         @endforeach
@@ -137,7 +141,7 @@
         </div>
 
         @php $no=1 @endphp
-        @foreach ($submissions as $submission)
+        {{-- @foreach ($submissions as $submission)
           @if ($submission->grade == null)
             <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$submission->flag_checkpoint-4}}%">Task {{$no}}</p>
             <p class="absolute font-normal text-[8px]" style="left: {{$submission->flag_checkpoint-6}}%">{{\Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}</p>
@@ -148,7 +152,7 @@
             @endif
           @endif
           @php $no++ @endphp
-        @endforeach
+        @endforeach --}}
       </div>
       @if($student->is_confirm == 1)
         <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
@@ -251,7 +255,8 @@
       @endif
 
       {{-- grade status revise --}}
-
+      <a href="http://jqueryui.com/themeroller/" title="ThemeRoller: jQuery UI&apos;s theme builder application">ThemeRoller</a>
+      will also style tooltips accordingly.</p>
     </div>
   @else
   <div class="flex flex-col">
@@ -262,3 +267,4 @@
   </div>
   @endif
 </aside>
+

@@ -37,6 +37,13 @@
     <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet">
     <meta name="theme-color" content="#712cf9">
     <style>
+      .tooltip-inner {
+          font-size: 12px;
+          padding: 6px 10px;
+          border-radius: 0.375rem;
+          border:1px solid black;
+          background-color: white 
+        }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -406,6 +413,12 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+      $( document ).ready(function() {
+          $('[data-toggle="flag"]').tooltip().css({});
+      });
+    </script>
+    
     @yield('more-js')
   </body>
 </html>
