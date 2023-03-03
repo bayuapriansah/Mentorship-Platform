@@ -245,6 +245,7 @@ class ProjectController extends Controller
 
     public function dashboardpublishDraft(Company $partner, Project $project)
     {        
+        // dd($project);
         $project = Project::find($project->id);
         if($project->status == 'publish'){
             $notificationDraft = (new NotificationController)->project_notification_draft($project->id);
@@ -939,7 +940,7 @@ class ProjectController extends Controller
     // projects from admin dashboard sidebar menu
     public function allProjects()
     {
-        dd('te');
+        // dd('te');
         $projects = Project::get();
         return view('dashboard.projects.index', compact('projects'));
     }

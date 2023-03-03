@@ -14,6 +14,7 @@ use App\Models\Institution;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
+use App\Models\ReadNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -121,15 +122,16 @@ class StudentController extends Controller
         return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('successTailwind', $message);
     }
 
-    public function addStudentToInstitution($email,$institution_id){
-        $student = Student::create([
+    public function addStudentToInstitution($email,$institution_id)
+    {
+        return Student::create([
             'email' => $email,
             'institution_id' => $institution_id,
         ]);
-        return $student;
     }
 
-    public function addStudent($email, $institution_id){
+    public function addStudent($email, $institution_id)
+    {
         if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
             $student = Student::create([
                 'email' => $email,
@@ -285,6 +287,7 @@ class StudentController extends Controller
         return redirect('/dashboard/institutions/'.$institution_id.'/students/')->with('successTailwind','Successfully edited student data');
 
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -466,7 +469,8 @@ class StudentController extends Controller
 
     // STUDENT PROFILE
 
-    public function newNotificationActivityCount($id){
+    public function newNotificationActivityCount($id)
+    {
         $notifActivityCounts = Submission::select('submissions.id as submission_id', 'students.id as student_id')
         ->join('grades', 'submissions.id', '=', 'grades.submission_id')
         ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)->where('readornot', 0)
@@ -476,12 +480,14 @@ class StudentController extends Controller
         return $notifActivityCount;
     }
 
-    public function newNotificationActivity($id){
+    public function newNotificationActivity($id)
+    {
         $notifActivity = Submission::where('student_id',$id)->get();
         return $notifActivity;
     }
 
-    public function newCommentForSidebarMenu($id){
+    public function newCommentForSidebarMenu($id)
+    {
         $newMessage = Comment::where('student_id', $id)
         ->where('read_message', 0)
         ->whereHas('project')
@@ -602,6 +608,15 @@ class StudentController extends Controller
         $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
         // dd($newMessage->count());
         return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+    }
+
+    public function readActivityTask($student_id, $project_id, $notification_id){
+        $ReadNotification = new ReadNotification;
+        $ReadNotification->student_id = $student_id;
+        $ReadNotification->notifications_id = $notification_id;
+        $ReadNotification->is_read = 1;
+        $ReadNotification->save();
+        return $this->availableProjectDetail($student_id, $project_id);
     }
 
     public function readActivity($student_id, $project_id, $task_id, $submission_id){
@@ -793,6 +808,7 @@ class StudentController extends Controller
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
 
     }
+
     public function allProjectsAvailable($student_id)
     {
         if($student_id != Auth::guard('student')->user()->id ){

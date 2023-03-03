@@ -317,20 +317,22 @@
                         {{-- END HERE --}}
                         @endforeach
                         {{-- For each for notification activity 2 --}}
+                        
                         @foreach($notifNewTasks as $notifNewTask)
-                        {{-- {{ dd($notifNewTask->status == 'publish') }} --}}
-                          @if ($notifNewTask->project && $notifNewTask->status == 'publish')
-                            <a href="{{ route('student.availableProjectDetail',[$student->id,$notifNewTask->project_id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                              <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
-                                <div class="flex">
-                                    <div class="ml-3 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">New Project available in {{ $notifNewTask->project->name }}</span>
-                                      <p>
-                                      <div class="mb-2 text-sm font-normal text-blue-300">{{ $notifNewTask->created_at }}</div>
-                                    </div>
+                          @if ($notifNewTask->project)
+                          {{-- student.readActivityTask --}}
+                          {{-- student.availableProjectDetail --}}
+                              <a href="{{ route('student.readActivityTask',[$student->id,$notifNewTask->project_id,$notifNewTask->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
+                                <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                  <div class="flex">
+                                      <div class="ml-3 text-sm font-normal">
+                                        <span class="mb-1 text-sm font-semibold text-dark-blue">New Project available in {{ $notifNewTask->project->name }}</span>
+                                        <p>
+                                        <div class="mb-2 text-sm font-normal text-blue-300">{{ $notifNewTask->created_at }}</div>
+                                      </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </a>
+                              </a>
                           @endif
                         @endforeach
                     @else

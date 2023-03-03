@@ -1,12 +1,10 @@
 @extends('layouts.profile.index')
 @section('content')
 @include('flash-message')
-  {{-- @dd($task->project->name); --}}
 <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center pb-36 min-h-[500px]">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
       <div class="col-span-8 my-auto">
-        {{-- @dd($student) --}}
         <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$task->project->id}}/detail" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue"><i class="fa-solid fa-arrow-left pr-2"></i>back</a>
 
         <h2 class="text-dark-blue text-2xl font-medium mt-4 mb-3">{{$task->project->name}}</h2>
@@ -185,7 +183,7 @@
                           <div class="relative cursor-pointer " id="drop-area">
                             <label for="file-input">
                               <div class="relative cursor-pointer" id="drop-area">
-                                <input type="file" name="file" class="absolute opacity-0" id="file-input" required>
+                                <input type="file" name="file" class="absolute opacity-0" id="file-input" accept=".{{$task->file_type}}" required>
                                 <div class="p-6 border-2 border-dashed hover:bg-gray-50 rounded-md border-light-blue">
                                     <div class="text-center">
                                       <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>

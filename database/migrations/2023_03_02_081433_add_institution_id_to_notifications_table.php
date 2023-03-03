@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('notifications', function (Blueprint $table) {
-            $table->string('status')->after('project_id')->nullable()->default('publish');
+            $table->unsignedBigInteger('institution_id')->after('project_id')->nullable()->default('0');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('notifications', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropColumn('institution_id');
         });
     }
 };

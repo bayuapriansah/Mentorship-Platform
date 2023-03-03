@@ -85,7 +85,7 @@ class MentorController extends Controller
 
     public function editSupervisor(Institution $institution, Mentor $supervisor)
     {
-        dd($supervisor->id);
+        // dd($supervisor->id);
     }
     /**
      * Show the form for creating a new resource.

@@ -44,7 +44,7 @@ class SimintEncryption extends Controller
       $date = Carbon::createFromFormat('Y-m-d', $myDate);
       $daysToAdd = 20;
       $date = $date->addDays($daysToAdd)->toDateString();
-      dd($date);
+    //   dd($date);
     }
 
     public function daycompare($date,$end)

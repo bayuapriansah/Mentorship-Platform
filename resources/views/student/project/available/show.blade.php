@@ -1,5 +1,9 @@
 @extends('layouts.profile.index')
 @section('content')
+
+{{-- @foreach($notifNewTasks as $notifNewTask)
+    {{ $notifNewTask->read_notification }}
+@endforeach --}}
 <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center ">
   <div class="col-span-8 min-h-[600px]">
     @if ($message = Session::get('error'))

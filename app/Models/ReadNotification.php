@@ -7,10 +7,10 @@ use App\Models\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Read_Notification extends Model
+class ReadNotification extends Model
 {
     use HasFactory;
-    
+    protected $fillable = ['student_id', 'notifications_id', 'is_read'];
     public function user()
     {
     return $this->belongsTo(User::class);
@@ -18,6 +18,6 @@ class Read_Notification extends Model
 
     public function notification()
     {
-    return $this->belongsTo(Notification::class);
+    return $this->hasOne(Notification::class,'notifications_id','id');
     }
 }

@@ -108,6 +108,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::patch('/profile/{student}/enrolled/{project}/task/{task}/submission/{submission}', [StudentController::class, 'taskResubmit'])->name('student.taskResubmit');
     Route::get('/profile/{student}/enrolled/{project}/task/{task}/readComment/{id}', [StudentController::class, 'readComment'])->name('student.readComment');
     Route::get('/profile/{student}/enrolled/{project}/task/{task}/readNotif/{id}', [StudentController::class, 'readActivity'])->name('student.readActivity');
+    Route::get('/profile/{student}/project/{project}/notification/{notification}/readNotifTask/', [StudentController::class, 'readActivityTask'])->name('student.readActivityTask');
 
 
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');

@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->string('status')->after('project_id')->nullable()->default('publish');
+        Schema::table('read_notifications', function (Blueprint $table) {
+            $table->renameColumn('user_id', 'student_id');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->dropColumn('status');
+        Schema::table('read_notifications', function (Blueprint $table) {
+            $table->renameColumn('student_id', 'user_id');
         });
     }
 };
