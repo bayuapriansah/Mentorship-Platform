@@ -102,7 +102,7 @@
                         <div class="col-span-5">Task {{$no++}}: {{substr($project_section->title,0,30)}}...</div>
                         <span class="col-start-6 col-span-3 text-sm font-normal text-right ">{{ $appliedDate->format('dS M,Y') }} {{ $appliedDate->format('g:ia') }}</span>
                         <div class="col-start-9 col-span-2 items-center">
-                          @foreach ($project_section->submissions->where('student_id',Auth::guard('student')->user()->id) as $submission)
+                          @foreach ($project_section->submissions->where('student_id',Auth::guard('student')->user()->id)->where('is_complete', 1) as $submission)
                             @if($submission->grade)
                               @if ($submission->grade->status==1)
                                 <span class="text-[#11BF61]"><i class="fa-solid fa-circle text-[#11BF61] fa-xs mr-2"></i> Complete</span>
@@ -112,6 +112,21 @@
                             @else
                               <span class="text-light-brown"><i class="fa-solid fa-circle text-light-brown fa-xs mr-2"></i> In Review</span>
                             @endif
+
+                            {{-- @if($submission)
+                              @if($submission->grade)
+                                @if ($submission->grade->status==1)
+                                  <span class="text-[#11BF61]"><i class="fa-solid fa-circle text-[#11BF61] fa-xs mr-2"></i> Complete</span>
+                                @elseif($submission->grade->status==0)
+                                  <span class="text-[#EA0202]"><i class="fa-solid fa-circle text-[#EA0202] fa-xs mr-2"></i> Revise</span>
+                                @endif
+                              @else
+                              <span class="text-light-brown"><i class="fa-solid fa-circle text-light-brown fa-xs mr-2"></i> In Review</span>
+                              @endif
+                            @else
+                              <span class="text-light-brown"><i class="fa-solid fa-circle text-light-brown fa-xs mr-2"></i> In Review</span>
+                            @endif --}}
+
                           @endforeach
                         </div>
                         <div class="col-start-12 col-span-2">

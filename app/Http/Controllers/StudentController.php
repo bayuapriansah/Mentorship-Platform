@@ -645,7 +645,8 @@ class StudentController extends Controller
         $task = ProjectSection::find($task_id);
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->where('student_id', Auth::guard('student')->user()->id)->get();
         // $submission = Submission::get();
-        $submissionData = Submission::where('student_id',$student_id)->where('section_id', $task->id)->first();
+        $submissionData = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',1)->first();
+        $submissionId = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',0)->first();
         $project = Project::find($project_id);
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
@@ -667,10 +668,10 @@ class StudentController extends Controller
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
         $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
+        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
-    public function taskSubmit(Request $request, $student_id, $project_id, $task_id)
+    public function taskSubmit(Request $request, $student_id, $project_id, $task_id, $submission_id)
     {
         if ($request->dataset) {
             $dataset_array = json_decode($request->dataset, true);
@@ -702,7 +703,7 @@ class StudentController extends Controller
                 'file' => ['required'],
             ]);
         }
-        $submission = new Submission;
+        $submission = Submission::find($submission_id);
         $submission->section_id = $task_id;
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;

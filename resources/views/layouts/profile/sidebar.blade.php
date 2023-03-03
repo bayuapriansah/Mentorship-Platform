@@ -255,8 +255,6 @@
       @endif
 
       {{-- grade status revise --}}
-      <a href="http://jqueryui.com/themeroller/" title="ThemeRoller: jQuery UI&apos;s theme builder application">ThemeRoller</a>
-      will also style tooltips accordingly.</p>
     </div>
   @else
   <div class="flex flex-col">
