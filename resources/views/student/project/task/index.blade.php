@@ -99,9 +99,9 @@
                 <p class="mb-2 text-base text-black ">{!!$comment->message!!}</p>
                 @if($comment->file)
                   <br>
-                  <a download="image.jpg" href="{{asset('storage/'.$comment->file)}}" class="flex w-1/2 py-2 px-4 rounded-xl justify-between items-center border border-light-blue">
+                  <a target="_blank" href="{{asset('storage/'.$comment->file)}}" class="flex w-1/2 py-2 px-4 rounded-xl justify-between items-center border border-light-blue">
                     <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
-                    <span class="text-xs  font-normal text-black">click to download (.{{substr($comment->file, strpos($comment->file, ".") + 1)}})</span>
+                    <span class="text-xs  font-normal text-black">Click to download (.{{substr($comment->file, strpos($comment->file, ".") + 1)}})</span>
                     <img src="{{asset('assets/img/icon/download.png')}}" alt="">
                   </a>
                 @endif
