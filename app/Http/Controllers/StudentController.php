@@ -851,7 +851,7 @@ class StudentController extends Controller
         }
         $student = Student::where('id', $student_id)->first();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project_id)->get();
-        $project = Project::find($project_id);
+        $project = Project::where('status', 'publish')->find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student_id);
@@ -859,6 +859,10 @@ class StudentController extends Controller
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
         $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
-        return view('student.project.available.show', compact('student','project','enrolled_projects', 'dataDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+        if($project){
+            return view('student.project.available.show', compact('student','project','enrolled_projects', 'dataDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+        }else{
+            abort(404);
+        }
     }
 }
