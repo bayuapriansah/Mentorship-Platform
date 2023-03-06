@@ -10,7 +10,15 @@
                             class="fa-solid fa-arrow-left pr-2"></i>back</a>
                     <h2 class="text-dark-blue text-2xl font-medium mb-3">{{ $project->name }}</h2>
                     <span
-                        class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">{{ $project->project_domain }}</span>
+                        class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">
+                        @if ($project->project_domain == 'statistical')
+                          Statistical Data
+                        @elseif($project->project_domain == 'computer_vision')
+                          Computer Vision
+                        @else
+                          {{$project->project_domain}}
+                        @endif
+                        </span>
                 </div>
                 <div class="col-span-6 relative">
                     <img src="{{ asset('assets/img/icon/profile/dots.png') }}" class="absolute z-10 right-0 -top-3 ">
@@ -21,7 +29,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
                 <div class="col-span-7 relative my-auto">
                     <h1 class="text-dark-blue text-[22px] font-medium">Project Details</h1>

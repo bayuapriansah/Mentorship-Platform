@@ -25,8 +25,8 @@
   </thead>
   <tbody>
     @php $no=1 @endphp
-    @foreach ($submissions as $submission)
-    {{-- @dd($submission->student->first_name) --}}
+    
+    @foreach ($submissions->whereNotNull('file') as $submission)
     <tr>
       <td>{{$no}}</td>
       <td>{{$submission->student->first_name}} {{$submission->student->last_name}}</td>
@@ -40,7 +40,9 @@
             <span class="text-[#EA0202]">REVISE</span>
           @endif
         @else
-          <span class="text-light-brown">IN REVIEW</span>
+          @if($submission->file)
+            <span class="text-light-brown">IN REVIEW</span>
+          @endif
         @endif
       </td>
       <td>
