@@ -109,15 +109,15 @@
                   $nn = 1;
                   $todayDate = \Carbon\Carbon::now()->format('dS F Y')
                   @endphp
-                  @foreach ($submission_data as $submi_data)
+                  @foreach ($submission_data->sortByDesc('taskNumber') as $submi_data)
                   {{-- @dd($submi_data->projectSection) --}}
                   @if($todayDate >= \Carbon\Carbon::parse($submi_data->release_date)->format('dS F Y'))
                       <div
-                          class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $nn }}">
+                          class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $submi_data->taskNumber }}">
                           <a href="{{ route('student.taskDetail',[Auth::guard('student')->user()->id,$project->id,$submi_data->section_id]) }}"
                             {{-- /profile/{{ Auth::guard('student')->user()->id }}/enrolled/{{ $project->id }}/task/{{ $project_section->id }} --}}
                               class="grid grid-cols-12 gap-4 grid-flow-col">
-                              <div class="col-span-5">Task {{ $no++ }}:
+                              <div class="col-span-5">Task {{ $submi_data->taskNumber }}:
                                   {{ substr($submi_data->projectSection->title, 0, 30) }}...</div>
                               <span
                                   class="col-start-6 col-span-3 text-sm font-normal text-right ">{{ \Carbon\Carbon::parse($submi_data->release_date)->format('dS F Y') }}
