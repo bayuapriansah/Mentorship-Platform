@@ -172,11 +172,10 @@
                       <div class="pb-20">
                         <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignments </h1>
                         @if($submissionData == null)
-                          <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/id/{{$submissionId->id}}" method="POST" enctype="multipart/form-data">
+                          <form action="{{ route('student.taskSubmit',[$student->id,$task->project->id,$task->id,$submissionId->id]) }}" method="POST" enctype="multipart/form-data">
                         @else
-                          <form action="/profile/{{$student->id}}/enrolled/{{$task->project->id}}/task/{{$task->id}}/submission/{{$submissionData->id}}" method="POST" enctype="multipart/form-data">
+                          <form action="{{ route('student.taskResubmit',[$student->id,$task->project->id,$task->id,$submissionData->id]) }}" method="POST" enctype="multipart/form-data">
                           @method('patch')
-                        
                         @endif
                           @csrf
                           <div class="relative cursor-pointer " id="drop-area">

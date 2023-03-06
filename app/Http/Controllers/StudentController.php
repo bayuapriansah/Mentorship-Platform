@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Grade;
 use App\Models\Mentor;
@@ -560,12 +561,15 @@ class StudentController extends Controller
         $submissions = Submission::where([['section_id', $project_section->id], ['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
         // end of code
         // dd($submissions);
+        $submission_data = Submission::where([['section_id', $project_section->id], ['student_id', Auth::guard('student')->user()->id]])->get();
         $student = Student::where('id', $student_id)->first();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+        // $project_sections = ProjectSection::orderBy('id','DESC')->where('project_id', $project_id)->get();
         $project_sections = ProjectSection::orderBy('id','DESC')->where('project_id', $project_id)->get();
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions'));
+        // dd($project_sections);
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions', 'submission_data'));
     }
 
     public function enrolledDetail($student_id, $project_id)
@@ -607,7 +611,9 @@ class StudentController extends Controller
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
         $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
         // dd($newMessage->count());
-        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+        $submission_data = Submission::where([['project_id', $project_id], ['student_id', Auth::guard('student')->user()->id]])->get();
+        
+        return view('student.project.show', compact('student','project', 'enrolled_projects' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages','submission_data'));
     }
 
     public function readActivityTask($student_id, $project_id, $notification_id){
@@ -726,15 +732,11 @@ class StudentController extends Controller
         }else{
             return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
-        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-        // $submissions = Grade::where('submission_id',$submission)get();
-        // dd($project_sections->count());
-        // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
-        //     $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-        //     $success_project->is_submited = 1;
-        //     $success_project->flag_checkpoint = $dataDate;
-        //     $success_project->save();
-        // }
+        $submission_date_override = Submission::where('project_id', $project_id)->where('is_complete', 0)->first();
+        if($submission_date_override != NULL){
+            $submission_date_override->release_date = Carbon::now()->format('Y-m-d');
+            $submission_date_override->save();
+        }
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
     }
 
