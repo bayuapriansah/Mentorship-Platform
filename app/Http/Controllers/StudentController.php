@@ -578,7 +578,11 @@ class StudentController extends Controller
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-        // dd($project_sections);
+
+        if($project == null || $project->enrolled_project->count() == 0){
+            abort(404);
+        }
+        
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);

@@ -6,7 +6,15 @@
       <div class="col-span-6 my-auto">
         <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue"><i class="fa-solid fa-arrow-left pr-2"></i>back</a>
         <h2 class="text-dark-blue text-2xl font-medium mb-3">{{$project->name}}</h2>
-        <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">{{$project->project_domain}}</span>
+        <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">
+          @if ($project->project_domain == 'statistical')
+            Statistical Data
+          @elseif($project->project_domain == 'computer_vision')
+            Computer Vision
+          @else
+            {{$project->project_domain}}
+          @endif
+        </span>
       </div>
       <div class="col-span-6 relative">
         <img src="{{asset('assets/img/icon/profile/dots.png')}}" class="absolute z-10 right-0 -top-3 ">
