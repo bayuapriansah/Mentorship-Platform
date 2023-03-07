@@ -18,7 +18,7 @@
                         @else
                           {{$project->project_domain}}
                         @endif
-                        </span>
+                    </span>
                 </div>
                 <div class="col-span-6 relative">
                     <img src="{{ asset('assets/img/icon/profile/dots.png') }}" class="absolute z-10 right-0 -top-3 ">

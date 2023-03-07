@@ -116,19 +116,40 @@
           {{-- @dd(array_search($submission, $submissions->toArray())) --}}
           @if ($loop->index %2 ==0)
             @if ($submission->grade == null)
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+              {{-- <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}"> --}}
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                Task {{$tipNumber}} <br>
+                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
             @else
               @if($submission->grade->status == 1)
-                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                Task {{$tipNumber}} <br>
+                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
               @endif
             @endif
           @else
             @if ($submission->grade == null)
-            <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="bottom" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+            <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                Task {{$tipNumber}} <br>
+                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
             {{-- {{$loop->index+1}} --}}
             @else
               @if($submission->grade->status == 1)
-                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0"  alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}">
+              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                Task {{$tipNumber}} <br>
+                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
               @endif
             @endif
           @endif

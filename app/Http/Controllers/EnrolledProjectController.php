@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EnrolledProject;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Models\EnrolledProject;
+use Illuminate\Support\Facades\Auth;
 
 class EnrolledProjectController extends Controller
 {
@@ -14,7 +16,7 @@ class EnrolledProjectController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -44,9 +46,23 @@ class EnrolledProjectController extends Controller
      * @param  \App\Models\EnrolledProject  $enrolledProject
      * @return \Illuminate\Http\Response
      */
-    public function show(EnrolledProject $enrolledProject)
+    public function show($project_id)
     {
-        //
+        $project = Project::find($project_id);
+        $enrolled_projects = EnrolledProject::where('project_id', $project_id)->get();
+        if (Auth::guard('mentor')->check()) {
+            $enrolled_projects = EnrolledProject::where('project_id', $project_id)
+                                                ->whereHas('student', function($q){
+                                                    $q->where('institution_id', Auth::guard('mentor')->user()->institution_id);
+                                                })->get();
+            $enrolled_projects_supervised = EnrolledProject::where('project_id', $project_id)
+                                                ->whereHas('student', function($q){
+                                                    $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                                                })->get();                                  
+        return view('dashboard.enrolled.show', compact('enrolled_projects','project', 'enrolled_projects_supervised'));
+        }
+        
+        return view('dashboard.enrolled.show', compact('enrolled_projects','project'));
     }
 
     /**

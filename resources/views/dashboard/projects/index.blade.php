@@ -72,7 +72,12 @@
         @endif
       </td>
       <td>{{$project->project_domain}}</td>
-      <td>{{count($project->enrolled_project)}}</td>
+      <td class="flex space-x-4 ">
+        <div>{{count($project->enrolled_project)}}</div>
+        <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a>
+        {{-- <a href="{{route('dashboard.enrollment.show',['project'=>$project->id])}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a> --}}
+
+      </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
       <td class="capitalize">
         @if ($project->status == 'publish')
@@ -181,15 +186,21 @@
         @endif
       </td>
       <td>{{$project->project_domain}}</td>
-      <td>
-        @if ($project->enrolled_project)
+      <td>{{count($project->enrolled_project)}}</td>
+
+       {{-- @dd($project->enrolled_project) --}}
+
+        {{-- @if ($project->enrolled_project)
           @forelse ($project->enrolled_project as $item)
-            {{$item->student->mentor_id == Auth::guard('mentor')->user()->id }}
+            @if ($item->student->mentor_id == Auth::guard('mentor')->user()->id)
+            {{$item->student->mentor_id++}}
+            @endif
           @empty
             0
           @endforelse
         @else
-        @endif
+        0
+        @endif --}}
         
       </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
