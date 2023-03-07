@@ -39,25 +39,40 @@
           </p>
       @enderror
     </div>
-    <div class="flex justify-between mt-4">
-      <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" id="dob" type="date" placeholder="Date of birth" value="{{$student->date_of_birth}}" name="date_of_birth" required><br>
-      @error('date_of_birth')
-          <p class="text-red-600 text-sm mt-1">
-            {{$message}}
-          </p>
-      @enderror
+    <div class="flex justify-between mt-4 mb-0">
+      <div class="flex flex-col w-full">
+        <label for="" class="text-light-blue text-base">Date of birth</label>
+        <input class="border border-light-blue rounded-lg  h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" id="dob" type="date" placeholder="Date of birth" value="{{$student->date_of_birth}}" name="date_of_birth" required><br>
+        @error('date_of_birth')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+      </div>
+
+      <div class="flex flex-col  w-full">
+        <label for="" class="text-light-blue text-base">End date</label>
+        <input class="border border-light-blue rounded-lg  h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" id="dob" type="date" placeholder="Date of birth" value="{{$student->end_date}}" name="end_date" required><br>
+        @error('end_date')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+      </div>
       
-      <select id="sex" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" name="sex" required>
-        <option value="" class="" id="emptySex" hidden>Sex *</option>
-        <option value="male" {{$student->sex == 'male' ? 'selected' : ''}}>Male</option>
-        <option value="female" {{$student->sex == 'female' ? 'selected' : ''}}>Female</option>
-      </select><br>
-      @error('sex')
-          <p class="text-red-600 text-sm mt-1">
-            {{$message}}
-          </p>
-      @enderror
+      
     </div>
+
+    <select id="sex" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none mt-4" name="sex" required>
+      <option value="" class="" id="emptySex" hidden>Sex *</option>
+      <option value="male" {{$student->sex == 'male' ? 'selected' : ''}}>Male</option>
+      <option value="female" {{$student->sex == 'female' ? 'selected' : ''}}>Female</option>
+    </select><br>
+    @error('sex')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
     
     @if(Route::is('dashboard.students.manage'))
       <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight bg-gray-300 invalid:text-black text-black cursor-not-allowed focus:outline-none" name="institution" disabled>

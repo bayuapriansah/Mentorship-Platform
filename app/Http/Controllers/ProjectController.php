@@ -335,6 +335,13 @@ class ProjectController extends Controller
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
+        
+        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->first();
+        if ($completed_enrolled->is_submited == 1) {
+            $completed_enrolled->is_submited = 0;
+            $completed_enrolled->flag_checkpoint = null;
+            $completed_enrolled->save();
+        }
 
         $section  = new ProjectSection;
         $section_count = ProjectSection::where('project_id', $project->id);
@@ -764,6 +771,13 @@ class ProjectController extends Controller
             'description.required' => 'Description is required',
         ]);
 
+        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->first();
+        if ($completed_enrolled->is_submited == 1) {
+            $completed_enrolled->is_submited = 0;
+            $completed_enrolled->flag_checkpoint = null;
+            $completed_enrolled->save();
+        }
+        
         $section  = new ProjectSection;
         $section_count = ProjectSection::where('project_id', $project->id);
         $section->project_id = $project->id;

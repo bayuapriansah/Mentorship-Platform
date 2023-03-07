@@ -197,6 +197,7 @@ class StudentController extends Controller
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
+        $student->end_date = $request->end_date;
         $student->sex = $request->sex;
         $student->institution_id = $request->institution;
         $student->country = $request->country;
@@ -236,7 +237,7 @@ class StudentController extends Controller
             }
         }
         $student->save();
-        return redirect('/dashboard/students/'.$student->id.'/manage')->with('successTailwind','Profile updated successfully');
+        return redirect('/dashboard/students/')->with('successTailwind','Profile updated successfully');
 
     }
 
@@ -246,6 +247,7 @@ class StudentController extends Controller
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
+        $student->end_date = $request->end_date;
         $student->sex = $request->sex;
         $student->country = $request->country;
         $student->state = $request->state;
