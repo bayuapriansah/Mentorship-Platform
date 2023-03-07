@@ -736,7 +736,7 @@ class StudentController extends Controller
         }else{
             return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
-        $submission_date_override = Submission::where('project_id', $project_id)->where('is_complete', 0)->first();
+        $submission_date_override = Submission::where('project_id', $project_id)->where('student_id',Auth::guard('student')->user()->id)->where('is_complete', 0)->first();
         if($submission_date_override != NULL){
             $submission_date_override->release_date = Carbon::now()->format('Y-m-d');
             $submission_date_override->save();

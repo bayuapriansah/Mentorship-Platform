@@ -118,7 +118,7 @@
                   @endphp
                   @foreach ($submission_data->sortByDesc('taskNumber') as $submi_data)
                   {{-- @dd($submi_data->projectSection) --}}
-                  @if($todayDate >= \Carbon\Carbon::parse($submi_data->release_date)->format('dS F Y'))
+                  @if($todayDate->greaterThan(\Carbon\Carbon::parse($submi_data->release_date)->format('dS F Y')))
                       <div
                           class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $submi_data->taskNumber }}">
                           <a href="{{ route('student.taskDetail',[Auth::guard('student')->user()->id,$project->id,$submi_data->section_id]) }}"
