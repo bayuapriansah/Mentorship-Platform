@@ -1,8 +1,11 @@
 @extends('layouts.admin2')
 @section('content')
-<div class="text-[#6973C6] hover:text-light-blue">
+<div class="text-[#6973C6] hover:text-light-blue flex justify-between">
   <a href="/dashboard/submissions/project/{{$project->id}}"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+  @include('flash-message')
 </div>
+
+
 
 <div class="flex justify-between mb-10 w-4/5 items-center">
   <h3 class="text-dark-blue font-medium text-xl">Review Submission</h3>
@@ -87,7 +90,7 @@
     </div>
     @endif
   </div>
-  @if(Auth::guard('web')->check() || Auth::guard('mentor')->check() )
+  @if(Auth::guard('web')->check() || Auth::guard('mentor')->user()->id == $submission->student->mentor_id )
     @if(!$submission->grade)
       <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
         @csrf

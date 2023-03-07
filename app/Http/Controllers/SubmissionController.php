@@ -55,11 +55,17 @@ class SubmissionController extends Controller
     public function show(Project $project)
     {
         if(Auth::guard('mentor')->check()){
-            $submissions = Submission::with('grade')
+            $submissionsSupervised = Submission::with('grade')
                                     ->where('project_id', $project->id)
                                     ->whereHas('student', function($q){
                                         $q->where('mentor_id', Auth::guard('mentor')->user()->id);
                                     })->get();
+            $submissions = Submission::with('grade')
+                                    ->where('project_id', $project->id)
+                                    ->whereHas('student', function($q){
+                                        $q->where('institution_id', Auth::guard('mentor')->user()->institution_id);
+                                    })->get();
+            return view('dashboard.submissions.index', compact('project', 'submissionsSupervised', 'submissions'));
         }
         else{
             $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
@@ -75,6 +81,11 @@ class SubmissionController extends Controller
 
     public function adminGrade(Request $request, Project $project, Submission $submission)
     {
+        if (Auth::guard('mentor')->check()) {
+            if($submission->student->mentor_id != Auth::guard('mentor')->user()->id){
+                return back()->with('errorTailwind', 'You cannot evaluate a student whom you did not supervise');
+            }
+        }
         if($request->message){
             $comment = new Comment;
             $comment->student_id = $submission->student_id;
@@ -93,7 +104,9 @@ class SubmissionController extends Controller
         if(Auth::guard('web')->check()){
             $grade->user_id = Auth::guard('web')->user()->id;
         }elseif(Auth::guard('mentor')->check()){
-            $grade->mentor_id = Auth::guard('mentor')->user()->id;
+            if(Auth::guard('mentor')->check()){
+                $grade->mentor_id = Auth::guard('mentor')->user()->id;
+            }
         }
         $grade->submission_id = $submission->id;
         if($request->input('pass')){

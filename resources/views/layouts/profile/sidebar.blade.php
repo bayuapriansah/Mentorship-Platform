@@ -69,7 +69,6 @@
       <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mx-auto object-scale-down" alt="">
       <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
       <p class="text-black font-normal text-sm text-center">Internship Status:
-        {{-- @dd($student->end_date) --}}
 
         @if(\Carbon\Carbon::now()<=$student->end_date)
           <span class="text-[#F8AC2A] font-medium">Ongoing</span>

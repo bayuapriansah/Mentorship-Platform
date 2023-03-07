@@ -584,8 +584,8 @@ class StudentController extends Controller
         $project = Project::find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-
-        if($project == null || $project->enrolled_project->count() == 0){
+        // dd($project->enrolled_project->where('student_id', $student_id));
+        if($project == null || $project->enrolled_project->where('student_id', $student_id)->count() == 0){
             abort(404);
         }
         
