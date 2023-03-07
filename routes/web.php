@@ -24,6 +24,7 @@ use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
 
 /*
@@ -280,8 +281,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/submissions/project/{project}/view/{submission}/adminGrade', [SubmissionController::class, 'adminGrade'])->name('submission.adminGrade');
         Route::get('/submissions/project/{project}/view/{submission}/grade/{grade}', [SubmissionController::class, 'edit'])->name('submission.editSubmissionGrade');
 
+        // Enrollment
+        Route::get('/enrollment/project/{id}', [EnrolledProjectController::class, 'show'])->name('enrollment.show');
+        
         // Message
-
         Route::get('/messages', [CommentController::class, 'index'])->name('messages.index');
         Route::get('/messages/create', [CommentController::class, 'create'])->name('messages.create');
         Route::get('/messages/{injection}', [CommentController::class, 'taskMessage'])->name('messages.taskMessage');
