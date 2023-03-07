@@ -29,7 +29,7 @@ class AuthOtpController extends Controller
         if ($request->isMethod('get')) {
             return redirect()->route('otp.login')->with('email', 'Please use registered Email');
         }
-
+        
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required',
@@ -43,10 +43,10 @@ class AuthOtpController extends Controller
         }
 
         $validated = $validator->validated();
-        $user_id = Student::where('email', $validated['email'])->first();
+        $user_id = Student::where('email', $validated['email'])->where('is_confirm',1)->first();
 
         if($user_id == null){
-            $user_id = Mentor::where('email', $validated['email'])->first();
+            $user_id = Mentor::where('email', $validated['email'])->where('is_confirm',1)->first();
         }
 
         if(!$user_id == null){
@@ -100,6 +100,7 @@ class AuthOtpController extends Controller
                 'email' => 'required',
                 'otp' => 'required'
             ]);
+            
             $theMail = (new SimintEncryption)->encData($request->email);
             $encId = (new SimintEncryption)->decData($request->user_id);
             $encEmail = (new SimintEncryption)->decData($theMail);
@@ -118,7 +119,7 @@ class AuthOtpController extends Controller
             if($data_user->is_confirm == 2){
                 return redirect()->route('otp.login')->with('error', 'Your internship already ended and You can\'t login again because the account is suspended');
             }elseif($data == TRUE){
-                $student =Student::where('id', $encId)->where('email', $encEmail)->first();
+                $student = Student::where('id', $encId)->where('email', $encEmail)->first();
                 $student->is_confirm = 2;
                 $student->save();
                 return redirect()->route('otp.login')->with('error', 'Your internship already ended and You can\'t login again because the account is suspended');
