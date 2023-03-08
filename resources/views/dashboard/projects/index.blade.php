@@ -24,7 +24,7 @@
     </a>
   </div>
 @endif
-@if(Auth::guard('mentor')->check())
+{{-- @if(Auth::guard('mentor')->check())
 <div class="flex items-center mb-2 space-x-2">
   <label for="filter" class="text-sm font-normal text-black my-auto">Show</label>
   <select id="filter" class="bg-gray-50 border border-[#aaa] text-gray-900 text-md p-1 focus:ring-blue-500 focus:border-blue-500 rounded-md">
@@ -32,7 +32,7 @@
     <option value="supervised">Supervised Student</option>
   </select>
 </div>
-@endif
+@endif --}}
 <!-- Content Row -->
 
 @include('flash-message')
