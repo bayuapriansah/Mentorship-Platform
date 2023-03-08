@@ -14,8 +14,13 @@
         <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
       </a>
     </nav>
-    <div class="flex justify-center">
-      <img src="{{url('/assets/img/error_page/400.png')}}" alt="Image"/>
+    <div class="flex flex-col">
+      <div class="flex justify-center">
+        <img src="{{url('/assets/img/error_page/400.png')}}" class="object-scale-down" alt="Image"/>
+      </div>
+      <div class="flex justify-center">
+        <a href="{{ URL::previous() }}" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue" >Go Back</a>
+      </div>
     </div>
   </div>
 </body>
