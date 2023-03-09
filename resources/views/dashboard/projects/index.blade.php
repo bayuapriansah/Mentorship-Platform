@@ -24,7 +24,7 @@
     </a>
   </div>
 @endif
-@if(Auth::guard('mentor')->check())
+{{-- @if(Auth::guard('mentor')->check())
 <div class="flex items-center mb-2 space-x-2">
   <label for="filter" class="text-sm font-normal text-black my-auto">Show</label>
   <select id="filter" class="bg-gray-50 border border-[#aaa] text-gray-900 text-md p-1 focus:ring-blue-500 focus:border-blue-500 rounded-md">
@@ -32,7 +32,7 @@
     <option value="supervised">Supervised Student</option>
   </select>
 </div>
-@endif
+@endif --}}
 <!-- Content Row -->
 
 @include('flash-message')
@@ -73,11 +73,11 @@
       </td>
       <td>{{$project->project_domain}}</td>
       <td class="flex space-x-4 ">
-        @if (Auth::guard('mentor')->check())
+        {{-- @if (Auth::guard('mentor')->check()) --}}
           {{-- @dd() --}}
-          @foreach ($project->enrolled_project as $item)
+          {{-- @foreach ($project->enrolled_project as $item) --}}
               {{-- {{}} --}}
-              @php
+              {{-- @php
                   $sum = $item->student->mentor_id === Auth::guard('mentor')->user()->id;
               @endphp
               {{$sum}}
@@ -85,10 +85,10 @@
           @endforeach
           <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a>
 
-        @else
+        @else --}}
           <div>{{count($project->enrolled_project)}}</div>
           <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a>
-        @endif
+        {{-- @endif --}}
         
         {{-- <a href="{{route('dashboard.enrollment.show',['project'=>$project->id])}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a> --}}
 

@@ -24,23 +24,31 @@
   </div>
   <div class="cert-container print-m-0">
     <div id="content2" class="cert">
-      <img src="{{asset('assets/img/Certificate_4x.png')}}" class="cert-bg" />
-      <div class="w-2/3 mx-auto py-16">
+      <img src="{{asset('assets/img/Certificate_1x.svg')}}" class="cert-bg" />
+      <div class="w-full mx-auto py-16">
         <br /><br /><br /><br />
-        <p class="mb-2 text-[22px]">
+        <p class=" text-[22px] mt-1">
           This is to certify that 
         </p>
         <div class="mb-2">
-          <h1 class="text-3xl capitalize">
+          <h1 class="text-3xl capitalize font-medium">
             {{$student->first_name}} {{$student->last_name}}
           </h1>
         </div>
-        <p class="mb-2">
-          This is to certify that <span class="capitalize">{{$student->first_name}} {{$student->last_name}}</span> participated in a 2-week-long Simulated Internship Experience with Sustainable Living Lab
-        </p>
-        <p>
-          We wish him/her great success in {{$student->sex == 'male'? 'His':'Her'}}  future endeavours.
-        </p>
+        <div class="flex flex-col -space-y-2">
+          <p>
+            participated in a 2-week-long Simulated AI Internship with Sustainable Living Lab from
+          </p>
+          <p>
+            {{$student->created_at->format('d-m-Y')}} to {{Carbon\Carbon::parse($student->end_date)->format('d-m-y')}}
+          </p>
+        </div>
+        <div class="flex flex-col -space-y-2">
+          <p>
+            During the internship, they successfully completed a simulated industry project on
+          </p>
+          <p>Computer Vision.</p>
+        </div>
       </div>
     </div>
   </div>
