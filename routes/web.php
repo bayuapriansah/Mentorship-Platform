@@ -124,6 +124,8 @@ Route::group(['middleware'=>'auth:student'], function(){
     // /profile/{{$student->id}}/all-notification
     Route::get('/profile/{student}/allNotification', [NotificationController::class, 'index'])->name('student.allNotification');
     Route::get('/profile/{student}/certificate', [StudentController::class, 'certificate'])->name('student.certificate');
+
+    // Certificate
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){

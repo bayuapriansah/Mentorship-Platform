@@ -875,11 +875,12 @@ class StudentController extends Controller
         }
     }
     
-    public function certificate($student_id)
+    public function certificate(Student $student)
     {
-      if($student_id != Auth::guard('student')->user()->id ){
+      if($student->id != Auth::guard('student')->user()->id ){
         abort(403);
       }
+      return view('student.certificate.index', compact('student'));
       
     }
 }

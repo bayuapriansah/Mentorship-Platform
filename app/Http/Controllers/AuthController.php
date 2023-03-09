@@ -53,6 +53,19 @@ class AuthController extends Controller
             'study_program' => ['required'],
             'year_of_study' => ['required'],
             'g-recaptcha-response' => 'required|recaptcha',
+        ],[
+          'first_name.required' => 'First name is required',
+          'last_name.required' => 'Last name is required',
+          'date_of_birth.required' => 'Date of birth is required',
+          'email.required' => 'Email is required',
+          'sex.required' => 'Sex is required',
+          'state.required' => 'State is required',
+          'institution.required' => 'Institution is required',
+          'country.required' => 'Country is required',
+          'study_program.required' => 'Study program is required',
+          'year_of_study.required' => 'Year of study program is required',
+          'g-recaptcha-response.required' => 'Captcha is required',
+          
         ]);
 
         if($validator->fails()){
