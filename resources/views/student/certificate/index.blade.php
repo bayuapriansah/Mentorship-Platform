@@ -24,14 +24,19 @@
   </div>
   <div class="cert-container print-m-0">
     <div id="content2" class="cert">
-      <img src="{{asset('assets/img/Certificate-figma.png')}}" class="cert-bg" />
-      <div class="cert-content">
-        <br /><br /><br /><br /><br /><br />
-        <p class="mb-2">
-          This is to certify that {{$student->sex == 'male'? 'Mr':'Ms'}}. {{$student->first_name}} {{$student->last_name}} has successfully completed 5 weeks of an internship program from {{$student->created_at->format('d-m-Y')}} to {{Carbon\Carbon::parse($student->end_date)->format('d-m-y')}} in the ………………… department of our organization.
+      <img src="{{asset('assets/img/Certificate_4x.png')}}" class="cert-bg" />
+      <div class="w-2/3 mx-auto py-16">
+        <br /><br /><br /><br />
+        <p class="mb-2 text-[22px]">
+          This is to certify that 
         </p>
+        <div class="mb-2">
+          <h1 class="text-3xl capitalize">
+            {{$student->first_name}} {{$student->last_name}}
+          </h1>
+        </div>
         <p class="mb-2">
-          {{$student->sex == 'male'? 'He':'She'}} was highly motivated and hardworking. {{$student->sex == 'male'? 'He':'She'}}  worked sincerely at {{$student->sex == 'male'? 'His':'Her'}}  tasks and did a very good job.
+          This is to certify that <span class="capitalize">{{$student->first_name}} {{$student->last_name}}</span> participated in a 2-week-long Simulated Internship Experience with Sustainable Living Lab
         </p>
         <p>
           We wish him/her great success in {{$student->sex == 'male'? 'His':'Her'}}  future endeavours.
