@@ -1,3 +1,12 @@
+@php
+    $data = [
+        'subject' => 'Invitation to be a Mentor',
+        'body' => 'bayuapriansah@gmail.com',
+        'body2' => 'localhost:8000/verified/eyJpdiI6ImRRS2R6SkVZVCtWSjFIN24iLCJ2YWx1ZSI6Ik9FenlnM1FQSzdjeC93YTJUQVpMVmRCY0xBNjYiLCJtYWMiOiIiLCJ0YWciOiJQM2w2WG81a0tzUUlrb1hNUjVJUGh3PT0ifQ==',
+        'body3' => 'institutions/lmqSridhebBWESOiquE8bEZLKYfb9n2TSZeRfBaw.png',
+        'type' => 'cusmemb',
+    ];
+@endphp
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif">
  <head>
@@ -114,8 +123,28 @@ td .es-button-border-1:hover {
                      </tr>
                    </table></td>
                  </tr>
-               </table></td>
+               </table>
+              </td>
              </tr>
+
+             <tr>
+              <td align="left" style="padding:0;Margin:0;padding-right:10px;padding-top:10px;padding-left:30px;">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                 <tr>
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:770px">
+                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <td align="justify" style="padding:0;Margin:0;padding-left:30px;padding-right:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:25px">You are invited to join as a (Member || Supervisor) for Intel Corp. (Partners || Institution)</p></td>
+                     <tr>
+                      <td align="left" style="padding:0;Margin:0;font-size:0px;padding-left:20px"><img class="adapt-img" src="{{ asset('storage/'.$data['body3']) }}" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="192" height="108"></td>
+                     </tr>
+                     <tr>
+                     </tr>
+                   </table></td>
+                 </tr>
+               </table>
+              </td>
+             </tr>
+
              <tr>
               <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-right:20px;padding-left:40px">
                <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
@@ -240,7 +269,7 @@ td .es-button-border-1:hover {
                  <td align="left" style="padding:0;Margin:0;width:255px">
                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                     <tr>
-                     <td align="right" style="padding-right:20px;Margin:0;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/imagesl.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="44" height="24"></td>
+                     <td align="right" style="padding-right:20px;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/imagesl.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="44" height="24"></td>
                     </tr>
                   </table></td>
                 </tr>

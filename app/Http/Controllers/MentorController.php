@@ -44,7 +44,7 @@ class MentorController extends Controller
     {
         return view('dashboard.mentors.invite', compact('institution'));
     }
-// fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
+
     public function sendInvite(Request $request,$institution_id)
     {
         $message = "Successfully Send Invitation to Supervisor";
@@ -57,6 +57,8 @@ class MentorController extends Controller
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('supervisor.register', [$encEmail]);
                 $mentors = $this->addMentor($email,$institution_id);
+                $institution_image = Institution::where('id',$institution_id)->first();
+                dd($institution_image->logo);
                 $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
                 $message .= "\n$email";
             }else{
