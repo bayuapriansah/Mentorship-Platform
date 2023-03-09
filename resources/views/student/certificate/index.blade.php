@@ -21,10 +21,11 @@
       Print Certificate
     </button>
     <button class="btn btn-info" id="downloadPDF">Download PDF</button>
+    <button class="btn btn-info" id="downloadPDF2">Download PDF</button>
   </div>
   <div class="cert-container print-m-0">
     <div id="content2" class="cert">
-      <img src="{{asset('assets/img/Certificate_4x.png')}}" class="cert-bg" />
+      <img src="{{asset('assets/img/14834937_5520962.svg')}}" class="cert-bg" />
       <div class="w-2/3 mx-auto py-16">
         <br /><br /><br /><br />
         <p class="mb-2 text-[22px]">

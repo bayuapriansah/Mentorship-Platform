@@ -40,6 +40,20 @@ $("#downloadPDF").click(function () {
   });
 });
 
+$("#downloadPDF2").click(function () {
+  var element = $("div#content2").get(0);
+  html2canvas(element, {
+    dpi: 600, // set the DPI
+    scale: 3, // increase the scale to improve image quality
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight
+  }).then(function (canvas) {
+    var pdf = new jsPDF("l", "pt", [$("#content2").width(), 550], 300);
+    var imgData = canvas.toDataURL("image/jpeg", 1.0);
+    pdf.addImage(imgData, "JPEG", 0, 0, $("#content2").width(), 550);
+    pdf.save("certificate.pdf");
+  });
+});
 
 // this function is the configuration of the html2cavas library (https://html2canvas.hertzen.com/)
 // $("#content2").removeClass('ml-215'); is the only custom line here, the rest comes from the library.
