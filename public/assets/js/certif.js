@@ -4,10 +4,13 @@
 //     $("div#content2").get(0),
 //     0,
 //     0,
-//     $("#content2").width() + 35,  // added 45 because the container's (content2) width is smaller than the image, if it's not added then the content from right side will get cut off
-//     450, // same issue as above. if the container width / height is changed (currently they are fixed) then these values might need to be changed as well.
+//     $("#content2").width() + 45,  // added 45 because the container's (content2) width is smaller than the image, if it's not added then the content from right side will get cut off
+//     $("#content2").height() + 30, // same issue as above. if the container width / height is changed (currently they are fixed) then these values might need to be changed as well.
 //     function (data) {
-//       var pdf = new jsPDF("l", "pt", [$("#content2").width(), 450], 10000);
+//       var pdf = new jsPDF("l", "pt", [
+//         $("#content2").width(),
+//         $("#content2").height(),
+//       ]);
 
 //       pdf.addImage(
 //         "data:image/png;base64," + data,
@@ -15,12 +18,13 @@
 //         0,
 //         0,
 //         $("#content2").width(),
-//         450
+//         $("#content2").height()
 //       );
-//       pdf.save("internship-certificate.pdf");
+//       pdf.save("azimuth-certificte.pdf");
 //     }
 //   );
 // });
+
 $("#downloadPDF").click(function () {
   var element = $("div#content2").get(0);
   html2canvas(element, {
@@ -30,12 +34,26 @@ $("#downloadPDF").click(function () {
     windowHeight: element.scrollHeight
   }).then(function (canvas) {
     var pdf = new jsPDF("l", "pt", [$("#content2").width(), 550], 300);
-    var imgData = canvas.toDataURL("image/png", 1.0);
+    var imgData = canvas.toDataURL("image/png", 4.0);
     pdf.addImage(imgData, "PNG", 0, 0, $("#content2").width(), 550);
     pdf.save("certificate.pdf");
   });
 });
 
+$("#downloadPDF2").click(function () {
+  var element = $("div#content2").get(0);
+  html2canvas(element, {
+    dpi: 600, // set the DPI
+    scale: 3, // increase the scale to improve image quality
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight
+  }).then(function (canvas) {
+    var pdf = new jsPDF("l", "pt", [$("#content2").width(), 550], 300);
+    var imgData = canvas.toDataURL("image/jpeg", 1.0);
+    pdf.addImage(imgData, "JPEG", 0, 0, $("#content2").width(), 550);
+    pdf.save("certificate.pdf");
+  });
+});
 
 // this function is the configuration of the html2cavas library (https://html2canvas.hertzen.com/)
 // $("#content2").removeClass('ml-215'); is the only custom line here, the rest comes from the library.

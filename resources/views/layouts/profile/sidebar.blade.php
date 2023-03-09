@@ -210,8 +210,8 @@
         <div class="text-center">
           @php $no=1 @endphp
           @foreach ($enrolled_projects->where('is_submited',1) as $enrolled_project)
-            <p class="absolute bottom-0 font-medium text-center text-[10px]" style="left: {{$enrolled_project->flag_checkpoint-10}}%">Project {{$no}}</p>
-            <p class="absolute font-normal text-[8px]" style="left: {{$enrolled_project->flag_checkpoint-11}}%">{{\Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
+            <p class="absolute bottom-0 mt-1 font-medium text-center text-[10px]" style="left: {{$enrolled_project->flag_checkpoint-10}}%">Project {{$no}}</p>
+            <p class="absolute -mt-3 font-normal text-[8px]" style="left: {{$enrolled_project->flag_checkpoint-11}}%">{{\Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
             @php
               $no++
             @endphp

@@ -150,7 +150,7 @@
             @enderror
 
 
-            <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required><br>
+            <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required><br>
             @error('email')
                 <p class="text-red-600 text-sm mt-1">
                   {{$message}}
