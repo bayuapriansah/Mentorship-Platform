@@ -24,7 +24,7 @@
   </div>
   <div class="cert-container print-m-0">
     <div id="content2" class="cert">
-      <img src="{{asset('assets/img/certif-big.png')}}" class="cert-bg" />
+      <img src="{{asset('assets/img/Certificate-figma.png')}}" class="cert-bg" />
       <div class="cert-content">
         <br /><br /><br /><br /><br /><br />
         <p class="mb-2">
