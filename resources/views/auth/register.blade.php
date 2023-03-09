@@ -19,38 +19,60 @@
         <form action="{{route('register')}}" method="post" id="register">
             @csrf
             <div class="flex justify-between">
-              <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="firstname" type="text" value="{{old('first_name')}}" placeholder="First Name *" name="first_name" required><br>
-              @error('first_name')
-                  <p class="text-red-600 text-sm mt-1">
-                    {{$message}}
-                  </p>
-              @enderror
-
-              <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="lastname" type="text" value="{{old('last_name')}}" placeholder="Last Name *" name="last_name" required><br>
-              @error('last_name')
-                  <p class="text-red-600 text-sm mt-1">
-                    {{$message}}
-                  </p>
-              @enderror
+              <div class="flex-col flex-grow mr-5">
+                <div>
+                  <input class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="firstname" type="text" value="{{old('first_name')}}" placeholder="First Name *" name="first_name" required>
+                </div>
+                @error('first_name')
+                    <div>
+                      <p class="text-red-600 text-sm mt-1">
+                        {{$message}}
+                      </p>
+                    </div>
+                @enderror
+              </div>
+              <div class="flex-col flex-grow">
+                <div>
+                  <input class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="lastname" type="text" value="{{old('last_name')}}" placeholder="Last Name *" name="last_name" required>
+                </div>
+                  @error('last_name')
+                    <div>
+                      <p class="text-red-600 text-sm mt-1">
+                        {{$message}}
+                      </p>
+                    </div>
+                  @enderror
+              </div>
             </div>
             <div class="flex justify-between mt-4">
-              <input class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" id="dob" type="text" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" value="{{old('date_of_birth')}}" name="date_of_birth" required><br>
-              @error('date_of_birth')
+              <div class="flex-col flex-grow mr-5">
+                <div>
+                  <input class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" id="dob" type="text" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" value="{{old('date_of_birth')}}" name="date_of_birth" required>
+                </div>
+                @error('date_of_birth')
+                  <div>
+                    <p class="text-red-600 text-sm mt-1">
+                      {{$message}}
+                    </p>
+                  </div>
+                @enderror
+              </div>
+              <div class="flex-col flex-grow ">
+                <div>
+                  <select id="sex" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 pr-28 invalid:text-lightest-grey leading-tight focus:outline-none" name="sex" required>
+                    <option value="" class="" hidden>Sex *</option>
+                    <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
+                    <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
+                  </select>
+                </div>
+              @error('country')
+                <div>
                   <p class="text-red-600 text-sm mt-1">
                     {{$message}}
                   </p>
+                </div>
               @enderror
-
-              <select id="sex" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" name="sex" required>
-                <option value="" class="" hidden>Sex *</option>
-                <option value="male" {{old('sex') == 'male' ? 'selected' : ''}}>Male</option>
-                <option value="female" {{old('sex') == 'female' ? 'selected' : ''}}>Female</option>
-              </select><br>
-              @error('sex')
-                  <p class="text-red-600 text-sm mt-1">
-                    {{$message}}
-                  </p>
-              @enderror
+              </div>
             </div>
 
             <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution" required>
@@ -68,21 +90,31 @@
             @enderror
 
             <div class="flex justify-between mt-4">
-              <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
-              <br>
+              <div class="flex-col flex-grow mr-5">
+                <div>
+                  <input class=" border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
+                </div>
               @error('country')
+                <div>
                   <p class="text-red-600 text-sm mt-1">
                     {{$message}}
                   </p>
+                </div>
               @enderror
+              </div>
 
-              <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight bg-gray-300 cursor-not-allowed focus:outline-none" id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
-              <br>
-              @error('state')
-                  <p class="text-red-600 text-sm mt-1">
-                    {{$message}}
-                  </p>
-              @enderror
+              <div class="flex-col flex-grow">
+                <div>
+                  <input class=" border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight bg-gray-300 cursor-not-allowed focus:outline-none" id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
+                </div>
+                @error('state')
+                  <div>
+                    <p class="text-red-600 text-sm mt-1">
+                      {{$message}}
+                    </p>
+                  </div>
+                @enderror
+              </div>
             </div>
 
             @php
@@ -249,7 +281,7 @@
             @enderror
 
 
-            <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('email') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{ $checkStudent->email }}" placeholder="Email *" id="email" name="email" readonly><br>
+            <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" value="{{ $checkStudent->email }}" placeholder="Email *" id="email" name="email" readonly><br>
             @error('email')
                 <p class="text-red-600 text-sm mt-1">
                   {{$message}}
