@@ -72,7 +72,7 @@
         @endif
       </td>
       <td>{{$project->project_domain}}</td>
-      <td class="flex justify-center ">
+      <td class=" text-center">
         @if (Auth::guard('mentor')->check())
           @php
               $count = 0
@@ -198,7 +198,7 @@
         @endif
       </td>
       <td>{{$project->project_domain}}</td>
-      <td class="flex justify-center">
+      <td class="">
         @php
               $count = 0
           @endphp
