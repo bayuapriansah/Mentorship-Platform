@@ -10,16 +10,19 @@ use App\Models\Project;
 use App\Models\Student;
 use App\Models\Customer;
 use App\Models\Institution;
-use Illuminate\Http\Request;
 use App\Models\MentorProject;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use App\Models\SectionSubsection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotify;
+use Exception;
 
 class MentorController extends Controller
 {
@@ -44,7 +47,7 @@ class MentorController extends Controller
     {
         return view('dashboard.mentors.invite', compact('institution'));
     }
-// fungsi nya bisa untuk menambahkan mentor ke banyak project dan ke banyak perusahaan
+
     public function sendInvite(Request $request,$institution_id)
     {
         $message = "Successfully Send Invitation to Supervisor";
@@ -57,7 +60,11 @@ class MentorController extends Controller
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('supervisor.register', [$encEmail]);
                 $mentors = $this->addMentor($email,$institution_id);
-                $sendmail = (new MailController)->EmailMentorInvitation($mentors->email,$link);
+                $institution_detail = Institution::where('id',$institution_id)->first();
+                $nameInstitution = $institution_detail->name;
+                $InstitutionLogo = $institution_detail->logo;
+                $sendmail = $this->EmailMentorInvitation($mentors->email,$link,$nameInstitution,$InstitutionLogo);
+                // dd($sendmail);
                 $message .= "\n$email";
             }else{
                 return redirect()->back()->with('error', 'Email is already registered');
@@ -67,6 +74,25 @@ class MentorController extends Controller
         return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('successTailwind', $message);
     }
 
+    public function EmailMentorInvitation($mailto, $urlInvitation, $nameInstitution, $logo)
+    {
+        $data = [
+            'subject' => 'Invitation to join as a Supervisor',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            'body3' => $nameInstitution,
+            'body4' => $logo,
+            'body5' => 'Supervisor',
+            'type' => 'cusmemb',
+        ];
+        try {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['message' => 'Mentor Invitation Email sent successfully']);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()], 500);
+        }
+    }
+    
     public function addMentor($email,$institution_id){
         return Mentor::create([
             'email' => $email,

@@ -243,7 +243,7 @@ td .es-button-border-1:hover {
                   <td align="left" style="padding:0;Margin:0;width:255px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="right" style="padding-right:20px;Margin:0;font-size:0px"><img class="adapt-img" src="https://github.com/bayuapriansah/public-repo-images/raw/main/imagesl.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="44" height="24"></td>
+                      <td align="right" style="padding-right:20px;Margin:0;font-size:0px"><img src="https://github.com/bayuapriansah/public-repo-images/raw/main/imagesl.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="44" height="24"></td>
                      </tr>
                    </table></td>
                  </tr>

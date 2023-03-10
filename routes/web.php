@@ -40,9 +40,9 @@ use App\Http\Controllers\EmailBulkInvitationController;
 |
 */
 //Static Page
-Route::get('/emailtemp', function () {
-    return view('emails.otp');
-});
+// Route::get('/emailtemp', function () {
+//     return view('emails.cusmemb');
+// })->name('emailtemp');
 Route::get('/supportlib', function () {
     return view('projects.supportlibrary');
 })->name('projects.support');
