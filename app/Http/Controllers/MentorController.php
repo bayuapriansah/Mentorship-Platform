@@ -82,6 +82,7 @@ class MentorController extends Controller
             'body2' => $urlInvitation,
             'body3' => $nameInstitution,
             'body4' => $logo,
+            'body5' => 'Supervisor',
             'type' => 'cusmemb',
         ];
         try {

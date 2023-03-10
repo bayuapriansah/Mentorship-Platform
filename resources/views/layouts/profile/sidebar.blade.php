@@ -159,7 +159,7 @@
         @endforeach
 
         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-3">
-          <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ round($taskDate) }}%"></div>
+          <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ (round($taskDate) >= 100) ? 100 : round($taskDate)}}%"></div>
         </div>
 
         @php $no=1 @endphp
@@ -205,7 +205,7 @@
         @endforeach
 
         <div class="bg-gray-200 rounded-full h-1.5 mb-4 mt-4 ">
-          <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ $dataDate }}%"></div>
+          <div class="bg-[#11BF61] h-1.5 rounded-full " style="width: {{ ($dataDate >= 100) ? 100 : $dataDate }}%"></div>
         </div>
         <div class="text-center">
           @php $no=1 @endphp

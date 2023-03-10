@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotify;
+use Exception;
 
 class CustomerController extends Controller
 {
@@ -78,8 +81,11 @@ class CustomerController extends Controller
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('customer.register', [$encEmail]);
-                $student = $this->addCustomerToPartner($email,$partner_id);
-                $sendmail = (new MailController)->EmailMemberInvitation($student->email,$link);
+                $members = $this->addCustomerToPartner($email,$partner_id);
+                $companies_detail = Company::where('id',$partner_id)->first();
+                $nameCompanies = $companies_detail->name;
+                $CompaniesLogo = $companies_detail->logo;
+                $sendmail = $this->EmailMemberInvitation($members->email,$link,$nameCompanies,$CompaniesLogo);
                 $message .= "\n$email";
             }else{
                 return redirect()->back()->with('error', 'Email is already registered');
@@ -87,6 +93,25 @@ class CustomerController extends Controller
         }
 
         return redirect()->route('dashboard.partner.partnerMember', [$partner_id])->with('successTailwind', $message);
+    }
+
+    public function EmailMemberInvitation($mailto, $urlInvitation, $nameInstitution, $logo)
+    {
+        $data = [
+            'subject' => 'Invitation to join as a Customer',
+            'body' => $mailto,
+            'body2' => $urlInvitation,
+            'body3' => $nameInstitution,
+            'body4' => $logo,
+            'body5' => 'Customer',
+            'type' => 'cusmemb',
+        ];
+        try {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['message' => 'Customer Invitation Email sent successfully']);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()], 500);
+        }
     }
 
     // Register customer
