@@ -10,20 +10,17 @@
 
 </head>
 <body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> --}}
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script> --}}
-
   <div class="toolbar no-print">
     <button class="btn btn-info" onclick="window.print()">
       Print Certificate
     </button>
-    <button class="btn btn-info" id="downloadPDF">Download PDF</button>
+    {{-- <button class="btn btn-info" id="downloadPDF">Download PDF</button> --}}
+    {{-- <a class="btn btn-info" href="/profile/{{$student->id}}/generate">Download PDF</a> --}}
+    <a href="javascript:void(0)" class="btn btn-download">Generate PDF</a>
   </div>
-  <div class="cert-container print-m-0">
+  <div class="cert-container" id="print-m-0">
     <div id="content2" class="cert">
+      {{-- <img src="{{asset('assets/img/Certificate_2x.png')}}" class="cert-bg" /> --}}
       <img src="{{asset('assets/img/Certificate_1x.svg')}}" class="cert-bg" />
       <div class="w-full mx-auto py-16">
         <br /><br /><br /><br />
@@ -52,7 +49,13 @@
       </div>
     </div>
   </div>
-  
-  <script src="{{asset('assets/js/certif.js')}}"></script>
+  <div class="flex">
+  </div>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js"></script>
+
+  <script type="text/javascript" src="{{asset('assets/js/certificate.js')}}"></script>
 </body>
 </html>
+
+
