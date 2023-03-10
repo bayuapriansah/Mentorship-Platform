@@ -11,12 +11,10 @@
 </head>
 <body>
   <div class="toolbar no-print">
-    <button class="btn btn-info" onclick="window.print()">
-      Print Certificate
-    </button>
     {{-- <button class="btn btn-info" id="downloadPDF">Download PDF</button> --}}
     {{-- <a class="btn btn-info" href="/profile/{{$student->id}}/generate">Download PDF</a> --}}
-    <a href="javascript:void(0)" class="btn btn-download">Generate PDF</a>
+    <br>
+    <a href="javascript:void(0)" class="px-4 py-3 bg-dark-blue hover:bg-darker-blue text-base mx-1 text-white rounded-xl mt-2 btn-download">Generate PDF</a>
   </div>
   <div class="cert-container" id="print-m-0">
     <div id="content2" class="cert">

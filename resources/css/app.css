@@ -146,8 +146,8 @@ body{
 }
 
 .toolbar{
-  background: #333; 
-  width: 100vw; 
+  background: white; 
+  width: 100%; 
   position: fixed; 
   left: 0; 
   top: 0; 

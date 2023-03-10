@@ -33,10 +33,16 @@
     <tr>
       <td>{{$no}}</td>
       <td>{{$enrolled_project->student->first_name}} {{$enrolled_project->student->last_name}}</td>
-      <td>{{$enrolled_project->is_submited == 1? 'Complete': 'Ongoing'}}</td>
+      <td>
+        @if ($enrolled_project->is_submited == 1)
+          <div class="text-green-600">Complete</div>
+        @else
+        <div class="text-[#D89B33]">Ongoing</div>
+        @endif  
+      </td>
     </tr>
     @php
-        $no++;
+      $no++;
     @endphp
     @endforeach
   </tbody>
@@ -57,7 +63,13 @@
     <tr>
       <td>{{$no}}</td>
       <td>{{$enrolled_project->student->first_name}} {{$enrolled_project->student->last_name}}</td>
-      <td>{{$enrolled_project->is_submited == 1? 'Complete': 'Ongoing'}}</td>
+      <td>
+        @if ($enrolled_project->is_submited == 1)
+          <div class="text-green-600">Complete</div>
+        @else
+        <div class="text-[#D89B33]">Ongoing</div>
+        @endif
+      </td>
     </tr>
     @php
         $no++;
