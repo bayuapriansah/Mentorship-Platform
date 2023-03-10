@@ -1,5 +1,6 @@
 @extends('layouts.profile.index')
 @section('content')
+{{-- {{ dd($__data) }} --}}
     {{-- @dd($submission_data) --}}
     <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center min-h-screen">
         <div class="col-span-8">
@@ -109,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
+            <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3 ">
               <div class="col-span-12">
                   @php
                   $no = 1;
@@ -127,8 +128,9 @@
                               <div class="col-span-5">Task {{ $submi_data->taskNumber }}:
                                   {{ substr($submi_data->projectSection->title, 0, 30) }}...</div>
                               <span
-                                  class="col-start-6 col-span-3 text-sm font-normal text-right ">{{ \Carbon\Carbon::parse($submi_data->release_date)->format('dS F Y') }}
-                                  {{ $appliedDate->format('g:ia') }}</span>
+                                  class="col-start-6 col-span-3 text-sm font-normal text-justify inline-block">{{ \Carbon\Carbon::parse($submi_data->dueDate)->format('dS') }} - {{ \Carbon\Carbon::parse($submi_data->dueDate)->addDays($submi_data->projectSection->duration)->format('dS F Y') }}
+                                  {{-- {{ $appliedDate->format('g:ia') }} --}}
+                                </span>
                               <div class="col-start-9 col-span-2 items-center">
                                   @if ($submi_data->is_complete == 0)
                                       {{-- <span class="text-light-brown"><i
