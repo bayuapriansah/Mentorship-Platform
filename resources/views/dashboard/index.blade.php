@@ -5,8 +5,18 @@
     <h3 class="text-dark-blue font-medium text-xl">Dashboard</h3>
     <div class="flex justify-between space-x-7 mt-4">
         <div class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
-            <p class="font-normal text-[18px] text-left">Total Student</p>
-            <p class="text-right text-dark-blue text-3xl">{{$students}}</p>
+            <div class="flex flex-col">
+              <div class="flex justify-between">
+                <p class="font-normal text-[18px]">Total Student</p>
+                {{-- <i  data-tooltip-target="tooltip-bottom-1" data-tooltip-placement="top" data-tooltip-trigger="hover" class="fa-solid fa-circle-info fa-lg -mr-8 text-dark-blue"></i>
+                <div id="tooltip-bottom-1" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                  wdw
+                  <div class="tooltip-arrow" data-popper-arrow></div>
+                </div> --}}
+
+              </div>
+              <p class="text-right text-dark-blue text-3xl">{{$students}}</p>
+            </div>
         </div>
 
         <div class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">

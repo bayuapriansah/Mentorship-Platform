@@ -15,8 +15,8 @@
 <div class="flex items-center mb-2 space-x-2">
   <label for="filter" class="text-base font-normal text-black my-auto">Filter</label>
   <select id="filter" class="bg-gray-50 border border-[#aaa] text-gray-900 text-md p-1 focus:ring-blue-500 focus:border-blue-500 rounded-md">
-    <option selected>All Student</option>
-    <option value="supervised">Supervised Student</option>
+    <option selected>All Students</option>
+    <option value="supervised">My Students</option>
   </select>
 </div>
 @endif
