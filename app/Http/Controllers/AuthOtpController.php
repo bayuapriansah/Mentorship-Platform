@@ -113,17 +113,20 @@ class AuthOtpController extends Controller
             }
 
             $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
-            $data = $now->format('Y-m-d') > $data_user->end_date;
 
-            //check if internship already end or not
-            if($data_user->is_confirm == 2){
-                return redirect()->route('otp.login')->with('error', 'Your internship already ended and You can\'t login again because the account is suspended');
-            }elseif($data == TRUE){
-                $student = Student::where('id', $encId)->where('email', $encEmail)->first();
-                $student->is_confirm = 2;
-                $student->save();
-                return redirect()->route('otp.login')->with('error', 'Your internship already ended and You can\'t login again because the account is suspended');
-            }
+            // Uncomment this section to enable function suspend auto
+            // $data = $now->format('Y-m-d') > $data_user->end_date;
+
+            // //check if internship already end or not
+            // if($data_user->is_confirm == 2){
+            //     return redirect()->route('otp.login')->with('error', 'Your internship already ended and You can\'t login again because the account is suspended');
+            // }elseif($data == TRUE){
+            //     $student = Student::where('id', $encId)->where('email', $encEmail)->first();
+            //     $student->is_confirm = 2;
+            //     $student->save();
+            //     return redirect()->route('otp.login')->with('error', 'Your internship already ended and You can\'t login again because the account is suspended');
+            // }
+
             // dd(!$data_user->email == 'student@mail.test');
             if(!$data_user){
                 $data_user = Mentor::where('id', $encId)->where('email', $encEmail)->first();
