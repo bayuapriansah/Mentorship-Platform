@@ -824,6 +824,9 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::where('id', $student_id)->first();
+        if(\Carbon\Carbon::now() > $student->end_date){
+          abort(403);
+        }
         $projects = Project::whereNotIn('id', function($query){
                                 $query->select('project_id')->from('enrolled_projects');
                                 $query->where('student_id',Auth::guard('student')->user()->id);
@@ -858,7 +861,11 @@ class StudentController extends Controller
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
+
         $student = Student::where('id', $student_id)->first();
+        if(\Carbon\Carbon::now() > $student->end_date){
+          abort(403);
+        }
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project_id)->get();
         $project = Project::where('status', 'publish')->find($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);

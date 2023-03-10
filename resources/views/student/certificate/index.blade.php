@@ -19,7 +19,7 @@
   <div class="cert-container" id="print-m-0">
     <div id="content2" class="cert">
       {{-- <img src="{{asset('assets/img/Certificate_2x.png')}}" class="cert-bg" /> --}}
-      <img src="{{asset('assets/img/Certificate_1x.svg')}}" class="cert-bg" />
+      <img src="{{asset('assets/img/Certificate_V2.svg')}}" class="cert-bg" />
       <div class="w-full mx-auto py-16">
         <br /><br /><br /><br />
         <p class=" text-[22px] mt-1">

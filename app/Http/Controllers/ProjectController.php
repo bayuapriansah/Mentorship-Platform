@@ -24,6 +24,11 @@ class ProjectController extends Controller
 {
     public function index()
     {
+      if(Auth::guard('student')->check()){
+        if(\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date){
+          abort(403);
+        }
+      }
         if(Auth::guard('student')->check()){
             $projects = Project::whereNotIn('id', function($query){
                             $query->select('project_id')->from('enrolled_projects');
@@ -66,6 +71,12 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
+        if(Auth::guard('student')->check()){
+          if(\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date){
+            abort(403);
+          }
+        }
+        
         if(Auth::guard('student')->check()){
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $id)->get();
         }

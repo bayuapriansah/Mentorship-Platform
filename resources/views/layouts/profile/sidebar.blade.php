@@ -73,7 +73,7 @@
         @if(\Carbon\Carbon::now()<=$student->end_date)
           <span class="text-[#F8AC2A] font-medium">Ongoing</span>
         @else
-          <span class="text-light-green font-medium">Complete</span>
+          <span class="text-light-green font-medium">Finished</span>
         @endif
         {{-- @if($student->is_confirm == 0)
           <span class="text-light-blue">Not Started</span>
@@ -233,8 +233,9 @@
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
       @if($submissionData == null)
-        <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
-
+        @if (\Carbon\Carbon::now() < $student->end_date)
+          <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
+        @endif
       @else
         <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
         <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
@@ -267,9 +268,11 @@
           @if ($submissionData->grade->status==1)
             <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">Complete</span></p>
           @elseif($submissionData->grade->status==0)
-          <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2 mt-2">Resubmit Task </button>
+            @if (\Carbon\Carbon::now() < $student->end_date)
+            <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2 mt-2">Resubmit Task </button>
 
-          <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">Revise</span></p>
+            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">Revise</span></p>
+            @endif
           @endif
         @else
           <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-light-brown">In Review</span></p>
@@ -280,13 +283,14 @@
     </div>
   @else
   <div class="flex flex-col">
-    <p class="text-dark-blue font-medium text-sm text-center my-3">Complete 3 Months project to unlock</p>
     @if($enrolled_projects->where('is_submited',1)->count()==1 && \Carbon\Carbon::now() >= $student->end_date)
+    <p class="text-dark-blue font-medium text-sm text-center my-3">Congratulations!</p>
     <a href="/profile/{{Auth::guard('student')->user()->id}}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a>
-      
-      {{-- <a href="#" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
-      {{-- <button class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2" id="bd{{Auth::guard('student')->user()->id}}" onclick="certificate()">Save as PDF</button> --}}
+    @elseif($enrolled_projects->where('is_submited',1)->count()==0 && \Carbon\Carbon::now() >= $student->end_date)
+      <p class="text-dark-blue font-medium text-sm text-center my-3">Sorry! You did not meet the requirements to complete the internship.</p>
+      <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
     @else
+      <p class="text-dark-blue font-medium text-sm text-center my-3">Complete entire program to unlock</p>
       <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
     @endif
 
