@@ -26,10 +26,10 @@
 @endif
 @if(Auth::guard('mentor')->check())
 <div class="flex items-center mb-2 space-x-2">
-  <label for="filter" class="text-sm font-normal text-black my-auto">Show</label>
+  <label for="filter" class="text-base font-normal text-black my-auto">Filter</label>
   <select id="filter" class="bg-gray-50 border border-[#aaa] text-gray-900 text-md p-1 focus:ring-blue-500 focus:border-blue-500 rounded-md">
-    <option selected>All Student</option>
-    <option value="supervised">Supervised Student</option>
+    <option selected>All Students</option>
+    <option value="supervised">My Students</option>
   </select>
 </div>
 @endif
@@ -40,7 +40,7 @@
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16 allStudent">
   <thead class="text-dark-blue">
     <tr>
-      <th>No</th>
+      <th class="font-normal">No</th>
       <th>Project name</th>
       <th>Project domain</th>
       <th>Total enrollment</th>
@@ -72,26 +72,23 @@
         @endif
       </td>
       <td>{{$project->project_domain}}</td>
-      <td class="flex space-x-4 ">
+      <td class="text-center">
         @if (Auth::guard('mentor')->check())
-          {{-- @dd() --}}
+          @php
+              $count = 0
+          @endphp
           @foreach ($project->enrolled_project as $item)
-              {{-- {{}} --}}
               @php
-                  $sum = $item->student->mentor_id === Auth::guard('mentor')->user()->id;
+                $sum = $item->student->institution_id == Auth::guard('mentor')->user()->institution_id;
+                if ($sum == 1) {
+                  $count++;
+                }
               @endphp
-              {{$sum}}
-              
           @endforeach
-          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a>
-
+          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>
         @else
-          <div>{{count($project->enrolled_project)}}</div>
-          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a>
+          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white ">{{count($project->enrolled_project)}}</a>
         @endif
-        
-        {{-- <a href="{{route('dashboard.enrollment.show',['project'=>$project->id])}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View</a> --}}
-
       </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
       <td class="capitalize">
@@ -201,22 +198,20 @@
         @endif
       </td>
       <td>{{$project->project_domain}}</td>
-      <td>{{count($project->enrolled_project)}}</td>
-
-       {{-- @dd($project->enrolled_project) --}}
-
-        {{-- @if ($project->enrolled_project)
-          @forelse ($project->enrolled_project as $item)
-            @if ($item->student->mentor_id == Auth::guard('mentor')->user()->id)
-            {{$item->student->mentor_id++}}
-            @endif
-          @empty
-            0
-          @endforelse
-        @else
-        0
-        @endif --}}
-        
+      <td class="text-center">
+        @php
+              $count = 0
+          @endphp
+          @foreach ($project->enrolled_project as $item)
+              @php
+                $sum = $item->student->mentor_id == Auth::guard('mentor')->user()->id;
+                if ($sum == 1) {
+                  $count++;
+                }
+              @endphp
+          @endforeach
+          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>  
+      </td>
       </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
       <td class="capitalize">

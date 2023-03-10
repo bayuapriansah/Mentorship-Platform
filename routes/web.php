@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\AdminController;
@@ -124,7 +125,8 @@ Route::group(['middleware'=>'auth:student'], function(){
     // /profile/{{$student->id}}/all-notification
     Route::get('/profile/{student}/allNotification', [NotificationController::class, 'index'])->name('student.allNotification');
     Route::get('/profile/{student}/certificate', [StudentController::class, 'certificate'])->name('student.certificate');
-
+    Route::get('/profile/{student}/generate', [PdfController::class, 'downloadPDF'])->name('download-pdf');
+    // Route::get('/download-pdf', [PdfController::class, 'downloadPDF'])->name('download-pdf');
     // Certificate
 });
 // Student projects page

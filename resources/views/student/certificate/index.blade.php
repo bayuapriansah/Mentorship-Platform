@@ -10,42 +10,50 @@
 
 </head>
 <body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> --}}
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script> --}}
-
   <div class="toolbar no-print">
-    <button class="btn btn-info" onclick="window.print()">
-      Print Certificate
-    </button>
-    <button class="btn btn-info" id="downloadPDF">Download PDF</button>
-    <button class="btn btn-info" id="downloadPDF2">Download PDF</button>
+    {{-- <button class="btn btn-info" id="downloadPDF">Download PDF</button> --}}
+    {{-- <a class="btn btn-info" href="/profile/{{$student->id}}/generate">Download PDF</a> --}}
+    <br>
+    <a href="javascript:void(0)" class="px-4 py-3 bg-dark-blue hover:bg-darker-blue text-base mx-1 text-white rounded-xl mt-2 btn-download">Generate PDF</a>
   </div>
-  <div class="cert-container print-m-0">
+  <div class="cert-container" id="print-m-0">
     <div id="content2" class="cert">
-      <img src="{{asset('assets/img/14834937_5520962.svg')}}" class="cert-bg" />
-      <div class="w-2/3 mx-auto py-16">
+      {{-- <img src="{{asset('assets/img/Certificate_2x.png')}}" class="cert-bg" /> --}}
+      <img src="{{asset('assets/img/Certificate_1x.svg')}}" class="cert-bg" />
+      <div class="w-full mx-auto py-16">
         <br /><br /><br /><br />
-        <p class="mb-2 text-[22px]">
+        <p class=" text-[22px] mt-1">
           This is to certify that 
         </p>
         <div class="mb-2">
-          <h1 class="text-3xl capitalize">
+          <h1 class="text-3xl capitalize font-medium">
             {{$student->first_name}} {{$student->last_name}}
           </h1>
         </div>
-        <p class="mb-2">
-          This is to certify that <span class="capitalize">{{$student->first_name}} {{$student->last_name}}</span> participated in a 2-week-long Simulated Internship Experience with Sustainable Living Lab
-        </p>
-        <p>
-          We wish him/her great success in {{$student->sex == 'male'? 'His':'Her'}}  future endeavours.
-        </p>
+        <div class="flex flex-col -space-y-2">
+          <p>
+            participated in a 2-week-long Simulated AI Internship with Sustainable Living Lab from
+          </p>
+          <p>
+            {{$student->created_at->format('d-m-Y')}} to {{Carbon\Carbon::parse($student->end_date)->format('d-m-y')}}
+          </p>
+        </div>
+        <div class="flex flex-col -space-y-2">
+          <p>
+            During the internship, they successfully completed a simulated industry project on
+          </p>
+          <p>Computer Vision.</p>
+        </div>
       </div>
     </div>
   </div>
-  
-  <script src="{{asset('assets/js/certif.js')}}"></script>
+  <div class="flex">
+  </div>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js"></script>
+
+  <script type="text/javascript" src="{{asset('assets/js/certificate.js')}}"></script>
 </body>
 </html>
+
+
