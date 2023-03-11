@@ -418,6 +418,11 @@
           $('[data-toggle="flag"]').tooltip().css({});
       });
     </script>
+    <script>
+      function certificate(){
+        console.log('tes');
+      }
+    </script>
     
     @yield('more-js')
   </body>

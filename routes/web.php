@@ -22,6 +22,7 @@ use App\Http\Controllers\TheWorldController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\EnrolledProjectController;
@@ -122,7 +123,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     // Bell Notification
     // /profile/{{$student->id}}/all-notification
     Route::get('/profile/{student}/allNotification', [NotificationController::class, 'index'])->name('student.allNotification');
-
+    Route::get('/profile/{student}/certificate', [StudentController::class, 'certificate'])->name('student.certificate');
 });
 // Student projects page
 // Route::group(['middleware'=>'auth:student'], function(){
@@ -227,11 +228,10 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
         Route::resource('partners', CompanyController::class);
 
-
-
-        // Projects
-
-        // /dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade
+        // Certificate
+        Route::get('/certificate', [CertificateController::class, 'index'])->name('certificate.index');
+        Route::get('/certificate/add/{student}', [CertificateController::class, 'edit'])->name('certificate.edit');
+        Route::patch('/certificate/add/{student}', [CertificateController::class, 'update'])->name('certificate.update');
     });
 
     Route::middleware(['auth:web,customer,mentor'])->group(function(){

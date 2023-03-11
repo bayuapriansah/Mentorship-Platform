@@ -874,4 +874,12 @@ class StudentController extends Controller
             abort(404);
         }
     }
+    
+    public function certificate($student_id)
+    {
+      if($student_id != Auth::guard('student')->user()->id ){
+        abort(403);
+      }
+      
+    }
 }
