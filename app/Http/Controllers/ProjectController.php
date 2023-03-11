@@ -296,7 +296,6 @@ class ProjectController extends Controller
         //                                     ->where('is_submited', 1)->first();
         // dd($already_enrolled);
         if(Auth::guard('student')->check()){
-            // dd($remaining_intern_days-$project_totaldays);
             if($remaining_intern_days-$project_totaldays >0)
                 if($already_enrolled == null ){
                     $enrolled_project->student_id = Auth::guard('student')->user()->id;
