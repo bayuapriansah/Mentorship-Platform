@@ -60,6 +60,10 @@
         @endif
         <td>{{$student->student->updated_at->format('d/m/Y')}}</td>
         <td class="text-center">
+          {{-- @php
+            // $collection = collect(['name' => 'Desk', 'price' => 200]);
+            $collection = collect([['name' => 'Desk', 'price' => 200], ['name' => 'Desk', 'price' => 200]]);
+          @endphp --}}
           <button class="view-details space-y-7"
                   data-student-id="{{ $student->student->id }}"
                   data-student-dob="{{ $student->student->date_of_birth }}"
@@ -71,7 +75,6 @@
                   data-student-join="{{ $student->student->created_at->format('d/m/ Y') }}"
                   data-student-is_confirm="{{ $student->student->is_confirm }}"
                   data-student-start="{{ $student->student->created_at->format('d M Y') }}"
-  
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @else
@@ -101,6 +104,11 @@
           @endif
         </td>
         <td class="text-center">
+          @php
+              // $collection = collect(['name' => 'Desk', 'price' => 200]);
+              $collection = collect([['name' => 'Desk', 'price' => 200], ['name' => 'Desk', 'price' => 200]]);
+              $dataDate = App\Http\Controllers\SimintEncryption::daytimeline($student->created_at,$student->end_date);
+          @endphp
           <button class="view-details space-y-7"
                   data-student-id="{{ $student->id }}"
                   data-student-dob="{{ $student->date_of_birth }}"
@@ -115,7 +123,9 @@
                   data-student-btn="{{$student->is_confirm == 1 ? 'Deactive': 'Activate'}}"
                   data-student-btn="{{$student->is_confirm == 1 ? 'Deactive': 'Activate'}}"
                   data-student-instution-id = {{ $student->institution->id }}
-                  
+                  data-student-end_date = {{ \Carbon\Carbon::parse($student->end_date) }}
+                  data-timeline="{{$collection->toJson()}}"
+                  data-date="{{$dataDate >=100 ? 100: $dataDate}}"
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
@@ -153,6 +163,9 @@
         let studentStart = $(this).data('student-start');
         let studentBtn = $(this).data('student-btn');
         let studentInstitutionId = $(this).data('student-instution-id')
+        let studentEndDate = $(this).data('student-end_date')
+        let timeline = $(this).data('timeline');
+        let dataDate = $(this).data('date');
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -165,8 +178,7 @@
         } else {
           $(this).html('<i class="fa-solid fa-chevron-up"></i>');
           row.child.show();
-
-          row.child(`
+          let rowData = `
           <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
             <div class = "flex justify-between">
               <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
@@ -178,6 +190,13 @@
               <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
               <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
             </div>
+            <div class="flex justify-between">
+            
+              <div class="bg-gray-200 rounded-full h-1.5 mb-4 mt-4 ">
+                <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
+              </div>`
+            rowData += `</div>`
+            rowData +=`
             <div class="flex justify-between">
               <div class="flex space-x-4">
                 <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
@@ -197,7 +216,9 @@
               </div>
             </div>
           </div>
-            `).show();
+          `;
+
+          row.child(rowData).show();
         }
       });
     });
