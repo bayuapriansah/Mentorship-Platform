@@ -23,30 +23,35 @@
     </div>
   </div> --}}
   <div class="max-w-[1366px] mx-auto px-16 pt-5 grid grid-cols-12 gap-8 grid-flow-col items-center">
-    <div class="col-span-8 min-h-[500px]">
-      @forelse($projects as $project)
-        <div class="border-[1px] hover:border-darker-blue bg-white border-light-blue py-5 px-5 rounded-xl mb-3">
-          <div class="flex space-x-2">
-            <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
-              <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
+    <div class="col-span-8 min-h-screen">
+      @if (\Carbon\Carbon::now() > $student->end_date)
+        <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
+        <p class="intelOne text-lg text-center">Internship ended</p>
+      @else
+        @forelse($projects as $project)
+          <div class="border-[1px] hover:border-darker-blue bg-white border-light-blue py-5 px-5 rounded-xl mb-3">
+            <div class="flex space-x-2">
+              <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
+                <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
+              </div>
+              <div class="flex-col">
+                <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>
+                <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
+                <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
+              </div>
             </div>
-            <div class="flex-col">
-              <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>
-              <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-              <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
+            <div class="intelOne text-grey font-normal text-sm py-2 m-0">{{substr($project->overview,0,250) }}...</div>
+            <div class="flex justify-between mt-2">
+              <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$project->period}} Months</span></p>
+              <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjectsAvailable/{{$project->id}}/detail"
+                class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Project</a>
             </div>
           </div>
-          <div class="intelOne text-grey font-normal text-sm py-2 m-0">{{substr($project->overview,0,250) }}...</div>
-          <div class="flex justify-between mt-2">
-            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$project->period}} Months</span></p>
-            <a href="/profile/{{Auth::guard('student')->user()->id}}/allProjectsAvailable/{{$project->id}}/detail"
-               class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Project</a>
-          </div>
-        </div>
         @empty
           <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
           <p class="intelOne text-lg text-center">No Internship Found</p>
         @endforelse
+      @endif
     </div>
   </div>
 </div>

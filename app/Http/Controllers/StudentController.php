@@ -824,9 +824,9 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::where('id', $student_id)->first();
-        if(\Carbon\Carbon::now() > $student->end_date){
-          abort(403);
-        }
+        // if(\Carbon\Carbon::now() > $student->end_date){
+        //   abort(403);
+        // }
         $projects = Project::whereNotIn('id', function($query){
                                 $query->select('project_id')->from('enrolled_projects');
                                 $query->where('student_id',Auth::guard('student')->user()->id);
