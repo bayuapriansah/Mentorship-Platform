@@ -89,7 +89,15 @@
               <div class="flex-col">
                 <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{substr($project->name,0,17)}}...</p>
                 <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36">{{$project->project_domain}}</p>
+                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36">
+                  @if ($project->project_domain == 'statistical')
+                    Statistical Data
+                  @elseif($project->project_domain == 'computer_vision')
+                    Computer Vision
+                  @else
+                    {{$project->project_domain}}
+                  @endif   
+                </p>
               </div>
             </div>
             <div class="text-grey font-normal text-base mb-2 pt-3">

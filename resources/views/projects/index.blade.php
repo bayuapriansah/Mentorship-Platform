@@ -42,7 +42,15 @@
                 <div class="flex-col">
                   <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>
                   <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-                  <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
+                  <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">
+                    @if ($project->project_domain == 'statistical')
+                      Statistical Data
+                    @elseif($project->project_domain == 'computer_vision')
+                      Computer Vision
+                    @else
+                      {{$project->project_domain}}
+                    @endif  
+                  </p>
                 </div>
               </div>
               <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{{ substr($project->overview,0,200) }}...</p>
@@ -72,7 +80,15 @@
               <div class="flex-col">
                 <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>
                 <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-                <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
+                <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">
+                  @if ($project->project_domain == 'statistical')
+                    Statistical Data
+                  @elseif($project->project_domain == 'computer_vision')
+                    Computer Vision
+                  @else
+                    {{$project->project_domain}}
+                  @endif   
+                </p>
               </div>
             </div>
             <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{{ substr($project->overview,0,200) }}...</p>
