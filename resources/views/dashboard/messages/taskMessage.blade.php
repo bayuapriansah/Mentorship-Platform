@@ -32,7 +32,7 @@
             {{$customer->first_name}} {{$customer->last_name}};
         @endforeach
       </td>
-      <td>{{$comments->where('student_id', $participant->id)->count()}}</td>
+      <td>{{$comments->where('student_id', $participant->id)->where('read_message', 0)->where('user_id', null)->where('mentor_id', null)->where('customer_id', null)->count()}}</td>
       <td>
         <a href="/dashboard/messages/{{$injection->id}}/single/{{$participant->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">View Message 
           <i class="fa-xs fa-solid fa-chevron-right"></i>
