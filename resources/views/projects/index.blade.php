@@ -31,7 +31,9 @@
     <div class="col-span-8 space-y-4 ">
       @if (Auth::guard('student')->check())
         @if (\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date)
-            <div class="text-center">Internship Ended</div>
+          <div id="toast-danger" class="flex flex-grow items-center w-full p-4 mb-4 text-white rounded-lg bg-[#CE2E2E]" role="alert">
+            <div class="ml-3 text-sm font-normal">Internship Timeline is over. Please contact system admin.</div> 
+          </div>
         @else
           @forelse($projects as $project)
             <div class="border-[1px] hover:border-darker-blue border-light-blue py-5 px-5 rounded-xl">

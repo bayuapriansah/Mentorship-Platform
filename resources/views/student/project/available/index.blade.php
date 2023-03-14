@@ -25,8 +25,9 @@
   <div class="max-w-[1366px] mx-auto px-16 pt-5 grid grid-cols-12 gap-8 grid-flow-col items-center">
     <div class="col-span-8 min-h-screen">
       @if (\Carbon\Carbon::now() > $student->end_date)
-        <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
-        <p class="intelOne text-lg text-center">Internship ended</p>
+        <div id="toast-danger" class="flex flex-grow items-center w-full p-4 mb-4 text-white rounded-lg bg-[#CE2E2E]" role="alert">
+          <div class="ml-3 text-sm font-normal">Internship Timeline is over. Please contact system admin.</div> 
+        </div>
       @else
         @forelse($projects as $project)
           <div class="border-[1px] hover:border-darker-blue bg-white border-light-blue py-5 px-5 rounded-xl mb-3">
