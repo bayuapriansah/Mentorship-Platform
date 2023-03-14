@@ -53,7 +53,7 @@
         @endif    
     </li>
   @endif
-  @if(Auth::guard('web')->check())
+  {{-- @if(Auth::guard('web')->check())
     <li class="hover:font-medium">
       @if(Route::is('dashboard.certificate.index'))
         <a href="/dashboard/certificate" class="font-medium">Certificate</a>
@@ -61,7 +61,7 @@
         <a href="/dashboard/certificate">Certificate</a>
       @endif    
     </li>
-  @endif
+  @endif --}}
 
 
   {{-- @if(Auth::guard('mentor')->check())
