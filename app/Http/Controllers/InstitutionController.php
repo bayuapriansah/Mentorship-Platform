@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Student;
 use App\Models\Institution;
 use Illuminate\Http\Request;
+use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Storage;
 use App\Models\institution_world_data_view;;
 
@@ -163,7 +164,8 @@ class InstitutionController extends Controller
     {
         // dd('tes');
         $students = Student::where('institution_id', $institution->id)->get();
-        return view('dashboard.institutions.students.index', compact('students', 'institution'));
+        $enrolled_projects = EnrolledProject::get();
+        return view('dashboard.institutions.students.index', compact('students', 'institution', 'enrolled_projects'));
     }
 
 

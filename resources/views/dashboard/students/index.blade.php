@@ -39,7 +39,8 @@
       @else
       <th>Institute Name</th>
       <th>Supervisor Name</th>
-      <th>Status</th>
+      <th>Account Status</th>
+      <th>Internship Status</th>
       @endif
       <th>View</th>
     </tr>
@@ -103,6 +104,19 @@
             <span class="text-[#D89B33]">Pending</span>
           @endif
         </td>
+        <td>
+          @if($student->end_date)
+            @if($enrolled_projects->where('is_submited',1)->where('student_id', $student->id)->count()==1 && \Carbon\Carbon::now() > $student->end_date)
+              <span class="text-green-600">Finished</span>
+            @elseif($enrolled_projects->where('is_submited',1)->where('student_id', $student->id)->count()==0 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
+              <span class="text-red-600">Incomplete</span>
+            @else
+              <span class="text-[#D89B33]">Ongoing</span>
+            @endif
+          @else
+          Student not completed the registration yet
+          @endif
+        </td>
         <td class="text-center">
           @php
               // $collection = collect(['name' => 'Desk', 'price' => 200]);
@@ -137,11 +151,11 @@
                               <img src='{{asset('assets/img/icon/flag.png')}}' class='absolute top-0' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?'99':$enrolled_project->flag_checkpoint}}%'>
                               @php $tipNumber++ @endphp
                               @endforeach"
-                  data-info = "@php $no = 1 @endphp
+                  data-info = "@php $num = 1 @endphp
                               @foreach ($enrolled_projects->where('is_submited',1)->where('student_id',  $student->id) as $enrolled_project)
                               <p class='absolute font-medium text-left flex-wrap overflow-hidden whitespace-nowrap text-[8px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?100-6:$enrolled_project->flag_checkpoint-2}}%'>{{Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
-                              <p class='absolute mt-3 font-medium text-left text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?99-4:$enrolled_project->flag_checkpoint-2}}%'>Project {{$no}}</p>
-                              @php $no++ @endphp
+                              <p class='absolute mt-3 font-medium text-left text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?99-4:$enrolled_project->flag_checkpoint-2}}%'>Project {{$num}}</p>
+                              @php $num++ @endphp
                               @endforeach
                               "                         
           ><i class="fa-solid fa-chevron-down"></i></button>
