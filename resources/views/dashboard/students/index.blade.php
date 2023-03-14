@@ -54,7 +54,7 @@
         <td>{{$student->student->first_name}} {{$student->student->last_name}}</td>
         <td>{{$student->student->email}}</td>
         @if($student->student->mentor)
-          <td>{{$student->student->mentor->first_name}} {{$student->student->mentor->last_name}}</td>
+          <td>{{$student->student->mentor->first_name}} {{$student->student->mentor->last_name}} </td>
         @else
           <td>Supervisor not registered yet</td>
         @endif
@@ -119,13 +119,28 @@
                   data-student-year_of_study="{{ $student->year_of_study }}"
                   data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
                   data-student-is_confirm="{{ $student->is_confirm }}"
-                  data-student-start="{{ $student->created_at->format('d M Y') }}"
+                  data-student-start="{{ $student->created_at->format('d-M-Y') }}"
                   data-student-btn="{{$student->is_confirm == 1 ? 'Deactive': 'Activate'}}"
                   data-student-btn="{{$student->is_confirm == 1 ? 'Deactive': 'Activate'}}"
                   data-student-instution-id = {{ $student->institution->id }}
-                  data-student-end_date = {{ \Carbon\Carbon::parse($student->end_date) }}
+                  data-student-end_date = {{date_format(new DateTime($student->end_date), "d-M-Y")}}
                   data-timeline="{{$collection->toJson()}}"
                   data-date="{{$dataDate >=100 ? 100: $dataDate}}"
+                  data-flag = "@php $tipNumber = 1 @endphp
+                              @foreach ($enrolled_projects->where('is_submited',1)->where('student_id',  $student->id) as $enrolled_project)
+                                <p class='font-medium text-left flex-wrap text-[10px] overflow-hidden whitespace-nowrap' style='margin-left: {{$enrolled_project->flag_checkpoint>=100?'88':$enrolled_project->flag_checkpoint}}%'>
+                                  {{$enrolled_project->project->name}}
+                                </p>
+                                <img src='{{asset('assets/img/icon/flag.png')}}' class='top-0' style='margin-left: {{$enrolled_project->flag_checkpoint>=100?'99':$enrolled_project->flag_checkpoint}}%'>
+                              @php $tipNumber++ @endphp
+                              @endforeach"
+                  data-info = "@php $no = 1 @endphp
+                              @foreach ($enrolled_projects->where('is_submited',1)->where('student_id',  $student->id) as $enrolled_project)
+                              <p class='bottom-0 mt-1 font-medium text-center text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=100?99-4:$enrolled_project->flag-4}}%'>Project {{$no}}</p>
+                              <p class='-mt-3 font-normal text-[8px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=100?100-6:$enrolled_project->flag-6}}%'>{{Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
+                              @php $no++ @endphp
+                              @endforeach
+                              "                         
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
@@ -163,9 +178,12 @@
         let studentStart = $(this).data('student-start');
         let studentBtn = $(this).data('student-btn');
         let studentInstitutionId = $(this).data('student-instution-id')
-        let studentEndDate = $(this).data('student-end_date')
+        let studentEnd = $(this).data('student-end_date')
         let timeline = $(this).data('timeline');
         let dataDate = $(this).data('date');
+        let dataFlag = $(this).data('flag');
+        let dataInfo = $(this).data('info');
+        console.log(studentEnd);
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -190,13 +208,21 @@
               <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
               <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
             </div>
-            <div class="flex justify-between">
-            
-              <div class="bg-gray-200 rounded-full h-1.5 mb-4 mt-4 ">
-                <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
-              </div>`
-            rowData += `</div>`
-            rowData +=`
+            <div class="border border-light-blue rounded-xl px-3 py-8 text-center bg-white">
+              <div class="flex justify-between">
+                <p class="text-black text-xs">${studentStart}</p>
+                <div class="w-full">
+                  ${dataFlag}
+                  <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
+                    <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
+                  </div>  
+                  <div class="text-center">  
+                  ${dataInfo}
+                  </div>
+                </div>
+                <p class="text-black text-xs">${studentEnd}</p>
+              </div>
+            </div>
             <div class="flex justify-between">
               <div class="flex space-x-4">
                 <a href="/dashboard/students/${studentId}/manage" class="bg-dark-blue px-6 py-2 text-white rounded-lg"> Edit Details</a>
