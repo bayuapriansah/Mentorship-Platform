@@ -352,3 +352,6 @@ Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');
     Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin');
 });
+Route::fallback(function() {
+  abort(404);
+});
