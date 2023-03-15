@@ -236,7 +236,7 @@
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
       @if($submissionData == null)
-        @if (\Carbon\Carbon::now() < $student->end_date)
+        @if (\Carbon\Carbon::now()->format('Y-m-d') <= $student->end_date)
           <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
         @endif
       @else
@@ -271,7 +271,7 @@
           @if ($submissionData->grade->status==1)
             <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">Complete</span></p>
           @elseif($submissionData->grade->status==0)
-            @if (\Carbon\Carbon::now() < $student->end_date)
+            @if (\Carbon\Carbon::now()->format('Y-m-d') <= $student->end_date)
             <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2 mt-2">Resubmit Task </button>
 
             <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">Revise</span></p>
@@ -289,7 +289,7 @@
     @if($enrolled_projects->where('is_submited',1)->count()==1 && \Carbon\Carbon::now() >= $student->end_date)
     <p class="text-dark-blue font-medium text-sm text-center my-3">Congratulations!</p>
     <a href="/profile/{{Auth::guard('student')->user()->id}}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a>
-    @elseif($enrolled_projects->where('is_submited',1)->count()==0 && \Carbon\Carbon::now() >= $student->end_date)
+    @elseif($enrolled_projects->where('is_submited',1)->count()==0 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
       <p class="text-dark-blue font-medium text-sm text-center my-3">Sorry! You did not meet the requirements to complete the internship.</p>
       <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
     @else

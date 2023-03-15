@@ -45,7 +45,11 @@ class StudentController extends Controller
             $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get();
             $enrolled_projects = EnrolledProject::get();
         }elseif(Auth::guard('customer')->check()){
-            $students = EnrolledProject::whereHas('student')->get();
+            $students = Student::whereHas('enrolled_projects', function($q){
+              $q->whereHas('project', function($q){
+                $q->where('company_id', Auth::guard('customer')->user()->company_id);
+              });
+            })->get();
             $enrolled_projects = EnrolledProject::get();
         }
 
@@ -834,9 +838,9 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::where('id', $student_id)->first();
-        if(\Carbon\Carbon::now() > $student->end_date){
-          abort(403);
-        }
+        // if(\Carbon\Carbon::now() > $student->end_date){
+        //   abort(403);
+        // }
         $projects = Project::whereNotIn('id', function($query){
                                 $query->select('project_id')->from('enrolled_projects');
                                 $query->where('student_id',Auth::guard('student')->user()->id);

@@ -24,11 +24,11 @@ class ProjectController extends Controller
 {
     public function index()
     {
-      if(Auth::guard('student')->check()){
-        if(\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date){
-          abort(403);
-        }
-      }
+      // if(Auth::guard('student')->check()){
+      //   if(\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date){
+      //     abort(403);
+      //   }
+      // }
         if(Auth::guard('student')->check()){
             $projects = Project::whereNotIn('id', function($query){
                             $query->select('project_id')->from('enrolled_projects');
@@ -303,23 +303,33 @@ class ProjectController extends Controller
         $enrolled_project = new EnrolledProject;
         $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('is_submited', 0)->latest()->first();
+        // $total_month_complete = EnrolledProject::select('')->where('student_id',Auth::guard('student')->user()->id)
+        //                                         ->where('is_submit',1)->;
+        $total_month_complete = Project::select('period')->whereHas('enrolled_project', function($q){
+                                            $q->where('student_id',Auth::guard('student')->user()->id);
+                                            $q->where('is_submited',1);
+                                          })->count();
         // $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
         //                                     ->where('is_submited', 1)->first();
-        // dd($already_enrolled);
         if(Auth::guard('student')->check()){
-            if($remaining_intern_days-$project_totaldays >=30)
-                if($already_enrolled == null ){
-                    $enrolled_project->student_id = Auth::guard('student')->user()->id;
-                    $enrolled_project->project_id = $project->id;
-                    $enrolled_project->is_submited = 0;
-                    $enrolled_project->save();
-                    return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
-                }else{
-                    return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$project->id.'/detail')->with('error', 'Kindly complete your ongoing project');
-                }
+          if($total_month_complete<3){
+            if($remaining_intern_days-$project_totaldays >=30){
+              if($already_enrolled == null ){
+                $enrolled_project->student_id = Auth::guard('student')->user()->id;
+                $enrolled_project->project_id = $project->id;
+                $enrolled_project->is_submited = 0;
+                $enrolled_project->save();
+                return redirect('/profile/'.Auth::guard('student')->user()->id .'/allProjects')->with('success', 'Selected project has been applied');
+              }else{
+                  return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$project->id.'/detail')->with('error', 'Kindly complete your ongoing project');
+              }
+            }
             else{
                 return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$project->id.'/detail')->with('error', 'Your available intern time is not sufficient');
             }
+          }else{
+            return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$project->id.'/detail')->with('error', 'Your completed projects already 3 months long, please prepare for final submission');
+          }
         }else{
             return redirect('auth.otplogin');
         }

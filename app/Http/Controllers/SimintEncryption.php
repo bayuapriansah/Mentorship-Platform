@@ -65,6 +65,24 @@ class SimintEncryption extends Controller
       return $percentage;
     }
 
+    public static function daytimeline($date,$end)
+    { 
+      $todayDate = Carbon::now();
+      $initialDate = Carbon::parse($date)->format('Y-m-d');
+      $endDate = Carbon::parse($end)->format('Y-m-d');
+      $finalDate = $todayDate->diffInDays($initialDate);
+      $totalDate = floor(abs(strtotime($endDate) - strtotime($initialDate))/86400);
+
+      if ($totalDate < 0) {
+          $totalDate = abs($totalDate);
+      } else {
+          $totalDate = $totalDate;
+      }
+      $percentage = ($finalDate/$totalDate) * 100;
+      // dd($percentage);
+      return $percentage;
+    }
+
     public static function dayPercentage($date,$end)
     { 
       $todayDate = Carbon::now();
