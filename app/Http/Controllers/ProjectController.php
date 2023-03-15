@@ -296,6 +296,7 @@ class ProjectController extends Controller
         //                                     ->where('is_submited', 1)->first();
         // dd($already_enrolled);
         if(Auth::guard('student')->check()){
+            // dd($remaining_intern_days-$project_totaldays);
             if($remaining_intern_days-$project_totaldays >0)
                 if($already_enrolled == null ){
                     $enrolled_project->student_id = Auth::guard('student')->user()->id;
@@ -336,11 +337,14 @@ class ProjectController extends Controller
             'description.required' => 'Description is required',
         ]);
         
-        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->first();
-        if ($completed_enrolled->is_submited == 1) {
-            $completed_enrolled->is_submited = 0;
-            $completed_enrolled->flag_checkpoint = null;
-            $completed_enrolled->save();
+        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->get();
+        foreach ($completed_enrolled as $item) {
+            DB::table('enrolled_projects')
+            ->where('project_id', $project->id)
+            ->update([
+                'is_submited' => 0,
+                'flag_checkpoint' => null
+            ]);
         }
 
         $section  = new ProjectSection;
@@ -771,11 +775,14 @@ class ProjectController extends Controller
             'description.required' => 'Description is required',
         ]);
 
-        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->first();
-        if ($completed_enrolled->is_submited == 1) {
-            $completed_enrolled->is_submited = 0;
-            $completed_enrolled->flag_checkpoint = null;
-            $completed_enrolled->save();
+        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->get();
+        foreach ($completed_enrolled as $item) {
+            DB::table('enrolled_projects')
+            ->where('project_id', $project->id)
+            ->update([
+                'is_submited' => 0,
+                'flag_checkpoint' => null
+            ]);
         }
         
         $section  = new ProjectSection;
