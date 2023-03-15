@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -269,8 +268,6 @@
         </div>
     </div>
   </div>
-  {{-- @dd($newActivityNotifs); --}}
-
     {{-- Notification Modal --}}
     <div id="notification-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-sm md:h-auto">
@@ -286,60 +283,68 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
+                @php
+                $mergedNotifs = $newActivityNotifs->merge($notifNewTasks)->sortByDesc('created_at')->all();
+                // $sortedNotifs = collect($mergedNotifs)->sortByDesc('created_at')->all();
+                @endphp
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
                   <div class="max-h-60 overflow-y-auto">
                       {{-- code comment here --}}
+                      {{-- {{ $notifActivityCount}} --}}
                     @if($notifActivityCount > 0)
-                        @foreach ($newActivityNotifs as $newActivityNotif)
-                          {{-- Start Her --}}
-                          @if ($newActivityNotif->grade == !NULL)
-                              @if ($newActivityNotif->grade->readornot != 1)
-                              {{-- {{ $newActivityNotif->grade->readornot != 1 }} --}}
-                              <a href="
-                              {{ route('student.readActivity',
-                              [$newActivityNotif->grade->submission->student_id,
-                              $newActivityNotif->grade->submission->project_id,
-                              $newActivityNotif->grade->submission->section_id,
-                              $newActivityNotif->grade->submission->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                                  <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-4 hover:bg-blue-100" role="alert">
-                                      <div class="flex">
-                                          <div class="ml-3 text-sm font-normal">
-                                              <span class="mb-1 text-sm font-semibold text-dark-blue">New Acitivity <p> Result Task : {{ $newActivityNotif->grade->submission->projectSection->title }}</span>
-                                              <p>
-                                                Hi {{$student->first_name}} {{$student->last_name}},
-                                                  @if($newActivityNotif->grade->status == 0)
-                                                      {{ 'Sorry but you need to revise the Task' }}
-                                                  @elseif($newActivityNotif->grade->status == 1)
-                                                      {{ 'Great you Pass the Task' }}
-                                                  @else
-                                                      {{ 'Nothing' }}
-                                                  @endif.
-                                              <div class="mb-2 text-sm font-normal text-blue-300">{{ $newActivityNotif->grade->created_at }}</div>
+                        @foreach($mergedNotifs as $notification)
+                              @if($notification->type == 'grade')
+                                @if($notification->grade == !NULL)
+                                  @if($notification->grade->readornot != 1)
+                                    <a href="
+                                    {{ route('student.readActivity',
+                                    [$notification->grade->submission->student_id,
+                                    $notification->grade->submission->project_id,
+                                    $notification->grade->submission->section_id,
+                                    $notification->grade->submission->id]) }}
+                                    " class="mb-2 text-sm font-normal text-dark-blue">
+                                      <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                        <div class="flex">
+                                            <div class="ml-3 text-sm font-normal">
+                                              <span class="mb-1 text-sm font-semibold text-dark-blue">New Acitivity <p> Result Task : {{ $notification->grade->submission->projectSection->title }}</span>
+                                                <p>
+                                                  Hi {{$student->first_name}} {{$student->last_name}},
+                                                    @if($notification->grade->status == 0)
+                                                        {{ 'Sorry but you need to revise the Task' }}
+                                                    @elseif($notification->grade->status == 1)
+                                                        {{ 'Great you Pass the Task' }}
+                                                    @else
+                                                        {{ 'Nothing' }}
+                                                    @endif.
+                                              <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->grade->created_at }}</div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  @endif
+                                @endif
+                              @elseif($notification->type == 'notification')
+                                @if($notification->project)
+                                  @if($notification->status != 'deldraft')
+                                    @if($notification->project->institution_id == $student->institution_id || $notification->project->institution_id == NULL)
+                                      @if(optional($notification->read_notification)->firstWhere(['student_id' => $student->id, 'notifications_id' => $notification->id]) == NULL)
+                                        <a href="{{ route('student.readActivityTask',[$student->id,$notification->project_id,$notification->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
+                                          <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                            <div class="flex">
+                                                <div class="ml-3 text-sm font-normal">
+                                                  <span class="mb-1 text-sm font-semibold text-dark-blue">New Project available in {{ $notification->project->name }} .</span>
+                                                  <p>
+                                                  <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->created_at }}</div>
+                                                </div>
+                                            </div>
                                           </div>
-                                      </div>
-                                  </div>
-                                </a>
+                                        </a>
+                                      @endif
+                                    @endif
+                                  @endif
+                                @endif
                               @endif
-                          @endif
-                        {{-- END HERE --}}
-                        @endforeach
-                        {{-- For each for notification activity 2 --}}
-                        
-                        @foreach($notifNewTasks as $notifNewTask)
-                          @if ($notifNewTask->project)
-                              <a href="{{ route('student.readActivityTask',[$student->id,$notifNewTask->project_id,$notifNewTask->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                                <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
-                                  <div class="flex">
-                                      <div class="ml-3 text-sm font-normal">
-                                        <span class="mb-1 text-sm font-semibold text-dark-blue">New Project available in {{ $notifNewTask->project->name }}</span>
-                                        <p>
-                                        <div class="mb-2 text-sm font-normal text-blue-300">{{ $notifNewTask->created_at }}</div>
-                                      </div>
-                                  </div>
-                                </div>
-                              </a>
-                          @endif
                         @endforeach
                     @else
                       {{ 'No Notification' }}

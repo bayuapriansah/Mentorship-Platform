@@ -178,9 +178,10 @@ td .es-button-border-1:hover {
 <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border-1 es-button-border" style="border-style:solid;border-color:#000f8a;background:#000f8a;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a href="{{ $data['body2'] }}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;border-style:solid;border-color:#000f8a;border-width:20px 80px 20px 80px;display:inline-block;background:#000f8a;border-radius:50px;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Accept Invitation</a></span><!--<![endif]--></td>
                      </tr>
                      <tr>
-                      <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">If you didn’t request this email, there is nothing to worry about - you can safely ignore it</p></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">If you didn’t expect this email, there is nothing to worry about - you can safely ignore it</p></td>
                      </tr>
-                   </table></td>
+                   </table>
+                  </td>
                  </tr>
                </table></td>
              </tr>

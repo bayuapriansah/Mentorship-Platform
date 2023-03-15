@@ -36,7 +36,7 @@ class NotificationController extends Controller
     }
 
     public function count_total_all_notification_available(){
-        $notifs = Notification::get();
+        $notifs = Notification::where('status','publish')->get();
         $dataNotif = 0; // initialize variable outside loop
         foreach($notifs as $notif){
             // if($notif->project && $notif->status == 'publish'){ // check if project status is publish

@@ -10,40 +10,57 @@
       </tr>
     </thead>
     <tbody>
-      {{-- @php
-        $mergedNotifs = array_merge($newActivityNotifs->toArray(), $notifNewTasks->toArray());
-        $sortedNotifs = collect($mergedNotifs)->sortByDesc('created_at')->all();
+      @php
+        $mergedNotifs = $newActivityNotifs->merge($notifNewTasks)->sortByDesc('created_at')->all();
       @endphp
-      @dd($sortedNotifs) --}}
-      {{-- @foreach ($sortedNotifs as $sorted) --}}
-        {{-- @dd(isset($sorted->section_id)) --}}
-      {{-- @endforeach --}}
-      @foreach ($notifNewTasks->sortByDesc('created_at') as $notifNewTask)
-          {{-- @if ($newActivityNotif->grade->readornot != 1) --}}
-          {{-- {{ dd(isset($notifNewTasks->user_id)) }} --}}
+      @foreach ($mergedNotifs as $notifNewTask)
+        @if($notifNewTask->type == 'grade')
+          @if($notifNewTask->grade == !NULL)
           <tr>
             <td>
-              <span class="{{$notifNewTask->status != 'deldraft' ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
-                Task : 
-                {{ substr($notifNewTask->project->name,0,99) }} 
+              <span class="{{$notifNewTask->grade->readornot != 1 ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
+                New Acitivity <p> Result Task : {{ $notifNewTask->grade->submission->projectSection->title }}
                 <br>
-                {!! substr($notifNewTask->project->problem,0,80) !!}...
+                Hi {{$student->first_name}} {{$student->last_name}},
+                @if($notifNewTask->grade->status == 0)
+                    {{ 'Sorry but you need to revise the Task' }}
+                @elseif($notifNewTask->grade->status == 1)
+                    {{ 'Great you Pass the Task' }}
+                @else
+                    {{ 'Nothing' }}
+                @endif
                 <br>
               </span>
               <span class="text-[#6973C6] text-xs font-normal">{{$notifNewTask->created_at->format('dS F, Y')}}</span>
             </td>
             <td class="">
-              @if($notifNewTask->status != 'deldraft')
-              <a href="#" class="bg-dark-blue hover:bg-darker-blue rounded-lg py-1 px-4 pb-2 text-white">View Notification</a>
-              @else
-              <a href="#" data-tooltip-target="tooltip-hovers" data-tooltip-trigger="hover" class="bg-grey hover:bg-gray-800 rounded-lg py-1 px-4 pb-2 text-white">View Notification</a>
-              @endif
+              <a href="{{ route('student.readActivity',[$notifNewTask->grade->submission->student_id,$notifNewTask->grade->submission->project_id,$notifNewTask->grade->submission->section_id,$notifNewTask->grade->submission->id]) }}" class="bg-{{ $notifNewTask->grade->readornot != 1 ? 'dark-blue hover:bg-darker-blue' : 'grey hover:bg-gray-800' }} rounded-lg py-1 px-4 pb-2 text-white">View Notification</a>
             </td>
           </tr>
-          <div id="tooltip-hovers" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            Task Has been deleted or not available right now for you to access it
-            <div class="tooltip-arrow" data-popper-arrow></div>
-          </div> 
+          @endif
+        @elseif($notifNewTask->type == 'notification')
+          @if($notifNewTask->project)
+            @if($notifNewTask->status != 'deldraft')
+              @if($notifNewTask->project->institution_id == $student->institution_id || $notifNewTask->project->institution_id == NULL)
+                <tr>
+                  <td>
+                    <span class="{{optional($notifNewTask->read_notification)->firstWhere(['student_id' => $student->id, 'notifications_id' => $notifNewTask->id]) != TRUE ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
+                      Task : 
+                      {{ substr($notifNewTask->project->name,0,99) }} 
+                      <br>
+                      {!! substr($notifNewTask->project->problem,0,80) !!}...
+                      <br>
+                    </span>
+                    <span class="text-[#6973C6] text-xs font-normal">{{$notifNewTask->created_at->format('dS F, Y')}}</span>
+                  </td>
+                  <td class="">
+                    <a href="{{ route('student.readActivityTask',[$student->id,$notifNewTask->project_id,$notifNewTask->id]) }}" class="bg-{{ optional($notifNewTask->read_notification)->firstWhere(['student_id' => $student->id, 'notifications_id' => $notifNewTask->id]) != TRUE ? 'dark-blue hover:bg-darker-blue' : 'grey hover:bg-gray-800' }} rounded-lg py-1 px-4 pb-2 text-white">View Notification</a>
+                  </td>
+                </tr>
+              @endif
+            @endif
+          @endif
+        @endif
       @endforeach
     </tbody>
   </table>

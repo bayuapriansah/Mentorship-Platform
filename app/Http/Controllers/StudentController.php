@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use App\Models\ReadNotification;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -479,7 +480,9 @@ class StudentController extends Controller
         ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)->where('readornot', 0)
         ->get();
         $notif = (new NotificationController)->count_total_all_notification_available();
-        $notifActivityCount = $notifActivityCounts->count() + $notif;
+        $readTheNotifications = ReadNotification::where('student_id', $id)->whereNot('id',0)->get()->count();
+        // dd($notifActivityCounts." AND ".$notif." AND ".$readTheNotifications);
+        $notifActivityCount = ($notifActivityCounts->count() + $notif) - $readTheNotifications;
         return $notifActivityCount;
     }
 
@@ -623,11 +626,18 @@ class StudentController extends Controller
     }
 
     public function readActivityTask($student_id, $project_id, $notification_id){
-        $ReadNotification = new ReadNotification;
-        $ReadNotification->student_id = $student_id;
-        $ReadNotification->notifications_id = $notification_id;
-        $ReadNotification->is_read = 1;
-        $ReadNotification->save();
+        // dd($project_id);
+        $checkReadNotification = ReadNotification::where('notifications_id',$notification_id)->first();
+        $checkIdNotification = Notification::where('id',$notification_id)->first();
+        if($checkIdNotification){
+            if(!$checkReadNotification){
+                $ReadNotification = new ReadNotification;
+                $ReadNotification->student_id = $student_id;
+                $ReadNotification->notifications_id = $notification_id;
+                $ReadNotification->is_read = 1;
+                $ReadNotification->save();
+            }
+        }
         return $this->availableProjectDetail($student_id, $project_id);
     }
 
