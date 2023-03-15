@@ -44,7 +44,11 @@ class StudentController extends Controller
             $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get();
             $enrolled_projects = EnrolledProject::get();
         }elseif(Auth::guard('customer')->check()){
-            $students = EnrolledProject::whereHas('student')->get();
+            $students = Student::whereHas('enrolled_projects', function($q){
+              $q->whereHas('project', function($q){
+                $q->where('company_id', Auth::guard('customer')->user()->company_id);
+              });
+            })->get();
             $enrolled_projects = EnrolledProject::get();
         }
 

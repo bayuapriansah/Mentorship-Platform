@@ -52,30 +52,52 @@
       <td>{{$no}}</td>
 
       @if(Auth::guard('customer')->check())
-        <td>{{$student->student->first_name}} {{$student->student->last_name}}</td>
-        <td>{{$student->student->email}}</td>
-        @if($student->student->mentor)
-          <td>{{$student->student->mentor->first_name}} {{$student->student->mentor->last_name}} </td>
+        <td>{{$student->first_name}} {{$student->last_name}}</td>
+        <td>{{$student->email}}</td>
+        @if($student->mentor)
+          <td>{{$student->mentor->first_name}} {{$student->mentor->last_name}} </td>
         @else
           <td>Supervisor not registered yet</td>
         @endif
-        <td>{{$student->student->updated_at->format('d/m/Y')}}</td>
+        <td>{{$student->created_at->format('d/m/Y')}}</td>
         <td class="text-center">
-          {{-- @php
-            // $collection = collect(['name' => 'Desk', 'price' => 200]);
-            $collection = collect([['name' => 'Desk', 'price' => 200], ['name' => 'Desk', 'price' => 200]]);
-          @endphp --}}
+           @php
+              // $collection = collect(['name' => 'Desk', 'price' => 200]);
+              $collection = collect([['name' => 'Desk', 'price' => 200], ['name' => 'Desk', 'price' => 200]]);
+              $dataDate = App\Http\Controllers\SimintEncryption::daytimeline($student->created_at,$student->end_date);
+          @endphp
           <button class="view-details space-y-7"
-                  data-student-id="{{ $student->student->id }}"
-                  data-student-dob="{{ $student->student->date_of_birth }}"
-                  data-student-sex="{{ $student->student->sex }}"
-                  data-student-state="{{ $student->student->state }}"
-                  data-student-country="{{ $student->student->country }}"
-                  data-student-study_program="{{ $student->student->study_program }}"
-                  data-student-year_of_study="{{ $student->student->year_of_study }}"
-                  data-student-join="{{ $student->student->created_at->format('d/m/ Y') }}"
-                  data-student-is_confirm="{{ $student->student->is_confirm }}"
-                  data-student-start="{{ $student->student->created_at->format('d M Y') }}"
+                  data-student-id="{{ $student->id }}"
+                  data-student-dob="{{ $student->date_of_birth }}"
+                  data-student-sex="{{ $student->sex }}"
+                  data-student-state="{{ $student->state }}"
+                  data-student-country="{{ $student->country }}"
+                  data-student-study_program="{{ $student->study_program }}"
+                  data-student-year_of_study="{{ $student->year_of_study }}"
+                  data-student-join="{{ $student->created_at->format('d/m/ Y') }}"
+                  data-student-is_confirm="{{ $student->is_confirm }}"
+                  data-student-start="{{ $student->created_at->format('d M Y') }}"
+                  data-student-text="{{$student->is_confirm == 1 ? 'Internship Timeline': 'Student not completed the registration yet'}}"
+                  data-student-end_date = {{date_format(new DateTime($student->end_date), "d-M-Y")}}
+                  data-date="{{$dataDate >=100 ? 100: $dataDate}}"
+                  data-flag = "@php 
+                                $tipNumber = 1 ;
+                                $arr = $enrolled_projects->where('is_submited',1)->where('student_id',  $student->id);
+                              @endphp
+                              @foreach ($arr as $key=> $enrolled_project)
+                              <p class='absolute -top-5 font-medium text-left flex-wrap text-[10px] overflow-hidden whitespace-nowrap' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?'90':$enrolled_project->flag_checkpoint- 4}}%'>
+                                {{substr($enrolled_project->project->name,0,15)}}{{strlen($enrolled_project->project->name) >=15?"...":''}}
+                              </p>
+                              <img src='{{asset('assets/img/icon/flag.png')}}' class='absolute top-0' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?'99':$enrolled_project->flag_checkpoint}}%'>
+                              @php $tipNumber++ @endphp
+                              @endforeach"
+                  data-info = "@php $num = 1 @endphp
+                              @foreach ($enrolled_projects->where('is_submited',1)->where('student_id',  $student->id) as $enrolled_project)
+                              <p class='absolute font-medium text-left flex-wrap overflow-hidden whitespace-nowrap text-[8px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?100-6:$enrolled_project->flag_checkpoint-2}}%'>{{Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
+                              <p class='absolute mt-3 font-medium text-left text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?99-4:$enrolled_project->flag_checkpoint-2}}%'>Project {{$num}}</p>
+                              @php $num++ @endphp
+                              @endforeach
+                              "
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @else
@@ -201,7 +223,7 @@
         let dataDate = $(this).data('date');
         let dataFlag = $(this).data('flag');
         let dataInfo = $(this).data('info');
-        console.log(studentEnd);
+        // console.log(studentEnd);
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -290,6 +312,13 @@
         let studentJoin = $(this).data('student-join');
         let studentIs_confirm = $(this).data('student-is_confirm');
         let studentStart = $(this).data('student-start');
+        let studentText = $(this).data('student-text');
+        let studentInstitutionId = $(this).data('student-instution-id')
+        let studentEnd = $(this).data('student-end_date')
+        let timeline = $(this).data('timeline');
+        let dataDate = $(this).data('date');
+        let dataFlag = $(this).data('flag');
+        let dataInfo = $(this).data('info');
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -303,7 +332,7 @@
           $(this).html('<i class="fa-solid fa-chevron-up"></i>');
           row.child.show();
 
-          row.child(`
+          let rowData = `
           <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
             <div class = "flex justify-between">
               <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
@@ -315,8 +344,24 @@
               <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
               <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
             </div>
+            <div class="border border-light-blue rounded-xl px-3 py-8 text-center bg-white">
+              <p class="text-black text-xs font-normal mb-4">${studentText}</p>
+              <div class="flex justify-between">
+                <p class="text-black text-xs ">${studentStart}</p>
+                <div class="w-full relative ">
+                  ${dataFlag}
+                  <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
+                    <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
+                  </div>  
+                  ${dataInfo}
+                </div>
+                <p class="text-black text-xs ">${studentEnd}</p>
+              </div>
+            </div>
           </div>
-            `).show();
+          `;
+
+          row.child(rowData).show();
         }
       });
     });
@@ -345,6 +390,12 @@
         let studentJoin = $(this).data('student-join');
         let studentIs_confirm = $(this).data('student-is_confirm');
         let studentStart = $(this).data('student-start');
+        let studentText = $(this).data('student-text');
+        let studentEnd = $(this).data('student-end_date')
+        let timeline = $(this).data('timeline');
+        let dataDate = $(this).data('date');
+        let dataFlag = $(this).data('flag');
+        let dataInfo = $(this).data('info');
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -358,7 +409,7 @@
           $(this).html('<i class="fa-solid fa-chevron-up"></i>');
           row.child.show();
 
-          row.child(`
+          let rowData = `
           <div class = "flex flex-col py-4 px-10 space-y-7 bg-[#EBEDFF] rounded-3xl">
             <div class = "flex justify-between">
               <p class="text-dark-blue font-mediun">Date Of Birth: <span class="text-black font-normal">${studentDob}</span></p>
@@ -370,8 +421,24 @@
               <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
               <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
             </div>
+            <div class="border border-light-blue rounded-xl px-3 py-8 text-center bg-white">
+              <p class="text-black text-xs font-normal mb-4">${studentText}</p>
+              <div class="flex justify-between">
+                <p class="text-black text-xs ">${studentStart}</p>
+                <div class="w-full relative ">
+                  ${dataFlag}
+                  <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
+                    <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
+                  </div>  
+                  ${dataInfo}
+                </div>
+                <p class="text-black text-xs ">${studentEnd}</p>
+              </div>
+            </div>
           </div>
-            `).show();
+          `;
+
+          row.child(rowData).show();
         }
       });
     });
