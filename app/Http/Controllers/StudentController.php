@@ -442,6 +442,7 @@ class StudentController extends Controller
 
         // to get randomly id mentors
         $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->where('is_confirm',1)->first();
+        $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();        
         $regStudent = Student::where('email',$validated['email'])->first();
         $regStudent->first_name = $validated['first_name'];
         $regStudent->last_name = $validated['last_name'];
@@ -457,6 +458,7 @@ class StudentController extends Controller
         // $regStudent->is_confirm = 1;
         // $regStudent->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
         $regStudent->mentor_id = $mentor->id;
+        $regStudent->staff_id = $staff->id;
         $regStudent->save();
         $emailEnc = (new SimintEncryption)->encData($validated['email']);
         return redirect()->route('verified',[$emailEnc]);

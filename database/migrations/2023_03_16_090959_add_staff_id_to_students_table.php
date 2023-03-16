@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
-            //
+          $table->integer('staff_id')->after('mentor_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('students', function (Blueprint $table) {
-            //
+          $table->dropColumn('staff_id');
         });
     }
 };
