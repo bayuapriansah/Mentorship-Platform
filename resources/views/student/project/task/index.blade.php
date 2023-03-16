@@ -76,7 +76,7 @@
                       @if ($comment->mentor_id)
                         {{$comment->mentor->first_name}} {{$comment->mentor->last_name}} (Supervisor)
                       @elseif($comment->staff_id)
-                        {{$comment->staff->first_name}} {{$comment->staff->last_name}} (Staff Member)
+                        {{$comment->staff->first_name}} {{$comment->staff->last_name}} (Customer)
                       @elseif ($comment->user_id)
                         {{$comment->user->name}} (Platform Admin)
                       @else
@@ -127,7 +127,7 @@
             To: 
             <span class="font-light text-black pl-4 capitalize">
               {{$student->mentor->first_name}} {{$student->mentor->last_name}} (Supervisor);
-              {{$student->staff->first_name}} {{$student->staff->last_name}} (Staff Member)
+              {{$student->staff->first_name}} {{$student->staff->last_name}} (Customer)
             </span>
           </p>
           <p class="border-b-2 text-dark-blue font-medium capitalize">CC: 
