@@ -51,33 +51,37 @@
                       {{$message}}
                     </p>
                 @enderror
-
-              <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution" required>
-                <option value="{{ $checkMentor->institution_id }}" selected>{{ $checkMentor->institution->name }}</option>
-              </select><br>
-              @error('institution')
-                  <p class="text-red-600 text-sm mt-1">
-                    {{ $message}}
-                  </p>
-              @enderror
-
-              <div class="flex justify-between mt-4">
-                <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
-                <br>
-                @error('country')
+              
+              @if ($checkMentor->insittution_id)
+                <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution" required>
+                  <option value="{{ $checkMentor->institution_id }}" selected>{{ $checkMentor->institution->name }}</option>
+                </select><br>
+                @error('institution')
                     <p class="text-red-600 text-sm mt-1">
-                      {{$message}}
+                      {{ $message}}
                     </p>
                 @enderror
+              @endif
+              
+              @if ($checkMentor->insittution_id)
+                <div class="flex justify-between mt-4">
+                  <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
+                  <br>
+                  @error('country')
+                      <p class="text-red-600 text-sm mt-1">
+                        {{$message}}
+                      </p>
+                  @enderror
 
-                <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight bg-gray-300 cursor-not-allowed focus:outline-none" id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
-                <br>
-                @error('state')
-                    <p class="text-red-600 text-sm mt-1">
-                      {{$message}}
-                    </p>
-                @enderror
-              </div>
+                  <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight bg-gray-300 cursor-not-allowed focus:outline-none" id="ForState" type="text" value="{{old('state')}}" placeholder="State *" name="state" readonly required>
+                  <br>
+                  @error('state')
+                      <p class="text-red-600 text-sm mt-1">
+                        {{$message}}
+                      </p>
+                  @enderror
+                </div>
+              @endif
 
               <input type="password" class="text w-full border border-light-blue rounded-lg h-11 py-2 mt-4 px-4 text-lightest-grey::placeholder leading-tight {{old('password') != null ? 'border-red-500' : ''}} focus:outline-none"" placeholder="Password" id="password" name="password"><br>
               @error('password')

@@ -38,7 +38,7 @@
         ),
         5 => array(
           'title'=>'Can I work on more than one project at a time?',
-          'answer'=>'You can only be enrolled in one project at a time. However, if the deadline of a projet has passed, you can enroll in a second one while you finish the first project.'
+          'answer'=>'You can only be enrolled in one project at a time. However, if the deadline of a project has passed, you can enroll in a second one while you finish the first project.'
         ),
         6 => array(
           'title'=>'Will I receive college credit for my internship?',
