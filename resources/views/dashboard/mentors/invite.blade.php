@@ -141,8 +141,8 @@ dropArea.addEventListener('drop', e => {
                 let email = emails[i];
                 let row = `<tr>
                     <td>${i + 1}</td>
-                    <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
-                    <td>${email.email}</td>
+                    <td><input value="${email.Email}" type="checkbox" class="checkbox" name="email[]"></td>
+                    <td>${email.Email}</td>
                 </tr>`;
                 tableBody.append(row);
 
