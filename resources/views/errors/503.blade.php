@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   @vite('resources/css/app.css')
-
+  <title>Under Maintenance</title>
 </head>
 <body class="bg-profile-grey min-h-screen ">
   <div class="flex justify-center">
@@ -14,12 +14,23 @@
         <div class="flex-col my-auto w-1/2 space-y-7">
           <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="mb-10" alt="">
           <h1 class="text-dark-blue my-8 text-3xl">Website is under Maintenance</h1>
-          <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae, facere. Quos illum nisi quaerat tempora eos accusantium atque, fugiat voluptatibus, asperiores saepe impedit itaque perferendis maxime vero laboriosam numquam. Quidem?</span>
-          <h1 class="text-light-brown text-2xl font-medium space-y-2">
+          <div class="text-justify text-2xl">
+            Thank you for visiting our website. We're currently making some updates to provide you with an even better experience. We're sorry for any inconvenience this may cause and we appreciate your patience as we work to improve our site.
+          </div>
+          <div class="text-justify text-2xl">
+            We're doing everything we can to minimize the downtime and ensure that our website is back up and running as soon as possible. Thank you for your understanding and support. We look forward to seeing you again soon.
+          </div>
+          <p>
+          <div class="font-medium space-y-2 text-justify text-1xl">
+            With best regards,
+          </div>
+          <div class="font-medium space-y-2 text-light-brown text-justify text-1xl">
+            Simulated Internship Team
+          </div>
+          {{-- <h1 class="text-light-brown text-2xl font-medium space-y-2">
             Scheduled maintenance <br>
             <span class="text-black text-2xl">8th March 6:30am - 12:30pm IST.</span>
-          </h1>
-        
+          </h1> --}}
         </div>
         <div class="w-1/2">
           <img src="{{url('/assets/img/error_page/under_construction.png')}}" class="!w-[513px] !h-[379px]" style="width: 513px; height: 379px;" alt="Image"/>

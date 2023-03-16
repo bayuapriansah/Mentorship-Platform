@@ -19,7 +19,7 @@
           <tr>
             <td>
               <span class="{{$notifNewTask->grade->readornot != 1 ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
-                New Acitivity <p> Result Task : {{ $notifNewTask->grade->submission->projectSection->title }}
+                Result Task : {{ $notifNewTask->grade->submission->projectSection->title }}
                 <br>
                 Hi {{$student->first_name}} {{$student->last_name}},
                 @if($notifNewTask->grade->status == 0)
