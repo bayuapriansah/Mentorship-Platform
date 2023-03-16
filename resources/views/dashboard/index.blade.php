@@ -36,14 +36,18 @@
     </div>
     @elseif(Auth::guard('mentor')->check())
         <div class="flex justify-between items-center">
+          @if (Auth::guard('mentor')->user()->institution_id != 0)
             <div class="space-y-7">
                 <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('mentor')->user()->first_name}} {{Auth::guard('mentor')->user()->last_name}}</h3>
                 <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Supervisor Dashboard.</p>
             </div>
-            @if (Auth::guard('mentor')->user()->institution_id != 0)
               <img src="/storage/{{Auth::guard('mentor')->user()->institution->logo}}" class="w-80 h-44 object-scale-down" alt="">
             @else
-              [logo] 
+              <div class="space-y-7">
+                <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('mentor')->user()->first_name}} {{Auth::guard('mentor')->user()->last_name}}</h3>
+                <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Staff Admin Dashboard.</p>
+              </div>
+              <img src="{{asset('assets/img/SL2-Registered-Logo.png')}}" class="w-80 h-44 object-scale-down" alt="">
             @endif
         </div>
         <div class="flex justify-between space-x-7 my-4">
