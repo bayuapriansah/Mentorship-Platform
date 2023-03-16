@@ -19,7 +19,6 @@
         <a href="/dashboard/customer">Dashboard</a>
       @endif
     @endif
-    
   </li>
   <li class="hover:font-medium">
     @if(Route::is('dashboard.students.index'))
@@ -28,15 +27,23 @@
       <a href="/dashboard/students">Students</a>
     @endif
   </li>
-  <li class="hover:font-medium">
-    @if(Auth::guard('web')->check())
-      @if(Route::is('dashboard.institutions_partners'))
-        <a href="/dashboard/institutions_partners" class="font-medium">Institutions & Partner</a>
-      @else
-        <a href="/dashboard/institutions_partners">Institutions & Partner</a>
-      @endif
-    @endif
-  </li>
+  @if(Auth::guard('web')->check())
+    <li class="hover:font-medium">
+        @if(Route::is('dashboard.staffs.index'))
+          <a href="/dashboard/staffs" class="font-medium">Staff</a>
+        @else
+          <a href="/dashboard/staffs">Staff</a>
+        @endif
+    </li>
+    <li class="hover:font-medium">
+        @if(Route::is('dashboard.institutions_partners'))
+          <a href="/dashboard/institutions_partners" class="font-medium">Institutions & Partner</a>
+        @else
+          <a href="/dashboard/institutions_partners">Institutions & Partner</a>
+        @endif
+    </li>
+  @endif
+
   <li class="hover:font-medium">
     @if(Route::is('dashboard.projects.index'))
       <a href="/dashboard/projects" class="font-medium">Projects</a>

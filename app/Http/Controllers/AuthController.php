@@ -170,7 +170,7 @@ class AuthController extends Controller
         $registeredEmail = Student::where('email', $email)->where('is_confirm', 0)->first();
         if($registeredEmail){
             $registeredEmail->is_confirm = 1;
-            $registeredEmail->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+            $registeredEmail->end_date = $registeredEmail->created_at->addMonth(4)->toDateString();
             $registeredEmail->save();
             return view('auth.verified');
         }else{
