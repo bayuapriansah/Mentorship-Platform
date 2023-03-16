@@ -17,9 +17,11 @@
         <div class="flex items-center space-x-4">
           <i class="text-dark-blue fa-solid fa-circle"></i>
           <div class="flex-col">
-            <span class="font-medium">
+            <span class="font-medium capitalize">
               @if ($comment->mentor_id)
                 {{$comment->mentor->first_name}} {{$comment->mentor->last_name}} (Supervisor)
+              @elseif($comment->staff_id)
+                {{$comment->staff->first_name}} {{$comment->staff->last_name}} (Staff Member)
               @elseif ($comment->user_id)
                 {{$comment->user->name}} (Platform Admin)
               @elseif ($comment->customer_id)
@@ -28,7 +30,7 @@
                 {{$comment->student->first_name}} {{$comment->student->last_name}} (Student)
               @endif
             </span><br>
-            <span class="font-light receiver">
+            <span class="font-light receiver capitalize">
               @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
                 to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}},
                 @foreach ($customer_participants as $customer)

@@ -40,7 +40,11 @@
                 <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('mentor')->user()->first_name}} {{Auth::guard('mentor')->user()->last_name}}</h3>
                 <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Supervisor Dashboard.</p>
             </div>
-            <img src="/storage/{{Auth::guard('mentor')->user()->institution->logo}}" class="w-80 h-44 object-scale-down" alt="">
+            @if (Auth::guard('mentor')->user()->institution_id != 0)
+              <img src="/storage/{{Auth::guard('mentor')->user()->institution->logo}}" class="w-80 h-44 object-scale-down" alt="">
+            @else
+              [logo] 
+            @endif
         </div>
         <div class="flex justify-between space-x-7 my-4">
             <div class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
