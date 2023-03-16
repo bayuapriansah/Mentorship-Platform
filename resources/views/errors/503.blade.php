@@ -31,7 +31,6 @@
             Scheduled maintenance <br>
             <span class="text-black text-2xl">8th March 6:30am - 12:30pm IST.</span>
           </h1> --}}
-        
         </div>
         <div class="w-1/2">
           <img src="{{url('/assets/img/error_page/under_construction.png')}}" class="!w-[513px] !h-[379px]" style="width: 513px; height: 379px;" alt="Image"/>
