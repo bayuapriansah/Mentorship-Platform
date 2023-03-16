@@ -78,7 +78,11 @@ class SimintEncryption extends Controller
       } else {
           $totalDate = $totalDate;
       }
-      $percentage = ($finalDate/$totalDate) * 100;
+      if($totalDate != 0){
+        $percentage = ($finalDate/$totalDate) * 100;
+      }else{
+        $percentage = 0;
+      }
       // dd($percentage);
       return $percentage;
     }
