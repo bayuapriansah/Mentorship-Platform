@@ -30,9 +30,9 @@
   @if(Auth::guard('web')->check())
     <li class="hover:font-medium">
         @if(Route::is('dashboard.staffs.index'))
-          <a href="/dashboard/staffs" class="font-medium">Staff</a>
+          {{-- <a href="/dashboard/staffs" class="font-medium">Staff</a> --}}
         @else
-          <a href="/dashboard/staffs">Staff</a>
+          {{-- <a href="/dashboard/staffs">Staff</a> --}}
         @endif
     </li>
     <li class="hover:font-medium">
