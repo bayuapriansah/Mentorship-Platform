@@ -125,6 +125,12 @@ class CommentController extends Controller
     {
         $comments = Comment::where('project_section_id', $injection->id)->where('student_id', $participant->id)->get();
         $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
+        $readAllDataMessage = Comment::where('project_section_id', $injection->id)
+        ->where('student_id', $participant->id)
+        ->whereNull('user_id')
+        ->whereNull('mentor_id')
+        ->whereNull('customer_id')
+        ->update(['read_message' => 1]);
         return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments', 'customer_participants'));
     }
 
