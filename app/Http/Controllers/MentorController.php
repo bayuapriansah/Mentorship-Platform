@@ -209,9 +209,11 @@ class MentorController extends Controller
             $mentor->first_name = $validated['first_name'];
             $mentor->last_name = $validated['last_name'];
             $mentor->sex = $validated['sex'];
-            $mentor->institution_id = $validated['institution'];
-            $mentor->country = $validated['country'];
-            $mentor->state = $validated['state'];
+            if($request->institution){
+              $mentor->institution_id = $validated['institution'];
+              $mentor->country = $validated['country'];
+              $mentor->state = $validated['state'];
+            }
             $mentor->is_confirm = 1;
             $menpwd = $validated['password'];
             $menpwdhash = Hash::make($menpwd) ;

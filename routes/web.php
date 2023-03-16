@@ -10,6 +10,7 @@ use App\Http\Controllers\BatchController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\AssignController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\SimintEncryption;
@@ -160,6 +161,13 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/students/{student}/manage', [StudentController::class, 'manageStudent'])->name('students.manageStudent');
         Route::patch('/students/{student}/managepatch', [StudentController::class, 'manageStudentpatch' ])->name('students.manageStudentpatch');
         Route::post('/students/{student}/suspend', [StudentController::class, 'suspendAccount' ])->name('students.suspendAccount');
+
+        // Staff
+        Route::get('/staffs', [StaffController::class, 'index'])->name('staffs.index');
+        Route::get('/staffs/invite', [StaffController::class, 'invite'])->name('staffs.invite');
+        Route::post('/staffs/sendInvite', [StaffController::class, 'sendInvite'])->name('staffs.sendInvite');
+        Route::get('/staffs/{staff}/edit', [StaffController::class, 'edit'])->name('staffs.edit');
+        Route::patch('/staffs/{staff}/update', [StaffController::class, 'update' ])->name('staffs.update');
 
 
         // Institution
