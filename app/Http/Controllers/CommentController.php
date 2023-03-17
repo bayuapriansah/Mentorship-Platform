@@ -80,6 +80,7 @@ class CommentController extends Controller
                   });
               })
                 ->get();
+            $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
             return view('dashboard.messages.index', compact('messages','injections','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('customer')->check()){
             $messages = Comment::whereHas('project', function($q){

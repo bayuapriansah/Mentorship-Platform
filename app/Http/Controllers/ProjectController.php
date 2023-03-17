@@ -1652,7 +1652,6 @@ class ProjectController extends Controller
     // projects from admin dashboard sidebar menu
     public function allProjects()
     {
-        // dd('te');
         $projects = Project::get();
         return view('dashboard.projects.index', compact('projects'));
     }

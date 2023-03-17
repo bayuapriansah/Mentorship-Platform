@@ -249,9 +249,9 @@
               <div class="pl-6 pb-3 space-y-6">
                 <div class="max-h-60 overflow-y-auto">
                   @if($totalNotificationAdmin > 0)
-                  @php
+                  {{-- @php
                   $numbercountpls = 1;
-                  @endphp
+                  @endphp --}}
                     @foreach($submissionNotifications as $submissionNotification)
                       @if($submissionNotification->student == !NULL)
                         @if(Auth::guard('web')->check())
@@ -259,7 +259,7 @@
                             <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                               <div class="flex">
                                   <div class="ml-3 text-sm font-normal">
-                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}. There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                       <p>
                                     <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
                                   </div>
@@ -272,7 +272,7 @@
                               <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                                 <div class="flex">
                                     <div class="ml-3 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}. There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                         <p>
                                       <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
                                     </div>
@@ -285,7 +285,7 @@
                               <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                                 <div class="flex">
                                     <div class="ml-3 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}. There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                         <p>
                                       <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
                                     </div>
@@ -294,9 +294,9 @@
                             </a>
                         @endif
                       @endif
-                      @php
+                      {{-- @php
                       $numbercountpls = $numbercountpls +1;
-                      @endphp
+                      @endphp --}}
                     @endforeach
                     @else
                     {{ 'No Notification' }}
