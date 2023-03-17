@@ -54,6 +54,15 @@
                 <option value="{{$institution->id}}">{{$institution->name}}</option>
                 @endforeach
             </select>
+        @elseif(Auth::guard('mentor')->check())
+            @if (Auth::guard('mentor')->user()->institution_id == 0)
+              <select id="inputStudy" class="text w-3/4 border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution_id" required>
+                  <option value="" hidden>Institution Name</option>
+                  @foreach($allInstitutions as $institution)
+                  <option value="{{$institution->id}}">{{$institution->name}}</option>
+                  @endforeach
+              </select>
+            @endif
         @endif
     @endif
 

@@ -175,7 +175,6 @@ class StudentController extends Controller
 
     public function sendInvite(Request $request)
     {
-        // dd('tes');
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();
@@ -234,10 +233,17 @@ class StudentController extends Controller
                 'institution_id' => $institution_id,
             ]);
         }elseif(Auth::guard('mentor')->check()){
+          if(Auth::guard('mentor')->user()->institution_id != 0){
             $student = Student::create([
                 'email' => $email,
                 'institution_id' => Auth::guard('mentor')->user()->institution_id,
             ]);
+          }else{
+            $student = Student::create([
+              'email' => $email,
+              'institution_id' => $institution_id,
+            ]);
+          }
         }
         return $student;
     }
