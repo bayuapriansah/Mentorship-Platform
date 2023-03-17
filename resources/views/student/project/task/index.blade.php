@@ -127,7 +127,9 @@
             To: 
             <span class="font-light text-black pl-4 capitalize">
               {{$student->mentor->first_name}} {{$student->mentor->last_name}} (Supervisor);
-              {{$student->staff->first_name}} {{$student->staff->last_name}} (Customer)
+              @if ($student->staff_id)
+                {{$student->staff->first_name}} {{$student->staff->last_name}} (Customer)
+              @endif
             </span>
           </p>
           <p class="border-b-2 text-dark-blue font-medium capitalize">CC: 
