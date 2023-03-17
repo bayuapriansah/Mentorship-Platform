@@ -4,7 +4,13 @@
     <div class="bg-darker-blue">
       <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col ">
         <div class="col-span-7 relative">
-          <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">Join As Institute Supervisor</h1>
+          <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">
+            @if ($checkMentor->insittution_id)
+            Join As Institute Supervisor
+            @else
+            Join As Staff Member
+            @endif
+          </h1>
           <p class="m-0 text-light-blue">Fill out the registration form below to sign up for the platform.</p>
           <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-2 ">
         </div>
