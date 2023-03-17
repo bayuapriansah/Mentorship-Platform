@@ -206,7 +206,7 @@
         <ul class="text-dark-blue text-xs font-normal">
           <li class="pb-3"><a href="/#AiForFuture">About Us</a></li>
           <li class="pb-3"><a href="/faq">FAQs</a></li>
-          <li class="pb-3"><a href="">Contact Us</a></li>
+          <li class="pb-3"><a href="/contact">Contact Us</a></li>
         </ul>
       </div>
       <div class="col-start-10 col-span-2 flex flex-col">

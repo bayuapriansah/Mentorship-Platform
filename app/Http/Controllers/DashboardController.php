@@ -7,16 +7,19 @@ use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Project;
 use App\Models\Student;
+use App\Mail\MailNotify;
 use App\Models\Customer;
 use App\Models\Submission;
-use App\Models\ReadNotification;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 
 use App\Models\EnrolledProject;
 use Illuminate\Validation\Rule;
+use App\Models\ReadNotification;
 use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -500,4 +503,53 @@ class DashboardController extends Controller
       } 
       return back();
     }
+  
+  public function contact()
+  {
+    return view('contact');
+  }
+  
+  public function sendContact(Request $request)
+  {
+    $validated = $request->validate([
+      'first_name' => ['required'],
+      'last_name' => ['required'],
+      'email' => ['required'],
+      'message' => ['required'],
+      'phone' => ['sometimes'],
+      'g-recaptcha-response' => 'required|recaptcha',
+    ],[
+      'first_name.required' => 'First name is required',
+      'last_name.required' => 'Last name is required',
+      'email.required' => 'Email is required',
+      'message.required' => 'Message is required',
+      'g-recaptcha-response.required' => 'Captcha is required',
+    ]);
+
+    $tes = $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
+    dd($tes);
+    return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
+
+  }
+
+  public function ContactUsMail($mailto,$validated) //Email, urlInvitation
+  {
+      $data = [
+          'subject' => 'New Email',
+          'body' => $mailto,
+          'first_name' => $validated['first_name'],
+          'last_name' => $validated['last_name'],
+          'email' => $validated['email'],
+          'message'=> $validated['message'],
+          'phone'=> $validated['phone'],
+          'type' => 'contactUs',
+      ];
+      try
+      {
+          Mail::to($mailto)->send(new MailNotify($data));
+          return response()->json(['Your message has been successfully sent to our team.']);
+      } catch (\Exception $th) {
+          return response()->json(['Sorry Something went wrong']);
+      }
+  }
 }

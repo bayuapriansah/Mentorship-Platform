@@ -41,15 +41,17 @@ use App\Http\Controllers\EmailBulkInvitationController;
 |
 */
 //Static Page
-// Route::get('/emailtemp', function () {
-//     return view('emails.cusmemb');
-// })->name('emailtemp');
+Route::get('/emailtemp', function () {
+    return view('emails.contactUs');
+})->name('emailtemp');
 Route::get('/supportlib', function () {
     return view('projects.supportlibrary');
 })->name('projects.support');
 Route::get('/faq', function () {
     return view('faq');
 })->name('faq');
+Route::get('/contact', [DashboardController::class, 'contact'])->name('contact');
+Route::post('/contact', [DashboardController::class, 'sendContact'])->name('sendContact');
 Route::get('/privacy-policy', function () {
     return view('privacy-policy');
 })->name('privacy-policy');
