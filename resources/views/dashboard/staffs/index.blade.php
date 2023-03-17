@@ -43,7 +43,7 @@
                   <a href="{{ route('dashboard.staffs.edit' , [$staff->id])}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit Details</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  <a href="{{ route('dashboard.staffs.suspend' , [$staff->id])}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                     @if($staff->is_confirm == 1)
                     Deactivate
                     @else
@@ -52,7 +52,7 @@
                   </a>
                 </li>
                 <li>
-                  <form action="#" method="post">
+                  <form action="{{ route('dashboard.staffs.destroy', [$staff->id]) }}" method="post">
                     @method('delete')
                     @csrf
                     <input type="submit" class="w-full text-left cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onClick="return confirm('Delete this supervisor?')" value="Delete">

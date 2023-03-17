@@ -110,7 +110,12 @@
         @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
           <option value="private">Private to one institution</option>
         @elseif(Auth::guard('mentor')->check())
-          <option value="private">Private to your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+          @if (Auth::guard('mentor')->user()->institution_id != 0 )
+            <option value="private">Private to your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+          @else{
+            <option value="private">Private to one institution</option>
+          }
+          @endif
         @endif
     </select>
     @error('projectType')
@@ -255,27 +260,62 @@
   </script>
   @endsection
 @elseif(Auth::guard('mentor')->check())
-  @section('more-js')
-  <script>
-    $(document).ready(function () {
-        $('#institution').on('change', function () {
-            var institutionVal = this.value;
-            var base_url = window.location.origin;
-            $("#ForState").html('');
-            $.ajax({
-                url: base_url+"/api/institution/"+institutionVal,
-                contentType: "application/json",
-                dataType: 'json',
-                success: function (result) {
-                  console.log(result);
-                  $('#ForCountry').val(result.countries);
-                  $('#ForState').val(result.states);
-                }
-            });
-        });
+  @if (Auth::guard('mentor')->user()->institution_id != 0)
+    @section('more-js')
+    <script>
+      $(document).ready(function () {
+          $('#institution').on('change', function () {
+              var institutionVal = this.value;
+              var base_url = window.location.origin;
+              $("#ForState").html('');
+              $.ajax({
+                  url: base_url+"/api/institution/"+institutionVal,
+                  contentType: "application/json",
+                  dataType: 'json',
+                  success: function (result) {
+                    console.log(result);
+                    $('#ForCountry').val(result.countries);
+                    $('#ForState').val(result.states);
+                  }
+              });
+          });
 
-        $('#inputinstitution').hide();
-    });
-  </script>
-  @endsection
+          $('#inputinstitution').hide();
+      });
+    </script>
+    @endsection
+  @else
+    @section('more-js')
+    <script>
+      $(document).ready(function () {
+          $('#institution').on('change', function () {
+              var institutionVal = this.value;
+              var base_url = window.location.origin;
+              $("#ForState").html('');
+              $.ajax({
+                  url: base_url+"/api/institution/"+institutionVal,
+                  contentType: "application/json",
+                  dataType: 'json',
+                  success: function (result) {
+                    console.log(result);
+                    $('#ForCountry').val(result.countries);
+                    $('#ForState').val(result.states);
+                  }
+              });
+          });
+
+          $('#inputinstitution').hide();
+        
+          $("#inputprojecttype").change(function(){
+            var values = $("#inputprojecttype option:selected").val();
+            if(values=='private'){
+              $('#inputinstitution').show();
+            }else{
+              $('#inputinstitution').hide();
+            }
+          });
+      });
+    </script>
+    @endsection    
+  @endif  
 @endif

@@ -14,7 +14,11 @@
 @else
 <div class="flex justify-between mb-10">
   @if (Auth::guard('mentor')->check())
-    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">{{Auth::guard('mentor')->user()->institution->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
+    @if (Auth::guard('mentor')->user()->institution_id != 0)
+      <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">{{Auth::guard('mentor')->user()->institution->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
+    @else
+      <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Students</h3>
+    @endif
   @elseif(Auth::guard('customer')->check())
     <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">{{Auth::guard('customer')->user()->company->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
   @elseif(Auth::guard('web')->check())

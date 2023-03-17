@@ -25,13 +25,15 @@
   </div>
 @endif
 @if(Auth::guard('mentor')->check())
-<div class="flex items-center mb-2 space-x-2">
-  <label for="filter" class="text-base font-normal text-black my-auto">Filter</label>
-  <select id="filter" class="bg-gray-50 border border-[#aaa] text-gray-900 text-md p-1 focus:ring-blue-500 focus:border-blue-500 rounded-md">
-    <option selected>All Students</option>
-    <option value="supervised">My Students</option>
-  </select>
-</div>
+  @if (Auth::guard('mentor')->user()->institution_id != 0)
+    <div class="flex items-center mb-2 space-x-2">
+      <label for="filter" class="text-base font-normal text-black my-auto">Filter</label>
+      <select id="filter" class="bg-gray-50 border border-[#aaa] text-gray-900 text-md p-1 focus:ring-blue-500 focus:border-blue-500 rounded-md">
+        <option selected>All Students</option>
+        <option value="supervised">My Students</option>
+      </select>
+    </div>
+  @endif
 @endif
 <!-- Content Row -->
 
@@ -79,7 +81,11 @@
           @endphp
           @foreach ($project->enrolled_project as $item)
               @php
-                $sum = $item->student->institution_id == Auth::guard('mentor')->user()->institution_id;
+                if (Auth::guard('mentor')->user()->institution_id) {
+                  $sum = $item->student->institution_id == Auth::guard('mentor')->user()->institution_id;
+                }else{
+                  $sum = $item->student->staff_id == Auth::guard('mentor')->user()->id;
+                }
                 if ($sum == 1) {
                   $count++;
                 }
@@ -211,7 +217,6 @@
               @endphp
           @endforeach
           <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>  
-      </td>
       </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
       <td class="capitalize">
