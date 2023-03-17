@@ -351,7 +351,6 @@
                     @endif
                   </div>
                   <div class="border-t border-light-blue ">
-                    {{-- <a href="#" class="text-[#6973C6] text-xs">View All Notifications</a> --}}
                     <a href="/profile/{{$student->id}}/allNotification" class="text-[#6973C6] text-xs">View All Notifications</a>
                   </div>
                 </div>
@@ -400,14 +399,14 @@
 
   </footer>
 
-  @php
+  {{-- @php
       $top = exec("top -bn1 | grep 'Cpu(s)'");
       preg_match_all("/\s+([0-9\.]+)%\s+id/", $top, $cores);
       $cores = $cores[1];
       foreach ($cores as $index => $usage) {
         echo "Core " . ($index + 1) . ": " . $usage . "%<br>";
       }
-  @endphp
+  @endphp --}}
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}

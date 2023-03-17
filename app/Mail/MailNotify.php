@@ -31,9 +31,7 @@ class MailNotify extends Mailable
      */
     public function build()
     {
-        return $this->from('no-reply@simulatedinternship.com', 'no-reply@simulatedinternship.com')->with('data', $this->data);
-        // ->subject($this->data['subject'])
-        // ->view('emails.otp')
+        return $this->from('sip@sustainablelivinglab.org', 'Simulated Internship')->with('data', $this->data);
     }
 
     /**

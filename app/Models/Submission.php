@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Grade;
 use App\Models\SectionSubsection;
+use App\Models\ReadNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -29,5 +30,10 @@ class Submission extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function read_notification()
+    {
+        return $this->belongsTo(ReadNotification::class);
     }
 }

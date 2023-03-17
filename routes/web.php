@@ -292,6 +292,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Submission
         Route::get('/submissions/project/{project}', [SubmissionController::class, 'show'])->name('submission.show');
         Route::get('/submissions/project/{project}/view/{submission}', [SubmissionController::class, 'singleSubmission'])->name('submission.singleSubmission');
+        Route::get('/submissions/project/{project}/view/{submission}/readNotification/{student}', [DashboardController::class, 'singleSubmissionReadNotification'])->name('submission.singleSubmission.readNotification');
         Route::post('/submissions/project/{project}/view/{submission}/adminGrade', [SubmissionController::class, 'adminGrade'])->name('submission.adminGrade');
         Route::get('/submissions/project/{project}/view/{submission}/grade/{grade}', [SubmissionController::class, 'edit'])->name('submission.editSubmissionGrade');
 

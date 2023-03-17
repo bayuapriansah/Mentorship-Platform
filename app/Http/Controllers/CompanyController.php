@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Project;
+use App\Models\Submission;
+use App\Models\ReadNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +20,51 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        
+        if(Auth::guard('web')->check()){
+            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+            $submissionNotifications = Submission::where('is_complete', 1)
+                ->whereNotIn('id', function($query) {
+                    $query->select('submission_id')
+                          ->from('read_notifications')
+                          ->where('is_read', 1)
+                          ->where('user_id', Auth::guard('web')->user()->id);
+                })
+                ->get();
+            } elseif(Auth::guard('mentor')->check()){
+                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
+                $submissionNotifications = Submission::where('is_complete', 1)
+                    ->whereNotIn('id', function($query) {
+                        $query->select('submission_id')
+                              ->from('read_notifications')
+                              ->where('is_read', 1)
+                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                    })
+                    ->when(Auth::guard('mentor')->check(), function ($query) {
+                      $query->whereIn('student_id', function($query) {
+                          $query->select('id')
+                              ->from('students')
+                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                      });
+                  })
+                    ->get();
+            } elseif(Auth::guard('customer')->check()){
+                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
+                $submissionNotifications = Submission::whereHas('project', function($q){
+                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
+                  })
+                  ->where('is_complete', 1)
+                  ->whereNotIn('id', function($query) {
+                      $query->select('submission_id')
+                            ->from('read_notifications')
+                            ->where('is_read', 1)
+                            ->where('customer_id', Auth::guard('customer')->user()->id);
+                  })
+                  ->get();
+            }
+        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         $companies = Company::get();
-        return view('dashboard.partners.index', compact('companies'));
+        return view('dashboard.partners.index', compact('companies','totalNotificationAdmin','submissionNotifications'));
     }
 
     public function registered()
@@ -34,7 +80,50 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('dashboard.companies.create');
+        
+        if(Auth::guard('web')->check()){
+            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+            $submissionNotifications = Submission::where('is_complete', 1)
+                ->whereNotIn('id', function($query) {
+                    $query->select('submission_id')
+                          ->from('read_notifications')
+                          ->where('is_read', 1)
+                          ->where('user_id', Auth::guard('web')->user()->id);
+                })
+                ->get();
+            } elseif(Auth::guard('mentor')->check()){
+                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
+                $submissionNotifications = Submission::where('is_complete', 1)
+                    ->whereNotIn('id', function($query) {
+                        $query->select('submission_id')
+                              ->from('read_notifications')
+                              ->where('is_read', 1)
+                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                    })
+                    ->when(Auth::guard('mentor')->check(), function ($query) {
+                      $query->whereIn('student_id', function($query) {
+                          $query->select('id')
+                              ->from('students')
+                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                      });
+                  })
+                    ->get();
+            } elseif(Auth::guard('customer')->check()){
+                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
+                $submissionNotifications = Submission::whereHas('project', function($q){
+                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
+                  })
+                  ->where('is_complete', 1)
+                  ->whereNotIn('id', function($query) {
+                      $query->select('submission_id')
+                            ->from('read_notifications')
+                            ->where('is_read', 1)
+                            ->where('customer_id', Auth::guard('customer')->user()->id);
+                  })
+                  ->get();
+            }
+        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        return view('dashboard.companies.create',compact('totalNotificationAdmin','submissionNotifications'));
     }
 
     /**
@@ -93,8 +182,51 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
+        
+        if(Auth::guard('web')->check()){
+            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+            $submissionNotifications = Submission::where('is_complete', 1)
+                ->whereNotIn('id', function($query) {
+                    $query->select('submission_id')
+                          ->from('read_notifications')
+                          ->where('is_read', 1)
+                          ->where('user_id', Auth::guard('web')->user()->id);
+                })
+                ->get();
+            } elseif(Auth::guard('mentor')->check()){
+                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
+                $submissionNotifications = Submission::where('is_complete', 1)
+                    ->whereNotIn('id', function($query) {
+                        $query->select('submission_id')
+                              ->from('read_notifications')
+                              ->where('is_read', 1)
+                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                    })
+                    ->when(Auth::guard('mentor')->check(), function ($query) {
+                      $query->whereIn('student_id', function($query) {
+                          $query->select('id')
+                              ->from('students')
+                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                      });
+                  })
+                    ->get();
+            } elseif(Auth::guard('customer')->check()){
+                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
+                $submissionNotifications = Submission::whereHas('project', function($q){
+                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
+                  })
+                  ->where('is_complete', 1)
+                  ->whereNotIn('id', function($query) {
+                      $query->select('submission_id')
+                            ->from('read_notifications')
+                            ->where('is_read', 1)
+                            ->where('customer_id', Auth::guard('customer')->user()->id);
+                  })
+                  ->get();
+            }
+        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         $company= Company::find($id);
-        return view('dashboard.companies.edit', compact('company'));
+        return view('dashboard.companies.edit', compact('company','totalNotificationAdmin','submissionNotifications'));
     }
 
     /**
