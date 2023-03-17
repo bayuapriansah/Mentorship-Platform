@@ -99,6 +99,7 @@ class SubmissionController extends Controller
             }
         $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         if(Auth::guard('mentor')->check()){
+          if (Auth::guard('mentor')->user()->institution_id != 0){
             $submissionsSupervised = Submission::with('grade')
                                     ->where('project_id', $project->id)
                                     ->whereHas('student', function($q){
@@ -110,10 +111,18 @@ class SubmissionController extends Controller
                                         $q->where('institution_id', Auth::guard('mentor')->user()->institution_id);
                                     })->get();
             return view('dashboard.submissions.index', compact('project', 'submissionsSupervised', 'submissions','totalNotificationAdmin','submissionNotifications'));
+          }else{
+            $submissions = Submission::with('grade')
+                                    ->where('project_id', $project->id)
+                                    ->whereHas('student', function($q){
+                                        $q->where('staff_id', Auth::guard('mentor')->user()->id);
+                                    })->get();
+            return view('dashboard.submissions.index', compact('project', 'submissions','totalNotificationAdmin','submissionNotifications'));
+          }
+            
         }
         else{
             $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
-
         }
         return view('dashboard.submissions.index', compact('project', 'submissions','totalNotificationAdmin','submissionNotifications'));
     }
@@ -172,8 +181,8 @@ class SubmissionController extends Controller
     public function adminGrade(Request $request, Project $project, Submission $submission)
     {
         if (Auth::guard('mentor')->check()) {
-            if($submission->student->mentor_id != Auth::guard('mentor')->user()->id){
-                return back()->with('errorTailwind', 'You cannot evaluate a student whom you did not supervise');
+            if($submission->student->mentor_id != Auth::guard('mentor')->user()->id && $submission->student->staff_id != Auth::guard('mentor')->user()->id){
+              return back()->with('errorTailwind', 'You cannot evaluate a student whom you did not supervise');
             }
         }
         if($request->message){
@@ -185,7 +194,11 @@ class SubmissionController extends Controller
             if(Auth::guard('web')->check()){
                 $comment->user_id = Auth::guard('web')->user()->id;
             }elseif(Auth::guard('mentor')->check()){
+              if(Auth::guard('mentor')->user()->institution_id != 0){
                 $comment->mentor_id = Auth::guard('mentor')->user()->id;
+              }else{
+                $comment->staff_id = Auth::guard('mentor')->user()->id;
+              }
             }
             $comment->message = $request->message;
             $comment->save();

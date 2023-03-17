@@ -9,6 +9,7 @@ use App\Mail\MailNotify;
 use App\Models\Customer;
 use App\Models\Institution;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\SimintEncryption;
@@ -96,5 +97,57 @@ class StaffController extends Controller
     $supervisor->save();
     $message = "Successfully updated Staff Member";
     return redirect('/dashboard/staffs')->with('successTailwind', $message );
+    }
+
+    public function suspend(Mentor $staff)
+    {
+      $staff_count = Mentor::where('is_confirm',1)->where('institution_id', 0)->get()->count();
+      if($staff_count != 1){
+        if ($staff->is_confirm == 1) {
+          $staff->is_confirm = 0;
+          $message = "Successfully Pending Account";
+
+          $new_staff = Mentor::inRandomOrder()
+                      ->where('institution_id',0)->where('id', '!=', $staff->id)->get()->pluck('id')->toArray();
+          $students = Student::where('staff_id', $staff->id)->get();
+          foreach ($students as $student) {
+              DB::table('students')
+              ->where('id', $student->id)
+              ->update(['staff_id' => $new_staff[array_rand($new_staff,1)]]);
+          }
+        }else{
+          $staff->is_confirm = 1;
+          $message = "Successfully Activate Account";
+        }
+        $staff->save();
+        return back()->with('errorTailwind', $message);
+      }else{
+        $message = "Cant deactivate staff member";
+        return back()->with('errorTailwind', $message);
+      }
+    }
+
+    public function destroy(Mentor $staff)
+    {
+      $staff_count = Mentor::where('is_confirm',1)->where('institution_id', 0)->get()->count();
+      if($staff_count != 1){
+        $new_staff = Mentor::inRandomOrder()
+                        ->where('institution_id',0)
+                        ->where('is_confirm',1)
+                        ->where('id', '!=', $staff->id)->get()->pluck('id')->toArray();
+        $students = Student::where('staff_id', $staff->id)->get();
+        foreach ($students as $student) {
+            DB::table('students')
+            ->where('id', $student->id)
+            ->update(['staff_id' => $new_staff[array_rand($new_staff,1)]]);
+        }
+        $staff->delete();
+        
+        $message = "Successfully Delete Account";
+        return back()->with('successTailwind', $message);
+      }else{
+        $message = "Cant delete staff member";
+        return back()->with('errorTailwind', $message);
+      }
     }
 }

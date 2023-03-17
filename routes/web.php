@@ -168,6 +168,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/staffs/sendInvite', [StaffController::class, 'sendInvite'])->name('staffs.sendInvite');
         Route::get('/staffs/{staff}/edit', [StaffController::class, 'edit'])->name('staffs.edit');
         Route::patch('/staffs/{staff}/update', [StaffController::class, 'update' ])->name('staffs.update');
+        Route::get('/staffs/{staff}/suspend', [StaffController::class, 'suspend' ])->name('staffs.suspend');
+        Route::delete('/staffs/{staff}', [StaffController::class, 'destroy'])->name('staffs.destroy');
 
 
         // Institution

@@ -54,31 +54,32 @@ class CommentController extends Controller
                 $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
             return view('dashboard.messages.index', compact('messages','injections','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('mentor')->check()){
-            $messages = Comment::whereHas('student', function($q){
-                $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-            })->get();
-            $injections = ProjectSection::whereHas('comment', function($q){
-                $q->whereHas('student', function($q){
+            if(Auth::guard('mentor')->user()->institution_id != 0){
+                $messages = Comment::whereHas('student', function($q){
                     $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-                });
-            })->get();
+                })->get();
+                $injections = ProjectSection::whereHas('comment', function($q){
+                    $q->whereHas('student', function($q){
+                        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                    });
+                })->get();
+            }
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
-            ->whereNotIn('id', function($query) {
-                $query->select('submission_id')
-                      ->from('read_notifications')
-                      ->where('is_read', 1)
-                      ->where('mentor_id', Auth::guard('mentor')->user()->id);
-            })
-            ->when(Auth::guard('mentor')->check(), function ($query) {
-              $query->whereIn('student_id', function($query) {
-                  $query->select('id')
-                      ->from('students')
-                      ->where('mentor_id', Auth::guard('mentor')->user()->id);
-              });
-          })
-            ->get();
-            $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+                ->whereNotIn('id', function($query) {
+                    $query->select('submission_id')
+                          ->from('read_notifications')
+                          ->where('is_read', 1)
+                          ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                })
+                ->when(Auth::guard('mentor')->check(), function ($query) {
+                  $query->whereIn('student_id', function($query) {
+                      $query->select('id')
+                          ->from('students')
+                          ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                  });
+              })
+                ->get();
             return view('dashboard.messages.index', compact('messages','injections','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('customer')->check()){
             $messages = Comment::whereHas('project', function($q){
@@ -89,6 +90,7 @@ class CommentController extends Controller
                     $q->where('company_id', Auth::guard('customer')->user()->company_id);
                 });
             })->get();
+
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
             $submissionNotifications = Submission::whereHas('project', function($q){
                 $q->where('company_id', Auth::guard('customer')->user()->company_id);
@@ -96,9 +98,9 @@ class CommentController extends Controller
                 ->where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('customer_id', Auth::guard('customer')->user()->id);
+                        ->from('read_notifications')
+                        ->where('is_read', 1)
+                        ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
                 ->get();
             $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
@@ -158,7 +160,11 @@ class CommentController extends Controller
         $students = Student::get();
         }elseif(Auth::guard('mentor')->check()){
         // dd(Auth::guard('mentor')->user()->institution_id);
-        $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
+        if(Auth::guard('mentor')->user()->institution_id != 0){
+          $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
+        }else{
+          $projects = Project::where('status', 'publish')->get();
+        }
         $projectSections = ProjectSection::get();
         $students = Student::get();
         }elseif(Auth::guard('customer')->check()){
@@ -239,7 +245,11 @@ class CommentController extends Controller
             $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
             return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('mentor')->check()){
-            $participants = Student::whereHas('comment')->where('mentor_id',Auth::guard('mentor')->user()->id)->get();
+            if(Auth::guard('mentor')->user()->institution_id != 0){
+              $participants = Student::whereHas('comment')->where('mentor_id',Auth::guard('mentor')->user()->id)->get();
+            }else{
+              $participants = Student::whereHas('comment')->where('staff_id',Auth::guard('mentor')->user()->id)->get();
+            }
             $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
             $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
             return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments','totalNotificationAdmin','submissionNotifications'));
@@ -369,7 +379,11 @@ class CommentController extends Controller
             $comment->user_id = Auth::guard('web')->user()->id;
             $comment->student_id = $participant->id;
         }elseif(Auth::guard('mentor')->check()){
-            $comment->mentor_id = Auth::guard('mentor')->user()->id;
+            if(Auth::guard('mentor')->user()->institution_id != 0){
+              $comment->mentor_id = Auth::guard('mentor')->user()->id;
+            }else{
+              $comment->staff_id = Auth::guard('mentor')->user()->id;
+            }
             $comment->student_id = $participant->id;
         }elseif(Auth::guard('customer')->check()){
             $comment->customer_id = Auth::guard('customer')->user()->id;
@@ -400,7 +414,11 @@ class CommentController extends Controller
             $comment->user_id = Auth::guard('web')->user()->id;
             $comment->student_id = $validated['student'];
         }elseif(Auth::guard('mentor')->check()){
-            $comment->mentor_id = Auth::guard('mentor')->user()->id;
+            if(Auth::guard('mentor')->user()->institution_id != 0){
+              $comment->mentor_id = Auth::guard('mentor')->user()->id;
+            }else{
+              $comment->staff_id = Auth::guard('mentor')->user()->id;
+            }
             $comment->student_id = $validated['student'];
         }elseif(Auth::guard('customer')->check()){
             $comment->customer_id = Auth::guard('customer')->user()->id;

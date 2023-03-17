@@ -134,7 +134,15 @@
             <option value="private">Private to one institution</option>
           @endif
         @elseif(Auth::guard('mentor')->check())
-          <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+          @if (Auth::guard('mentor')->user()->institution_id != 0)
+            <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+          @else
+            @if($project->institution_id)
+              <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{$project->institution->name}})</option>
+            @else
+              <option value="private">Private to one institution</option>
+            @endif
+          @endif
         @elseif(Auth::guard('customer')->check())
           @if($project->institution_id)
             <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
@@ -278,12 +286,30 @@
   </script>
   @endsection
 @elseif(Auth::guard('mentor')->check() )
-  @section('more-js')
+  @if (Auth::guard('mentor')->user()->institution_id != 0)
+    @section('more-js')
+      <script>
+        $(document).ready(function () {
+          $('#inputinstitution').hide();
+          
+          });
+      </script>
+    @endsection
+  @else
+    @section('more-js')
     <script>
       $(document).ready(function () {
         $('#inputinstitution').hide();
-         
+          $("#inputprojecttype").change(function(){
+            var values = $("#inputprojecttype option:selected").val();
+            if(values=='private'){
+              $('#inputinstitution').show();
+            }else{
+              $('#inputinstitution').hide();
+            }
+          });
         });
     </script>
-  @endsection
+    @endsection
+  @endif
 @endif

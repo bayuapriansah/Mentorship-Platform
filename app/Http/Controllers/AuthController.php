@@ -75,7 +75,8 @@ class AuthController extends Controller
         }
         $validated = $validator->validated();
         $existing_student = Student::where('email',$validated['email'])->first();
-        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->first();
+        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->where('is_confirm',1)->first();
+        $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();
         if($existing_student == null){
             $student = new Student;
             $student->first_name = $validated['first_name'];
@@ -95,6 +96,7 @@ class AuthController extends Controller
             $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $student->is_confirm = 0;
             $student->mentor_id = $mentor->id;
+            $student->staff_id = $staff->id;
             $student->save();
             $emailEnc = (new SimintEncryption)->encData($validated['email']);
             $link = route('verified', [$emailEnc]);

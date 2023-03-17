@@ -25,6 +25,10 @@ class Comment extends Model
         return $this->belongsTo(Mentor::class);
     }
 
+    public function staff(){
+        return $this->belongsTo(Mentor::class);
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

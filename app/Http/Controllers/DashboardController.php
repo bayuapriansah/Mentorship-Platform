@@ -219,8 +219,7 @@ class DashboardController extends Controller
     }
 
     public function indexMentor()
-    {
-      
+    { 
       if(Auth::guard('web')->check()){
           $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
           $submissionNotifications = Submission::where('is_complete', 1)
@@ -248,6 +247,21 @@ class DashboardController extends Controller
                     });
                 })
                   ->get();
+              if(Auth::guard('mentor')->user()->institution_id != 0){
+                $students   = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
+                $assign_students   = Student::where('mentor_id', Auth::guard('mentor')->user()->id)->get()->count();
+                $mentors    = Mentor::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
+                $student_submissions = Submission::whereHas('student', function($q){
+                  $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                })->count();
+              }else{
+                $students   = Student::get()->count();
+                $assign_students   = Student::where('staff_id', Auth::guard('mentor')->user()->id)->get()->count();
+                $mentors    = Mentor::where('institution_id', 0)->get()->count();
+                $student_submissions = Submission::whereHas('student', function($q){
+                  $q->where('staff_id', Auth::guard('mentor')->user()->id);
+                })->count();
+              }
           } elseif(Auth::guard('customer')->check()){
               $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
               $submissionNotifications = Submission::whereHas('project', function($q){
@@ -262,14 +276,6 @@ class DashboardController extends Controller
                 })
                 ->get();
           }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-      $students   = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
-      $assign_students   = Student::where('mentor_id', Auth::guard('mentor')->user()->id)->get()->count();
-      $mentors    = Mentor::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
-      // dd($mentors);
-      $student_submissions = Submission::whereHas('student', function($q){
-        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-      })->count();
       return view('dashboard.index', compact('students','assign_students','mentors','student_submissions','totalNotificationAdmin','submissionNotifications'));
     }
 
@@ -393,42 +399,69 @@ class DashboardController extends Controller
       if (Auth::guard('web')->check()) {
         # code...
       }elseif(Auth::guard('mentor')->check()){
-        $validated = $request->validate([
-          'first_name' => ['required'],
-          'last_name' => ['required'],
-          'email' => ['required'],
-          'institution' => ['required'],
-          'state' => ['required'],
-          'country' => ['required'],
-          'position' => ['required'],
-          'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
-            return !empty($request->input('password'));
-          })],
-          'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+        if(Auth::guard('mentor')->user()->institution_id != 0){
+          $validated = $request->validate([
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'email' => ['required'],
+            'institution' => ['required'],
+            'state' => ['required'],
+            'country' => ['required'],
+            'position' => ['required'],
+            'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
               return !empty($request->input('password'));
-          })]
-        ],
-        [
-          'first_name.required' => 'First name is required',
-          'last_name.required' => 'Last name is required',
-          'email.required' => 'Email is required',
-          'institution.required' => 'Institution is required',
-          'state.required' => 'State is required',
-          'country.required' => 'Country is required',
-          'position.required' => 'Position is required',
-          'password.confirmed' => 'Password confirmation must be the same',
-          'password_confirmation.required'=> 'Please enter your confirmation password',
-        ]);
-        // dd($request->all());
-        $mentor = Mentor::find($id);
-        $mentor->first_name = $validated['first_name'];
-        $mentor->last_name = $validated['last_name'];
-        $mentor->position = $validated['position'];
-        if(!empty($validated['password'])){
-        $mentor->password = \Hash::make($validated['password']);
+            })],
+            'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+                return !empty($request->input('password'));
+            })]
+          ],
+          [
+            'first_name.required' => 'First name is required',
+            'last_name.required' => 'Last name is required',
+            'email.required' => 'Email is required',
+            'institution.required' => 'Institution is required',
+            'state.required' => 'State is required',
+            'country.required' => 'Country is required',
+            'position.required' => 'Position is required',
+            'password.confirmed' => 'Password confirmation must be the same',
+            'password_confirmation.required'=> 'Please enter your confirmation password',
+          ]);
+          $mentor = Mentor::find($id);
+          $mentor->first_name = $validated['first_name'];
+          $mentor->last_name = $validated['last_name'];
+          $mentor->position = $validated['position'];
+          if(!empty($validated['password'])){
+          $mentor->password = \Hash::make($validated['password']);
+          }
+          $mentor->save();
+        }else{
+          $validated = $request->validate([
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'email' => ['required'],
+            'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+              return !empty($request->input('password'));
+            })],
+            'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+                return !empty($request->input('password'));
+            })]
+          ],
+          [
+            'first_name.required' => 'First name is required',
+            'last_name.required' => 'Last name is required',
+            'email.required' => 'Email is required',
+            'password.confirmed' => 'Password confirmation must be the same',
+            'password_confirmation.required'=> 'Please enter your confirmation password',
+          ]);
+          $mentor = Mentor::find($id);
+          $mentor->first_name = $validated['first_name'];
+          $mentor->last_name = $validated['last_name'];
+          if(!empty($validated['password'])){
+          $mentor->password = \Hash::make($validated['password']);
+          }
+          $mentor->save();
         }
-        $mentor->save();
-        return back()->with('successTailwind', 'Profile Edited');
+          return back()->with('successTailwind', 'Profile Edited');
       }elseif(Auth::guard('customer')->check()){
         $validated = $request->validate([
           'first_name' => ['required'],

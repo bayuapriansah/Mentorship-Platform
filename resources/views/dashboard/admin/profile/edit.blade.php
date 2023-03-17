@@ -33,21 +33,30 @@
   </div>
 
   <div class="flex justify-between mt-4">
+    @if (Auth::guard('mentor')->user()->institution_id != 0)
     <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->email}}" placeholder="First Name *" name="email" readonly><br>
+    @else
+    <input class="border bg-gray-300 border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->email}}" placeholder="First Name *" name="email" readonly><br>
+
+    @endif
    
     @if(Auth::guard('mentor')->check())
-      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->institution->name}}" placeholder="Last Name *" name="institution" readonly><br>
+      @if (Auth::guard('mentor')->user()->institution_id != 0)
+        <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="wewe" placeholder="Last Name *" name="institution" readonly><br>
+      @endif
     @elseif(Auth::guard('customer')->check())
       <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->company->name}}" placeholder="Last Name *" name="company" readonly><br>
     @endif
   </div>
 
   @if(Auth::guard('mentor')->check())
-    <div class="flex justify-between mt-4">
-      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->state}}" placeholder="First Name *" name="state" readonly><br>
-    
-      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->country}}" placeholder="Last Name *" name="country" readonly><br>
-    </div>
+    @if (Auth::guard('mentor')->user()->institution_id != 0)
+      <div class="flex justify-between mt-4">
+        <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->state}}" placeholder="State" name="state" readonly><br>
+      
+        <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->country}}" placeholder="Country" name="country" readonly><br>
+      </div>
+    @endif
   @elseif(Auth::guard('customer')->check())
     <div class="flex justify-between mt-4">
       <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->company->address}}" placeholder="First Name *" readonly><br>
@@ -57,12 +66,23 @@
   @endif
 
   <div class="flex mt-4">
-    <input class="border border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="" type="text" value="{{$user->position}}" placeholder="Position" name="position" required><br>
-    @error('position')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
+    @if(Auth::guard('mentor')->check())
+      @if (Auth::guard('mentor')->user()->institution_id != 0)
+        <input class="border border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="" type="text" value="{{$user->position}}" placeholder="Position" name="position" required><br>
+        @error('position')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+      @endif
+    @elseif(Auth::guard('customer')->check())
+      <input class="border border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="" type="text" value="{{$user->position}}" placeholder="Position" name="position" required><br>
+      @error('position')
+          <p class="text-red-600 text-sm mt-1">
+            {{$message}}
+          </p>
+      @enderror
+    @endif
   </div>
 
   <div class="flex justify-between mt-4">

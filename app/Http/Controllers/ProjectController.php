@@ -108,8 +108,6 @@ class ProjectController extends Controller
             $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
             return view('dashboard.projects.index', compact('projects','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('mentor')->check()){
-            $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->where('status', 'publish')->get();
-
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
             ->whereNotIn('id', function($query) {
@@ -126,6 +124,17 @@ class ProjectController extends Controller
               });
           })
             ->get();
+            if(Auth::guard('mentor')->user()->institution_id != 0){
+                $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->where('status', 'publish')->get();
+              }else{
+                $projects = Project::where('status', 'publish')
+                                    ->whereHas('enrolled_project', function($q){
+                                      $q->whereHas('student', function($q){
+                                        $q->where('staff_id', Auth::guard('mentor')->user()->id );
+                                      });
+                                      })->orWhere('proposed_by', Auth::guard('mentor')->user()->id)
+                                      ->get();
+              }
             $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
             return view('dashboard.projects.index', compact('projects','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('customer')->check()){
@@ -208,7 +217,6 @@ class ProjectController extends Controller
     {
         // dd($request->all());
         // dd(Auth::guard('mentor')->user()->institution_id);
-
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],
@@ -246,7 +254,12 @@ class ProjectController extends Controller
             if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
                 $project->institution_id = $request->institution_id;
             }elseif(Auth::guard('mentor')->check()){
+              if(Auth::guard('mentor')->user()->institution_id != 0){
                 $project->institution_id = Auth::guard('mentor')->user()->institution_id;
+              }
+              else{
+                $project->institution_id = $request->institution_id;
+              }
             }
         }
         $project->dataset = $request->dataset;
@@ -356,7 +369,12 @@ class ProjectController extends Controller
                     $project->institution_id = $request->institution_id;
                 }
             }elseif(Auth::guard('mentor')->check()){
-                $project->institution_id = Auth::guard('mentor')->user()->institution_id;
+                if(Auth::guard('mentor')->user()->institution_id != 0){
+                  $project->institution_id = Auth::guard('mentor')->user()->institution_id;
+                }
+                else{
+                  $project->institution_id = $request->institution_id;
+                }
             }
         }elseif($validated['projectType'] == 'public'){
             $project->institution_id = null;

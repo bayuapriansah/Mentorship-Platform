@@ -91,7 +91,7 @@
     @endif
   </div>
   @if (!Auth::guard('customer')->check())
-    @if(Auth::guard('web')->check() || Auth::guard('mentor')->user()->id == $submission->student->mentor_id )
+    @if(Auth::guard('web')->check() || Auth::guard('mentor')->user()->id == $submission->student->mentor_id || Auth::guard('mentor')->user()->id == $submission->student->staff_id )
       @if(!$submission->grade)
         <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
           @csrf

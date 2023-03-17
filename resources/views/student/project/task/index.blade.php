@@ -71,10 +71,12 @@
               <button type="button" id="accordion-{{$no}}" class="flex items-center justify-between w-full p-5 mb-2 font-medium text-left text-black  border-b-2 border-gray-200" data-accordion-target="#accordion-collapse-body-{{$no}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$no}}">
                 <div class="flex items-center space-x-4">
                   <i class="text-dark-blue fa-solid fa-circle"></i>
-                  <div class="flex-col">
+                  <div class="flex-col capitalize">
                     <span class="font-medium">
                       @if ($comment->mentor_id)
                         {{$comment->mentor->first_name}} {{$comment->mentor->last_name}} (Supervisor)
+                      @elseif($comment->staff_id)
+                        {{$comment->staff->first_name}} {{$comment->staff->last_name}} (Customer)
                       @elseif ($comment->user_id)
                         {{$comment->user->name}} (Platform Admin)
                       @else
@@ -121,8 +123,14 @@
         </div>
         @endif
         <div class="border border-light-blue p-6 rounded-xl bg-white space-y-2" id="message-form">
-          <p class="border-b-2 text-dark-blue font-medium">To: <span class="font-light text-black pl-4">{{$student->mentor->first_name}} {{$student->mentor->last_name}} (Supervisor)</span></p>
-          <p class="border-b-2 text-dark-blue font-medium">CC: 
+          <p class="border-b-2 text-dark-blue font-medium">
+            To: 
+            <span class="font-light text-black pl-4 capitalize">
+              {{$student->mentor->first_name}} {{$student->mentor->last_name}} (Supervisor);
+              {{$student->staff->first_name}} {{$student->staff->last_name}} (Customer)
+            </span>
+          </p>
+          <p class="border-b-2 text-dark-blue font-medium capitalize">CC: 
             <span class="pl-3">
               @foreach ($admins as $admin)
                 <span class="font-light text-black">{{$admin->name}}(Admin); </span>

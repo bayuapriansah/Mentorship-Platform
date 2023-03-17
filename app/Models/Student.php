@@ -35,6 +35,10 @@ class Student extends Authenticatable
     {
         return $this->belongsTo(Mentor::class);
     }
+    public function staff()
+    {
+        return $this->belongsTo(Mentor::class);
+    }
 
     public function enrolled_projects()
     {
