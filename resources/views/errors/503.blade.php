@@ -13,7 +13,7 @@
       <div class="flex justify-between">
         <div class="flex-col my-auto w-1/2 space-y-7">
           <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="mb-10" alt="">
-          <h1 class="text-dark-blue my-8 text-3xl">Website is under Maintenance</h1>
+          <h1 class="text-dark-blue my-8 text-3xl">Website is under maintenance</h1>
           <div class="text-justify text-2xl">
             Thank you for visiting our website. We're currently making some updates to provide you with an even better experience. We're sorry for any inconvenience this may cause and we appreciate your patience as we work to improve our site.
           </div>

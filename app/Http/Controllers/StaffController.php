@@ -207,7 +207,7 @@ class StaffController extends Controller
           $message = "Successfully Activate Account";
         }
         $staff->save();
-        return back()->with('errorTailwind', $message);
+        return back()->with('successTailwind', $message);
       }else{
         $message = "Cant deactivate staff member";
         return back()->with('errorTailwind', $message);
