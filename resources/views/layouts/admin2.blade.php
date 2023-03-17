@@ -1,3 +1,10 @@
+{{-- @foreach($submissionNotifications as $submissionNotification)
+  @if($submissionNotification->student == !NULL)
+  @if($submissionNotification->read_notification == !NULL)
+    @dd($submissionNotification->submission)
+  @endif
+  @endif
+@endforeach --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,6 +65,64 @@
   </script>
 
   <style>
+      .tooltip-inner {
+          font-size: 12px;
+          padding: 6px 10px;
+          border-radius: 0.375rem;
+          border:1px solid black;
+          background-color: white 
+        }
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
     .dropdown:hover .dropdown-menu {
         display: block;
         /* transform: translate(1247px, 750px); */
@@ -105,7 +170,7 @@
                 <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
               <span class="sr-only">Notifications Bell</span>
-              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3"></div>
+              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $totalNotificationAdmin }}</div>
 
             </button>
 
@@ -166,14 +231,14 @@
       </div>
     </div>
     {{-- message modal --}}
-    <div id="message-modal" data-modal-placement="top-center" class="fixed top-0 left-0 right-20 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+    <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
       <div class="relative w-full h-full max-w-sm md:h-auto">
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow">
               <!-- Modal header -->
               <div class="flex items-center justify-between p-5 border-b rounded-t">
                   <h3 class="text-xl font-medium text-gray-900">
-                      Message Notification
+                      Notification
                   </h3>
                   <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="message-modal">
                       <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -181,55 +246,66 @@
                   </button>
               </div>
               <!-- Modal body -->
-              <div class="p-6 space-y-6">
-                  <p class="text-base leading-relaxed text-gray-500">
-                    {{-- @if(Auth::guard('customer')->check())
-                        {{Auth::guard('customer')->user()->name}}
-                    @elseif(Auth::guard('web')->check())
-                        {{Auth::guard('web')->user()->email}}
-                    @endif --}}
-                    Notification Feature Will be in Future Release
-                  </p>
+              <div class="pl-6 pb-3 space-y-6">
+                <div class="max-h-60 overflow-y-auto">
+                  @if($totalNotificationAdmin > 0)
+                  {{-- @php
+                  $numbercountpls = 1;
+                  @endphp --}}
+                    @foreach($submissionNotifications as $submissionNotification)
+                      @if($submissionNotification->student == !NULL)
+                        @if(Auth::guard('web')->check())
+                          <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
+                            <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                              <div class="flex">
+                                  <div class="ml-3 text-sm font-normal">
+                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                      <p>
+                                    <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
+                                  </div>
+                              </div>
+                            </div>
+                          </a>
+                        @elseif(Auth::guard('mentor')->check())
+                          @if($submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id)
+                            <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
+                              <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                <div class="flex">
+                                    <div class="ml-3 text-sm font-normal">
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                        <p>
+                                      <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
+                                    </div>
+                                </div>
+                              </div>
+                            </a>                      
+                          @endif
+                        @elseif(Auth::guard('customer')->check())
+                            <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
+                              <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                <div class="flex">
+                                    <div class="ml-3 text-sm font-normal">
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                        <p>
+                                      <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
+                                    </div>
+                                </div>
+                              </div>
+                            </a>
+                        @endif
+                      @endif
+                      {{-- @php
+                      $numbercountpls = $numbercountpls +1;
+                      @endphp --}}
+                    @endforeach
+                    @else
+                    {{ 'No Notification' }}
+                  @endif
+                </div>
               </div>
-          </div>
-      </div>
+            </div>
     </div>
     {{-- end message modal --}}
-    <footer class="w-full bg-lightest-blue relative z-30">
-      <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
-        <div class="col-span-4">
-          <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
-          <p class="text-grey font-normal text-[10px] pt-2 ">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal <a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C" class="text-black">Notices and Disclaimers</a>. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See <a href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html" class="text-black">Intel's Global Human Rights Principles</a>. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
-        </div>
-        <div class="col-start-6 col-span-2 flex flex-col">
-          <ul class="text-dark-blue text-xs font-normal">
-            <li class="pb-3"><a href="/#AiForFuture">For Industry Partners</a></li>
-            <li class="pb-3"><a href="/#AiForFuture">For Institution</a></li>
-            <li class="pb-3"><a href="/#AiForFuture">For Students</a></li>
-          </ul>
-        </div>
-        <div class="col-start-8 col-span-2 flex flex-col">
-          <ul class="text-dark-blue text-xs font-normal">
-            <li class="pb-3"><a href="/#AiForFuture">About Us</a></li>
-            <li class="pb-3"><a href="/faq">FAQs</a></li>
-            <li class="pb-3"><a href="">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="col-start-10 col-span-2 flex flex-col">
-          <ul class="text-dark-blue intelOne text-xs font-normal">
-            <li class="pb-3"><a href="/terms-of-use">Terms & Conditions</a></li>
-            <li class="pb-3"><a href="/privacy-policy">Privacy Policies</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="w-full border-t border-grey">
-        <div class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-11 grid-flow-col ">
-          <div class="col-span-5 my-auto ">
-            <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
-          </div>
-        </div>
-      </div>
-    </footer>
   </div>
 
 

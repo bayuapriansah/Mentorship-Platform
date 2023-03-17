@@ -221,7 +221,6 @@ fileInput.addEventListener('change', e => {
                     <td>${email.Email}</td>
                 </tr>`;
                 tableBody.append(row);
-
                 if (i === emails.length - 1) {
                     var checkboxes = document.querySelectorAll(".checkbox");
                     for (var j = 0; j < checkboxes.length; j++) {
