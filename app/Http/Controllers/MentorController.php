@@ -264,7 +264,9 @@ class MentorController extends Controller
         $supervisor = Mentor::find($supervisor->id);
 
         $mentors = Mentor::inRandomOrder()
-                        ->where('institution_id',$institution->id)->where('id', '!=', $supervisor->id)->get()->pluck('id')->toArray();
+                        ->where('institution_id',$institution->id)
+                        ->where('is_confirm',1)
+                        ->where('id', '!=', $supervisor->id)->get()->pluck('id')->toArray();
         
         $students = Student::where('mentor_id', $supervisor->id)->get();
         foreach ($students as $student) {

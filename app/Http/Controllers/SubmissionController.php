@@ -79,7 +79,6 @@ class SubmissionController extends Controller
         }
         else{
             $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
-
         }
         return view('dashboard.submissions.index', compact('project', 'submissions'));
     }
