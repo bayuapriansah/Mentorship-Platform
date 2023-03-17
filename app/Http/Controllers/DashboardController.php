@@ -526,8 +526,7 @@ class DashboardController extends Controller
       'g-recaptcha-response.required' => 'Captcha is required',
     ]);
 
-    $tes = $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
-    dd($tes);
+    $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
     return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
 
   }
