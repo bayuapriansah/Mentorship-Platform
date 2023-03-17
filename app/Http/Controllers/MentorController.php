@@ -223,7 +223,11 @@ class MentorController extends Controller
             }
             $mentor->save();
             // $sendmail = (new MailController)->EmailMentorRegister($mentor->email);
+            if($request->institution){
             $message = "Successfully Register as Mentor, Now you can login to your account";
+            }else{
+              $message = "Successfully Register as Staff Member, Now you can login to your account";
+            }
             return redirect()->route('login')->with('success', $message);
         }else{
             return redirect()->back();
