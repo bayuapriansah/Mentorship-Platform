@@ -23,7 +23,7 @@
   </div>
 </div>
 <div class="w-full">
-  <div class="max-w-[1366px] mx-auto px-16 pt-16 pb-7 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
+  {{-- <div class="max-w-[1366px] mx-auto px-16 pt-16 pb-7 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
     <div class="col-span-12 text-center">
       <p class="font-normal inteOne text-base text-black m-0">Our Esteemed Industry Partners</p>
     </div>
@@ -34,7 +34,7 @@
     <img src="{{asset('assets/img/image 5.png')}}" alt="">
     <img src="{{asset('assets/img/image 6.png')}}" alt="">
     <img src="{{asset('assets/img/image 7.png')}}" alt="">
-  </div>
+  </div> --}}
   <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col" id="AiForFuture">
     <div class="col-span-6 flex my-auto">
       <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
