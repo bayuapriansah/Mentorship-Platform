@@ -63,6 +63,15 @@ class CommentController extends Controller
                         $q->where('mentor_id', Auth::guard('mentor')->user()->id);
                     });
                 })->get();
+            }else{ 
+                $messages = Comment::whereHas('student', function($q){
+                    $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                })->get();
+                $injections = ProjectSection::whereHas('comment', function($q){
+                    $q->whereHas('student', function($q){
+                        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                    });
+                })->get();
             }
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
