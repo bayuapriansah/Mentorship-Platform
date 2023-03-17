@@ -535,7 +535,7 @@ class DashboardController extends Controller
   public function ContactUsMail($mailto,$validated) //Email, urlInvitation
   {
       $data = [
-          'subject' => 'New Email',
+          'subject' => 'Simulated Internship Contact-Us',
           'body' => $mailto,
           'first_name' => $validated['first_name'],
           'last_name' => $validated['last_name'],
