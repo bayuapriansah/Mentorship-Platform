@@ -103,7 +103,8 @@ class ProjectController extends Controller
                                     $q->whereHas('student', function($q){
                                       $q->where('staff_id', Auth::guard('mentor')->user()->id );
                                     });
-                                    })->get();
+                                    })->orWhere('proposed_by', Auth::guard('mentor')->user()->id)
+                                    ->get();
             }
             return view('dashboard.projects.index', compact('projects'));
         }elseif(Auth::guard('customer')->check()){
@@ -129,7 +130,6 @@ class ProjectController extends Controller
     {
         // dd($request->all());
         // dd(Auth::guard('mentor')->user()->institution_id);
-
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],
@@ -167,7 +167,12 @@ class ProjectController extends Controller
             if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
                 $project->institution_id = $request->institution_id;
             }elseif(Auth::guard('mentor')->check()){
+              if(Auth::guard('mentor')->user()->institution_id != 0){
                 $project->institution_id = Auth::guard('mentor')->user()->institution_id;
+              }
+              else{
+                $project->institution_id = $request->institution_id;
+              }
             }
         }
         $project->dataset = $request->dataset;
@@ -234,7 +239,12 @@ class ProjectController extends Controller
                     $project->institution_id = $request->institution_id;
                 }
             }elseif(Auth::guard('mentor')->check()){
-                $project->institution_id = Auth::guard('mentor')->user()->institution_id;
+                if(Auth::guard('mentor')->user()->institution_id != 0){
+                  $project->institution_id = Auth::guard('mentor')->user()->institution_id;
+                }
+                else{
+                  $project->institution_id = $request->institution_id;
+                }
             }
         }elseif($validated['projectType'] == 'public'){
             $project->institution_id = null;
