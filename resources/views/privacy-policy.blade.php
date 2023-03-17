@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div class="max-w-[1366px] px-16 py-16 grid grid-cols-12 grid-flow-col">
+  <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 grid-flow-col">
     <div class="col-span-12 text-sm font-normal">
       <div class="space-y-3">
         <p>
