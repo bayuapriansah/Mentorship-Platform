@@ -65,11 +65,11 @@ class CommentController extends Controller
                 })->get();
             }else{ 
                 $messages = Comment::whereHas('student', function($q){
-                    $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                    $q->where('staff_id', Auth::guard('mentor')->user()->id);
                 })->get();
                 $injections = ProjectSection::whereHas('comment', function($q){
                     $q->whereHas('student', function($q){
-                        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                        $q->where('staff_id', Auth::guard('mentor')->user()->id);
                     });
                 })->get();
             }
