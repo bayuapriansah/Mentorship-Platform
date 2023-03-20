@@ -35,13 +35,14 @@ class MentorController extends Controller
      */
     public function index(Institution $institution)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -90,13 +91,14 @@ class MentorController extends Controller
 
     public function invite(Institution $institution)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -141,9 +143,9 @@ class MentorController extends Controller
         $message = "Successfully Send Invitation to Supervisor";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();
-            $checkUser = User::where('email', $email)->first(); 
-            $checkMentor = Mentor::where('email', $email)->first(); 
-            $checkCustomer = Customer::where('email', $email)->first(); 
+            $checkUser = User::where('email', $email)->first();
+            $checkMentor = Mentor::where('email', $email)->first();
+            $checkCustomer = Customer::where('email', $email)->first();
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('supervisor.register', [$encEmail]);
@@ -180,7 +182,7 @@ class MentorController extends Controller
             return response()->json(['message' => $exception->getMessage()], 500);
         }
     }
-    
+
     public function addMentor($email,$institution_id){
         return Mentor::create([
             'email' => $email,
@@ -242,13 +244,14 @@ class MentorController extends Controller
     // edit mentor dari dashboard
     public function edit(Institution $institution, Mentor $supervisor)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -402,7 +405,7 @@ class MentorController extends Controller
                         ->where('institution_id',$institution->id)
                         ->where('is_confirm',1)
                         ->where('id', '!=', $supervisor->id)->get()->pluck('id')->toArray();
-        
+
         $students = Student::where('mentor_id', $supervisor->id)->get();
         foreach ($students as $student) {
             DB::table('students')
@@ -410,8 +413,8 @@ class MentorController extends Controller
             ->update(['mentor_id' => $mentors[array_rand($mentors,1)]]);
         }
         $supervisor->delete();
-        
-        
+
+
         $message = "Successfully Delete Account";
         return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message);
     }

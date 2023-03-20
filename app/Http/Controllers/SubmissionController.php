@@ -55,13 +55,14 @@ class SubmissionController extends Controller
     // project task submission list
     public function show(Project $project)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -119,7 +120,7 @@ class SubmissionController extends Controller
                                     })->get();
             return view('dashboard.submissions.index', compact('project', 'submissions','totalNotificationAdmin','submissionNotifications'));
           }
-            
+
         }
         else{
             $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
@@ -131,13 +132,14 @@ class SubmissionController extends Controller
     {
 
         // Notification Admin
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })

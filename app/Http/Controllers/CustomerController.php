@@ -21,13 +21,14 @@ class CustomerController extends Controller
 {
     public function indexPartner(Company $partner)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -70,13 +71,14 @@ class CustomerController extends Controller
 
     public function partnerMemberEdit(Company $partner, Customer $member)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -150,13 +152,14 @@ class CustomerController extends Controller
 
     public function invite(Company $partner)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -206,8 +209,8 @@ class CustomerController extends Controller
         $message = "Invitation sented successfully";
         foreach (array_filter($request->email) as $email) {
             $checkCustomer = Customer::where('email', $email)->first();
-            $checkUser = User::where('email', $email)->first(); 
-            $checkMentor = Mentor::where('email', $email)->first(); 
+            $checkUser = User::where('email', $email)->first();
+            $checkMentor = Mentor::where('email', $email)->first();
             $checkStudent = Student::where('email', $email)->first();
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);

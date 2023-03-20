@@ -36,13 +36,14 @@ class InstitutionController extends Controller
     {
         $institutions = institution_world_data_view::get();
         $companies = Company::get();
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -96,13 +97,14 @@ class InstitutionController extends Controller
      */
     public function create()
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -201,13 +203,14 @@ class InstitutionController extends Controller
      */
     public function edit($id)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -294,13 +297,14 @@ class InstitutionController extends Controller
 
     public function institutionStudents(Institution $institution)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })

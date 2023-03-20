@@ -18,7 +18,7 @@ class EnrolledProjectController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -50,13 +50,14 @@ class EnrolledProjectController extends Controller
      */
     public function show($project_id)
     {
-        
+
         if(Auth::guard('web')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('user_id', Auth::guard('web')->user()->id);
                 })
@@ -114,10 +115,10 @@ class EnrolledProjectController extends Controller
                                                 })->get();
             return view('dashboard.enrolled.show', compact('enrolled_projects','project','totalNotificationAdmin','submissionNotifications'));
           }
-          
-                                              
+
+
         }
-        
+
         return view('dashboard.enrolled.show', compact('enrolled_projects','project','totalNotificationAdmin','submissionNotifications'));
     }
 

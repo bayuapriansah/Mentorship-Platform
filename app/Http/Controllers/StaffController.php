@@ -57,6 +57,7 @@ class StaffController extends Controller
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
@@ -85,6 +86,7 @@ class StaffController extends Controller
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('mentor_id', Auth::guard('mentor')->user()->id);
                 })
@@ -144,9 +146,9 @@ class StaffController extends Controller
       $message = "Successfully Send Invitation to Staff Member";
         foreach (array_filter($request->email) as $email) {
           $checkStudent = Student::where('email', $email)->first();
-          $checkUser = User::where('email', $email)->first(); 
-          $checkMentor = Mentor::where('email', $email)->first(); 
-          $checkCustomer = Customer::where('email', $email)->first(); 
+          $checkUser = User::where('email', $email)->first();
+          $checkMentor = Mentor::where('email', $email)->first();
+          $checkCustomer = Customer::where('email', $email)->first();
           if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
               $encEmail = (new SimintEncryption)->encData($email);
               $link = route('supervisor.register', [$encEmail]);
@@ -202,6 +204,7 @@ class StaffController extends Controller
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
@@ -271,7 +274,7 @@ class StaffController extends Controller
             ->update(['staff_id' => $new_staff[array_rand($new_staff,1)]]);
         }
         $staff->delete();
-        
+
         $message = "Successfully Delete Account";
         return back()->with('successTailwind', $message);
       }else{

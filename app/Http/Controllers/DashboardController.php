@@ -29,8 +29,8 @@ class DashboardController extends Controller
       $mentors    = Mentor::get()->count();
       $eProjects  = EnrolledProject::get()->count();
       $companies  = Company::get()->count();
-      
-      
+
+
       if(Auth::guard('web')->check()){
           $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
           $submissionNotifications = Submission::where('is_complete', 1)
@@ -67,6 +67,7 @@ class DashboardController extends Controller
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
@@ -106,7 +107,7 @@ class DashboardController extends Controller
 
     public function indexCustomer()
     {
-      
+
       if(Auth::guard('web')->check()){
           $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
           $submissionNotifications = Submission::where('is_complete', 1)
@@ -143,6 +144,7 @@ class DashboardController extends Controller
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
@@ -157,7 +159,7 @@ class DashboardController extends Controller
       $internshipsOngoing = EnrolledProject::where('is_submited', 0)->whereHas('project', function($q){
         $q->where('company_id', Auth::guard('customer')->user()->company_id);
       })->get()->count();
-      
+
       $customerTotal = Customer::where('company_id', Auth::guard('customer')->user()->company_id)->get()->count();
 
       $student_submissions = Submission::whereHas('project', function($q){
@@ -169,7 +171,7 @@ class DashboardController extends Controller
 
     public function allCustomer()
     {
-      
+
       if(Auth::guard('web')->check()){
           $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
           $submissionNotifications = Submission::where('is_complete', 1)
@@ -206,6 +208,7 @@ class DashboardController extends Controller
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
@@ -222,7 +225,7 @@ class DashboardController extends Controller
     }
 
     public function indexMentor()
-    { 
+    {
       if(Auth::guard('web')->check()){
           $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
           $submissionNotifications = Submission::where('is_complete', 1)
@@ -343,7 +346,7 @@ class DashboardController extends Controller
     // Profile
 
     public function profile($id){
-      
+
       if(Auth::guard('web')->check()){
           $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
           $submissionNotifications = Submission::where('is_complete', 1)
@@ -380,6 +383,7 @@ class DashboardController extends Controller
                 ->whereNotIn('id', function($query) {
                     $query->select('submission_id')
                           ->from('read_notifications')
+                          ->where('type', 'submissions')
                           ->where('is_read', 1)
                           ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
@@ -399,7 +403,7 @@ class DashboardController extends Controller
     }
 
     public function updateProfile(Request $request, $id){
-      // dd($request->all()); 
+      // dd($request->all());
       if (Auth::guard('web')->check()) {
         # code...
       }elseif(Auth::guard('mentor')->check()){
@@ -500,15 +504,15 @@ class DashboardController extends Controller
         }
         $customer->save();
         return back()->with('successTailwind', 'Profile Edited');
-      } 
+      }
       return back();
     }
-  
+
   public function contact()
   {
     return view('contact');
   }
-  
+
   public function sendContact(Request $request)
   {
     $validated = $request->validate([
