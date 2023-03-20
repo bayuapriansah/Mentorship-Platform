@@ -45,7 +45,7 @@
             @else
               <div class="space-y-7">
                 <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('mentor')->user()->first_name}} {{Auth::guard('mentor')->user()->last_name}}</h3>
-                <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Staff Admin Dashboard.</p>
+                <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Staff Member Dashboard.</p>
               </div>
               <img src="{{asset('assets/img/SL2-Registered-Logo.png')}}" class="w-80 h-44 object-scale-down" alt="">
             @endif

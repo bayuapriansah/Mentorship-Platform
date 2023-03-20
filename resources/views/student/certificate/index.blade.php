@@ -35,7 +35,7 @@
             participated in a 2-week-long Simulated AI Internship with Sustainable Living Lab from
           </p>
           <p>
-            {{$student->created_at->format('d-m-Y')}} to {{Carbon\Carbon::parse($student->end_date)->format('d-m-y')}}
+            {{$student->created_at->format('d-m-Y')}} to {{Carbon\Carbon::parse($student->end_date)->format('d-m-Y')}}
           </p>
         </div>
         <div class="flex flex-col -space-y-2">

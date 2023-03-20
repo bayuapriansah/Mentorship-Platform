@@ -16,7 +16,7 @@ return [
     */
 
     'default' => env('CACHE_DRIVER', 'file'),
-    
+
     // 'headers' => [
     //     'Cache-Control' => 'public, max-age=3600',
     // ],
@@ -55,6 +55,7 @@ return [
         'file' => [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data'),
+            'ttl' => 604801,
         ],
 
         'memcached' => [
