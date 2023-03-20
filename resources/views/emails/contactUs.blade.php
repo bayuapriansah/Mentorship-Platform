@@ -27,7 +27,6 @@
     </tr>
     <tr>
       <td colspan="2">Email: {{$data['email']}}</td>
-      <td colspan="2">Phone: {{$data['phone']}}</td>
     </tr>
     <tr>
       <td colspan="4">

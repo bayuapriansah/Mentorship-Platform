@@ -564,7 +564,6 @@ class DashboardController extends Controller
           'type' => 'contactUs',
         ];
       // }
-      dd($data);
       
       try
       {
