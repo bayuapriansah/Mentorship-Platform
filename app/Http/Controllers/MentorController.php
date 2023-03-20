@@ -53,6 +53,7 @@ class MentorController extends Controller
                     ->whereNotIn('id', function($query) {
                         $query->select('submission_id')
                               ->from('read_notifications')
+                              ->where('type', 'submissions')
                               ->where('is_read', 1)
                               ->where('mentor_id', Auth::guard('mentor')->user()->id);
                     })
@@ -109,6 +110,7 @@ class MentorController extends Controller
                     ->whereNotIn('id', function($query) {
                         $query->select('submission_id')
                               ->from('read_notifications')
+                              ->where('type', 'submissions')
                               ->where('is_read', 1)
                               ->where('mentor_id', Auth::guard('mentor')->user()->id);
                     })
@@ -262,6 +264,7 @@ class MentorController extends Controller
                     ->whereNotIn('id', function($query) {
                         $query->select('submission_id')
                               ->from('read_notifications')
+                              ->where('type', 'submissions')
                               ->where('is_read', 1)
                               ->where('mentor_id', Auth::guard('mentor')->user()->id);
                     })

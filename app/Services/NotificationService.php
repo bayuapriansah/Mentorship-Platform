@@ -10,7 +10,7 @@ class NotificationService
 {
     public static function getNotifications()
     {
-        
+
         $submissionCountReadNotification = 0;
         $submissionNotifications = [];
 
@@ -30,6 +30,7 @@ class NotificationService
                     ->whereNotIn('id', function($query) {
                         $query->select('submission_id')
                               ->from('read_notifications')
+                              ->where('type', 'submissions')
                               ->where('is_read', 1)
                               ->where('mentor_id', Auth::guard('mentor')->user()->id);
                     })
