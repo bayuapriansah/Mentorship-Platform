@@ -511,21 +511,31 @@ class DashboardController extends Controller
   
   public function sendContact(Request $request)
   {
-    $validated = $request->validate([
-      'first_name' => ['required'],
-      'last_name' => ['required'],
-      'email' => ['required'],
-      'message' => ['required'],
-      'phone' => ['sometimes'],
-      'g-recaptcha-response' => 'required|recaptcha',
-    ],[
-      'first_name.required' => 'First name is required',
-      'last_name.required' => 'Last name is required',
-      'email.required' => 'Email is required',
-      'message.required' => 'Message is required',
-      'g-recaptcha-response.required' => 'Captcha is required',
-    ]);
-
+    // dd($request->all());
+    if (Auth::guard('student')->check()) {
+      $validated = $request->validate([
+        'message' => ['required'],
+        'g-recaptcha-response' => 'required|recaptcha',
+      ],[
+        'message.required' => 'Message is required',
+        'g-recaptcha-response.required' => 'Captcha is required',
+      ]);
+    }else{
+      $validated = $request->validate([
+        'first_name' => ['required'],
+        'last_name' => ['required'],
+        'email' => ['required'],
+        'message' => ['required'],
+        'g-recaptcha-response' => 'required|recaptcha',
+      ],[
+        'first_name.required' => 'First name is required',
+        'last_name.required' => 'Last name is required',
+        'email.required' => 'Email is required',
+        'message.required' => 'Message is required',
+        'g-recaptcha-response.required' => 'Captcha is required',
+      ]);
+    }
+    
     $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
     return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
 
@@ -533,16 +543,28 @@ class DashboardController extends Controller
 
   public function ContactUsMail($mailto,$validated) //Email, urlInvitation
   {
-      $data = [
+      if (Auth::guard('student')->check()) {
+        $data = [
+          'subject' => 'Simulated Internship Contact-Us',
+          'body' => $mailto,
+          'first_name' => Auth::guard('student')->user()->first_name,
+          'last_name' => Auth::guard('student')->user()->last_name,
+          'email' => Auth::guard('student')->user()->email,
+          'message'=> $validated['message'],
+          'type' => 'contactUs',
+        ];
+      }else{
+        $data = [
           'subject' => 'Simulated Internship Contact-Us',
           'body' => $mailto,
           'first_name' => $validated['first_name'],
           'last_name' => $validated['last_name'],
           'email' => $validated['email'],
           'message'=> $validated['message'],
-          'phone'=> $validated['phone'],
           'type' => 'contactUs',
-      ];
+        ];
+      }
+      
       try
       {
           Mail::to($mailto)->send(new MailNotify($data));
