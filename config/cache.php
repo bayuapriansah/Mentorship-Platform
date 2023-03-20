@@ -55,7 +55,7 @@ return [
         'file' => [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data'),
-            'ttl' => 604800,
+            'ttl' => 604801,
         ],
 
         'memcached' => [
