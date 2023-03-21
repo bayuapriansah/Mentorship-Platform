@@ -17,6 +17,7 @@
 @endif
   @csrf
   @method('PATCH')
+  @if(!Auth::guard('web')->check())
   <div class="flex justify-between">
     <input class="border border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="firstname" type="text" value="{{$user->first_name}}" placeholder="First Name *" name="first_name" required><br>
     @error('first_name')
@@ -31,18 +32,39 @@
         </p>
     @enderror
   </div>
+  @else
+  <div class="flex justify-between">
+    <input class="border border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="name" type="text" value="{{$user->name}}" placeholder="Name *" name="name" required><br>
+    @error('name')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
+  <div class="flex justify-between mt-4">
+    <input class="border bg-gray-300 border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="email" type="text" value="{{$user->email}}" placeholder="Email *" name="email" readonly required><br>
+    @error('email')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
+  @endif
 
   <div class="flex justify-between mt-4">
-    @if (Auth::guard('mentor')->user()->institution_id != 0)
-    <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->email}}" placeholder="First Name *" name="email" readonly><br>
-    @else
-    <input class="border bg-gray-300 border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->email}}" placeholder="First Name *" name="email" readonly><br>
-
+    @if(Auth::guard('mentor')->check())
+      @if (Auth::guard('mentor')->user()->institution_id != 0)
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="" type="text" value="{{$user->email}}" placeholder="Email *" name="email" readonly><br>
+      @else
+      <input class="border bg-gray-300 border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="" type="text" value="{{$user->email}}" placeholder="Email *" name="email" readonly><br>
+      @endif
     @endif
+      {{-- <input class="border bg-gray-300 border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="" type="text" value="{{$user->email}}" placeholder="Email *" name="email" readonly><br> --}}
+      
    
     @if(Auth::guard('mentor')->check())
       @if (Auth::guard('mentor')->user()->institution_id != 0)
-        <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="wewe" placeholder="Last Name *" name="institution" readonly><br>
+        <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->institution->name}}" placeholder="Last Name *" name="institution" readonly><br>
       @endif
     @elseif(Auth::guard('customer')->check())
       <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->company->name}}" placeholder="Last Name *" name="company" readonly><br>

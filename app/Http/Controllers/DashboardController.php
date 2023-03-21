@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Company;
@@ -11,8 +12,8 @@ use App\Mail\MailNotify;
 use App\Models\Customer;
 use App\Models\Submission;
 use Illuminate\Http\Request;
-use App\Models\ProjectSection;
 
+use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use Illuminate\Validation\Rule;
 use App\Models\ReadNotification;
@@ -388,7 +389,7 @@ class DashboardController extends Controller
       $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
 
       if (Auth::guard('web')->check()) {
-          # code...
+        $user = User::find($id);
       }elseif(Auth::guard('mentor')->check()){
         $user = Mentor::find($id);
       }elseif(Auth::guard('customer')->check()){
@@ -399,9 +400,32 @@ class DashboardController extends Controller
     }
 
     public function updateProfile(Request $request, $id){
-      // dd($request->all()); 
       if (Auth::guard('web')->check()) {
-        # code...
+        $validated = $request->validate([
+          'name' => ['required'],
+          'email' => ['required'],
+          'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+            return !empty($request->input('password'));
+          })],
+          'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+              return !empty($request->input('password'));
+          })]
+        ],
+        [
+          'name.required' => 'Name is required',
+          'email.required' => 'Email is required',
+          'password.confirmed' => 'Password confirmation must be the same',
+          'password_confirmation.required'=> 'Please enter your confirmation password',
+        ]);
+
+        $user = User::find($id);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        if(!empty($validated['password'])){
+        $user->password = \Hash::make($validated['password']);
+        }
+        $user->save();
+        return back()->with('successTailwind', 'Profile Edited');
       }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
           $validated = $request->validate([
