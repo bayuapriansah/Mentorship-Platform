@@ -22,14 +22,24 @@
       <form action="/contact" method="post">
         @csrf
         <div class="mb-3 flex justify-between">
-          <input type="text" name="first_name" placeholder="First Name*" class="border border-light-blue rounded-lg w-1/2 mr-5 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" required>
+          <input type="text" name="first_name" placeholder="First Name*" class="border border-light-blue rounded-lg w-1/2 mr-5 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" 
+          @if (Auth::guard('student')->check())
+            value={{Auth::guard('student')->user()->first_name}}
+            disabled
+          @endif
+          required>
           @error('first_name')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
 
-          <input type="text" name="last_name" placeholder="Last Name*" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" required>
+          <input type="text" name="last_name" placeholder="Last Name*" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"
+          @if (Auth::guard('student')->check())
+            value={{Auth::guard('student')->user()->last_name}}
+            disabled
+          @endif
+          required>
           @error('last_name')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
@@ -37,16 +47,13 @@
           @enderror
         </div>
         <div class="mb-3">
-          <input type="text" name="email" placeholder="Email Address*" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" required>
+          <input type="text" name="email" placeholder="Email Address*" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"
+          @if (Auth::guard('student')->check())
+            value={{Auth::guard('student')->user()->email}}
+            disabled
+          @endif
+          required>
           @error('email')
-              <p class="text-red-600 text-sm mt-1">
-                {{$message}}
-              </p>
-          @enderror
-        </div>
-        <div class="mb-3">
-          <input type="text" name="phone" placeholder="Phone Number" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none">
-          @error('phone')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
