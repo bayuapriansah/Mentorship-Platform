@@ -13,7 +13,9 @@
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
+    
     <div class="col-span-6">
+      @include('flash-message')
         @if ($regState == 0)
         {{-- reg state 0 if we access register just from the page --}}
         <form action="{{route('register')}}" method="post" id="register">

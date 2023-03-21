@@ -583,6 +583,9 @@ class StudentController extends Controller
 
         // to get randomly id mentors
         $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->where('is_confirm',1)->first();
+        if($mentor == null){
+          return back()->with('errorTailwind', "Your institute supervisor haven't registered yet");
+        }
         $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();        
         $regStudent = Student::where('email',$validated['email'])->first();
         $regStudent->first_name = $validated['first_name'];
@@ -598,6 +601,7 @@ class StudentController extends Controller
         // just for note, is confirm and the end_date we dont need to set in here because when we enter the route verified the is confirm and the end_date  will be handled by the route
         // $regStudent->is_confirm = 1;
         // $regStudent->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
+        dd($mentor);
         $regStudent->mentor_id = $mentor->id;
         $regStudent->staff_id = $staff->id;
         $regStudent->save();
