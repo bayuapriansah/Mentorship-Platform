@@ -47,7 +47,15 @@ class CommentController extends Controller
                       ->WhereNull('staff_id')
                       ->WhereNull('user_id')
                       ->WhereNull('customer_id');
-            })->get();
+                })->whereNotIn('id', function($query) {
+                $query->select('comments_id')
+                    ->from('read_notifications')
+                    ->where('type', 'comments')
+                    ->where('is_read', 1)
+                    ->where('user_id', Auth::guard('web')->user()->id);
+            })
+            ->get();
+            // dd($messages);
             $injections = ProjectSection::whereHas('comment')->get();
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
@@ -336,15 +344,49 @@ class CommentController extends Controller
             }
         $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
 
+        $readMessageProjectSections = Comment::where(['project_section_id' => $injection->id,'student_id' => $participant->id,'user_id' => null,'mentor_id' => null,'customer_id' => null,])->get();
         $comments = Comment::where('project_section_id', $injection->id)->where('student_id', $participant->id)->get();
         $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
         $readAllDataMessage = Comment::where('project_section_id', $injection->id)
-        ->where('student_id', $participant->id)
-        ->whereNull('user_id')
-        ->whereNull('mentor_id')
-        ->whereNull('customer_id')->get();
-        dd($readAllDataMessage);
-        // ->update(['read_message' => 1]);
+            ->where('student_id', $participant->id)
+            ->whereNull('user_id')
+            ->whereNull('mentor_id')
+            // ->whereNull('customer_id')->get();
+            ->whereNull('customer_id')
+            ->update(['read_message' => 1]);
+
+        $guard = Auth::getDefaultDriver();
+
+        foreach ($readMessageProjectSections as $readMessageProjectSection) {
+            $studentId = $readMessageProjectSection->student_id;
+            $commentsId = $readMessageProjectSection->id;
+
+            $existingRecord = ReadNotification::where('student_id', $studentId)
+                ->where('comments_id', $commentsId)
+                ->first();
+
+            if (!$existingRecord) {
+                $readNotification = new ReadNotification;
+                $readNotification->student_id = $studentId;
+                $readNotification->comments_id = $commentsId;
+
+                switch ($guard) {
+                    case 'web':
+                        $readNotification->user_id = Auth::guard('web')->user()->id;
+                        break;
+                    case 'mentor':
+                        $readNotification->mentor_id = Auth::guard('mentor')->user()->id;
+                        break;
+                    case 'customer':
+                        $readNotification->customer_id = Auth::guard('customer')->user()->id;
+                        break;
+                }
+
+                $readNotification->type = 'comments';
+                $readNotification->is_read = 1;
+                $readNotification->save();
+            }
+        }
         return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments', 'customer_participants','totalNotificationAdmin','submissionNotifications'));
     }
 
