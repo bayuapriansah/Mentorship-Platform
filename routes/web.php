@@ -116,6 +116,11 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/task/{task}/readNotif/{id}', [StudentController::class, 'readActivity'])->name('student.readActivity');
     Route::get('/profile/{student}/project/{project}/notification/{notification}/readNotifTask/', [StudentController::class, 'readActivityTask'])->name('student.readActivityTask');
 
+    // Support
+    Route::get('/profile/{student}/support', [StudentController::class, 'support'])->name('student.support');
+    Route::post('/profile/{student}/support', [StudentController::class, 'sendSupport'])->name('student.sendSupport');
+
+
 
     Route::get('/profile/{student}/allProjectsAvailable/{project}/detail', [StudentController::class, 'availableProjectDetail'])->name('student.availableProjectDetail');
     // Route::get('/projects/{student}/applied/{project}/detail', [ProjectController::class, 'appliedDetail'])->name('projects.appliedDetail');

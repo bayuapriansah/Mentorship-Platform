@@ -9,15 +9,17 @@ use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
+use App\Mail\MailNotify;
 use App\Models\Customer;
 use App\Models\Submission;
 use App\Models\Institution;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\EnrolledProject;
 use App\Models\ReadNotification;
-use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -1064,6 +1066,64 @@ class StudentController extends Controller
         abort(403);
       }
       return view('student.certificate.index', compact('student'));
-      
     }
+
+    public function support(Student $student)
+    {
+      if($student->id != Auth::guard('student')->user()->id ){
+        abort(403);
+      }
+      // $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
+      $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+      $completed_months = Project::whereHas('enrolled_project', function($q){
+        $q->where('student_id', Auth::guard('student')->user()->id);
+        $q->where('is_submited',1);
+      })->get();
+      $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+
+      $newMessage = $this->newCommentForSidebarMenu($student->id);
+      $newActivityNotifs = $this->newNotificationActivity($student->id);
+      $notifActivityCount = $this->newNotificationActivityCount($student->id);
+      $notifNewTasks = (new NotificationController)->all_notif_new_task();
+      $dataMessages = (new NotificationController)->data_comment_from_admin($student->id);
+      return view('student.support', compact('student','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages','enrolled_projects','completed_months','dataDate'));
+    }
+
+    public function sendSupport(Request $request,Student $student)
+    {
+      $validated = $request->validate([
+        'first_name' => ['required'],
+        'last_name' => ['required'],
+        'email' => ['required'],
+        'message' => ['required'],
+      ],[
+        'first_name.required' => 'First name is required',
+        'last_name.required' => 'Last name is required',
+        'email.required' => 'Email is required',
+        'message.required' => 'Message is required',
+      ]);
+      $this->SupportMail('sip@sustainablelivinglab.org', $validated);
+      return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
+    }
+
+    public function SupportMail($mailto,$validated) //Email, urlInvitation
+    {
+      $data = [
+        'subject' => 'Simulated Internship Support-Mail',
+        'body' => $mailto,
+        'first_name' => $validated['first_name'],
+        'last_name' => $validated['last_name'],
+        'email' => $validated['email'],
+        'message'=> $validated['message'],
+        'type' => 'contactUs',
+      ];
+    
+    try
+      {
+        Mail::to($mailto)->send(new MailNotify($data));
+        return response()->json(['Your message has been successfully sent to our team.']);
+      } catch (\Exception $th) {
+        return response()->json(['Sorry Something went wrong']);
+      }
+  }
 }
