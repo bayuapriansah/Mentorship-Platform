@@ -27,10 +27,10 @@ class DashboardController extends Controller
     public function index()
     {
       $students   = Student::get()->count();
-      $mentors    = Mentor::get()->count();
+      $mentors    = Mentor::where('institution_id', '>',0)->get()->count();
+      $staffs    = Mentor::where('institution_id', 0)->get()->count();
       $eProjects  = EnrolledProject::get()->count();
       $companies  = Company::get()->count();
-      
       
       if(Auth::guard('web')->check()){
           $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
@@ -74,7 +74,7 @@ class DashboardController extends Controller
                 ->get();
           }
       $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-      return view('dashboard.index', compact('students','mentors','eProjects','companies','totalNotificationAdmin','submissionNotifications'));
+      return view('dashboard.index', compact('students','staffs','mentors','eProjects','companies','totalNotificationAdmin','submissionNotifications'));
     }
 
     public function singleSubmissionReadNotification($projectID,$submissionID,$studentId){
