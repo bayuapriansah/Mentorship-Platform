@@ -12,7 +12,7 @@ use App\Models\Customer;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
-
+use Illuminate\Support\Facades\Hash;
 use App\Models\EnrolledProject;
 use Illuminate\Validation\Rule;
 use App\Models\ReadNotification;
@@ -439,7 +439,7 @@ class DashboardController extends Controller
           $mentor->last_name = $validated['last_name'];
           $mentor->position = $validated['position'];
           if(!empty($validated['password'])){
-          $mentor->password = \Hash::make($validated['password']);
+          $mentor->password = Hash::make($validated['password']);
           }
           $mentor->save();
         }else{
@@ -465,7 +465,7 @@ class DashboardController extends Controller
           $mentor->first_name = $validated['first_name'];
           $mentor->last_name = $validated['last_name'];
           if(!empty($validated['password'])){
-          $mentor->password = \Hash::make($validated['password']);
+          $mentor->password = Hash::make($validated['password']);
           }
           $mentor->save();
         }
@@ -500,7 +500,7 @@ class DashboardController extends Controller
         $customer->last_name = $validated['last_name'];
         $customer->position = $validated['position'];
         if(!empty($validated['password'])){
-        $customer->password = \Hash::make($validated['password']);
+        $customer->password = Hash::make($validated['password']);
         }
         $customer->save();
         return back()->with('successTailwind', 'Profile Edited');
@@ -539,7 +539,7 @@ class DashboardController extends Controller
         'g-recaptcha-response.required' => 'Captcha is required',
       ]);
     }
-    
+
     $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
     return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
 
@@ -568,7 +568,7 @@ class DashboardController extends Controller
           'type' => 'contactUs',
         ];
       }
-      
+
       try
       {
           Mail::to($mailto)->send(new MailNotify($data));
