@@ -50,6 +50,10 @@ Route::get('/supportlib', function () {
 Route::get('/faq', function () {
     return view('faq');
 })->name('faq');
+Route::get('/about-us', function () {
+  return view('about');
+})->name('about');
+Route::get('/for-students', [IndexController::class, 'forStudents'])->name('forStudent');
 Route::get('/contact', [DashboardController::class, 'contact'])->name('contact');
 Route::post('/contact', [DashboardController::class, 'sendContact'])->name('sendContact');
 Route::get('/privacy-policy', function () {

@@ -567,34 +567,23 @@ class DashboardController extends Controller
 
   public function ContactUsMail($mailto,$validated) //Email, urlInvitation
   {
-      // if (Auth::guard('student')->check()) {
-      //   $data = [
-      //     'subject' => 'Simulated Internship Contact-Us',
-      //     'body' => $mailto,
-      //     'first_name' => Auth::guard('student')->user()->first_name,
-      //     'last_name' => Auth::guard('student')->user()->last_name,
-      //     'email' => Auth::guard('student')->user()->email,
-      //     'message'=> $validated['message'],
-      //     'type' => 'contactUs',
-      //   ];
-      // }else{
-        $data = [
-          'subject' => 'Simulated Internship Contact-Us',
-          'body' => $mailto,
-          'first_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->first_name : $validated['first_name'],
-          'last_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->last_name : $validated['last_name'],
-          'email' => Auth::guard('student')->check()? Auth::guard('student')->user()->email : $validated['email'],
-          'message'=> $validated['message'],
-          'type' => 'contactUs',
-        ];
-      // }
-      
-      try
-      {
-          Mail::to($mailto)->send(new MailNotify($data));
-          return response()->json(['Your message has been successfully sent to our team.']);
-      } catch (\Exception $th) {
-          return response()->json(['Sorry Something went wrong']);
-      }
+    $data = [
+      'subject' => 'Simulated Internship Contact-Us',
+      'body' => $mailto,
+      'first_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->first_name : $validated['first_name'],
+      'last_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->last_name : $validated['last_name'],
+      'email' => Auth::guard('student')->check()? Auth::guard('student')->user()->email : $validated['email'],
+      'message'=> $validated['message'],
+      'type' => 'contactUs',
+    ];
+    
+    
+    try
+    {
+        Mail::to($mailto)->send(new MailNotify($data));
+        return response()->json(['Your message has been successfully sent to our team.']);
+    } catch (\Exception $th) {
+        return response()->json(['Sorry Something went wrong']);
+    }
   }
 }
