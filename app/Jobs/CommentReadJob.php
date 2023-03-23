@@ -58,9 +58,26 @@ class CommentReadJob implements ShouldQueue
             $studentId = $readMessageProjectSection->student_id;
             $commentsId = $readMessageProjectSection->id;
 
-            $existingRecord = ReadNotification::where('student_id', $studentId)
-                ->where('comments_id', $commentsId)
-                ->first();
+            switch ($this->guard) {
+                case 'web':
+                    $existingRecord = ReadNotification::where('student_id', $studentId)
+                    ->where('comments_id', $commentsId)
+                    ->where('user_id', $this->roleUserId)
+                    ->first();
+                    break;
+                case 'mentor':
+                    $existingRecord = ReadNotification::where('student_id', $studentId)
+                    ->where('comments_id', $commentsId)
+                    ->where('mentor_id', $this->roleUserId)
+                    ->first();
+                    break;
+                case 'customer':
+                    $existingRecord = ReadNotification::where('student_id', $studentId)
+                    ->where('comments_id', $commentsId)
+                    ->where('customer_id', $this->roleUserId)
+                    ->first();
+                    break;
+            }
 
             if (!$existingRecord) {
                 $readNotification = new ReadNotification;
