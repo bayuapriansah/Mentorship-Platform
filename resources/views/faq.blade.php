@@ -18,47 +18,48 @@
       $faqs = [
         0 => array(
           'title'=>'What types of projects are available on the website?',
-          'answer'=>'AI projects ranging from Machine Learning (ML), Natural Language Processing (NLP), to Computer Vision (CV)'
+          'answer'=>'We have various AI projects ranging from Machine Learning (ML), Natural Language Processing (NLP), to Computer Vision (CV).'
         ),
         1 => array(
           'title'=>'How do I enroll in a project?',
-          'answer'=>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus, sequi.'
+          'answer'=>'When you go to the Internship Projects page you will see the list of all available projects. To enroll simply click on the enroll button. Note that you can only be enrolled in one project at a time therefore, you will be able to enroll in another project after you have completed the project you are currently enrolled in.'
         ),
         2 => array(
-          'title'=>'What are the requirements for a project?',
-          'answer'=>'If you are enrolled in an institute involved in this program you can start any project.'
+          'title'=>'What are the requirements to enroll in a project?',
+          'answer'=>'To enroll in a project you must be currently attending an institute which is involved in the Simulated Internship Program.'
         ),
         3 => array(
+          'title'=>'What are the requirements to complete a project?',
+          'answer'=>'Each project has it’s own specific requirements. After you enroll in a project you will receive a variety of tasks which you will need to complete. Once you submit a task, your institutions supervisor mark your task as pass or return it to you for revisions. You must pass all the tasks to complete a project. 
+'
+        ),
+        4 => array(
           'title'=>'How long is this program?',
           'answer'=>'The program is typically 4 months long and comprised of projects of various durations (generally 1 month).'
         ),
-        4 => array(
+        5 => array(
           'title'=>'Are there any deadlines for applying for projects?',
           'answer'=>'The deadlines for each task/project are the soft deadlines. These deadlines are what your customer is expecting you to meet but, your educational institute will be responsible for fixing hard deadlines.'
         ),
-        5 => array(
+        6 => array(
           'title'=>'Can I work on more than one project at a time?',
           'answer'=>'You can only be enrolled in one project at a time. However, if the deadline of a project has passed, you can enroll in a second one while you finish the first project.'
         ),
-        6 => array(
+        7 => array(
           'title'=>'Will I receive college credit for my internship?',
           'answer'=>'College credit specifics is dependent on your insitution. Please contact your institution for more information.'
         ),
-        7 => array(
+        8 => array(
           'title'=>'Are there any opportunities for full-time employment after the program?',
           'answer'=>'We cannot guarantee employment after this program.'
         ),
-        8 => array(
-          'title'=>'How will I be matched with an internship opportunity?',
-          'answer'=>'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur.'
-        ),
         9 => array(
           'title'=>'Will there be a supervisor or mentor assigned to me during the internship?',
-          'answer'=>'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet, ipsa!.'
+          'answer'=>'There will be one supervisor assigned to you from your own institute, and one staff member assigned to you from the Simulated Internship Platform team. You can chat with the supervisor and the staff member for any required support using the messaging feature present under each task of a project.'
         ),
         10 => array(
           'title'=>'What are the expectations from an intern during an internship project?',
-          'answer'=>'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam, error!.'
+          'answer'=>'An intern is expected to enroll in and complete multiple projects on the platform based on the duration of their internship. For each project, they must pass all the tasks inside the recommended project duration where each tasks should be completed inside the recommended task duration.'
         ),
         11 => array(
           'title'=>'I see an industry partner listed but there is not a project listed by them?',
