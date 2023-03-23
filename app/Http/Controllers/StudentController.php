@@ -59,7 +59,7 @@ class StudentController extends Controller
 
 
       if(Auth::guard('web')->check()){
-          $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
           $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -93,10 +93,10 @@ class StudentController extends Controller
                   })
                   ->get();
             }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+      $totalNotificationAdmin = $submissionNotifications->count();
         // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
-        return view('dashboard.students.index', compact('students', 'enrolled_projects','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.students.index', compact('students', 'enrolled_projects'));
     }
 
     public function register($email)
@@ -118,7 +118,7 @@ class StudentController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -152,12 +152,12 @@ class StudentController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         if(Route::is('dashboard.students.invite')){
             $allInstitutions = Institution::where('status',1)->get();
-            return view('dashboard.students.institution.invite', compact('allInstitutions', 'institution','totalNotificationAdmin','submissionNotifications'));
+            return view('dashboard.students.institution.invite', compact('allInstitutions', 'institution'));
         }else{
-            return view('dashboard.students.institution.invite', compact('institution','totalNotificationAdmin','submissionNotifications'));
+            return view('dashboard.students.institution.invite', compact('institution'));
         }
     }
 
@@ -278,7 +278,7 @@ class StudentController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -312,9 +312,9 @@ class StudentController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $institutions = Institution::get();
-        return view('dashboard.students.edit', compact('student', 'institutions','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.students.edit', compact('student', 'institutions'));
     }
 
     public function manageStudentpatch(Request $request, Student $student)

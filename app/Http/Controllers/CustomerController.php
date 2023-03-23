@@ -23,7 +23,7 @@ class CustomerController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -57,16 +57,16 @@ class CustomerController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $members = Customer::where('company_id', $partner->id)->get();
-        return view('dashboard.companies.partner.index', compact('members','partner','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.companies.partner.index', compact('members','partner'));
     }
 
     public function partnerMemberEdit(Company $partner, Customer $member)
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -100,8 +100,8 @@ class CustomerController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.companies.partner.edit',compact('partner', 'member','totalNotificationAdmin','submissionNotifications'));
+        $totalNotificationAdmin = $submissionNotifications->count();
+        return view('dashboard.companies.partner.edit',compact('partner', 'member'));
     }
 
     public function partnerMemberUpdate(Request $request, Company $partner, Customer $member)
@@ -140,7 +140,7 @@ class CustomerController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -174,12 +174,12 @@ class CustomerController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         if (!Auth::guard('customer')) {
-            return view('dashboard.companies.partner.invite', compact('partner','totalNotificationAdmin','submissionNotifications'));
+            return view('dashboard.companies.partner.invite', compact('partner'));
         } else {
             // need to put partner here for a while @farhanfarhan9
-            return view('dashboard.companies.partner.invite', compact('partner','totalNotificationAdmin','submissionNotifications'));
+            return view('dashboard.companies.partner.invite', compact('partner'));
         }
     }
 

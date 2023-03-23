@@ -26,7 +26,7 @@
       <td>
         <a href="/dashboard/messages/{{$injection->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">Message
         <span class="bg-[#EA0202] p-1 rounded-full">
-          {{$messages->count()}}
+          {{ getCommentMessages()->count() }}
         </span>
         <i class="fa-xs fa-solid fa-chevron-right"></i>
       </a>

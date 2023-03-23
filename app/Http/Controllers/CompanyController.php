@@ -22,7 +22,7 @@ class CompanyController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -56,9 +56,9 @@ class CompanyController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $companies = Company::get();
-        return view('dashboard.partners.index', compact('companies','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.partners.index', compact('companies'));
     }
 
     public function registered()
@@ -76,7 +76,7 @@ class CompanyController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -110,7 +110,7 @@ class CompanyController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         return view('dashboard.companies.create',compact('totalNotificationAdmin','submissionNotifications'));
     }
 
@@ -172,7 +172,7 @@ class CompanyController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -206,9 +206,9 @@ class CompanyController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $company= Company::find($id);
-        return view('dashboard.companies.edit', compact('company','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.companies.edit', compact('company'));
     }
 
     /**

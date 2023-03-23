@@ -22,7 +22,7 @@ class StaffController extends Controller
     public function index()
     {
         if(Auth::guard('web')->check()){
-          $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
           $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
           } elseif(Auth::guard('mentor')->check()){
               $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -56,15 +56,15 @@ class StaffController extends Controller
                 })
                 ->get();
           }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+      $totalNotificationAdmin = $submissionNotifications->count();
       $staffs = Mentor::where('institution_id',0)->get();
-      return view('dashboard.staffs.index', compact('staffs','totalNotificationAdmin','submissionNotifications'));
+      return view('dashboard.staffs.index', compact('staffs'));
     }
 
     public function invite()
     {
       if(Auth::guard('web')->check()){
-        $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
         $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
         } elseif(Auth::guard('mentor')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -98,7 +98,7 @@ class StaffController extends Controller
               })
               ->get();
         }
-    $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+    $totalNotificationAdmin = $submissionNotifications->count();
       return view('dashboard.staffs.invite',compact('totalNotificationAdmin','submissionNotifications'));
     }
 
@@ -155,7 +155,7 @@ class StaffController extends Controller
     public function edit(Mentor $staff)
     {
         if(Auth::guard('web')->check()){
-          $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
           $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
           } elseif(Auth::guard('mentor')->check()){
               $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -189,8 +189,8 @@ class StaffController extends Controller
                 })
                 ->get();
           }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-      return view('dashboard.staffs.edit', compact('staff','totalNotificationAdmin','submissionNotifications'));
+      $totalNotificationAdmin = $submissionNotifications->count();
+      return view('dashboard.staffs.edit', compact('staff'));
     }
 
     public function update(Request $request,Mentor $staff)

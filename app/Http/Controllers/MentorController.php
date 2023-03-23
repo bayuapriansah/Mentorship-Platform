@@ -37,7 +37,7 @@ class MentorController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -71,9 +71,9 @@ class MentorController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $mentors = Mentor::where('institution_id', $institution->id)->get();
-        return view('dashboard.mentors.index', compact('mentors', 'institution','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.mentors.index', compact('mentors', 'institution'));
     }
 
     public function registered()
@@ -86,7 +86,7 @@ class MentorController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -120,8 +120,8 @@ class MentorController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.mentors.invite', compact('institution','totalNotificationAdmin','submissionNotifications'));
+        $totalNotificationAdmin = $submissionNotifications->count();
+        return view('dashboard.mentors.invite', compact('institution'));
     }
 
     public function sendInvite(Request $request,$institution_id)
@@ -232,7 +232,7 @@ class MentorController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -266,8 +266,8 @@ class MentorController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.mentors.edit', compact('institution', 'supervisor','totalNotificationAdmin','submissionNotifications'));
+        $totalNotificationAdmin = $submissionNotifications->count();
+        return view('dashboard.mentors.edit', compact('institution', 'supervisor'));
     }
     // update mentor dari dashboard
     public function updateMentorDashboard(Request $request, Institution $institution, Mentor $supervisor)

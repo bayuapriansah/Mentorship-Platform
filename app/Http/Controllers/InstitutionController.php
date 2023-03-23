@@ -38,7 +38,7 @@ class InstitutionController extends Controller
         $companies = Company::get();
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -72,8 +72,8 @@ class InstitutionController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.institutions.index', compact('institutions', 'companies','totalNotificationAdmin','submissionNotifications'));
+        $totalNotificationAdmin = $submissionNotifications->count();
+        return view('dashboard.institutions.index', compact('institutions', 'companies'));
     }
     public function index()
     {
@@ -92,7 +92,7 @@ class InstitutionController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -126,9 +126,9 @@ class InstitutionController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $countries = (new TheWorldController)->TheWorld();
-        return view('dashboard.institutions.create', compact('countries','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.institutions.create', compact('countries'));
     }
 
     /**
@@ -191,7 +191,7 @@ class InstitutionController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -225,11 +225,11 @@ class InstitutionController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $institutions = Institution::where('id',$id)->first();
         $institutions_view = institution_world_data_view::where('id',$id)->first();
         $countries = (new TheWorldController)->TheWorld();
-        return view('dashboard.institutions.edit', compact('institutions','institutions_view','id','countries','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.institutions.edit', compact('institutions','institutions_view','id','countries'));
     }
 
     /**
@@ -278,7 +278,7 @@ class InstitutionController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -312,10 +312,10 @@ class InstitutionController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $students = Student::where('institution_id', $institution->id)->get();
         $enrolled_projects = EnrolledProject::get();
-        return view('dashboard.institutions.students.index', compact('students', 'institution', 'enrolled_projects','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.institutions.students.index', compact('students', 'institution', 'enrolled_projects'));
     }
 
 

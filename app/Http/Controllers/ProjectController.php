@@ -96,10 +96,10 @@ class ProjectController extends Controller
         if(Auth::guard('web')->check()){
             $projects = Project::with(['student', 'company'])->get();
 
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-            return view('dashboard.projects.index', compact('projects','totalNotificationAdmin','submissionNotifications'));
+            $totalNotificationAdmin = $submissionNotifications->count();
+            return view('dashboard.projects.index', compact('projects'));
         }elseif(Auth::guard('mentor')->check()){
             $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
             $submissionNotifications = Submission::where('is_complete', 1)
@@ -128,8 +128,8 @@ class ProjectController extends Controller
                                       })->orWhere('proposed_by', Auth::guard('mentor')->user()->id)
                                       ->get();
               }
-            $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-            return view('dashboard.projects.index', compact('projects','totalNotificationAdmin','submissionNotifications'));
+            $totalNotificationAdmin = $submissionNotifications->count();
+            return view('dashboard.projects.index', compact('projects'));
         }elseif(Auth::guard('customer')->check()){
             $projects = Project::where('company_id', Auth::guard('customer')->user()->company_id)->with(['student', 'company'])->get();
 
@@ -146,8 +146,8 @@ class ProjectController extends Controller
                           ->where('customer_id', Auth::guard('customer')->user()->id);
                 })
                 ->get();
-            $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-            return view('dashboard.projects.index', compact('projects','totalNotificationAdmin','submissionNotifications'));
+            $totalNotificationAdmin = $submissionNotifications->count();
+            return view('dashboard.projects.index', compact('projects'));
         }
     }
 
@@ -161,7 +161,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -195,10 +195,10 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $partners = Company::get();
         $institutions = Institution::get();
-        return view('dashboard.projects.create', compact('partners','institutions','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.create', compact('partners','institutions'));
     }
 
     public function dashboardIndexStore(Request $request)
@@ -265,7 +265,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -299,14 +299,14 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         // if(Auth::guard('web')->check()){
         $partners = Company::get();
         // $institutions = (new InstitutionController)->GetInstituionData();
         $cards = ProjectSection::where('project_id', $project->id)->get();
 
         $institutions = Institution::get();
-        return view('dashboard.projects.edit', compact(['project','partners','cards','institutions','totalNotificationAdmin','submissionNotifications']));
+        return view('dashboard.projects.edit', compact(['project','partners','cards','institutions']));
         // }
         // return view('dashboard.projects.edit', compact('project'));
     }
@@ -388,7 +388,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -422,10 +422,10 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $cards = ProjectSection::where('project_id', $project->id)->get();
 
-        return view('dashboard.projects.show', compact('project','cards','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.show', compact('project','cards'));
     }
 
     public function dashboardpublishDraft(Company $partner, Project $project)
@@ -508,7 +508,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -542,8 +542,8 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.projects.injection.index', compact(['project','totalNotificationAdmin','submissionNotifications']));
+        $totalNotificationAdmin = $submissionNotifications->count();
+        return view('dashboard.projects.injection.index', compact(['project']));
     }
 
     public function dashboardIndexStoreSection(Request $request, Project $project)
@@ -594,7 +594,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -628,17 +628,17 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
-        return view('dashboard.projects.injection.edit', compact(['project','injection', 'attachment_id','attachments','totalNotificationAdmin','submissionNotifications']));
+        return view('dashboard.projects.injection.edit', compact(['project','injection', 'attachment_id','attachments']));
     }
 
     public function dashboardIndexShowSection(Project $project, ProjectSection $injection)
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -672,9 +672,9 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
-        return view('dashboard.projects.injection.show', compact(['project','injection','attachments','totalNotificationAdmin','submissionNotifications']));
+        return view('dashboard.projects.injection.show', compact(['project','injection','attachments']));
     }
 
     public function dashboardIndexUpdateSection(Request $request,Project $project, ProjectSection $injection)
@@ -757,7 +757,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -791,9 +791,9 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $attachment = SectionSubsection::where('project_section_id', $injection->id)->first();
-        return view('dashboard.projects.injection.attachment.index', compact('project', 'injection', 'attachment','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.injection.attachment.index', compact('project', 'injection', 'attachment'));
     }
 
     public function dashboardCreateSubsection ($project_id, $section_id)
@@ -836,7 +836,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -870,8 +870,8 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.projects.injection.attachment.edit', compact('project', 'injection', 'attachment','totalNotificationAdmin','submissionNotifications'));
+        $totalNotificationAdmin = $submissionNotifications->count();
+        return view('dashboard.projects.injection.attachment.edit', compact('project', 'injection', 'attachment'));
     }
 
     public function dashboardUpdateSubsection(Request $request, Project $project, ProjectSection $injection, SectionSubsection $attachment)
@@ -1003,7 +1003,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -1037,16 +1037,16 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $projects = Project::where('company_id', $partner->id)->get();
-        return view('dashboard.projects.index', compact('partner', 'projects','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.index', compact('partner', 'projects'));
     }
 
     public function partnerProjectsCreate(Company $partner)
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -1080,9 +1080,9 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $institutions = Institution::get();
-        return view('dashboard.projects.create', compact('partner', 'institutions','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.create', compact('partner', 'institutions'));
     }
 
     public function partnerProjectsStore(Request $request,Company $partner)
@@ -1172,7 +1172,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -1206,11 +1206,11 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $project = Project::find($project->id);
         $cards = ProjectSection::where('project_id', $project->id)->get();
         $institutions = Institution::get();
-        return view('dashboard.projects.edit', compact('partner', 'project', 'cards', 'institutions','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.edit', compact('partner', 'project', 'cards', 'institutions'));
     }
 
     public function publishDraft(Company $partner, Project $project)
@@ -1243,7 +1243,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -1277,8 +1277,8 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.projects.injection.index', compact('partner', 'project','totalNotificationAdmin','submissionNotifications'));
+        $totalNotificationAdmin = $submissionNotifications->count();
+        return view('dashboard.projects.injection.index', compact('partner', 'project'));
     }
 
     public function partnerProjectsInjectionStore(Request $request, Company $partner, Project $project)
@@ -1332,7 +1332,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -1366,11 +1366,11 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $injection = ProjectSection::find($injection->id);
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
-        return view('dashboard.projects.injection.edit', compact('partner', 'project', 'injection', 'attachments', 'attachment_id','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.injection.edit', compact('partner', 'project', 'injection', 'attachments', 'attachment_id'));
     }
 
     public function partnerProjectsInjectionUpdate(Request $request, Company $partner, Project $project, ProjectSection $injection)
@@ -1418,7 +1418,7 @@ class ProjectController extends Controller
     {
 
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('user_id',Auth::guard('web')->user()->id)->get()->count();
+
             $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
             } elseif(Auth::guard('mentor')->check()){
                 $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
@@ -1452,9 +1452,9 @@ class ProjectController extends Controller
                   })
                   ->get();
             }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count();
         $attachment = SectionSubsection::where('project_section_id', $injection->id)->first();
-        return view('dashboard.projects.injection.attachment.index', compact('partner', 'project', 'injection', 'attachment','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.projects.injection.attachment.index', compact('partner', 'project', 'injection', 'attachment'));
     }
 
     public function partnerProjectsInjectionAttachmentStore(Request $request, Company $partner, Project $project, ProjectSection $injection)
