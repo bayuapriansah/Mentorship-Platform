@@ -2,7 +2,7 @@
 @section('content')
 <section id="about" class="w-full min-h-screen">
   <div class="relative">
-    <img src="{{asset('assets/img/about.png')}}" alt="" class="w-full">
+    <img src="{{asset('assets/img/robot-hand-finger.jpeg')}}" alt="" class="w-full h-[316px] object-cover">
     <div class="absolute bottom-14 left-32 text-white">
       <h1 class="font-bold text-3xl">About</h1>
       <h1 class="font-bold text-3xl"><span class="text-light-brown">Simulated Internship</span> Platform</h1>
