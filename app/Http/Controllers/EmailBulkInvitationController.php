@@ -14,7 +14,6 @@ class EmailBulkInvitationController extends Controller
     {
         return view('test.upload');
     }
-// $emailBulk = new BulkEmailInvitation;
     public function sendInviteFromInstitution(Request $request)
     {
         if ($request->hasFile('file')) {

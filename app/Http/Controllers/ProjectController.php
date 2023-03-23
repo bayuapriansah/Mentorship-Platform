@@ -91,64 +91,23 @@ class ProjectController extends Controller
 
     public function dashboardIndex()
     {
-
-        // $projects = Project::with(['student', 'company'])->where('status','publish')->get();
         if(Auth::guard('web')->check()){
             $projects = Project::with(['student', 'company'])->get();
-
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            $totalNotificationAdmin = $submissionNotifications->count();
-            return view('dashboard.projects.index', compact('projects'));
         }elseif(Auth::guard('mentor')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-            ->whereNotIn('id', function($query) {
-                $query->select('submission_id')
-                      ->from('read_notifications')
-                      ->where('is_read', 1)
-                      ->where('mentor_id', Auth::guard('mentor')->user()->id);
-            })
-            ->when(Auth::guard('mentor')->check(), function ($query) {
-              $query->whereIn('student_id', function($query) {
-                  $query->select('id')
-                      ->from('students')
-                      ->where('mentor_id', Auth::guard('mentor')->user()->id);
-              });
-          })
-            ->get();
             if(Auth::guard('mentor')->user()->institution_id != 0){
                 $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->where('status', 'publish')->get();
-              }else{
+            }else{
                 $projects = Project::where('status', 'publish')
-                                    ->whereHas('enrolled_project', function($q){
-                                      $q->whereHas('student', function($q){
-                                        $q->where('staff_id', Auth::guard('mentor')->user()->id );
-                                      });
-                                      })->orWhere('proposed_by', Auth::guard('mentor')->user()->id)
-                                      ->get();
-              }
-            $totalNotificationAdmin = $submissionNotifications->count();
-            return view('dashboard.projects.index', compact('projects'));
+                ->whereHas('enrolled_project', function($q){
+                    $q->whereHas('student', function($q){
+                        $q->where('staff_id', Auth::guard('mentor')->user()->id );
+                    });
+                })->orWhere('proposed_by', Auth::guard('mentor')->user()->id)->get();
+            }
         }elseif(Auth::guard('customer')->check()){
             $projects = Project::where('company_id', Auth::guard('customer')->user()->company_id)->with(['student', 'company'])->get();
-
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-            $submissionNotifications = Submission::whereHas('project', function($q){
-                $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                })
-                ->where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('type', 'submissions')
-                          ->where('is_read', 1)
-                          ->where('customer_id', Auth::guard('customer')->user()->id);
-                })
-                ->get();
-            $totalNotificationAdmin = $submissionNotifications->count();
-            return view('dashboard.projects.index', compact('projects'));
         }
+        return view('dashboard.projects.index', compact('projects'));
     }
 
     public function draftIndex()
@@ -159,43 +118,6 @@ class ProjectController extends Controller
 
     public function dashboardIndexCreate()
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $partners = Company::get();
         $institutions = Institution::get();
         return view('dashboard.projects.create', compact('partners','institutions'));
@@ -263,43 +185,6 @@ class ProjectController extends Controller
 
     public function dashboardIndexEdit(Project $project)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         // if(Auth::guard('web')->check()){
         $partners = Company::get();
         // $institutions = (new InstitutionController)->GetInstituionData();
@@ -386,43 +271,6 @@ class ProjectController extends Controller
 
     public function dashboardIndexShow(Project $project)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $cards = ProjectSection::where('project_id', $project->id)->get();
 
         return view('dashboard.projects.show', compact('project','cards'));
@@ -506,43 +354,6 @@ class ProjectController extends Controller
     // SECTION
     public function dashboardIndexSection(Project $project)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         return view('dashboard.projects.injection.index', compact(['project']));
     }
 
@@ -592,43 +403,6 @@ class ProjectController extends Controller
 
     public function dashboardIndexEditSection(Project $project, ProjectSection $injection)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
         return view('dashboard.projects.injection.edit', compact(['project','injection', 'attachment_id','attachments']));
@@ -636,43 +410,6 @@ class ProjectController extends Controller
 
     public function dashboardIndexShowSection(Project $project, ProjectSection $injection)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         return view('dashboard.projects.injection.show', compact(['project','injection','attachments']));
     }
@@ -755,43 +492,6 @@ class ProjectController extends Controller
     // SUBSECTION
     public function dashboardIndexSubsection(Project $project, ProjectSection $injection)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $attachment = SectionSubsection::where('project_section_id', $injection->id)->first();
         return view('dashboard.projects.injection.attachment.index', compact('project', 'injection', 'attachment'));
     }
@@ -834,43 +534,6 @@ class ProjectController extends Controller
 
     public function dashboardEditSubsection(Project $project, ProjectSection $injection, SectionSubsection $attachment)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         return view('dashboard.projects.injection.attachment.edit', compact('project', 'injection', 'attachment'));
     }
 
@@ -1001,86 +664,12 @@ class ProjectController extends Controller
 
     public function partnerProjects(Company $partner)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $projects = Project::where('company_id', $partner->id)->get();
         return view('dashboard.projects.index', compact('partner', 'projects'));
     }
 
     public function partnerProjectsCreate(Company $partner)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $institutions = Institution::get();
         return view('dashboard.projects.create', compact('partner', 'institutions'));
     }
@@ -1170,43 +759,6 @@ class ProjectController extends Controller
 
     public function partnerProjectsEdit(Company $partner, Project $project)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $project = Project::find($project->id);
         $cards = ProjectSection::where('project_id', $project->id)->get();
         $institutions = Institution::get();
@@ -1241,43 +793,6 @@ class ProjectController extends Controller
 
     public function partnerProjectsInjection(Company $partner, Project $project)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         return view('dashboard.projects.injection.index', compact('partner', 'project'));
     }
 
@@ -1330,43 +845,6 @@ class ProjectController extends Controller
 
     public function partnerProjectsInjectionEdit(Company $partner, Project $project, ProjectSection $injection)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $injection = ProjectSection::find($injection->id);
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
@@ -1416,43 +894,6 @@ class ProjectController extends Controller
 
     public function partnerProjectsInjectionAttachment(Company $partner, Project $project, ProjectSection $injection)
     {
-
-        if(Auth::guard('web')->check()){
-
-            $submissionNotifications = Submission::where('is_complete', 1)->whereNotIn('id', function($query) {$query->select('submission_id')->from('read_notifications')->where('type', 'submissions')->where('is_read', 1)->where('user_id', Auth::guard('web')->user()->id);})->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('type', 'submissions')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('type','submissions')->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count();
         $attachment = SectionSubsection::where('project_section_id', $injection->id)->first();
         return view('dashboard.projects.injection.attachment.index', compact('partner', 'project', 'injection', 'attachment'));
     }

@@ -29,7 +29,7 @@ class AuthOtpController extends Controller
         if ($request->isMethod('get')) {
             return redirect()->route('otp.login')->with('email', 'Please use registered Email');
         }
-        
+
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required',
@@ -100,7 +100,7 @@ class AuthOtpController extends Controller
                 'email' => 'required',
                 'otp' => 'required'
             ]);
-            
+
             $theMail = (new SimintEncryption)->encData($request->email);
             $encId = (new SimintEncryption)->decData($request->user_id);
             $encEmail = (new SimintEncryption)->decData($theMail);
