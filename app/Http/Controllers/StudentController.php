@@ -1099,11 +1099,13 @@ class StudentController extends Controller
         'first_name' => ['required'],
         'last_name' => ['required'],
         'email' => ['required'],
+        'query' => ['required'],
         'message' => ['required'],
       ],[
         'first_name.required' => 'First name is required',
         'last_name.required' => 'Last name is required',
         'email.required' => 'Email is required',
+        'query.required' => 'Type of query is required',
         'message.required' => 'Message is required',
       ]);
       $this->SupportMail('sip@sustainablelivinglab.org', $validated);
@@ -1118,6 +1120,7 @@ class StudentController extends Controller
         'first_name' => $validated['first_name'],
         'last_name' => $validated['last_name'],
         'email' => $validated['email'],
+        'query' => $validated['query'],
         'message'=> $validated['message'],
         'type' => 'contactUs',
       ];

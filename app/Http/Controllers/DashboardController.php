@@ -549,12 +549,14 @@ class DashboardController extends Controller
         'first_name' => ['required'],
         'last_name' => ['required'],
         'email' => ['required'],
+        'query' => ['required'],
         'message' => ['required'],
         'g-recaptcha-response' => 'required|recaptcha',
       ],[
         'first_name.required' => 'First name is required',
         'last_name.required' => 'Last name is required',
         'email.required' => 'Email is required',
+        'query.required' => 'Type of query is required',
         'message.required' => 'Message is required',
         'g-recaptcha-response.required' => 'Captcha is required',
       ]);
@@ -584,6 +586,7 @@ class DashboardController extends Controller
           'first_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->first_name : $validated['first_name'],
           'last_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->last_name : $validated['last_name'],
           'email' => Auth::guard('student')->check()? Auth::guard('student')->user()->email : $validated['email'],
+          'query'=> $validated['query'],
           'message'=> $validated['message'],
           'type' => 'contactUs',
         ];
