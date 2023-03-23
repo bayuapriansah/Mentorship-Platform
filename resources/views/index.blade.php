@@ -106,7 +106,7 @@
             <div class="flex justify-between">
             <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-medium">{{ $project->period }} Months</span></p>
             <a href="
-            @if (Auth::guard('student')->check() || Auth::guard('web')->check())
+            @if (Auth::guard('student')->check() || Auth::guard('web')->check() || Auth::guard('mentor')->check() || Auth::guard('customer')->check())
                 /projects/{{$project->id}}
             @else
               /otp/login
