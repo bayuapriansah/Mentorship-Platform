@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Str;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Mentor;
@@ -12,6 +12,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Validator;
@@ -66,7 +67,7 @@ class AuthController extends Controller
           'study_program.required' => 'Study program is required',
           'year_of_study.required' => 'Year of study program is required',
           'g-recaptcha-response.required' => 'Captcha is required',
-          
+
         ]);
 
         if($validator->fails()){
@@ -205,8 +206,8 @@ class AuthController extends Controller
             'email.exists' => 'This email is not registered'
         ]);
 
-        $token = \Str::random(64);
-        \DB::table('password_resets')->insert([
+        $token = Str::random(64);
+        DB::table('password_resets')->insert([
             'email' => $request->email,
             'token' => $token,
             'created_at' => Carbon::now(),
@@ -219,7 +220,7 @@ class AuthController extends Controller
     public function showResetForm(Request $request, $token=null)
     {
         return view('auth.reset')->with(['token'=>$token, 'email'=>$request->email]);
-    } 
+    }
 
     public function resetPassword(Request $request)
     {
@@ -248,7 +249,7 @@ class AuthController extends Controller
             'password_confirmation.required'=> 'Please enter your confirmation password',
         ]);
 
-        $checkToken = \DB::table('password_resets')->where([
+        $checkToken = DB::table('password_resets')->where([
             'email'=>$request->email,
             'token'=>$request->token,
         ])->first();
@@ -261,26 +262,26 @@ class AuthController extends Controller
             $customerExist = Customer::where('email',$request->email)->first();
             if($usersExist){
                 User::where('email',$request->email)->update([
-                    'password' =>\Hash::make($request->password)
+                    'password' =>Hash::make($request->password)
                 ]);
 
-                \DB::table('password_resets')->where([
+                DB::table('password_resets')->where([
                     'email'=>$request->email
                 ])->delete();
             }elseif($mentorsExist){
                 Mentor::where('email',$request->email)->update([
-                    'password' =>\Hash::make($request->password)
+                    'password' =>Hash::make($request->password)
                 ]);
 
-                \DB::table('password_resets')->where([
+                DB::table('password_resets')->where([
                     'email'=>$request->email
                 ])->delete();
             }elseif($customerExist){
                 Customer::where('email',$request->email)->update([
-                    'password' =>\Hash::make($request->password)
+                    'password' =>Hash::make($request->password)
                 ]);
 
-                \DB::table('password_resets')->where([
+                DB::table('password_resets')->where([
                     'email'=>$request->email
                 ])->delete();
             }

@@ -11,9 +11,14 @@ class ReadNotification extends Model
 {
     use HasFactory;
     protected $fillable = ['student_id', 'notifications_id', 'is_read'];
+
     public function user()
     {
     return $this->belongsTo(User::class);
+    }
+
+    public function comment(){
+        return $this->belongsTo(Comment::class);
     }
 
     public function notification()

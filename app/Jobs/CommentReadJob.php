@@ -21,16 +21,18 @@ class CommentReadJob implements ShouldQueue
     protected $injection;
     protected $participant;
     protected $roleUserId;
+    protected $guard;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($injection, $participant,$roleUserId)
+    public function __construct($injection, $participant, $roleUserId, $guard)
     {
         $this->injection = $injection;
         $this->participant = $participant;
         $this->roleUserId = $roleUserId;
+        $this->guard = $guard;
     }
 
     /**
@@ -50,7 +52,7 @@ class CommentReadJob implements ShouldQueue
             ->whereNull('customer_id')
             ->update(['read_message' => 1]);
 
-        $guard = Auth::getDefaultDriver();
+        // $guard = Auth::getDefaultDriver();
 
         foreach ($readMessageProjectSections as $readMessageProjectSection) {
             $studentId = $readMessageProjectSection->student_id;
@@ -65,7 +67,7 @@ class CommentReadJob implements ShouldQueue
                 $readNotification->student_id = $studentId;
                 $readNotification->comments_id = $commentsId;
 
-                switch ($guard) {
+                switch ($this->guard) {
                     case 'web':
                         $readNotification->user_id = $this->roleUserId;
                         break;
