@@ -20,51 +20,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         $companies = Company::get();
-        return view('dashboard.partners.index', compact('companies','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.partners.index', compact('companies'));
     }
 
     public function registered()
@@ -80,50 +37,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        return view('dashboard.companies.create',compact('totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.companies.create');
     }
 
     /**
@@ -148,7 +62,7 @@ class CompanyController extends Controller
         $company->email = $validated['email'];
         if($request->hasFile('logo')){
             // 5000000
-            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
                 ){
@@ -157,7 +71,7 @@ class CompanyController extends Controller
             }else{
                 return back()->with('error', 'file extension is not png, jpg or jpeg');
             }
-            
+
         }
         $company->save();
         return redirect('dashboard/institutions_partners/')->with('successTailwind','Partner has been added');
@@ -182,51 +96,8 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         $company= Company::find($id);
-        return view('dashboard.companies.edit', compact('company','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.companies.edit', compact('company'));
     }
 
     /**
@@ -243,19 +114,19 @@ class CompanyController extends Controller
             'address' => 'required',
             'email' => 'required',
         ]);
-        
+
         $company = Company::find($id);
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
         if($request->hasFile('logo')){
-        
+
             if(Storage::path($company->logo)) {
                 Storage::disk('public')->delete($company->logo);
             }
-        
+
             // save the new image
-             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 || 
+             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
                 $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
                 ){
@@ -267,7 +138,7 @@ class CompanyController extends Controller
         }
         $company->save();
         return redirect('dashboard/institutions_partners')->with('successTailwind','Partner has been edited');
-        
+
     }
 
     /**
@@ -281,5 +152,5 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->delete();
         return redirect('dashboard/institutions')->with('successTailwind','Partner has been deleted');
-    }   
+    }
 }

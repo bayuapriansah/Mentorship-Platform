@@ -1,10 +1,3 @@
-{{-- @foreach($submissionNotifications as $submissionNotification)
-  @if($submissionNotification->student == !NULL)
-  @if($submissionNotification->read_notification == !NULL)
-    @dd($submissionNotification->submission)
-  @endif
-  @endif
-@endforeach --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +63,7 @@
           padding: 6px 10px;
           border-radius: 0.375rem;
           border:1px solid black;
-          background-color: white 
+          background-color: white
         }
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -147,6 +140,7 @@
       background-color: rgba(0, 0, 0, 0.3);
     }
   </style>
+
 </head>
 <body>
   <div class="max-w-[2000px] mx-auto">
@@ -162,6 +156,12 @@
         </div>
       </div>
 
+      @php
+        $notifications = getNotificationSubmission();
+        $NotificationForAdmin = $notifications['totalNotificationAdmin'];
+        $DataSubmissionNotifications = $notifications['submissionNotifications'];
+      @endphp
+
       <div class="w-full bg-profile-grey mx-auto py-11 px-10 relative">
         <div class="flex flex-row-reverse">
           <div class="space-x-9">
@@ -170,7 +170,9 @@
                 <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
               <span class="sr-only">Notifications Bell</span>
-              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $totalNotificationAdmin }}</div>
+              @if ($NotificationForAdmin > 0)
+              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $NotificationForAdmin }}</div>
+              @endif
 
             </button>
 
@@ -179,6 +181,9 @@
                 <path d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
               <span class="sr-only">Notifications Message</span>
+              @if (getCommentMessages()->count() > 0)
+              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ getCommentMessages()->count() }}</div>
+              @endif
             </a>
 
 
@@ -247,19 +252,19 @@
               </div>
               <!-- Modal body -->
               <div class="pl-6 pb-3 space-y-6">
-                <div class="max-h-60 overflow-y-auto">
-                  @if($totalNotificationAdmin > 0)
-                  {{-- @php
+                <div class="max-h-60 overflow-y-auto mt-3">
+                  @if($NotificationForAdmin > 0)
+                  @php
                   $numbercountpls = 1;
-                  @endphp --}}
-                    @foreach($submissionNotifications as $submissionNotification)
+                  @endphp
+                    @foreach($DataSubmissionNotifications as $submissionNotification)
                       @if($submissionNotification->student == !NULL)
                         @if(Auth::guard('web')->check())
                           <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
                             <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                               <div class="flex">
                                   <div class="ml-3 text-sm font-normal">
-                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}. There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                       <p>
                                     <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
                                   </div>
@@ -272,20 +277,20 @@
                               <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                                 <div class="flex">
                                     <div class="ml-3 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}.There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                         <p>
                                       <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
                                     </div>
                                 </div>
                               </div>
-                            </a>                      
+                            </a>
                           @endif
                         @elseif(Auth::guard('customer')->check())
                             <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
                               <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                                 <div class="flex">
                                     <div class="ml-3 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}.There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                         <p>
                                       <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
                                     </div>
@@ -294,9 +299,9 @@
                             </a>
                         @endif
                       @endif
-                      {{-- @php
+                      @php
                       $numbercountpls = $numbercountpls +1;
-                      @endphp --}}
+                      @endphp
                     @endforeach
                     @else
                     {{ 'No Notification' }}
@@ -327,7 +332,7 @@
         if ( document.getElementById(`dropdownHover${id}`).classList.contains('hidden') )
 
         document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
-      } 
+      }
   </script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CommentReadJob;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
@@ -38,132 +39,36 @@ class CommentController extends Controller
 
     public function index()
     {
-        
         if(Auth::guard('web')->check()){
-            $messages = Comment::get();
             $injections = ProjectSection::whereHas('comment')->get();
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-                $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-            return view('dashboard.messages.index', compact('messages','injections','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('mentor')->check()){
             if(Auth::guard('mentor')->user()->institution_id != 0){
-                $messages = Comment::whereHas('student', function($q){
-                    $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-                })->get();
+
                 $injections = ProjectSection::whereHas('comment', function($q){
                     $q->whereHas('student', function($q){
                         $q->where('mentor_id', Auth::guard('mentor')->user()->id);
                     });
                 })->get();
-            }else{ 
-                $messages = Comment::whereHas('student', function($q){
-                    $q->where('staff_id', Auth::guard('mentor')->user()->id);
-                })->get();
+            }else{
                 $injections = ProjectSection::whereHas('comment', function($q){
                     $q->whereHas('student', function($q){
                         $q->where('staff_id', Auth::guard('mentor')->user()->id);
                     });
                 })->get();
             }
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                })
-                ->when(Auth::guard('mentor')->check(), function ($query) {
-                  $query->whereIn('student_id', function($query) {
-                      $query->select('id')
-                          ->from('students')
-                          ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                  });
-              })
-                ->get();
-            $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-            return view('dashboard.messages.index', compact('messages','injections','totalNotificationAdmin','submissionNotifications'));
         }elseif(Auth::guard('customer')->check()){
-            $messages = Comment::whereHas('project', function($q){
-                $q->where('company_id', Auth::guard('customer')->user()->company_id);
-            })->get();
+
             $injections = ProjectSection::whereHas('comment', function($q){
                 $q->whereHas('project', function($q){
                     $q->where('company_id', Auth::guard('customer')->user()->company_id);
                 });
             })->get();
-
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-            $submissionNotifications = Submission::whereHas('project', function($q){
-                $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                })
-                ->where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                        ->from('read_notifications')
-                        ->where('is_read', 1)
-                        ->where('customer_id', Auth::guard('customer')->user()->id);
-                })
-                ->get();
-            $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-            return view('dashboard.messages.index', compact('messages','injections','totalNotificationAdmin','submissionNotifications'));
         }
+        return view('dashboard.messages.index', compact('injections'));
     }
 
     public function create()
     {
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-        } elseif(Auth::guard('mentor')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-            ->whereNotIn('id', function($query) {
-                $query->select('submission_id')
-                      ->from('read_notifications')
-                      ->where('is_read', 1)
-                      ->where('mentor_id', Auth::guard('mentor')->user()->id);
-            })
-            ->when(Auth::guard('mentor')->check(), function ($query) {
-              $query->whereIn('student_id', function($query) {
-                  $query->select('id')
-                      ->from('students')
-                      ->where('mentor_id', Auth::guard('mentor')->user()->id);
-              });
-          })
-            ->get();
-        } elseif(Auth::guard('customer')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-            $submissionNotifications = Submission::whereHas('project', function($q){
-              $q->where('company_id', Auth::guard('customer')->user()->company_id);
-              })
-              ->where('is_complete', 1)
-              ->whereNotIn('id', function($query) {
-                  $query->select('submission_id')
-                        ->from('read_notifications')
-                        ->where('is_read', 1)
-                        ->where('customer_id', Auth::guard('customer')->user()->id);
-              })
-              ->get();
-        }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-
         if(Auth::guard('web')->check()){
         $projects = Project::get();
         $projectSections = ProjectSection::get();
@@ -182,7 +87,7 @@ class CommentController extends Controller
         $projectSections = ProjectSection::get();
         $students = Student::get();
         }
-        return view('dashboard.messages.create', compact('projects', 'projectSections', 'students','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.messages.create', compact('projects', 'projectSections', 'students'));
     }
 
     public function getdatacomment($id)
@@ -205,55 +110,23 @@ class CommentController extends Controller
 
     public function taskMessage(ProjectSection $injection)
     {
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-
         if(Auth::guard('web')->check()){
             $participants = Student::whereHas('comment')->get();
             $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
-            $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
-            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments','totalNotificationAdmin','submissionNotifications'));
+            $comments = Comment::where('project_section_id',$injection->id)->where(function ($query) {
+                $query->whereNull('mentor_id')
+                      ->WhereNull('staff_id')
+                      ->WhereNull('user_id')
+                      ->WhereNull('customer_id');
+                })->whereNotIn('id', function($query) {
+                    $query->select('comments_id')
+                        ->from('read_notifications')
+                        ->where('type', 'comments')
+                        ->where('is_read', 1)
+                        ->where('user_id', Auth::guard('web')->user()->id);
+                })
+                ->get();
+            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
         }elseif(Auth::guard('mentor')->check()){
             if(Auth::guard('mentor')->user()->institution_id != 0){
               $participants = Student::whereHas('comment')->where('mentor_id',Auth::guard('mentor')->user()->id)->get();
@@ -261,126 +134,67 @@ class CommentController extends Controller
               $participants = Student::whereHas('comment')->where('staff_id',Auth::guard('mentor')->user()->id)->get();
             }
             $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
-            $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
-            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments','totalNotificationAdmin','submissionNotifications'));
+            $comments = Comment::where('project_section_id',$injection->id)->where(function ($query) {
+                $query->whereNull('mentor_id')
+                      ->WhereNull('staff_id')
+                      ->WhereNull('user_id')
+                      ->WhereNull('customer_id');
+                })->whereNotIn('id', function($query) {
+                    $query->select('comments_id')
+                        ->from('read_notifications')
+                        ->where('type', 'comments')
+                        ->where('is_read', 1)
+                        ->where('mentor_id', Auth::guard('mentor')->user()->id);
+                })
+                ->get();
+            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
         }elseif(Auth::guard('customer')->check()){
             $participants = Student::whereHas('comment')->get();
             $customer_participants = Customer::where('company_id',Auth::guard('customer')->user()->company_id)->get();
-            $comments = Comment::where('project_section_id',$injection->id)->where('read_message', 0)->get();
-            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments','totalNotificationAdmin','submissionNotifications'));
+            $comments = Comment::where('project_section_id',$injection->id)->where(function ($query) {
+                $query->whereNull('mentor_id')
+                      ->WhereNull('staff_id')
+                      ->WhereNull('user_id')
+                      ->WhereNull('customer_id');
+                })->whereNotIn('id', function($query) {
+                    $query->select('comments_id')
+                        ->from('read_notifications')
+                        ->where('type', 'comments')
+                        ->where('is_read', 1)
+                        ->where('customer_id', Auth::guard('customer')->user()->id);
+                })
+                ->get();
+            return view('dashboard.messages.taskMessage', compact('participants', 'injection','customer_participants', 'comments'));
         }
     }
 
     public function single(ProjectSection $injection, Student $participant)
     {
-        
+
         if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        
+            $roleUserId = Auth::guard('web')->user()->id;
+        } elseif(Auth::guard('mentor')->check()){
+            $roleUserId = Auth::guard('mentor')->user()->id;
+        } elseif(Auth::guard('customer')->check()){
+            $roleUserId = Auth::guard('customer')->user()->id;
+        }
+        $guard = Auth::getDefaultDriver();
         $comments = Comment::where('project_section_id', $injection->id)->where('student_id', $participant->id)->get();
         $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
-        $readAllDataMessage = Comment::where('project_section_id', $injection->id)
-        ->where('student_id', $participant->id)
-        ->whereNull('user_id')
-        ->whereNull('mentor_id')
-        ->whereNull('customer_id')
-        ->update(['read_message' => 1]);
-        return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments', 'customer_participants','totalNotificationAdmin','submissionNotifications'));
+
+        dispatch(new CommentReadJob($injection, $participant, $roleUserId, $guard));
+
+        return view('dashboard.messages.singleMessage', compact('injection', 'participant', 'comments', 'customer_participants'));
     }
 
     public function adminReply(ProjectSection $injection, Student $participant)
     {
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-
         $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
-        return view('dashboard.messages.replyMessage', compact('injection', 'participant', 'customer_participants','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.messages.replyMessage', compact('injection', 'participant', 'customer_participants'));
     }
 
     public function adminSendMessage (Request $request,ProjectSection $injection, Student $participant)
     {
-        // dd($request->all());
         $validated = $request->validate([
             'message' => 'required',
         ]);
