@@ -186,7 +186,7 @@ if(!function_exists('commentPerSection')){
                         ->from('read_notifications')
                         ->where('type', 'comments')
                         ->where('is_read', 1)
-                        ->where('staff_id', Auth::guard('mentor')->user()->id);
+                        ->where('user_id', Auth::guard('mentor')->user()->id);
                 })->get();
             }
         }elseif(Auth::guard('customer')->check()){
