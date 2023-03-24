@@ -732,7 +732,11 @@ class StudentController extends Controller
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
         $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
+        $completed_months = Project::whereHas('enrolled_project', function($q){
+          $q->where('student_id', Auth::guard('student')->user()->id);
+          $q->where('is_submited',1);
+        })->get();
+        return view('student.project.task.index', compact('student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id, $submission_id)
