@@ -45,9 +45,9 @@ class AuthOtpController extends Controller
         $validated = $validator->validated();
         $user_id = Student::where('email', $validated['email'])->where('is_confirm',1)->first();
 
-        if($user_id == null){
-            $user_id = Mentor::where('email', $validated['email'])->where('is_confirm',1)->first();
-        }
+        // if($user_id == null){
+        //     $user_id = Mentor::where('email', $validated['email'])->where('is_confirm',1)->first();
+        // }
 
         if(!$user_id == null){
             $verificationCode = $this->generateOtp($validated['email']);

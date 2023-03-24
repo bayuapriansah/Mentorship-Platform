@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Company;
@@ -26,7 +27,8 @@ class DashboardController extends Controller
     public function index()
     {
       $students   = Student::get()->count();
-      $mentors    = Mentor::get()->count();
+      $mentors    = Mentor::where('institution_id', '>',0)->get()->count();
+      $staffs    = Mentor::where('institution_id', 0)->get()->count();
       $eProjects  = EnrolledProject::get()->count();
       $companies  = Company::get()->count();
 
@@ -174,7 +176,7 @@ class DashboardController extends Controller
     public function profile($id)
     {
       if (Auth::guard('web')->check()) {
-          # code...
+        $user = User::find($id);
       }elseif(Auth::guard('mentor')->check()){
         $user = Mentor::find($id);
       }elseif(Auth::guard('customer')->check()){
@@ -185,9 +187,32 @@ class DashboardController extends Controller
     }
 
     public function updateProfile(Request $request, $id){
-      // dd($request->all());
       if (Auth::guard('web')->check()) {
-        # code...
+        $validated = $request->validate([
+          'name' => ['required'],
+          'email' => ['required'],
+          'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+            return !empty($request->input('password'));
+          })],
+          'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+              return !empty($request->input('password'));
+          })]
+        ],
+        [
+          'name.required' => 'Name is required',
+          'email.required' => 'Email is required',
+          'password.confirmed' => 'Password confirmation must be the same',
+          'password_confirmation.required'=> 'Please enter your confirmation password',
+        ]);
+
+        $user = User::find($id);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        if(!empty($validated['password'])){
+        $user->password = Hash::make($validated['password']);
+        }
+        $user->save();
+        return back()->with('successTailwind', 'Profile Edited');
       }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
           $validated = $request->validate([
@@ -311,12 +336,14 @@ class DashboardController extends Controller
         'first_name' => ['required'],
         'last_name' => ['required'],
         'email' => ['required'],
+        'query' => ['required'],
         'message' => ['required'],
         'g-recaptcha-response' => 'required|recaptcha',
       ],[
         'first_name.required' => 'First name is required',
         'last_name.required' => 'Last name is required',
         'email.required' => 'Email is required',
+        'query.required' => 'Type of query is required',
         'message.required' => 'Message is required',
         'g-recaptcha-response.required' => 'Captcha is required',
       ]);
@@ -346,6 +373,7 @@ class DashboardController extends Controller
           'first_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->first_name : $validated['first_name'],
           'last_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->last_name : $validated['last_name'],
           'email' => Auth::guard('student')->check()? Auth::guard('student')->user()->email : $validated['email'],
+          'query'=> $validated['query'],
           'message'=> $validated['message'],
           'type' => 'contactUs',
         ];

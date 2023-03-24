@@ -39,10 +39,12 @@
       <th>Email</th>
       @if(Auth::guard('customer')->check())
       <th>Supervisor Name</th>
+      <th>Staff Name</th>
       <th>Join Date</th>
       @else
       <th>Institute Name</th>
       <th>Supervisor Name</th>
+      <th>Staff Name</th>
       <th>Account Status</th>
       <th>Internship Status</th>
       @endif
@@ -60,6 +62,11 @@
         <td>{{$student->email}}</td>
         @if($student->mentor)
           <td>{{$student->mentor->first_name}} {{$student->mentor->last_name}} </td>
+        @else
+          <td>Supervisor not registered yet</td>
+        @endif
+        @if($student->staff)
+          <td>{{$student->staff->first_name}} {{$student->staff->last_name}} </td>
         @else
           <td>Supervisor not registered yet</td>
         @endif
@@ -122,6 +129,13 @@
           @endif
         </td>
         <td>
+          @if ($student->staff)
+            {{$student->staff->first_name}} {{$student->staff->last_name}}
+          @else
+            Student not completed the registration yet
+          @endif
+        </td>
+        <td>
           @if ($student->is_confirm == 1)
             <span class="text-green-600">Active</span>
           @elseif($student->is_confirm == 2)
@@ -132,9 +146,17 @@
         </td>
         <td>
           @if($student->end_date)
-            @if($enrolled_projects->where('is_submited',1)->where('student_id', $student->id)->count()==1 && \Carbon\Carbon::now() > $student->end_date)
+            @php
+                $completed_months = \App\Models\Project::whereHas('enrolled_project', function($q){
+                  $q->where('is_submited',1);
+                })->get();
+                $totalMonth = $completed_months->map(function ($item) {
+                  return $item['period'] ;
+                });
+            @endphp
+            @if($total = $totalMonth->sum()==3 && \Carbon\Carbon::now() > $student->end_date)
               <span class="text-green-600">Finished</span>
-            @elseif($enrolled_projects->where('is_submited',1)->where('student_id', $student->id)->count()==0 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
+            @elseif($total = $totalMonth->sum()<3 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
               <span class="text-red-600">Incomplete</span>
             @else
               <span class="text-[#D89B33]">Ongoing</span>

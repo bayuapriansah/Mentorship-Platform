@@ -60,6 +60,22 @@
           @enderror
         </div>
         <div class="mb-3">
+          <select id="query" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="query" required>
+            <option value="" hidden>Type Of Query *</option>
+            <option value="General Queries">General Queries</option>
+            <option value="Get Involved">Get Involved</option>
+            <option value="Submit a Project">Submit a Project</option>
+            <option value="1-on-1 Consultation Session">1-on-1 Consultation Session</option>
+            <option value="Report a Bug">Report a Bug</option>
+            <option value="Other">Other</option>
+          </select><br>
+          @error('query')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
+      </div>
+        <div class="mb-3">
           <textarea id="comment" name="message" rows="10" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-light-blue focus:outline-none" placeholder="Your Message*" required></textarea>
           @error('message')
             <p class="text-red-600 text-sm mt-1">

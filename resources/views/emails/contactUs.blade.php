@@ -29,6 +29,9 @@
       <td colspan="2">Email: {{$data['email']}}</td>
     </tr>
     <tr>
+      <td colspan="2">Type Of Query: {{$data['query']}}</td>
+    </tr>
+    <tr>
       <td colspan="4">
         {{$data['message']}}
       </td>
