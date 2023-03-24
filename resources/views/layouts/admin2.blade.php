@@ -252,7 +252,7 @@
               </div>
               <!-- Modal body -->
               <div class="pl-6 pb-3 space-y-6">
-                <div class="max-h-60 overflow-y-auto">
+                <div class="max-h-60 overflow-y-auto mt-3">
                   @if($NotificationForAdmin > 0)
                   @php
                   $numbercountpls = 1;
