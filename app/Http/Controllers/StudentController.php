@@ -332,8 +332,8 @@ class StudentController extends Controller
                   })
                   ->get();
             }
-        $supervisors = Mentor::where('institution_id', '!=', 0)->get();
-        $staffs = Mentor::where('institution_id', 0)->get();
+        $supervisors = Mentor::where('institution_id', '!=', 0)->where('is_confirm', 1)->get();
+        $staffs = Mentor::where('institution_id', 0)->where('is_confirm', 1)->get();
         $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         $institutions = Institution::get();
         return view('dashboard.students.edit', compact('student','supervisors','staffs','institutions','totalNotificationAdmin','submissionNotifications'));
