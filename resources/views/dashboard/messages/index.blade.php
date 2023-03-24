@@ -25,9 +25,9 @@
       <td>{{substr($injection->title,0,35)}} {{strlen($injection->title)>=35?"...":''}}</td>
       <td>
         <a href="/dashboard/messages/{{$injection->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">Message
-            @if (getCommentMessages()->count() > 0)
+            @if (commentPerSection($injection)->count() > 0)
                 <span class="bg-[#EA0202] p-1 rounded-full">
-                    {{ getCommentMessages()->count() }}
+                    {{ commentPerSection($injection)->count() }}
                 </span>
             @endif
         <i class="fa-xs fa-solid fa-chevron-right"></i>
