@@ -112,11 +112,19 @@
                   <div class="flex-col">
                     <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$enrolled_project->project->name}}</p>
                     <p class="text-black font-normal text-sm m-0">{{$enrolled_project->project->company->name}}</p>
-                    <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$enrolled_project->project->project_domain}}</p>
+                    <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">
+                      @if ($enrolled_project->project->project_domain == 'statistical')
+                        Statistical Data
+                      @elseif($enrolled_project->project->project_domain == 'computer_vision')
+                        Computer Vision
+                      @else
+                        NLP
+                      @endif  
+                    </p>
                   </div>
                 </div>
                 <div class="intelOne text-grey font-normal text-xs py-2 m-0">
-                  {!! substr($enrolled_project->project->problem,0,250) !!}...
+                  {{ substr($enrolled_project->project->overview,0,250) }}...
                 </div>
                 <div class="flex justify-between mt-0">
                   <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>
@@ -149,11 +157,19 @@
                   <div class="flex-col">
                     <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$enrolled_project->project->name}}</p>
                     <p class="text-black font-normal text-sm m-0">{{$enrolled_project->project->company->name}}</p>
-                    <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$enrolled_project->project->project_domain}}</p>
+                    <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">
+                      @if ($enrolled_project->project->project_domain == 'statistical')
+                        Statistical Data
+                      @elseif($enrolled_project->project->project_domain == 'computer_vision')
+                        Computer Vision
+                      @else
+                        NLP
+                      @endif 
+                    </p>
                   </div>
                 </div>
                 <div class="intelOne text-grey font-normal text-xs py-2 m-0">
-                  {!! substr($enrolled_project->project->problem,0,250) !!}...
+                  {{ substr($enrolled_project->project->overview,0,250) }}...
                 </div>
                 <div class="flex justify-between mt-0">
                   <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>

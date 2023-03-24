@@ -203,7 +203,9 @@ class StudentController extends Controller
     public function manageStudent(Student $student)
     {
         $institutions = Institution::get();
-        return view('dashboard.students.edit', compact('student', 'institutions'));
+        $supervisors = Mentor::where('institution_id', '!=', 0)->where('is_confirm', 1)->get();
+        $staffs = Mentor::where('institution_id', 0)->where('is_confirm', 1)->get();
+        return view('dashboard.students.edit', compact('student','supervisors','staffs','institutions'));
     }
 
     public function manageStudentpatch(Request $request, Student $student)

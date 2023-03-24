@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('content')
-<section id="show" class="w-full">
+<section id="show" class="w-full min-h-screen">
   <div class="bg-darker-blue">
     <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col ">
       <div class="col-span-9 relative my-auto">
@@ -78,9 +78,6 @@
     <div class="col-span-9 my-auto">
       {!!$project->problem!!}
     </div>
-    <div class="col-end-13 col-span-3 text-right flex flex-col relative mt-5">
-      <img src="{{asset('assets/img/certificate.png')}}" alt="" class="relative mt-20 w-[305] h-[236]">
-    </div> 
   </div>
 </section>
 @endsection
