@@ -322,7 +322,6 @@ class DashboardController extends Controller
 
   public function sendContact(Request $request)
   {
-    // dd($request->all());
     
     $validated = $request->validate([
       'first_name' => ['required'],

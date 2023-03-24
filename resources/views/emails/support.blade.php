@@ -1,4 +1,4 @@
-@php
+{{-- @php
 $data = [
     'subject' => 'New Email',
     'body' => 'sip@nmail.com',
@@ -9,7 +9,7 @@ $data = [
     'query'=> '0822672362',
     'type' => 'contactUs',
 ];    
-@endphp
+@endphp --}}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif">
