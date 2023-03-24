@@ -1,4 +1,4 @@
-  {{-- @php
+  @php
   $data = [
       'subject' => 'New Email',
       'body' => 'sip@nmail.com',
@@ -6,10 +6,10 @@
       'last_name' => 'Jon',
       'email' => 'faarhan@mail.com',
       'message'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos atque suscipit amet non consectetur? Nam, a laborum? Accusamus similique beatae id distinctio cumque odit, ipsa nemo molestiae, libero, ratione consectetur?',
-      'phone'=> '0822672362',
+      'query'=> '0822672362',
       'type' => 'contactUs',
   ];    
-  @endphp --}}
+  @endphp
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif">
@@ -29,6 +29,7 @@
       <td colspan="2">Email: {{$data['email']}}</td>
     </tr>
     <tr>
+      <td colspan="2">Type Of User: {{$data['user']}}</td>
       <td colspan="2">Type Of Query: {{$data['query']}}</td>
     </tr>
     <tr>

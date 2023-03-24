@@ -1130,7 +1130,7 @@ class StudentController extends Controller
         'email' => $validated['email'],
         'query' => $validated['query'],
         'message'=> $validated['message'],
-        'type' => 'contactUs',
+        'type' => 'support',
       ];
     
     try
