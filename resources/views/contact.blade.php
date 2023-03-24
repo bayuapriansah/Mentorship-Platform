@@ -75,12 +75,7 @@
             <option value="1-on-1 Consultation Session">1-on-1 Consultation Session</option>
             <option value="Report a Bug">Report a Bug</option>
             <option value="Other">Other</option>
-          </select><br>
-          @error('query')
-              <p class="text-red-600 text-sm mt-1">
-                {{$message}}
-              </p>
-          @enderror
+          </select>
         </div>
         <div class="mb-3">
           <textarea id="comment" name="message" rows="10" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-light-blue focus:outline-none" placeholder="Your Message*" required></textarea>
@@ -112,5 +107,17 @@
 @endsection
 
 @section('more-js')
-
+<script>
+  $(document).ready(function () {
+    $("#query option[value='1-on-1 Consultation Session']").hide();
+    $("#user").change(function(){
+        var values = $("#user option:selected").val();
+        if(values=='Student'){
+          $("#query option[value='1-on-1 Consultation Session']").hide();
+        }else{
+          $("#query option[value='1-on-1 Consultation Session']").show();
+        }
+      });
+  });
+</script>
 @endsection
