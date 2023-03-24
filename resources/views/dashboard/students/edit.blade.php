@@ -59,8 +59,37 @@
             </p>
         @enderror
       </div>
-      
-      
+    </div>
+    <div class="flex justify-between mb-0">
+      <div class="flex flex-col w-full">
+        <label for="" class="text-light-blue text-base">Supervisor</label>
+        <select id="supervisor" class="border border-light-blue rounded-lg  h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" name="supervisor" required>
+          <option value="" class="" id="" hidden>Supervisor</option>
+          @foreach ($supervisors as $supervisor)
+            <option value="{{$supervisor->id}}" {{$supervisor->id == $student->mentor_id ? 'selected' : ''}}>{{$supervisor->first_name}} {{$supervisor->last_name}}</option>
+          @endforeach
+        </select><br>
+        @error('supervisor')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+      </div>
+
+      <div class="flex flex-col  w-full">
+        <label for="" class="text-light-blue text-base">Staff</label>
+        <select id="staff" class="border border-light-blue rounded-lg  h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" name="staff" required>
+          <option value="" class="" id="" hidden>Staff</option>
+          @foreach ($staffs as $staff)
+            <option value="{{$staff->id}}" {{$staff->id == $student->staff_id ? 'selected' : ''}}>{{$staff->first_name}} {{$staff->last_name}}</option>
+          @endforeach
+        </select><br>
+        @error('staff')
+            <p class="text-red-600 text-sm mt-1">
+              {{$message}}
+            </p>
+        @enderror
+      </div>
     </div>
 
     <select id="sex" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none mt-4" name="sex" required>

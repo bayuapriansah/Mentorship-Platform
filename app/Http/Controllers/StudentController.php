@@ -101,7 +101,7 @@ class StudentController extends Controller
                   })
                   ->get();
             }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
         return view('dashboard.students.index', compact('students', 'enrolled_projects','totalNotificationAdmin','submissionNotifications'));
@@ -332,9 +332,11 @@ class StudentController extends Controller
                   })
                   ->get();
             }
+        $supervisors = Mentor::where('institution_id', '!=', 0)->get();
+        $staffs = Mentor::where('institution_id', 0)->get();
         $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         $institutions = Institution::get();
-        return view('dashboard.students.edit', compact('student', 'institutions','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.students.edit', compact('student','supervisors','staffs','institutions','totalNotificationAdmin','submissionNotifications'));
     }
 
     public function manageStudentpatch(Request $request, Student $student)
@@ -344,6 +346,8 @@ class StudentController extends Controller
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
         $student->end_date = $request->end_date;
+        $student->mentor_id = $request->supervisor;
+        $student->staff_id = $request->staff;
         $student->sex = $request->sex;
         $student->institution_id = $request->institution;
         $student->country = $request->country;
