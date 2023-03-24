@@ -32,7 +32,7 @@ class DashboardController extends Controller
       $eProjects  = EnrolledProject::get()->count();
       $companies  = Company::get()->count();
 
-      return view('dashboard.index', compact('students','mentors','eProjects','companies'));
+      return view('dashboard.index', compact('students','staffs','mentors','eProjects','companies'));
     }
 
     public function singleSubmissionReadNotification($projectID,$submissionID,$studentId){
