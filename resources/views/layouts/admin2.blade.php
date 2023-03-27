@@ -253,59 +253,34 @@
               <!-- Modal body -->
               <div class="pl-6 pb-3 space-y-6">
                 <div class="max-h-60 overflow-y-auto mt-3">
-                  @if($NotificationForAdmin > 0)
-                  @php
-                  $numbercountpls = 1;
-                  @endphp
-                    @foreach($DataSubmissionNotifications as $submissionNotification)
-                      @if($submissionNotification->student == !NULL)
-                        @if(Auth::guard('web')->check())
-                          <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                            <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
-                              <div class="flex">
-                                  <div class="ml-3 text-sm font-normal">
-                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}. There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
-                                      <p>
-                                    <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
-                                  </div>
-                              </div>
-                            </div>
-                          </a>
-                        @elseif(Auth::guard('mentor')->check())
-                            @if($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id)
+                    @if ($NotificationForAdmin > 0)
+                    @php
+                        $numbercountpls = 1;
+                    @endphp
+                    @foreach ($DataSubmissionNotifications as $submissionNotification)
+                        @if ($submissionNotification->student != NULL &&
+                            (Auth::guard('web')->check() ||
+                             ($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id) ||
+                             Auth::guard('customer')->check()))
                             <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                              <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
-                                <div class="flex">
-                                    <div class="ml-3 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}.There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
-                                        <p>
-                                      <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
+                                <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                    <div class="flex">
+                                        <div class="ml-3 text-sm font-normal">
+                                            <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}. There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                            <p>
+                                            <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                              </div>
                             </a>
-                          @endif
-                        @elseif(Auth::guard('customer')->check())
-                            <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                              <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
-                                <div class="flex">
-                                    <div class="ml-3 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}.There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
-                                        <p>
-                                      <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
-                                    </div>
-                                </div>
-                              </div>
-                            </a>
+                            @php
+                                $numbercountpls++;
+                            @endphp
                         @endif
-                      @endif
-                      @php
-                      $numbercountpls = $numbercountpls +1;
-                      @endphp
                     @endforeach
-                    @else
+                @else
                     {{ 'No Notification' }}
-                  @endif
+                @endif
                 </div>
               </div>
             </div>
