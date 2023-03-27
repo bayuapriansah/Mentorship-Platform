@@ -11,7 +11,7 @@
           @elseif($project->project_domain == 'computer_vision')
             Computer Vision
           @else
-            {{$project->project_domain}}
+            NLP
           @endif   
         </span>
         <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 top-0 ">
