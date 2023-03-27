@@ -504,8 +504,12 @@ class StudentController extends Controller
         ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)->where('readornot', 0)
         ->get();
         $notif = (new NotificationController)->count_total_all_notification_available();
-        $readTheNotifications = ReadNotification::where('student_id', $id)->whereNot('id',0)->get()->count();
-        // dd($notifActivityCounts." AND ".$notif." AND ".$readTheNotifications);
+        $readTheNotifications = ReadNotification::where('student_id', $id)->where('is_read',1)
+        ->WhereNull('comments_id')
+        ->WhereNull('submission_id')
+        ->WhereNull('type')
+        ->whereNull('mentor_id')
+        ->WhereNull('user_id')->get()->count();
         $notifActivityCount = ($notifActivityCounts->count() + $notif) - $readTheNotifications;
         return $notifActivityCount;
     }
