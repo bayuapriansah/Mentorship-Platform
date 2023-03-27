@@ -113,7 +113,10 @@
         </td>
       @else
         <td>{{$student->first_name}} {{$student->last_name}}</td>
-        <td>{{$student->email}}</td>
+        <td>
+          {{$student->email}}
+          
+        </td>
         <td>
           @if($student->institution)
           {{$student->institution->name}}
@@ -206,11 +209,12 @@
                               @php $num++ @endphp
                               @endforeach"            
                   data-status-student = " @if($student->enrolled_projects->count() >=1)
-                                            Already enrolled to a project
-                                          @else
-                                            Not yet enrolled
-                                          @endif
-                                        "           
+                                            @if($student->enrolled_projects->where('is_submited',0)->last())
+                                            Enrolled in '{{$student->enrolled_projects->where('is_submited',0)->last()->project->name}}'
+                                            @else
+                                            Not enrolled in a project
+                                            @endif
+                                          @endif"
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
