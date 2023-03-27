@@ -14,7 +14,6 @@ class EmailBulkInvitationController extends Controller
     {
         return view('test.upload');
     }
-// $emailBulk = new BulkEmailInvitation;
     public function sendInviteFromInstitution(Request $request)
     {
         if ($request->hasFile('file')) {
@@ -22,7 +21,7 @@ class EmailBulkInvitationController extends Controller
             $extension = $uploadedFile->getClientOriginalExtension();
             if ($extension == 'csv' || $extension == 'xls' || $extension == 'xlsx') {
                 $path = Storage::disk('public')->put('invitation', $uploadedFile);
-                $filePath = Storage::disk('public')->path($path);
+                // $filePath = Storage::disk('public')->path($path);
                 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filePath);
                 $emails = [];
                 if ($extension == 'csv') {

@@ -6,7 +6,7 @@
       'last_name' => 'Jon',
       'email' => 'faarhan@mail.com',
       'message'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos atque suscipit amet non consectetur? Nam, a laborum? Accusamus similique beatae id distinctio cumque odit, ipsa nemo molestiae, libero, ratione consectetur?',
-      'phone'=> '0822672362',
+      'query'=> '0822672362',
       'type' => 'contactUs',
   ];    
   @endphp --}}
@@ -27,6 +27,10 @@
     </tr>
     <tr>
       <td colspan="2">Email: {{$data['email']}}</td>
+    </tr>
+    <tr>
+      <td colspan="2">Type Of User: {{$data['user']}}</td>
+      <td colspan="2">Type Of Query: {{$data['query']}}</td>
     </tr>
     <tr>
       <td colspan="4">

@@ -13,6 +13,10 @@ class Comment extends Model
         return $this->belongsTo(Student::class);
     }
 
+    public function read_comment(){
+        return $this->hasMany(ReadNotification::class, 'comments_id', 'id');
+    }
+
     public function project(){
         return $this->belongsTo(Project::class);
     }

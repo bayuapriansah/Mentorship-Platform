@@ -35,10 +35,6 @@
           @enderror
 
           <input type="text" name="last_name" placeholder="Last Name*" class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"
-          @if (Auth::guard('student')->check())
-            value={{Auth::guard('student')->user()->last_name}}
-            disabled
-          @endif
           required>
           @error('last_name')
               <p class="text-red-600 text-sm mt-1">
@@ -48,16 +44,38 @@
         </div>
         <div class="mb-3">
           <input type="text" name="email" placeholder="Email Address*" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"
-          @if (Auth::guard('student')->check())
-            value={{Auth::guard('student')->user()->email}}
-            disabled
-          @endif
           required>
           @error('email')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}
               </p>
           @enderror
+        </div>
+        <div class="mb-3">
+          <select id="user" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="user" required>
+            <option value="" hidden>Type Of User *</option>
+            <option value="Student">Student</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Company Partner">Company Partner</option>
+            <option value="Institution">Institution</option>
+            <option value="Other">Other</option>
+          </select><br>
+          @error('user')
+              <p class="text-red-600 text-sm mt-1">
+                {{$message}}
+              </p>
+          @enderror
+        </div>
+        <div class="mb-3">
+          <select id="query" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="query" required>
+            <option value="" hidden>Type Of Query *</option>
+            <option value="General Queries">General Queries</option>
+            <option value="Get Involved">Get Involved</option>
+            <option value="Submit a Project">Submit a Project</option>
+            <option value="1-on-1 Consultation Session">1-on-1 Consultation Session</option>
+            <option value="Report a Bug">Report a Bug</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         <div class="mb-3">
           <textarea id="comment" name="message" rows="10" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-light-blue focus:outline-none" placeholder="Your Message*" required></textarea>
@@ -89,5 +107,17 @@
 @endsection
 
 @section('more-js')
-
+<script>
+  $(document).ready(function () {
+    $("#query option[value='1-on-1 Consultation Session']").hide();
+    $("#user").change(function(){
+        var values = $("#user option:selected").val();
+        if(values=='Student'){
+          $("#query option[value='1-on-1 Consultation Session']").hide();
+        }else{
+          $("#query option[value='1-on-1 Consultation Session']").show();
+        }
+      });
+  });
+</script>
 @endsection

@@ -70,10 +70,18 @@
       <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
       <p class="text-black font-normal text-sm text-center">Internship Status:
 
-        @if(\Carbon\Carbon::now()<=$student->end_date)
-          <span class="text-[#F8AC2A] font-medium">Ongoing</span>
-        @else
+        @php
+          $totalMonth = $completed_months->map(function ($item) {
+            return $item['period'] ;
+          });
+        @endphp
+
+        @if($total = $totalMonth->sum()==3 && \Carbon\Carbon::now() >= $student->end_date)
           <span class="text-light-green font-medium">Finished</span>
+        @elseif($total = $totalMonth->sum()<3 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
+          <span class="text-red-600 font-medium">Incomplete</span>
+        @else
+          <span class="text-[#F8AC2A] font-medium">Ongoing</span>
         @endif
         {{-- @if($student->is_confirm == 0)
           <span class="text-light-blue">Not Started</span>
@@ -153,8 +161,8 @@
               @endif
             @endif
           @endif
-          
-          
+
+
             @php $tipNumber++ @endphp
         @endforeach
 
@@ -261,7 +269,7 @@
           <div class="flex flex-wrap justify-start pt-2">
             @foreach ($datasets as $dataset)
               <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
-              @php $no++ @endphp  
+              @php $no++ @endphp
             @endforeach
           </div>
         </div>

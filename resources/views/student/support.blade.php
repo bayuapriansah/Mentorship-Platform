@@ -10,7 +10,8 @@
         <h1 class="text-dark-blue text-2xl font-medium flex items-center">Contact Support</h1>
         @include('flash-message')
       </div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit natus, est ipsam expedita perspiciatis corporis quaerat quas libero? Iusto beatae eius voluptatum illo libero explicabo consequatur sequi obcaecati incidunt officiis?</p>
+      <p>Contact the Simulated Internship Platform team for any technical support that you require. 
+        For project support, kindly use the chat feature available under each project task.</p>
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-16 pt-5 grid grid-cols-12 gap-8 grid-flow-col ">
@@ -40,6 +41,23 @@
                 {{$message}}
               </p>
           @enderror
+        </div>
+        <div class="mb-3">
+            <select id="query" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="query" required>
+              <option value="" hidden>Type Of Query *</option>
+              <option value="Bugs">Bugs</option>
+              <option value="Functionality issues">Functionality issues</option>
+              <option value="Performance problems">Performance problems</option>
+              <option value="Compatibility errors">Compatibility errors</option>
+              <option value="Security concerns">Security concerns</option>
+              <option value="User interface glitches">User interface glitches</option>
+              <option value="Other">Other</option>
+            </select><br>
+            @error('query')
+                <p class="text-red-600 text-sm mt-1">
+                  {{$message}}
+                </p>
+            @enderror
         </div>
         <div class="mb-3">
           <textarea name="message" rows="10" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-light-blue focus:outline-none" placeholder="Your Message*" required></textarea>

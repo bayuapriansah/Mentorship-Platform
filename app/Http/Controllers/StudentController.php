@@ -59,52 +59,7 @@ class StudentController extends Controller
             $enrolled_projects = EnrolledProject::get();
         }
 
-      
-      if(Auth::guard('web')->check()){
-          $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-          $submissionNotifications = Submission::where('is_complete', 1)
-              ->whereNotIn('id', function($query) {
-                  $query->select('submission_id')
-                        ->from('read_notifications')
-                        ->where('is_read', 1)
-                        ->where('user_id', Auth::guard('web')->user()->id);
-              })
-              ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-        // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-
-        return view('dashboard.students.index', compact('students', 'enrolled_projects','totalNotificationAdmin','submissionNotifications'));
+        return view('dashboard.students.index', compact('students', 'enrolled_projects'));
     }
 
     public function register($email)
@@ -123,55 +78,12 @@ class StudentController extends Controller
     }
 
     public function inviteFromInstitution(Institution $institution)
-    {   
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
+    {
         if(Route::is('dashboard.students.invite')){
             $allInstitutions = Institution::where('status',1)->get();
-            return view('dashboard.students.institution.invite', compact('allInstitutions', 'institution','totalNotificationAdmin','submissionNotifications'));
+            return view('dashboard.students.institution.invite', compact('allInstitutions', 'institution'));
         }else{
-            return view('dashboard.students.institution.invite', compact('institution','totalNotificationAdmin','submissionNotifications'));
+            return view('dashboard.students.institution.invite', compact('institution'));
         }
     }
 
@@ -180,9 +92,9 @@ class StudentController extends Controller
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();
-            $checkUser = User::where('email', $email)->first(); 
-            $checkMentor = Mentor::where('email', $email)->first(); 
-            $checkCustomer = Customer::where('email', $email)->first(); 
+            $checkUser = User::where('email', $email)->first();
+            $checkMentor = Mentor::where('email', $email)->first();
+            $checkCustomer = Customer::where('email', $email)->first();
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
@@ -202,9 +114,9 @@ class StudentController extends Controller
         $message = "Successfully Send Invitation to Student";
         foreach (array_filter($request->email) as $email) {
             $checkStudent = Student::where('email', $email)->first();
-            $checkUser = User::where('email', $email)->first(); 
-            $checkMentor = Mentor::where('email', $email)->first(); 
-            $checkCustomer = Customer::where('email', $email)->first(); 
+            $checkUser = User::where('email', $email)->first();
+            $checkMentor = Mentor::where('email', $email)->first();
+            $checkCustomer = Customer::where('email', $email)->first();
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
@@ -290,51 +202,10 @@ class StudentController extends Controller
     // manage students in sidebar menu
     public function manageStudent(Student $student)
     {
-        
-        if(Auth::guard('web')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('user_id', Auth::guard('web')->user()->id);
-                })
-                ->get();
-            } elseif(Auth::guard('mentor')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-                $submissionNotifications = Submission::where('is_complete', 1)
-                    ->whereNotIn('id', function($query) {
-                        $query->select('submission_id')
-                              ->from('read_notifications')
-                              ->where('is_read', 1)
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    })
-                    ->when(Auth::guard('mentor')->check(), function ($query) {
-                      $query->whereIn('student_id', function($query) {
-                          $query->select('id')
-                              ->from('students')
-                              ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                      });
-                  })
-                    ->get();
-            } elseif(Auth::guard('customer')->check()){
-                $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-                $submissionNotifications = Submission::whereHas('project', function($q){
-                  $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                  })
-                  ->where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('customer_id', Auth::guard('customer')->user()->id);
-                  })
-                  ->get();
-            }
-        $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
         $institutions = Institution::get();
-        return view('dashboard.students.edit', compact('student', 'institutions','totalNotificationAdmin','submissionNotifications'));
+        $supervisors = Mentor::where('institution_id', '!=', 0)->where('is_confirm', 1)->get();
+        $staffs = Mentor::where('institution_id', 0)->where('is_confirm', 1)->get();
+        return view('dashboard.students.edit', compact('student','supervisors','staffs','institutions'));
     }
 
     public function manageStudentpatch(Request $request, Student $student)
@@ -344,6 +215,8 @@ class StudentController extends Controller
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
         $student->end_date = $request->end_date;
+        $student->mentor_id = $request->supervisor;
+        $student->staff_id = $request->staff;
         $student->sex = $request->sex;
         $student->institution_id = $request->institution;
         $student->country = $request->country;
@@ -451,7 +324,7 @@ class StudentController extends Controller
         $student = Student::find($student->id);
         // $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student->id);
-        
+
         $newActivityNotifs = $this->newNotificationActivity($student->id);
         $notifActivityCount = $this->newNotificationActivityCount($student->id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
@@ -586,7 +459,7 @@ class StudentController extends Controller
         if($mentor == null){
           return back()->with('errorTailwind', "Your institute supervisor haven't registered yet");
         }
-        $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();        
+        $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();
         $regStudent = Student::where('email',$validated['email'])->first();
         $regStudent->first_name = $validated['first_name'];
         $regStudent->last_name = $validated['last_name'];
@@ -762,7 +635,7 @@ class StudentController extends Controller
         if($project == null || $project->enrolled_project->where('student_id', $student_id)->count() == 0){
             abort(404);
         }
-        
+
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
@@ -792,7 +665,7 @@ class StudentController extends Controller
         $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
         // dd($newMessage->count());
         $submission_data = Submission::where([['project_id', $project_id], ['student_id', Auth::guard('student')->user()->id]])->get();
-        
+
         return view('student.project.show', compact('student','project', 'enrolled_projects','completed_months' ,'project_sections', 'dataDate','submissions','projectsections','taskProgress','total_task','task_clear','taskDate','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages','submission_data'));
     }
 
@@ -861,7 +734,11 @@ class StudentController extends Controller
         $notifActivityCount = $this->newNotificationActivityCount($student_id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
         $dataMessages = (new NotificationController)->data_comment_from_admin($student_id);
-        return view('student.project.task.index', compact('student','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
+        $completed_months = Project::whereHas('enrolled_project', function($q){
+          $q->where('student_id', Auth::guard('student')->user()->id);
+          $q->where('is_submited',1);
+        })->get();
+        return view('student.project.task.index', compact('student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function taskSubmit(Request $request, $student_id, $project_id, $task_id, $submission_id)
@@ -871,7 +748,7 @@ class StudentController extends Controller
             $dataset_values = array_column($dataset_array, 'value');
             $dataset_result = implode(';', $dataset_values);
         }
-        
+
         // dd($request->all());
 
         // dd(implode(';',$request->dataset));
@@ -1063,7 +940,7 @@ class StudentController extends Controller
             abort(404);
         }
     }
-    
+
     public function certificate(Student $student)
     {
       if($student->id != Auth::guard('student')->user()->id ){
@@ -1099,11 +976,13 @@ class StudentController extends Controller
         'first_name' => ['required'],
         'last_name' => ['required'],
         'email' => ['required'],
+        'query' => ['required'],
         'message' => ['required'],
       ],[
         'first_name.required' => 'First name is required',
         'last_name.required' => 'Last name is required',
         'email.required' => 'Email is required',
+        'query.required' => 'Type of query is required',
         'message.required' => 'Message is required',
       ]);
       $this->SupportMail('sip@sustainablelivinglab.org', $validated);
@@ -1118,10 +997,11 @@ class StudentController extends Controller
         'first_name' => $validated['first_name'],
         'last_name' => $validated['last_name'],
         'email' => $validated['email'],
+        'query' => $validated['query'],
         'message'=> $validated['message'],
-        'type' => 'contactUs',
+        'type' => 'support',
       ];
-    
+
     try
       {
         Mail::to($mailto)->send(new MailNotify($data));

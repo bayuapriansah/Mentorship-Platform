@@ -21,97 +21,13 @@ class StaffController extends Controller
 {
     public function index()
     {
-        if(Auth::guard('web')->check()){
-          $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-          $submissionNotifications = Submission::where('is_complete', 1)
-              ->whereNotIn('id', function($query) {
-                  $query->select('submission_id')
-                        ->from('read_notifications')
-                        ->where('is_read', 1)
-                        ->where('user_id', Auth::guard('web')->user()->id);
-              })
-              ->get();
-          } elseif(Auth::guard('mentor')->check()){
-              $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-              $submissionNotifications = Submission::where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                  })
-                  ->when(Auth::guard('mentor')->check(), function ($query) {
-                    $query->whereIn('student_id', function($query) {
-                        $query->select('id')
-                            ->from('students')
-                            ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    });
-                })
-                  ->get();
-          } elseif(Auth::guard('customer')->check()){
-              $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-              $submissionNotifications = Submission::whereHas('project', function($q){
-                $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                })
-                ->where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('customer_id', Auth::guard('customer')->user()->id);
-                })
-                ->get();
-          }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
       $staffs = Mentor::where('institution_id',0)->get();
-      return view('dashboard.staffs.index', compact('staffs','totalNotificationAdmin','submissionNotifications'));
+      return view('dashboard.staffs.index', compact('staffs'));
     }
 
     public function invite()
     {
-      if(Auth::guard('web')->check()){
-        $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-        $submissionNotifications = Submission::where('is_complete', 1)
-            ->whereNotIn('id', function($query) {
-                $query->select('submission_id')
-                      ->from('read_notifications')
-                      ->where('is_read', 1)
-                      ->where('user_id', Auth::guard('web')->user()->id);
-            })
-            ->get();
-        } elseif(Auth::guard('mentor')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-            $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                })
-                ->when(Auth::guard('mentor')->check(), function ($query) {
-                  $query->whereIn('student_id', function($query) {
-                      $query->select('id')
-                          ->from('students')
-                          ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                  });
-              })
-                ->get();
-        } elseif(Auth::guard('customer')->check()){
-            $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-            $submissionNotifications = Submission::whereHas('project', function($q){
-              $q->where('company_id', Auth::guard('customer')->user()->company_id);
-              })
-              ->where('is_complete', 1)
-              ->whereNotIn('id', function($query) {
-                  $query->select('submission_id')
-                        ->from('read_notifications')
-                        ->where('is_read', 1)
-                        ->where('customer_id', Auth::guard('customer')->user()->id);
-              })
-              ->get();
-        }
-    $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-      return view('dashboard.staffs.invite',compact('totalNotificationAdmin','submissionNotifications'));
+      return view('dashboard.staffs.invite');
     }
 
     public function addStaff($email){
@@ -144,9 +60,9 @@ class StaffController extends Controller
       $message = "Successfully Send Invitation to Staff Member";
         foreach (array_filter($request->email) as $email) {
           $checkStudent = Student::where('email', $email)->first();
-          $checkUser = User::where('email', $email)->first(); 
-          $checkMentor = Mentor::where('email', $email)->first(); 
-          $checkCustomer = Customer::where('email', $email)->first(); 
+          $checkUser = User::where('email', $email)->first();
+          $checkMentor = Mentor::where('email', $email)->first();
+          $checkCustomer = Customer::where('email', $email)->first();
           if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
               $encEmail = (new SimintEncryption)->encData($email);
               $link = route('supervisor.register', [$encEmail]);
@@ -166,49 +82,7 @@ class StaffController extends Controller
 
     public function edit(Mentor $staff)
     {
-        if(Auth::guard('web')->check()){
-          $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('user_id',Auth::guard('web')->user()->id)->get()->count();
-          $submissionNotifications = Submission::where('is_complete', 1)
-              ->whereNotIn('id', function($query) {
-                  $query->select('submission_id')
-                        ->from('read_notifications')
-                        ->where('is_read', 1)
-                        ->where('user_id', Auth::guard('web')->user()->id);
-              })
-              ->get();
-          } elseif(Auth::guard('mentor')->check()){
-              $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('mentor_id',Auth::guard('mentor')->user()->id)->get()->count();
-              $submissionNotifications = Submission::where('is_complete', 1)
-                  ->whereNotIn('id', function($query) {
-                      $query->select('submission_id')
-                            ->from('read_notifications')
-                            ->where('is_read', 1)
-                            ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                  })
-                  ->when(Auth::guard('mentor')->check(), function ($query) {
-                    $query->whereIn('student_id', function($query) {
-                        $query->select('id')
-                            ->from('students')
-                            ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    });
-                })
-                  ->get();
-          } elseif(Auth::guard('customer')->check()){
-              $submissionCountReadNotification = ReadNotification::where('is_read',1)->where('customer_id',Auth::guard('customer')->user()->id)->get()->count();
-              $submissionNotifications = Submission::whereHas('project', function($q){
-                $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                })
-                ->where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                          ->from('read_notifications')
-                          ->where('is_read', 1)
-                          ->where('customer_id', Auth::guard('customer')->user()->id);
-                })
-                ->get();
-          }
-      $totalNotificationAdmin = $submissionNotifications->count() - $submissionCountReadNotification;
-      return view('dashboard.staffs.edit', compact('staff','totalNotificationAdmin','submissionNotifications'));
+      return view('dashboard.staffs.edit', compact('staff'));
     }
 
     public function update(Request $request,Mentor $staff)
@@ -271,7 +145,7 @@ class StaffController extends Controller
             ->update(['staff_id' => $new_staff[array_rand($new_staff,1)]]);
         }
         $staff->delete();
-        
+
         $message = "Successfully Delete Account";
         return back()->with('successTailwind', $message);
       }else{

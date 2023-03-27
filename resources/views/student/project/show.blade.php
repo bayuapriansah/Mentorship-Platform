@@ -17,7 +17,7 @@
                         @elseif($project->project_domain == 'computer_vision')
                           Computer Vision
                         @else
-                          {{$project->project_domain}}
+                          NLP
                         @endif
                     </span>
                 </div>

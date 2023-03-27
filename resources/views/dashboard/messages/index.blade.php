@@ -25,9 +25,11 @@
       <td>{{substr($injection->title,0,35)}} {{strlen($injection->title)>=35?"...":''}}</td>
       <td>
         <a href="/dashboard/messages/{{$injection->id}}" class="py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white">Message
-        <span class="bg-[#EA0202] p-1 rounded-full">
-          {{$messages->where('project_section_id', $injection->id)->where('read_message',0)->count()}}
-        </span>
+            @if (commentPerSection($injection)->count() > 0)
+                <span class="bg-[#EA0202] p-1 rounded-full">
+                    {{ commentPerSection($injection)->count() }}
+                </span>
+            @endif
         <i class="fa-xs fa-solid fa-chevron-right"></i>
       </a>
       </td>

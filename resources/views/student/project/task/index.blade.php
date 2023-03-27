@@ -14,7 +14,7 @@
             @elseif($project->project_domain == 'computer_vision')
               Computer Vision
             @else
-              {{$project->project_domain}}
+              NLP
             @endif
         </span>
       </div>
@@ -85,7 +85,7 @@
                     </span><br>
                     <span class="font-light receiver text-xs">
                       @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
-                        to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}}(Supervisor), 
+                        to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}}(Supervisor), {{$comment->student->staff->first_name}}  {{$comment->student->staff->first_name}}(Customer), 
                         @foreach ($admins as $admin)
                           <span class="font-light text-black">{{$admin->name}}(Admin); </span>
                         @endforeach

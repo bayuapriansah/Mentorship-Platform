@@ -39,10 +39,12 @@
       <th>Email</th>
       @if(Auth::guard('customer')->check())
       <th>Supervisor Name</th>
+      <th>Staff Name</th>
       <th>Join Date</th>
       @else
       <th>Institute Name</th>
       <th>Supervisor Name</th>
+      <th>Staff Name</th>
       <th>Account Status</th>
       <th>Internship Status</th>
       @endif
@@ -60,6 +62,11 @@
         <td>{{$student->email}}</td>
         @if($student->mentor)
           <td>{{$student->mentor->first_name}} {{$student->mentor->last_name}} </td>
+        @else
+          <td>Supervisor not registered yet</td>
+        @endif
+        @if($student->staff)
+          <td>{{$student->staff->first_name}} {{$student->staff->last_name}} </td>
         @else
           <td>Supervisor not registered yet</td>
         @endif
@@ -122,6 +129,13 @@
           @endif
         </td>
         <td>
+          @if ($student->staff)
+            {{$student->staff->first_name}} {{$student->staff->last_name}}
+          @else
+            Student not completed the registration yet
+          @endif
+        </td>
+        <td>
           @if ($student->is_confirm == 1)
             <span class="text-green-600">Active</span>
           @elseif($student->is_confirm == 2)
@@ -132,9 +146,17 @@
         </td>
         <td>
           @if($student->end_date)
-            @if($enrolled_projects->where('is_submited',1)->where('student_id', $student->id)->count()==1 && \Carbon\Carbon::now() > $student->end_date)
+            @php
+                $completed_months = \App\Models\Project::whereHas('enrolled_project', function($q){
+                  $q->where('is_submited',1);
+                })->get();
+                $totalMonth = $completed_months->map(function ($item) {
+                  return $item['period'] ;
+                });
+            @endphp
+            @if($total = $totalMonth->sum()==3 && \Carbon\Carbon::now() > $student->end_date)
               <span class="text-green-600">Finished</span>
-            @elseif($enrolled_projects->where('is_submited',1)->where('student_id', $student->id)->count()==0 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
+            @elseif($total = $totalMonth->sum()<3 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
               <span class="text-red-600">Incomplete</span>
             @else
               <span class="text-[#D89B33]">Ongoing</span>
@@ -182,8 +204,13 @@
                               <p class='absolute font-medium text-left flex-wrap overflow-hidden whitespace-nowrap text-[8px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?100-6:$enrolled_project->flag_checkpoint-2}}%'>{{Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
                               <p class='absolute mt-3 font-medium text-left text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?99-4:$enrolled_project->flag_checkpoint-2}}%'>Project {{$num}}</p>
                               @php $num++ @endphp
-                              @endforeach
-                              "                         
+                              @endforeach"            
+                  data-status-student = " @if($student->enrolled_projects->count() >=1)
+                                            Already enrolled to a project
+                                          @else
+                                            Not yet enrolled
+                                          @endif
+                                        "           
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
@@ -323,6 +350,7 @@
         let dataDate = $(this).data('date');
         let dataFlag = $(this).data('flag');
         let dataInfo = $(this).data('info');
+        let dataStatusStudent = $(this).data('status-student');
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
         //   $('#SuspendActiveBtn').html('tes');
@@ -347,6 +375,7 @@
             <div class = "flex space-x-10">
               <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
               <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
+              <p class="text-dark-blue font-mediun">Status: <span class="text-black font-normal">${dataStatusStudent}</span></p>
             </div>
             <div class="border border-light-blue rounded-xl px-3 py-8 text-center bg-white">
               <p class="text-black text-xs font-normal mb-4">${studentText}</p>
