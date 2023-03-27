@@ -217,7 +217,7 @@
                             <span class="sr-only">Close modal</span>
                         </button>
                         <div class="p-6 text-left space-x-4">
-                            <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Please visit support page to contact platform admin.</h3>
+                          <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Please visit <a href="/profile/{{Auth::guard('student')->user()->id}}/support" class="underline hover:text-darker-blue">support page</a> to contact platform admin.</h3>
                         </div>
                     </div>
                 </div>

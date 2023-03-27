@@ -50,6 +50,7 @@
             <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Request OTP</button>
           </div>
         </form>
+        {{-- <a href="#" class="text-dark-blue text-xs">Login as an admin/supervisor/customer/staff member</a> --}}
       </div>
       <div class="col-start-7 col-span-6 relative">
         <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->

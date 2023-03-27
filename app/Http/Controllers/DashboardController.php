@@ -101,14 +101,14 @@ class DashboardController extends Controller
         $mentors    = Mentor::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
         $student_submissions = Submission::whereHas('student', function($q){
             $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-        })->count();
+        })->where('is_complete', 1)->count();
         }else{
         $students   = Student::get()->count();
         $assign_students   = Student::where('staff_id', Auth::guard('mentor')->user()->id)->get()->count();
         $mentors    = Mentor::where('institution_id', 0)->get()->count();
         $student_submissions = Submission::whereHas('student', function($q){
             $q->where('staff_id', Auth::guard('mentor')->user()->id);
-        })->count();
+        })->where('is_complete', 1)->count();
         }
 
         return view('dashboard.index', compact('students','assign_students','mentors','student_submissions'));
