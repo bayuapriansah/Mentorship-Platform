@@ -25,4 +25,9 @@ class ReadNotification extends Model
     {
     return $this->hasOne(Notification::class,'notifications_id','id');
     }
+
+    public function notificationStudent()
+    {
+        return $this->belongsTo(Notification::class, 'notifications_id');
+    }
 }

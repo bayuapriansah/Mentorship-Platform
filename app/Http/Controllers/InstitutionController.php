@@ -86,7 +86,7 @@ class InstitutionController extends Controller
                 $logo = Storage::disk('public')->put('institutions', $validated['logo']);
                 $institutions->logo = $logo;
             }else{
-                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg. Or image size is too large');
             }
 
         }
@@ -154,7 +154,7 @@ class InstitutionController extends Controller
                 $logo = Storage::disk('public')->put('institutions', $request->logo);
                 $institutions->logo = $logo;
             }else{
-                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg');
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg. Or image size is too large');
             }
         }
         $institutions->save();

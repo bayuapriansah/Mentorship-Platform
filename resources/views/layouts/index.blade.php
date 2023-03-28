@@ -65,7 +65,7 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
-      
+
       .hidden {
         display: none;
       }
@@ -95,11 +95,11 @@
         <div id="tooltip-hover" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
             Coming Soon
             <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>        
+        </div>
       </ul>
-      <div class="col-start-9 col-span-4 flex relative 
+      <div class="col-start-9 col-span-4 flex relative
       @if (Auth::guard('student')->check())
-        justify-between 
+        justify-between
       @else
         justify-end
       @endif
@@ -177,12 +177,12 @@
                 </ul>
             </div>
           </li>
-        </ul>       
+        </ul>
         @else
-        <a href="{{ route('otp.login') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne mr-10">Login</a>
+        <a href="{{ route('multiLogIn') }}" class="py-2 px-14 rounded-full border-[1px] border-solid border-dark-blue text-center capitalize bg-orange text-dark-blue hover:bg-neutral-100 font-light text-sm intelOne mr-10">Login</a>
         <a href="{{route('registerPage')}}" class="py-2 px-11 rounded-full border-2 border-solid border-dark-blue bg-dark-blue text-center capitalize bg-orange text-white hover:bg-darker-blue font-normal text-sm intelOne">Register</a>
         @endif
-        
+
       </div>
     </nav>
   </div>
@@ -242,7 +242,7 @@
         </div>
       </div>
     </div>
-    
+
   </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}

@@ -162,7 +162,7 @@ if(!function_exists('commentPerSection')){
                         ->where('user_id', Auth::guard('web')->user()->id);
             })->get();
         }elseif(Auth::guard('mentor')->check()){
-            if(Auth::guard('mentor')->user()->institution_id != 0){
+            // if(Auth::guard('mentor')->user()->institution_id != 0){
               $comments = Comment::where('project_section_id',$injections->id)->where(function ($query) {
                 $query->whereNull('mentor_id')
                       ->WhereNull('staff_id')
@@ -175,21 +175,20 @@ if(!function_exists('commentPerSection')){
                         ->where('is_read', 1)
                         ->where('mentor_id', Auth::guard('mentor')->user()->id);
             })->get();
-            }else{
-                $comments = Comment::where('project_section_id',$injections->id)->where(function ($query) {
-                    $query->whereNull('mentor_id')
-                          ->WhereNull('staff_id')
-                          ->WhereNull('user_id')
-                          ->WhereNull('customer_id');
-                    })->whereNotIn('id', function($query) {
-                        $query->select('comments_id')
-                            ->from('read_notifications')
-                            ->where('type', 'comments')
-                            ->where('is_read', 1)
-                            ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                })->get();
-                // dd($comments);
-            }
+            // }else{
+            //     $comments = Comment::where('project_section_id',$injections->id)->where(function ($query) {
+            //         $query->whereNull('mentor_id')
+            //               ->WhereNull('staff_id')
+            //               ->WhereNull('user_id')
+            //               ->WhereNull('customer_id');
+            //         })->whereNotIn('id', function($query) {
+            //             $query->select('comments_id')
+            //                 ->from('read_notifications')
+            //                 ->where('type', 'comments')
+            //                 ->where('is_read', 1)
+            //                 ->where('mentor_id', Auth::guard('mentor')->user()->id);
+            //     })->get();
+            // }
         }elseif(Auth::guard('customer')->check()){
             $comments = Comment::where('project_section_id',$injections->id)->where(function ($query) {
                 $query->whereNull('mentor_id')

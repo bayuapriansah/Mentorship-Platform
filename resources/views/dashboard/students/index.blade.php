@@ -113,7 +113,10 @@
         </td>
       @else
         <td>{{$student->first_name}} {{$student->last_name}}</td>
-        <td>{{$student->email}}</td>
+        <td>
+          {{$student->email}}
+          
+        </td>
         <td>
           @if($student->institution)
           {{$student->institution->name}}
@@ -206,11 +209,14 @@
                               @php $num++ @endphp
                               @endforeach"            
                   data-status-student = " @if($student->enrolled_projects->count() >=1)
-                                            Already enrolled to a project
+                                            @if($student->enrolled_projects->where('is_submited',0)->last())
+                                              Enrolled in '{{$student->enrolled_projects->where('is_submited',0)->last()->project->name}}'
+                                            @else
+                                              Not enrolled in a project
+                                            @endif
                                           @else
-                                            Not yet enrolled
-                                          @endif
-                                        "           
+                                            Not enrolled in a project
+                                          @endif"
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
@@ -254,6 +260,7 @@
         let dataDate = $(this).data('date');
         let dataFlag = $(this).data('flag');
         let dataInfo = $(this).data('info');
+        let dataStatusStudent = $(this).data('status-student');
         // console.log(studentEnd);
         // if(studentIs_confirm == 1){
           // $('#BitTitle').html('activate');
@@ -278,6 +285,7 @@
             <div class = "flex space-x-10">
               <p class="text-dark-blue font-mediun">Study Program: <span class="text-black font-normal">${studentStudyProgram}</span></p>
               <p class="text-dark-blue font-mediun">Year Of Study: <span class="text-black font-normal">${studentYear}</span></p>
+              <p class="text-dark-blue font-mediun">Status: <span class="text-black font-normal">${dataStatusStudent}</span></p>
             </div>
             <div class="border border-light-blue rounded-xl px-3 py-8 text-center bg-white">
               <p class="text-black text-xs font-normal mb-4">${studentText}</p>

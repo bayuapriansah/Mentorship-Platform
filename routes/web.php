@@ -81,8 +81,10 @@ Route::get('/verified/{email}', [AuthController::class, 'verified'])->name('veri
 Route::get('/register', [AuthController::class, 'register'])->name('registerPage');
 Route::post('/register', [AuthController::class, 'store'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [AuthController::class, 'multiLogIn'])->name('multiLogIn');
+Route::post('/login/auth', [AuthController::class, 'multiLogInCheck'])->name('multiLogInCheck');
 Route::get('/sendmail', [MailController::class, 'index']);
-Route::get('/admin', [AuthController::class, 'login'])->name('login');
+Route::get('/Vv2g5bdRc0bqs5fOB6Nj0emOd9B7bobU8MaJKWb2MMCJMJaZL3CtW', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 // forgot password
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
@@ -249,7 +251,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // /dashboard/partners/{{$partner->id}}/members/{{$member->id}}/suspend
         Route::get('/partners/{partner}/members/{member}/suspend', [CustomerController::class, 'partnerMemberSuspend'])->name('mentors.partnerMemberSuspend');
         Route::delete('/partners/{partner}/members/{member}', [CustomerController::class, 'destroy'])->name('mentors.partnerMemberDelete');
-        
+
         Route::post('partners/{partner}/members/sendInvitePartner', [CustomerController::class, 'sendInvitePartner'])->name('partner.sendInvitePartner');
         Route::resource('partners', CompanyController::class);
 
@@ -309,7 +311,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // Enrollment
         Route::get('/enrollment/project/{id}', [EnrolledProjectController::class, 'show'])->name('enrollment.show');
-        
+
         // Message
         Route::get('/messages', [CommentController::class, 'index'])->name('messages.index');
         Route::get('/messages/create', [CommentController::class, 'create'])->name('messages.create');
@@ -319,7 +321,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Route::get('/messages/{injection}/reply/{participant}', [CommentController::class, 'adminReply'])->name('messages.adminReply');
         Route::post('/messages/{injection}/reply/{participant}/sendMessage', [CommentController::class, 'adminSendMessage'])->name('messages.adminSendMessage');
         Route::post('/messages', [CommentController::class, 'adminSendMessageGlobal'])->name('messages.adminSendMessageGlobal');
-        
+
         // Profile
         Route::get('/profile/{profile}/edit', [DashboardController::class, 'profile'])->name('profile.edit');
         Route::patch('/profile/{profile}/', [DashboardController::class, 'updateProfile'])->name('profile.update');
@@ -328,7 +330,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
         Route::resource('students', StudentController::class);
         Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
-    
+
     });
     Route::middleware(['auth:web,mentor'])->group(function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');

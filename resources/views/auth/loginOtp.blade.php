@@ -24,7 +24,8 @@
       <div class="col-span-5">
         <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Login</h1>
         <p class="intelOne font-light text-black text-lg leading-6 py-6">Sign in to your account to continue.</p>
-        <form action="{{ route('otp.generate') }}" method="post" id="register">
+        {{-- <form action="{{ route('otp.generate') }}" method="post" id="register"> --}}
+        <form action="{{ route('multiLogInCheck') }}" method="post" id="register">
           @csrf
           <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder focus:border focus:outline-none  focus:border-light-blue focus:ring-light-blue leading-tight {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email *" id="email" name="email" required>
           @if (Session::has('email'))
@@ -47,7 +48,7 @@
             This email address is already registered!
           </div> --}}
           <div class="flex">
-            <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Request OTP</button>
+            <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Log In</button>
           </div>
         </form>
         {{-- <a href="#" class="text-dark-blue text-xs">Login as an admin/supervisor/customer/staff member</a> --}}
