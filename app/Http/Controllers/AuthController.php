@@ -149,7 +149,7 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function login($email){
+    public function login($email = null){
         $guards = ['customer', 'web', 'mentor', 'student'];
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
@@ -178,7 +178,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect('/')->with('success','Logged in admin');
         }else{
-            return back()->with('error','Invalid Login Credentials: Your email or password is incorrect. Please review your information and try again.');
+            return $this->login($validated['email'])->with('error','Invalid Login Credentials: Your email or password is incorrect. Please review your information and try again.');
         }
     }
 

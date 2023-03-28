@@ -45,8 +45,8 @@
                 <tr>
                   <td>
                     <span class="{{optional($notifNewTask->read_notification)->firstWhere(['student_id' => $student->id, 'notifications_id' => $notifNewTask->id]) != TRUE ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
-                      Task : 
-                      {{ substr($notifNewTask->project->name,0,99) }} 
+                      Task :
+                      {{ substr($notifNewTask->project->name,0,99) }}
                       <br>
                       {!! substr($notifNewTask->project->problem,0,80) !!}...
                       <br>
@@ -65,7 +65,7 @@
     </tbody>
   </table>
 </div>
-@endsection 
+@endsection
 
 @section('more-js')
 <script>
