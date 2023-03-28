@@ -152,7 +152,7 @@ class CommentController extends Controller
                         ->from('read_notifications')
                         ->where('type', 'comments')
                         ->where('is_read', 1)
-                        ->where('staff_id', Auth::guard('mentor')->user()->id);
+                        ->where('mentor_id', Auth::guard('mentor')->user()->id);
             })->get();
             }
             $customer_participants = Customer::where('company_id',$injection->project->company_id)->get();
