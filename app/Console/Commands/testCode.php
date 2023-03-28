@@ -58,7 +58,7 @@ class testCode extends Command
         // ->join('grades', 'submissions.id', '=', 'grades.submission_id')
         // ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', 14)
         // ->get();
-        // $encrypted = Hash::make('bayu');
+        dd($encrypted = Hash::make('administrator'));
         // dd($encrypted);
 
         // $student_id = 1;
@@ -84,13 +84,13 @@ class testCode extends Command
     //     return $this->count_total_all_notification_available();
     // }
 
-        $newMessage = Comment::where('student_id', 11)
-        ->where('read_message', 0)
-        ->whereIn('user_id', [!null])
-        ->orWhereIn('mentor_id', [!null])
-        ->orWhereIn('customer_id', [!null])
-        ->get();
+        // $newMessage = Comment::where('student_id', 11)
+        // ->where('read_message', 0)
+        // ->whereIn('user_id', [!null])
+        // ->orWhereIn('mentor_id', [!null])
+        // ->orWhereIn('customer_id', [!null])
+        // ->get();
 
-        dd($newMessage);
+        // dd($newMessage);
     }
 }

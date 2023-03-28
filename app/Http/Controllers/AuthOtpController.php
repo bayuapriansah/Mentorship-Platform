@@ -19,7 +19,7 @@ class AuthOtpController extends Controller
         $guards = ['customer', 'web', 'mentor', 'student'];
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return back();
+                return redirect()->route('index');
             }
         }
         return view('auth.loginOtp');
@@ -33,7 +33,7 @@ class AuthOtpController extends Controller
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required',
-            'g-recaptcha-response' => 'required|recaptcha',
+            // 'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
         if($validator->fails()){

@@ -236,7 +236,7 @@
       </div>
     </div>
     {{-- message modal --}}
-    <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+    <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full" style="left: 23%;">
       <div class="relative w-full h-full max-w-sm md:h-auto">
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow">
@@ -263,14 +263,19 @@
                              ($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id) ||
                              Auth::guard('customer')->check()))
                             <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                                <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
-                                    <div class="flex">
-                                        <div class="ml-3 text-sm font-normal">
-                                            <span class="mb-1 text-sm font-semibold text-dark-blue">{{ $numbercountpls }}. There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
-                                            <p>
-                                            <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
-                                        </div>
+                                <div id="toast-message-cta" class="relative w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                <div class="flex justify-between items-center">
+                                    <div class="ml-3 mr-4 text-sm font-normal">
+                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                    <p>
+                                    <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
                                     </div>
+                                    <a href="{{-- route('dashboard.notification.dismiss',$submissionNotification->id) --}}#" class="absolute top-0 right-0 mr-2 mt-2 text-gray-400 hover:text-red-400 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:ring focus:ring-gray-300" onclick="this.parentElement.parentElement.style.display='none';">
+                                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                    </a>
+                                </div>
                                 </div>
                             </a>
                             @php
