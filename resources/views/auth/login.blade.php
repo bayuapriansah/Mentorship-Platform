@@ -28,7 +28,7 @@
         <p class="intelOne font-light text-black text-lg leading-6 py-6">Sign in to your account to continue.</p>
         <form action="/authenticate" method="post" id="register">
           @csrf
-          <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none {{old('email') != null ? 'border-red-500' : ''}}" value="{{old('email')}}" placeholder="Email" id="email" name="email" required>
+          <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none {{old('email') != null ? 'border-red-500' : ''}}" value="{{ $email}}" placeholder="Email" id="email" name="email" required>
           @error('email')
               <p class="text-red-600 text-sm mt-1">
                 {{$message}}

@@ -21,19 +21,50 @@ use App\Http\Controllers\InstitutionController;
 
 class AuthController extends Controller
 {
+
+    public function multiLogIn(){
+        $guards = ['customer', 'web', 'mentor', 'student'];
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return redirect()->route('index');
+            }
+        }
+        return (new AuthOtpController)->login();
+    }
+
+    public function multiLogInCheck(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'g-recaptcha-response' => 'required|recaptcha',
+        ]);
+
+        if($validator->fails()){
+            Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
+            return redirect()->route('multiLogIn')->withErrors($validator);
+        }
+        $validated = $validator->validated();
+        if($validated != null){
+            $usersExist = User::where('email',$validated['email'])->first();
+            $mentorsExist = Mentor::where('email',$validated['email'])->where('is_confirm',1)->first();
+            $customerExist = Customer::where('email',$validated['email'])->where('is_confirm',1)->first();
+            $studentExist = Student::where('email',$validated['email'])->where('is_confirm',1)->first();
+            if($usersExist || $mentorsExist || $customerExist){
+                return $this->login($validated['email']);
+            }elseif($studentExist){
+                return (new AuthOtpController)->generate($request);
+            }else{
+                return redirect()->route('multiLogIn')->with('error','This email is not registered.');;
+            }
+        }
+    }
+
     public function register()
     {
-        if(Auth::guard('customer')->check()){
-            return back();
-        }
-        if(Auth::guard('web')->check()){
-            return back();
-        }
-        if(Auth::guard('mentor')->check()){
-            return back();
-        }
-        if(Auth::guard('student')->check()){
-            return back();
+        $guards = ['customer', 'web', 'mentor', 'student'];
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return redirect()->route('index');
+            }
         }
         $GetInstituionData = (new InstitutionController)->GetInstituionData();
         $regState = 0;
@@ -118,20 +149,14 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function login(){
-        if(Auth::guard('customer')->check()){
-            return back();
+    public function login($email){
+        $guards = ['customer', 'web', 'mentor', 'student'];
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return redirect()->route('index');
+            }
         }
-        if(Auth::guard('web')->check()){
-            return back();
-        }
-        if(Auth::guard('mentor')->check()){
-            return back();
-        }
-        if(Auth::guard('student')->check()){
-            return back();
-        }
-        return view('auth.login');
+        return view('auth.login',compact('email'));
     }
 
     public function authenticate(Request $request){
