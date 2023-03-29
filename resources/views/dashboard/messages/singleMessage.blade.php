@@ -32,17 +32,17 @@
             </span><br>
             <span class="font-light receiver capitalize">
               @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
-                to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}},
+                cc: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}},
                 @foreach ($customer_participants as $customer)
                   {{$customer->first_name}} {{$customer->last_name}},
                 @endforeach
               @elseif($comment->mentor_id !=null)
-                to: {{$comment->student->first_name}} {{$comment->student->last_name}},
+                cc: {{$comment->student->first_name}} {{$comment->student->last_name}},
                 @foreach ($customer_participants as $customer)
                   {{$customer->first_name}} {{$customer->last_name}},
                 @endforeach
               @elseif($comment->user_id !=null )
-              to: {{$comment->student->first_name}} {{$comment->student->last_name}}, {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}},
+              cc: {{$comment->student->first_name}} {{$comment->student->last_name}}, {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}},
                 @foreach ($customer_participants as $customer)
                   {{$customer->first_name}} {{$customer->last_name}},
                 @endforeach
