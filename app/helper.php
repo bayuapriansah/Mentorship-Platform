@@ -207,7 +207,10 @@ if(!function_exists('commentPerSection')){
                         ->where('type', 'comments')
                         ->where('is_read', 1)
                         ->where('customer_id', Auth::guard('customer')->user()->id);
-            })->get();
+            })->whereHas('student', function($q){
+                $q->where('institution_id', Auth::guard('customer')->user()->id);
+            })
+            ->get();
         }
         return $comments;
     }
