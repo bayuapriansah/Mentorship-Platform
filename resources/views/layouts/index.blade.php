@@ -198,7 +198,7 @@
       <div class="col-start-6 col-span-2 flex flex-col">
         <ul class="text-dark-blue text-xs font-normal">
           <li class="pb-3"><a href="/#AiForFuture">For Industry Partners</a></li>
-          <li class="pb-3"><a href="/for-institutes">For Institution</a></li>
+          <li class="pb-3"><a href="/for-institution">For Institution</a></li>
           <li class="pb-3"><a href="/for-students">For Students</a></li>
         </ul>
       </div>

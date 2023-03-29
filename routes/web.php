@@ -53,7 +53,7 @@ Route::get('/faq', function () {
 Route::get('/about-us', function () {
   return view('about');
 })->name('about');
-Route::get('/for-institutes', function () {
+Route::get('/for-institution', function () {
   return view('forInstitutes');
 })->name('forInstitutes');
 Route::get('/for-students', [IndexController::class, 'forStudents'])->name('forStudent');

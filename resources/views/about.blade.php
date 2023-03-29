@@ -11,16 +11,22 @@
   <div class="max-w-[1366px] mx-auto px-16 py-16 z-30 text-lg space-y-5 text-justify">
     <section id="main-text">
       <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime quasi dolores nulla fugiat? Quod quos, numquam assumenda deleniti provident facere sit cupiditate. Numquam quidem non iure quos, dolore placeat maxime voluptas incidunt officiis porro sed facere ullam dolorum vel eius, quam impedit corrupti, fugit totam! Consequuntur unde porro harum, pariatur inventore quos laboriosam laborum ipsa fugit delectus cum praesentium nulla dolor soluta culpa asperiores ducimus dolorem minus cupiditate incidunt veniam et voluptas? Eaque aut, temporibus vitae laudantium molestiae consequuntur exercitationem eveniet cumque maxime! Magni, ipsa, natus suscipit velit doloribus consectetur debitis, soluta quia est sapiente aliquam aliquid labore ut quae.
+        Welcome to the Simulated Internship Platform, where we strive to provide students with an environment that mimics the real-world workplace experience. Our goal is to help students develop practical skills and gain hands-on experience in a professional setting, preparing them to become the workforce of the future.
       </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque aspernatur suscipit architecto voluptatibus consectetur explicabo non accusamus velit minima. Repudiandae molestias explicabo, ducimus fugiat neque nesciunt beatae tenetur laborum iste harum expedita est nostrum mollitia nobis? Ab minus officia, vitae ea saepe accusantium distinctio, placeat corporis natus sint architecto expedita impedit nesciunt quaerat quam eaque libero quibusdam? Et quis atque magni corporis sunt, suscipit, qui quidem nobis laboriosam, voluptatum similique error veritatis placeat totam optio tempore? Modi eum amet eius libero beatae adipisci, numquam, nam, tempore iure deleniti tenetur quos culpa! Aliquid, minus reprehenderit. Ratione vel quibusdam optio. Cupiditate vero praesentium, officiis numquam earum nam doloribus ullam fuga assumenda eos, veritatis maxime adipisci fugit quaerat tempora? Ut provident, quod illo deserunt assumenda dicta corporis porro magni incidunt odio dolorem corrupti hic earum. Sapiente quam eligendi error quos nemo doloremque quibusdam odio architecto aut fugiat corrupti quo dicta placeat laboriosam, ut nesciunt atque animi sequi exercitationem suscipit! Possimus neque ab labore non eligendi quaerat laborum in voluptatem! Doloremque delectus possimus molestiae voluptate, repudiandae asperiores optio expedita blanditiis reiciendis officiis ipsa temporibus reprehenderit vero sint quae sed aperiam tempora! Excepturi, fugit voluptas expedita nobis quas praesentium soluta quidem cum eum architecto unde.
+      <p class="mt-4">
+        Our platform offers a range of AI projects that cover Machine Learning (ML), Natural Language Processing (NLP), and Computer Vision (CV), designed to challenge students and expand their knowledge. Each project has its own specific requirements, and students must complete all tasks to the satisfaction of our team or their institution's supervisor.
+      </p>
+      <p class="mt-4">
+        We understand that real-world work experience can be difficult to come by, especially for students. That's why we created the Simulated Internship Program to provide an opportunity for students to gain valuable experience and enhance their skills. The program typically lasts four months and comprises projects of various durations, generally one month.
+      </p>
+      <p class="mt-4">
+        Our platform not only offers students the opportunity to gain hands-on experience, but also provides a collaborative environment where they can work with industry professionals and communicate with supervisors and our team for any required support. Our industry partners provide us with various projects to work on, so students can be sure that they're gaining experience in relevant and current technologies. We believe that the skills and experience students gain will be valuable assets to them at the start of their careers. Join us on this journey to hone your skills, gain real-world experience, and become ready to be a part of the future workforce.
       </p>
     </section>
 
-    <div class="grid grid-cols-12 gap-11 grid-flow-col  relative">
-      <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 -top-32 right-0" aria-hidden="true" >
-      <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-10 left-0 " aria-hidden="true" >
+    <div class="grid grid-cols-12 gap-11 grid-flow-col relative">
+      <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 -top-10 -right-12" aria-hidden="true" >
+      <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-20 -left-12 " aria-hidden="true" >
       <div class="col-span-4">
         <div class="flex flex-col">
           <img src="{{asset('assets/img/for_students.png')}}" class="relative z-20" alt="for students">
