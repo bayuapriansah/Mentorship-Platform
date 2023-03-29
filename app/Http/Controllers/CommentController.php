@@ -95,13 +95,12 @@ class CommentController extends Controller
         return $projectSections;
     }
 
-    public function getdatastudent($id)
+    public function getdatastudent($id,$user_id)
     {
         $EnrolledProjects = EnrolledProject::where('project_id', $id)->get();
         $students = [];
-
         foreach ($EnrolledProjects as $EnrolledProject) {
-            $students[] = $EnrolledProject->student;
+            $students[] = $EnrolledProject->student->where('staff_id', $user_id)->get();
         }
 
         return $students;
