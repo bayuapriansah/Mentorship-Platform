@@ -28,7 +28,7 @@ class NotificationController extends Controller
             'status' => "publish",
         ]);
     }
-    
+
     public function project_notification_draft($project)
     {
         Notification::where('project_id', $project)
@@ -39,7 +39,6 @@ class NotificationController extends Controller
         $notifs = Notification::where('status','publish')->get();
         $dataNotif = 0; // initialize variable outside loop
         foreach($notifs as $notif){
-            // if($notif->project && $notif->status == 'publish'){ // check if project status is publish
             if($notif->project){ // check if project status is publish
                 $dataNotif++; // increment variable
             }

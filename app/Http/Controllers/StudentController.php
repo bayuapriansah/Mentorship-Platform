@@ -504,8 +504,18 @@ class StudentController extends Controller
         ->join('students', 'submissions.student_id', '=', 'students.id')->where('student_id', $id)->where('readornot', 0)
         ->get();
         $notif = (new NotificationController)->count_total_all_notification_available();
-        $readTheNotifications = ReadNotification::where('student_id', $id)->whereNot('id',0)->get()->count();
-        // dd($notifActivityCounts." AND ".$notif." AND ".$readTheNotifications);
+        $readTheNotifications = ReadNotification::where('student_id', $id)
+        ->where('is_read', 1)
+        ->whereNull('comments_id')
+        ->whereNull('submission_id')
+        ->whereNull('type')
+        ->whereNull('mentor_id')
+        ->whereNull('user_id')
+        ->whereHas('notificationStudent', function ($query) {
+            $query->where('status', 'publish');
+        })
+        ->get()->count();
+        // dd($readTheNotifications);
         $notifActivityCount = ($notifActivityCounts->count() + $notif) - $readTheNotifications;
         return $notifActivityCount;
     }
@@ -670,10 +680,10 @@ class StudentController extends Controller
     }
 
     public function readActivityTask($student_id, $project_id, $notification_id){
-        // dd($project_id);
-        $checkReadNotification = ReadNotification::where('notifications_id',$notification_id)->first();
-        $checkIdNotification = Notification::where('id',$notification_id)->first();
-        if($checkIdNotification){
+        $checkReadNotification = ReadNotification::where('notifications_id',$notification_id)->where('student_id',$student_id)->first();
+        $checkIdNotification = Notification::where('id',$notification_id)->where('project_id',$project_id)->where('status','publish')->first();
+        $checkEnrolled = EnrolledProject::where('student_id',$student_id)->where('project_id',$project_id)->first();
+        if($checkIdNotification != null){
             if(!$checkReadNotification){
                 $ReadNotification = new ReadNotification;
                 $ReadNotification->student_id = $student_id;
@@ -681,8 +691,15 @@ class StudentController extends Controller
                 $ReadNotification->is_read = 1;
                 $ReadNotification->save();
             }
+        }else{
+            return redirect()->back();
         }
-        return $this->availableProjectDetail($student_id, $project_id);
+
+        if($checkEnrolled != null){
+            return $this->availableProjectDetail($student_id, $project_id);
+        }else{
+            return $this->enrolledDetail($student_id, $project_id);
+        }
     }
 
     public function readActivity($student_id, $project_id, $task_id, $submission_id){
