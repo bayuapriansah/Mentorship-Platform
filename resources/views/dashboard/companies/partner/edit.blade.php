@@ -13,7 +13,7 @@
     <a href="/dashboard/partners/{{$partner->id}}/members"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
   </div>
   <div class="flex justify-between mb-10">
-    <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Edit Supervisor </h3>
+    <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Edit Customer </h3>
     <a href="/dashboard/partners/{{$partner->id}}/members" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
   </div>
 @endif
