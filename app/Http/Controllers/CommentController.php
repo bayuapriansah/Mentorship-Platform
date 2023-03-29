@@ -97,10 +97,30 @@ class CommentController extends Controller
 
     public function getdatastudent($id,$user_id)
     {
-        $EnrolledProjects = EnrolledProject::where('project_id', $id)->get();
+
+        if(Auth::guard('web')->check()){
+            $EnrolledProjects = EnrolledProject::where('project_id', $id)->get();
+        }elseif(Auth::guard('mentor')->check()){
+            if(Auth::guard('mentor')->user()->institution_id != 0){
+                $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
+                    $q->where('staff_id', $user_id);
+                })->get();
+            }else{
+
+            }
+        }elseif(Auth::guard('customer')->check()){
+
+        }
+
+        $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
+            $q->where('staff_id', $user_id);
+        })->get();
+
+        dd($EnrolledProjects);
         $students = [];
         foreach ($EnrolledProjects as $EnrolledProject) {
-            $students[] = $EnrolledProject->student->where('staff_id', $user_id)->get();
+            $students[] = $EnrolledProject->student;
+        // }
         }
 
         return $students;
