@@ -203,7 +203,7 @@ if(!function_exists('commentPerSection')){
                         ->where('customer_id', Auth::guard('customer')->user()->id);
             })->get();
         }
-
+        // dd($comments);
         return $comments;
     }
 }
