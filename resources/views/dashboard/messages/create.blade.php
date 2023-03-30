@@ -167,10 +167,14 @@ $(document).ready(function () {
 
       $('#inputproject').on('change', function () {
           var idproject = this.value;
+          var user = {!! auth()->user()->toJson() !!};
+          var userAuth = {!! json_encode((array)auth()->user()) !!};
+          var guard = userAuth['*'].guard;
+          console.log(guard);
           var base_url = window.location.origin;
           $("#inputstudent").html('');
           $.ajax({
-              url: base_url+"/api/student/project/"+idproject,
+              url: base_url+"/api/student/project/"+idproject+"/"+user.id,
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
