@@ -57,12 +57,12 @@ class NotificationController extends Controller
     }
 
     public function data_comment_from_admin($id){
-        $newMessage = Comment::where('student_id', $id)
-        ->where('read_message', 0)
-        ->whereIn('user_id', [!null])
-        ->orWhereIn('mentor_id', [!null])
-        ->orWhereIn('customer_id', [!null])
-        ->get();
+        $newMessage = Comment::where('student_id', $id)->where('read_message', 0)->where(function ($query) {
+        $query->orWhereNotNull('user_id')
+            ->orWhereNotNull('mentor_id')
+            ->orWhereNotNull('customer_id')
+            ->orWhereNotNull('staff_id');
+        })->get();
 
         return $newMessage;
     }

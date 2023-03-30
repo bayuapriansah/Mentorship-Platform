@@ -515,7 +515,6 @@ class StudentController extends Controller
             $query->where('status', 'publish');
         })
         ->get()->count();
-        // dd($readTheNotifications);
         $notifActivityCount = ($notifActivityCounts->count() + $notif) - $readTheNotifications;
         return $notifActivityCount;
     }
@@ -528,13 +527,12 @@ class StudentController extends Controller
 
     public function newCommentForSidebarMenu($id)
     {
-        $newMessage = Comment::where('student_id', $id)
-        ->where('read_message', 0)
-        ->whereHas('project')
-        ->whereIn('user_id', [!null])
-        ->orWhereIn('mentor_id', [!null])
-        ->orWhereIn('customer_id', [!null])
-        ->count();
+        $newMessage = Comment::where('student_id', $id)->where('read_message', 0)->where(function ($query) {
+            $query->orWhereNotNull('user_id')
+                ->orWhereNotNull('mentor_id')
+                ->orWhereNotNull('customer_id')
+                ->orWhereNotNull('staff_id');
+            })->get()->count();
 
         return $newMessage;
     }

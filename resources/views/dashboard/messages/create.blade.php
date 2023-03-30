@@ -4,7 +4,7 @@
   <a href="/dashboard/messages"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Reply Message</h3>
+  <h3 class="text-dark-blue font-medium text-xl">New Message</h3>
 </div>
 
 <form action="/dashboard/messages" method="post" id="form-chat" class="text-dark-blue text-lg font-normal" enctype="multipart/form-data">
@@ -56,9 +56,9 @@
         </p>
     @enderror
   </div>
-
-  <div class="mb-3">
-    <label for="inputproject">CC </label>
+{{-- @dd($instituteId) --}}
+  {{-- <div class="mb-3">
+    <label for="inputproject">CC </label> --}}
     {{-- <input type="text" class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none"> --}}
     {{-- <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none " id="inputproject"  name="project" disabled>
       <option value="{{$participant->id}}">
@@ -68,8 +68,7 @@
         @endforeach
       </option>
     </select> --}}
-  </div>
-
+  {{-- </div> --}}
   <div class="mb-3">
     <label for="inputproject">Message <span class="text-red-600">*</span> </label>
     <div class="w-full mb-4 border border-light-blue rounded-lg  ">
@@ -167,20 +166,20 @@ $(document).ready(function () {
 
       $('#inputproject').on('change', function () {
           var idproject = this.value;
-          var user = {!! auth()->user()->toJson() !!};
-          var userAuth = {!! json_encode((array)auth()->user()) !!};
-          var guard = userAuth['*'].guard;
-          console.log(guard);
+          var userAuth = "{{ Auth::getDefaultDriver() }}";
+          var guardId = "{{ Auth::user()->id }}";
+          var instituteId = "{{ $instituteId }}";
+          var guardIns = instituteId != 0 ? 1 : 0;
           var base_url = window.location.origin;
           $("#inputstudent").html('');
           $.ajax({
-              url: base_url+"/api/student/project/"+idproject+"/"+user.id,
+              url: base_url+"/api/student/project/"+idproject+"/"+guardId+"/"+userAuth+"/"+guardIns,
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
-                console.log(result);
                   $('#inputstudent').html('<option hidden>Select Task</option>');
                   $.each(result, function (key, value) {
+                      console.log(value);
                       $("#inputstudent").append('<option value="' + value
                           .id + '">' + value.first_name + ' ' + value.last_name +'</option>');
                   });

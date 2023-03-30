@@ -72,6 +72,7 @@ class CommentController extends Controller
             $projects = Project::get();
             $projectSections = ProjectSection::get();
             $students = Student::get();
+            $instituteId = Auth::guard('web')->user()->institution_id;
         }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
             $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
@@ -80,12 +81,14 @@ class CommentController extends Controller
         }
             $projectSections = ProjectSection::get();
             $students = Student::get();
+            $instituteId = Auth::guard('mentor')->user()->institution_id;
         }elseif(Auth::guard('customer')->check()){
             $projects = Project::get();
             $projectSections = ProjectSection::get();
             $students = Student::get();
+            $instituteId = Auth::guard('customer')->user()->institution_id;
         }
-        return view('dashboard.messages.create', compact('projects', 'projectSections', 'students'));
+        return view('dashboard.messages.create', compact('projects', 'projectSections', 'students', 'instituteId'));
     }
 
     public function getdatacomment($id)
@@ -94,14 +97,12 @@ class CommentController extends Controller
         return $projectSections;
     }
 
-    public function getdatastudent($id,$user_id)
+    public function getdatastudent($id,$user_id,$guard,$institution)
     {
-        $guard = Auth::getDefaultDriver();
-        dd($guard);
-        if(Auth::guard('web')->check()){
+        if($guard == 'web'){
             $EnrolledProjects = EnrolledProject::where('project_id', $id)->get();
-        }elseif(Auth::guard('mentor')->check()){
-            if(Auth::guard('mentor')->user()->institution_id != 0){
+        }elseif($guard == 'mentor'){
+            if($institution != 0){
                 $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
                     $q->where('mentor_id', $user_id);
                 })->get();
@@ -110,17 +111,13 @@ class CommentController extends Controller
                     $q->where('staff_id', $user_id);
                 })->get();
             }
-        }elseif(Auth::guard('customer')->check()){
+        }elseif($guard == 'customer'){
             $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
                 $q->where('staff_id', $user_id);
             })->get();
         }
 
-        $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
-            $q->where('staff_id', $user_id);
-        })->get();
-
-        dd($EnrolledProjects);
+        // dd($EnrolledProjects);
         $students = [];
         foreach ($EnrolledProjects as $EnrolledProject) {
             $students[] = $EnrolledProject->student;

@@ -186,7 +186,6 @@
               @endif
             </a>
 
-
             @if (Auth::guard('web')->check())
               <a href="/dashboard/profile/{{Auth::guard('web')->user()->id}}/edit" type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300">
             @elseif (Auth::guard('mentor')->check())
@@ -258,10 +257,7 @@
                         $numbercountpls = 1;
                     @endphp
                     @foreach ($DataSubmissionNotifications as $submissionNotification)
-                        @if ($submissionNotification->student != NULL &&
-                            (Auth::guard('web')->check() ||
-                             ($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id) ||
-                             Auth::guard('customer')->check()))
+                        @if ($submissionNotification->student != NULL && (Auth::guard('web')->check() || (Auth::guard('mentor')->user() != NULL && ($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id)) || Auth::guard('customer')->check()))
                             <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
                                 <div id="toast-message-cta" class="relative w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                                 <div class="flex justify-between items-center">
