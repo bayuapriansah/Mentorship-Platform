@@ -72,6 +72,7 @@ class CommentController extends Controller
             $projects = Project::get();
             $projectSections = ProjectSection::get();
             $students = Student::get();
+            $instituteId = Auth::guard('web')->user()->institution_id;
         }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
             $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
@@ -80,12 +81,14 @@ class CommentController extends Controller
         }
             $projectSections = ProjectSection::get();
             $students = Student::get();
+            $instituteId = Auth::guard('mentor')->user()->institution_id;
         }elseif(Auth::guard('customer')->check()){
             $projects = Project::get();
             $projectSections = ProjectSection::get();
             $students = Student::get();
+            $instituteId = Auth::guard('customer')->user()->institution_id;
         }
-        return view('dashboard.messages.create', compact('projects', 'projectSections', 'students'));
+        return view('dashboard.messages.create', compact('projects', 'projectSections', 'students', 'instituteId'));
     }
 
     public function getdatacomment($id)

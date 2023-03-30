@@ -56,7 +56,7 @@
         </p>
     @enderror
   </div>
-
+{{-- @dd($instituteId) --}}
   <div class="mb-3">
     <label for="inputproject">CC </label>
     {{-- <input type="text" class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none"> --}}
@@ -69,7 +69,6 @@
       </option>
     </select> --}}
   </div>
-
   <div class="mb-3">
     <label for="inputproject">Message <span class="text-red-600">*</span> </label>
     <div class="w-full mb-4 border border-light-blue rounded-lg  ">
@@ -166,16 +165,14 @@ $(document).ready(function () {
 
       $('#inputproject').on('change', function () {
           var idproject = this.value;
-          var userAuth = {!! json_encode((array)auth()->user()) !!};
-          userAuth = JSON.parse(JSON.stringify(userAuth));
-          var guardRoles = userAuth['\u0000*\u0000guard'];
-          var guard = userAuth['\u0000*\u0000attributes'];
-          // console.log(guard.institution_id);
-          // console.log(userAuth['\u0000*\u0000attributes']);
+          var userAuth = "{{ Auth::getDefaultDriver() }}";
+          var guardId = "{{ Auth::user()->id }}";
+          var instituteId = "{{ $instituteId }}";
+          var guardIns = instituteId != 0 ? 1 : 0;
           var base_url = window.location.origin;
           $("#inputstudent").html('');
           $.ajax({
-              url: base_url+"/api/student/project/"+idproject+"/"+guard.id+"/"+guardRoles+"/"+guard.institution_id,
+              url: base_url+"/api/student/project/"+idproject+"/"+guardId+"/"+userAuth+"/"+guardIns,
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
