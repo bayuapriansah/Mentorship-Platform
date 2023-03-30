@@ -56,6 +56,9 @@ Route::get('/about-us', function () {
 Route::get('/for-institution', function () {
   return view('forInstitutes');
 })->name('forInstitutes');
+Route::get('/for-industry-partners', function () {
+  return view('forIndustry');
+})->name('forIndustry');
 Route::get('/for-students', [IndexController::class, 'forStudents'])->name('forStudent');
 Route::get('/contact', [DashboardController::class, 'contact'])->name('contact');
 Route::post('/contact', [DashboardController::class, 'sendContact'])->name('sendContact');

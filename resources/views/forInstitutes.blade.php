@@ -15,7 +15,7 @@
       <div class="w-[40%] my-auto">
         <h1 class="font-bold text-3xl leading-8">
           <span class="text-dark-blue">Simulated Internships</span><br>
-          <span class="text-light-brown">For Students</span>
+          <span class="text-light-brown">For Institutes</span>
         </h1>
       </div>
       <div class="w-full">
