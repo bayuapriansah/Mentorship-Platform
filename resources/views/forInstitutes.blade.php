@@ -45,19 +45,16 @@
         <div class="bg-dark-blue py-9 pl-14 pr-36 rounded-3xl w-7/12 relative">
           <img src="{{asset('assets/img/for-institutes/image1.png')}}" class="absolute -right-24 -top-20" alt="">
           <p class="text-white text-lg font-normal">students will have a practical learning experience that simulates the demands of the workforce. This enables them to apply the knowledge and skills they have acquired in the classroom to real-world scenarios, developing critical skills that employers look for in candidates.</p>
-          <img src="{{asset('assets/img/for-institutes/line1.png')}}" class="absolute -bottom-48 right-44" alt="">
         </div>
         <div class="flex flex-row-reverse mt-20">
           <div class="bg-light-brown px-11 pt-7 pb-20 rounded-3xl  w-7/12 relative ">
             <img src="{{asset('assets/img/for-institutes/image 65.png')}}" class="absolute -right-24 -bottom-14" alt="">
             <p class="text-white text-lg font-normal">the online format offers flexibility and convenience. Students can access the program at their own pace and from anywhere. This makes it possible for students who may be unable to participate in traditional internships to still benefit from the program. Additionally, students can manage their schedules and balance personal commitments with meeting project deadlines.</p>
-            <img src="{{asset('assets/img/for-institutes/line2.png')}}" class="absolute -bottom-48 left-36" alt="">
           </div>
         </div>
         <div class="bg-dark-blue py-9 pl-36 pr-14 rounded-3xl w-7/12 relative mt-20">
           <img src="{{asset('assets/img/for-institutes/image 66.png')}}" class="absolute -left-24 -top-20" alt="">
           <p class="text-white text-lg font-normal">our program provides exposure to different types of AI projects, allowing students to build a well-rounded portfolio and explore various career paths. Students can select projects based on their interests and gain a better understanding of which paths they wish to pursue and specialize in.</p>
-          <img src="{{asset('assets/img/for-institutes/line3.png')}}" class="absolute -bottom-48 right-44" alt="">
         </div>
         <div class="flex flex-row-reverse mt-20">
           <div class="bg-light-brown pl-44 pr-11 py-11 rounded-3xl  w-7/12 relative ">

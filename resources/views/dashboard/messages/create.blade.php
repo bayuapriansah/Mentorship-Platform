@@ -142,7 +142,8 @@ function resetUI() {
     console.log('Resetting UI');
     // Do something to reset the UI
 }
-
+</script>
+<script>
 $(document).ready(function () {
       $('#inputproject').on('change', function () {
           var idproject = this.value;
@@ -183,6 +184,5 @@ $(document).ready(function () {
           });
       });
   });
-
 </script>
 @endsection

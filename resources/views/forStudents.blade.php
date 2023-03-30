@@ -182,14 +182,14 @@
         <div class="col-span-4">
           <div class="flex flex-col">
             <img src="{{asset('assets/img/for_institution.png')}}" class="relative z-20 mt-5" alt="for students">
-            <h1 class="text-dark-blue text-2xl font-bold py-3 -mt-4">For Institutes</h1>
+            <h1 class="text-dark-blue text-2xl font-bold py-3 -mt-4 relative z-30 hover:text-darker-blue"><a href="for-institution">For Institutes</a></h1>
             <p class="text-black font-normal text-sm">Enhanced Student Employability, Collaborate with Industry leaders, Supervise Real-World AI Projects</p>
           </div>
         </div>
         <div class="col-span-4">
           <div class="flex flex-col">
             <img src="{{asset('assets/img/for_industries.png')}}" class="relative z-20" alt="for students">
-            <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
+            <h1 class="text-dark-blue text-2xl font-bold py-3 relative z-30 hover:text-darker-blue"><a href="for-industry">For Industries</a></h1>
             <p class="text-black font-normal text-sm">Identify Top Future Talents, Collaborate with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
           </div>
         </div>
