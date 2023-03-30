@@ -77,7 +77,7 @@ class DashboardController extends Controller
 
       $student_submissions = Submission::whereHas('project', function($q){
         $q->where('company_id', Auth::guard('customer')->user()->company_id);
-      })->count();
+      })->where('is_complete',1)->count();
 
       return view('dashboard.index', compact('internshipsTotal', 'internshipsOngoing', 'customerTotal', 'student_submissions'));
     }
