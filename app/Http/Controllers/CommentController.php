@@ -69,22 +69,21 @@ class CommentController extends Controller
     public function create()
     {
         if(Auth::guard('web')->check()){
-        $projects = Project::get();
-        $projectSections = ProjectSection::get();
-        $students = Student::get();
+            $projects = Project::get();
+            $projectSections = ProjectSection::get();
+            $students = Student::get();
         }elseif(Auth::guard('mentor')->check()){
-        // dd(Auth::guard('mentor')->user()->institution_id);
         if(Auth::guard('mentor')->user()->institution_id != 0){
-          $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
+            $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
         }else{
-          $projects = Project::where('status', 'publish')->get();
+            $projects = Project::where('status', 'publish')->get();
         }
-        $projectSections = ProjectSection::get();
-        $students = Student::get();
+            $projectSections = ProjectSection::get();
+            $students = Student::get();
         }elseif(Auth::guard('customer')->check()){
-        $projects = Project::get();
-        $projectSections = ProjectSection::get();
-        $students = Student::get();
+            $projects = Project::get();
+            $projectSections = ProjectSection::get();
+            $students = Student::get();
         }
         return view('dashboard.messages.create', compact('projects', 'projectSections', 'students'));
     }
@@ -97,19 +96,24 @@ class CommentController extends Controller
 
     public function getdatastudent($id,$user_id)
     {
-
+        $guard = Auth::getDefaultDriver();
+        dd($guard);
         if(Auth::guard('web')->check()){
             $EnrolledProjects = EnrolledProject::where('project_id', $id)->get();
         }elseif(Auth::guard('mentor')->check()){
             if(Auth::guard('mentor')->user()->institution_id != 0){
                 $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
-                    $q->where('staff_id', $user_id);
+                    $q->where('mentor_id', $user_id);
                 })->get();
             }else{
-
+                $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
+                    $q->where('staff_id', $user_id);
+                })->get();
             }
         }elseif(Auth::guard('customer')->check()){
-
+            $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
+                $q->where('staff_id', $user_id);
+            })->get();
         }
 
         $EnrolledProjects = EnrolledProject::where('project_id', $id)->whereHas('student', function($q) use ($user_id){
@@ -120,7 +124,7 @@ class CommentController extends Controller
         $students = [];
         foreach ($EnrolledProjects as $EnrolledProject) {
             $students[] = $EnrolledProject->student;
-        // }
+
         }
 
         return $students;
