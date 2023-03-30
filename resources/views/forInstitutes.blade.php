@@ -5,7 +5,7 @@
     <img src="{{asset('assets/img/hero-institutes.png')}}" alt="" class="w-full h-[556px] object-cover">
     <div class="absolute bottom-[15%] left-[4%] text-white bg-darker-blue rounded-3xl opacity-90 p-9 max-w-xl">
       <div class="flex flex-col opacity-100 space-y-4">
-        <h1 class="font-bold text-3xl leading-8"><span class="text-light-brown">Simulated Internship</span> Platform for <span class="text-light-brown">Institutes</span></h1>
+        <h1 class="font-bold text-3xl leading-8">Information for <span class="text-light-brown">Institutes</span></h1>
         <p class="text-[23px] font-light">Enroll your institute today to provide a virtual environment for students to work on real-world projects that simulate the demands of the workforce.</p>
       </div>
     </div>
@@ -14,8 +14,8 @@
     <div id="main-text" class="flex justify-between">
       <div class="w-[40%] my-auto">
         <h1 class="font-bold text-3xl leading-8">
-          <span class="text-dark-blue">Simulated Internships</span><br>
-          <span class="text-light-brown">For Institutes</span>
+          <span class="text-dark-blue">Information for </span><br>
+          <span class="text-light-brown">Institutes</span>
         </h1>
       </div>
       <div class="w-full">
@@ -27,17 +27,6 @@
         <p>As a supervisor, you will play a crucial role in supporting your students throughout the project. You will act as the project manager, while our industry partners or the platform team will act as customers. This means that students will turn to you for guidance and support as they work on the projects.</p>
         <p>By partnering with our platform, educational institutions can help their students bridge the gap between the classroom and the workforce, gain a competitive edge in the job market, and make informed career choices. Join us today and help your students achieve their career goals!</p>
       </div>
-    </div>
-    <div id="ascociated" class="px-28">
-      <h1 class="font-bold text-3xl leading-8 text-center text-dark-blue">Associated Institutes</h1>
-      <div class="flex space-x-10 pt-14">
-        <img src="{{asset('assets/img/for-institutes/image 56.png')}}" class="object-scale-down" alt="">
-        <img src="{{asset('assets/img/for-institutes/image 57.png')}}" class="object-scale-down" alt="">
-        <img src="{{asset('assets/img/for-institutes/image 58.png')}}" class="object-scale-down" alt="">
-        <img src="{{asset('assets/img/for-institutes/image 59.png')}}" class="object-scale-down" alt="">
-        <img src="{{asset('assets/img/for-institutes/image 60.png')}}" class="object-scale-down" alt="">
-      </div>
-
     </div>
     <div id="benefits" class="px-28">
       <h1 class="font-bold text-3xl leading-8 text-center text-dark-blue">Benefits of Joining Simulated Internships </h1>
@@ -75,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div id="institutes-say" class="px-28">
+    {{-- <div id="institutes-say" class="px-28">
       <h1 class="font-bold text-3xl leading-8 text-center text-dark-blue">Institutes Say</h1>
       <p class="text-lg py-5">By partnering with our platform, educational institutions can help their students bridge the gap between the classroom and the workforce, gain a competitive edge in the job market, and make informed career choices. Join us today and help your students achieve their career goals!</p>
       <div class="flex px-20 justify-between my-12">
@@ -94,7 +83,7 @@
         </div>
         <div></div>
       </div>
-    </div>
+    </div> --}}
   </div>
 </section>
 @endsection

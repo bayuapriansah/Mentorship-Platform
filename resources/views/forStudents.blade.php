@@ -5,7 +5,7 @@
     <img src="{{asset('assets/img/two-happy.jpeg')}}" alt="" class="w-full h-[556px] object-cover">
     <div class="absolute bottom-1/4 left-[10%] text-white bg-darker-blue rounded-3xl opacity-90 p-9 max-w-xl">
       <div class="flex flex-col opacity-100 space-y-4">
-        <h1 class="font-bold text-3xl leading-8"><span class="text-light-brown">Simulated Internship</span> Platform for <span class="text-light-brown">Students</span></h1>
+        <h1 class="font-bold text-3xl leading-8">Information for <span class="text-light-brown">Students</span></h1>
         <p class="text-[23px] font-light">Join today to work on real-world projects and kick-start your career!</p>
         <a href="#" class="py-2.5 px-11 rounded-full bg-white text-center capitalize bg-orange text-dark-blue font-light text-sm w-1/3">Get Started</a>
       </div>
@@ -15,8 +15,8 @@
     <div id="main-text" class="flex justify-between">
       <div class="w-[40%] my-auto">
         <h1 class="font-bold text-3xl leading-8">
-          <span class="text-dark-blue">Simulated Internships</span><br>
-          <span class="text-light-brown">For Students</span>
+          <span class="text-dark-blue">Information for</span><br>
+          <span class="text-light-brown">Students</span>
         </h1>
       </div>
       <div class="w-full">
