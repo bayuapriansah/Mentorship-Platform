@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('comment/{id}', [CommentController::class, 'getdatacomment'])->name('getdatacomment');
-Route::get('student/project/{project}/{user_id}', [CommentController::class, 'getdatastudent'])->name('getdatastudent');
+Route::get('student/project/{project}/{user}/{guard}/{institution}', [CommentController::class, 'getdatastudent'])->name('getdatastudent');
 Route::get('institution/{id}', [InstitutionController::class, 'GetInstituionById'])->name('getInstitutionData');

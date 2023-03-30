@@ -166,20 +166,22 @@ $(document).ready(function () {
 
       $('#inputproject').on('change', function () {
           var idproject = this.value;
-          var user = {!! auth()->user()->toJson() !!};
           var userAuth = {!! json_encode((array)auth()->user()) !!};
-          var guard = userAuth['*'].guard;
-          console.log(guard);
+          userAuth = JSON.parse(JSON.stringify(userAuth));
+          var guardRoles = userAuth['\u0000*\u0000guard'];
+          var guard = userAuth['\u0000*\u0000attributes'];
+          // console.log(guard.institution_id);
+          // console.log(userAuth['\u0000*\u0000attributes']);
           var base_url = window.location.origin;
           $("#inputstudent").html('');
           $.ajax({
-              url: base_url+"/api/student/project/"+idproject+"/"+user.id,
+              url: base_url+"/api/student/project/"+idproject+"/"+guard.id+"/"+guardRoles+"/"+guard.institution_id,
               contentType: "application/json",
               dataType: 'json',
               success: function (result) {
-                console.log(result);
                   $('#inputstudent').html('<option hidden>Select Task</option>');
                   $.each(result, function (key, value) {
+                      console.log(value);
                       $("#inputstudent").append('<option value="' + value
                           .id + '">' + value.first_name + ' ' + value.last_name +'</option>');
                   });
