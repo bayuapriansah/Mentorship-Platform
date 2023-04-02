@@ -20,13 +20,16 @@
         </h1>
       </div>
       <div class="w-full">
-        <p>This platform offers students the opportunity to work on AI projects in an online work-like environment. Unlike typical projects or tutorials that provide a step-by-step guide, this platform is designed to replicate real-world work settings, allowing students to tackle projects with increasing independence. By completing the projects on this platform, students will develop valuable skills in problem-solving, time management, and accountability as they take ownership of their tasks and meet deadlines.</p>
-        <p>The AI projects featured on this platform have been thoughtfully crafted to guide students through a work-like project experience, enhancing their independence and preparing them for industry settings. Students will gain experience in data collection, data wrangling, data pipelining, AI model building, AI model evaluation, and soon, AI solution proof of concept deployment.</p>
-        <p>Throughout their time on the platform, students will enroll in projects, receive tasks, complete work, and submit it for review. Feedback will be provided, allowing students to revise and improve their work. Successful completion of the simulated internship program will result in a portfolio of projects that not only showcases a student's growth as a developer but also demonstrates their ability to work independently in a work-like setting.</p>
-        <p>Overall, the platform provides students with a unique opportunity to develop practical skills, collaborate with industry professionals, and gain valuable experience that will benefit them in their future careers.</p>
+        <p class="text-lg">This platform offers students the opportunity to work on AI projects in an online work-like environment. Unlike typical projects or tutorials that provide a step-by-step guide, this platform is designed to replicate real-world work settings, allowing students to tackle projects with increasing independence. By completing the projects on this platform, students will develop valuable skills in problem-solving, time management, and accountability as they take ownership of their tasks and meet deadlines.</p>
+        <p class="text-lg mt-4">The AI projects featured on this platform have been thoughtfully crafted to guide students through a work-like project experience, enhancing their independence and preparing them for industry settings. Students will gain experience in data collection, data wrangling, data pipelining, AI model building, AI model evaluation, and soon, AI solution proof of concept deployment.</p>
+        <p class="text-lg mt-4">Throughout their time on the platform, students will enroll in projects, receive tasks, complete work, and submit it for review. Feedback will be provided, allowing students to revise and improve their work. Successful completion of the simulated internship program will result in a portfolio of projects that not only showcases a student's growth as a developer but also demonstrates their ability to work independently in a work-like setting.</p>
+        <p class="text-lg mt-4">Overall, the platform provides students with a unique opportunity to develop practical skills, collaborate with industry professionals, and gain valuable experience that will benefit them in their future careers.</p>
         <div class="p-9 bg-[#F3F3F3] rounded-2xl mt-4">
-          <div class="flex flex-col space-y-6">
-            <div class="flex space-x-32">
+          <div class="flex">
+            <div class="flex">
+
+            </div>
+            {{-- <div class="flex space-x-32">
               <div class="flex space-x-4">
                 <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="">
                 <p class="text-xl font-medium text-dark-blue">Data Collection</p>
@@ -49,68 +52,82 @@
             <div class="flex space-x-32">
               <div class="flex space-x-4">
                 <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="">
-                <p class="text-xl font-medium text-dark-blue inline">AI Model Evaluation</p>
+                <p class="text-xl font-medium text-dark-blue inline">Model Evaluation</p>
               </div>
               <div class="flex space-x-4">
                 <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="">
                 <p class="text-xl font-medium text-dark-blue inline">AI Solution Proof of Concept (POC) deployment <span class="text-light-brown">(Coming Soon)</span></p>
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>
     </div>
     <div id="success-stories" class="px-28">
       <h1 class="font-bold text-3xl leading-8 text-center text-dark-blue">How it Works?</h1>
-      <div class="flex mt-[70px]">
-        <div class="w-1/2 flex flex-col">
-          <img src="{{asset('assets/img/1_how it work.png')}}" alt="">
+      <div class="flex justify-end mt-[70px] space-x-20">
+        <div class="w-1/2 text-right relative">
+          <p class="bg-light-brown ml-[80%] text-white text-justify p-2 rounded-full w-24 h-24 flex justify-center items-center text-2xl font-medium">Step 1</p>
+          <h1 class="text-2xl font-medium py-5">Register & Login</h1>
+          <p class="text-[#5A5A5A] ">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eligendi recusandae nobis aliquid nulla amet labore ea quo quasi. Consequuntur provident ex voluptatum sapiente neque facere deserunt voluptas quas eligendi.
+          </p>
+          <img src="{{asset('assets/img/for-institutes/line1.png')}}" class="absolute z-10 -bottom-30 -right-14" alt="">
         </div>
-        <div class="w-1/2 ">
-          <p class="bg-light-brown text-white p-2 rounded-full w-24 h-24 flex items-center justify-center text-2xl font-medium">Step 1</p>
+        <div class="w-1/2 flex flex-col relative">
+          <img src="{{asset('assets/img/for-institutes/register_login 1.png')}}" class="z-20 " style="width: 486px; height: 280px;" alt="">
+        </div>
+      </div>
+      <div class="flex mt-[110px] space-x-20">
+        <div class="w-1/2 flex flex-col">
+          <img src="{{asset('assets/img/for-institutes/ENROLL.png')}}" class="z-30" alt="">
+        </div>
+        <div class="w-1/2 relative">
+          <p class="bg-light-brown text-white p-2 rounded-full w-24 h-24 flex items-center justify-center text-2xl font-medium">Step 2</p>
           <h1 class="text-2xl font-medium py-5">Enroll in a project</h1>
           <p class="text-[#5A5A5A] ">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eligendi recusandae nobis aliquid nulla amet labore ea quo quasi. Consequuntur provident ex voluptatum sapiente neque facere deserunt voluptas quas eligendi.
           </p>
+          <img src="{{asset('assets/img/for-institutes/line2.png')}}" class="absolute z-10 -bottom-30 -left-14" alt="">
         </div>
       </div>
-      <div class="flex justify-end mt-[70px]">
-        <div class="w-1/2 text-right">
-          <p class="bg-light-brown ml-[80%] text-white text-justify p-2 rounded-full w-24 h-24 flex justify-center items-center text-2xl font-medium">Step 2</p>
+      <div class="flex justify-end mt-[110px] space-x-20">
+        <div class="w-1/2 text-right relative">
+          <p class="bg-light-brown ml-[80%] text-white text-justify p-2 rounded-full w-24 h-24 flex justify-center items-center text-2xl font-medium">Step 3</p>
           <h1 class="text-2xl font-medium py-5">Begin & Work on the Task</h1>
           <p class="text-[#5A5A5A] ">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eligendi recusandae nobis aliquid nulla amet labore ea quo quasi. Consequuntur provident ex voluptatum sapiente neque facere deserunt voluptas quas eligendi.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eligendi recusandae nobis aliquid nulla amet labore ea quo quasi. Consequuntur provident ex voluptatum.
           </p>
+          <img src="{{asset('assets/img/for-institutes/line4.png')}}" class="absolute z-10 -bottom-30 -right-14" alt="">
         </div>
         <div class="w-1/2 flex flex-col relative">
-          <img src="{{asset('assets/img/line1.png')}}" class="absolute z-10 -top-32" alt="">
-          <img src="{{asset('assets/img/2_how it work.png')}}" class="z-20 " style="width: 486px; height: 280px;" alt="">
+          <img src="{{asset('assets/img/for-institutes/step3.png')}}" class="z-20 " style="width: 486px; height: 280px;" alt="">
         </div>
       </div>
-      <div class="flex mt-[115px]">
-        <div class="w-1/2 flex flex-col relative">
-          <img src="{{asset('assets/img/line2.png')}}" class="absolute z-10 -top-36 -right-10" alt="">
-          <img src="{{asset('assets/img/3.how it work.png')}}" class="z-20" alt="">
+      <div class="flex mt-[130px] space-x-20">
+        <div class="w-1/2 flex flex-col">
+          <img src="{{asset('assets/img/for-institutes/step4.png')}}" class="z-30" alt="">
         </div>
-        <div class="w-1/2 ml-12 mt-6">
-          <p class="bg-light-brown text-white p-2 rounded-full w-24 h-24 flex items-center justify-center text-2xl font-medium">Step 3</p>
+        <div class="w-1/2 relative">
+          <p class="bg-light-brown text-white p-2 rounded-full w-24 h-24 flex items-center justify-center text-2xl font-medium">Step 4</p>
           <h1 class="text-2xl font-medium py-5">Submit the task</h1>
           <p class="text-[#5A5A5A] ">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eligendi recusandae nobis aliquid nulla amet labore ea quo quasi. Consequuntur provident ex voluptatum sapiente neque facere deserunt voluptas quas eligendi.
           </p>
+          <img src="{{asset('assets/img/for-institutes/line5.png')}}" class="absolute z-10 -bottom-30 -left-12" alt="">
         </div>
       </div>
-      <div class="flex justify-end mt-[158px]">
-        <div class="w-1/2 text-right mt-10 mr-5">
-          <p class="bg-light-brown ml-[80%] text-white text-justify p-2 rounded-full w-24 h-24 flex justify-center items-center text-2xl font-medium">Step 4</p>
+      <div class="flex justify-end mt-[196px] space-x-20">
+        <div class="w-1/2 text-right relative">
+          <p class="bg-light-brown ml-[80%] text-white text-justify p-2 rounded-full w-24 h-24 flex justify-center items-center text-2xl font-medium">Step 5</p>
+          <img src="{{asset('assets/img/for-institutes/line6.png')}}" class="absolute z-10 -top-36 right-28" alt="">
           <h1 class="text-2xl font-medium py-5">Move onto the next task</h1>
           <p class="text-[#5A5A5A] ">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eligendi recusandae nobis aliquid nulla amet labore ea quo quasi. Consequuntur provident ex voluptatum sapiente neque facere deserunt voluptas quas eligendi.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eligendi recusandae nobis aliquid nulla amet labore ea quo quasi. Consequuntur provident ex voluptatum.
           </p>
         </div>
         <div class="w-1/2 flex flex-col relative">
-          <img src="{{asset('assets/img/line3.png')}}" class="absolute z-10 -top-44 " alt="">
-          <img src="{{asset('assets/img/4.how it work.png')}}" class="z-20" alt="">
+          <img src="{{asset('assets/img/for-institutes/step3.png')}}" class="z-20 " style="width: 486px; height: 280px;" alt="">
         </div>
       </div>
     </div>
