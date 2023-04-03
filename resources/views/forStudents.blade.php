@@ -25,9 +25,29 @@
         <p class="text-lg mt-4">Throughout their time on the platform, students will enroll in projects, receive tasks, complete work, and submit it for review. Feedback will be provided, allowing students to revise and improve their work. Successful completion of the simulated internship program will result in a portfolio of projects that not only showcases a student's growth as a developer but also demonstrates their ability to work independently in a work-like setting.</p>
         <p class="text-lg mt-4">Overall, the platform provides students with a unique opportunity to develop practical skills, collaborate with industry professionals, and gain valuable experience that will benefit them in their future careers.</p>
         <div class="p-9 bg-[#F3F3F3] rounded-2xl mt-4">
-          <div class="flex">
-            <div class="flex">
-
+          <div class="flex text-dark-blue text-xl font-medium justify-evenly">
+            <div class="flex flex-col pr-4">
+              <ul class="space-y-2 my-auto">
+                <li class="flex">
+                  <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="checkpoint">Data Collection</li>
+                <li class="flex">
+                  <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="checkpoint">Data Pipelining</li>
+                <li class="flex">
+                  <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="checkpoint">Model Evaluation</li>
+              </ul>
+            </div>
+            <div class="flex flex-col">
+              <ul class="space-y-2 my-auto">
+                <li class="flex">
+                  <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="checkpoint">Data Wrangling
+                </li>
+                <li class="flex">
+                  <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="checkpoint">AI Model Building
+                </li>
+                <li class="flex">
+                  <img src="{{asset('assets/img/checkround.png')}}" class="object-scale-down" alt="checkpoint">AI Solution Proof of Concept (POC) deployment  <span class="text-light-brown">(Coming Soon)</span>
+                </li>
+              </ul>
             </div>
             {{-- <div class="flex space-x-32">
               <div class="flex space-x-4">
