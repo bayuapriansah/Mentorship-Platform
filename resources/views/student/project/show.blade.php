@@ -128,7 +128,7 @@
                               <div class="col-span-5">Task {{ $submi_data->taskNumber }}:
                                   {{ substr($submi_data->projectSection->title, 0, 30) }}...</div>
                               <span
-                                  class="col-start-6 col-span-3 text-sm font-normal text-justify inline-block">{{ \Carbon\Carbon::parse($submi_data->dueDate)->format('dS') }} - {{ \Carbon\Carbon::parse($submi_data->dueDate)->addDays($submi_data->projectSection->duration)->format('dS F Y') }}
+                                  class="col-start-6 col-span-3 text-sm font-normal text-justify inline-block">{{ \Carbon\Carbon::parse($submi_data->release_date)->format('dS') }} - {{ \Carbon\Carbon::parse($submi_data->dueDate)->format('dS F Y') }}
                                   {{-- {{ $appliedDate->format('g:ia') }} --}}
                                 </span>
                               <div class="col-start-9 col-span-2 items-center">

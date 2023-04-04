@@ -210,7 +210,7 @@ class StudentController extends Controller
 
     public function manageStudentpatch(Request $request, Student $student)
     {
-        $student = Student::find($student->id);
+        $student = Student::findOrFail($student->id);
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
@@ -262,7 +262,7 @@ class StudentController extends Controller
 
     public function managepatch($institution_id, $student_id, Request $request)
     {
-        $student = Student::find($student_id);
+        $student = Student::findOrFail($student_id);
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
@@ -321,7 +321,7 @@ class StudentController extends Controller
         if($student->id != Auth::guard('student')->user()->id ){
             abort(403);
         }
-        $student = Student::find($student->id);
+        $student = Student::findOrFail($student->id);
         // $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student->id);
 
@@ -334,7 +334,7 @@ class StudentController extends Controller
 
     public function suspendAccountInstitution($institution_id,$student_id)
     {
-        $students = Student::find($student_id);
+        $students = Student::findOrFail($student_id);
         if($students->is_confirm==1){
             $students->is_confirm =2;
             $message = "Successfully Suspend Account";
@@ -350,7 +350,7 @@ class StudentController extends Controller
     public function suspendAccount(request $request,$student_id)
     {
         $mentor = Mentor::inRandomOrder()->where('institution_id',$request->institution)->where('is_confirm',1)->first();
-        $student = Student::find($student_id);
+        $student = Student::findOrFail($student_id);
         if($student->is_confirm == 1){
             $student->is_confirm = 2;
             $message = "Successfully Deactive Account";
@@ -381,7 +381,7 @@ class StudentController extends Controller
         // dd($request->all());
         // jangan lupa di validasi ya di bagian sini
         // dd($request->all());
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $student->first_name = $request->first_name;
         $student->last_name = $request->last_name;
         $student->date_of_birth = $request->date_of_birth;
@@ -490,7 +490,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        $student = Student::find($student->id);
+        $student = Student::findOrFail($student->id);
         $student->delete();
         return back()->with('error', 'Student Deleted');
     }
@@ -617,7 +617,7 @@ class StudentController extends Controller
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
         })->get();
-        $project = Project::find($project_id);
+        $project = Project::findOrFail($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $project_sections = ProjectSection::orderBy('id','DESC')->where('project_id', $project_id)->get();
         $project_sections = ProjectSection::orderBy('id','DESC')->where('project_id', $project_id)->get();
@@ -636,7 +636,7 @@ class StudentController extends Controller
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
         })->get();
-        $project = Project::find($project_id);
+        $project = Project::findOrFail($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
         // dd($project->enrolled_project->where('student_id', $student_id));
@@ -723,12 +723,12 @@ class StudentController extends Controller
         $admins = User::get();
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        $task = ProjectSection::find($task_id);
+        $task = ProjectSection::findOrFail($task_id);
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->where('student_id', Auth::guard('student')->user()->id)->get();
         // $submission = Submission::get();
         $submissionData = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',1)->first();
         $submissionId = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',0)->first();
-        $project = Project::find($project_id);
+        $project = Project::findOrFail($project_id);
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
@@ -768,7 +768,7 @@ class StudentController extends Controller
 
         // dd(implode(';',$request->dataset));
         // For Submission
-        $project = Project::find($project_id);
+        $project = Project::findOrFail($project_id);
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
@@ -781,14 +781,17 @@ class StudentController extends Controller
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
-        $task = ProjectSection::find($task_id);
+
+        $task = ProjectSection::findOrFail($task_id);
+        $tiempoAdicional = ProjectSection::where('project_id',$project_id)->where('section', '>', $task_id)->firstOrFail();
         // dd($task->file_type);
+        // dd($task->duration);
         if($request->hasFile('file')==true){
             $validated = $request->validate([
                 'file' => ['required'],
             ]);
         }
-        $submission = Submission::find($submission_id);
+        $submission = Submission::findOrFail($submission_id);
         $submission->section_id = $task_id;
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;
@@ -814,6 +817,7 @@ class StudentController extends Controller
         $submission_date_override = Submission::where('project_id', $project_id)->where('student_id',Auth::guard('student')->user()->id)->where('is_complete', 0)->first();
         if($submission_date_override != NULL){
             $submission_date_override->release_date = Carbon::now()->format('Y-m-d');
+            $submission_date_override->dueDate = Carbon::now()->addDays($tiempoAdicional->duration)->format('Y-m-d');
             $submission_date_override->save();
         }
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
@@ -831,7 +835,7 @@ class StudentController extends Controller
         }
 
         // checkpoint
-        $project = Project::find($project_id);
+        $project = Project::findOrFail($project_id);
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
         $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
@@ -844,7 +848,7 @@ class StudentController extends Controller
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
-        $task = ProjectSection::find($task_id);
+        $task = ProjectSection::findOrFail($task_id);
         // dd($task->file_type);
         if($request->hasFile('file')==true){
             $validated = $request->validate([
@@ -852,7 +856,7 @@ class StudentController extends Controller
             ]);
         }
 
-        $submission = Submission::find($submission_id);
+        $submission = Submission::findOrFail($submission_id);
         $submission->flag_checkpoint = $taskDate;
         if($request->dataset){
             $submission->dataset = $dataset_result;
@@ -941,7 +945,7 @@ class StudentController extends Controller
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
         })->get();
-        $project = Project::where('status', 'publish')->find($project_id);
+        $project = Project::where('status', 'publish')->findOrFail($project_id);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student_id);
