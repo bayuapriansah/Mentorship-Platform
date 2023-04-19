@@ -807,10 +807,12 @@ class StudentController extends Controller
             if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
                 $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
                 $submission->file = $file;
-            }else{
-                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong');
+                $submission->save();
+            }elseif(!$uploadedFileType == $task->file_type){
+                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Check your File Extension');
+            }elseif($request->file('file')->getSize() > 5000000){
+                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'You Can not upload file Size more than 5MB');
             }
-            $submission->save();
         }else{
             return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
         }
@@ -825,9 +827,6 @@ class StudentController extends Controller
 
     public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
     {
-        // dd($request->all());
-        // dd($submission_id);
-        // dataset tag implode
         if ($request->dataset) {
             $dataset_array = json_decode($request->dataset, true);
             $dataset_values = array_column($dataset_array, 'value');
@@ -864,8 +863,8 @@ class StudentController extends Controller
             $submission->dataset = null;
         }
         // dd($dataset_result);
+        dd($request->hasFile('file'));
         if($request->hasFile('file')){
-
             if(Storage::path($submission->file)) {
                 Storage::disk('public')->delete($submission->file);
             }

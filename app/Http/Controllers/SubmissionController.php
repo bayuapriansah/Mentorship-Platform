@@ -114,6 +114,7 @@ class SubmissionController extends Controller
             $comment->message = $request->message;
             $comment->save();
         }
+
         $grade = new Grade;
         if(Auth::guard('web')->check()){
             $grade->user_id = Auth::guard('web')->user()->id;
@@ -161,6 +162,36 @@ class SubmissionController extends Controller
     public function edit(Project $project,Submission $submission, Grade $grade)
     {
         return view('dashboard.submissions.edit', compact('project','submission', 'grade'));
+    }
+
+    public function changeGrade(Request $request, Project $project, Submission $submission)
+    {
+        $changeGrade = Grade::where('submission_id', $submission->id)->firstOrFail();
+        if($request->messageFeedback){
+            $comment = new Comment;
+            $comment->student_id = $submission->student_id;
+            $comment->project_id = $project->id;
+            $comment->project_section_id = $submission->projectSection->id;
+            $comment->read_message = 0;
+            if(Auth::guard('web')->check()){
+                $comment->user_id = Auth::guard('web')->user()->id;
+            }elseif(Auth::guard('mentor')->check()){
+              if(Auth::guard('mentor')->user()->institution_id != 0){
+                $comment->mentor_id = Auth::guard('mentor')->user()->id;
+              }else{
+                $comment->staff_id = Auth::guard('mentor')->user()->id;
+              }
+            }
+            $comment->message = $request->messageFeedback;
+            $comment->save();
+        }
+        if(!$changeGrade){
+            return redirect()->back()->with('errorTailwind', 'You cant do that');
+        }else{
+            $changeGrade->status = $changeGrade->status == 0 ? 1 : 0 ;
+            $changeGrade->save();
+        }
+        return redirect()->back()->with('success', 'Success Update Grades');
     }
 
     /**

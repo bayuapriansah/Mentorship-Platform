@@ -17,7 +17,7 @@
 
 <div class="flex justify-between mt-5 w-3/4">
   <div>
-    <p class="text-light-blue">Project Name</p>
+    <p class="text-light-blue">Project Domain</p>
     <p>{{$project->project_domain}}</p>
   </div>
   <div>

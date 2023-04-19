@@ -10,7 +10,7 @@
   <div class="space-y-6">
     <div class="flex justify-between">
       <div>
-        <div class="text-dark-blue font-normal">Project Name</div>
+        <div class="text-dark-blue font-normal">Project Domain</div>
         <div class="font-normal">{{$project->name}}</div>
       </div>
       <div>
@@ -41,7 +41,7 @@
     </div>
     <div>
       <div class="text-dark-blue font-normal">Submitted on</div>
-      <div class="font-normal">{{$submission->created_at->format('d/m/Y')}}</div>
+      <div class="font-normal">{{$submission->updated_at->format('d/m/Y')}}</div>
     </div>
   </div>
 

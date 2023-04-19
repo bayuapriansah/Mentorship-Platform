@@ -28,7 +28,7 @@
   <div class="space-y-6">
     <div class="flex justify-between">
       <div>
-        <div class="text-dark-blue font-normal">Project Name</div>
+        <div class="text-dark-blue font-normal">Project Domain</div>
         <div class="font-normal">{{$project->name}}</div>
       </div>
       <div>
@@ -59,8 +59,47 @@
     </div>
     <div>
       <div class="text-dark-blue font-normal">Submitted on</div>
-      <div class="font-normal">{{$submission->created_at->format('d/m/Y')}}</div>
+      <div class="font-normal">{{$submission->updated_at->format('d/m/Y')}}</div>
     </div>
+
+    @if ($submission->grade)
+        @if ($submission->grade->status==0 || $submission->grade->status==1)
+        <style>
+          body.modal-open {
+            overflow: visible !important;
+          }
+        </style>
+        <div>
+          <div class="text-dark-blue font-normal mb-2">Change Task Completion Status</div>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeGradeModal">
+            Change Status
+          </button>
+        </div>
+
+        <div class="modal fade" id="changeGradeModal" tabindex="-1" aria-labelledby="changeGradeModalLabel" aria-hidden="true" style="display: none;">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="changeGradeModalLabel">Change Students Grade</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="{{ route('dashboard.submission.changeGrade', ['project' => $project->id, 'submission' => $submission->id]) }}" method="post">
+                  @csrf
+                  <div class="mb-3">
+                    <textarea id="comment" rows="4" class="form-control" name="messageFeedback" placeholder="Add Comments (Optional)"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Change Grade</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        @endif
+    @endif
+
   </div>
 
   <div class="space-y-6">
