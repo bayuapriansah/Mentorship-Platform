@@ -783,7 +783,7 @@ class StudentController extends Controller
         }
 
         $task = ProjectSection::findOrFail($task_id);
-        $tiempoAdicional = ProjectSection::where('project_id',$project_id)->where('section', '>', $task_id)->firstOrFail();
+        $tiempoAdicional = ProjectSection::where('project_id',$project_id)->where('id', '>', $task_id)->firstOrFail();
         // dd($task->file_type);
         // dd($task->duration);
         if($request->hasFile('file')==true){
