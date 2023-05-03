@@ -365,6 +365,7 @@ class ProjectController extends Controller
             'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
+            'dataset' => ['nullable']
         ],
         [
             'title.required' => 'Title is required',
@@ -391,6 +392,7 @@ class ProjectController extends Controller
         $section->duration = $validated['duration'];
         $section->section = $section_count->count()+1;
         $section->description = $validated['description'];
+        $section->dataset = $validated['dataset'];
         $section->save();
         $message = "Successfully created an injection card";
         if($request->input('addInjectionCard')){
@@ -422,6 +424,7 @@ class ProjectController extends Controller
             'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
+            'dataset' => ['nullable']
         ],
         [
             'title.required' => 'Title is required',
@@ -435,6 +438,7 @@ class ProjectController extends Controller
         $section->file_type = $validated['inputfiletype'];
         $section->duration = $validated['duration'];
         $section->description = $validated['description'];
+        $section->dataset = $validated['dataset'];
         $section->save();
         $message = "Successfully updated an injection card";
         return redirect('/dashboard/projects/'.$project->id.'/edit')->with('successTailwind', $message);

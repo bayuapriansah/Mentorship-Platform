@@ -84,6 +84,14 @@
         </p>
     @enderror
   </div>
+  <div class="mb-3">
+    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Dataset" id="inputtitle" name="dataset" value="{{old('title')}}">
+    @error('title')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">File Attachment</h3>
     <div class="text-xl text-dark-blue">

@@ -318,7 +318,7 @@
                                                     @if($notification->grade->status == 0)
                                                         {{ 'Sorry but you need to revise the Task' }}
                                                     @elseif($notification->grade->status == 1)
-                                                        {{ 'Great you Pass the Task' }}
+                                                        {{ 'Great you Complete the Task' }}
                                                     @else
                                                         {{ 'Nothing' }}
                                                     @endif.

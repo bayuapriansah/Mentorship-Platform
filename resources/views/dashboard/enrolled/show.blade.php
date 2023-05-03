@@ -26,7 +26,7 @@
     <tr>
       <th>No</th>
       <th>Student Name</th>
-      <th>Mentor Name</th>
+      <th>Supervisor Name</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -59,7 +59,7 @@
         <tr>
           <th>No</th>
           <th>Student Name</th>
-          <th>Mentor Name</th>
+          <th>Supervisor Name</th>
           <th>Status</th>
         </tr>
       </thead>
