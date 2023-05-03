@@ -814,14 +814,14 @@ class StudentController extends Controller
                 $currentTime = Carbon::now();
                 $formattedTime = $currentTime->format('YmdHis'); // YearMonthDayHourMinuteSecond
                 $destinationPath = 'projects/submission/project/'.$project_id.'/'.$studentName.'/task/'.$task_id;
-                // $saveFileTask = $uploadedFile->storeAs($destinationPath, $formattedTime . '_' . $fileName, 'public');
+                $saveFileTask = $uploadedFile->storeAs($destinationPath, $formattedTime . '_' . $fileName, 'public');
                 
                 $submission->file = $saveFileTask;
-                // $submission->save();
+                $submission->save();
             }elseif($uploadedFile != $task->file_type){
                 $error_message = 'The uploaded file must be of the following type: ' . $task->file_type;
-                // return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('errorTailwind', $error_message);
-                return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id])->with('errorTailwind', $error_message);
+                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('errorTailwind', $error_message);
+                // return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id])->with('errorTailwind', $error_message);
             }
         }
 
@@ -831,8 +831,8 @@ class StudentController extends Controller
             $submission_date_override->dueDate = Carbon::now()->addDays($tiempoAdicional->duration)->format('Y-m-d');
             $submission_date_override->save();
         }
-        // return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
-        return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
+        return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
+        // return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
     }
 
     public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
