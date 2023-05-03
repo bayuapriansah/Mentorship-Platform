@@ -253,7 +253,7 @@
                                       <div class="ml-3 text-sm font-normal">
                                           <span class="mb-1 text-sm font-semibold text-dark-blue">New Message : </span><p>
                                           <span class="mb-1 text-sm font-normal text-blue-700">In Task {{ $dataMessage->project_section->section }} - {{ $dataMessage->project_section->title }} </span>
-                                          <div class="mb-1 text-sm font-normal text-blue-300">{{ $dataMessage->project_section->created_at }}</div>
+                                          <div class="mb-1 text-sm font-normal text-blue-300">{{ $dataMessage->project_section->updated_at }}</div>
                                       </div>
                                   </div>
                               </div>
@@ -289,7 +289,7 @@
                     </button>
                 </div>
                 @php
-                $mergedNotifs = $newActivityNotifs->merge($notifNewTasks)->sortByDesc('created_at')->all();
+                $mergedNotifs = $newActivityNotifs->merge($notifNewTasks)->sortByDesc('updated_at')->all();
                 // $sortedNotifs = collect($mergedNotifs)->sortByDesc('created_at')->all();
                 @endphp
                 <!-- Modal body -->
@@ -322,7 +322,7 @@
                                                     @else
                                                         {{ 'Nothing' }}
                                                     @endif.
-                                              <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->grade->created_at }}</div>
+                                              <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->grade->updated_at }}</div>
                                             </div>
                                         </div>
                                       </div>
@@ -340,7 +340,7 @@
                                                 <div class="ml-3 text-sm font-normal">
                                                   <span class="mb-1 text-sm font-semibold text-dark-blue">New Project available in {{ $notification->project->name }} .</span>
                                                   <p>
-                                                  <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->created_at }}</div>
+                                                  <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->updated_at }}</div>
                                                 </div>
                                             </div>
                                           </div>

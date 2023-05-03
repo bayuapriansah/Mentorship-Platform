@@ -264,7 +264,7 @@
                                     <div class="ml-3 mr-4 text-sm font-normal">
                                     <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                     <p>
-                                    <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->created_at }}</div>
+                                    <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->updated_at }}</div>
                                     </div>
                                     <a href="{{-- route('dashboard.notification.dismiss',$submissionNotification->id) --}}#" class="absolute top-0 right-0 mr-2 mt-2 text-gray-400 hover:text-red-400 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:ring focus:ring-gray-300" onclick="this.parentElement.parentElement.style.display='none';">
                                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
