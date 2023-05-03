@@ -795,7 +795,7 @@ class StudentController extends Controller
         
         $task = ProjectSection::findOrFail($task_id);
         
-        $tiempoAdicional = ProjectSection::where('project_id',$project_id)->where('id', '>', $task_id)->firstOrFail();
+        $tiempoAdicional = ProjectSection::where('project_id',$project_id)->where('id', $task_id)->firstOrFail();
         
         $submission = Submission::findOrFail($submission_id);
         $submission->section_id = $task_id;
