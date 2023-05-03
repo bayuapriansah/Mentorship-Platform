@@ -38,7 +38,7 @@
         {!!$task->description!!}
       </div>
     </div>
-    <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
+    <div class="grid grid-cols-12 gap-4 grid-flow-col mt-2">
       <div class="col-span-7 relative my-auto">
         <h1 class="text-dark-blue text-[22px] font-medium">Attachment</h1>
       </div>
@@ -60,9 +60,30 @@
         @endforelse
       </div>
     </div>
+
+    <div class="grid grid-cols-12 gap-4 grid-flow-col mt-2">
+      <div class="col-span-10 text-justify">
+          @if ($project->dataset)
+              @php
+                  $datasets_array = explode(';', $project->dataset);
+                  $no = 1;
+              @endphp
+              <div class="mb-6">
+                  <h1 class="text-dark-blue text-[22px] font-medium mb-1">Dataset</h1>
+                  @foreach ($datasets_array as $dataset_array)
+                      <a href="{{ $dataset_array }}"
+                          class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2"
+                          target="_blank">Dataset {{ $no }} <i
+                              class="fa-solid fa-chevron-right"></i></a>
+                      @php $no++ @endphp
+                  @endforeach
+              </div>
+          @endif
+      </div>
+      </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-10  my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium">Discussion</h1>
+        <h1 class="text-dark-blue text-[22px] font-medium  mb-2">Discussion</h1>
         @if ($comments->count())
         <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
           @php $no=1;  @endphp

@@ -770,7 +770,7 @@ class StudentController extends Controller
             $error_message = $request->hasFile('file') ? 'You cannot upload a file size larger than 5MB' : 'No file was uploaded';
 
             // return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)
-            return redirect()->route('student.taskDetail')
+            return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id])
                 ->with('errorTailwind', $error_message)
                 ->withErrors($validated);
         }
@@ -821,7 +821,7 @@ class StudentController extends Controller
             }elseif($uploadedFile != $task->file_type){
                 $error_message = 'The uploaded file must be of the following type: ' . $task->file_type;
                 // return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('errorTailwind', $error_message);
-                return redirect()->route('student.taskDetail')->with('errorTailwind', $error_message);
+                return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id])->with('errorTailwind', $error_message);
             }
         }
 
@@ -832,7 +832,7 @@ class StudentController extends Controller
             $submission_date_override->save();
         }
         // return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
-        return redirect()->route('student.taskDetail');
+        return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
     }
 
     public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
