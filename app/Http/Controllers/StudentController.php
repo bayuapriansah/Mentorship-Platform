@@ -806,8 +806,9 @@ class StudentController extends Controller
         $submission->dataset = $request->dataset ? $dataset_result : null;
         // Get the extension file
         if ($request->hasFile('file')) {
-            $uploadedFile = $request->file('file')->getClientOriginalExtension();
-            if($uploadedFile == $task->file_type){
+            $uploadedFile = $request->file('file');
+            $uploadedFileExtension  = $uploadedFile->getClientOriginalExtension();
+            if($uploadedFileExtension == $task->file_type){
                 $fileName = str_replace(" ", "_", strtolower($uploadedFile->getClientOriginalName()));
                 $studentName = $student->first_name . $student->last_name;
                 // Use Carbon to get the current date and time
@@ -818,7 +819,7 @@ class StudentController extends Controller
                 
                 $submission->file = $saveFileTask;
                 $submission->save();
-            }elseif($uploadedFile != $task->file_type){
+            }elseif($uploadedFileExtension != $task->file_type){
                 $error_message = 'The uploaded file must be of the following type: ' . $task->file_type;
                 return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('errorTailwind', $error_message);
                 // return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id])->with('errorTailwind', $error_message);
