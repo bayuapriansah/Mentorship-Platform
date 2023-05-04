@@ -874,7 +874,7 @@ class StudentController extends Controller
             $submission->dataset = null;
         }
         // dd($dataset_result);
-        dd($request->hasFile('file'));
+        // dd($request->hasFile('file'));
         if($request->hasFile('file')){
             if(Storage::path($submission->file)) {
                 Storage::disk('public')->delete($submission->file);
