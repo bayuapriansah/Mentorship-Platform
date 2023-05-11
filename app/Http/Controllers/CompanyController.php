@@ -52,9 +52,15 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:companies,email',
             'logo' => 'required'
         ]);
+
+        $existingEmail = Company::where('email', $validated['email'])->first();
+
+        if($existingEmail) {
+            return back()->with('error', 'The email has already been taken.');
+        }
 
         $company = new Company;
         $company->name = $validated['name'];

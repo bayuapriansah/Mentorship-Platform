@@ -756,85 +756,121 @@ class StudentController extends Controller
         return view('student.project.task.index', compact('student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
-    public function taskSubmit(Request $request, $student_id, $project_id, $task_id, $submission_id)
-    {
-        if($student_id != Auth::guard('student')->user()->id ){
+    public function taskSubmit(
+        Request $request,
+        $student_id,
+        $project_id,
+        $task_id,
+        $submission_id
+    ) {
+        if ($student_id != Auth::guard('student')->user()->id) {
             abort(403);
         }
-        
+    
         $validated = Validator::make($request->all(), [
             'file' => 'nullable|file|max:5120',
         ]);
-
+    
         if ($validated->fails()) {
-            $error_message = $request->hasFile('file') ? 'You cannot upload a file size larger than 5MB' : 'No file was uploaded';
-
-            // return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)
-            return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id])
+            $error_message = $request->hasFile('file')
+                ? 'You cannot upload a file size larger than 5MB'
+                : 'No file was uploaded';
+    
+            return redirect()
+                ->route('student.taskDetail', [$student_id, $project_id, $task_id])
                 ->with('errorTailwind', $error_message)
                 ->withErrors($validated);
         }
-        
+    
         if ($request->dataset) {
             $dataset_array = json_decode($request->dataset, true);
             $dataset_values = array_column($dataset_array, 'value');
             $dataset_result = implode(';', $dataset_values);
         }
-        
+    
         $project = Project::findOrFail($project_id);
-        $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
-        $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
-        $taskDate = (new SimintEncryption)->daycompare($appliedDateStart,$appliedDateEnd);
-        
+        $appliedDateStart = \Carbon\Carbon::parse(
+            $project
+                ->enrolled_project
+                ->where('student_id', Auth::guard('student')->user()->id)
+                ->where('project_id', $project->id)
+                ->first()
+                ->created_at
+        )->startOfDay();
+        $appliedDateEnd = \Carbon\Carbon::parse(
+            $project
+                ->enrolled_project
+                ->where('student_id', Auth::guard('student')->user()->id)
+                ->where('project_id', $project->id)
+                ->first()
+                ->created_at
+        )->addMonths($project->period)->startOfDay();
+        $taskDate = (new SimintEncryption())->daycompare(
+            $appliedDateStart,
+            $appliedDateEnd
+        );
+    
         $student = Student::where('id', $student_id)->first();
-        // $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date); -> the variable never used or called in this function
-        
-        // $project_sections = ProjectSection::where('project_id', $project_id)->get(); -> the variable never used or called in this function
-        
-        // $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first()->is_submited; -> the variable never used or called in this function
-        
         $task = ProjectSection::findOrFail($task_id);
-        
-        $tiempoAdicional = ProjectSection::where('project_id',$project_id)->where('id', $task_id)->firstOrFail();
-        
+        $tiempoAdicional = ProjectSection::where('project_id', $project_id)
+            ->where('id', $task_id)
+            ->firstOrFail();
+    
         $submission = Submission::findOrFail($submission_id);
         $submission->section_id = $task_id;
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;
         $submission->is_complete = 1;
-        $submission->flag_checkpoint = $taskDate; 
+        $submission->flag_checkpoint = $taskDate;
         $submission->dataset = $request->dataset ? $dataset_result : null;
-        // Get the extension file
+    
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
-            $uploadedFileExtension  = $uploadedFile->getClientOriginalExtension();
-            if($uploadedFileExtension == $task->file_type){
-                $fileName = str_replace(" ", "_", strtolower($uploadedFile->getClientOriginalName()));
+            $uploadedFileExtension = $uploadedFile->getClientOriginalExtension();
+    
+            if ($uploadedFileExtension == $task->file_type) {
+                $fileName = str_replace(
+                    " ",
+                    "_",
+                    strtolower($uploadedFile->getClientOriginalName())
+                );
                 $studentName = $student->first_name . $student->last_name;
-                // Use Carbon to get the current date and time
                 $currentTime = Carbon::now();
-                $formattedTime = $currentTime->format('YmdHis'); // YearMonthDayHourMinuteSecond
-                $destinationPath = 'projects/submission/project/'.$project_id.'/'.$studentName.'/task/'.$task_id;
-                $saveFileTask = $uploadedFile->storeAs($destinationPath, $formattedTime . '_' . $fileName, 'public');
-                
+                $formattedTime = $currentTime->format('YmdHis');
+                $destinationPath = 'projects/submission/project/'
+                    . $project_id
+                    . '/'
+                    . $studentName
+                    . '/task/'
+                    . $task_id;
+                $saveFileTask = $uploadedFile->storeAs(
+                    $destinationPath,
+                    $formattedTime . '_' . $fileName,
+                    'public'
+                );
+    
                 $submission->file = $saveFileTask;
                 $submission->save();
-            }elseif($uploadedFileExtension != $task->file_type){
+            } elseif ($uploadedFileExtension != $task->file_type) {
                 $error_message = 'The uploaded file must be of the following type: ' . $task->file_type;
-                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('errorTailwind', $error_message);
-                // return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id])->with('errorTailwind', $error_message);
+                return redirect('/profile/' . $student_id . '/enrolled/' . $project_id . '/task/' . $task_id)
+                    ->with('errorTailwind', $error_message);
             }
         }
-
-        $submission_date_override = Submission::where('project_id', $project_id)->where('student_id',Auth::guard('student')->user()->id)->where('is_complete', 0)->first();
-        if($submission_date_override != NULL){
+    
+        $submission_date_override = Submission::where('project_id', $project_id)
+            ->where('student_id', Auth::guard('student')->user()->id)
+            ->where('is_complete', 0)
+            ->first();
+    
+        if ($submission_date_override != null) {
             $submission_date_override->release_date = Carbon::now()->format('Y-m-d');
             $submission_date_override->dueDate = Carbon::now()->addDays($tiempoAdicional->duration)->format('Y-m-d');
             $submission_date_override->save();
         }
-        return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
-        // return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
-    }
+    
+        return redirect('/profile/' . $student_id . '/enrolled/' . $project_id . '/task/' . $task_id);
+    }    
 
     public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
     {
