@@ -48,13 +48,16 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->file('logo')->extension());
+        $messages = [
+            'email.unique' => 'The email address has already been taken by another company.',
+        ];
+    
         $validated = $request->validate([
             'name' => 'required',
             'address' => 'required',
             'email' => 'required|unique:companies,email',
             'logo' => 'required'
-        ]);
+        ], $messages);
 
         $existingEmail = Company::where('email', $validated['email'])->first();
 
