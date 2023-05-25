@@ -412,12 +412,10 @@ const tagify = new Tagify(input, {
                   // Show the error message and clear the input if it's not a Google Docs, Google Drive, or Google Colab link
                   // $(this).val('');
                   $("#link_error").show();
-              } else {
-                  // If the URL is valid, hide the error message
+              } else {s
                   $("#link_error").hide();
               }
           } catch(e) {
-              // Invalid URL, show the error message
               // $(this).val('');
               $("#link_error").show();
           }
