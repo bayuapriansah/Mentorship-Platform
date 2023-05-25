@@ -766,11 +766,11 @@ class StudentController extends Controller
         if ($student_id != Auth::guard('student')->user()->id) {
             abort(403);
         }
-    
+        
         $validated = Validator::make($request->all(), [
-            'file' => 'nullable|file|max:5120',
+            'glablink' => 'required',
         ]);
-    
+        
         if ($validated->fails()) {
             $error_message = $request->hasFile('file')
                 ? 'You cannot upload a file size larger than 5MB'
@@ -815,48 +815,54 @@ class StudentController extends Controller
         $tiempoAdicional = ProjectSection::where('project_id', $project_id)
             ->where('id', $task_id)
             ->firstOrFail();
-    
+
+        $glablink = $request->input('glablink');
+
         $submission = Submission::findOrFail($submission_id);
         $submission->section_id = $task_id;
         $submission->student_id = $student_id;
         $submission->project_id = $project_id;
         $submission->is_complete = 1;
         $submission->flag_checkpoint = $taskDate;
+        $submission->file = $glablink;
         $submission->dataset = $request->dataset ? $dataset_result : null;
+        $submission->save();
     
-        if ($request->hasFile('file')) {
-            $uploadedFile = $request->file('file');
-            $uploadedFileExtension = $uploadedFile->getClientOriginalExtension();
+        // Remove shit
+        // if ($request->hasFile('file')) {
+        //     $uploadedFile = $request->file('file');
+        //     $uploadedFileExtension = $uploadedFile->getClientOriginalExtension();
     
-            if ($uploadedFileExtension == $task->file_type) {
-                $fileName = str_replace(
-                    " ",
-                    "_",
-                    strtolower($uploadedFile->getClientOriginalName())
-                );
-                $studentName = $student->first_name . $student->last_name;
-                $currentTime = Carbon::now();
-                $formattedTime = $currentTime->format('YmdHis');
-                $destinationPath = 'projects/submission/project/'
-                    . $project_id
-                    . '/'
-                    . $studentName
-                    . '/task/'
-                    . $task_id;
-                $saveFileTask = $uploadedFile->storeAs(
-                    $destinationPath,
-                    $formattedTime . '_' . $fileName,
-                    'public'
-                );
+        //     if ($uploadedFileExtension == $task->file_type) {
+        //         $fileName = str_replace(
+        //             " ",
+        //             "_",
+        //             strtolower($uploadedFile->getClientOriginalName())
+        //         );
+        //         $studentName = $student->first_name . $student->last_name;
+        //         $currentTime = Carbon::now();
+        //         $formattedTime = $currentTime->format('YmdHis');
+        //         $destinationPath = 'projects/submission/project/'
+        //             . $project_id
+        //             . '/'
+        //             . $studentName
+        //             . '/task/'
+        //             . $task_id;
+        //         $saveFileTask = $uploadedFile->storeAs(
+        //             $destinationPath,
+        //             $formattedTime . '_' . $fileName,
+        //             'public'
+        //         );
     
-                $submission->file = $saveFileTask;
-                $submission->save();
-            } elseif ($uploadedFileExtension != $task->file_type) {
-                $error_message = 'The uploaded file must be of the following type: ' . $task->file_type;
-                return redirect('/profile/' . $student_id . '/enrolled/' . $project_id . '/task/' . $task_id)
-                    ->with('errorTailwind', $error_message);
-            }
-        }
+        //         $submission->file = $saveFileTask;
+        //         $submission->save();
+        //     } elseif ($uploadedFileExtension != $task->file_type) {
+        //         $error_message = 'The uploaded file must be of the following type: ' . $task->file_type;
+        //         return redirect('/profile/' . $student_id . '/enrolled/' . $project_id . '/task/' . $task_id)
+        //             ->with('errorTailwind', $error_message);
+        //     }
+        // }
+        // We choose to just use inputed link for this function so it didnt adddedl-
     
         $submission_date_override = Submission::where('project_id', $project_id)
             ->where('student_id', Auth::guard('student')->user()->id)

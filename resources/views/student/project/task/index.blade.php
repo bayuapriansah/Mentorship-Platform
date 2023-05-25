@@ -218,26 +218,15 @@
                         @endif
                           @csrf
                           <div class="relative cursor-pointer " id="drop-area">
-                            <label for="file-input">
-                              <div class="relative cursor-pointer" id="drop-area">
-                                <input type="file" name="file" class="absolute opacity-0" id="file-input" accept=".{{$task->file_type}}" required>
-                                <div class="p-6 border-2 border-dashed hover:bg-gray-50 rounded-md border-light-blue">
-                                    <div class="text-center">
-                                      <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                        <p class="mt-1 text-sm text-gray-600">
-                                          Click to upload or drag and drop
-                                        </p>
-                                        <p class="text-xs text-gray-500 ">.{{$task->file_type}} (MAX. 5MB)</p>
-                                        {{-- <p class="mt-2 text-sm text-gray-600" id="file-name"></p> --}}
-                                    </div>
-                                </div>
-                              </div>
-                            </label>
-                            <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
+                          {{-- <div class="relative cursor-pointer " id="drop-area"> --}}
+                            <div>
+                              <h1 class="text-dark-blue font-medium text-sm mb-1">File Link</h1>
+                                <input class="border border-light-blue rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 mb-2 focus:outline-none" type="text" placeholder="File Link" name="glablink">
+                                <p class="text-xs text-dark-blue" id="link_error" style="display: none;">*Please enter a link from Google Docs, Google Drive, or Google Colab</p>
                             </div>
                             <div>
-                              <h1 class="text-dark-blue font-medium text-sm mb-1">Add Datasets <span class="font-normal">(Optional)</span></h1>
-                              <input class="border border-light-blue rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Add Dataset Link" name="dataset">
+                              <h1 class="text-dark-blue font-medium text-sm mb-1">Additional Resources (Datasets, Reports, etc.)</h1>
+                              <input class="border border-light-blue rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Optional" name="dataset">
                               <p class="text-xs text-dark-blue">*You can add more than one dataset by separating them with commas (,) </p><br>
                               {{-- <input type="text" class="w-full px-4 py-6 text-sm border border-gray-300 rounded outline-none"  name="tags"  value="Alpine Js, Tailwind CSS, PHP8.0" autofocus/> --}}
                             </div>
@@ -397,5 +386,43 @@ const tagify = new Tagify(input, {
   delimiter: ',',
 });
 </script>
+
+<!-- Your script -->
+<script>
+  $(document).ready(function(){
+      $('input[name="glablink"]').on('input', function() {
+          var value = $(this).val();
+  
+          // Add https:// prefix if not present
+          if (!/^https?:\/\//i.test(value)) {
+              value = 'https://' + value;
+          }
+  
+          // Remove www. if present at the start of the URL, after https:// or http://
+          value = value.replace(/(https?:\/\/)www\./i, '$1');
+  
+          // Set the updated value
+          $(this).val(value);
+  
+          // Perform Google Docs, Google Drive, or Google Colab check
+          try {
+              var url = new URL(value);
+              var hostnames = ['docs.google.com', 'drive.google.com', 'colab.research.google.com'];
+              if (!hostnames.includes(url.hostname)) {
+                  // Show the error message and clear the input if it's not a Google Docs, Google Drive, or Google Colab link
+                  // $(this).val('');
+                  $("#link_error").show();
+              } else {
+                  // If the URL is valid, hide the error message
+                  $("#link_error").hide();
+              }
+          } catch(e) {
+              // Invalid URL, show the error message
+              // $(this).val('');
+              $("#link_error").show();
+          }
+      });
+  });
+  </script>
 
 @endsection

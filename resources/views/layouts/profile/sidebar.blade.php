@@ -254,13 +254,16 @@
       @else
         <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
         <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
-          <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
-          Your Submission file</a>
-          @php
+          {{-- <img src="{{asset('assets/img/icon/Vector.png')}}" alt=""> --}}
+          <i class="fa-solid fa-link"></i>
+          Your Submission Link</a>
+          {{-- @php
             $ekstension = substr($submissionData->file, strpos($submissionData->file, ".") + 1);
-          @endphp
-          <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}">
-            <img  src="{{asset('assets/img/icon/download.png')}}" alt="">
+          @endphp --}}
+          {{-- <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}"> --}}
+          <a href="{{$submissionData->file}}">
+            {{-- <img  src="{{asset('assets/img/icon/download.png')}}" alt=""> --}}
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </div>
         @if($submissionData->dataset)
