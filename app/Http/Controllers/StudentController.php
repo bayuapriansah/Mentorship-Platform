@@ -915,24 +915,27 @@ class StudentController extends Controller
         }else{
             $submission->dataset = null;
         }
-        // dd($dataset_result);
-        // dd($request->hasFile('file'));
-        if($request->hasFile('file')){
-            if(Storage::path($submission->file)) {
-                Storage::disk('public')->delete($submission->file);
-            }
 
-            $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
-            if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
-                $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
-                $submission->file = $file;
-            }else{
-                return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong');
-            }
-            $submission->save();
-        }else{
-            return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
-        }
+        $submission->file = $file;
+        $submission->save();
+        // // dd($dataset_result);
+        // // dd($request->hasFile('file'));
+        // if($request->hasFile('file')){
+        //     if(Storage::path($submission->file)) {
+        //         Storage::disk('public')->delete($submission->file);
+        //     }
+
+        //     $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
+        //     if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
+        //         $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
+        //         $submission->file = $file;
+        //     }else{
+        //         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong');
+        //     }
+        //     $submission->save();
+        // }else{
+        //     return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
+        // }
 
         // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
         // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
