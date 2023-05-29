@@ -48,6 +48,21 @@
   <div class="space-y-6">
     <div class="text-dark-blue font-normal">Task Submission</div>
       <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
+
+        @if (strpos($submissionData->file, 'https://') !== false)
+          <i class="fa-solid fa-link"></i>
+            <a href="{{$submission->file}}" target="_blank" class="text-base">Submission Link</a>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        @else
+          <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+            Your Submission File
+            @php
+              $ekstension = substr($submissionData->file, strpos($submissionData->file, ".") + 1);
+            @endphp
+          <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}">
+          <img  src="{{asset('assets/img/icon/download.png')}}" alt="">
+        @endif
+
         <img src="{{asset('assets/img/icon/Vector.png')}}" class="object-scale-down">
         {{-- <a href="{{asset('storage/'.$submission->file)}}" target="_blank" class="text-base">Submission file .{{substr($submission->file, strpos($submission->file, '.')+1)}}</a> --}}
         <a href="{{$submission->file}}" target="_blank" class="text-base">Submission Link</a>
