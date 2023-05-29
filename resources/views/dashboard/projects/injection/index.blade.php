@@ -36,7 +36,7 @@
     @enderror
   </div>
   <div class="mb-3 flex justify-between">
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputfiletype" aria-label="Default select example" name="inputfiletype">
+    {{-- <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputfiletype" aria-label="Default select example" name="inputfiletype">
       <option value="">Select file input type *</option>
       <option value="zip" {{old('inputfiletype') == 'zip' ? 'selected': ''}}>.zip</option>
       <option value="pdf" {{old('inputfiletype') == 'pdf' ? 'selected': ''}}>.pdf</option>
@@ -47,12 +47,12 @@
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
         </p>
-    @enderror
+    @enderror --}}
 
     @php
         $durations = range(1,10);
     @endphp
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none" id="inputcardduration" aria-label="Default select example" name="duration">
+    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none" id="inputcardduration" aria-label="Default select example" name="duration">
       <option value="" hidden>Task Duration *</option>
       @foreach ($durations as $duration)
       <option value="{{$duration}}">{{$duration}} {{$duration==1?'day':'days'}}</option>
