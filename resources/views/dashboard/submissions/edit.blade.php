@@ -49,7 +49,8 @@
     <div class="text-dark-blue font-normal">Task Submission</div>
       <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
         <img src="{{asset('assets/img/icon/Vector.png')}}" class="object-scale-down">
-        <a href="{{asset('storage/'.$submission->file)}}" target="_blank" class="text-base">Submission file .{{substr($submission->file, strpos($submission->file, '.')+1)}}</a>
+        {{-- <a href="{{asset('storage/'.$submission->file)}}" target="_blank" class="text-base">Submission file .{{substr($submission->file, strpos($submission->file, '.')+1)}}</a> --}}
+        <a href="{{$submission->file}}" target="_blank" class="text-base">Submission Link</a>
         <img src="{{asset('assets/img/icon/download.png')}}" class="object-scale-down">
         {{-- /dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit --}}
         {{-- <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a> --}}
