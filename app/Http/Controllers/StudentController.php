@@ -902,11 +902,15 @@ class StudentController extends Controller
         }
         $task = ProjectSection::findOrFail($task_id);
         // dd($task->file_type);
-        if($request->hasFile('file')==true){
-            $validated = $request->validate([
-                'file' => ['required'],
-            ]);
-        }
+        // if($request->hasFile('file')==true){
+        //     $validated = $request->validate([
+        //         'glablink' => ['required'],
+        //     ]);
+        // }
+
+        $validated = Validator::make($request->all(), [
+            'glablink' => 'required',
+        ]);
 
         $submission = Submission::findOrFail($submission_id);
         $submission->flag_checkpoint = $taskDate;
@@ -915,8 +919,8 @@ class StudentController extends Controller
         }else{
             $submission->dataset = null;
         }
-
-        $submission->file = $file;
+        $glablink = $request->input('glablink');
+        $submission->file = $glablink;
         $submission->save();
         // // dd($dataset_result);
         // // dd($request->hasFile('file'));
