@@ -41,12 +41,12 @@ use App\Http\Controllers\EmailBulkInvitationController;
 |
 */
 
-Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments']);
+Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments'])->middleware('auth:web');
 
 // Experimental
 Route::get('/theplayground', function () {
     return view('experiment.index');
-})->name('theplayground');
+})->middleware('auth:web')->name('theplayground');
 
 //Static Page
 Route::get('/emailtemp', function () {
