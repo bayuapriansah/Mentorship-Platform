@@ -40,6 +40,14 @@ use App\Http\Controllers\EmailBulkInvitationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments']);
+
+// Experimental
+Route::get('/theplayground', function () {
+    return view('experiment.index');
+})->name('theplayground');
+
 //Static Page
 Route::get('/emailtemp', function () {
     return view('emails.contactUs');

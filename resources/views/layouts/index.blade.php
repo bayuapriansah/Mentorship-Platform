@@ -86,7 +86,7 @@
   <div class="w-full bg-white">
     <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
       <a href="/" class="col-span-3">
-        <img src="{{asset('assets/img/Intel-logo-2022.png')}}" class="" alt="">
+        <img src="{{asset('assets/img/Digitalreadiness-logo 1.svg')}}" class="" alt="">
       </a>
       <ul class="col-start-5 col-span-4 flex justify-between text-black">
         <li class="text-dark-blue intelOne font-light text-sm"><a href="/" class="hover:text-neutral-500">Home</a></li>
@@ -189,10 +189,54 @@
   <main>
   @yield('content')
   </main>
-  <footer class="w-full bg-lightest-blue relative z-30">
+
+  <footer class="w-full bg-lightest-blue">
+    <div class="max-w-[1366px] container mx-auto px-16 pb-16">
+      <img src="{{asset('assets/img/Digitalreadiness-logo 1.svg')}}" alt="" class="pt-16 object-scale-down h-96 w-auto">
+      <div class="grid grid-cols-12 gap-11 grid-flow-col">
+        <div class="col-span-6 lg:col-span-6 xl:col-span-4">
+          <p class="text-grey font-normal text-sm mt-4 text-justify">
+            Intel technologies may require enabled hardware, software, or service activation. No product or component can be absolutely secure. Your costs and results may vary. Performance varies by use, configuration, and other factors. See our complete legal <a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C" class="text-black">Notices and Disclaimers</a>. Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See <a href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html" class="text-black">Intel’s Global Human Rights Principles</a>. Intel’s products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognized human right.
+          </p>
+        </div>
+  
+        <div class="col-span-2 lg:col-span-2 xl:col-span-2 flex flex-col justify-start">
+          <div class="text-dark-blue mt-2 lg:mt-0">
+            <ul class="list-none p-0">
+              <li class="py-2">For Industry Partners</li>
+              <li class="py-2">For Institution</li>
+              <li class="py-2">For Students</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-span-2 lg:col-span-2 xl:col-span-2 flex flex-col justify-start">
+          <div class="text-dark-blue mt-2 lg:mt-0">
+            <ul class="list-none p-0">
+              <li class="py-2">About Us</li>
+              <li class="py-2">FAQs</li>
+              <li class="py-2">Contact Us</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-span-1 lg:col-span-2 xl:col-span-2 flex flex-col justify-start">
+          <div class="text-dark-blue mt-2 lg:mt-0">
+            <ul class="list-none p-0">
+              <li class="py-2">Terms & Conditions</li>
+              <li class="py-2">Privacy Policies</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+  
+  
+
+  {{-- <footer class="w-full bg-lightest-blue relative z-30">
     <div class="max-w-[1366px] mx-auto px-16 pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container">
       <div class="col-span-4">
-        <img src="{{asset('assets/img/Intel-logo-2022.png')}}" alt="">
+        <img src="{{asset('assets/img/Digitalreadiness-logo 1.svg')}}" alt="">
         <p class="text-grey font-normal text-[10px] pt-2 ">Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal <a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C" class="text-black">Notices and Disclaimers</a>. // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See <a href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html" class="text-black">Intel's Global Human Rights Principles</a>. Intel's products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognised human right.</p>
       </div>
       <div class="col-start-6 col-span-2 flex flex-col">
@@ -243,7 +287,7 @@
       </div>
     </div>
 
-  </footer>
+  </footer> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}
 
