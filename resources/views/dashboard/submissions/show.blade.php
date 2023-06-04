@@ -72,7 +72,7 @@
         <div>
           <div class="text-dark-blue font-normal mb-2">Change Task Completion Status</div>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeGradeModal">
-            Change Status
+            View Detail
           </button>
         </div>
 

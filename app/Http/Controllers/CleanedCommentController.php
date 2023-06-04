@@ -34,7 +34,7 @@ class CleanedCommentController extends Controller
             } elseif (!is_null($prompt)) {
                 $completion = $this->cleanText($comment->message);
                 $results[] = [
-                    'prompt' => $prompt,
+                    'prompt' => $prompt . '[put_the_last_parameter]',
                     'completion' => $completion
                 ];
                 $prompt = null;
@@ -55,7 +55,8 @@ class CleanedCommentController extends Controller
     // Function to clean HTML tags, special characters, newlines, backslashes, and replace double quotes with single quotes in a text
     private function cleanText($text)
     {
-        $cleanedText = str_replace(['<br>', '</br>'], ' ', $text);
+        $cleanedText = trim($text);
+        // $cleanedText = str_replace(['<br>', '</p>', '<p>'], ['[n]', '[p]', ''], $cleanedText);
         $cleanedText = strip_tags($cleanedText);
         $cleanedText = preg_replace('/(["\/])/', '$1', $cleanedText);
         // $cleanedText = preg_replace('/([\\/])/', ' or ', $cleanedText);

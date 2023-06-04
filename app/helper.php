@@ -5,6 +5,15 @@ use App\Models\Submission;
 use App\Models\ReadNotification;
 use Illuminate\Support\Facades\Auth;
 
+if(!function_exists('isLoggedIn')){
+    function isLoggedIn() {
+        return Auth::guard('student')->check() || 
+               Auth::guard('web')->check() || 
+               Auth::guard('mentor')->check() || 
+               Auth::guard('customer')->check();
+    }    
+}
+
 if(!function_exists('getCommentMessages')){
     function getCommentMessages() {
         if(Auth::guard('web')->check()){

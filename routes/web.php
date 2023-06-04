@@ -41,6 +41,9 @@ use App\Http\Controllers\EmailBulkInvitationController;
 |
 */
 
+// Experimental
+Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
+
 Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments'])->middleware('auth:web');
 
 // Experimental

@@ -1,8 +1,8 @@
 @extends('layouts.index')
 @section('content')
-<section id="faq" class="w-full">
+<section id="privacyandpolicy" class="w-full">
   <div class="bg-darker-blue">
-    <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col ">
+    <div class="max-w-screen-xl mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col ">
       <div class="col-span-7 relative">
         <h1 class="font-bold text-white text-3xl leading-10 relative z-20 ">Privacy Policies</h1>
         <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-6 ">
@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 grid-flow-col">
+  <div class="max-w-screen-xl mx-auto px-16 py-16 grid grid-cols-12 grid-flow-col text-justify">
     <div class="col-span-12 text-sm font-normal">
       <div class="space-y-3">
         <p>

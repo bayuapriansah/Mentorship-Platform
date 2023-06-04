@@ -1,174 +1,208 @@
 @extends('layouts.index')
 @section('content')
-<div class="w-full bg-darker-blue">
-  <div class="max-w-[1366px] mx-auto px-16 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
-    <div class="flex flex-col col-span-6 my-auto">
-      <h2 class="intelOne text-white font-bold text-3xl leading-11">
-        <span class="text-light-brown">Simulated Internship</span> Platform for <span class="text-light-brown">Industry Readiness</span>
-      </h2>
-      <span class="intelOne text-white py-6 font-light text-lg leading-6">Join today to work on real-world projects and kick start your career!</span>
-      <div class="flex">
-        <a href="/otp/login" class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-16 py-3.5 rounded-full">Get Started</a>
-      </div>
-    </div>
-    <div class="col-start-7 col-span-6 relative">
-      <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
-      <img src="assets/img/home1.png" class="relative z-50" alt="">
-
-      <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
-      <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
-      <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
-      
-    </div>
-  </div>
-</div>
-<div class="w-full">
-  {{-- <div class="max-w-[1366px] mx-auto px-16 pt-16 pb-7 mb-0 grid grid-cols-12 gap-11 grid-flow-col ">
-    <div class="col-span-12 text-center">
-      <p class="font-normal inteOne text-base text-black m-0">Our Esteemed Industry Partners</p>
-    </div>
-  </div>
-  <div class="max-w-[1366px] mx-auto px-36 mb-0 flex justify-between items-center ">
-    <img src="{{asset('assets/img/image 3.png')}}" alt="">
-    <img src="{{asset('assets/img/image 4.png')}}" alt="">
-    <img src="{{asset('assets/img/image 5.png')}}" alt="">
-    <img src="{{asset('assets/img/image 6.png')}}" alt="">
-    <img src="{{asset('assets/img/image 7.png')}}" alt="">
-  </div> --}}
-  <div class="max-w-[1366px] mx-auto px-36 pt-24 mb-0 grid grid-cols-12 gap-11 grid-flow-col" id="AiForFuture">
-    <div class="col-span-6 flex my-auto">
-      <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
-    </div>
-    <div class="col-end-13 col-span-6">
-      <p class="m-0 text-black text-justify">Intel® AI For Workforce is a global AI skilling program for vocational students for building an AI-ready workforce. The program aims to address the AI skill crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the necessary skills for employability in the digital economy. The program offers comprehensive, modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
-      <br>
-      <iframe width="525" height="300" class="relative z-20 rounded-lg" src="https://www.youtube.com/embed/K9iflwQqVsA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-  </div>
-  <div class="max-w-[1366px] mx-auto px-36 pt-20 mb-0 grid grid-cols-12 gap-11 grid-flow-col  relative">
-    <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 -top-32 right-0" aria-hidden="true" >
-    <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-10 left-0 " aria-hidden="true" >
-    <div class="col-span-4">
-      <div class="flex flex-col">
-        <img src="{{asset('assets/img/for_students.png')}}" class="relative z-20" alt="for students">
-        <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
-        <p class="text-black font-normal text-sm">Acquire Employability Skills, Gain Industry Experience, Strengthen Project Portfolio</p>
-      </div>
-    </div>
-    <div class="col-span-4">
-      <div class="flex flex-col">
-        <img src="{{asset('assets/img/for_institution.png')}}" class="relative z-20 mt-5" alt="for students">
-        <h1 class="text-dark-blue text-2xl font-bold py-3 -mt-4">For Institutes</h1>
-        <p class="text-black font-normal text-sm">Enhanced Student Employability, Collaborate with Industry leaders, Supervise Real-World AI Projects</p>
-      </div>
-    </div>
-    <div class="col-span-4">
-      <div class="flex flex-col">
-        <img src="{{asset('assets/img/for_industries.png')}}" class="relative z-20" alt="for students">
-        <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
-        <p class="text-black font-normal text-sm">Identify Top Future Talents, Collaborate with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
-      </div>
-    </div>
-  </div>
-  <div class="container mx-auto">
-    <div class="max-w-[1366px] mx-auto px-36 pt-28 mb-0 flex ">
-      <div class="">
-        <h2 class="intelOne text-dark-blue font-bold text-3xl">Internship Projects</h2>
-      </div>
-      {{-- untuk arrow --}}
-    </div>
-    <div class="max-w-[1366px] mx-auto px-36 pt-8 mb-0 grid grid-cols-13 gap-8 grid-flow-col">
-      @foreach($projects as $project)
-      <div class="col-span-4">
-        <div class="flex flex-grow">
-          <div class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC]  bg-white max-w-sm">
-            <div class="flex space-x-2">
-              <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-4 px-2 mr-2">
-                <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
-              </div>
-              <div class="flex-col">
-                <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{substr($project->name,0,17)}}...</p>
-                <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-                <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36">
-                  @if ($project->project_domain == 'statistical')
-                    Statistical Data
-                  @elseif($project->project_domain == 'computer_vision')
-                    Computer Vision
-                  @else
-                    NLP
-                  @endif   
-                </p>
-              </div>
+    {{-- Body Contents --}}
+    <div class="max-w-full bg-darker-blue">
+        <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20 bg-darker-blue">
+            <div class="grid md:grid-cols-2 gap-4 items-center">
+                <div class="my-auto">
+                    <h2 class="intelOne text-white font-bold text-3xl leading-11 py-4">
+                        <span class="text-light-brown">Simulated Internship</span> Platform for <span
+                            class="text-light-brown">Industry Readiness</span>
+                    </h2>
+                    <span class="intelOne text-white py-6 font-light text-lg leading-6">Join today to work on real-world
+                        projects and kick start your career!</span>
+                    <div class="flex py-4">
+                        <a href="{{ route('multiLogIn') }}"
+                            class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-16 py-3.5 rounded-full">GetStarted</a>
+                    </div>
+                </div>
+                <div class="relative my-auto">
+                    <img src="{{ asset('assets/img/home1.png') }}" class="relative z-40" alt="">
+                    <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots"
+                        class="absolute z-0 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true">
+                    <img src="{{ asset('assets/img/dots-2.png') }}" alt="dots"
+                        class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true">
+                </div>
             </div>
-            <div class="text-grey font-normal text-base mb-2 pt-3">
-              {{ substr($project->overview,0,62) }}...
-            </div>
-            <div class="flex justify-between">
-            <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-medium">{{ $project->period }} Months</span></p>
-            <a href="
-            @if (Auth::guard('student')->check() || Auth::guard('web')->check() || Auth::guard('mentor')->check() || Auth::guard('customer')->check())
-                /projects/{{$project->id}}
-            @else
-              /otp/login
-            @endif
-            " class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">View Project</a>
-            </div>
-          </div>
         </div>
-      </div>
-      @endforeach
     </div>
-    <div class="max-w-[1366px] mx-auto px-36 pt-12 mb-0 grid grid-cols-12 gap-3 grid-flow-col">
-      <div class="col-end-13 col-span-2">
-        <button  class="intelOnetext-sm font-normal border-2 border-solid border-dark-blue text-darker-blue hover:bg-dark-blue hover:text-white px-3 py-2 rounded-full">
-          <a href="/projects">View All Projects</a>
-        </button>
-      </div>
+
+    {{-- Body Content 2 --}}
+    <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
+        <div class="grid md:grid-cols-2 gap-4 items-center">
+            <div class="my-auto">
+                <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
+            </div>
+            <div class="relative my-auto">
+                <p class="m-0 text-black text-justify">Intel® AI For Workforce is a global AI skilling program for
+                    vocational students for building an AI-ready workforce. The program aims to address the AI skill
+                    crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the
+                    necessary skills for employability in the digital economy. The program offers comprehensive,
+                    modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
+                <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
+                    <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/K9iflwQqVsA"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="w-full bg-white relative z-20">
-    <div class="max-w-[1366px] mx-auto px-16  pt-24 pb-16 mb-0 grid grid-cols-12 gap-11 grid-flow-col container relative">
-      <div class="absolute z-10 w-20 h-20 bg-light-brown top-72 left-10 rounded-[10px]"></div>
-      <div class="col-span-5">
-        <iframe width="428" height="236" class="relative z-30 rounded-lg" src="https://www.youtube.com/embed/cUq-sTaxXks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        {{-- <img src="{{asset('assets/img/learningneverstops.png')}}" class=" relative z-30" alt="learning never stops"> --}}
-      </div>
-      <div class="col-span-7">
-        <h1 class="font-bold text-2xl text-dark-blue">Learning Never Stops</h1>
-        <p>When he was 16 years old, Feridoon Ghanbari and his family left Iran to live in the U.S. With time spent in the Army as a combat medic and the Air Force as a guidance and navigation engineer—the military has shaped his life. Afterward, he moved to New Mexico, where he's been living for over four decades. With degrees in Electrical Engineering, Industrial Engineering, and Business, he has a deep background in STEM. He's passionate about Artificial Intelligence and always wants to learn about where the future of tech is headed, in real time for the real world. That's why he's excited about expanding his knowledge in our AI for Workforce classes. The program teaches innovative tech while empowering students with the necessary AI skills for employability in the digital economy.</p>
-      </div>
+
+    {{-- Body Content 3 --}}
+    <div class="max-w-screen-xl mx-auto px-6 pt-20 mb-0 flex flex-col md:flex-row md:space-x-4 relative">
+        <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots" class="absolute z-10 -top-32 right-0"
+            aria-hidden="true">
+        <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots" class="absolute z-10 top-10 left-0 "
+            aria-hidden="true">
+        <div class="md:flex-1">
+            <div class="flex flex-col px-4">
+                <img src="{{ asset('assets/img/for_students.png') }}" class="relative z-20" alt="for students">
+                <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
+                <p class="text-black font-normal text-sm text-justify py-3">Acquire Employability Skills, Gain Industry
+                    Experience, Strengthen Project Portfolio</p>
+            </div>
+        </div>
+        <div class="md:flex-1">
+            <div class="flex flex-col px-4">
+                <img src="{{ asset('assets/img/for_institution.png') }}" class="relative z-20" alt="for students">
+                <h1 class="text-dark-blue text-2xl font-bold py-3">For Institutes</h1>
+                <p class="text-black font-normal text-sm text-justify py-3">Enhanced Student Employability, Collaborate
+                    with Industry leaders, Supervise Real-World AI Projects</p>
+            </div>
+        </div>
+        <div class="md:flex-1">
+            <div class="flex flex-col px-4">
+                <img src="{{ asset('assets/img/for_industries.png') }}" class="relative z-20" alt="for students">
+                <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
+                <p class="text-black font-normal text-sm text-justify py-3">Identify Top Future Talents, Collaborate
+                    with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+
+    {{-- Body Content 4 --}}
+    <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="intelOne text-dark-blue font-bold text-3xl pb-8">Internship Projects</h2>
+            <div class="flex space-x-4">
+                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="h-6 w-6 text-dark-blue">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="h-6 w-6 text-dark-blue">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                @foreach ($projects as $project)
+                    <!-- Slide -->
+                    <div class="swiper-slide">
+                        <div
+                            class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-[250px] overflow-hidden">
+                            <div class="flex space-x-2">
+                                <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
+                                    <img src="{{ asset('storage/' . $project->company->logo) }}"
+                                        class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
+                                </div>
+                                <div class="flex-col">
+                                    <p
+                                        class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">
+                                        {{ substr($project->name, 0, 18) }}{{ strlen($project->name) > 18 ? '...' : '' }}
+                                    </p>
+                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">
+                                        {{ $project->company->name }}</p>
+                                    <div class="pt-2">
+                                        <p
+                                            class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
+                                            {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-grey font-normal text-base mb-2 pt-3 overflow-ellipsis overflow-hidden">
+                                {{ substr($project->overview, 0, 62) }}...</div>
+                            <div class="flex justify-between">
+                                <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span
+                                        class="font-medium">{{ $project->period }} Months</span></p>
+                                <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}"
+                                    class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full ">View
+                                    Project</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="flex justify-end pt-6">
+            <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}"
+                class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">View
+                All Project</a>
+        </div>
+    </div>
+
+
+    <!-- Body Content 5 -->
+    <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
+        <div class="grid md:grid-cols-2 gap-4 items-start">
+            <!-- Changed here -->
+            <div class="relative">
+                <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
+                    <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/cUq-sTaxXks"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="relative">
+                <h1 class="font-bold text-2xl mb-4 text-dark-blue text-justify">Learning Never Stops</h1>
+                <p class="m-0 text-black text-justify">When he was 16 years old, Feridoon Ghanbari and his family left
+                    Iran to live in the U.S. With time spent in the Army as a combat medic and the Air Force as a
+                    guidance and navigation engineer—the military has shaped his life. Afterward, he moved to New
+                    Mexico, where he's been living for over four decades. With degrees in Electrical Engineering,
+                    Industrial Engineering, and Business, he has a deep background in STEM. He's passionate about
+                    Artificial Intelligence and always wants to learn about where the future of tech is headed, in real
+                    time for the real world. That's why he's excited about expanding his knowledge in our AI for
+                    Workforce classes. The program teaches innovative tech while empowering students with the necessary
+                    AI skills for employability in the digital economy.</p>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('more-js')
 <script>
-  var currentCard = 1;
-  var cardCount = {{count($projects)}};
-
-  function slideLeft(){
-    if(currentCard > 1){
-      currentCard--;
-      updateCards();
-    }
-  }
-
-  function slideRight(){
-    if(currentCard < cardCount){
-      currentCard++;
-      updateCards();
-    }
-  }
-
-  function updateCards(){
-    var cards = document.querySelectorAll(".relative.flex > div");
-    for(var i=0; i < cards.length; i++){
-      if(i === currentCard-1 || i === currentCard || i === currentCard+1){
-        cards[i].classList.remove("hidden");
-      }else{
-        cards[i].classList.add("hidden");
+  const swiper = new Swiper('.swiper-container', {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      navigation: {
+          nextEl: '#swiper-button-next',
+          prevEl: '#swiper-button-prev',
+      },
+      breakpoints: {
+          320: {
+              slidesPerView: 1,
+              spaceBetween: 10
+          },
+          480: {
+              slidesPerView: 1,
+              spaceBetween: 10
+          },
+          640: {
+              slidesPerView: 2,
+              spaceBetween: 10
+          },
+          950: {
+              slidesPerView: 3,
+              spaceBetween: 30
+          }
       }
-    }
-  }
+  });
 </script>
 @endsection
