@@ -27,6 +27,7 @@ use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
 
@@ -43,6 +44,8 @@ use App\Http\Controllers\EmailBulkInvitationController;
 
 // Experimental
 Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
+Route::get('/face-detection', [FaceDetectionController::class, 'index']);
+Route::get('/run-face-detection', [FaceDetectionController::class, 'runFaceDetection']);
 
 Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments'])->middleware('auth:web');
 

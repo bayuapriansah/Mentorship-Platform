@@ -362,14 +362,14 @@ class ProjectController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
             'dataset' => ['nullable']
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
@@ -388,7 +388,7 @@ class ProjectController extends Controller
         $section_count = ProjectSection::where('project_id', $project->id);
         $section->project_id = $project->id;
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->section = $section_count->count()+1;
         $section->description = $validated['description'];
@@ -421,21 +421,21 @@ class ProjectController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
             'dataset' => ['nullable']
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
 
         $section = ProjectSection::findOrFail($injection->id);
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->description = $validated['description'];
         $section->dataset = $validated['dataset'];
@@ -804,13 +804,13 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
@@ -829,7 +829,7 @@ class ProjectController extends Controller
         $section_count = ProjectSection::where('project_id', $project->id);
         $section->project_id = $project->id;
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->section = $section_count->count()+1;
         $section->description = $validated['description'];
@@ -859,20 +859,20 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
 
         $section = ProjectSection::findOrFail($injection->id);
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->description = $validated['description'];
         if($request->hasFile('file')){
