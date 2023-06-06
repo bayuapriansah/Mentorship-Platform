@@ -119,7 +119,7 @@
                 <div class="mb-6 md:mb-0">
                     <a href="/" class="flex items-center">
                         <img src="{{ asset('assets/img/Digitalreadiness-logo 1.svg') }}"
-                            class="object-scale-down h-32 w-auto py-4" alt="Intel Digital Readiness Logo" />
+                            class="object-scale-down h-15 w-auto py-4" alt="Intel Digital Readiness Logo" />
                     </a>
                 </div>
             </div>
