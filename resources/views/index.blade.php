@@ -131,7 +131,7 @@
                                 {{ substr($project->overview, 0, 62) }}...</div>
                             <div class="flex justify-between">
                                 <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span
-                                        class="font-medium">{{ $project->period }} {{ strtolower($project->name) == "onboarding project" ? 'Week' : ($project->period > 1 ? 'Months' : 'Month') }}</span></p>
+                                        class="font-medium">{{ $project->period }} {{ strtolower($project->name) == "onboarding week" ? 'Week' : ($project->period > 1 ? 'Months' : 'Month') }}</span></p>
                                 <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}"
                                     class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full ">View
                                     Project</a>
