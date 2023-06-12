@@ -37,7 +37,7 @@
                     class="text-dark-blue intelOne no-underline hover:text-lightest-blue">Industry Partners</a>
             </div>
             <div class="space-x-4 gap-12">
-                @if (Auth::check())
+                @if (isLoggedIn())
                     <button id="dropdownRightEndButton" data-dropdown-toggle="dropdownRightEnd"
                         data-dropdown-placement="right-end"
                         class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
@@ -48,7 +48,7 @@
                             <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                             <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
                         </svg> --}}
-                        {{ Auth::user()->name }}
+                        {{ nameUserAuth() }}
                         <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -61,6 +61,11 @@
                         class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Login</a>
                     <a href="{{ route('registerPage') }}"
                         class="bg-dark-blue text-white rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Register</a>
+                        {{-- need to put it here as emergency button to logout --}}
+                        {{-- <form class="inline" method="post" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log Out</button>
+                        </form> --}}
                 @endif
             </div>
             {{-- Navbar Componet --}}
@@ -69,13 +74,13 @@
                 Coming Soon
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
-            @if (Auth::check())
+            @if (isLoggedIn())
                 <!-- Dropdown menu -->
                 <div id="dropdownRightEnd"
                     class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                     <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                        <div class="font-medium">{{ Auth::user()->name }}</div>
-                        <div class="truncate">{{ Auth::user()->email }}</div>
+                        <div class="font-medium">{{ nameUserAuth() }}</div>
+                        <div class="truncate">{{ emailUserAuth() }}</div>
                     </div>
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRightEndButton">
                         <li>
@@ -97,9 +102,7 @@
                     <div class="py-2">
                         <form class="inline" method="post" action="{{ route('logout') }}">
                             @csrf
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log
-                                out</a>
+                            <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log Out</button>
                         </form>
                     </div>
                 </div>
