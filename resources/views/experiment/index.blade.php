@@ -63,12 +63,14 @@
 
       const data = {
         model: model,
-        messages: [{ role: "user", content: userMessage }],
-        temperature: 0.5
+        prompt: userMessage + '\n\n###\n\n',
+        max_tokens: 200,
+        temperature: 0.7,
+        stop:["END"]
       };
 
       $.ajax({
-        url: "https://api.openai.com/v1/chat/completions",
+        url: "https://api.openai.com/v1/completions",
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -76,8 +78,11 @@
         },
         data: JSON.stringify(data),
         success: function(response) {
-          const output = response.choices[0].message.content;
+          console.log(response);
+          const output = response.choices[0].text;
+          // appendMessage("ChatGPT", output);
           showTypingEffect("ChatGPT", output);
+          console.log(response.usage.total_tokens);
         },
         error: function(error) {
           console.error(error);
@@ -94,33 +99,18 @@
       chatLog.scrollTop = chatLog.scrollHeight;
     }
 
-    function appendCodeMessage(sender, code) {
-      const chatLog = document.getElementById("chat-log");
-      const messageDiv = document.createElement("div");
-      const codeBlock = document.createElement("pre");
-      const codeContent = document.createElement("code");
-      codeContent.innerText = code;
-      codeContent.classList.add("language-python"); // Set the code language for syntax highlighting
-      codeBlock.appendChild(codeContent);
-      messageDiv.innerHTML = `<strong>${sender}:</strong>`;
-      messageDiv.appendChild(codeBlock);
-      chatLog.appendChild(messageDiv);
-      chatLog.scrollTop = chatLog.scrollHeight;
-      hljs.highlightAll();
-    }
-
     function showTypingEffect(sender, message) {
       const delay = 50; // Delay between each character (in milliseconds)
       const chatLog = document.getElementById("chat-log");
       const messageDiv = document.createElement("div");
       const typingIndicator = document.createElement("span");
       typingIndicator.innerHTML = "<em>Typing...</em>";
-
+ 
       messageDiv.innerHTML = `<strong>${sender}:</strong> `;
       messageDiv.appendChild(typingIndicator);
       chatLog.appendChild(messageDiv);
       chatLog.scrollTop = chatLog.scrollHeight;
-
+ 
       let index = 0;
       const timer = setInterval(() => {
         if (index >= message.length) {

@@ -34,8 +34,8 @@ class CleanedCommentController extends Controller
             } elseif (!is_null($prompt)) {
                 $completion = $this->cleanText($comment->message);
                 $results[] = [
-                    'prompt' => $prompt . '[put_the_last_parameter]',
-                    'completion' => $completion
+                    'prompt' => ' '. $prompt . '[put_the_last_parameter]',
+                    'completion' => ' '.$completion . ' END'
                 ];
                 $prompt = null;
             }
