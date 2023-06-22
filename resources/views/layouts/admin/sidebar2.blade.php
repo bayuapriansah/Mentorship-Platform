@@ -60,33 +60,4 @@
         @endif    
     </li>
   @endif
-  {{-- @if(Auth::guard('web')->check())
-    <li class="hover:font-medium">
-      @if(Route::is('dashboard.certificate.index'))
-        <a href="/dashboard/certificate" class="font-medium">Certificate</a>
-      @else
-        <a href="/dashboard/certificate">Certificate</a>
-      @endif    
-    </li>
-  @endif --}}
-
-
-  {{-- @if(Auth::guard('mentor')->check())
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="{{route('dashboard.assigned.index')}}">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Assigned Projects</span>
-    </a>
-  </li>
-  @elseif(Auth::guard('web')->check())
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="{{route('dashboard.chat.allAssignedProjects')}}">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Assigned Projects</span>
-    </a>
-  </li>
-  @endif --}}
-  {{-- <li class="hover:font-medium">
-    <a href="/dashboard"></a>
-  </li> --}}
 </ul>

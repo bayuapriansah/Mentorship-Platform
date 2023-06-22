@@ -145,7 +145,7 @@
 <body>
   <div class="max-w-[2000px] mx-auto">
     <div class="flex">
-      <div class="w-1/5 min-h-screen bg-gradient-to-b from-darker-blue to-dark-blue  items-center py-9 px-14 justify-center" >
+      <div class="w-1/5 min-h-screen bg-gradient-to-b from-darker-blue to-dark-blue items-center py-9 px-14 justify-center" >
         <div class="flex-col">
           <a href="{{ route('index') }}">
             <img src="{{asset('assets/img/intellogo2022_1.png')}}" class="w-[188px] h-[53px] object-scale-down mx-auto" alt="">
@@ -233,60 +233,60 @@
           @yield('content')
         </div>
       </div>
-    </div>
-    {{-- message modal --}}
-    <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full" style="left: 23%;">
-      <div class="relative w-full h-full max-w-sm md:h-auto">
-          <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow">
-              <!-- Modal header -->
-              <div class="flex items-center justify-between p-5 border-b rounded-t">
-                  <h3 class="text-xl font-medium text-gray-900">
-                      Notification
-                  </h3>
-                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="message-modal">
-                      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                      <span class="sr-only">Close modal</span>
-                  </button>
-              </div>
-              <!-- Modal body -->
-              <div class="pl-6 pb-3 space-y-6">
-                <div class="max-h-60 overflow-y-auto mt-3">
-                    @if ($NotificationForAdmin > 0)
-                    @php
-                        $numbercountpls = 1;
-                    @endphp
-                    @foreach ($DataSubmissionNotifications as $submissionNotification)
-                        @if ($submissionNotification->student != NULL && (Auth::guard('web')->check() || (Auth::guard('mentor')->user() != NULL && ($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id)) || Auth::guard('customer')->check()))
-                            <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                                <div id="toast-message-cta" class="relative w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
-                                <div class="flex justify-between items-center">
-                                    <div class="ml-3 mr-4 text-sm font-normal">
-                                    <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
-                                    <p>
-                                    <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->updated_at }}</div>
-                                    </div>
-                                    <a href="{{-- route('dashboard.notification.dismiss',$submissionNotification->id) --}}#" class="absolute top-0 right-0 mr-2 mt-2 text-gray-400 hover:text-red-400 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:ring focus:ring-gray-300" onclick="this.parentElement.parentElement.style.display='none';">
-                                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                    </a>
-                                </div>
-                                </div>
-                            </a>
-                            @php
-                                $numbercountpls++;
-                            @endphp
-                        @endif
-                    @endforeach
-                @else
-                    {{ 'No Notification' }}
-                @endif
+      {{-- message modal --}}
+      <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full" style="left: 23%;">
+        <div class="relative w-full h-full max-w-sm md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-5 border-b rounded-t">
+                    <h3 class="text-xl font-medium text-gray-900">
+                        Notification
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="message-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="pl-6 pb-3 space-y-6">
+                  <div class="max-h-60 overflow-y-auto mt-3">
+                      @if ($NotificationForAdmin > 0)
+                      @php
+                          $numbercountpls = 1;
+                      @endphp
+                      @foreach ($DataSubmissionNotifications as $submissionNotification)
+                          @if ($submissionNotification->student != NULL && (Auth::guard('web')->check() || (Auth::guard('mentor')->user() != NULL && ($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id)) || Auth::guard('customer')->check()))
+                              <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
+                                  <div id="toast-message-cta" class="relative w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                  <div class="flex justify-between items-center">
+                                      <div class="ml-3 mr-4 text-sm font-normal">
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                      <p>
+                                      <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->updated_at }}</div>
+                                      </div>
+                                      <a href="{{-- route('dashboard.notification.dismiss',$submissionNotification->id) --}}#" class="absolute top-0 right-0 mr-2 mt-2 text-gray-400 hover:text-red-400 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:ring focus:ring-gray-300" onclick="this.parentElement.parentElement.style.display='none';">
+                                      <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                          <path fill-rule="evenodd" d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                      </svg>
+                                      </a>
+                                  </div>
+                                  </div>
+                              </a>
+                              @php
+                                  $numbercountpls++;
+                              @endphp
+                          @endif
+                      @endforeach
+                  @else
+                      {{ 'No Notification' }}
+                  @endif
+                  </div>
                 </div>
               </div>
-            </div>
+      </div>
+      {{-- end message modal --}}
     </div>
-    {{-- end message modal --}}
   </div>
 
 

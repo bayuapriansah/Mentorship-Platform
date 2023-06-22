@@ -130,6 +130,7 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],
+            'type' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
@@ -137,6 +138,7 @@ class ProjectController extends Controller
         [
             'name.required' => 'Project name is required',
             'domain.required' => 'Project domain is required',
+            'type.required' => 'Project type is required',
             'period.required' => 'Project period is required',
             'problem.required' => 'Project problem is required',
             'projectType.required' => 'Project type is required',
@@ -145,6 +147,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->name = $validated['name'];
         $project->project_domain = $validated['project_domain'];
+        $project->type = $validated['type'];
         $project->period = $validated['period'];
         $project->problem = $validated['problem'];
         $project->type = 'monthly';
@@ -203,6 +206,7 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],
+            'type' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
@@ -210,6 +214,7 @@ class ProjectController extends Controller
         [
             'name.required' => 'Project name is required',
             'domain.required' => 'Project domain is required',
+            'type.required' => 'Project type is required',
             'period.required' => 'Project period is required',
             'problem.required' => 'Project problem is required',
             'projectType.required' => 'Project type is required',
@@ -246,7 +251,7 @@ class ProjectController extends Controller
         }elseif($validated['projectType'] == 'public'){
             $project->institution_id = null;
         }
-        $project->type = 'monthly';
+        $project->type = $validated['type'];
         $project->save();
         return redirect('dashboard/projects')->with('successTailwind','Project has been edited');
 

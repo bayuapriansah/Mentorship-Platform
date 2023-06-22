@@ -16,6 +16,7 @@
     </tr>
   </thead>
   <tbody>
+    
     @php $no=1 @endphp
     @foreach ($injections as $injection)
     <tr>

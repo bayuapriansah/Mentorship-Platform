@@ -56,6 +56,7 @@
 
     <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
       <option value="" hidden>Project Duration *</option>
+      <option value="1" {{old('period') == '1' ? 'selected': ''}}>A Week</option>
       <option value="1" {{old('period') == '1' ? 'selected': ''}}>1 Month</option>
       <option value="2" {{old('period') == '2' ? 'selected': ''}}>2 Months</option>
       <option value="3" {{old('period') == '3' ? 'selected': ''}}>3 Months</option>

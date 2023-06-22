@@ -71,11 +71,22 @@
         </p>
     @enderror
 
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
+    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
       <option value="" hidden>Project Duration *</option>
-      <option value="1" {{$project->period == '1' ? 'selected': ''}}>1 Month</option>
-      <option value="2" {{$project->period == '2' ? 'selected': ''}}>2 Months</option>
-      <option value="3" {{$project->period == '3' ? 'selected': ''}}>3 Months</option>
+      <option value="1" {{$project->period == '1' ? 'selected': ''}}>1 (Monthly Option)</option>
+      <option value="2" {{$project->period == '2' ? 'selected': ''}}>2 (Monthly Option)</option>
+      <option value="3" {{$project->period == '3' ? 'selected': ''}}>3 (Monthly Option)</option>
+      <option value="7" {{$project->period == '7' ? 'selected': ''}}>1 (Weekly Option)</option>
+    </select>
+    @error('period')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputtype"  name="type">
+      <option value="" hidden>Project Type *</option>
+      <option value="weekly" {{$project->type == 'weekly' ? 'selected': ''}}>Weekly</option>
+      <option value="monthly" {{$project->type == 'monthly' ? 'selected': ''}}>Monthly</option>
     </select>
     @error('period')
         <p class="text-red-600 text-sm mt-1">
