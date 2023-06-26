@@ -777,8 +777,9 @@ class StudentController extends Controller
         }
     
         if ($request->dataset) {
-          $dataset_array = explode(",", $request->dataset);
-          $dataset_result = implode(";", $dataset_array);
+          $dataset_array = json_decode($request->dataset, true);
+          $dataset_values = array_column($dataset_array, 'value');
+          $dataset_result = implode(';', $dataset_values);
         }
 
         $project = Project::findOrFail($project_id);
@@ -874,8 +875,9 @@ class StudentController extends Controller
     public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
     {
         if ($request->dataset) {
-            $dataset_array = explode(",", $request->dataset);
-            $dataset_result = implode(";", $dataset_array);
+            $dataset_array = json_decode($request->dataset, true);
+            $dataset_values = array_column($dataset_array, 'value');
+            $dataset_result = implode(';', $dataset_values);
         }
 
         // checkpoint
