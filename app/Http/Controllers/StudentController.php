@@ -1057,7 +1057,7 @@ class StudentController extends Controller
         'query.required' => 'Type of query is required',
         'message.required' => 'Message is required',
       ]);
-      $recipients = ['sip@sustainablelivinglab.org', 'poornima@digitalreadiness.org', 'aswathy@sustainablelivinglab.org','kevin@sustainablelivinglab.org','anip@sustainablelivinglab.org'];
+      $recipients = ['sip@sustainablelivinglab.org', 'poornima@digitalreadiness.org', 'aswathy@sustainablelivinglab.org','kevin@sustainablelivinglab.org','anip@sustainablelivinglab.org','sachin@sustainablelivinglab.org'];
       $this->SupportMail($recipients, $validated);
       return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
     }
