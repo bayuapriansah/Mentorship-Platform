@@ -756,13 +756,7 @@ class StudentController extends Controller
         return view('student.project.task.index', compact('student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
-    public function taskSubmit(
-        Request $request,
-        $student_id,
-        $project_id,
-        $task_id,
-        $submission_id
-    ) {
+    public function taskSubmit( Request $request, $student_id, $project_id, $task_id, $submission_id ) {
         if ($student_id != Auth::guard('student')->user()->id) {
             abort(403);
         }
@@ -783,11 +777,10 @@ class StudentController extends Controller
         }
     
         if ($request->dataset) {
-            $dataset_array = json_decode($request->dataset, true);
-            $dataset_values = array_column($dataset_array, 'value');
-            $dataset_result = implode(';', $dataset_values);
+          $dataset_array = explode(",", $request->dataset);
+          $dataset_result = implode(";", $dataset_array);
         }
-    
+
         $project = Project::findOrFail($project_id);
         $appliedDateStart = \Carbon\Carbon::parse(
             $project
@@ -881,9 +874,8 @@ class StudentController extends Controller
     public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
     {
         if ($request->dataset) {
-            $dataset_array = json_decode($request->dataset, true);
-            $dataset_values = array_column($dataset_array, 'value');
-            $dataset_result = implode(';', $dataset_values);
+            $dataset_array = explode(",", $request->dataset);
+            $dataset_result = implode(";", $dataset_array);
         }
 
         // checkpoint
