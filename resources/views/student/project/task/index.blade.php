@@ -283,7 +283,6 @@
 @endif
 <script>
 const dropArea = document.getElementById('drop-area')
-const fileInput = document.getElementById('file-input')
 const fileName = document.getElementById('file-name')
 const fileChatInput = document.getElementById('file-chat-input')
 const chatFileName = document.getElementById('chatFileName')
@@ -313,23 +312,23 @@ dropArea.addEventListener('dragleave', e => {
     e.preventDefault()
     dropArea.classList.remove('bg-gray-200')
 })
-dropArea.addEventListener('drop', e => {
-    e.preventDefault()
-    dropArea.classList.remove('bg-gray-200')
-    fileInput.files = e.dataTransfer.files
-    let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-    fileName.classList.add(...classesToAdd);
-    fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
-    // You can handle the files here.
-    handleUpload(e.dataTransfer.files)
-    const fileClear = document.querySelector('.fa-times')
-    fileClear.addEventListener('click', e => {
-        e.preventDefault();
-        fileName.textContent = '';
-        fileInput.value = '';
-        resetUI();
-    });
-})
+// dropArea.addEventListener('drop', e => {
+//     e.preventDefault()
+//     dropArea.classList.remove('bg-gray-200')
+//     fileInput.files = e.dataTransfer.files
+//     let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
+//     fileName.classList.add(...classesToAdd);
+//     fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
+//     // You can handle the files here.
+//     handleUpload(e.dataTransfer.files)
+//     const fileClear = document.querySelector('.fa-times')
+//     fileClear.addEventListener('click', e => {
+//         e.preventDefault();
+//         fileName.textContent = '';
+//         fileInput.value = '';
+//         resetUI();
+//     });
+// })
 
 fileChatInput.addEventListener('change', e =>{
   // console.log('${e.target.files[0].name}');
@@ -345,20 +344,20 @@ fileChatInput.addEventListener('change', e =>{
 })
 
 // Listen for file input change events
-fileInput.addEventListener('change', e => {
-    fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
-    // You can handle the files here.
-    handleUpload(e.target.files)
-    let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-    fileName.classList.add(...classesToAdd);
-    const fileClear = document.querySelector('.fa-times')
-    fileClear.addEventListener('click', e => {
-        e.preventDefault();
-        fileName.textContent = '';
-        fileInput.value = '';
-        resetUI();
-    });
-})
+// fileInput.addEventListener('change', e => {
+//     fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
+//     // You can handle the files here.
+//     handleUpload(e.target.files)
+//     let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
+//     fileName.classList.add(...classesToAdd);
+//     const fileClear = document.querySelector('.fa-times')
+//     fileClear.addEventListener('click', e => {
+//         e.preventDefault();
+//         fileName.textContent = '';
+//         fileInput.value = '';
+//         resetUI();
+//     });
+// })
 
 // Example function for handling file uploads
 function handleUpload(files) {
@@ -371,6 +370,7 @@ function resetUI() {
     console.log('Resetting UI');
     // Do something to reset the UI
 }
+
 
 // dataset as tags
 // var input = document.querySelector('input[name=dataset]')
