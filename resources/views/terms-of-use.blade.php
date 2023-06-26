@@ -1,8 +1,8 @@
 @extends('layouts.index')
 @section('content')
-<section id="faq" class="w-full">
+<section id="termofuse" class="w-full">
   <div class="bg-darker-blue">
-    <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col ">
+    <div class="max-w-screen-xl mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col ">
       <div class="col-span-7 relative">
         <h1 class="font-bold text-white text-3xl leading-10 relative z-20 ">Terms of use</h1>
         <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-6 ">
@@ -14,10 +14,10 @@
       </div>
     </div>
   </div>
-  <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 grid-flow-col">
+  <div class="max-w-screen-xl mx-auto px-16 py-16 grid grid-cols-12 grid-flow-col text-justify">
     <div class="col-span-12 text-sm font-normal">
       <div class="space-y-3">
-        <h1 class="text-dark-blue text-3xl font-bold mt-8">1. Terms</h1>
+        <h1 class="text-dark-blue text-3xl font-bold">1. Terms</h1>
         <p>
           By accessing this web site, you are agreeing to be bound by these site Terms and Conditions of Use, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. The materials contained in this web site are protected by applicable copyright and trade mark law.
         </p>

@@ -5,6 +5,47 @@ use App\Models\Submission;
 use App\Models\ReadNotification;
 use Illuminate\Support\Facades\Auth;
 
+if(!function_exists('isLoggedIn')){
+    function isLoggedIn() {
+        return Auth::guard('student')->check() || 
+               Auth::guard('web')->check() || 
+               Auth::guard('mentor')->check() || 
+               Auth::guard('customer')->check();
+    }    
+}
+
+if (!function_exists('emailUserAuth')) {
+    function emailUserAuth() {
+        if (Auth::guard('student')->check()) {
+            return Auth::guard('student')->user()->email;
+        } elseif (Auth::guard('web')->check()) {
+            return Auth::guard('web')->user()->email;
+        } elseif (Auth::guard('mentor')->check()) {
+            return Auth::guard('mentor')->user()->email;
+        } elseif (Auth::guard('customer')->check()) {
+            return Auth::guard('customer')->user()->email;
+        }
+
+        return null; // or return a default value
+    }
+}
+
+if (!function_exists('nameUserAuth')) {
+    function nameUserAuth() {
+        if (Auth::guard('student')->check()) {
+            return Auth::guard('student')->user()->first_name . " " .  Auth::guard('student')->user()->last_name;
+        } elseif (Auth::guard('web')->check()) {
+            return Auth::guard('web')->user()->first_name . " " .  Auth::guard('web')->user()->last_name;
+        } elseif (Auth::guard('mentor')->check()) {
+            return Auth::guard('mentor')->user()->first_name . " " .  Auth::guard('mentor')->user()->last_name;
+        } elseif (Auth::guard('customer')->check()) {
+            return Auth::guard('customer')->user()->first_name . " " .  Auth::guard('customer')->user()->last_name;
+        }
+
+        return null; // or return a default value
+    }
+}
+
 if(!function_exists('getCommentMessages')){
     function getCommentMessages() {
         if(Auth::guard('web')->check()){

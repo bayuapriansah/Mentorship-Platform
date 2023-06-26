@@ -130,6 +130,7 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],
+            'type' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
@@ -137,6 +138,7 @@ class ProjectController extends Controller
         [
             'name.required' => 'Project name is required',
             'domain.required' => 'Project domain is required',
+            'type.required' => 'Project type is required',
             'period.required' => 'Project period is required',
             'problem.required' => 'Project problem is required',
             'projectType.required' => 'Project type is required',
@@ -145,6 +147,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->name = $validated['name'];
         $project->project_domain = $validated['project_domain'];
+        $project->type = $validated['type'];
         $project->period = $validated['period'];
         $project->problem = $validated['problem'];
         $project->type = 'monthly';
@@ -203,6 +206,7 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'name' => ['required'],
             'project_domain' => ['required'],
+            'type' => ['required'],
             'period' => ['required'],
             'problem' => ['required'],
             'projectType' => ['required'],
@@ -210,6 +214,7 @@ class ProjectController extends Controller
         [
             'name.required' => 'Project name is required',
             'domain.required' => 'Project domain is required',
+            'type.required' => 'Project type is required',
             'period.required' => 'Project period is required',
             'problem.required' => 'Project problem is required',
             'projectType.required' => 'Project type is required',
@@ -246,7 +251,7 @@ class ProjectController extends Controller
         }elseif($validated['projectType'] == 'public'){
             $project->institution_id = null;
         }
-        $project->type = 'monthly';
+        $project->type = $validated['type'];
         $project->save();
         return redirect('dashboard/projects')->with('successTailwind','Project has been edited');
 
@@ -362,13 +367,14 @@ class ProjectController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
+            'dataset' => ['nullable']
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
@@ -387,10 +393,11 @@ class ProjectController extends Controller
         $section_count = ProjectSection::where('project_id', $project->id);
         $section->project_id = $project->id;
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->section = $section_count->count()+1;
         $section->description = $validated['description'];
+        $section->dataset = $validated['dataset'];
         $section->save();
         $message = "Successfully created an injection card";
         if($request->input('addInjectionCard')){
@@ -419,22 +426,24 @@ class ProjectController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
+            'dataset' => ['nullable']
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
 
         $section = ProjectSection::findOrFail($injection->id);
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->description = $validated['description'];
+        $section->dataset = $validated['dataset'];
         $section->save();
         $message = "Successfully updated an injection card";
         return redirect('/dashboard/projects/'.$project->id.'/edit')->with('successTailwind', $message);
@@ -800,13 +809,13 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
@@ -825,7 +834,7 @@ class ProjectController extends Controller
         $section_count = ProjectSection::where('project_id', $project->id);
         $section->project_id = $project->id;
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->section = $section_count->count()+1;
         $section->description = $validated['description'];
@@ -855,20 +864,20 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required'],
-            'inputfiletype' => ['required'],
+            // 'inputfiletype' => ['required'],
             'duration' => ['required'],
             'description' => ['required'],
         ],
         [
             'title.required' => 'Title is required',
-            'inputfiletype.required' => 'File Type is required',
+            // 'inputfiletype.required' => 'File Type is required',
             'duration.required' => 'Duration is required',
             'description.required' => 'Description is required',
         ]);
 
         $section = ProjectSection::findOrFail($injection->id);
         $section->title = $validated['title'];
-        $section->file_type = $validated['inputfiletype'];
+        $section->file_type = '.zip';
         $section->duration = $validated['duration'];
         $section->description = $validated['description'];
         if($request->hasFile('file')){

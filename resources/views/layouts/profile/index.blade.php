@@ -198,7 +198,7 @@
                             <div class="p-6 text-left space-x-4">
                                 <img src="{{asset('assets/img/dots-1.png')}}" class="absolute top-0 right-0 w-[233px] h-[108px]" alt="">
                                 {{-- <img src="{{asset('assets/img/dots-1.png')}}" class="absolute bottom-0 z-10 left-0 w-[233px] h-[108px]" alt=""> --}}
-                                <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to Logout?</h3>
+                                <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left"> Logout?</h3>
                                 <div class="relative z-50">
                                   <button data-modal-hide="popup-logout" type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full shadow-xl">
                                     Yes
@@ -253,7 +253,7 @@
                                       <div class="ml-3 text-sm font-normal">
                                           <span class="mb-1 text-sm font-semibold text-dark-blue">New Message : </span><p>
                                           <span class="mb-1 text-sm font-normal text-blue-700">In Task {{ $dataMessage->project_section->section }} - {{ $dataMessage->project_section->title }} </span>
-                                          <div class="mb-1 text-sm font-normal text-blue-300">{{ $dataMessage->project_section->created_at }}</div>
+                                          <div class="mb-1 text-sm font-normal text-blue-300">{{ $dataMessage->project_section->updated_at }}</div>
                                       </div>
                                   </div>
                               </div>
@@ -289,7 +289,7 @@
                     </button>
                 </div>
                 @php
-                $mergedNotifs = $newActivityNotifs->merge($notifNewTasks)->sortByDesc('created_at')->all();
+                $mergedNotifs = $newActivityNotifs->merge($notifNewTasks)->sortByDesc('updated_at')->all();
                 // $sortedNotifs = collect($mergedNotifs)->sortByDesc('created_at')->all();
                 @endphp
                 <!-- Modal body -->
@@ -318,11 +318,11 @@
                                                     @if($notification->grade->status == 0)
                                                         {{ 'Sorry but you need to revise the Task' }}
                                                     @elseif($notification->grade->status == 1)
-                                                        {{ 'Great you Pass the Task' }}
+                                                        {{ 'Great you Complete the Task' }}
                                                     @else
                                                         {{ 'Nothing' }}
                                                     @endif.
-                                              <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->grade->created_at }}</div>
+                                              <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->grade->updated_at }}</div>
                                             </div>
                                         </div>
                                       </div>
@@ -340,7 +340,7 @@
                                                 <div class="ml-3 text-sm font-normal">
                                                   <span class="mb-1 text-sm font-semibold text-dark-blue">New Project available in {{ $notification->project->name }} .</span>
                                                   <p>
-                                                  <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->created_at }}</div>
+                                                  <div class="mb-2 text-sm font-normal text-blue-300">{{ $notification->updated_at }}</div>
                                                 </div>
                                             </div>
                                           </div>

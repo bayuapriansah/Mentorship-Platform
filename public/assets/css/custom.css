@@ -7,6 +7,14 @@
   margin-bottom:18px !important;
 }
 
-.hidden {
-  display: none;
+body {
+  overflow-x: hidden;
 }
+
+.swiper-container {
+  overflow-x: hidden;
+}
+
+/* .hidden {
+  display: none;
+} */

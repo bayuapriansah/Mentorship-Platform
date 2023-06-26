@@ -27,6 +27,7 @@ use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
 
@@ -40,6 +41,19 @@ use App\Http\Controllers\EmailBulkInvitationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Experimental
+Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
+Route::get('/face-detection', [FaceDetectionController::class, 'index']);
+Route::get('/run-face-detection', [FaceDetectionController::class, 'runFaceDetection']);
+
+Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments'])->middleware('auth:web');
+
+// Experimental
+Route::get('/theplayground', function () {
+    return view('experiment.index');
+})->middleware('auth:web')->name('theplayground');
+
 //Static Page
 Route::get('/emailtemp', function () {
     return view('emails.contactUs');

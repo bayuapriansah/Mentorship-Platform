@@ -72,7 +72,7 @@
         <div>
           <div class="text-dark-blue font-normal mb-2">Change Task Completion Status</div>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeGradeModal">
-            Change Status
+            View Detail
           </button>
         </div>
 
@@ -105,9 +105,15 @@
   <div class="space-y-6">
     <div class="text-dark-blue font-normal">Task Submission</div>
       <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
-        <img src="{{asset('assets/img/icon/Vector.png')}}" class="object-scale-down">
-        <a href="{{asset('storage/'.$submission->file)}}" target="_blank" class="text-base">Submission file .{{substr($submission->file, strpos($submission->file, '.')+1)}}</a>
-        <img src="{{asset('assets/img/icon/download.png')}}" class="object-scale-down">
+        @if (strpos($submission->file, 'https://') !== false)
+          <i class="fa-solid fa-link"></i>
+            <a href="{{$submission->file}}" target="_blank" class="text-base">Submission Link</a>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        @else
+          <img src="{{asset('assets/img/icon/Vector.png')}}" class="object-scale-down">
+            <a href="{{asset('storage/'.$submission->file)}}" target="_blank" class="text-base">Submission file .{{ substr($submission->file, strpos($submission->file, '.')+1) }}</a>
+            <img src="{{asset('assets/img/icon/download.png')}}" class="object-scale-down">
+        @endif
         {{-- /dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit --}}
         {{-- <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a> --}}
       </div>
@@ -161,7 +167,7 @@
                           Confirm
                         </button>
                         <button type="button" data-modal-hide="popup-modal" type="button" class="bg-[#B52809] w-1/2 rounded-lg text-white py-2">
-                          cancel
+                          Cancel
                         </button>
                       </div>
                       {{-- <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">

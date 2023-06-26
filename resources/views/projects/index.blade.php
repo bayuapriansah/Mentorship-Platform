@@ -1,159 +1,116 @@
 @extends('layouts.index')
 @section('content')
-<section id="login" class="w-full">
-  <div class="bg-darker-blue">
-    <div class="max-w-[1366px] mx-auto px-16 pt-0 grid grid-cols-12 gap-11 grid-flow-col ">
-      <div class="col-span-6 my-auto">
-        <h2 class="intelOne text-white font-bold text-4xl leading-11">Internship <span class="text-light-brown">Projects</span></h2>
-        <p class="intelOne font-light text-white text-lg leading-6 py-6 m-0">Take a look at the active projects being offered by our industry partners</p>
-        
-      </div>
-      <div class="col-start-7 col-span-6 relative">
-        <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
-        <img src="{{asset('assets/img/internship-1.png')}}" class="relative z-20" alt="">
 
-        <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
-        <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
-        <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
-        
-      </div>
-    </div>
-  </div>
-  <div class="max-w-[1366px] mx-auto px-16 pt-24 mb-0 grid grid-cols-12 gap-8 grid-flow-col" id="#projectsSection">
-    <div class="col-span-8 space-y-4">
-      <h3 class="intelOne text-dark-blue text-2xl font-semibold">Internship Projects</h3>
-    </div>
-    
-  </div>
-
-  <div class="max-w-[1366px] mx-auto px-16 py-8 mb-0 grid grid-cols-12 gap-8 grid-flow-col">
-    
-    <div class="col-span-8 space-y-4 ">
-      @if (Auth::guard('student')->check())
-        @if (\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date)
-          <div id="toast-danger" class="flex flex-grow items-center w-full p-4 mb-4 text-white rounded-lg bg-[#CE2E2E]" role="alert">
-            <div class="ml-3 text-sm font-normal">Internship Timeline is over. Please contact system admin.</div> 
-          </div>
-        @else
-          @forelse($projects as $project)
-            <div class="border-[1px] hover:border-darker-blue border-light-blue py-5 px-5 rounded-xl">
-              <div class="flex space-x-2">
-                <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
-                  <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
+<section id="project" class="w-full">
+    {{-- Body Contents --}}
+    <div class="max-w-full bg-darker-blue">
+        <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20 bg-darker-blue">
+            <div class="grid md:grid-cols-2 gap-4 items-center">
+                <div class="my-auto">
+                    <h2 class="intelOne text-white font-bold text-3xl leading-11 py-4">
+                        <span>Internship <span class="text-light-brown">Projects</span>
+                    </h2>
+                    <span class="intelOne text-white py-6 font-light text-lg leading-6">Take a look at the active projects being offered by our industry partners</span>
                 </div>
-                <div class="flex-col">
-                  <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>
-                  <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-                  <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">
-                    @if ($project->project_domain == 'statistical')
-                      Statistical Data
-                    @elseif($project->project_domain == 'computer_vision')
-                      Computer Vision
-                    @else
-                      NLP
-                    @endif  
-                  </p>
+                <div class="relative my-auto">
+                    <img src="{{asset('assets/img/internship-projects.png')}}" class="relative z-40" alt="">
+                    <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots"
+                        class="absolute z-0 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true">
+                    <img src="{{ asset('assets/img/dots-2.png') }}" alt="dots"
+                        class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true">
                 </div>
-              </div>
-              <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{{ substr($project->overview,0,200) }}...</p>
-              <div class="flex justify-between mt-4">
-                <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">
-                  @if ($project->period>1)
-                    {{$project->period}} Months
-                  @else
-                    {{$project->period}} Month
-                  @endif  
-                </span></p>
-                <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Project Details</a>
-              </div>
             </div>
-          @empty
-            <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
-            <p class="intelOne text-lg text-center">No Project Found</p>
-          @endforelse
-        @endif
-      @else
-        @forelse($projects as $project)
-          <div class="border-[1px] hover:border-darker-blue border-light-blue py-5 px-5 rounded-xl">
-            <div class="flex space-x-2">
-              <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
-                <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
-              </div>
-              <div class="flex-col">
-                <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>
-                <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-                <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">
-                  @if ($project->project_domain == 'statistical')
-                    Statistical Data
-                  @elseif($project->project_domain == 'computer_vision')
-                    Computer Vision
-                  @else
-                    NLP
-                  @endif   
-                </p>
-              </div>
-            </div>
-            <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{{ substr($project->overview,0,200) }}...</p>
-            <div class="flex justify-between mt-4">
-              <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">
-                @if ($project->period>1)
-                  {{$project->period}} Months
-                @else
-                  {{$project->period}} Month
-                @endif  
-              </span></p>
-              <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Project Details</a>
-            </div>
-          </div>
-        @empty
-          <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
-          <p class="intelOne text-lg text-center">No Project Found</p>
-        @endforelse
-      @endif
-      {{-- @forelse($projects as $project)
-      <div class="border-[1px] hover:border-darker-blue border-light-blue py-5 px-5 rounded-xl">
-        <div class="flex space-x-2">
-          <div class=" my-auto border-[1px] border-light-blue rounded-xl py-4 px-2 mr-2">
-            <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
-          </div>
-          <div class="flex-col">
-            <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">{{$project->name}}</p>
-            <p class="text-black font-normal text-sm m-0">{{$project->company->name}}</p>
-            <p class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">{{$project->project_domain}}</p>
-          </div>
         </div>
-        <p class="intelOne text-grey font-normal text-sm py-2 m-0 text-justify">{{ substr($project->overview,0,200) }}...</p>
-        <div class="flex justify-between mt-4">
-          <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">
-            @if ($project->period>1)
-              {{$project->period}} Months
-            @else
-              {{$project->period}} Month
-            @endif  
-          </span></p>
-          <a href="/projects/{{$project->id}}" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full">Project Details</a>
-        </div>
-      </div>
-      @empty
-        <img src="{{asset('assets/img/4957155.png')}}" alt="" class="mx-auto">
-        <p class="intelOne text-lg text-center">No Project Found</p>
-      @endforelse --}}
     </div>
-    <div class="col-span-4">
-      <div class="flex flex-col">
-        <div class="space-y-5">
-          <iframe width="361" height="240" src="https://www.youtube.com/embed/aZLE-c7I7uk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <h5 class=" font-bold text-xl ">Quick start video to get you going</h5>
-          <p class="text-grey font-normal text-sm">Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity.</p>
-        </div>
-        <div class="space-y-5 mt-10">
-          <img src="{{asset('assets/img/image19.png')}}" alt="">
-          <h5 class=" font-bold text-xl ">About intel digital readliness</h5>
-          <p class="text-grey font-normal text-sm">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
-        </div>
 
+    {{-- Body Content 2 --}}
+    <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
+      <div class="grid md:grid-cols-4 gap-4 items-start">
+        <div class="relative col-span-3">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="m-0 text-2xl font-medium text-dark-blue font-semibold text-justify justify-start">Internship Projects</h2>
+                <div class="flex space-x-4">
+                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-prev">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="h-6 w-6 text-dark-blue">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-next">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="h-6 w-6 text-dark-blue">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    @foreach($projects as $project)
+                        <!-- Slide -->
+                        <div class="swiper-slide">
+                            <div
+                                class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-xl h-[250px] overflow-hidden">
+                                <div class="flex space-x-2">
+                                    <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
+                                        <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
+                                    </div>
+                                    <div class="flex-col">
+                                        <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">{{$project->name}}</p>
+                                        <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">{{$project->company->name}}</p>
+                                        <div class="pt-2">
+                                            <p
+                                            class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
+                                            {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-grey font-normal text-base mb-2 pt-3 overflow-ellipsis overflow-hidden">
+                                    {{ $project->overview }}</div>
+                                <div class="flex justify-between">
+                                    <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span
+                                            class="font-medium">{{ $project->period }} Months</span></p>
+                                    <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}"
+                                        class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full ">View
+                                        Project</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+          </div>
+            <div class="relative">
+              <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
+                <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/aZLE-c7I7uk"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+              </div>
+              <h1 class="m-0 font-bold text-xl text-justify justify-start">Quick start video to get you going</h1>
+              <p class="text-grey font-normal text-sm text-justify py-4">Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity.</p>
+              <div class="relative z-30 rounded-lg overflow-hidden py-6">
+                <img src="{{asset('assets/img/image19.png')}}" class="w-full h-full" alt="">
+              </div>
+              <h1 class="m-0 font-bold text-xl text-justify justify-start">About intel digital readliness</h1>
+              <p class="text-grey font-normal text-sm text-justify py-4">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
+            </div>    
       </div>
     </div>
-  </div>
 </section>
+
+@endsection
+@section('more-js')
+<script>
+  var swiper = new Swiper('.swiper-container', {
+      direction: 'vertical',
+      slidesPerView: 'auto',
+      spaceBetween: 10,
+      navigation: {
+      nextEl: '#swiper-button-next',
+      prevEl: '#swiper-button-prev',
+    },
+  });
+</script>
 @endsection
