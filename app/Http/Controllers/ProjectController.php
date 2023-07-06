@@ -334,8 +334,8 @@ class ProjectController extends Controller
         // $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
         //                                     ->where('is_submited', 1)->first();
         if(Auth::guard('student')->check()){
-          if($total_month_complete<3){
-            if($remaining_intern_days-$project_totaldays >=0){
+          if($total_month_complete<4){
+            if($remaining_intern_days-$project_totaldays >=30){
               if($already_enrolled == null ){
                 $enrolled_project->student_id = Auth::guard('student')->user()->id;
                 $enrolled_project->project_id = $project->id;
