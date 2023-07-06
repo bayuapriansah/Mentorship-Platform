@@ -19,19 +19,19 @@
           <div class="flex-col">
             <span class="font-medium capitalize">
 @if ($comment->mentor_id)
-    {{optional($comment->mentor)->first_name ?? 'Default First Name'}} 
-    {{optional($comment->mentor)->last_name ?? 'Default Last Name'}} (Supervisor)
+    {{optional($comment->mentor)->first_name ?? 'NoName'}} 
+    {{optional($comment->mentor)->last_name ?? ''}} (Supervisor)
 @elseif($comment->staff_id)
-    {{optional($comment->staff)->first_name ?? 'Default First Name'}} 
-    {{optional($comment->staff)->last_name ?? 'Default Last Name'}} (Customer)
+    {{optional($comment->staff)->first_name ?? 'NoName'}} 
+    {{optional($comment->staff)->last_name ?? ''}} (Staff)
 @elseif ($comment->user_id)
-    {{optional($comment->user)->name ?? 'Default Name'}} (Platform Admin)
+    {{optional($comment->user)->name ?? 'NoName'}} (Platform Admin)
 @elseif ($comment->customer_id)
-    {{optional($comment->customer)->first_name ?? 'Default First Name'}} 
-    {{optional($comment->customer)->last_name ?? 'Default Last Name'}} (Customer)
+    {{optional($comment->customer)->first_name ?? 'NoName'}} 
+    {{optional($comment->customer)->last_name ?? ''}} (Customer)
 @else
-    {{optional($comment->student)->first_name ?? 'Default First Name'}} 
-    {{optional($comment->student)->last_name ?? 'Default Last Name'}} (Student)
+    {{optional($comment->student)->first_name ?? 'NoName'}} 
+    {{optional($comment->student)->last_name ?? ''}} (Student)
 @endif
             </span><br>
             <span class="font-light receiver capitalize">
