@@ -51,7 +51,7 @@
                         <!-- Slide -->
                         <div class="swiper-slide">
                             <div
-                                class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-xl h-[250px] overflow-hidden">
+                                class="block p-5 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-3xl h-[250px] overflow-hidden">
                                 <div class="flex space-x-2">
                                     <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
                                         <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
@@ -81,21 +81,21 @@
                 </div>
             </div>
           </div>
-            <div class="relative">
-              <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
-                <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/aZLE-c7I7uk"
-                title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-              </div>
-              <h1 class="m-0 font-bold text-xl text-justify justify-start">Quick start video to get you going</h1>
-              <p class="text-grey font-normal text-sm text-justify py-4">Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity.</p>
-              <div class="relative z-30 rounded-lg overflow-hidden py-6">
-                <img src="{{asset('assets/img/image19.png')}}" class="w-full h-full" alt="">
-              </div>
-              <h1 class="m-0 font-bold text-xl text-justify justify-start">About intel digital readliness</h1>
-              <p class="text-grey font-normal text-sm text-justify py-4">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
-            </div>    
+          <div class="relative">
+            <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
+              <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/aZLE-c7I7uk"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+            </div>
+            <h1 class="m-0 font-bold text-xl text-justify justify-start">Quick start video to get you going</h1>
+            <p class="text-grey font-normal text-sm text-justify py-4">Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity.</p>
+            <div class="relative z-30 rounded-lg overflow-hidden py-6">
+              <img src="{{asset('assets/img/image19.png')}}" class="w-full h-full" alt="">
+            </div>
+            <h1 class="m-0 font-bold text-xl text-justify justify-start">About intel digital readliness</h1>
+            <p class="text-grey font-normal text-sm text-justify py-4">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
+          </div>    
       </div>
     </div>
 </section>
