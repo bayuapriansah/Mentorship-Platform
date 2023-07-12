@@ -318,6 +318,7 @@ class ProjectController extends Controller
 
         $project_time = $now_time->addMonth($project->period);
         $project_totaldays = Carbon::now()->diffInDays($project_time);
+
         // dd($remaining_intern_days-$project_totaldays);
 
         // dd(Auth::guard('student')->user()->end_date);
@@ -333,8 +334,8 @@ class ProjectController extends Controller
         // $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
         //                                     ->where('is_submited', 1)->first();
         if(Auth::guard('student')->check()){
-          if($total_month_complete<3){
-            if($remaining_intern_days-$project_totaldays >=30){
+          if($total_month_complete<4){
+            if($remaining_intern_days-$project_totaldays >=0){
               if($already_enrolled == null ){
                 $enrolled_project->student_id = Auth::guard('student')->user()->id;
                 $enrolled_project->project_id = $project->id;
@@ -344,8 +345,7 @@ class ProjectController extends Controller
               }else{
                   return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$project->id.'/detail')->with('error', 'Kindly complete your ongoing project');
               }
-            }
-            else{
+            }else{
                 return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjectsAvailable/'.$project->id.'/detail')->with('error', 'Your available intern time is not sufficient');
             }
           }else{

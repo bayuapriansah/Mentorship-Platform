@@ -18,17 +18,21 @@
           <i class="text-dark-blue fa-solid fa-circle"></i>
           <div class="flex-col">
             <span class="font-medium capitalize">
-              @if ($comment->mentor_id)
-                {{$comment->mentor->first_name}} {{$comment->mentor->last_name}} (Supervisor)
-              @elseif($comment->staff_id)
-                {{$comment->staff->first_name}} {{$comment->staff->last_name}} (Customer)
-              @elseif ($comment->user_id)
-                {{$comment->user->name}} (Platform Admin)
-              @elseif ($comment->customer_id)
-                {{$comment->customer->first_name}} {{$comment->customer->last_name}} (Customer)
-              @else
-                {{$comment->student->first_name}} {{$comment->student->last_name}} (Student)
-              @endif
+@if ($comment->mentor_id)
+    {{optional($comment->mentor)->first_name ?? 'NoName'}} 
+    {{optional($comment->mentor)->last_name ?? ''}} (Supervisor)
+@elseif($comment->staff_id)
+    {{optional($comment->staff)->first_name ?? 'NoName'}} 
+    {{optional($comment->staff)->last_name ?? ''}} (Staff)
+@elseif ($comment->user_id)
+    {{optional($comment->user)->name ?? 'NoName'}} (Platform Admin)
+@elseif ($comment->customer_id)
+    {{optional($comment->customer)->first_name ?? 'NoName'}} 
+    {{optional($comment->customer)->last_name ?? ''}} (Customer)
+@else
+    {{optional($comment->student)->first_name ?? 'NoName'}} 
+    {{optional($comment->student)->last_name ?? ''}} (Student)
+@endif
             </span><br>
             <span class="font-light receiver capitalize">
               @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
