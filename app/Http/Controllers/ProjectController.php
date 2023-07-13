@@ -149,7 +149,6 @@ class ProjectController extends Controller
         $project->project_domain = $validated['project_domain'];
         $project->type = $validated['type'];
         $project->period = $validated['period'];
-        $project->problem = $validated['problem'];
         $project->type = 'monthly';
         if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
             $project->status = 'draft';
@@ -174,7 +173,10 @@ class ProjectController extends Controller
                 $project->institution_id = $request->institution_id;
               }
             }
+        }elseif($validated['projectType'] == 'private_project'){
+          $project->status = 'private_project';
         }
+        $project->problem = $validated['problem'];
         $project->dataset = $request->dataset;
         $project->overview = $request->overview;
         $project->save();

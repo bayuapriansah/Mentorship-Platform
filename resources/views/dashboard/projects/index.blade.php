@@ -100,8 +100,10 @@
       <td class="capitalize">
         @if ($project->status == 'publish')
           <span class="text-green-600 ">{{$project->status}}</span>
-        @else
+        @elseif($project->status == 'draft')
           <span class="text-[#D89B33] ">{{$project->status}}</span>
+        @elseif($project->status == 'private_project')
+          <span class="text-blue-700">{{$project->status}}</span>
         @endif
       </td>
       <td>

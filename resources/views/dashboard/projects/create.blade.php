@@ -54,7 +54,7 @@
     @enderror
 
 
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
+    <select class="border border-light-blue rounded-lg w-1/2 h-11 mr-5 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
       <option value="" hidden>Project Duration *</option>
       <option value="1" {{old('period') == '1' ? 'selected': ''}}>A Week</option>
       <option value="1" {{old('period') == '1' ? 'selected': ''}}>1 Month</option>
@@ -62,6 +62,16 @@
       <option value="3" {{old('period') == '3' ? 'selected': ''}}>3 Months</option>
     </select>
     @error('period')
+        <p class="text-red-600 text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputtype"  name="type">
+      <option value="" hidden>Project Type *</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+    </select>
+    @error('type')
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
         </p>
@@ -107,6 +117,7 @@
   <div class="mb-3">
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
+        <option value="private_project">Private to specific students</option>
         <option value="public">Public to all institutions</option>
         @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
           <option value="private">Private to one institution</option>
