@@ -432,7 +432,7 @@ class DashboardController extends Controller
   {
     if(Auth::guard('web')->check()){
       $students = Student::withCount(['enrolled_projects' => function($q) {
-                              $q->where('is_submited', 3);
+                              $q->where('is_submited', 1);
                           }])
                           ->having('enrolled_projects_count', '=', 3)
                           ->get();
