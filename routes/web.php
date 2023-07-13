@@ -346,6 +346,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     Route::middleware(['auth:web,mentor'])->group(function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
         Route::get('/completed_all', [DashboardController::class, 'studentCompleteAll'])->name('student.completeAll');
+        Route::get('/completed_all/{student}', [DashboardController::class, 'studentCompleteAssign'])->name('student.studentCompleteAssign');
+        Route::post('/completed_all/{student}', [DashboardController::class, 'studentCompleteAssignStore'])->name('student.studentCompleteAssignStore');
         Route::get('/completed_3', [DashboardController::class, 'studentComplete3'])->name('student.complete3');
 
         // Route::get('/students', [StudentController::class, 'index'])->name('students.index');

@@ -445,6 +445,22 @@ class DashboardController extends Controller
     return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
   }
 
+  public function studentCompleteAssign(Student $student)
+  {
+    $projects = Project::where('status', 'private_project')->get();
+    return view('dashboard.students.complete.assign', compact('student', 'projects'));
+  }
+
+  public function studentCompleteAssignStore(Request $request,Student $student)
+  {
+    $enrolled_project = new EnrolledProject;
+    $enrolled_project->student_id = $student->id;
+    $enrolled_project->project_id = $request->project;
+    $enrolled_project->is_submited = 0;
+    $enrolled_project->save();
+    return redirect('/dashboard/completed_all');
+  }
+
   public function studentComplete3()
   {
     if(Auth::guard('web')->check()){

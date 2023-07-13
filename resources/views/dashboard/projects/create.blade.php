@@ -117,7 +117,7 @@
   <div class="mb-3">
     <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
         <option value="" hidden>Project type</option>
-        <option value="private_project">Private to specific students</option>
+        <option value="private_project">Final project (private)</option>
         <option value="public">Public to all institutions</option>
         @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
           <option value="private">Private to one institution</option>
