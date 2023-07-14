@@ -191,6 +191,30 @@ class SubmissionController extends Controller
             $changeGrade->status = $changeGrade->status == 0 ? 1 : 0 ;
             $changeGrade->save();
         }
+
+        // $project_sections = ProjectSection::where('project_id', $project->id)->get();
+        // $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first()->is_submited;
+        // $submissionData = Submission::whereHas('grade', function($q){
+        //     $q->where('status',1);
+        // })->where('project_id', $project->id)->where('student_id', $submission->student->id)->get();
+
+        // if($changeGrade->status == 0){
+        //     if(($submissionData->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 1){
+        //     $success_project = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first();
+        //     $success_project->is_submited = 0;
+        //     $success_project->flag_checkpoint = null;
+        //     $success_project->save();
+        //     }
+        // }elseif($changeGrade->status == 1){
+        //     if(($submissionData->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
+        //     $student = Student::where('id', $submission->student->id)->first();
+        //     $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+        //     $success_project = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first();
+        //     $success_project->is_submited = 1;
+        //     $success_project->flag_checkpoint = $dataDate;
+        //     $success_project->save();      
+        //     }          
+        // }
         return redirect()->back()->with('success', 'Success Update Grades');
     }
 
