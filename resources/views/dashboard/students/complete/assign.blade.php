@@ -12,15 +12,15 @@
 @else
 <div class="flex justify-between mb-10">
   @if (Auth::guard('mentor')->check())
-    @if (Auth::guard('mentor')->user()->institution_id != 0)
+    {{-- @if (Auth::guard('mentor')->user()->institution_id != 0) --}}
       <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Assign final project to student {{$student->first_name}} {{$student->last_name}}</h3>
-    @else
+    {{-- @else
       @if (Route::is('dashboard.student.completeAll'))
         <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Assign final project to student {{$student->first_name}} {{$student->last_name}}</h3>
       @elseif(Route::is('dashboard.student.complete3'))
         <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Assign final project to student {{$student->first_name}} {{$student->last_name}}</h3>
       @endif
-    @endif
+    @endif --}}
   @elseif(Auth::guard('web')->check())
     <h3 class="text-dark-blue font-medium text-xl" id="BitTitle"> Assign final project to student {{$student->first_name}} {{$student->last_name}}</h3>
   @endif

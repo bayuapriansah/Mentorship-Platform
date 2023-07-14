@@ -3,7 +3,6 @@
 {{-- <div class="text-[#6973C6] hover:text-light-blue">
   <a href="/dashboard"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div> --}}
-
 @if (Route::is('dashboard.students.institutionStudents'))
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Institutions <i class="fa-solid fa-chevron-right"></i> Students</h3>
