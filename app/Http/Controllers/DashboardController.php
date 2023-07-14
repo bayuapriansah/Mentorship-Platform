@@ -426,7 +426,7 @@ class DashboardController extends Controller
       $enrolled_projects = EnrolledProject::get();
     }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
-          $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)
+          $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
                     ->withCount(['enrolled_projects' => function($q) {
                         $q->where('is_submited', 1);
                     }])
@@ -472,7 +472,7 @@ class DashboardController extends Controller
       $enrolled_projects = EnrolledProject::get();
     }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
-          $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)
+          $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
                     ->withCount(['enrolled_projects' => function($q) {
                         $q->where('is_submited', 1);
                     }])
