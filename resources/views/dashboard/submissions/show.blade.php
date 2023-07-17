@@ -71,8 +71,8 @@
         </style>
         <div>
           <div class="text-dark-blue font-normal mb-2">Change Task Completion Status</div>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeGradeModal">
-            View Detail
+          <button id="detailButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeGradeModal">
+            More Detail
           </button>
         </div>
 
@@ -188,3 +188,16 @@
 
 @endsection
 
+@section('more-js')
+<script>
+  $(document).ready(function(){
+    $('#changeGradeModal').on('show.bs.modal', function (e) {
+      $('#detailButton').text('Less Detail');
+    });
+  
+    $('#changeGradeModal').on('hide.bs.modal', function (e) {
+      $('#detailButton').text('More Detail');
+    });
+  });
+  </script>
+@endsection
