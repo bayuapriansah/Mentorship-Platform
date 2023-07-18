@@ -82,9 +82,40 @@ class EnrolledProjectController extends Controller
      * @param  \App\Models\EnrolledProject  $enrolledProject
      * @return \Illuminate\Http\Response
      */
-    public function edit(EnrolledProject $enrolledProject)
+    public function edit($enrolled_projects_id, $student_id, $project_id)
     {
-        //
+        // dd($enrolled_projects_id.', '.$student_id.', '.$project_id);
+        $enrolled_projects = EnrolledProject::where('id', $enrolled_projects_id)->firstOrFail();
+        $project = Project::findOrFail($project_id);
+        $appliedDateStart = \Carbon\Carbon::parse(
+            $project
+                ->enrolled_project
+                ->where('student_id', $student_id)
+                ->where('project_id', $project->id)
+                ->first()
+                ->created_at
+        )->startOfDay();
+        $appliedDateEnd = \Carbon\Carbon::parse(
+            $project
+                ->enrolled_project
+                ->where('student_id', $student_id)
+                ->where('project_id', $project->id)
+                ->first()
+                ->created_at
+        )->addMonths($project->period)->startOfDay();
+        $taskDate = (new SimintEncryption())->daycompare(
+            $appliedDateStart,
+            $appliedDateEnd
+        );
+
+        if($enrolled_projects->is_submited != 1){
+            $enrolled_projects->is_submited = 1;
+            $enrolled_projects->flag_checkpoint=$taskDate;
+            $enrolled_projects->save();
+        }
+        session()->flash('success', 'The project was successfully updated!');
+
+        return redirect()->route('dashboard.enrollment.show', $project_id);
     }
 
     /**
