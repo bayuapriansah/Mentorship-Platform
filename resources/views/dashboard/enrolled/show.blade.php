@@ -131,12 +131,12 @@ document.addEventListener("DOMContentLoaded", function() {
       <td>
 
         <!-- Modal toggle -->
-        <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white" type="button">
+        <button data-modal-target="defaultModal{{ $enrolled_project->id }}" data-modal-toggle="defaultModal{{ $enrolled_project->id }}" class="block py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white" type="button">
           View detail
         </button>
 
         <!-- Main modal -->
-        <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="defaultModal{{ $enrolled_project->id }}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-2xl max-h-full">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                             Detail Project
                         </h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal{{ $enrolled_project->id }}">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -162,8 +162,8 @@ document.addEventListener("DOMContentLoaded", function() {
                                       Task {{ $submission->taskNumber }}
                                   </p>
                               </div>
-                              <div class="p-1 bg-{{ $submission->is_complete ? 'green-600' : 'red-600' }} text-right">
-                                  <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-{{ $submission->is_complete ? 'green-500' : 'red-100' }} rounded-full">
+                              <div class="p-1 text-right">
+                                  <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-{{ $submission->is_complete ? 'green-500' : 'red-100' }} bg-{{ $submission->is_complete ? 'green-600' : 'red-600' }} rounded-full">
                                       {{ $submission->is_complete ? 'Complete' : 'Incomplete' }}
                                   </span>
                                   <p class="text-sm text-gray-500 mt-2 dark:text-gray-400">
@@ -280,12 +280,12 @@ document.addEventListener("DOMContentLoaded", function() {
           <td>
     
             <!-- Modal toggle -->
-            <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white" type="button">
+            <button data-modal-target="defaultModal{{ $enrolled_project->id }}" data-modal-toggle="defaultModal{{ $enrolled_project->id }}" class="block py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white" type="button">
               View detail
             </button>
     
             <!-- Main modal -->
-            <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div id="defaultModal{{ $enrolled_project->id }}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div class="relative w-full max-w-2xl max-h-full">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                 Detail Project
                             </h3>
-                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal{{ $enrolled_project->id }}">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                 </svg>
