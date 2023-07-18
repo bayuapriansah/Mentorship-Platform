@@ -1,2 +1,3 @@
-import './bootstrap';
+// import './bootstrap';
+import 'flowbite';
 require('./swiperInit');

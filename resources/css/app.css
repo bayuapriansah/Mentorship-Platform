@@ -1,5 +1,6 @@
 @tailwind base;
 @tailwind components;
+@tailwind utilities;
 @font-face {
   font-family: 'IntelOne';
   src: url(/public/assets/intelOneFont/intelone-display-regular.woff);
@@ -215,4 +216,3 @@ p {
 .ml-215 {
   margin-left: 215px;
 }
-@tailwind utilities;
