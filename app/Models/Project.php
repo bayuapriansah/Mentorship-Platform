@@ -48,4 +48,22 @@ class Project extends Model
     {
         return $this->belongsTo(Comment::class,'id','project_id');
     }
+    
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+
+    public function submission($studentId, $projectId)
+    {
+        // Ambil data submission berdasarkan studentId dan projectId.
+        // Saya asumsikan Anda memiliki model Submission dan relasinya sudah didefinisikan.
+        $submission = Submission::where('student_id', $studentId)
+                                ->where('project_id', $projectId)
+                                ->get();
+
+        // Anda bisa memodifikasi kode di atas sesuai dengan struktur dan kebutuhan aplikasi Anda.
+
+        return $submission;
+    }   
 }

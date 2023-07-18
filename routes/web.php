@@ -322,6 +322,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // Enrollment
         Route::get('/enrollment/project/{id}', [EnrolledProjectController::class, 'show'])->name('enrollment.show');
+        Route::post('/enrollment/project/{id}/{student}/{project}', [EnrolledProjectController::class, 'edit'])->name('enrollment.edit');
 
         // Message
         Route::get('/messages', [CommentController::class, 'index'])->name('messages.index');
