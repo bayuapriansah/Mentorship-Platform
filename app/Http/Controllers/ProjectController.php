@@ -95,9 +95,9 @@ class ProjectController extends Controller
             $projects = Project::with(['student', 'company'])->get();
         }elseif(Auth::guard('mentor')->check()){
             if(Auth::guard('mentor')->user()->institution_id != 0){
-                $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->where('status', 'publish')->get();
+                $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->where('status', 'publish')->orWhere('status', 'private_project')->get();
             }else{
-                $projects = Project::where('status', 'publish')
+                $projects = Project::where('status', 'publish')->orWhere('status', 'private_project')
                 ->whereHas('enrolled_project', function($q){
                     $q->whereHas('student', function($q){
                         $q->where('staff_id', Auth::guard('mentor')->user()->id );
