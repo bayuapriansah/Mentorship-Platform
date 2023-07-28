@@ -75,7 +75,7 @@ class CommentController extends Controller
             $instituteId = Auth::guard('web')->user()->institution_id;
         }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
-            $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish'])->get();
+            $projects = Project::where('institution_id',Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->whereIn('status', ['publish', 'private_project'])->get();
         }else{
             $projects = Project::where('status', 'publish')->orWhere('status', 'private_project')->get();
         }
