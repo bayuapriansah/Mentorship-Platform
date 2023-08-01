@@ -1,0 +1,126 @@
+Registration
+<Below Register> 
+Fill out the registration form below to sign up for the platform
+Homepage
+<Main Banner Title> 
+Simulated Internship Platform for Industry Readiness
+<Main Banner Subtitle> 
+Join today to work on real-world projects and kick start your career! 
+<Above Industry Partner Logos>
+Our Esteemed Industry Partners
+About AI for Future Workforce Program
+Intel® AI For Workforce is a global AI skilling program for vocational students for building an AI-ready workforce. The program aims to address the AI skill crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the necessary skills for employability in the digital economy. The program offers comprehensive, modular, experiential, and flexible AI content delivered through engaging learning experiences. 
+For Students
+Acquire Employability Skills
+Gain Industry Experience
+Strengthen Project Portfolio
+For Institutions
+Enhanced Student Employability
+Collaborate with Industry leaders
+Supervise Real-World AI Projects
+For Industry
+Identify Top Future Talents
+Collaborate with Top Institutions
+Explore Fresh Perspectives on Industry Use-Cases
+Internship Projects 
+<Main Banner Title>
+Internship Projects
+Below the title
+Take a look at the active projects being offered by our industry partners
+Intel Digital Readiness
+Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world. 
+Login
+<Below Login>
+Sign in to your account to continue
+<Beside Quick Start Video to get you going>
+Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity. 
+FAQ
+What types of projects are available on the website? 
+We have various AI projects ranging from Machine Learning (ML), Natural Language Processing (NLP), to Computer Vision (CV).
+How do I enroll in a project? 
+When you go to the Internship Projects page you will see the list of all available projects. To enroll simply click on the enroll button. Note that you can only be enrolled in one project at a time therefore, you will be able to enroll in another project after you have completed the project you are currently enrolled in.
+What are the requirements to enroll in a project? 
+To enroll in a project you must be currently attending an institute which is involved in the Simulated Internship Program.
+What are the requirements to complete a project?
+Each project has it’s own specific requirements. After you enroll in a project you will receive a variety of tasks which you will need to complete. Once you submit a task, your institutions supervisor mark your task as pass or return it to you for revisions. You must pass all the tasks to complete a project. 
+How long is this program? 
+The program is typically 4 months long and comprised of projects of various durations (generally 1 month). 
+Are there any deadlines for applying for projectss? 
+The deadlines for each task/project are the soft deadlines. These deadlines are what your customer is expecting you to meet but, your educational institute will be responsible for fixing hard deadlines.
+Can I work on more than one project at a time? 
+You can only be enrolled in one project at a time. However, if the deadline of a projet has passed, you can enroll in a second one while you finish the first project.
+Will I receive college credit for my internship? 
+College credit specifics is dependent on your insitution. Please contact your institution for more information.
+Are there any opportunities for full-time employment after the program? 
+We cannot guarantee employment after this program
+Will there be a supervisor or mentor assigned to me during the internship? 
+There will be one supervisor assigned to you from your own institute, and one person who will be your point of contact from the customer from the Simulated Internship Platform team. You can chat with the supervisor and our team for any required support using the messaging feature present under each task of a project. 
+What are the expectations from an intern during an internship project? 
+An intern is expected to enroll in and complete multiple projects on the platform based on the duration of their internship. The intern must complete all tasks associated within a project to the satisfaction of our team or their supervisor. Students must submit each task before the expected duration assigned to a task is over. 
+I see an industry partner listed but there is not a project listed by them?
+We have various industry partners however, we can only run a limited number of projects at a time. Our list of industry partners represents those we have worked with, either currently or in the past.
+
+Drop down for Support button: 
+Bugs
+Functionality issues
+Performance problems
+Compatibility errors
+Security concerns
+User interface glitches
+Other
+
+Contact Support Page:
+Contact the Simulated Internship Platform team for any technical support that you require. 
+For project support, kindly use the chat feature available under each project task.
+
+For Students Page
+This platform offers students the opportunity to work on AI projects in an online work-like environment. Unlike typical projects or tutorials that provide a step-by-step guide, this platform is designed to replicate real-world work settings, allowing students to tackle projects with increasing independence. By completing the projects on this platform, students will develop valuable skills in problem-solving, time management, and accountability as they take ownership of their tasks and meet deadlines.
+The AI projects featured on this platform have been thoughtfully crafted to guide students through a work-like project experience, enhancing their independence and preparing them for industry settings. Students will gain experience in data collection, data wrangling, data pipelining, AI model building, AI model evaluation, and soon, AI solution proof of concept deployment.
+Throughout their time on the platform, students will enroll in projects, receive tasks, complete work, and submit it for review. Feedback will be provided, allowing students to revise and improve their work. Successful completion of the simulated internship program will result in a portfolio of projects that not only showcases a student's growth as a developer but also demonstrates their ability to work independently in a work-like setting.
+Overall, the platform provides students with a unique opportunity to develop practical skills, collaborate with industry professionals, and gain valuable experience that will benefit them in their future careers.
+
+User journey for Subha to make a graphical representation:
+Enroll in a project
+Begin a task
+Work on the task
+Submit the task
+Move onto the next task
+Previous task will either be approved or ask for revision with feedback
+If revisions are necessary students will need to return to the previous task and get it approved in order to complete the entire project
+
+For Insitutes Page
+In today's competitive job market, academic credentials alone are no longer enough to secure employment. Practical experience and relevant skills are increasingly in demand by employers. The simulated internship platform offers students the opportunity to work on AI projects and gain practical experience to help them stand out in the job market.
+Joining our platform can benefit your institution and students in several ways. Firstly, students will have a practical learning experience that simulates the demands of the workforce. This enables them to apply the knowledge and skills they have acquired in the classroom to real-world scenarios, developing critical skills that employers look for in candidates.
+
+Secondly, the online format offers flexibility and convenience. Students can access the program at their own pace and from anywhere. This makes it possible for students who may be unable to participate in traditional internships to still benefit from the program. Additionally, students can manage their schedules and balance personal commitments with meeting project deadlines.
+
+Thirdly, our program provides exposure to different types of AI projects, allowing students to build a well-rounded portfolio and explore various career paths. Students can select projects based on their interests and gain a better understanding of which paths they wish to pursue and specialize in.
+Lastly, our online simulated internship programs offer a safe learning environment where students can learn and experiment without fear of consequences. This allows students to develop their skills and confidence without any pressure.
+As a supervisor, you will play a crucial role in supporting your students throughout the project. You will act as the project manager, while our industry partners or the platform team will act as customers. This means that students will turn to you for guidance and support as they work on the projects.
+By partnering with our platform, educational institutions can help their students bridge the gap between the classroom and the workforce, gain a competitive edge in the job market, and make informed career choices. Join us today and help your students achieve their career goals!
+
+For Partners Page
+Collaborating with a platform that connects students with real-world problems presents an excellent opportunity for companies to receive innovative insights and potential solutions to their most pressing challenges. By sharing problem statements and anonymized data with our team, partners can benefit from the innovative thinking of a talented and motivated pool of students.
+Students participating in the program are keen to work on real-world projects that can help them build their skills and gain practical experience, making it a mutually beneficial program for both partners and students.
+Moreover, partnering with the platform can help companies identify potential future talent. The program provides a unique opportunity for partners to engage with students who have demonstrated an interest in their industry and challenges, enabling them to evaluate their skills, work ethic, and suitability for future employment opportunities.
+The platform takes privacy and data security seriously, and all data provided by partners is anonymized to protect confidentiality. Partners can be confident that their sensitive data will be safeguarded throughout the program, and they will have control over how and when their data is shared with students.
+In designing a project, we are here to support you and ensure that both you and the students have a positive experience. Our AI educators will take your proposed project and transform it into the final project the students will see. Once the project is live, you will have the opportunity to interact with the students as if you are their customer contracting them to work on your project. However, this is optional as our team will also be there to help the students complete the project.
+
+To get involved, please contact us to start discussing your problem statements, and we will begin transforming them into a project for our students. By collaborating with our platform, you can tap into the talent and creativity of motivated students from diverse backgrounds, gain fresh insights and potential solutions to your challenges, and help shape the minds and careers of future leaders. Contact us now to start the conversation and see how we can help turn your problem statement into a real-world project.
+Project Proposal Roadmap:
+You send us a problem statement with a dataset
+Our team creates project details with a project outline
+1st meeting to discuss the project and approve outline
+Our team refines the project details and writes up all injection cards
+2nd meeting to finalize the project
+
+
+About Us 
+Welcome to the Simulated Internship Platform, where we strive to provide students with an environment that mimics the real-world workplace experience. Our goal is to help students develop practical skills and gain hands-on experience in a professional setting, preparing them to become the workforce of the future.
+
+Our platform offers a range of AI projects that cover Machine Learning (ML), Natural Language Processing (NLP), and Computer Vision (CV), designed to challenge students and expand their knowledge. Each project has its own specific requirements, and students must complete all tasks to the satisfaction of our team or their institution's supervisor.
+
+We understand that real-world work experience can be difficult to come by, especially for students. That's why we created the Simulated Internship Program to provide an opportunity for students to gain valuable experience and enhance their skills. The program typically lasts four months and comprises projects of various durations, generally one month.
+
+Our platform not only offers students the opportunity to gain hands-on experience, but also provides a collaborative environment where they can work with industry professionals and communicate with supervisors and our team for any required support. Our industry partners provide us with various projects to work on, so students can be sure that they're gaining experience in relevant and current technologies. We believe that the skills and experience students gain will be valuable assets to them at the start of their careers. Join us on this journey to hone your skills, gain real-world experience, and become ready to be a part of the future workforce.
+

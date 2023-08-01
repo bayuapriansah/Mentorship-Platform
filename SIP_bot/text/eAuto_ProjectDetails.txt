@@ -1,0 +1,118 @@
+eAuto Problem Statement
+Project Details:
+Electric Automobiles Limited is a small company with an auto shop, mechanic, gas station, and carwash all on-site. Their vision is to be a one-stop shop for all vehicle needs. They have automated as much as possible to balance the demands of offering so many services. Next, they want to use AI to make their company even more efficient. Their issue is that they do not know enough about AI yet. The customer service manager, Vaibhav, is the most interested in AI. As the company’s first POC project, he wants to use CV to collect customer demographic information at the automated car wash.
+
+The carwash is fully automated, so customers only have to drive up, select the type of carwash, pay with their card, and drive in. Vaibhav has chosen this as eAuto’s first project because he wants to collect customer information from the carwash to determine who is using that service and see if eAuto could draw the customers who only use it into their auto shop. He thinks this is a good place to start because once cars start to enter the carwash, it will be easy to identify the brand of the car and have a clear shot of the customer’s face.
+
+They do not have their cameras set up at the carwash yet, so the dataset for the POC was made via web scraping. The dataset is photos of the front of India’s 9 most common car brands (Volkswagen, Honda, Suzuki, Hyundai, Tata, Toyota, Ford, Renault, and Nissan). Although web scraping is very helpful, it does mean the dataset has a lot of variance. 
+They are looking for talented AI engineers to help them build this product! 
+ 
+Project Proposal Summary:
+eAuto is requesting assistance creating a computer vision model to collect customer demographic information at their car wash.
+This project requires dataset creation/expansion and model building. There will be a camera mounted at the front of the carwash to collect either video or photos as cars enter the carwash.
+eAuto wants to try to identify/collect the following:
+The brand (i.e., the logo) of the customer’s car.
+The customer’s age, race, and gender.
+They are open to discussing other information that can potentially be collected. The collected information will be used to identify the demographic disproportionately using the carwash only so that eAuto can target this demographic to attract them into using their other services (specifically their auto shop). The car information will then be used to identify what products to offer in the auto shop.
+
+
+
+
+
+
+Brief Project Overview (for project cards):
+Build a CV model for eAuto to collect customer demographic information from their carwash. In this project, you will need to create/expand on their dataset, label new data, and train a model.
+
+
+Injection Card 1
+Card Title (i.e., email subject): Dataset Evaluation
+Hello,
+I am Vaibhav, and I look forward to working on this project with you. I assume your manager has briefed you on the project, so I won’t spend time reviewing the details. But I just wanted to let you know that you can always message me if you have any questions about the project, and either myself or my team will get back to you!
+We at eAuto are new to AI and are looking to you to help us complete the project, but we also want you to help us learn more about AI and how we can use it now and in the future. Therefore, if you have any ideas or concerns about the project, please feel free to bring them up.
+Now to business. All we have done so far is create a dataset we’ve put together by web scraping for you to get started with. So, the first thing we’d like you to do is review the dataset and write a Colab notebook that has both code and explanations to address the following:
+1. We scraped the web for the same number of images but are all the images useable? If you are wondering, we consider a usable image to be the front of a car with the car’s logo clearly visible. If there are images that are not usable, please remove them from the set.
+2. After dataset pruning, is the dataset big enough? Is there any imbalance in our dataset?
+3. Is the dataset good quality?
+   * Do many images require editing (cropping, zooming, sharpening, etc.)?
+   * Are there other issues in our dataset you can see?
+   * What are some challenges that you see with the current dataset?
+4. Based on your evaluation, please lay out your plan for correcting any issues you’ve identified.
+   * Do you plan on manually editing some images?
+   * Can you do any standardization to the images?
+   * Is there any data augmentation you can do?
+I expect you to send a link to the Colab Notebook with all the necessary code and text to answer the prompts above. 
+For communication, you can use the messaging feature to reach out to both your project supervisors and my team if you have any questions. 
+Thank you!
+Vaibhav 
+Injection Card 2
+Card Title (i.e., email subject): Dataset Improvement 
+Hello,
+Thank you for your evaluation of our dataset! It was informative and helpful to help us better understand the needs of CV projects.
+I guess the second step in this project would naturally be for you to complete your proposed plan for improving our dataset. Please execute your plan and submit your new dataset. Also, just to help us better understand the process of dataset refinement, could you provide a brief explanation of the hiccups you encountered and how you overcame them while working on our dataset? I hope that your summary will help us identify potential issues/roadblocks for future projects.
+
+To summarize, I am expecting you to submit the link to your revised dataset and a link to the Colab Notebook with the following actions:
+* Apply the following image processing techniques to improve images in the dataset
+   * Crop
+   * Sharpen
+   * Zoom
+* Apply data augmentation to the dataset to create "new" images and ensure the dataset is balanced
+* Provide a brief explanation of the hiccups you encountered and how you overcame them while working on our dataset
+Thank you, 
+Vaibhav
+Injection Card 3
+Card Title (i.e., email subject): Model Building
+Hello,
+Now that the data is ready, the next step must be building the model to recognize the car brand. Let me repeat that, we want to be able to identify the car brand, so feel free to process the images to isolate the car's logos.
+ 
+Please create as many models as you think necessary to get started, but we’d like you to submit a report explaining the three top-performing models. You can include as much information as you’d like, but as a minimum, we’d like to know the following:
+* The models’ names and a brief explanation of how each works.
+* Evaluation reports for each model.
+* Which model we should choose to deploy in production and why.
+   * Consider evaluation metrics and the cost of running the model. 
+I expect you to submit a Colab Notebook link with the text and code to address the above prompts.
+Regards, 
+Vaibhav
+Injection Card 4
+Card Title (i.e., email subject): Car Brand Identification Model Next Steps
+Hello,
+I’m happy to inform you that we are satisfied with the current status of the car brand identification model for the sake of the POC. Before we move on to the facial recognition aspect of the project, could you write us a report outlining what the next steps would be for this model? Specifically, we’d like your opinion on the following:
+* How can we continue to improve the accuracy of our model?
+* What camera would you recommend we purchase once we go live?
+* What is the best way to deploy this model?
+   * Do we need to buy on-premises servers? Why?
+   * Who is the best option for AI cloud services? What are the pros and cons of the top options?
+I expect you to submit a Google Documents link that addresses the above prompts.
+Thank you, 
+Vaibhav
+Injection Card 5
+Card Title (i.e., email subject): Facial Recognition
+Hello,
+It is time for us to move on to the second part of our project, facial recognition. We think this is a fundamental part of this project because collecting customer demographic data is fundamental for our targeted advertising.
+I have done some preliminary research and have seen various articles discussing premade facial recognition models. Can you advise us on the available open-source facial recognition options to see if they would be viable for our project? When you report your findings, please include your recommendation on the model we should use.
+I'd like you to submit a Colab Notebook link that contains both texts discussing the facial recognition models available as well as the code for demonstrating how we can use these models.
+Thank you
+Vaibhav
+
+
+
+
+Injection Card 6
+Card Title (i.e., email subject): Make the Facial Recognition Model
+Hello,
+We’ve reviewed your previous report and think we should proceed with your recommended model.
+Please create a sample dataset of photos of people in cars via web scraping and use the open-source model you’ve recommended to demonstrate its efficacy for our specific use case.
+You are expected to submit a link to the dataset in Google Drive and a link to your Colab Notebook.
+Thank you, 
+Vaibhav
+Injection Card 7
+Card Title (i.e., email subject): Facial Recognition – Ethics
+Hello,
+We recently had an internal meeting to discuss the project's status, and our human resources department raised an objection to the project. They are worried about potential personal privacy issues due to using a facial recognition model to collect customer demographics. We are unsure if this is common practice or not, what the specific laws are regarding collecting customer data with this method, or what we legally need to do to inform our customers about us using facial recognition onsite. Can you please write a report to address these three concerns and any other issues you think are relevant to this topic? Obviously, we need to be aware of any ethical considerations we need to make, and we want to comply with the law, so I cannot stress the importance of your diligence and thoroughness on this matter enough.
+Thank you, 
+Vaibhav
+Injection Card 8
+Card Title (i.e., email subject): Logo Identification and Facial Recognition
+Hello,
+We have gotten the green light to move ahead with the project as our legal department reviews your advice and comes up with a plan to ensure we are covered with this project. The next phase for us is that we need the model to be able to identify both the car logo and gather the customer demographic data. Can you combine the two models to do this?
+Thank you, 
+Vaibhav

@@ -1,0 +1,155 @@
+TASK_NAMEIntroduction to the Company and Team
+TASK_DESCRIPTIONHello,
+
+I am Kevin Rush, the CEO of AI Minds; I want to welcome you and thank you for joining our team. You are an integral part of our company, and we are excited to have you on board as we work together to deliver innovative AI solutions to our clients.
+
+We understand that you are here to learn, and we are committed to providing you with valuable experiences and opportunities to build your skills and knowledge. Our goal is to create a supportive and collaborative environment where you can develop your technical skills, gain hands-on experience, and contribute to developing cutting-edge AI solutions. 
+
+Our mission as an AI consulting company is to empower businesses with AI solutions so they can transform how they operate, innovate, and grow. In addition, we strive to deliver customized AI solutions tailored to our client's needs.
+
+Our vision is to be a leading provider of AI consulting services globally, recognized for our innovative and customer-centric approach. We aim to be at the forefront of AI innovation, helping businesses leverage the power of AI to transform their operations and achieve their business goals.
+
+At AI Minds, we have a core set of values listed below.
+Customer-Centric: We put our client's needs at the center of everything we do and strive to deliver exceptional customer experiences at every touchpoint.
+Innovation: We are committed to exploring new technologies and approaches to problem-solving, and we encourage creativity and out-of-the-box thinking.
+Accountability: We take ownership of our work and hold ourselves accountable for delivering high-quality, timely, cost-effective solutions.
+Learning: We believe in continuous learning and development. We encourage our team members to take on new challenges and face the unknown to acquire new skills and knowledge to become true experts.
+Growth Mindset: This is crucial as our projects tend to be multidisciplinary, with a steep learning curve.
+
+AI consulting is a growing industry that helps businesses harness the power of artificial intelligence to drive growth, streamline operations, and improve customer experience. AI consulting firms work with various clients, including small startups, mid-sized companies, and large enterprises. These clients come from diverse industries, including automotive, finance, retail, e-commerce, and more. AI consulting firms provide various services, including strategic planning, data analysis, software development, and implementation of AI solutions. The services provided by AI consulting firms can also vary widely, depending on the client's needs. For example, some clients may require help with data analysis and modeling, while others may need assistance with developing AI-driven software solutions. AI consulting firms can also provide guidance on ethical and legal considerations related to AI technologies, such as data privacy, bias, and security. In addition, they work with clients to identify areas where AI can be applied to improve operations, enhance customer experiences, and increase profitability. 
+As an intern at our company, you will be exposed to many projects requiring creativity, resilience, and resourcefulness to design and implement AI solutions for clients. In addition, as an intern at AI Minds, you will be an integral part of the team responsible for developing and implementing AI solutions for clients. Your roles and responsibilities include the following:
+
+Research and Analysis: You will be responsible for conducting research and analysis on various AI-related topics, such as new technologies, trends, and best practices. This research will inform the development of AI solutions for clients.
+Data Collection, Preparation, and Cleaning: You will collect, prepare, and clean data for AI models. This includes tasks such as data entry, formatting, and imputation.
+Model Development: You will develop and refine AI models that can be used to address specific client needs. This may involve feature selection, model training, and model evaluation.
+Testing and Validation: You will be responsible for testing and validating AI models to ensure they work as intended. This may involve testing model performance, validating model accuracy, and conducting stress tests.
+Documentation: You will document your work, including data analysis, model development, and project management. This documentation will need to be clear, concise, and well-organized to ensure that other team members can easily understand and replicate your work.
+Communication: You must communicate effectively with the supervisor and clients through emails and reports. 
+
+Overall, you will be expected to be a proactive team player eager to learn and contribute to the success of the firm's projects. You must be flexible, adaptable, and willing to take on new challenges as they arise. By doing so, you will gain valuable experience in the field of AI consulting and develop the skills and knowledge needed to become a successful AI consultant.
+
+But you will not be alone. You will have a supervisor responsible for overseeing your work and providing guidance and support throughout your internship. Your supervisor will be a faculty member of the educational institution you are currently enrolled in. They will always be available to support you while you are working with us.
+
+Our customers come from various industries and have commissioned us to advise them and aid them to work effectively with AI. Our clients come to us with a range of familiarity with AI, ranging from complete beginners to experts. Therefore, it is our responsibility to ensure we help them achieve the technical capabilities they desire and educate them so that when our contract ends, they have a deep understanding of the work we have done and are prepared to continue with their projects. You can communicate openly with the customer on our work portal (the website you are currently on). You will also see their name denoted with the customer tags in the messaging section of the projects. We will discuss messaging best practices on the third day of your training.
+
+TASK_DELIVERABLESAs a first assignment, I'd like you to write a report detailing your role in our team in your own words. Please also include what you hope to get from this internship experience.
+ 
+Additionally, for us to get a better sense of who you are and what experience you will be bringing into this role, I'd like you to answer the following questions:
+Of the latest developments in AI, which interest you the most, and how could they be applied to solve real-world problems?
+What do you think are the most significant challenges facing organizations looking to implement AI technologies, and how can these challenges be addressed?
+What inspired you to pursue a career in AI, and what are your career goals?
+What experience do you have with data analysis and modeling, and how could these skills be applied to support AI consulting projects?
+How do you plan to apply the knowledge gained from this internship in your future career?
+
+As a final note, please do not hesitate to share any questions or comments on this onboarding task, the company, the team, or any other subject. 
+
+We are happy to have you on board.
+
+Sincerely,
+Kevin Rush
+END_OF_TASK
+TASK_NAMEDeadline Expectations and Submission Protocols
+TASK_DESCRIPTIONHello, and welcome to day two of onboarding.
+
+On the first day, you gained exposure to various aspects of the AI consulting industry and were introduced to our company. Today we will focus on the project timelines, milestones, and deliverables. 
+
+During your internship, you will pick up multiple projects that you will work on for a set period of time (normally one month). Throughout these projects, you will interact with our customers, integrate and reply to their feedback, conduct data analysis, develop AI models, test, validate, and perform other tasks to meet our client's expectations. As you progress through each project, you will likely encounter new information and unexpected challenges. 
+
+When you begin a new project, you will have the project details explained in the main body, as you saw with your onboarding project. From then on, you will have assigned tasks within the projects, like each day of your onboarding. Each task will have its name, duration, and details clearly stated. It is very important that you read the shared information carefully to ensure you know what you need to do and when it must be done by. Deliverables may involve documentation, report preparation, and/or colab notebooks. In each task, clear instructions regarding the submission requirements will be specified. If you are unsure what you must deliver, feel free to clarify with your supervisor and/or the customer. Once you have completed a task, you will submit it for review to your customer. Submissions typically involve attaching relevant files or documentation and briefly explaining the work completed. 
+
+Once you have submitted a task, it will be sent to the customer for review, showing the status as "IN REVIEW." The customer will then review the work and provide feedback on any areas that require revision or improvement. Depending on the scope of the work, this may involve multiple rounds of review and feedback. If revisions are required, the task will be set to "REVISE" status, indicating that it needs further work before it can be considered complete. You will make the necessary revisions and resubmit the work for review. Once your customer reviews and approves the work, it will be marked "COMPLETED." The project review and feedback process is critical to ensuring that the work delivered to clients is high quality and meets their expectations. Throughout the project's review and feedback process, it is essential to communicate effectively with the customer, ask questions when you need clarification, and take feedback constructively to improve your work. By following this process and staying engaged with your team, you can deliver high-quality work and contribute to the project's success.
+
+Deadline and time management are critical aspects of success in any industry. Prioritizing your tasks and managing your time effectively to meet deadlines and deliver high-quality work is essential. 
+
+Here are some best practices to follow for effective time management:
+Create a Schedule: Create a schedule for each day or week that outlines the tasks you need to complete and their deadlines. Be realistic about the time required for each task and build in buffer time to account for unexpected issues that may arise.
+Prioritize Your Tasks: Identify the most critical tasks that must be completed first, and focus your energy on those. This will ensure that you are making progress on the essential items and help you avoid last-minute rushes to complete them.
+Break Down Larger Tasks: Large tasks can feel overwhelming, but breaking them down into smaller, more manageable pieces can make them easier to tackle. Set goals for each day or week, and celebrate each milestone as you achieve it.
+Eliminate Distractions: Distractions can significantly drain your time and energy. Try to eliminate as many distractions as possible, such as turning off your phone or email notifications, so that you can focus on your work.
+Take Breaks: Regular breaks can help you stay focused and avoid burnout. Take short breaks every hour and a half to rest your eyes, stretch, or walk around.
+
+Remember, effective time management requires discipline and practice. So keep it in mind, and see how different schedules affect your productivity.
+ 
+As an intern at AI Minds, you are at the beginning of a rewarding career in a rapidly growing field. The key to success is to stay focused, manage your time effectively, and submit your work on time. Doing so will build your skills, make a positive impact, and set you up for a successful career in the industry. I cannot emphasize how important it is for you to take responsibility for your work in this role. By taking responsibility for your work, you must own your failures, but you also get to own your victories. As an intern, taking on the responsibility of your work here will help prepare you for the responsibility that awaits you when you fully enter the workforce. Therefore, I hope you will ensure you meet all deadlines, communicate professionally, and schedule time effectively to grow into a strong AI consultant.
+
+TASK_DELIVERABLESTo prepare for this internship and set yourself up for success, I'd like you to submit a productivity plan for your work outlining your strategies for maximizing your effectiveness and success. Your plan should include the following:
+A schedule outlining your perfect work day.
+A plan for how you intend to manage your time effectively.
+Strategies with specific actions that you will/can take to achieve your goals.
+Strategies for how you plan to overcome the obstacles/challenges you may face.
+
+Your productivity plan will help you stay organized, manage your time more effectively, and ultimately help you meet all your deadlines while working with us. Feel free to do some research to help you find the best strategies for you. 
+
+To help you get started, here are a few resources we recommend reviewing:
+https://onlinegrad.syracuse.edu/blog/productivity/
+https://www.range.co/blog/how-to-plan-your-day
+https://www.youtube.com/watch?v=czFxQpXB1AI
+I look forward to reading your productivity plan, and I hope you find this exercise beneficial.
+END_OF_TASK
+
+TASK_NAMECommunication Channels and Collaboration
+TASK_DESCRIPTIONWelcome to day 3 of your onboarding guide.
+Today, the focus will be communication channels and collaborating with the wider team.
+Before Sending a Message:
+Firstly, we highly encourage open communication channels, so do not hesitate to contact your supervisor or the customer to discuss task expectations and deliverables and brainstorm ideas. However, we are, first and foremost, a consulting company, and our customers have employed us to advise them on AI and complete specific tasks for them to accomplish their work. Therefore, although you can always contact the customer for assistance, we expect you to do two things first: 1) Ensure you have explored all the options you can think of and 2) reach out to your supervisor.
+For number one, before reaching out to your supervisor, ask yourself if you've done everything possible to solve the question you will ask. Then, if you can think of a potential solution, test it first, and when you have completely expended all your options, reach out to your supervisor and/or the customer. We have noticed that most of our new interns have two types of issues; they either need help knowing where to start or are facing problems with their solution/approach.
+Here is a list of potential questions you can ask yourself when you are trying to start the task:
+1. What is the main objective of this task or project? What are we trying to achieve?
+2. Can I clearly define the problem or task in my own words?
+3. What are the specific requirements and expectations for this task?
+4. Should I be aware of any assumptions or preconditions? (If so, ask!)
+5. Are there any dependencies or relationships between this task and other tasks in the project?
+6. What are the relevant resources, tools, and technologies I need to be familiar with to complete this task?
+7. Can I create a visual representation like a flowchart or diagram to understand the task or project structure better?
+8. Should I anticipate potential risks, obstacles, or challenges while working on this task?
+9. Can I establish a plan of action for this task and identify a clear sequence of steps to progress toward completion?
+10. Should I follow industry best practices or guidelines while working on this project?
+Here is a list of potential questions you can ask yourself when you run into problems with your solution/approach:
+1. What is the exact problem/issue that I am facing?
+2. Have I encountered a similar problem in the past? If so, how did I resolve it?
+3. Can I break the problem into smaller, more manageable parts?
+4. Can online resources, such as documentation, tutorials, or training materials, help me find a solution?
+5. Can I brainstorm and list down potential solutions to the problem?
+6. Have I allocated enough time to explore the issue and possible solutions thoroughly?
+7. Is there a way to test or prototype potential solutions to better understand their effectiveness?
+8. Have I documented the issue and my attempts to resolve it so that I can easily communicate my progress to my supervisor if needed?
+9. Do I still need to consider any alternative approaches or perspectives?
+10. Can I identify patterns or trends that may help me better understand the issue and develop a solution?
+Please use the questions provided as a guide to help you thoroughly understand your assigned tasks within each project. Asking yourself these questions will help you build a solid foundation for problem-solving and ensure you can confidently approach your work.
+Remember, challenges are opportunities for growth and learning. Feel free to explore, innovate, and ask questions when necessary. The team will recognize and appreciate your proactive efforts to understand and solve problems. 
+Company Policy: Effective and Professional Customer Communication
+I. Purpose
+The purpose of this policy is to establish guidelines and expectations for effective and professional communication with our valued customers. Given the nature of our work as an AI consulting company, fostering close relationships with customers is essential. Adhering to these guidelines will ensure that our company consistently provides high-quality, clear, and respectful communication, leading to strong customer relationships and maintaining our reputation as a trusted and reliable partner in the industry.
+II. Scope
+This policy applies to all employees, including interns, who communicate with customers, whether written or verbal. Interns can expect to have mainly written correspondence with customers via email correspondence, report writing, and documentation on technical tasks.
+III. General Guidelines
+1. Professional Tone: Maintain a polite, respectful, and professional tone in all customer communications. Be mindful of the close nature of the relationship and use language that reflects a sense of familiarity while remaining professional and respectful.
+2. Clarity and Conciseness: Ensure your messages, including reports, are clear, concise, and well-organized. Use simple language, avoid ambiguity, and provide enough context for the customer to understand your message. Be specific and avoid unnecessary details.
+3. Timeliness: Respond to customer inquiries and concerns promptly. Set and adhere to reasonable response time expectations, and inform customers if there will be a delay in addressing their requests or delivering reports.
+4. Empathy and Tact: Demonstrate empathy and tact when addressing customer concerns and acknowledging their feelings and frustrations. Remain calm and composed, even in difficult situations, and seek to provide solutions that meet the customer's needs.
+5. Confidentiality and Privacy: Adhere to the company's confidentiality and privacy policies when discussing customer information or including it in reports. Do not share sensitive customer data with unauthorized individuals or parties.
+6. Collaboration and Partnership: Foster a collaborative and partnership-oriented approach in all customer interactions. Encourage open communication, share ideas and expertise, and work together to find the best solutions to meet the customer's needs.
+7. Report Writing and Presentation: Ensure written reports and presentations are accurate, well-structured, and tailored to customer needs. Use visuals and data-driven insights to communicate findings and recommendations effectively.
+8 Follow-up and Continuity: Provide appropriate follow-up with customers to ensure their concerns have been addressed and resolved satisfactorily. Keep the customer informed of any updates or progress on their requests and maintain a sense of continuity in the relationship.
+IV. Violations and Consequences
+Failure to adhere to this policy may result in disciplinary action, including termination. In addition, the company reserves the right to take appropriate action based on the severity of the violation and the employee's history of non-compliance.
+Sending Messages:
+Now that you have been briefed on what you should be doing before sending a message and our communication policy, we can talk about what you should do to reach out for help. 
+As you know, all of your assignments and submissions are being funneled through this website. You may also have noticed (and possibly used it already) that at the bottom of each task is a messaging feature for you to reach out to both your supervisor and the customer. Here is your main point of access to everyone involved in the project. 
+We keep everything streamlined and organized within our team, so all communication regarding a specific task happens on that task. For example, you have been assigned the task "Communication Channels and Collaboration," and in the past, you were assigned the tasks from  Day 1 and Day 2. Each task has its unique messaging board so that all questions, queries, and concerns are tracked and saved on the relevant task. So, here is your deliverable for Day 3!
+Please draft a professional message to introduce yourself to the teamand submit it as a pdf file. Within your message, I'd like you to include the following:
+1. Name and academic background: Introduce your full name, university, major, and relevant academic achievements.
+2. Personal philosophy or values: Share the core values or personal philosophy that drive your approach to work and life.
+3. Favorite quote or inspiration: Mention a quote, book, or individual who has inspired or significantly impacted your personal or professional development.
+4. Hobbies and interests outside work: Let us know about your hobbies, interests, or personal passions that help you maintain a balanced and fulfilling life.
+5. Relevant Experience or Projects: Briefly describe any past projects, internships, or experiences that have prepared you for your current role.
+TASK_DELIVERABLESThen, because we need you to submit something on our platform to complete the task, please answer and justify your response to one of the questions below and submit it as a pdf.
+1. Do you believe AI can ever develop a genuine sense of morality or ethics, or will AI's ethical behavior always be determined by human-created rules and guidelines?
+2. What are the potential consequences of AI surpassing human intelligence in various domains, and how can we ensure that AI advancements remain beneficial to humanity?
+3. Can AI ever possess a sense of self-awareness or identity, similar to human consciousness? If so, what implications might this have on AI development and our relationship with AI systems?
+4. How do you envision the role of AI in shaping the future of work and society? What are the potential risks and benefits of increasing AI integration into daily life?
+5. In the context of AI's potential to enhance or augment human capabilities, how do you think AI advancements might redefine what it means to be human?
+6. What responsibilities do AI developers and researchers have in addressing potential ethical concerns and unintended consequences of AI systems? How can they ensure that AI technologies are designed and implemented responsibly?
+7. Do you think AI systems should have legal rights and responsibilities similar to humans or corporations, especially if they become increasingly autonomous and capable of making decisions? 
+END_OF_TASK
+END_OF_FILE

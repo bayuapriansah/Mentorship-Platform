@@ -1,0 +1,125 @@
+WebHelpers - Project Details
+
+
+We’ve been recently contracted by a company that creates web extensions. They are called Web Helpers, focused on helping their users be as informed and avoid living in an echo chamber when surfing the internet. They are best known for their NewsReferee extension, which shares articles from politically opposed news agencies and fact-checker agencies that review all respective news sources. They are now working on a new e-commerce support extension that reads product webpages, extracts information, and provides insights to help customers make better purchasing decisions.The lead for this project is Dev, and they are mainly interested in how they can use NLP  to process various information present within a product page efficiently. Since e-commerce websites vary in their content placement, Web Helpers wants to focus on Amazon for now, and then extend their product to other major e-commerce websites.This is where you come in. We have been asked to provide an AI expert to help them develop their e-commerce product support web extension. 
+        The team is open to suggestions for improving their web extension and welcomes any ideas. However, they currently prioritize three key features for the first development phase: 
+* Do text summarization to give the users a quick understanding of the product.
+* Sentiment analysis on the reviews of the product to give a high-level overview of the reviews that provide more information beyond the 1 - 5 star rating reviewers give. 
+* Create a chatbot that answers questions about the product.
+The team has plans for a second development phase that integrates this work into their larger ecosystem. 
+
+
+Injection Card 1
+Card Title (i.e., email subject): Data Pipeline
+Hello,
+
+
+I am Dev, and very excited to start working with you. I believe your manager has given you the briefing for the project, so that I won’t waste any time on that. We think the first feature we’d like to develop is the sentiment analysis of customer reviews. Now we know that this is not a new AI application, and there are online datasets of customer reviews. But we are worried that if we only use a publicly available dataset, our model would not be that much better than other publicly available models. To address this, we’d like you to focus on is being able to process a webpage to collect customer reviews and product descriptions.
+The idea behind the product is that you can open up to any Amazon product. We will read, process, and extract essential information from the page (i.e., classify the reviews and summarize product information). Therefore, the first thing we have to do is be able to extract all that information from any Amazon product page. 
+
+
+Please create a Jupyter notebook where I can upload an Amazon product URL, and it will process the page and return me one single dataset (csv file) that contains: Product Name, Category, Description, Reviews, Specification or Rating etc (5 columns is minimum). 
+
+
+ You can use any libraries you’d like (like Beautiful Soup or Scrapy), but please justify the web scraping library you settle on in the comments. You don’t need to explain all libraries you use, only those used for web scraping, so we can understand how you approach web scraping. 
+ 
+Also, there are many different types of products on Amazon, so to get started, you can collect an equal number of products from the categories: Gaming Accessories, Beauty Picks, Health & Personal Care, Electronics, Easy Returns, and Get Fit at Home. So let’s say 50 products per category and with six types will give us a minimum of 300 different products.
+
+
+
+
+Injection Card 2
+Card Title (i.e., email subject): Model Building - Sentiment Analysis
+Hello,
+Now that you’ve set up the data pipeline, the next step will be to train a model. We will first be focused on the sentiment analysis dashboard feature. As sentiment analysis of Amazon reviews is not a new application in AI, feel free to use a pre existing dataset or a merge of multiple datasets if you’d like. However, please justify your choice(s) of the dataset(s) for our project and verify that the dataset is indeed open-source. The last thing we need is for our dataset to be taken from a restricted source. 
+Please create a comparative analysis of multiple models with as many models as necessary to get started. Still, we’d like you to submit a report explaining the three top-performing models. You can include as much information as you’d like, but as a minimum, we’d like to know the following:
+* The models’ names and a brief explanation of how each works.
+* Evaluation reports for each model:
+   * Compare evaluation metrics
+   * Computation time 
+* Which model do you recommend for us to deploy in production eventually, and why?
+
+
+
+
+Injection Card 3
+Card Title (i.e., email subject): Dataset Expansion / Model Improvements- Sentiment Analysis
+
+
+Hello,
+
+
+We have also heard of data augmentation and synthetic data generation. Could you investigate how we could use both techniques to expand on the dataset we collected and then apply them to create an even more extensive dataset?
+
+
+In summary, please submit a jupyter notebook that does the following:
+Present various data augmentation and synthetic data generation techniques for text data and identity which methods you will use.
+Apply data augmentation/data generation 
+Then merge the two datasets into a single file.
+Submit the final dataset and the notebook with clear and thorough comments / documentation.
+
+
+After creating a bigger dataset, we must return to the model building and evaluation. There's no need to explore multiple models like before. Still, I'd like you to return to the drawing board, train the top 3 models you identified earlier, and submit their new evaluation reports.
+Once all three models are trained, please identify the following:
+* The improvements per model pre and post-data augmentation
+* Which model do you recommend we finalize for sentiment analysis?
+* Was the other data creation/collection worth it in the end? 
+   * i.e., should we aim to improve our dataset in this way continuously? If not, how can we further enhance our models' accuracy?
+
+
+
+
+Injection Card 4
+Card Title (i.e., email subject):  Model Building - Text Summarization 
+
+
+Hello,
+
+
+Thank you for submitting your final model. While we internally review the final sentiment analysis model, we’d like you to get started on the text summarization feature. Now with your dataset can you build a model to summarize these specific texts. I’m not very well versed in the AI resources available however, I do know that there are many big models that can be used for text summarization that are available in different open-source libraries. I’d recommend starting by using transfer learning / Use of Open Source libraries to train one of these big language models on our specific dataset. 
+
+
+I’m expecting you to submit a jupyter notebook that will walk us through any data processing you deem necessary, model training, and model testing. I’m sure your manager has brought this up before but, I cannot stress the importance of properly documenting your code enough. We are a big team and once we take this forward to our other team, I do not want there to be any delay due to them trying to understand your code.
+
+
+
+
+Injection Card 5
+Card Title (i.e., email subject): Data Scraping  – Ethics
+Hello,
+We recently had an internal meeting to discuss the project's status, and our human resources department raised an objection to the project. They are worried about potential ethical issues due to use of scraped product data from an e-commerce website owned by another company. We know that Amazon allows for collecting data to a point, but what about other companies? 
+Generate a report to address  the legal and ethical considerations of web scraping, such as the legality of the practice, laws and regulations surrounding data collection, and the requirements for informing e-commerce companies about the use of their data.
+Additional points to be considered :
+* The relevant licenses and terms and conditions of the e-commerce websites in question. 
+* The laws and regulations surrounding data collection may vary depending on the country and the website's jurisdiction. 
+* Data policies of the websites 
+
+
+We are unsure if all e-commerce stores allow scraping or not, what the specific laws are regarding collecting product data with this method, or what we legally need to do to inform an e-commerce company about us using their data. Can you please write a report to address these three concerns and any other issues you think are relevant to this topic? 
+
+
+
+
+Injection Card 6
+Card Title (i.e., email subject):  Chatbot
+Hello,
+
+
+We have received approval to proceed with the project because Amazon permits data collection, and our legal team will review your suggestions and develop a plan to ensure we are covered for supporting other websites. Additionally, we have two updates to share.
+
+
+Firstly, we have also decided that the product summarization is not actually worth implementing because the product descriptions are already straight forward enough. Secondly, we have realized the importance of creating ar chatbot that can answer product-related questions after processing the current webpage.
+
+
+So i would like you to develop a chatbot that can assist customers with product-related inquiries for an amazon website. Consider using open source generative AI API to generate informative and engaging conversation prompts to keep users engaged.
+
+
+Injection Card 7
+Card Title (i.e., email subject): Deployment - Streamlit
+Hello,
+
+
+Finally you have reached the last step of the project - Deployment. Deployment is an essential part of machine learning projects, deployment refers to the process of making a trained model available for use in a real-world setting.Deploying a machine learning model also allows for easy updates and maintenance, ensuring that the model remains up-to-date with the latest features and improvements.
+
+
+Develop a deployment in Streamlit that includes a machine learning model for sentiment analysis of Amazon reviews and a chatbot that can assist customers with product-related inquiries for an Amazon website. The chatbot should be able to handle various types of customer inquiries and provide helpful responses.

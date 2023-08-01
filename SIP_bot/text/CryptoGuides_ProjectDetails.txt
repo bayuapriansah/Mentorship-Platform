@@ -1,0 +1,101 @@
+Crypto Guides
+
+Our new customer, Crypto Guides, is a crypto startup that is focused on creating interactive learning tools for educating people about crypto currencies and blockchain technologies. Their plan for the future is to merge their educational content with a live exchange but as of right now they are focused on the educational side and just reference other websites for their coin prices. A chapter of their next course is comparing the stocks and other assets to crypto currencies and discussing different trends in crypto prices. To assist this chapter the CTO, Anip  Sharma, wants the development team to use AI to make a price prediction model for crypto currencies to be included in the section on trading with bots. However, their development team has little experience with AI and is also mainly focused on their work with developing their exchange. Therefore, they have commissioned us to provide someone who is an AI expert to setup their data pipeline for current crypto prices and create the model for predicting the price of crypto coins .
+
+Injection Card 1
+Card Title (i.e., email subject): Data Source Identification
+Hello,
+Welcome to the team, we are excited to be working with you. I assume your manager has already briefed you on the project so let’s get right into it.
+
+In our other content we reference a lot of other cryptocurrency websites and exchanges but we do not pull actual data. Since we’re obviously going to need actual data to train a model, could you investigate which is the best website for us to use to get our data from? There are many sites that have their own APIs or you could use web scraping to pull the information down, there are also sites like Yahoo that let you download the data directly, but it only has daily open and closing price data. In any case, we need you to find a data source that can give us the following:
+Data of coin prices in USD
+Bitcoin, Ethereum, and Litecoin are the main ones we’ve been referencing so it has to have those 3
+Data is updated at a minimum daily
+Ideally we’d like also to have a weekly, daily, and hourly breakdown in the data
+
+To begin searching we’d recommend looking into the following sites:
+https://finance.yahoo.com
+https://coinmarketcap.com/ 
+https://www.binance.com/ 
+https://www.coinbase.com/ 
+There’s even a coinbase API client library in python
+https://pypi.org/project/coinbase/
+
+Please conduct your research and in a google colab  notebook submit a text field(s) outlining your findings and recommendation on which method you plan to use for this project. You can also include any coding cells you think necessary to show how you intend to get the data or to highlight the issues you’ve encountered with the other sources to support why we don’t get data from them.
+
+Injection Card 2
+Card Title (i.e., email subject): Data Collection
+Hello,
+
+Now that you’ve identified what you think is the best approach for data collection, let’s collect data! As our primary goal of this project is to predict the cryptocurrency price trends for the future, we’ll need a dataset of past data to train our model on.
+
+Using your data collection strategy, you have to  create datasets for Bitcoin, Ethereum, and Litecoin.
+
+In addition to the dataset, we’d like you to submit a google colab notebook swith explanations outlining:
+
+What are the features you are going to be using from the collected data? 
+If you have to remove features, how did you decide on which to keep and which to discard?
+Since it is time series data, there must be a timestamp present. Is it in UNIX? If it is in UNIX, how do you plan to convert it to human-readable date time? 
+Are there any missing values present? 
+If yes, what is the imputation technique you are following? Why did you choose that technique?
+
+Injection Card 3
+Card Title (i.e., email subject): Data Pipeline (Bitcoin)
+Hello,
+Great job creating our training dataset. Now before we can move forward with building a model, we absolutely need this model to be able to make predictions on live data so that our readers can actively see how effective it is to use AI for trading. 
+Can you create a data pipeline that will take data from the data source and process it to be usable for training on demand? We’ll need to do this because obviously if I want to just update my dataset I need to keep that pipeline separate from any code relating to the model. Therefore, we will need a function to update our master dataset with all data from our last update. I.e., if I only have data up to January 1st, 2023 then the next time I update the dataset it will collect all data from January 1st, 2023 to today and save it in the master dataset. But, I do not want to need to update my entire dataset to check my models predictions to the current price. Therefore, in addition to the dataset update function, you will need to make a function to get, clean, and present the price for a specific date.
+Injection Card 4
+Card Title (i.e., email subject): Model Building - Price Prediction
+Hello,
+Fantastic! Thanks to you, for building the data pipeline. As we review your work, we’d like you to move onto creating the price prediction model! To keep things simple for our team, we think it would be best for you to just focus on predicting the price of Bitcoin for now. 
+As we are not that experienced on the AI front we’d like you to create and compare three different AI models that use 3 different algorithms for Bitcoin price prediction. We will leave it to you to decide on what algorithms to choose but, we’d like an explanation of each and why each of them are viable options for price prediction. Then of course, we will require you to compare their performance and make a recommendation on which model we should include in our main product.
+To summarise, we’d like you to submit a google colab notebook with:
+3 sections dedicated to each individual model that will include:
+Algorithm identification and explanation
+Training
+Evaluation Report
+Then the final model recommendation with references to the evaluation reports
+
+Injection Card 5w
+Card Title (i.e., email subject): Data Pipeline (Bitcoin, Ethereum, and Litecoin)
+Hello,
+Excellent, great work on the Bitcoin model. We are reviewing your work right now, so in the meantime we’d like you to move on to incorporating Ethereum and Litecoin into the model. To do this we’re going to first need to set up the data pipeline for Ethereum and Litecoin. To keep things organised we’d like you to keep the datasets for Ethereum and Litecoin separate. Please create a data pipeline for both Etereum and Litecoin just like you do for Bitcoin but keep them all in the same jupyter notebook. Therefore, we’re expecting you to submit a  google colab notebook  with the Bitcoin pipeline and then build one pipeline for Ethereum and one for Litecoin, so all three coins have the same two functions (dataset update and exact date price retrieval).
+
+Injection Card 6
+Card Title (i.e., email subject): Model Building for Multiple Coin Prediction
+Hello,
+Wonderful, as we review your code we’d like you to create a model that can predict the price of any of our three coins. Before your model only predicted the price of Bitcoin and was only trained on bitcoin data. Now we want to see how well one single model can do on predicting the price of the three coins. Please build three different multi coin price prediction models with the same algorithms you used in the Bitcoin model building task. Then, we will need you to again compare their performance and make a recommendation on which model we should include in our main product. But in addition to that we’d like you to test on 5 different test datasets.
+Bitcoin only
+Ethereum only
+Litecoin only
+All coins (with an equal number of each coin)
+All coins (with a random selection of each coin)
+As a final step, we’d like you to explain any trends or relationships you observe between your results across these 5 datasets.
+To summarize, we’d like you to submit a google colab notebook with:
+3 sections dedicated to each individual model that will include:
+Algorithm identification and explanation
+Training
+Evaluation report that includes model evaluations on the 5 different datasets
+Explaination for the evaluation results on the 5 different datasets
+Then the final model recommendation with references to the evaluation reports
+
+Injection Card 7
+Card Title (i.e., email subject): Building a Basic Crypto Trading Bot
+
+Hello,
+Next step is to build your own trading bot and run live simulations. To do this, you need to know the following:
+What exchanges do we want to pull data from? (eg. Binance API)
+What additional tools or libraries will we use to perform this task?
+What metrics do we want to capture to automate cryptocurrency trading? Some popular technical indicators are SMA(Simple Moving Average), RSI(Relative Strength Index) and MACD(Moving Average Convergence/Divergence) Indicator.
+How will you set up the algorithm to determine whether to buy, sell or hold?
+
+Please note: This should be considered as a programming project assignment only. Not intended for any kind of investment advice. Kindly use your own discretion for financial decisions.
+
+Injection Card 8
+Card Title (i.e., email subject): Deployment in Streamlit
+
+Hello,
+Now we have reached the final stage of the project, deployment. Deployment is crucial in AIprojects because it is the process of putting the model into production, where it can be accessed and used by end-users or integrated into other systems.Without deployment, the model remains only a theoretical concept, and its value is limited.
+Develop a Streamlit app that incorporates a machine learning model created in task 6  for price prediction of Bitcoin, Ethereum, and Litecoin, and the trading bot that uses these predictions to make buy/sell decisions. The app should allow users to input data and generate predictions, as well as view the trading bot's decisions and performance. Additionally, the deployment should be tested and optimized for stability and performance.
+Also conduct a research on other free deployment platforms available for machine learning models and provide a google document link with all your findings. Additionally, can you suggest any other platforms that you believe may be suitable for the deployment of price prediction of cryptocurrencies, in addition to Streamlit?
+
