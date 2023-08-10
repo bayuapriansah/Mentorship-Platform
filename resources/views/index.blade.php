@@ -142,7 +142,7 @@
             </div>
         </div>
         <div class="flex justify-end pt-6">
-            <a href="{{ route('projects.index') }}" class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">View All Projects</a>
+            <a href="{{ route('projects.index') }}" class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid px-4 py-2">View All Projects</a>
         </div>
     </div>
 

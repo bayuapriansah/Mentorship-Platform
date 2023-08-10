@@ -2,21 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Illuminate\Http\Request;
+use Closure;
 
 class SecurityHeadersMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
     public function handle(Request $request, Closure $next)
     {
-        // return $next($request);
         $userAgent = $request->header('User-Agent');
 
         // Check if user agent is set and contains a valid value
@@ -26,9 +18,15 @@ class SecurityHeadersMiddleware
 
         $response = $next($request);
 
-        $response->header('Content-Security-Policy', "frame-ancestors 'self'");
-        $response->header('X-Frame-Options', 'DENY');
+        if ($response instanceof \Symfony\Component\HttpFoundation\BinaryFileResponse) {
+            $response->headers->set('Content-Security-Policy', "frame-ancestors 'self'");
+            $response->headers->set('X-Frame-Options', 'DENY');
+        } else {
+            $response->header('Content-Security-Policy', "frame-ancestors 'self'");
+            $response->header('X-Frame-Options', 'DENY');
+        }
 
         return $response;
     }
 }
+

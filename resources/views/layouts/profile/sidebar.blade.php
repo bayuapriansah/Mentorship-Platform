@@ -332,6 +332,7 @@
     @else
       <p class="text-dark-blue font-medium text-sm text-center my-3">Complete entire program to unlock</p>
       <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
+      {{-- <a href="/profile/{{Auth::guard('student')->user()->id}}/{{ $student->institution->id }}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
     @endif
 
 

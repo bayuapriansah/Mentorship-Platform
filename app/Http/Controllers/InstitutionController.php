@@ -157,6 +157,21 @@ class InstitutionController extends Controller
                 return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg. Or image size is too large');
             }
         }
+        if($request->hasFile('template_cert')){
+            
+            // dd($request->template_cert);
+            if($institutions->template_cert && Storage::exists($institutions->template_cert)) {
+                Storage::disk('public')->delete($institutions->template_cert);
+            }
+
+            // save the new image
+             if( $request->file('template_cert')->extension() =='pdf' && $request->file('template_cert')->getSize() <=5000000){
+                $template_cert = Storage::disk('public')->put('institutions/template', $request->template_cert);
+                $institutions->template_cert = $template_cert;
+            }else{
+                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is pdf or template size is too large');
+            }
+        }
         $institutions->save();
         $message = "Successfully Edited Institution Data";
         return redirect()->route('dashboard.institutions_partners')->with('successTailwind', $message);
