@@ -47,7 +47,7 @@
       <div class="col-span-9">
         @forelse($task->sectionSubsections as $subsection)
         <div class="border border-dark-blue bg-white px-7 py-4 rounded-xl mb-2 font-medium ">
-          <a href="{{asset('storage/'.$subsection->file1)}}" class="flex justify-between items-center">
+          <a href="{{asset('storage/'.$subsection->file1)}}" class="flex justify-between items-center" download>
             <div class=" flex ">
               <img src="{{asset("assets/img/icon/Vector.png")}}" alt="" class="pr-8">
               {{$subsection->title}} {{substr($subsection->file1, strpos($subsection->file1, '.'))}}

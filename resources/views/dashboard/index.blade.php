@@ -85,7 +85,7 @@
             </div>
 
             <div class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
-                <p class="font-normal text-[18px] text-left">New Submissions</p>
+                <p class="font-normal text-[18px] text-left">Total Submissions</p>
                 <p class="text-right text-dark-blue text-3xl">{{$student_submissions}}</p>
             </div>
         </div>
@@ -132,7 +132,7 @@
             </div>
 
             <div class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
-                <p class="font-normal text-[18px] text-left">New Submissions</p>
+                <p class="font-normal text-[18px] text-left">Total Submissions</p>
                 <p class="text-right text-dark-blue text-3xl">{{$student_submissions}}</p>
             </div> 
         </div>
