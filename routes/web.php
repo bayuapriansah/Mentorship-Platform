@@ -148,7 +148,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     // Bell Notification
     // /profile/{{$student->id}}/all-notification
     Route::get('/profile/{student}/allNotification', [NotificationController::class, 'index'])->name('student.allNotification');
-    Route::get('/profile/{student}/certificate', [StudentController::class, 'certificate'])->name('student.certificate');
+    Route::get('/profile/{student}/{institution}/certificate', [StudentController::class, 'certificate'])->name('student.certificate');
     Route::get('/profile/{student}/generate', [PdfController::class, 'downloadPDF'])->name('download-pdf');
     // Route::get('/download-pdf', [PdfController::class, 'downloadPDF'])->name('download-pdf');
     // Certificate

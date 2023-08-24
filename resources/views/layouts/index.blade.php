@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-{{-- @dd( Auth::user() ) --}}
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,18 +83,19 @@
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRightEndButton">
                         <li>
                             @if (Auth::guard('student')->check())
-                                <a href="{{ route('student.allProjects', ['student' => Auth::guard('student')->user()->id]) }}"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                            <a href="{{ route('student.allProjects', ['student' => Auth::guard('student')->user()->id]) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+
                             @elseif(Auth::guard('web')->check())
-                                <a href="{{ route('dashboard.admin') }}"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                            <a href="{{ route('dashboard.admin') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+
                             @elseif(Auth::guard('mentor')->check())
-                                <a href="{{ route('dashboard.mentor') }}"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                            <a href="{{ route('dashboard.mentor') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+
                             @elseif(Auth::guard('customer')->check())
-                                <a href="{{ route('dashboard.customer') }}"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                            @endif
+                             <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                            
+                             @endif
+
                         </li>
                     </ul>
                     <div class="py-2 text-sm text-gray-700 dark:text-gray-200">

@@ -68,6 +68,19 @@
         </p>
     @enderror
   </div>
+
+  <div class="mb-3">
+    <label class="text-2xl mt-10">Certificate Template</label><br>
+    {{-- <img src="{{asset('storage/'.$institutions->logo)}}" alt="" class="object-scale-down" style="width: 350px; height: 230px;"> --}}
+    <label for="inputtemplate" class="form-label">Template {{ $institutions->template_cert == null ? "Empty" : "Exist" }}</label><br>
+    <input type="file" class="block w-1/2 text-sm text-gray-900 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none " id="inputtemplate" name="template_cert">
+    <label for="inputtemplate" class="form-label">*Template Extension is pdf</label>
+    @error('template_cert')
+        <p class="text-danger text-sm mt-1">
+          {{$message}}
+        </p>
+    @enderror
+  </div>
   <div class="mb-3">
     <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Confirm</button>
     <a href="/dashboard/institutions_partners" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-dark-red border-solid border-dark-red text-center capitalize bg-orange text-white font-light text-sm">Cancel</a>

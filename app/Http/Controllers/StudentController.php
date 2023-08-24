@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
+use setasign\Fpdi\Fpdi;
 
 class StudentController extends Controller
 {
@@ -1025,13 +1026,50 @@ class StudentController extends Controller
         }
     }
 
-    public function certificate(Student $student)
+    public function certificate(Student $student,$institution_id)
     {
-      if($student->id != Auth::guard('student')->user()->id ){
-        abort(403);
-      }
-      return view('student.certificate.index', compact('student'));
+        $institution_template = Institution::where('id',$institution_id)->firstOrFail();
+        $student_name = Student::where('id',$student->id)->firstOrFail();
+        $name = $student_name->first_name.' '.$student_name->last_name;
+        $templateFile = Storage::path('public/'.$institution_template->template_cert);
+        // dd($templateFile);
+        // dd($student_name->first_name.' '.$student_name->last_name);
+        // dd($institution_template->template_cert);
+        // Buat instance FPDI
+        $pdf = new Fpdi();
+        $pdf->AddPage();
+        $pdf->setSourceFile($templateFile);
+        $pdf->useTemplate($pdf->importPage(1), null, null, null, null, true);
+        
+        // Tambahkan custom font    
+        $pdf->AddFont('InteloneDisplay', '', 'IntelOneDisplayRegular.php');
+        $pdf->AddFont('InteloneDisplayLight', '', 'intelone-display-light.php');
+        $pdf->SetFont('InteloneDisplayLight', '', 37);
+
+        // Tambahkan nama ke sertifikat
+        $pdf->SetTextColor(0, 8, 100);
+        if (strlen($name) <= 28) {
+            $pdf->SetXY(50.3, 64);
+            $pdf->Cell(100, 10, $name, 0, 1, 'L');
+        } else {
+            $pdf->SetXY(50.3, 60);
+            $pdf->MultiCell(150, 10, $name, 0, 'L');
+        }
+
+        // Simpan sertifikat sebagai file PDF
+        $certificateFilename = "{$name}_SIP.pdf";
+        // 1. Save the generated PDF to a temporary file.
+        $temporaryPath = storage_path('app/public/temp/' . $certificateFilename);
+        $pdf->Output($temporaryPath, 'F'); // 'F' means save to a file.
+
+        // // 2. Use that file path to serve the PDF for download.
+        return response()->download($temporaryPath, $certificateFilename)->deleteFileAfterSend(true);
     }
+    //   if($student->id != Auth::guard('student')->user()->id ){
+    //     abort(403);
+    //   }
+    //   return view('student.certificate.index', compact('student'));
+
 
     public function support(Student $student)
     {
