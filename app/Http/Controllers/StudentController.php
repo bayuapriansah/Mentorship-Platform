@@ -1087,7 +1087,7 @@ class StudentController extends Controller
         }
 
             $pdf->SetFont('InteloneDisplayLight', '', 20);
-            $pdf->SetXY(144, 91.5);
+            $pdf->SetXY(148.5, 91.5);
             $pdf->MultiCell(150, 10, $formattedDate, 0, 'L');
 
             $pdf->SetFont('InteloneDisplayLight', '', 15);
