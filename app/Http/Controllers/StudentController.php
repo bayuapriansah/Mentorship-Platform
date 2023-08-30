@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
+use PhpParser\Node\Stmt\Break_;
 use setasign\Fpdi\Fpdi;
 
 class StudentController extends Controller
@@ -1029,6 +1030,18 @@ class StudentController extends Controller
 
     public function certificate(Student $student,$institution_id)
     {
+        if(Auth::guard('student')->user()->institution_id != $institution_id){
+            abort(404);
+        }
+        
+        if (!Auth::guard('student')->check()) {
+            abort(404);
+        }
+
+        if($student->id != Auth::guard('student')->user()->id ){
+            abort(404);
+        }
+
         $studentSerialNumber = $student->serial_number;
         
         if($studentSerialNumber == null){
@@ -1043,8 +1056,18 @@ class StudentController extends Controller
         $institution_template = Institution::where('id',$institution_id)->firstOrFail();
         $student_name = Student::where('id',$student->id)->firstOrFail();
         $name = $student_name->first_name.' '.$student_name->last_name;
-        $datess = $student_name->end_date; // Assuming this is "2023-8-28"
-        $dateserial = $student_name->end_date; // Assuming this is "2023-8-28"
+
+                // Get the latest updated_at value.
+        $latestUpdatedAt = $student->enrolled_projects->max('updated_at');
+
+        // Convert it to a Carbon instance.
+        $latestUpdatedDate = Carbon::parse($latestUpdatedAt);
+
+        // Format to get only the date part.
+        $onlyDate = $latestUpdatedDate->toDateString();  // Outputs "2023-08-24"
+
+        $datess = $onlyDate; // Assuming this is "2023-8-28"
+        $dateserial = $onlyDate; // Assuming this is "2023-8-28"
         $serialNumber = $studentSerialNumber;
 
         // Use str_pad to ensure it's 3 characters long, padding with zeros from the left.
@@ -1062,9 +1085,7 @@ class StudentController extends Controller
         // Format the date to YYMMDD
         $formattedDateSerial = $date->format('ymd'); // Outputs "230828"
         $templateFile = Storage::path('public/'.$institution_template->template_cert);
-        // dd($templateFile);
-        // dd($student_name->first_name.' '.$student_name->last_name);
-        // dd($institution_template->template_cert);
+
         // Buat instance FPDI
         $pdf = new Fpdi();
         $pdf->AddPage();
@@ -1091,10 +1112,11 @@ class StudentController extends Controller
             $pdf->MultiCell(150, 10, $formattedDate, 0, 'L');
 
             $pdf->SetFont('InteloneDisplayLight', '', 15);
-            $pdf->SetXY(295, 200);
+            $pdf->SetXY(293, 200);
             $pdf->MultiCell(50, -30, "AI4FW".$formattedDateSerial.$serialNombre, 0, 'L');
             // $pdf->SetXY(152.5, 83);
             // $pdf->MultiCell(150, 10, "AI internship under", 0, 'L');
+        
         // Simpan sertifikat sebagai file PDF
         $certificateFilename = "{$name}_SIP.pdf";
         // 1. Save the generated PDF to a temporary file.
