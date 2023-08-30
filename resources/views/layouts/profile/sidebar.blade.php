@@ -351,8 +351,8 @@
                         @csrf
                           <div>
                               <label for="feedback" class="block mb-2 text-sm text-gray-900 dark:text-white">We would be grateful if you could take a moment to share your feedback or a testimonial about your time with us.</label>                        
-                              <textarea id="feedback" name="feedback" rows="4" maxlength="255" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
-                              <span id="counter">0/255</span>
+                              <textarea id="feedback" name="feedback" rows="4" maxlength="1000" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                              <span id="counter">0/1000</span>
                           </div>
                           <button type="submit" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2 px-6">Submit your feedback</button>
                       </form>

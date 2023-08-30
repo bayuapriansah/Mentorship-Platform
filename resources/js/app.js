@@ -10,14 +10,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (textarea && counter) {
         console.log("Textarea and counter found", textarea, counter);  // Debug line
-        counter.textContent = `${textarea.value.length}/255`;
+        counter.textContent = `${textarea.value.length}/1000`;
 
         textarea.addEventListener('input', function() {
             console.log("Input event triggered");  // Debug line
-            counter.textContent = `${this.value.length}/255`;
+            counter.textContent = `${this.value.length}/1000`;
 
-            if (this.value.length > 255) {
-                this.value = this.value.substring(0, 255);
+            if (this.value.length > 1000) {
+                this.value = this.value.substring(0, 1000);
             }
         });
     } else {
