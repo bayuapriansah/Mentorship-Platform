@@ -17,10 +17,10 @@
                     </div>
                 </div>
                 <div class="relative my-auto">
-                    <img src="{{ asset('assets/img/home1.png') }}" class="relative z-40" alt="">
-                    <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots"
+                    <img src="{{ asset('assets/img/home1.png') }}" loading="lazy" class="relative z-40" alt="">
+                    <img src="{{ asset('assets/img/dots-1.png') }}" loading="lazy" alt="dots"
                         class="absolute z-0 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true">
-                    <img src="{{ asset('assets/img/dots-2.png') }}" alt="dots"
+                    <img src="{{ asset('assets/img/dots-2.png') }}" loading="lazy" alt="dots"
                         class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true">
                 </div>
             </div>
@@ -42,8 +42,8 @@
                 <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
                     <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/K9iflwQqVsA"
                         title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+                        allowfullscreen loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
             aria-hidden="true">
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
-                <img src="{{ asset('assets/img/for_students.png') }}" class="relative z-20" alt="for students">
+                <img src="{{ asset('assets/img/for_students.png') }}" loading="lazy" class="relative z-20" alt="for students">
                 <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Acquire Employability Skills, Gain Industry
                     Experience, Strengthen Project Portfolio</p>
@@ -65,7 +65,7 @@
         </div>
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
-                <img src="{{ asset('assets/img/for_institution.png') }}" class="relative z-20" alt="for students">
+                <img src="{{ asset('assets/img/for_institution.png') }}" loading="lazy" class="relative z-20" alt="for students">
                 <h1 class="text-dark-blue text-2xl font-bold py-3">For Institutes</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Enhanced Student Employability, Collaborate
                     with Industry leaders, Supervise Real-World AI Projects</p>
@@ -73,7 +73,7 @@
         </div>
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
-                <img src="{{ asset('assets/img/for_industries.png') }}" class="relative z-20" alt="for students">
+                <img src="{{ asset('assets/img/for_industries.png') }}" loading="lazy" class="relative z-20" alt="for students">
                 <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Identify Top Future Talents, Collaborate
                     with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
@@ -155,8 +155,8 @@
                 <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
                     <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/cUq-sTaxXks"
                         title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+                        allowfullscreen loading="lazy"></iframe>
                 </div>
             </div>
             <div class="relative">

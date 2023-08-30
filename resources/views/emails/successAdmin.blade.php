@@ -155,7 +155,7 @@ td .es-button-border-1:hover {
                      </tr>
                      <tr>
                       <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;color:#333333;font-size:20px">Quick start video to get you going <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></td>
-                      <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><iframe width="300" height="170" src="https://www.youtube.com/embed/OSCdZCfD8P8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></td>
+                      <td align="justify" style="padding:0;Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:50px"><iframe width="300" height="170" src="https://www.youtube.com/embed/OSCdZCfD8P8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe></td>
                      </tr>
                    </table></td>
                  </tr>

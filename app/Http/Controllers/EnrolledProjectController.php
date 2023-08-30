@@ -50,22 +50,23 @@ class EnrolledProjectController extends Controller
      */
     public function show($project_id)
     {
-        $project = Project::find($project_id);
-        $enrolled_projects = EnrolledProject::where('project_id', $project_id)->get();
+        $decId = decData($project_id);
+        $project = Project::find($decId);
+        $enrolled_projects = EnrolledProject::where('project_id', $decId)->get();
         if (Auth::guard('mentor')->check()) {
           if (Auth::guard('mentor')->user()->institution_id != 0){
-            $enrolled_projects = EnrolledProject::where('project_id', $project_id)
+            $enrolled_projects = EnrolledProject::where('project_id', $decId)
                                                 ->whereHas('student', function($q){
                                                     $q->where('institution_id', Auth::guard('mentor')->user()->institution_id);
                                                 })->get();
-            $enrolled_projects_supervised = EnrolledProject::where('project_id', $project_id)
+            $enrolled_projects_supervised = EnrolledProject::where('project_id', $decId)
                                                 ->whereHas('student', function($q){
                                                     $q->where('mentor_id', Auth::guard('mentor')->user()->id);
                                                 })->get();
             return view('dashboard.enrolled.show', compact('enrolled_projects','project', 'enrolled_projects_supervised'));
 
           }else{
-            $enrolled_projects = EnrolledProject::where('project_id', $project_id)
+            $enrolled_projects = EnrolledProject::where('project_id', $decId)
                                                 ->whereHas('student', function($q){
                                                     $q->where('staff_id', Auth::guard('mentor')->user()->id);
                                                 })->get();

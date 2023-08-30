@@ -57,6 +57,9 @@ class SubmissionController extends Controller
     {
         if(Auth::guard('mentor')->check()){
           if (Auth::guard('mentor')->user()->institution_id != 0){
+            if($project->id == 5){
+                return back();
+            }
             $submissionsSupervised = Submission::with('grade')
                                     ->where('project_id', $project->id)
                                     ->whereHas('student', function($q){

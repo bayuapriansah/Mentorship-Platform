@@ -35,7 +35,7 @@ class SimintEncryption extends Controller
           return abort(403);
           return 'Error: Invalid payload';
       }
-  }
+    }
   
 
     public function waktu()

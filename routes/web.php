@@ -120,6 +120,7 @@ Route::post('/register/customer/{email}', [CustomerController::class, 'completed
 
 // bay
 Route::group(['middleware'=>'auth:student'], function(){
+    Route::post('/feedback/{student}', [StudentController::class, 'feedbackStudent'])->name('student.feedback');
     Route::get('/profile/{student}/allProjects', [StudentController::class, 'allProjects'])->name('student.allProjects');
     Route::get('/profile/{student}/allProjectsAvailable', [StudentController::class, 'allProjectsAvailable'])->name('student.allProjectsAvailable');
     Route::get('/profile/{student}/ongoingProjects', [StudentController::class, 'ongoingProjects'])->name('student.ongoingProjects');
@@ -131,6 +132,7 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/task/{task}/readComment/{id}', [StudentController::class, 'readComment'])->name('student.readComment');
     Route::get('/profile/{student}/enrolled/{project}/task/{task}/readNotif/{id}', [StudentController::class, 'readActivity'])->name('student.readActivity');
     Route::get('/profile/{student}/project/{project}/notification/{notification}/readNotifTask/', [StudentController::class, 'readActivityTask'])->name('student.readActivityTask');
+
 
     // Support
     Route::get('/profile/{student}/support', [StudentController::class, 'support'])->name('student.support');

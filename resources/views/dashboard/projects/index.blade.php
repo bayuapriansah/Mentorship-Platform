@@ -91,9 +91,9 @@
                 }
               @endphp
           @endforeach
-          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>
+          <a href="/dashboard/enrollment/project/{{encData($project->id)}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>
         @else
-          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white ">{{count($project->enrolled_project)}}</a>
+          <a href="/dashboard/enrollment/project/{{encData($project->id)}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white ">{{count($project->enrolled_project)}}</a>
         @endif
       </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
@@ -218,7 +218,7 @@
                 }
               @endphp
           @endforeach
-          <a href="/dashboard/enrollment/project/{{$project->id}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>  
+          <a href="/dashboard/enrollment/project/{{encData($project->id)}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>  
       </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
       <td class="capitalize">

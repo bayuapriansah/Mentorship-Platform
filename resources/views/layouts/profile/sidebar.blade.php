@@ -238,6 +238,7 @@
         <p class="text-black text-xs">{{\Carbon\Carbon::parse($student->end_date)->format('d M Y')}}</p>
       @endif
     </div>
+    
     @if($student->is_confirm == 0)
       <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
     @endif
@@ -323,9 +324,47 @@
         return $item['period'] ;
       });
     @endphp
-    @if($total = $totalMonth->sum()==3 && \Carbon\Carbon::now() >= $student->end_date)
-    <p class="text-dark-blue font-medium text-sm text-center my-3">Congratulations!</p>
-    <a href="/profile/{{Auth::guard('student')->user()->id}}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a>
+    
+    {{-- @if($total = $totalMonth->sum()==5 && \Carbon\Carbon::now() >= $student->end_date) --}}
+    @if($enrolled_projects->where('is_submited',1)->count()==5)
+      @if($student->feedback_done == null)
+        <!-- Modal toggle -->
+        <p class="text-dark-blue font-medium text-sm text-center my-3">One Last Step!</p>
+        <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2" type="button">
+          Click Here!
+        </button>
+
+        <!-- Main modal -->
+        <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="px-6 py-6 lg:px-8">
+                      <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Congratulations on Completing Your Internship!</h3>
+                      <form class="space-y-6" action="{{ route('student.feedback', $student->id) }}" method="POST">
+                        @csrf
+                          <div>
+                              <label for="feedback" class="block mb-2 text-sm text-gray-900 dark:text-white">We would be grateful if you could take a moment to share your feedback or a testimonial about your time with us.</label>                        
+                              <textarea id="feedback" name="feedback" rows="4" maxlength="255" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                              <span id="counter">0/255</span>
+                          </div>
+                          <button type="submit" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2 px-6">Submit your feedback</button>
+                      </form>
+                  </div>
+                </div>
+            </div>
+        </div> 
+      @elseif($student->feedback_done == 1)
+        <p class="text-dark-blue font-medium text-sm text-center my-3">Congratulations!</p>
+        <a href="/profile/{{Auth::guard('student')->user()->id}}/{{ $student->institution->id }}/certificate" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a>
+        {{-- <a href="/profile/{{Auth::guard('student')->user()->id}}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
+      @endif
     @elseif($total = $totalMonth->sum()<3 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
       <p class="text-dark-blue font-medium text-sm text-center my-3">Sorry! You did not meet the requirements to complete the internship.</p>
       <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
@@ -339,3 +378,4 @@
   </div>
   @endif
 </aside>
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>

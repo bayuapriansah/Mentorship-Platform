@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    @vite(['resources/css/app.css','resources/js/app.js'])
 
     <script src="https://cdn.tiny.cloud/1/c4fnz0jmum59svb2qpxhe3tnay9nokoed263303akhgyhywv/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -31,7 +32,6 @@
     }
     });
     </script>
-    @vite('resources/css/app.css')
     {{-- font --}}
     <link href="https://fonts.cdnfonts.com/css/intelone-display" rel="stylesheet">
     <meta name="theme-color" content="#712cf9">

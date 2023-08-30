@@ -128,7 +128,7 @@
                 <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
                     <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/K9iflwQqVsA"
                         title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
                         allowfullscreen></iframe>
                 </div>
             </div>
@@ -237,7 +237,7 @@
                 <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
                     <iframe class="absolute inset-0 w-full h-full py-4"
                         src="https://www.youtube.com/embed/cUq-sTaxXks" title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
                         allowfullscreen></iframe>
                 </div>
             </div>

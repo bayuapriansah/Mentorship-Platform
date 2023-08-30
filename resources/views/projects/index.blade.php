@@ -85,7 +85,7 @@
             <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
               <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/aZLE-c7I7uk"
               title="YouTube video player" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
               allowfullscreen></iframe>
             </div>
             <h1 class="m-0 font-bold text-xl text-justify justify-start">Quick start video to get you going</h1>

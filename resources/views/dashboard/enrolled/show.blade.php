@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <th>Supervisor Name</th>
       <th>Status</th>
       @if(Auth::guard('mentor')->check() || Auth::guard('web')->check())
-      @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || Auth::guard('web')->user()->id == 1)
+      @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || optional(Auth::guard('web')->user())->id == 1)
       <th>Action</th>
       <th>Peek</th>
         @endif
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
         @endif  
       </td>
       @if(Auth::guard('mentor')->check() || Auth::guard('web')->check())
-      @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || Auth::guard('web')->user()->id == 1)
+      @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || optional(Auth::guard('web')->user())->id == 1)
       <td class="flex justify-center items-center">
         @if($enrolled_project->is_submited != 1)
           <button data-modal-target="popup-modal{{ $enrolled_project->id }}" data-modal-toggle="popup-modal{{ $enrolled_project->id }}" class="block py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white" type="button">

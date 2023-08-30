@@ -9,6 +9,7 @@ use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
+use App\Models\Feedback;
 use App\Mail\MailNotify;
 use App\Models\Customer;
 use App\Models\Submission;
@@ -1028,9 +1029,38 @@ class StudentController extends Controller
 
     public function certificate(Student $student,$institution_id)
     {
+        $studentSerialNumber = $student->serial_number;
+        
+        if($studentSerialNumber == null){
+            $highestSerialNumber = Student::where('institution_id', $institution_id)
+                                    ->max('serial_number') ?? 0;
+
+            $studentSerialNumber = $highestSerialNumber + 1;
+            $student->serial_number = $studentSerialNumber;
+            $student->save();
+        }
+
         $institution_template = Institution::where('id',$institution_id)->firstOrFail();
         $student_name = Student::where('id',$student->id)->firstOrFail();
         $name = $student_name->first_name.' '.$student_name->last_name;
+        $datess = $student_name->end_date; // Assuming this is "2023-8-28"
+        $dateserial = $student_name->end_date; // Assuming this is "2023-8-28"
+        $serialNumber = $studentSerialNumber;
+
+        // Use str_pad to ensure it's 3 characters long, padding with zeros from the left.
+        $serialNombre = str_pad($serialNumber, 3, '0', STR_PAD_LEFT);
+
+        // Parse the date using Carbon
+        $date = Carbon::parse($datess);
+
+        // Format the date
+        $formattedDate = $date->format('F j, Y.'); // Outputs "August 8, 2023"
+
+        // Parse the date using Carbon
+        $date = Carbon::parse($dateserial);
+
+        // Format the date to YYMMDD
+        $formattedDateSerial = $date->format('ymd'); // Outputs "230828"
         $templateFile = Storage::path('public/'.$institution_template->template_cert);
         // dd($templateFile);
         // dd($student_name->first_name.' '.$student_name->last_name);
@@ -1056,6 +1086,15 @@ class StudentController extends Controller
             $pdf->MultiCell(150, 10, $name, 0, 'L');
         }
 
+            $pdf->SetFont('InteloneDisplayLight', '', 20);
+            $pdf->SetXY(144, 91.5);
+            $pdf->MultiCell(150, 10, $formattedDate, 0, 'L');
+
+            $pdf->SetFont('InteloneDisplayLight', '', 15);
+            $pdf->SetXY(295, 200);
+            $pdf->MultiCell(50, -30, "AI4FW".$formattedDateSerial.$serialNombre, 0, 'L');
+            // $pdf->SetXY(152.5, 83);
+            // $pdf->MultiCell(150, 10, "AI internship under", 0, 'L');
         // Simpan sertifikat sebagai file PDF
         $certificateFilename = "{$name}_SIP.pdf";
         // 1. Save the generated PDF to a temporary file.
@@ -1070,6 +1109,41 @@ class StudentController extends Controller
     //   }
     //   return view('student.certificate.index', compact('student'));
 
+    public function feedbackStudent(Request $request, Student $student)
+    {
+        // 1. Cek apakah ada student
+        $student_name = Student::where('id', $student->id)->first();
+        if (!$student_name) {
+            return redirect()->back();
+        }
+    
+        // 2. Cek field feedback_done
+        if ($student_name->feedback_done == 1) {
+            return redirect()->back();
+        }
+    
+        // 3. Validasi data request
+        $validated = $request->validate([
+            'feedback' => 'required|min:25',
+        ], [
+            'feedback.required' => 'Feedback cannot be empty',
+            'feedback.min' => 'Your feedback is too short',
+        ]);
+        
+        
+
+        // 4 & 5. Insert ke table feedback
+        $feedback = new Feedback();
+        $feedback->feedback = $request->input('feedback');
+        $feedback->student_id = $student->id;
+        $feedback->save();
+    
+        // 6. Update field feedback_done pada table student
+        $student_name->feedback_done = 1;
+        $student_name->save();
+    
+        return redirect()->back()->with('success', 'Thank you for your feedback');
+    }
 
     public function support(Student $student)
     {
