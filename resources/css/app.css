@@ -225,3 +225,47 @@ p {
 .ml-215 {
   margin-left: 215px;
 }
+
+/* CHATBOT CUSTOM CSS */
+.chat-container {
+  width: 400px; /* Make the chat box a bit wider */
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+}
+
+.bot-name {
+  font-weight: bold;
+}
+
+.close-chat {
+  cursor: pointer;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  max-height: 300px; /* Set a maximum height */
+  overflow-y: auto; /* Make it scrollable */
+}
+
+.user-message {
+background-color: #f1f1f1;
+padding: 10px;
+border-radius: 5px;
+}
+
+.bot-message {
+padding: 10px;
+border-radius: 5px;
+}
+
+/* CHATBOT CUSTOM CSS */
