@@ -3,16 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Simulated Internship</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icon/favicon.ico') }}">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    <script src="https://kit.fontawesome.com/682a164d7d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css','resources/js/app.js'])
     <meta name="theme-color" content="#712cf9">
 </head>
 
@@ -56,7 +58,7 @@
                     </button>
                 @else
                     <a href="{{ route('multiLogIn') }}"
-                        class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Login</a>
+                        class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid px-4 py-2">Login</a>
                     <a href="{{ route('registerPage') }}"
                         class="bg-dark-blue text-white rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Register</a>
                         {{-- need to put it here as emergency button to logout --}}
@@ -116,7 +118,27 @@
     <main>
         @yield('content')
     </main>
-
+    {{-- <button id="chat-button" class="fixed bottom-0 right-0 m-6">
+        <i class="fas fa-comment"></i> Chat
+    </button>
+    <div id="chat-container" class="hidden fixed bottom-0 right-0 m-6 chat-container">
+        <div class="bg-white p-2 rounded-lg shadow-lg chat-box">
+            <div class="chat-header flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fa-solid fa-robot bot-logo"></i>
+                    <span class="bot-name ml-2">SimmyBot</span>
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                </div>
+                <button id="close-chat" class="close-chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="chat-box" class="chat-messages">
+                <!-- Chat messages will go here -->
+            </div>
+            <input id="user-input" class="mt-4 p-2 w-full rounded" placeholder="Type your message...">
+        </div>
+    </div> --}}
     <!-- Footer -->
     <footer class="bg-lightest-blue dark:bg-gray-900">
         <div class="max-w-screen-xl mx-auto px-6 py-4" id="AiForFuture">
@@ -148,15 +170,15 @@
                             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Info</h2>
                             <ul class="text-gray-600 dark:text-gray-400 font-medium">
                                 <li class="mb-4">
-                                    <a href="#" data-tooltip-target="Industry-Partners-hover"
+                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
                                         data-tooltip-trigger="hover" class="hover:underline">For Industry Partners</a>
                                 </li>
                                 <li class="mb-4">
-                                    <a href="#" data-tooltip-target="Industry-Partners-hover"
+                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
                                         data-tooltip-trigger="hover" class="hover:underline">For Institution</a>
                                 </li>
                                 <li>
-                                    <a href="#" data-tooltip-target="Industry-Partners-hover"
+                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
                                         data-tooltip-trigger="hover" class="hover:underline">For Students</a>
                                 </li>
                             </ul>
@@ -165,14 +187,15 @@
                             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Support</h2>
                             <ul class="text-gray-600 dark:text-gray-400 font-medium">
                                 <li class="mb-4">
-                                    <a href="#" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline ">About Us</a>
+                                    {{-- <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
+                                        data-tooltip-trigger="hover" class="hover:underline ">About Us</a> --}}
+                                    <a href="/#AiForFuture" class="hover:underline ">About Us</a>
                                 </li>
                                 <li class="mb-4">
                                     <a href="{{ route('faq') }}" class="hover:underline">FAQs</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="hover:underline">Contact Us</a>
+                                    <a href="{{ route('contact') }}" class="hover:underline">Contact Us</a>
                                 </li>
                             </ul>
                         </div>

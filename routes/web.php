@@ -30,6 +30,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------(------------------------------------
@@ -41,7 +42,7 @@ use App\Http\Controllers\EmailBulkInvitationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::post('/ask', [ChatbotController::class, 'ask']);
 // Experimental
 Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
 Route::get('/face-detection', [FaceDetectionController::class, 'index']);
