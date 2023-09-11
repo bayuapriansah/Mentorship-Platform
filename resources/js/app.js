@@ -24,61 +24,61 @@ document.addEventListener("DOMContentLoaded", function() {
         // console.log("Textarea or counter not found");  // Debug line
     }
 
-    const chatBox = document.getElementById('chat-box');
-    const userInput = document.getElementById('user-input');
-    const chatButton = document.getElementById('chat-button');
-    const chatContainer = document.getElementById('chat-container');
-    const closeChat = document.getElementById('close-chat');
+    // const chatBox = document.getElementById('chat-box');
+    // const userInput = document.getElementById('user-input');
+    // const chatButton = document.getElementById('chat-button');
+    // const chatContainer = document.getElementById('chat-container');
+    // const closeChat = document.getElementById('close-chat');
 
-    closeChat.addEventListener('click', function() {
-        chatContainer.classList.add('hidden');
-    });
+    // closeChat.addEventListener('click', function() {
+    //     chatContainer.classList.add('hidden');
+    // });
 
-    chatButton.addEventListener('click', function() {
-        if (chatContainer.classList.contains('hidden')) {
-            chatContainer.classList.remove('hidden');
-        } else {
-            chatContainer.classList.add('hidden');
-        }
-    });
+    // chatButton.addEventListener('click', function() {
+    //     if (chatContainer.classList.contains('hidden')) {
+    //         chatContainer.classList.remove('hidden');
+    //     } else {
+    //         chatContainer.classList.add('hidden');
+    //     }
+    // });
 
-    userInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const message = userInput.value;
-            chatBox.innerHTML += `<div class="flex justify-end py-4">
-                        <i class="fa-solid fa-user mr-2 my-auto px-2"></i>
-                        <div class="user-message">${message}</div>
-                      </div>`;
+    // userInput.addEventListener('keypress', function(e) {
+    //     if (e.key === 'Enter') {
+    //         e.preventDefault();
+    //         const message = userInput.value;
+    //         chatBox.innerHTML += `<div class="flex justify-end py-4">
+    //                     <i class="fa-solid fa-user mr-2 my-auto px-2"></i>
+    //                     <div class="user-message">${message}</div>
+    //                   </div>`;
 
-            userInput.value = '';
+    //         userInput.value = '';
 
-            // Fetch CSRF token from meta tag
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    //         // Fetch CSRF token from meta tag
+    //         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            fetch('/ask', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken, // Use the fetched CSRF token
-                },
-                body: JSON.stringify({ message }),
-            })
-            .then(response => {
-                console.log("Raw response:", response); // Log raw response
-                return response.json();
-            })
-            .then(data => {
-                console.log("Parsed data:", data); // Log parsed data
-                chatBox.innerHTML += `<div class="flex justify-start py-4">
-                        <i class="fa-solid fa-robot mr-2 my-auto px-2"></i>
-                        <div class="bot-message bg-gray-800 text-white rounded">${data.reply}</div>
-                      </div>`;
-            })
-            .catch(error => {
-                console.log("Fetch error:", error); // Log any exceptions
-            });
-        }
-    });
+    //         fetch('/ask', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'X-CSRF-TOKEN': csrfToken, // Use the fetched CSRF token
+    //             },
+    //             body: JSON.stringify({ message }),
+    //         })
+    //         .then(response => {
+    //             console.log("Raw response:", response); // Log raw response
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             console.log("Parsed data:", data); // Log parsed data
+    //             chatBox.innerHTML += `<div class="flex justify-start py-4">
+    //                     <i class="fa-solid fa-robot mr-2 my-auto px-2"></i>
+    //                     <div class="bot-message bg-gray-800 text-white rounded">${data.reply}</div>
+    //                   </div>`;
+    //         })
+    //         .catch(error => {
+    //             console.log("Fetch error:", error); // Log any exceptions
+    //         });
+    //     }
+    // });
 });
 // require('./swiperInit');

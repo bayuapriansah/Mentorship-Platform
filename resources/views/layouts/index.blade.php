@@ -4,17 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Simulated Internship</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#712cf9">
+    <title>{{ ENV('APP_NAME') }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icon/favicon.ico') }}">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <script src="https://kit.fontawesome.com/682a164d7d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     @vite(['resources/css/app.css','resources/js/app.js'])
-    <meta name="theme-color" content="#712cf9">
 </head>
 
 <body>
@@ -94,14 +91,14 @@
 
                             @elseif(Auth::guard('customer')->check())
                              <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                            
+
                              @endif
 
                         </li>
                     </ul>
                     <div class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                        <a href="#" 
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+                        <a href="#"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log Out</a>
 
                         <form id="logout-form" class="inline" method="post" action="{{ route('logout') }}" style="display: none;">
@@ -246,13 +243,8 @@
     </footer>
 
     {{-- @vite('resources/js/app.js') --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
     @yield('more-js')
