@@ -97,7 +97,7 @@
                       @if ($comment->mentor_id)
                         {{$comment->mentor->first_name}} {{$comment->mentor->last_name}} (Supervisor)
                       @elseif($comment->staff_id)
-                        {{$comment->staff->first_name}} {{$comment->staff->last_name}} (Customer)
+                        {{optional($comment->staff)->first_name}} {{optional($comment->staff)->last_name}} (Customer)
                       @elseif ($comment->user_id)
                         {{$comment->user->name}} (Platform Admin)
                       @else
