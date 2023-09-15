@@ -40,31 +40,90 @@ class StudentController extends Controller
     {
         // $this->middleware('auth');
     }
+// 1st code refactor
+    // public function index()
+    // {
+    //     if(Auth::guard('web')->check()){
+    //         $students = Student::get();
+    //         $enrolled_projects = EnrolledProject::get();
+    //     }elseif(Auth::guard('mentor')->check()){
+    //         if(Auth::guard('mentor')->user()->institution_id != 0){
+    //           $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get();
+    //         }else{
+    //           $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)->get();
+    //         }
+    //         $enrolled_projects = EnrolledProject::get();
+    //     }elseif(Auth::guard('customer')->check()){
+    //         $students = Student::whereHas('enrolled_projects', function($q){
+    //           $q->whereHas('project', function($q){
+    //             $q->where('company_id', Auth::guard('customer')->user()->company_id);
+    //           });
+    //         })->get();
+    //         $enrolled_projects = EnrolledProject::get();
+    //     }
 
+    //     return view('dashboard.students.index', compact('students', 'enrolled_projects'));
+    // }
     public function index()
     {
-        if(Auth::guard('web')->check()){
-            $students = Student::get();
-            $enrolled_projects = EnrolledProject::get();
-        }elseif(Auth::guard('mentor')->check()){
-            if(Auth::guard('mentor')->user()->institution_id != 0){
-              $students = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get();
-            }else{
-              $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)->get();
-            }
-            $enrolled_projects = EnrolledProject::get();
-        }elseif(Auth::guard('customer')->check()){
-            $students = Student::whereHas('enrolled_projects', function($q){
-              $q->whereHas('project', function($q){
-                $q->where('company_id', Auth::guard('customer')->user()->company_id);
-              });
-            })->get();
-            $enrolled_projects = EnrolledProject::get();
+        // Using a ternary operator to keep it more readable and less repetitive.
+        $guard = Auth::guard('web')->check() ? 'web' : 
+                 (Auth::guard('mentor')->check() ? 'mentor' : 
+                 (Auth::guard('customer')->check() ? 'customer' : null));
+    
+        switch ($guard) {
+            case 'web':
+                $students = Student::get();
+                break;
+            case 'mentor':
+                $mentor = Auth::guard('mentor')->user();
+                $students = ($mentor->institution_id != 0)
+                    ? Student::where('institution_id', $mentor->institution_id)->get()
+                    : Student::where('staff_id', $mentor->id)->get();
+                break;
+            case 'customer':
+                $companyId = Auth::guard('customer')->user()->company_id;
+                $students = Student::whereHas('enrolled_projects', function ($q) use ($companyId) {
+                    $q->whereHas('project', function ($q) use ($companyId) {
+                        $q->where('company_id', $companyId);
+                    });
+                })->get();
+                break;
+            default:
+                // Handle case when no guard is active (optional, but good for completeness)
+                abort(403, 'Unauthorized action.');
+                break;
         }
-
+    
+        $enrolled_projects = EnrolledProject::get();
+    
         return view('dashboard.students.index', compact('students', 'enrolled_projects'));
     }
+    // End of refactor first code
 
+    // 2nd code refactor
+    // public function testimonial(){
+    //     if(!Auth::guard('web')->check() || optional(Auth::guard('mentor')->user())->institution_id != 0){
+    //         return redirect()->back();
+    //     }
+    //     $students = Student::has('feedback')->get();
+
+    //     return view('dashboard.students.testimonial.index', compact('students'));
+    // }
+    public function testimonial()
+    {
+        $isWebGuardActive = Auth::guard('web')->check();
+        $mentorInstitutionId = optional(Auth::guard('mentor')->user())->institution_id;
+    
+        if (!$isWebGuardActive || $mentorInstitutionId != 0) {
+            return redirect()->back();
+        }
+    
+        $students = Student::has('feedback')->get();
+    
+        return view('dashboard.students.testimonial.index', compact('students'));
+    }
+    // end of 2nd code refactor
     public function register($email)
     {
         $email = (new SimintEncryption)->decData($email);
