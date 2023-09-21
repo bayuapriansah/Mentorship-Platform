@@ -23,20 +23,71 @@
     <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
         <div class="grid md:grid-cols-2 gap-4 items-center">
             <div class="my-auto">
-                <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
+                <h2 class="intelOne text-dark-blue font-bold text-4xl">Information<br><span class="text-light-brown"> For Students</span></h2>
             </div>
             <div class="relative my-auto">
-                <p class="m-0 text-black text-justify">Intel® AI For Workforce is a global AI skilling program for
-                    vocational students for building an AI-ready workforce. The program aims to address the AI skill
-                    crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the
-                    necessary skills for employability in the digital economy. The program offers comprehensive,
-                    modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
-                <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
-                    <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/K9iflwQqVsA"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-                        allowfullscreen loading="lazy"></iframe>
-                </div>
+                <p class="mb-4 text-black text-justify">On this platform students are going  to have the opportunity to work on AI projects in an online work like manner. Most projects or tutorials found online walk students through projects step by step given them a clear pathway from an idea to a solution. On this platform, the projects student will be working on have been designed to walk students through a project as it manifests itself in a work like setting. The goal is for students to develop their independence by finding solutions to problems, time management and responsibility by meeting deadlines, and accountability for their work as the owners of their tasks. Once the students have completed their simulated internship, not only will they have grown as developers, but they will have grown their project portfolio.
+                </p>
+                <p class="m-0 text-black text-justify">
+                    The projects our students will be working on have been designed to give students practical skills that will be beneficial in industry. From this program students will work on the following skills:
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{-- Body Content 2.1 --}}
+    <div class="max-w-screen-xl mx-auto px-6 py-4" id="AiForFuture">
+        <div class="grid md:grid-cols-2 gap-4 items-center">
+            <div class="my-auto">
+                {{-- <h2 class="intelOne text-dark-blue font-bold text-4xl">Information<br><span class="text-light-brown"> For Students</span></h2> --}}
+            </div>
+            <div class="relative my-auto bg-[#F3F3F3] rounded-xl px-8 py-4">
+                <p class="mb-4 text-black text-justify">
+                    <table class="table-fixed text-darker-blue font-medium">
+                        <tr>
+                        <td class="pb-4">
+                            <div class="flex items-center justify-center w-6 h-6 mr-2 bg-darker-blue rounded-full">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                        </td>
+                        <td class="pb-4">Data Collection</td>
+                        <td class="pb-4">
+                            <div class="flex items-center justify-center w-6 h-6 ml-16 mr-2 bg-darker-blue rounded-full">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                        </td>
+                        <td class="pb-4">Data Wrangling</td>
+                        </tr>
+                        <tr>
+                        <td class="pb-4">
+                            <div class="flex items-center justify-center w-6 h-6 mr-2 bg-darker-blue rounded-full">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                        </td>
+                        <td class="pb-4">Data Pipelining</td>
+                        <td class="pb-4">
+                            <div class="flex items-center justify-center w-6 h-6 ml-16 mr-2 bg-darker-blue rounded-full">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                        </td>
+                        <td class="pb-4">Data Model Building</td>
+                        </tr>
+                        <tr>
+                        <td class="pb-4">
+                            <div class="flex items-center justify-center w-6 h-6 mr-2 bg-darker-blue rounded-full">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                        </td>
+                        <td class="pb-4">AI Model Evaluation</td>
+                        <td class="pb-4">
+                            <div class="flex items-center justify-center w-6 h-6 ml-16 mr-2 bg-darker-blue rounded-full">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                        </td>
+                        <td class="pb-4">AI Solution Proof of Concept (POC) deployment <span class="text-light-brown">(Coming Soon)</span></td>
+                        </tr>
+                    </table>
+                </p>
             </div>
         </div>
     </div>
