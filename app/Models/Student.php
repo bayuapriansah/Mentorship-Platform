@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Project;
+use App\Models\Feedback;
 
 
 class Student extends Authenticatable
@@ -50,4 +51,9 @@ class Student extends Authenticatable
         return $this->hasMany(Submission::class);
     }
 
+    public function feedback()
+    {
+        return $this->hasOne(Feedback::class);
+    }
+    
 }

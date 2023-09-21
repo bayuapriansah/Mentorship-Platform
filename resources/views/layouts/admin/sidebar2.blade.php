@@ -42,6 +42,13 @@
           <a href="/dashboard/institutions_partners">Institutions & Partner</a>
         @endif
     </li>
+    <li class="hover:font-medium">
+        @if(Route::is('dashboard.testimonial'))
+          <a href="{{ route('dashboard.testimonial') }}" class="font-medium">Testimonials</a>
+        @else
+          <a href="{{ route('dashboard.testimonial') }}">Testimonials</a>
+        @endif
+    </li>
   @endif
 
   <li class="hover:font-medium">

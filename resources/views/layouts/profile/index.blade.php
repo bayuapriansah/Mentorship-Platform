@@ -248,7 +248,7 @@
                               $dataMessage->project_id,
                               $dataMessage->project_section_id,
                               $dataMessage->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                              <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-4 border border-blue-100 hover:bg-blue-100" role="alert">
+                              <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow mt-2 p-4 border border-blue-100 hover:bg-blue-100" role="alert">
                                   <div class="flex">
                                       <div class="ml-3 text-sm font-normal">
                                           <span class="mb-1 text-sm font-semibold text-dark-blue">New Message : </span><p>
@@ -309,7 +309,7 @@
                                     $notification->grade->submission->section_id,
                                     $notification->grade->submission->id]) }}
                                     " class="mb-2 text-sm font-normal text-dark-blue">
-                                      <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                      <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow mt-2 p-2 hover:bg-blue-100" role="alert">
                                         <div class="flex">
                                             <div class="ml-3 text-sm font-normal">
                                               <span class="mb-1 text-sm font-semibold text-dark-blue">New notification for grading. <p> Result Task : {{ $notification->grade->submission->projectSection->title }}</span>
@@ -335,7 +335,7 @@
                                     @if($notification->project->institution_id == $student->institution_id || $notification->project->institution_id == NULL)
                                       @if(optional($notification->read_notification)->firstWhere(['student_id' => $student->id, 'notifications_id' => $notification->id]) == NULL)
                                         <a href="{{ route('student.readActivityTask',[$student->id,$notification->project_id,$notification->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                                          <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                          <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow mt-2 p-2 hover:bg-blue-100" role="alert">
                                             <div class="flex">
                                                 <div class="ml-3 text-sm font-normal">
                                                   <span class="mb-1 text-sm font-semibold text-dark-blue">New Project available in {{ $notification->project->name }} .</span>

@@ -30,6 +30,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
+use App\Http\Controllers\HomepageController;
 // use App\Http\Controllers\ChatbotController;
 
 /*
@@ -173,6 +174,11 @@ Route::group(['middleware'=>'auth:student'], function(){
 });
 
 Route::get('/theworld', [TheWorldController::class, 'index']);
+
+// Homepage
+Route::get('/students-info', [HomepageController::class, 'studentsInfo'])->name('students.info');
+Route::get('/institutes-info', [HomepageController::class, 'institutesInfo'])->name('institutes.info');
+Route::get('/partners-info', [HomepageController::class, 'partnersInfo'])->name('partners.info');
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
@@ -345,7 +351,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
         Route::resource('students', StudentController::class);
         Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
-
+        Route::get('/testimonial', [StudentController::class, 'testimonial'])->name('testimonial');
     });
     Route::middleware(['auth:web,mentor'])->group(function(){
         Route::get('/mentor', [DashboardController::class, 'indexMentor'])->name('mentor');
@@ -354,7 +360,6 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::post('/completed_all/{student}', [DashboardController::class, 'studentCompleteAssignStore'])->name('student.studentCompleteAssignStore');
         Route::get('/completed_3', [DashboardController::class, 'studentComplete3'])->name('student.complete3');
 
-        // Route::get('/students', [StudentController::class, 'index'])->name('students.index');
         // Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
         // Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');
 
