@@ -178,8 +178,7 @@
                                         data-tooltip-trigger="hover" class="hover:underline">For Institution</a>
                                 </li>
                                 <li>
-                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Students</a>
+                                    <a href="{{ route('students.info') }}" class="hover:underline">For Students</a>
                                 </li>
                             </ul>
                         </div>
