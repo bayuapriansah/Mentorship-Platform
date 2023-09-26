@@ -222,7 +222,7 @@
                             <div>
                               <h1 class="text-dark-blue font-medium text-sm mb-1">File Link</h1>
                                 <input class="border border-light-blue rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 mb-2 focus:outline-none" type="text" placeholder="File Link" name="glablink">
-                                <p class="text-xs text-dark-blue" id="link_error" style="display: none;">*Please enter a link from Google Docs, Google Drive, or Google Colab</p>
+                                <p class="text-sm text-red-600" id="link_error" style="display: none;">*Please enter a link from Google Docs, Google Drive, or Google Colab</p>
                             </div>
                             <div>
                               <h1 class="text-dark-blue font-medium text-sm mb-1">Additional Resources (Datasets, Reports, etc.)</h1>
@@ -388,39 +388,61 @@ const tagify = new Tagify(input, {
 </script>
 
 <!-- Your script -->
+{{-- Better Javascript Validation for link html --}}
 <script>
-  $(document).ready(function(){
-      $('input[name="glablink"]').on('input', function() {
-          var value = $(this).val();
-  
-          // Add https:// prefix if not present
-          if (!/^https?:\/\//i.test(value)) {
-              value = 'https://' + value;
-          }
-  
-          // Remove www. if present at the start of the URL, after https:// or http://
-          value = value.replace(/(https?:\/\/)www\./i, '$1');
-  
-          // Set the updated value
-          $(this).val(value);
-  
-          // Perform Google Docs, Google Drive, or Google Colab check
-          try {
-              var url = new URL(value);
-              var hostnames = ['docs.google.com', 'drive.google.com', 'colab.research.google.com'];
-              if (!hostnames.includes(url.hostname)) {
-                  // Show the error message and clear the input if it's not a Google Docs, Google Drive, or Google Colab link
-                  // $(this).val('');
-                  $("#link_error").show();
-              } else {s
-                  $("#link_error").hide();
-              }
-          } catch(e) {
-              // $(this).val('');
-              $("#link_error").show();
-          }
-      });
-  });
+document.addEventListener('DOMContentLoaded', (event) => {
+    const confirmButton = document.getElementById('confirm');
+    const submitButton = document.getElementById('submit');
+    const linkInput = document.querySelector('input[name="glablink"]');
+    const linkError = document.getElementById('link_error');
+
+    // Initially disable both buttons
+    confirmButton.setAttribute('disabled', 'disabled');
+    submitButton.setAttribute('disabled', 'disabled');
+
+    // Validate the link as the user types
+    linkInput.addEventListener('input', validateLink);
+
+    function validateLink() {
+        let url = linkInput.value.trim();
+
+        // Remove www. if present
+        
+        // Ensure the URL starts with either http:// or https://
+        if (!url.match(/^https?:\/\//)) {
+          url = 'https://' + url;
+        }
+        
+        // Move the www removal after ensuring the URL starts with http:// or https://
+        url = url.replace(/^https?:\/\/www\./, 'https://');
+
+        let hostname;
+        try {
+            hostname = new URL(url).hostname;
+        } catch (e) {
+            linkError.style.display = 'block';
+            confirmButton.setAttribute('disabled', 'disabled');
+            submitButton.setAttribute('disabled', 'disabled');
+            return false; // URL is invalid
+        }
+
+        // Validate domain
+        const validDomains = ['docs.google.com', 'drive.google.com', 'colab.research.google.com'];
+        if (validDomains.includes(hostname)) {
+            linkError.style.display = 'none';
+            confirmButton.removeAttribute('disabled'); // Enable the confirm button
+            submitButton.removeAttribute('disabled'); // Enable the submit button
+            linkInput.value = url;
+            return true; // URL is valid
+        } else {
+            linkError.style.display = 'block';
+            confirmButton.setAttribute('disabled', 'disabled'); // Disable the confirm button
+            submitButton.setAttribute('disabled', 'disabled'); // Disable the submit button
+            return false; // URL is invalid
+        }
+    }
+});
+
   </script>
 
 @endsection

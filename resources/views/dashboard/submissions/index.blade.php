@@ -40,7 +40,7 @@
     @foreach ($submissions->whereNotNull('file') as $submission)
     <tr>
       <td>{{$no}}</td>
-      <td>{{$submission->student->first_name}} {{$submission->student->last_name}}</td>
+      <td>{{optional($submission->student)->first_name}} {{optional($submission->student)->last_name}}</td>
       <td>Task {{$submission->projectSection->section}} :{{substr($submission->projectSection->title,0,34)}} {{strlen($submission->projectSection->title) > 34? '...':''}}</td>
       <td>{{$submission->updated_at->format('d/m/Y')}}</td>
       <td>
@@ -98,7 +98,7 @@
         @foreach ($submissionsSupervised->whereNotNull('file') as $submission)
         <tr>
           <td>{{$no}}</td>
-          <td>{{$submission->student->first_name}} {{$submission->student->last_name}}</td>
+          <td>{{optional($submission->student)->first_name}} {{optional($submission->student)->last_name}}</td>
           <td>Task {{$submission->projectSection->section}} :{{substr($submission->projectSection->title,0,34)}} {{strlen($submission->projectSection->title) > 34? '...':''}}</td>
           <td>{{$submission->updated_at->format('d/m/Y')}}</td>
           <td>

@@ -58,8 +58,8 @@
       <option value="" hidden>Project Duration *</option>
       <option value="1" {{old('period') == '1' ? 'selected': ''}}>A Week</option>
       <option value="1" {{old('period') == '1' ? 'selected': ''}}>1 Month</option>
-      <option value="2" {{old('period') == '2' ? 'selected': ''}}>2 Months</option>
-      <option value="3" {{old('period') == '3' ? 'selected': ''}}>3 Months</option>
+      <option value="2" {{old('period') == '2' ? 'selected': ''}}>2 Month(s)</option>
+      <option value="3" {{old('period') == '3' ? 'selected': ''}}>3 Month(s)</option>
     </select>
     @error('period')
         <p class="text-red-600 text-sm mt-1">

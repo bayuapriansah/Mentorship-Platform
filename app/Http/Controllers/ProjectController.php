@@ -25,11 +25,6 @@ class ProjectController extends Controller
 {
     public function index()
     {
-      // if(Auth::guard('student')->check()){
-      //   if(\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date){
-      //     abort(403);
-      //   }
-      // }
         if(Auth::guard('student')->check()){
             $projects = Project::whereNotIn('id', function($query){
                             $query->select('project_id')->from('enrolled_projects');
@@ -47,6 +42,7 @@ class ProjectController extends Controller
         }
         else{
             $projects = Project::where('status', 'publish')->get();
+            // dd($projects);
         }
 
         return view('projects.index', compact('projects'));
@@ -336,7 +332,7 @@ class ProjectController extends Controller
         // $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
         //                                     ->where('is_submited', 1)->first();
         if(Auth::guard('student')->check()){
-          if($total_month_complete<4){
+          if($total_month_complete<=4){
             if($remaining_intern_days-$project_totaldays >=0){
               if($already_enrolled == null ){
                 $enrolled_project->student_id = Auth::guard('student')->user()->id;
