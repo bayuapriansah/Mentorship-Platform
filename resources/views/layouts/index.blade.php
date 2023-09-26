@@ -20,14 +20,14 @@
 
 <body>
     {{-- NAVBAR --}}
-    <nav class="bg-white text-dark-blue px-2 py-4">
+    <nav class="bg-white text-dark-blue px-6 py-4">
         <div class="max-w-screen-xl flex flex-col md:flex-row items-center justify-between mx-auto">
             <div class="text-lg font-semibold mb-4 md:mb-0">
                 <a href="{{ route('index') }}" class="text-dark-blue no-underline hover:text-lightest-blue">
                     <img src="{{ asset('assets/img/Digitalreadiness-logo 1.svg') }}" class="" alt="">
                 </a>
             </div>
-            <div class="flex justify-center space-x-4 flex-grow mb-4 gap-10 md:mb-0">
+            <div class="flex justify-center space-x-4 flex-grow mb-4 gap-5 tab:gap-5 md:mb-0">
                 <a href="{{ route('index') }}"
                     class="text-dark-blue intelOne no-underline hover:text-lightest-blue">Home</a>
                 <a href="{{ route('projects.index') }}"
@@ -95,14 +95,14 @@
 
                             @elseif(Auth::guard('customer')->check())
                              <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                            
+
                              @endif
 
                         </li>
                     </ul>
                     <div class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                        <a href="#" 
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+                        <a href="#"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log Out</a>
 
                         <form id="logout-form" class="inline" method="post" action="{{ route('logout') }}" style="display: none;">
@@ -178,8 +178,7 @@
                                         data-tooltip-trigger="hover" class="hover:underline">For Institution</a>
                                 </li>
                                 <li>
-                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Students</a>
+                                    <a href="{{ route('students.info') }}" class="hover:underline">For Students</a>
                                 </li>
                             </ul>
                         </div>

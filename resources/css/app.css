@@ -104,39 +104,39 @@
   margin-left: 0;
   margin-right: 0;
 }
-.problem ul { 
+.problem ul {
   color: #838383;
-  list-style-type: disc; 
-  list-style-position: inside; 
+  list-style-type: disc;
+  list-style-position: inside;
   margin-left: 20px;
 }
-.problem ol { 
+.problem ol {
   color: #838383;
-  list-style-type: decimal; 
-  list-style-position: inside; 
+  list-style-type: decimal;
+  list-style-position: inside;
   margin-left: 20px;
 }
-.problem ul .problem ul, .problem ol ul { 
-  list-style-type: circle; 
-  list-style-position: inside; 
-  margin-left: 15px; 
+.problem ul .problem ul, .problem ol ul {
+  list-style-type: circle;
+  list-style-position: inside;
+  margin-left: 15px;
 }
-.problem ol .problem ol, .problem ul .problem ol { 
-  list-style-type: lower-latin; 
-  list-style-position: inside; 
-  margin-left: 15px; 
+.problem ol .problem ol, .problem ul .problem ol {
+  list-style-type: lower-latin;
+  list-style-position: inside;
+  margin-left: 15px;
 }
 
 /* certif */
 @media print{
   .no-print, .no-print *{
     display: none !important;
-  } 
+  }
   .print-m-0{
     margin: 0px !important;
   }
   @page {size: landscape}
-} 
+}
 body{
   font-family: 'IntelOne';
 }
@@ -147,54 +147,54 @@ body{
 }
 
 .btn{
-  padding: 10px 17px; 
-  border-radius: 3px; 
-  background: #f4b71a; 
-  border: none; 
-  font-size: 12px; 
+  padding: 10px 17px;
+  border-radius: 3px;
+  background: #f4b71a;
+  border: none;
+  font-size: 12px;
   margin: 10px 5px;
 }
 
 .toolbar{
-  background: white; 
-  width: 100%; 
-  position: fixed; 
-  left: 0; 
-  top: 0; 
+  background: white;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
   text-align: center;
 }
 
 .cert-container {
-  margin:65px 0 10px 0; 
-  width: 100%; 
-  display: flex; 
+  margin:65px 0 10px 0;
+  width: 100%;
+  display: flex;
   justify-content: center;
 }
 
 .cert {
-  width:800px; 
-  height:600px; 
-  padding:15px 20px; 
-  text-align:center; 
-  position: relative; 
+  width:800px;
+  height:600px;
+  padding:15px 20px;
+  text-align:center;
+  position: relative;
   z-index: -1;
 }
 
 .cert-bg {
-  position: absolute; 
-  left: 0px; 
-  top: 0; 
+  position: absolute;
+  left: 0px;
+  top: 0;
   z-index: -1;
   width: 100%;
 }
 
 .cert-content {
-  width:750px; 
-  height:470px; 
-  padding:70px 60px 0px 60px; 
+  width:750px;
+  height:470px;
+  padding:70px 60px 0px 60px;
   text-align:center;
   font-family: Arial, Helvetica, sans-serif;
-  
+
 }
 
 /* h1 {
@@ -207,8 +207,8 @@ p {
 } */
 
 .bottom-txt {
-  padding: 12px 5px; 
-  display: flex; 
+  padding: 12px 5px;
+  display: flex;
   justify-content: space-between;
   font-size: 16px;
 }
@@ -224,6 +224,10 @@ p {
 
 .ml-215 {
   margin-left: 215px;
+}
+
+.swip-testimonial {
+    overflow: hidden;
 }
 
 /* CHATBOT CUSTOM CSS */
