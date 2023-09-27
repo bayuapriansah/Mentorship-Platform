@@ -188,6 +188,29 @@ body{
   width: 100%;
 }
 
+/* cus */
+
+.disabled-link {
+  pointer-events: none;
+  color: crimson !important;
+}
+
+.dataTables_filter{
+  margin-bottom:18px !important;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* .swiper-container {
+  overflow-x: hidden;
+} */
+
+/* .hidden {
+  display: none;
+} */
+
 .cert-content {
   width:750px;
   height:470px;

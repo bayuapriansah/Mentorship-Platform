@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
+use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
+use Illuminate\Support\Facades\Log;
+
 class CompanyController extends Controller
 {
     /**
@@ -46,44 +50,22 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCompanyRequest $request)
     {
-        $messages = [
-            'email.unique' => 'The email address has already been taken by another company.',
-        ];
+        $validated = $request->validated();
     
-        $validated = $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'email' => 'required|unique:companies,email',
-            'logo' => 'required'
-        ], $messages);
-
-        $existingEmail = Company::where('email', $validated['email'])->first();
-
-        if($existingEmail) {
-            return back()->with('error', 'The email has already been taken.');
-        }
-
         $company = new Company;
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
-        if($request->hasFile('logo')){
-            // 5000000
-            if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
-                $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
-                $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
-                ){
-                $logo = Storage::disk('public')->put('companies', $validated['logo']);
-                $company->logo = $logo;
-            }else{
-                return back()->with('error', 'file extension is not png, jpg or jpeg. Or image size is too large');
-            }
-
+    
+        if ($request->hasFile('logo')) {
+            $logo = $this->uploadLogo($request->file('logo'));
+            $company->logo = $logo;
         }
+    
         $company->save();
-        return redirect('dashboard/institutions_partners/')->with('successTailwind','Partner has been added');
+        return redirect('dashboard/institutions_partners/')->with('successTailwind', 'Partner has been added');
     }
 
     /**
@@ -116,38 +98,32 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update($id, UpdateCompanyRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'email' => 'required',
-        ]);
-
+        $validated = $request->validated();
+    
         $company = Company::find($id);
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
-        if($request->hasFile('logo')){
-
-            if(Storage::path($company->logo)) {
+    
+        if ($request->hasFile('logo')) {
+            if (Storage::path($company->logo)) {
                 Storage::disk('public')->delete($company->logo);
             }
-
-            // save the new image
-             if( $request->file('logo')->extension() =='png' && $request->file('logo')->getSize() <=5000000 ||
-                $request->file('logo')->extension() =='jpg' && $request->file('logo')->getSize() <=5000000 ||
-                $request->file('logo')->extension() =='jpeg' && $request->file('logo')->getSize() <=5000000
-                ){
-                $logo = Storage::disk('public')->put('companies', $request->logo);
-                $company->logo = $logo;
-            }else{
-                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg. Or image size is too large');
-            }
+    
+            $logo = $this->uploadLogo($request->file('logo'));
+            $company->logo = $logo;
         }
+    
         $company->save();
-        return redirect('dashboard/institutions_partners')->with('successTailwind','Partner has been edited');
-
+        return redirect('dashboard/institutions_partners')->with('successTailwind', 'Partner has been edited');
+    }
+    
+    // Upload Logo Function
+    private function uploadLogo($logo)
+    {
+        return Storage::disk('public')->put('companies', $logo);
     }
 
     /**
@@ -158,8 +134,8 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        $company = Company::find($id);
+        $company = Company::findOrFail($id);
         $company->delete();
-        return redirect('dashboard/institutions')->with('successTailwind','Partner has been deleted');
+        return redirect('dashboard/institutions')->with('successTailwind', 'Partner has been deleted');
     }
 }

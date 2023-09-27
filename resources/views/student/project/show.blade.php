@@ -105,7 +105,7 @@
                         class="border border-light-blue rounded-[10px] bg-white p-2 absolute mt-14  flex  float-right space-x-3 ">
                         <i class="fa-regular fa-calendar"></i>
                         <p class="font-normal text-sm text-light-blue">Duration: <span
-                                class="text-dark-blue">{{ $project->period }} Months</span></p>
+                                class="text-dark-blue">{{ $project->period }} Month(s)</span></p>
                     </div>
                 </div>
             </div>

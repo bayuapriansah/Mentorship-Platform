@@ -106,21 +106,21 @@
                     <!-- Slide -->
                     <div class="swiper-slide">
                         <div
-                            class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
+                            class="block p-3 rounded-lg shadow-lg hover:shadow-xl hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
                             <div class="flex space-x-2">
                                 <div class="flex-col">
                                     <p
                                         class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis px-2 overflow-hidden">
                                         {{ $testimonial['name'] }}
                                     </p>
-                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis px-2 overflow-hidden">
-                                        Students
-                                    <div class="pt-2">
+                                    <p class="text-black font-normal text-sm mt-2 overflow-ellipsis px-2 overflow-hidden">
+                                        Student
+                                    {{-- <div class="pt-2">
                                         <p
                                             class="text-dark-blue font-normal text-sm bg-lightest-blue py-0.5 text-center shadow-lg rounded-lg p-4 overflow-ellipsis px-2 overflow-hidden">
                                             {{ $testimonial['email'] }}
                                         </p>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="text-grey font-normal text-base text-justify mb-2 py-4 overflow-ellipsis px-2 overflow-hidden">
