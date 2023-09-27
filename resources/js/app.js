@@ -1,6 +1,67 @@
 // import './bootstrap';
 import 'flowbite';
-require('./swiperInit');
+
+import Swiper, { Navigation, Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+const swiper = new Swiper('.swiper-container', {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    navigation: {
+      nextEl: '#swiper-button-next',
+      prevEl: '#swiper-button-prev',
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      950: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+    },
+    modules: [Navigation, Pagination],
+  });
+  
+  const swiperTestimonial = new Swiper('.swip-testimonial', {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    navigation: {
+      nextEl: '#testimonial-swiper-button-next',
+      prevEl: '#testimonial-swiper-button-prev',
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      950: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+    },
+    modules: [Navigation, Pagination],
+  });
+
 document.addEventListener("DOMContentLoaded", function() {
     const textarea = document.getElementById('feedback');
     const counter = document.getElementById('counter');
