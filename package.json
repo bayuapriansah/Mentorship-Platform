@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "swiper": "^9.3.2",
+        "tinymce": "^6.7.0",
         "tw-elements": "^1.0.0-beta3"
     }
 }

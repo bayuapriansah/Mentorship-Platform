@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     @vite(['resources/css/app.css','resources/js/app.js'])
 
-    <script src="https://cdn.tiny.cloud/1/c4fnz0jmum59svb2qpxhe3tnay9nokoed263303akhgyhywv/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/gm5482398yg3mbfrvxr3y0bok7hggsq0gervklzy8n1jpj1a/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
     tinymce.init({
         selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
@@ -41,7 +41,7 @@
           padding: 6px 10px;
           border-radius: 0.375rem;
           border:1px solid black;
-          background-color: white 
+          background-color: white
         }
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -141,7 +141,7 @@
         @else
         <li class="text-black intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/support" class="hover:text-neutral-500">Support</a></li>
         @endif
-                
+
       </ul>
 
       <div class="col-start-9 col-span-4 flex relative ">
@@ -359,7 +359,7 @@
                     <a href="/profile/{{$student->id}}/allNotification" class="text-[#6973C6] text-xs">View All Notifications</a>
                   </div>
                 </div>
-                
+
             </div>
         </div>
       </div>
@@ -406,8 +406,7 @@
                                         data-tooltip-trigger="hover" class="hover:underline">For Institution</a>
                                 </li>
                                 <li>
-                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Students</a>
+                                    <a href="{{ route('students.info') }}" class="hover:underline">For Students</a>
                                 </li>
                             </ul>
                         </div>
@@ -558,7 +557,7 @@
         console.log('tes');
       }
     </script>
-    
+
     @yield('more-js')
   </body>
 </html>

@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
+use Illuminate\Validation\Rule;
 use PhpParser\Node\Stmt\Break_;
 use setasign\Fpdi\Fpdi;
 
@@ -770,7 +771,7 @@ class StudentController extends Controller
     }
 
     public function readComment($student_id, $project_id, $task_id, $commecnt_id){
-        $read_comment_from_admin = Comment::where('id', $commecnt_id)->where('read_message', 0)->first();
+        $read_comment_from_admin = Comment::where('id', $commecnt_id)->where('read_message', 0)->firstOrFail();
         $read_comment_from_admin->read_message = 1;
         $read_comment_from_admin->save();
         return redirect()->route('student.taskDetail',[$student_id,$project_id,$task_id]);
@@ -818,7 +819,8 @@ class StudentController extends Controller
         return view('student.project.task.index', compact('student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
-    public function taskSubmit( Request $request, $student_id, $project_id, $task_id, $submission_id ) {
+    public function taskSubmit( Request $request, $student_id, $project_id, $task_id, $submission_id )
+    {
         if ($student_id != Auth::guard('student')->user()->id) {
             abort(403);
         }
@@ -883,53 +885,6 @@ class StudentController extends Controller
         $submission->file = $glablink;
         $submission->dataset = $request->dataset ? $dataset_result : null;
         $submission->save();
-    
-        // Remove shit
-        // if ($request->hasFile('file')) {
-        //     $uploadedFile = $request->file('file');
-        //     $uploadedFileExtension = $uploadedFile->getClientOriginalExtension();
-    
-        //     if ($uploadedFileExtension == $task->file_type) {
-        //         $fileName = str_replace(
-        //             " ",
-        //             "_",
-        //             strtolower($uploadedFile->getClientOriginalName())
-        //         );
-        //         $studentName = $student->first_name . $student->last_name;
-        //         $currentTime = Carbon::now();
-        //         $formattedTime = $currentTime->format('YmdHis');
-        //         $destinationPath = 'projects/submission/project/'
-        //             . $project_id
-        //             . '/'
-        //             . $studentName
-        //             . '/task/'
-        //             . $task_id;
-        //         $saveFileTask = $uploadedFile->storeAs(
-        //             $destinationPath,
-        //             $formattedTime . '_' . $fileName,
-        //             'public'
-        //         );
-    
-        //         $submission->file = $saveFileTask;
-        //         $submission->save();
-        //     } elseif ($uploadedFileExtension != $task->file_type) {
-        //         $error_message = 'The uploaded file must be of the following type: ' . $task->file_type;
-        //         return redirect('/profile/' . $student_id . '/enrolled/' . $project_id . '/task/' . $task_id)
-        //             ->with('errorTailwind', $error_message);
-        //     }
-        // }
-        // We choose to just use inputed link for this function so it didnt adddedl-
-
-        // Important don't delete yet
-        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-        // $project_sections = ProjectSection::where('project_id', $project_id)->get();
-        // $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first()->is_submited;
-        // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
-        //     $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-        //     $success_project->is_submited = 1;
-        //     $success_project->flag_checkpoint = $dataDate;
-        //     $success_project->save();
-        // }
         
         $submission_date_override = Submission::where('project_id', $project_id)
             ->where('student_id', Auth::guard('student')->user()->id)
@@ -968,12 +923,6 @@ class StudentController extends Controller
             abort(403);
         }
         $task = ProjectSection::findOrFail($task_id);
-        // dd($task->file_type);
-        // if($request->hasFile('file')==true){
-        //     $validated = $request->validate([
-        //         'glablink' => ['required'],
-        //     ]);
-        // }
 
         $validated = Validator::make($request->all(), [
             'glablink' => 'required',
@@ -989,33 +938,7 @@ class StudentController extends Controller
         $glablink = $request->input('glablink');
         $submission->file = $glablink;
         $submission->save();
-        // // dd($dataset_result);
-        // // dd($request->hasFile('file'));
-        // if($request->hasFile('file')){
-        //     if(Storage::path($submission->file)) {
-        //         Storage::disk('public')->delete($submission->file);
-        //     }
 
-        //     $uploadedFileType = substr($request->file('file')->getClientOriginalName(), strpos($request->file('file')->getClientOriginalName(),'.')+1);
-        //     if($uploadedFileType == $task->file_type && $request->file('file')->getSize() <=5000000){
-        //         $file = Storage::disk('public')->put('projects/submission/project/'.$project_id.'/task/'.$task_id, $validated['file']);
-        //         $submission->file = $file;
-        //     }else{
-        //         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'File extension or file size is wrong');
-        //     }
-        //     $submission->save();
-        // }else{
-        //     return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id)->with('error', 'Please Upload File First');
-        // }
-
-        // Important don't delete yet
-        // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-        // if(($submissions->count() == $project_sections->count()) && $enrolled_project_completed_or_no == 0){
-        //     $success_project = EnrolledProject::where([['student_id', Auth::guard('student')->user()->id], ['project_id', $project_id]])->first();
-        //     $success_project->is_submited = 1;
-        //     $success_project->flag_checkpoint = $dataDate;
-        //     $success_project->save();
-        // }
         $grade = Grade::where('submission_id', $submission_id)->first();
         $grade->delete();
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
@@ -1035,13 +958,14 @@ class StudentController extends Controller
                                 $query->select('project_id')->from('enrolled_projects');
                                 $query->where('student_id',Auth::guard('student')->user()->id);
                             })->where('institution_id', $student->institution_id)
-                            ->where('status', 'publish')
+                            ->where('status', ['publish', 'private_project'])
                             ->orWhere('institution_id', null)->whereNotIn('id', function($query){
                                 $query->select('project_id')->from('enrolled_projects');
                                 $query->where('student_id',Auth::guard('student')->user()->id);
                             })
-                            ->where('status', 'publish')
+                            ->where('status', ['publish', 'private_project'])
                             ->get();
+
         $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
         $completed_months = Project::whereHas('enrolled_project', function($q){
           $q->where('student_id', Auth::guard('student')->user()->id);
