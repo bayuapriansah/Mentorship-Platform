@@ -79,7 +79,7 @@
                     {{ substr($enrolled_project->project->overview,0,250) }}...
                   </div>
                   <div class="flex justify-between mt-0">
-                    <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>
+                    <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Month(s)</span></p>
                     <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$enrolled_project->project->id}}/detail" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-2 rounded-full">View Project</a>
                   </div>
                 </div>
@@ -127,7 +127,7 @@
                   {{ substr($enrolled_project->project->overview,0,250) }}...
                 </div>
                 <div class="flex justify-between mt-0">
-                  <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>
+                  <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Month(s)</span></p>
                   <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$enrolled_project->project->id}}/detail" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-2 rounded-full">View Project</a>
                 </div>
               </div>
@@ -172,7 +172,7 @@
                   {{ substr($enrolled_project->project->overview,0,250) }}...
                 </div>
                 <div class="flex justify-between mt-0">
-                  <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Months</span></p>
+                  <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span class="font-bold">{{$enrolled_project->project->period}} Month(s)</span></p>
                   <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$enrolled_project->project->id}}/detail" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-2 rounded-full">View Project</a>
                 </div>
               </div>

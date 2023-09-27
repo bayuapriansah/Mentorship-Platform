@@ -57,7 +57,7 @@
             aria-hidden="true">
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
-                <img src="{{ asset('assets/img/for_students.png') }}" loading="lazy" class="relative z-20" alt="for students">
+                <img src="{{ asset('assets/img/for_students.png') }}" loading="lazy" class="relative shadow-lg rounded-2xl z-20" alt="for students">
                 <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Acquire Employability Skills, Gain Industry
                     Experience, Strengthen Project Portfolio</p>
@@ -65,7 +65,7 @@
         </div>
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
-                <img src="{{ asset('assets/img/for_institution.png') }}" loading="lazy" class="relative z-20" alt="for students">
+                <img src="{{ asset('assets/img/for_institution.png') }}" loading="lazy" class="relative shadow-lg rounded-2xl z-20" alt="for students">
                 <h1 class="text-dark-blue text-2xl font-bold py-3">For Institutes</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Enhanced Student Employability, Collaborate
                     with Industry leaders, Supervise Real-World AI Projects</p>
@@ -73,10 +73,62 @@
         </div>
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
-                <img src="{{ asset('assets/img/for_industries.png') }}" loading="lazy" class="relative z-20" alt="for students">
+                <img src="{{ asset('assets/img/for_industries.png') }}" loading="lazy" class="relative shadow-lg rounded-2xl z-20" alt="for students">
                 <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Identify Top Future Talents, Collaborate
                     with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
+            </div>
+        </div>
+    </div>
+
+    {{-- Body Content 4.1 --}}
+    <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="intelOne text-dark-blue font-bold text-3xl pb-8">Testimonial From Students</h2>
+            <div class="flex space-x-4">
+                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="testimonial-swiper-button-prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="h-6 w-6 text-dark-blue">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="testimonial-swiper-button-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="h-6 w-6 text-dark-blue">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="swip-testimonial">
+            <div class="swiper-wrapper">
+                @foreach ($testimonials as $testimonial)
+                    <!-- Slide -->
+                    <div class="swiper-slide">
+                        <div
+                            class="block p-3 rounded-lg shadow-lg hover:shadow-xl hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
+                            <div class="flex space-x-2">
+                                <div class="flex-col">
+                                    <p
+                                        class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis px-2 overflow-hidden">
+                                        {{ $testimonial['name'] }}
+                                    </p>
+                                    <p class="text-black font-normal text-sm mt-2 overflow-ellipsis px-2 overflow-hidden">
+                                        Student
+                                    {{-- <div class="pt-2">
+                                        <p
+                                            class="text-dark-blue font-normal text-sm bg-lightest-blue py-0.5 text-center shadow-lg rounded-lg p-4 overflow-ellipsis px-2 overflow-hidden">
+                                            {{ $testimonial['email'] }}
+                                        </p>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="text-grey font-normal text-base text-justify mb-2 py-4 overflow-ellipsis px-2 overflow-hidden">
+                                {{ $testimonial['feedback'] }}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -141,6 +193,7 @@
                 @endforeach
             </div>
         </div>
+
         <div class="flex justify-end pt-6">
             <a href="{{ route('projects.index') }}" class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid px-4 py-2">View All Projects</a>
         </div>
@@ -202,5 +255,33 @@
           }
       }
   });
+
+// New Testimonial Swiper
+const swiperTestimonial = new Swiper('.swip-testimonial', {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    navigation: {
+        nextEl: '#testimonial-swiper-button-next',
+        prevEl: '#testimonial-swiper-button-prev',
+    },
+    breakpoints: {
+        320: {
+            slidesPerView: 1,
+            spaceBetween: 10
+        },
+        480: {
+            slidesPerView: 1,
+            spaceBetween: 10
+        },
+        640: {
+            slidesPerView: 2,
+            spaceBetween: 10
+        },
+        950: {
+            slidesPerView: 3,
+            spaceBetween: 30
+        }
+    }
+});
 </script>
 @endsection
