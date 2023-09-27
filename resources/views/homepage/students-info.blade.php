@@ -26,10 +26,10 @@
                 <h2 class="intelOne text-dark-blue font-bold text-4xl">Information<br><span class="text-light-brown"> For Students</span></h2>
             </div>
             <div class="relative my-auto">
-                <p class="mb-4 text-black text-justify">On this platform students are going  to have the opportunity to work on AI projects in an online work like manner. Most projects or tutorials found online walk students through projects step by step given them a clear pathway from an idea to a solution. On this platform, the projects student will be working on have been designed to walk students through a project as it manifests itself in a work like setting. The goal is for students to develop their independence by finding solutions to problems, time management and responsibility by meeting deadlines, and accountability for their work as the owners of their tasks. Once the students have completed their simulated internship, not only will they have grown as developers, but they will have grown their project portfolio.
+                <p class="mb-4 text-black text-justify">On this platform, students will have the opportunity to work on AI projects in an online work-like environment. Most projects or tutorials found online walk students through projects step by step, giving them a clear pathway from the original idea to a solution. On this platform, the projects students will be working on have been designed to walk students through a project as it manifests itself in a work-like setting. The goal is for students to develop their independence by finding solutions to problems, time management and responsibility by meeting deadlines, and accountability for their work as the owners of their tasks. Once the students have completed their simulated internship, not only will they have grown as developers, but they will have grown their project portfolio.
                 </p>
                 <p class="m-0 text-black text-justify">
-                    The projects our students will be working on have been designed to give students practical skills that will be beneficial in industry. From this program students will work on the following skills:
+                    The projects our students will be working on have been designed to give students practical skills that will be beneficial in industry. From this program, students will work on the following skills:
                 </p>
             </div>
         </div>
@@ -84,7 +84,7 @@
                                 <i class="fas fa-check text-white"></i>
                             </div>
                         </td>
-                        <td class="pb-4">AI Solution Proof of Concept (POC) deployment <span class="text-light-brown">(Coming Soon)</span></td>
+                        <td class="pb-4">AI Solution Proof of Concept (POC) Deployment</td>
                         </tr>
                     </table>
                 </p>
@@ -130,7 +130,7 @@
                 <div class="relative z-30 rounded-lg">
                     <img src="{{ asset('assets/img/for_students/step2.svg') }}" loading="lazy" class="inset-0 w-1/4 h-1/4" alt="for students">
                     <h1 class="text-2xl font-medium text-left py-3">Enroll in a project</h1>
-                    <p class="text-black font-normal text-left py-3">Enroll in a project to transition from theoretical knowledge to practical skills. Embark on a hands-on learning journey, tackle real-world challenges, and step closer to mastering industry-relevant skills. Your gateway to practical learning starts here!</p>
+                    <p class="text-black font-normal text-left py-3">Enroll in one of our various projects to begin the hands-on learning journey.</p>
                 </div>
             </div>
         </div>
@@ -143,7 +143,7 @@
                 <div class="relative z-30 rounded-lg mr-16">
                     <img src="{{ asset('assets/img/for_students/step3.svg') }}" loading="lazy" class="inset-0 w-1/4 h-1/4 ml-auto" alt="for students">
                     <h1 class="text-2xl font-medium text-right py-3">Begin & Work on the Task</h1>
-                    <p class="text-black font-normal text-right py-3">Dive into tasks and transform your understanding into action. Engage with real-world challenges, work through them, and enrich your skill set. Your journey from initiation to implementation begins here!</p>
+                    <p class="text-black font-normal text-right py-3">Dive into the given tasks and transform your knowledge into action. During these tasks, you will engage with real-world challenges, and work through them, to enrich your skill set.</p>
                 </div>
             </div>
             <div class="relative my-auto">
@@ -168,7 +168,7 @@
                 <div class="relative z-30 rounded-lg">
                     <img src="{{ asset('assets/img/for_students/step4.svg') }}" loading="lazy" class="inset-0 w-1/4 h-1/4" alt="for students">
                     <h1 class="text-2xl font-medium text-left py-3">Submit the task</h1>
-                    <p class="text-black font-normal text-left py-3">Seal your progress by submitting your task. It's a step closer to mastering your project and receiving constructive feedback. Your efforts now await acknowledgment—hit submit to further your learning journey!</p>
+                    <p class="text-black font-normal text-left py-3">Once a task is completed, you will submit your work online so you can track and mark your progress throughout the project. Your task will then be evaluated by our industry partner, your supervisor, or our support team.</p>
                 </div>
             </div>
         </div>
@@ -181,7 +181,7 @@
                 <div class="relative z-30 rounded-lg mr-16">
                     <img src="{{ asset('assets/img/for_students/step5.svg') }}" loading="lazy" class="inset-0 w-1/4 h-1/4 ml-auto" alt="for students">
                     <h1 class="text-2xl font-medium text-right py-3">Move onto the next task</h1>
-                    <p class="text-black font-normal text-right py-3">Advance to the next task, keeping the learning curve ascending. Each task conquered inches you closer to your project completion, paving the way for a fruitful learning experience. Keep the pace, the next endeavor awaits!</p>
+                    <p class="text-black font-normal text-right py-3">Advance to the next task to stay on top of the work deadlines. Additionally, keep track of past task submissions as your work receives review and feedback</p>
                 </div>
             </div>
             <div class="relative my-auto">
@@ -205,8 +205,8 @@
             <div class="relative my-auto">
                 <div class="relative z-30 rounded-lg">
                     <img src="{{ asset('assets/img/for_students/step6.svg') }}" loading="lazy" class="inset-0 w-1/4 h-1/4" alt="for students">
-                    <h1 class="text-2xl font-medium text-left py-3">Portfolio Link & Certificate of Participation</h1>
-                    <p class="text-black font-normal text-left py-3">Complete all designated projects within 4 months to unlock access to your personalized digital portfolio landing page and receive a certificate of participation, showcasing your dedication and acquired skills.</p>
+                    <h1 class="text-2xl font-medium text-left py-3">Certificate of Participation</h1>
+                    <p class="text-black font-normal text-left py-3">Once all tasks are completed, you will repeat this process for 3 complete projects. Once you complete all 3 designated projects within the 4-month window, you will unlock access to receive a certificate of participation, showcasing your dedication and acquired skills.</p>
                 </div>
             </div>
         </div>
