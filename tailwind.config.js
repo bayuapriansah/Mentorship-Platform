@@ -10,12 +10,12 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-      '2k': '2560px',
-      'fhd': '1920px',
-      'laptop': '1366px',
-      'hd': '1280px',
-      'tab': '800px',
-      'phone': '375px',
+        '2k': '2560px',
+        'fhd': '1920px',
+        'laptop': '1366px',
+        'hd': '1280px',
+        'tab': '800px',
+        'phone': '375px',
       },
       colors: {
         'dark-blue' : '#000F8A',
@@ -120,7 +120,15 @@ module.exports = {
         'right-min-88': 'right -22rem center',
         'right-min-92': 'right -23rem center',
         'right-min-96': 'right -24rem center',
-      }
+      },
+      fontFamily: {
+        'intelOne': ['IntelOne', 'sans'], // 'sans' is a fallback font
+      },
+      fontWeight: {
+        '300': '300',
+        '500': '500',
+        'bold': '700',
+      },
     },
   },
   variants: {
