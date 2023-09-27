@@ -237,21 +237,22 @@
                     <!-- Slide -->
                     <div class="swiper-slide">
                         <div
-                            class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
+                            class="block p-3 rounded-lg shadow-lg hover:shadow-xl hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
                             <div class="flex space-x-2">
                                 <div class="flex-col">
                                     <p
                                         class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis px-2 overflow-hidden">
                                         {{ $testimonial['name'] }}
                                     </p>
-                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis px-2 overflow-hidden">
-                                        Students
-                                    <div class="pt-2">
+                                    <p class="text-black font-normal text-sm mt-2 overflow-ellipsis px-2 overflow-hidden">
+                                        Student
+                                    </p>
+                                    {{-- <div class="pt-2">
                                         <p
                                             class="text-dark-blue font-normal text-sm bg-lightest-blue py-0.5 text-center shadow-lg rounded-lg p-4 overflow-ellipsis px-2 overflow-hidden">
                                             {{ $testimonial['email'] }}
                                         </p>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="text-grey font-normal text-base text-justify mb-2 py-4 overflow-ellipsis px-2 overflow-hidden">
@@ -266,9 +267,9 @@
 
     {{-- Body Content 3 --}}
     <div class="max-w-screen-xl mx-auto px-6 pt-20 mb-20 flex flex-col md:flex-row md:space-x-4 items-center relative">
-        <div class="md:flex-1 flex items-center">  <!-- added flex and items-center classes here -->
+        <div class="md:flex-1 flex items-center mb-10">  <!-- added flex and items-center classes here -->
             <div class="flex flex-col px-4">
-                <h2 class="intelOne text-dark-blue font-bold text-4xl">Read More<i class="fa-solid fa-arrow-right ml-8"></i></h2>
+                <h2 class="intelOne text-dark-blue font-bold text-4xl">Read More<i class="fa-solid fa-arrow-right fa-rotate-90 ml-8 hidden"></i><i class="fa-solid fa-arrow-right fa-rotate-90 ml-8 hidden"></i></h2>
             </div>
         </div>
         <div class="md:flex-1">
