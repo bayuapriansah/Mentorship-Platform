@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="relative my-auto">
-                    <img src="{{ asset('assets/img/home1.png') }}" loading="lazy" class="relative z-40" alt="">
+                    <img src="{{ asset('assets/img/home1.png') }}" class="relative z-40" alt="">
                     <img src="{{ asset('assets/img/dots-1.png') }}" loading="lazy" alt="dots"
                         class="absolute z-0 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true">
                     <img src="{{ asset('assets/img/dots-2.png') }}" loading="lazy" alt="dots"
