@@ -31,7 +31,7 @@ class MailNotify extends Mailable
      */
     public function build()
     {
-        return $this->from('sip@sustainablelivinglab.org', 'Simulated Internship')->with('data', $this->data);
+        return $this->from('no_reply@sustainablelivinglab.org', 'Simulated Internship Mail')->with('data', $this->data);
     }
 
     /**

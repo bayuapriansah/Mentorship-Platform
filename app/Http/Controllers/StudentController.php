@@ -1127,16 +1127,14 @@ class StudentController extends Controller
             return redirect()->back();
         }
     
-        // 3. Validasi data request
-        $validated = $request->validate([
-            'feedback' => 'required|min:25',
-        ], [
-            'feedback.required' => 'Feedback cannot be empty',
-            'feedback.min' => 'Your feedback is too short',
-        ]);
+        // 3. Validation of data request
+        $feedback = $request->input('feedback');
+        if (empty($feedback)) {
+            return redirect()->back()->with('error', 'Feedback cannot be empty');
+        } elseif (strlen($feedback) < 25) {
+            return redirect()->back()->with('error', 'Your feedback is too short');
+        }
         
-        
-
         // 4 & 5. Insert ke table feedback
         $feedback = new Feedback();
         $feedback->feedback = $request->input('feedback');

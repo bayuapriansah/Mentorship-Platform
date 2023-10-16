@@ -42,7 +42,6 @@ class ProjectController extends Controller
         }
         else{
             $projects = Project::where('status', 'publish')->get();
-            // dd($projects);
         }
 
         return view('projects.index', compact('projects'));
@@ -311,26 +310,19 @@ class ProjectController extends Controller
         $now_time = Carbon::now();
         $intern_end = Carbon::parse(Auth::guard('student')->user()->end_date);
         $remaining_intern_days = $now_time->diffInDays($intern_end,false);
-        // dd($remaining_time_time);
-        // dd($now_time->addMonth($project->period)->toDateString());
 
         $project_time = $now_time->addMonth($project->period);
         $project_totaldays = Carbon::now()->diffInDays($project_time);
 
-        // dd($remaining_intern_days-$project_totaldays);
-
-        // dd(Auth::guard('student')->user()->end_date);
         $enrolled_project = new EnrolledProject;
         $already_enrolled =  EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
                                             ->where('is_submited', 0)->latest()->first();
-        // $total_month_complete = EnrolledProject::select('')->where('student_id',Auth::guard('student')->user()->id)
-        //                                         ->where('is_submit',1)->;
+
         $total_month_complete = Project::select('period')->whereHas('enrolled_project', function($q){
                                             $q->where('student_id',Auth::guard('student')->user()->id);
                                             $q->where('is_submited',1);
                                           })->count();
-        // $already_completed = EnrolledProject::where('student_id',Auth::guard('student')->user()->id)
-        //                                     ->where('is_submited', 1)->first();
+
         if(Auth::guard('student')->check()){
           if($total_month_complete<=4){
             if($remaining_intern_days-$project_totaldays >=0){

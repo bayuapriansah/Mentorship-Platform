@@ -11,7 +11,7 @@
                 <span class="intelOne text-white font-light text-sm hd:text-lg leading-6">Join today to work on real-world
                     projects and kick start your career!</span>
                 <div class="flex py-4">
-                    <a href="{{ route('multiLogIn') }}"
+                    <a href="#"
                        class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-8 py-1.5 hd:px-16 hd:py-3.5 rounded-full">Get Started</a>
                 </div>
             </div>
