@@ -158,7 +158,7 @@ class InstitutionController extends Controller
             }
         }
         if($request->hasFile('template_cert')){
-            
+
             // dd($request->template_cert);
             if($institutions->template_cert && Storage::exists($institutions->template_cert)) {
                 Storage::disk('public')->delete($institutions->template_cert);
@@ -182,6 +182,13 @@ class InstitutionController extends Controller
         $students = Student::where('institution_id', $institution->id)->get();
         $enrolled_projects = EnrolledProject::get();
         return view('dashboard.institutions.students.index', compact('students', 'institution', 'enrolled_projects'));
+    }
+
+    public function institutionStudentsExport(Institution $institution)
+    {
+        $students = Student::where('institution_id', $institution->id)->where('is_confirm',1)->get();
+        $enrolled_projects = EnrolledProject::get();
+        return view('dashboard.institutions.students.Export', compact('students', 'institution', 'enrolled_projects'));
     }
 
 

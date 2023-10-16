@@ -179,6 +179,7 @@ Route::get('/theworld', [TheWorldController::class, 'index']);
 Route::get('/students-info', [HomepageController::class, 'studentsInfo'])->name('students.info');
 Route::get('/institutes-info', [HomepageController::class, 'institutesInfo'])->name('institutes.info');
 Route::get('/partners-info', [HomepageController::class, 'partnersInfo'])->name('partners.info');
+Route::get('/about-us', [HomepageController::class, 'aboutus'])->name('homepage.aboutus');
 
 Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
@@ -209,6 +210,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Route::patch('institutions/{institution}', [InstitutionController::class, 'update'])->name('institutions.update');
         Route::get('/institutions_partners', [InstitutionController::class, 'institutions_partners'])->name('institutions_partners');
         Route::get('/institutions/{institution}/students', [InstitutionController::class, 'institutionStudents'])->name('students.institutionStudents');
+        Route::get('/institutions/{institution}/students/export', [InstitutionController::class, 'institutionStudentsExport'])->name('students.institutionStudentsExport');
 
         Route::get('/institutions/{institution}/students/invite', [StudentController::class, 'inviteFromInstitution'])->name('students.inviteFromInstitution');
         Route::post('/institutions/{institution}/students', [StudentController::class, 'sendInviteFromInstitution'])->name('students.sendInviteFromInstitution');

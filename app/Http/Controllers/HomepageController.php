@@ -82,4 +82,9 @@ class HomepageController extends Controller
     {
         return view('homepage.partners-info');
     }
+
+    public function aboutus()
+    {
+        return view('homepage.aboutus');
+    }
 }

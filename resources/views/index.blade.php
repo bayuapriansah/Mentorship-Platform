@@ -58,7 +58,7 @@
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
                 <img src="{{ asset('assets/img/for_students.png') }}" loading="lazy" class="relative shadow-lg rounded-2xl z-20" alt="for students">
-                <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
+                <h1 class="text-dark-blue text-2xl font-bold py-3"><a href="{{ route('students.info') }}">For Students</a></h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Acquire Employability Skills, Gain Industry
                     Experience, Strengthen Project Portfolio</p>
             </div>
