@@ -53,7 +53,7 @@ class AuthController extends Controller
             }elseif($studentExist){
                 return (new AuthOtpController)->generate($request);
             }else{
-                return redirect()->route('multiLogIn')->with('error','This email is not registered.');;
+                return redirect()->route('multiLogIn')->with('error','This email is not registered.');
             }
         }
     }

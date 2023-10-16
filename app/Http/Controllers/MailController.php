@@ -16,6 +16,25 @@ class MailController extends Controller
     /   Function used when platform admin using single invitation or bulk invitation
     /
     */
+    public function messageReminder($mailto, $studentName, $projectName, $taskName)
+    {
+        $data = [
+            'subject' => 'Notification - Message From Staff',
+            'body' => $mailto,
+            'student_name' => $studentName,
+            'project_name' => $projectName,
+            'task_name' => $taskName,
+            'type' => 'messageReminder',
+        ];
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Mentor Invitation  Email sent successfully']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
     public function EmailMentorInvitation($mailto,$urlInvitation) //Email, urlInvitation
     {
         $data = [

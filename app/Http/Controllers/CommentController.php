@@ -249,6 +249,8 @@ class CommentController extends Controller
             $comment->file = $file;
         }
         $comment->save();
+        $student_name_email = $participant->first_name." ".$participant->last_name;
+        $sendmail = (new MailController)->messageReminder("kevin@sustainablelivinglab.org",$student_name_email,$comment->project->name,$injection->title);
         return redirect('/dashboard/messages/'.$injection->id.'/single/'.$participant->id);
     }
 
