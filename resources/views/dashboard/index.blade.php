@@ -89,7 +89,7 @@
                 <p class="text-right text-dark-blue text-3xl">{{$student_submissions}}</p>
             </div>
         </div>
-        
+
         <div class="flex justify-between space-x-7 my-4">
           <a href="{{route('dashboard.student.completeAll')}}">
             <div class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
@@ -134,7 +134,7 @@
             <div class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
                 <p class="font-normal text-[18px] text-left">Total Submissions</p>
                 <p class="text-right text-dark-blue text-3xl">{{$student_submissions}}</p>
-            </div> 
+            </div>
         </div>
         <h3 class="text-dark-blue font-medium text-xl mt-12">Tutorial</h3>
 

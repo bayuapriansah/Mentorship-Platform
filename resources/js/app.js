@@ -1,12 +1,13 @@
 // import './bootstrap';
 import 'flowbite';
-
+import * as FilePond from 'filepond';
+import 'filepond/dist/filepond.min.css';
 import Swiper, { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const swiper = new Swiper('.swiper-container', {
+const swipers = new Swiper('.swiper-container', {
     slidesPerView: 3,
     spaceBetween: 30,
     navigation: {
@@ -33,7 +34,7 @@ const swiper = new Swiper('.swiper-container', {
     },
     modules: [Navigation, Pagination],
   });
-  
+
   const swiperTestimonial = new Swiper('.swip-testimonial', {
     slidesPerView: 3,
     spaceBetween: 30,
