@@ -55,7 +55,6 @@
                 <p class="text-right text-dark-blue text-3xl">{{ $student_final_ongoing }}</p>
             </a>
         </div>
-
         <div
             class="border border-light-blue bg-gradient-to-r from-[#CFF8D8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
             <a href="{{route('dashboard.student.finalPresentationComplete')}}">
@@ -110,26 +109,38 @@
         </div>
     </div>
 
-    <div class="flex justify-between space-x-7 my-4">
-        <a href="{{route('dashboard.student.completeAll')}}">
-            <div
-                class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
-                <p class="font-normal text-[18px] text-left">List of students with 3 completed projects + Onboarding
-                </p>
+    <div class="flex justify-between space-x-7 mt-4">
+        <div
+            class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <a href="{{route('dashboard.student.completeAll')}}">
+                <p class="font-medium text-[15px]  text-left">Final Presentation: To be Assigned</p>
                 <p class="text-right text-dark-blue text-3xl">{{$student_complete_all}}</p>
-            </div>
-        </a>
-        <a href="{{route('dashboard.student.complete3')}}">
-            <div
-                class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
-                <p class="font-normal text-[18px] text-left">List of students with 2 completed projects + Onboarding
-                </p>
+            </a>
+        </div>
+        <div
+            class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <a href="{{route('dashboard.student.complete3')}}">
+                <p class="font-medium text-[15px]  text-left">Students Approaching Final Presentation</p>
                 <p class="text-right text-dark-blue text-3xl">{{$student_complete_3}}</p>
-            </div>
-        </a>
+            </a>
+        </div>
+        <div
+            class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <a href="{{route('dashboard.student.finalPresentationOngoing')}}">
+                <p class="font-medium text-[15px]  text-left">Final Presentation: Ongoing</p>
+                <p class="text-right text-dark-blue text-3xl">{{ $student_final_ongoing }}</p>
+            </a>
+        </div>
+        <div
+            class="border border-light-blue bg-gradient-to-r from-[#CFF8D8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+            <a href="{{route('dashboard.student.finalPresentationComplete')}}">
+                <p class="font-medium text-[15px]  text-left">Final Presentation: Completed</p>
+                <p class="text-right text-dark-blue text-3xl">{{ $student_final_complete }}</p>
+            </a>
+        </div>
     </div>
 
-    <h3 class="text-dark-blue font-medium text-xl mt-12">Tutorial</h3>
+    {{-- <h3 class="text-dark-blue font-medium text-xl mt-12">Tutorial</h3> --}}
     @elseif(Auth::guard('customer')->check())
     <div class="flex justify-between items-center">
         <div class="space-y-7">
