@@ -171,7 +171,7 @@
               </svg>
               <span class="sr-only">Notifications Bell</span>
               @if ($NotificationForAdmin > 0)
-              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $NotificationForAdmin }}</div>
+              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-[10px] font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $NotificationForAdmin > 99 ? "99+" : $NotificationForAdmin}}</div>
               @endif
 
             </button>
