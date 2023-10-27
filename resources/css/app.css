@@ -2,14 +2,51 @@
 @layer base {
   html {
     @apply text-neutral-800;
+    scrollbar-color: #888 #f1f1f1;
+    scrollbar-width: thin;
   }
   html.dark {
     @apply text-neutral-50;
     @apply bg-neutral-800;
+    scrollbar-color: #888 #f1f1f1;
+    scrollbar-width: thin;
   }
 }
 @tailwind components;
 @tailwind utilities;
+
+/* Inside styles.css */
+::-webkit-scrollbar {
+    width: 2px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.disabled-link {
+    pointer-events: none;
+    color: crimson !important;
+  }
+
+.dataTables_filter{
+margin-bottom:18px !important;
+}
+
+body {
+overflow-x: hidden;
+}
+
+.swiper-container {
+overflow-x: hidden;
+}
+
 @font-face {
   font-family: 'IntelOne';
   src: url(/public/assets/intelOneFont/intelone-display-regular.woff);

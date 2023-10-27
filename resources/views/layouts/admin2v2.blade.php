@@ -8,7 +8,6 @@
   <link rel="icon" type="image/x-icon" href="{{asset('assets/img/icon/favicon.ico')}}">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="https://kit.fontawesome.com/682a164d7d.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
   {{-- <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet"> --}}
   @vite(['resources/css/app.css','resources/js/app.js'])
 

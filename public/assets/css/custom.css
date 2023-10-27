@@ -1,4 +1,4 @@
-.disabled-link {
+/* .disabled-link {
   pointer-events: none;
   color: crimson !important;
 }
@@ -13,7 +13,7 @@ body {
 
 .swiper-container {
   overflow-x: hidden;
-}
+} */
 
 /* .hidden {
   display: none;
