@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="relative my-auto">
-                    <img src="{{ asset('assets/img/home1.png') }}" loading="lazy" class="relative z-40" alt="">
+                    <img src="{{ asset('assets/img/home1.png') }}" class="relative z-40" alt="">
                     <img src="{{ asset('assets/img/dots-1.png') }}" loading="lazy" alt="dots"
                         class="absolute z-0 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true">
                     <img src="{{ asset('assets/img/dots-2.png') }}" loading="lazy" alt="dots"
@@ -115,6 +115,7 @@
                                     </p>
                                     <p class="text-black font-normal text-sm mt-2 overflow-ellipsis px-2 overflow-hidden">
                                         Student
+                                    </p>
                                     {{-- <div class="pt-2">
                                         <p
                                             class="text-dark-blue font-normal text-sm bg-lightest-blue py-0.5 text-center shadow-lg rounded-lg p-4 overflow-ellipsis px-2 overflow-hidden">
@@ -226,62 +227,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('more-js')
-<script>
-  const swiper = new Swiper('.swiper-container', {
-      slidesPerView: 3,
-      spaceBetween: 30,
-      navigation: {
-          nextEl: '#swiper-button-next',
-          prevEl: '#swiper-button-prev',
-      },
-      breakpoints: {
-          320: {
-              slidesPerView: 1,
-              spaceBetween: 10
-          },
-          480: {
-              slidesPerView: 1,
-              spaceBetween: 10
-          },
-          640: {
-              slidesPerView: 2,
-              spaceBetween: 10
-          },
-          950: {
-              slidesPerView: 3,
-              spaceBetween: 30
-          }
-      }
-  });
-
-// New Testimonial Swiper
-const swiperTestimonial = new Swiper('.swip-testimonial', {
-    slidesPerView: 3,
-    spaceBetween: 30,
-    navigation: {
-        nextEl: '#testimonial-swiper-button-next',
-        prevEl: '#testimonial-swiper-button-prev',
-    },
-    breakpoints: {
-        320: {
-            slidesPerView: 1,
-            spaceBetween: 10
-        },
-        480: {
-            slidesPerView: 1,
-            spaceBetween: 10
-        },
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 10
-        },
-        950: {
-            slidesPerView: 3,
-            spaceBetween: 30
-        }
-    }
-});
-</script>
 @endsection
