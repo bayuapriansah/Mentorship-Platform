@@ -10,19 +10,15 @@
 </div>
 @else
 <div class="flex justify-between mb-10">
-  @if (Auth::guard('mentor')->check())
-    @if (Auth::guard('mentor')->user()->institution_id != 0)
-      <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">List of students with 3 completed projects + Onboarding </h3>
-    @else
-      @if (Route::is('dashboard.student.completeAll'))
-        <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">List of students with 3 completed projects + Onboarding </h3>
-      @elseif(Route::is('dashboard.student.complete3'))
-        <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">List of students with 2 completed projects + Onboarding </h3>
-      @endif
+    @if (Route::is('dashboard.student.completeAll'))
+    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Final Presentation: To be Assigned </h3>
+    @elseif(Route::is('dashboard.student.complete3'))
+    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Students Approaching Final Presentation </h3>
+    @elseif(Route::is('dashboard.student.finalPresentationComplete'))
+    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Final Presentation: Complete </h3>
+    @elseif(Route::is('dashboard.student.finalPresentationOngoing'))
+    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Final Presentation: Ongoing </h3>
     @endif
-  @elseif(Auth::guard('web')->check())
-    <h3 class="text-dark-blue font-medium text-xl" id="BitTitle"> List of students with 3 completed projects + Onboarding </h3>
-  @endif
 </div>
 @endif
 
@@ -38,12 +34,18 @@
       <th>Supervisor Name</th>
       <th>Staff Name</th>
       <th>Account Status</th>
+      @if(Route::is('dashboard.student.completeAll'))
+      <th>Final Project Status</th>
+      @elseif(Route::is('dashboard.student.finalPresentationComplete') || Route::is('dashboard.student.finalPresentationOngoing'))
+      <th>Final Project Progress</th>
+      @else
       <th>Internship Status</th>
+      @endif
       <th>View</th>
     </tr>
   </thead>
   <tbody>
-    @php 
+    @php
       $no=1;
     @endphp
     @foreach($students as $student)
@@ -55,7 +57,7 @@
         <td>{{$student->first_name}} {{$student->last_name}}</td>
         <td>
           {{$student->email}}
-          
+
         </td>
         <td>
           @if($student->institution)
@@ -102,7 +104,11 @@
             @elseif($total = $totalMonth->sum()<3 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
               <span class="text-red-600">Incomplete</span>
             @else
-              <span class="text-[#D89B33]">Ongoing</span>
+                @if(Route::is('dashboard.student.finalPresentationComplete'))
+                    <span class="text-[#D89B33]">Complete</span>
+                @elseif(!Route::is('dashboard.student.completeAll'))
+                    <span class="text-[#D89B33]">Ongoing</span>
+                @endif
             @endif
             @if (Route::is('dashboard.student.completeAll'))
               <br>
@@ -146,7 +152,7 @@
                   data-student-end_date = {{date_format(new DateTime($student->end_date), "d-M-Y")}}
                   data-timeline="{{$collection->toJson()}}"
                   data-date="{{$dataDate >=100 ? 100: $dataDate}}"
-                  data-flag = "@php 
+                  data-flag = "@php
                                 $tipNumber = 1 ;
                                 $arr = $enrolled_projects->where('is_submited',1)->where('student_id',  $student->id);
                               @endphp
@@ -162,7 +168,7 @@
                               <p class='absolute font-medium text-left flex-wrap overflow-hidden whitespace-nowrap text-[8px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?100-6:$enrolled_project->flag_checkpoint-2}}%'>{{Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
                               <p class='absolute mt-3 font-medium text-left text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?99-4:$enrolled_project->flag_checkpoint-2}}%'>Project {{$num}}</p>
                               @php $num++ @endphp
-                              @endforeach"            
+                              @endforeach"
                   data-status-student = " @if($student->enrolled_projects->count() >=1)
                                             @if($student->enrolled_projects->where('is_submited',0)->last())
                                               Enrolled in '{{$student->enrolled_projects->where('is_submited',0)->last()->project->name}}'
@@ -174,8 +180,8 @@
                                           @endif"
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
-      
-      
+
+
     </tr>
     @php $no++ @endphp
     @endforeach
@@ -187,7 +193,7 @@
   @section('more-js')
   <script>
     $(document).ready(function() {
-      
+
       let table = $('#dataTable').DataTable({
       });
       // SuspendActiveBtn
@@ -249,7 +255,7 @@
                   ${dataFlag}
                   <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
                     <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
-                  </div>  
+                  </div>
                   ${dataInfo}
                 </div>
                 <p class="text-black text-xs ">${studentEnd}</p>
@@ -286,7 +292,7 @@
   @section('more-js')
   <script>
     $(document).ready(function() {
-      
+
       let table = $('#dataTable').DataTable({
       });
       // SuspendActiveBtn
@@ -347,7 +353,7 @@
                   ${dataFlag}
                   <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
                     <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
-                  </div>  
+                  </div>
                   ${dataInfo}
                 </div>
                 <p class="text-black text-xs ">${studentEnd}</p>

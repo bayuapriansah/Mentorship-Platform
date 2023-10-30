@@ -24,25 +24,60 @@ use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
+    // public function index()
+    // {
+    //   $students   = Student::get()->count();
+    //   $mentors    = Mentor::where('institution_id', '>',0)->get()->count();
+    //   $staffs    = Mentor::where('institution_id', 0)->get()->count();
+    //   $eProjects  = EnrolledProject::get()->count();
+    //   $companies  = Company::get()->count();
+    //   $student_complete_all = Student::withCount(['enrolled_projects' => function($q) {
+    //                                     $q->where('is_submited', 1);
+    //                                   }])
+    //                                   ->having('enrolled_projects_count', '=', 4)
+    //                                   ->get()->count();
+    //   $student_complete_3 = Student::withCount(['enrolled_projects' => function($q) {
+    //                                     $q->where('is_submited', 1);
+    //                                   }])
+    //                                   ->having('enrolled_projects_count', '=', 3)
+    //                                   ->get()->count();
+
+    //   return view('dashboard.index', compact('students','staffs','mentors','eProjects','companies', 'student_complete_all', 'student_complete_3'));
+    // }
+
     public function index()
     {
-      $students   = Student::get()->count();
-      $mentors    = Mentor::where('institution_id', '>',0)->get()->count();
-      $staffs    = Mentor::where('institution_id', 0)->get()->count();
-      $eProjects  = EnrolledProject::get()->count();
-      $companies  = Company::get()->count();
-      $student_complete_all = Student::withCount(['enrolled_projects' => function($q) {
-                                        $q->where('is_submited', 1);
-                                      }])
-                                      ->having('enrolled_projects_count', '=', 4)
-                                      ->get()->count();
-      $student_complete_3 = Student::withCount(['enrolled_projects' => function($q) {
-                                        $q->where('is_submited', 1);
-                                      }])
-                                      ->having('enrolled_projects_count', '=', 3)
-                                      ->get()->count();
-              
-      return view('dashboard.index', compact('students','staffs','mentors','eProjects','companies', 'student_complete_all', 'student_complete_3'));
+        $data = [];
+
+        $data['students'] = Student::count();
+        $data['mentors']  = Mentor::where('institution_id', '>', 0)->count();
+        $data['staffs']   = Mentor::where('institution_id', 0)->count();
+        $data['eProjects'] = EnrolledProject::count();
+        $data['companies'] = Company::count();
+
+        $data['student_complete_all'] = Student::whereHas('enrolled_projects', function($q) {
+            $q->where('is_submited', 1);
+        }, '=', 4)->count();
+
+        $data['student_complete_3'] = Student::whereHas('enrolled_projects', function($q) {
+            $q->where('is_submited', 1);
+        }, '=', 3)->count();
+
+        $data['student_complete_3'] = Student::whereHas('enrolled_projects', function($q) {
+            $q->where('is_submited', 1);
+        }, '=', 3)->count();
+
+        // Students enrolled in project_id = 5 but haven't submitted yet
+        $data['student_final_ongoing'] = Student::whereHas('enrolled_projects', function($q) {
+            $q->where('project_id', 5)->where('is_submited', 0);
+        })->count();
+
+        // Students enrolled in project_id = 5 and have submitted
+        $data['student_final_complete'] = Student::whereHas('enrolled_projects', function($q) {
+            $q->where('project_id', 5)->where('is_submited', 1);
+        })->count();
+
+        return view('dashboard.index', $data);
     }
 
     public function singleSubmissionReadNotification($projectID,$submissionID,$studentId){
@@ -103,49 +138,99 @@ class DashboardController extends Controller
       return view('dashboard.companies.partner.edit',compact('member'));
     }
 
+    // public function indexMentor()
+    // {
+    //     if(Auth::guard('mentor')->user()->institution_id != 0){
+    //     $students   = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
+    //     $assign_students   = Student::where('mentor_id', Auth::guard('mentor')->user()->id)->get()->count();
+    //     $mentors    = Mentor::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
+    //     $student_submissions = Submission::whereHas('student', function($q){
+    //         $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+    //     })->where('is_complete', 1)->count();
+    //     $student_complete_all = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
+    //                                               ->withCount(['enrolled_projects' => function($q) {
+    //                                                   $q->where('is_submited', 1);
+    //                                               }])
+    //                                               ->having('enrolled_projects_count', '=', 4)
+    //                                               ->get()->count();
+    //     $student_complete_3 = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
+    //                                               ->withCount(['enrolled_projects' => function($q) {
+    //                                                   $q->where('is_submited', 1);
+    //                                               }])
+    //                                               ->having('enrolled_projects_count', '=', 3)
+    //                                               ->get()->count();
+    //     }else{
+    //     $students   = Student::get()->count();
+    //     $assign_students   = Student::where('staff_id', Auth::guard('mentor')->user()->id)->get()->count();
+    //     $mentors    = Mentor::where('institution_id', 0)->get()->count();
+    //     $student_submissions = Submission::whereHas('student', function($q){
+    //         $q->where('staff_id', Auth::guard('mentor')->user()->id);
+    //     })->where('is_complete', 1)->count();
+    //     $student_complete_all = Student::where('staff_id', Auth::guard('mentor')->user()->id)
+    //                                               ->withCount(['enrolled_projects' => function($q) {
+    //                                                   $q->where('is_submited', 1);
+    //                                               }])
+    //                                               ->having('enrolled_projects_count', '=', 4)
+    //                                               ->get()->count();
+    //     $student_complete_3 = Student::where('staff_id', Auth::guard('mentor')->user()->id)
+    //                                               ->withCount(['enrolled_projects' => function($q) {
+    //                                                   $q->where('is_submited', 1);
+    //                                               }])
+    //                                               ->having('enrolled_projects_count', '=', 3)
+    //                                               ->get()->count();
+    //     }
+
+    //     return view('dashboard.index', compact('students','assign_students','mentors','student_submissions','student_complete_all', 'student_complete_3'));
+    // }
+
     public function indexMentor()
     {
-        if(Auth::guard('mentor')->user()->institution_id != 0){
-        $students   = Student::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
-        $assign_students   = Student::where('mentor_id', Auth::guard('mentor')->user()->id)->get()->count();
-        $mentors    = Mentor::where('institution_id', Auth::guard('mentor')->user()->institution_id)->get()->count();
-        $student_submissions = Submission::whereHas('student', function($q){
-            $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-        })->where('is_complete', 1)->count();
-        $student_complete_all = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
-                                                  ->withCount(['enrolled_projects' => function($q) {
-                                                      $q->where('is_submited', 1);
-                                                  }])
-                                                  ->having('enrolled_projects_count', '=', 4)
-                                                  ->get()->count();
-        $student_complete_3 = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
-                                                  ->withCount(['enrolled_projects' => function($q) {
-                                                      $q->where('is_submited', 1);
-                                                  }])
-                                                  ->having('enrolled_projects_count', '=', 3)
-                                                  ->get()->count();
-        }else{
-        $students   = Student::get()->count();
-        $assign_students   = Student::where('staff_id', Auth::guard('mentor')->user()->id)->get()->count();
-        $mentors    = Mentor::where('institution_id', 0)->get()->count();
-        $student_submissions = Submission::whereHas('student', function($q){
-            $q->where('staff_id', Auth::guard('mentor')->user()->id);
-        })->where('is_complete', 1)->count();
-        $student_complete_all = Student::where('staff_id', Auth::guard('mentor')->user()->id)
-                                                  ->withCount(['enrolled_projects' => function($q) {
-                                                      $q->where('is_submited', 1);
-                                                  }])
-                                                  ->having('enrolled_projects_count', '=', 4)
-                                                  ->get()->count();
-        $student_complete_3 = Student::where('staff_id', Auth::guard('mentor')->user()->id)
-                                                  ->withCount(['enrolled_projects' => function($q) {
-                                                      $q->where('is_submited', 1);
-                                                  }])
-                                                  ->having('enrolled_projects_count', '=', 3)
-                                                  ->get()->count();
+        $data = [];
+        $mentor = Auth::guard('mentor')->user();
+
+        if ($mentor->institution_id != 0) {
+            $data['students'] = Student::where('institution_id', $mentor->institution_id)->count();
+            $data['assign_students'] = Student::where('mentor_id', $mentor->id)->count();
+            $data['mentors'] = Mentor::where('institution_id', $mentor->institution_id)->count();
+        } else {
+            $data['students'] = Student::count();
+            $data['assign_students'] = Student::where('staff_id', $mentor->id)->count();
+            $data['mentors'] = Mentor::where('institution_id', 0)->count();
         }
 
-        return view('dashboard.index', compact('students','assign_students','mentors','student_submissions','student_complete_all', 'student_complete_3'));
+        $relationship = ($mentor->institution_id != 0) ? 'mentor_id' : 'staff_id';
+
+        $data['student_submissions'] = Submission::whereHas('student', function($q) use ($relationship, $mentor) {
+            $q->where($relationship, $mentor->id);
+        })->where('is_complete', 1)->count();
+
+        $data['student_complete_all'] = Student::where($relationship, $mentor->id)
+            ->withCount(['enrolled_projects' => function($q) {
+                $q->where('is_submited', 1);
+            }])
+            ->having('enrolled_projects_count', '=', 4)
+            ->count();
+
+        $data['student_complete_3'] = Student::where($relationship, $mentor->id)
+            ->withCount(['enrolled_projects' => function($q) {
+                $q->where('is_submited', 1);
+            }])
+            ->having('enrolled_projects_count', '=', 3)
+            ->count();
+
+        // Students enrolled in project_id = 5 but haven't submitted yet
+        $data['student_final_ongoing'] = Student::where($relationship, $mentor->id)
+            ->whereHas('enrolled_projects', function($q) {
+                $q->where('project_id', 5)->where('is_submited', 0);
+            })->count();
+
+        // Students enrolled in project_id = 5 and have submitted
+        $data['student_final_complete'] = Student::where($relationship, $mentor->id)
+            ->whereHas('enrolled_projects', function($q) {
+                $q->where('project_id', 5)->where('is_submited', 1);
+            })->count();
+
+        return view('dashboard.index', $data);
     }
 
     public function allAssignedProjectsBEST()
@@ -356,7 +441,7 @@ class DashboardController extends Controller
 
   public function sendContact(Request $request)
   {
-    
+
     $validated = $request->validate([
       'first_name' => ['required'],
       'last_name' => ['required'],
@@ -374,7 +459,7 @@ class DashboardController extends Controller
       'message.required' => 'Message is required',
       'g-recaptcha-response.required' => 'Captcha is required',
     ]);
-    
+
     $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
     return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
 
@@ -415,36 +500,6 @@ class DashboardController extends Controller
       }
   }
 
-  public function studentCompleteAll()
-  {
-    if(Auth::guard('web')->check()){
-      $students = Student::withCount(['enrolled_projects' => function($q) {
-                              $q->where('is_submited', 1);
-                          }])
-                          ->having('enrolled_projects_count', '=', 4)
-                          ->get();
-      $enrolled_projects = EnrolledProject::get();
-    }elseif(Auth::guard('mentor')->check()){
-        if(Auth::guard('mentor')->user()->institution_id != 0){
-          $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
-                    ->withCount(['enrolled_projects' => function($q) {
-                        $q->where('is_submited', 1);
-                    }])
-                    ->having('enrolled_projects_count', '=', 4)
-                    ->get();
-        }else{
-          $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
-                    ->withCount(['enrolled_projects' => function($q) {
-                        $q->where('is_submited', 1);
-                    }])
-                    ->having('enrolled_projects_count', '=', 4)
-                    ->get();
-        }
-        $enrolled_projects = EnrolledProject::get();
-    }
-    return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
-  }
-
   public function studentCompleteAssign(Student $student)
   {
     $projects = Project::where('status', 'private_project')->get();
@@ -461,33 +516,148 @@ class DashboardController extends Controller
     return redirect('/dashboard/completed_all');
   }
 
+//   public function studentComplete3()
+//   {
+//     if(Auth::guard('web')->check()){
+//       $students = Student::withCount(['enrolled_projects' => function($q) {
+//                               $q->where('is_submited', 1);
+//                           }])
+//                           ->having('enrolled_projects_count', '=', 3)
+//                           ->get();
+//       $enrolled_projects = EnrolledProject::get();
+//     }elseif(Auth::guard('mentor')->check()){
+//         if(Auth::guard('mentor')->user()->institution_id != 0){
+//           $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
+//                     ->withCount(['enrolled_projects' => function($q) {
+//                         $q->where('is_submited', 1);
+//                     }])
+//                     ->having('enrolled_projects_count', '=', 3)
+//                     ->get();
+//         }else{
+//           $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
+//                     ->withCount(['enrolled_projects' => function($q) {
+//                         $q->where('is_submited', 1);
+//                     }])
+//                     ->having('enrolled_projects_count', '=', 3)
+//                     ->get();
+//         }
+//         $enrolled_projects = EnrolledProject::get();
+//     }
+//     return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
+//   }
+
   public function studentComplete3()
   {
-    if(Auth::guard('web')->check()){
-      $students = Student::withCount(['enrolled_projects' => function($q) {
-                              $q->where('is_submited', 1);
-                          }])
-                          ->having('enrolled_projects_count', '=', 3)
-                          ->get();
-      $enrolled_projects = EnrolledProject::get();
-    }elseif(Auth::guard('mentor')->check()){
-        if(Auth::guard('mentor')->user()->institution_id != 0){
-          $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
-                    ->withCount(['enrolled_projects' => function($q) {
-                        $q->where('is_submited', 1);
-                    }])
-                    ->having('enrolled_projects_count', '=', 3)
-                    ->get();
-        }else{
-          $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
-                    ->withCount(['enrolled_projects' => function($q) {
-                        $q->where('is_submited', 1);
-                    }])
-                    ->having('enrolled_projects_count', '=', 3)
-                    ->get();
+    $data = [];
+
+    // Initialize the query
+    $query = Student::withCount(['enrolled_projects' => function($q) {
+        $q->where('is_submited', 1);
+    }])->having('enrolled_projects_count', '=', 3);
+
+    if (Auth::guard('web')->check()) {
+        // No additional conditions for web guard
+    } elseif (Auth::guard('mentor')->check()) {
+        $mentor = Auth::guard('mentor')->user();
+        if ($mentor->institution_id != 0) {
+            $query->where('mentor_id', $mentor->id);
+        } else {
+            $query->where('staff_id', $mentor->id);
         }
-        $enrolled_projects = EnrolledProject::get();
     }
-    return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
+
+    $data['students'] = $query->get();
+    $data['enrolled_projects'] = EnrolledProject::all();
+
+    return view('dashboard.students.complete.all', $data);
   }
+
+//   public function studentCompleteAll()
+//   {
+//     if(Auth::guard('web')->check()){
+//       $students = Student::withCount(['enrolled_projects' => function($q) {
+//                               $q->where('is_submited', 1);
+//                           }])
+//                           ->having('enrolled_projects_count', '=', 4)
+//                           ->get();
+//       $enrolled_projects = EnrolledProject::get();
+//     }elseif(Auth::guard('mentor')->check()){
+//         if(Auth::guard('mentor')->user()->institution_id != 0){
+//           $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
+//                     ->withCount(['enrolled_projects' => function($q) {
+//                         $q->where('is_submited', 1);
+//                     }])
+//                     ->having('enrolled_projects_count', '=', 4)
+//                     ->get();
+//         }else{
+//           $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
+//                     ->withCount(['enrolled_projects' => function($q) {
+//                         $q->where('is_submited', 1);
+//                     }])
+//                     ->having('enrolled_projects_count', '=', 4)
+//                     ->get();
+//         }
+//         $enrolled_projects = EnrolledProject::get();
+//     }
+//     return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
+//   }
+
+    public function studentCompleteAll()
+    {
+        $data = [];
+
+        // Initialize the query
+        $query = Student::withCount(['enrolled_projects' => function($q) {
+            $q->where('is_submited', 1);
+        }])->having('enrolled_projects_count', '=', 4);
+
+        if (Auth::guard('web')->check()) {
+            // No additional conditions for web guard
+        } elseif (Auth::guard('mentor')->check()) {
+            $mentor = Auth::guard('mentor')->user();
+            if ($mentor->institution_id != 0) {
+                $query->where('mentor_id', $mentor->id);
+            } else {
+                $query->where('staff_id', $mentor->id);
+            }
+        }
+
+        $data['students'] = $query->get();
+        $data['enrolled_projects'] = EnrolledProject::all();
+
+        return view('dashboard.students.complete.all', $data);
+    }
+
+    public function finalPresentationOngoing()
+    {
+        return $this->studentCompleteAll();
+    }
+
+    public function finalPresentationComplete()
+    {
+        $data = [];
+        // Students enrolled in project_id = 5 and have submitted
+        $query = Student::whereHas('enrolled_projects', function($q) {
+            $q->where('project_id', 5)->where('is_submited', 1);
+        })->withCount('enrolled_projects');
+
+        if (Auth::guard('web')->check()) {
+            // No additional conditions for web guard
+        } elseif (Auth::guard('mentor')->check()) {
+            $mentor = Auth::guard('mentor')->user();
+            if ($mentor->institution_id != 0) {
+                $query->where('mentor_id', $mentor->id);
+            } else {
+                $query->where('staff_id', $mentor->id);
+            }
+        }
+
+        $data['students'] = $query->get();
+        $data['enrolled_projects'] = EnrolledProject::all();
+
+        return view('dashboard.students.complete.all', $data);
+    }
+
+
+//   End of Bracket Don't Delete this bracket
 }
