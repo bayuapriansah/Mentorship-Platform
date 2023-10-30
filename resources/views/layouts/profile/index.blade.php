@@ -398,12 +398,10 @@
                             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Info</h2>
                             <ul class="text-gray-600 dark:text-gray-400 font-medium">
                                 <li class="mb-4">
-                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Industry Partners</a>
+                                    <a href="/#AiForFuture" class="hover:underline">For Industry Partners</a>
                                 </li>
                                 <li class="mb-4">
-                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Institution</a>
+                                    <a href="/#AiForFuture" class="hover:underline">For Institution</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('students.info') }}" class="hover:underline">For Students</a>
@@ -414,8 +412,6 @@
                             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Support</h2>
                             <ul class="text-gray-600 dark:text-gray-400 font-medium">
                                 <li class="mb-4">
-                                    {{-- <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline ">About Us</a> --}}
                                     <a href="/#AiForFuture" class="hover:underline ">About Us</a>
                                 </li>
                                 <li class="mb-4">

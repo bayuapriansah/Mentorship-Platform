@@ -5,17 +5,15 @@
             <img src="{{ asset('assets/img/Digitalreadiness-logo 1.svg') }}" class="h-8 md:h-16 mr-3" alt="Digital Readiness Logo" />
         </a>
         <div class="flex items-center md:order-2">
-            <button type="button" class="flex mr-3 text-sm rounded-full md:mr-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-            <span class="sr-only">Open user menu</span>
-            <i class="fa-solid fa-user fa-fade"></i>
-            <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-            </button>
             @if (isLoggedIn())
+            <button type="button" class="flex items-center mr-3 text-sm rounded-full md:mr-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                <span class="sr-only">Open user menu</span>
+                <i class="fa-solid fa-user fa-fade"></i>
+                <span class="hidden md:block pl-4">{{ nameUserAuth() == " " ? emailUserAuth() : nameUserAuth() }}</span>
+                <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
             <!-- Dropdown menu -->
             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
             <div class="px-4 py-3">
@@ -46,10 +44,12 @@
             </ul>
             </div>
             @else
+            <div class="gap-4">
             <a href="{{ route('multiLogIn') }}"
                 class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid px-4 py-2">Login</a>
             <a href="{{ route('registerPage') }}"
                 class="bg-dark-blue text-white rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Register</a>
+            </div>
             @endif
             <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
