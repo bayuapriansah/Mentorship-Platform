@@ -74,11 +74,12 @@ document.addEventListener("DOMContentLoaded", function() {
       <th>No</th>
       <th>Student Name</th>
       <th>Supervisor Name</th>
+      <th>College Name</th>
       <th>Status</th>
       @if(Auth::guard('mentor')->check() || Auth::guard('web')->check())
       @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || optional(Auth::guard('web')->user())->id == 1)
-      <th>Action</th>
-      <th>Peek</th>
+      {{-- <th>Action</th>
+      <th>Peek</th> --}}
         @endif
       @endif
     </tr>
@@ -90,14 +91,15 @@ document.addEventListener("DOMContentLoaded", function() {
       <td>{{$no}}</td>
       <td>{{$enrolled_project->student->first_name}} {{$enrolled_project->student->last_name}}</td>
       <td>{{$enrolled_project->student->mentor->first_name}} {{$enrolled_project->student->mentor->last_name}}</td>
+      <td>{{$enrolled_project->student->institution->name}}</td>
       <td>
         @if ($enrolled_project->is_submited == 1)
           <div class="text-green-600">Complete</div>
         @else
         <div class="text-[#D89B33]">Ongoing</div>
-        @endif  
+        @endif
       </td>
-      @if(Auth::guard('mentor')->check() || Auth::guard('web')->check())
+      {{-- @if(Auth::guard('mentor')->check() || Auth::guard('web')->check())
       @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || optional(Auth::guard('web')->user())->id == 1)
       <td class="flex justify-center items-center">
         @if($enrolled_project->is_submited != 1)
@@ -137,12 +139,12 @@ document.addEventListener("DOMContentLoaded", function() {
       <td>
 
         <!-- Modal toggle -->
-        <button data-modal-target="defaultModal{{ $enrolled_project->id }}" data-modal-toggle="defaultModal{{ $enrolled_project->id }}" class="block py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white" type="button">
+        <button data-modal-target="defaultModal-{{ $enrolled_project->student->id }}-{{ $enrolled_project->id }}" data-modal-toggle="defaultModal-{{ $enrolled_project->student->id }}-{{ $enrolled_project->id }}" class="block py-1 px-3 bg-dark-blue hover:bg-darker-blue rounded-md text-white" type="button">
           View detail
         </button>
 
         <!-- Main modal -->
-        <div id="defaultModal{{ $enrolled_project->id }}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="defaultModal-{{ $enrolled_project->student->id }}-{{ $enrolled_project->id }}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-2xl max-h-full">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -151,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                             Detail Project
                         </h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal{{ $enrolled_project->id }}">
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal-{{ $enrolled_project->student->id }}-{{ $enrolled_project->id }}">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -179,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function() {
                           </div>
                       </div>
                   @endforeach
-                  
+
                   </div>
                 </div>
             </div>
@@ -187,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       </td>
       @endif
-      @endif
+      @endif --}}
     </tr>
     @php
       $no++;
@@ -261,9 +263,9 @@ document.addEventListener("DOMContentLoaded", function() {
 @section('more-js')
 <script>
   $(document).ready(function () {
-    // console.log('tes');
     let table2 = $('#dataTable2').DataTable();
     let table1 = $('#dataTable').DataTable();
+
     $('#dataTable2_wrapper').hide()
     $("#filter").change(function(){
       var values = $("#filter option:selected").val();
@@ -279,3 +281,4 @@ document.addEventListener("DOMContentLoaded", function() {
   })
 </script>
 @endsection
+

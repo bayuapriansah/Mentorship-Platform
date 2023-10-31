@@ -359,6 +359,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/completed_all/{student}', [DashboardController::class, 'studentCompleteAssign'])->name('student.studentCompleteAssign');
         Route::post('/completed_all/{student}', [DashboardController::class, 'studentCompleteAssignStore'])->name('student.studentCompleteAssignStore');
         Route::get('/completed_3', [DashboardController::class, 'studentComplete3'])->name('student.complete3');
+        Route::get('/final-presentation-ongoing', [DashboardController::class, 'finalPresentationOngoing'])->name('student.finalPresentationOngoing');
+        Route::get('/final-presentation-complete', [DashboardController::class, 'finalPresentationComplete'])->name('student.finalPresentationComplete');
 
         // Route::get('/students/invite', [StudentController::class, 'inviteFromInstitution' ])->name('students.invite');
         // Route::post('/students/invite', [StudentController::class, 'sendInvite'])->name('students.sendInviteStudent');

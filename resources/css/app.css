@@ -32,6 +32,9 @@
 *{
   font-family: 'IntelOne';
 }
+.dataTables_wrapper .dataTables_length select {
+    padding-right: 15px !important;
+}
 .problem h1{
   display: block;
   font-size: 2em;
