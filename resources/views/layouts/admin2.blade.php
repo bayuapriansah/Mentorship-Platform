@@ -299,7 +299,9 @@
   @yield('more-js')
   <script>
       $(document).ready( function () {
-          $('#dataTable').DataTable();
+          $('#dataTable').DataTable({
+            pageLength : 50
+          });
       });
       const openToggle = (id)=>{
         // document.getElementById(`dropdownHover${id}`).classList.add('hidden');
