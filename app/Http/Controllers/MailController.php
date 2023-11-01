@@ -16,7 +16,7 @@ class MailController extends Controller
     /   Function used when platform admin using single invitation or bulk invitation
     /
     */
-    public function messageReminder($mailto, $studentName, $projectName, $taskName)
+    public function messageReminder($mailto, $studentName, $projectName, $taskName,$link)
     {
         $data = [
             'subject' => 'Notification - Message From Staff',
@@ -24,6 +24,7 @@ class MailController extends Controller
             'student_name' => $studentName,
             'project_name' => $projectName,
             'task_name' => $taskName,
+            'link' => $link,
             'type' => 'messageReminder',
         ];
         try

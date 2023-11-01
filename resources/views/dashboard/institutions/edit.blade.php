@@ -21,7 +21,7 @@
     @enderror
   </div>
   <div class="mb-3">
-    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="name" type="text" value="{{$institutions_view->email}}" placeholder="Institution Email" name="email" required>
+    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="text" value="{{$institutions_view->email}}" placeholder="Institution Email" name="email" required>
     @error('email')
         <p class="text-danger text-sm mt-1">
           {{$message}}
@@ -59,21 +59,21 @@
   </div>
   <div class="mb-3">
     <img src="{{asset('storage/'.$institutions->logo)}}" alt="" class="object-scale-down" style="width: 350px; height: 230px;">
-    <input type="file" class="block w-1/2 text-sm text-gray-900 border border-light-blue rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none " id="inputlogo" name="logo">
-    <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
-    <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>
+    <input type="file" class="block w-1/2 text-sm text-gray-900 border border-light-blue rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none filepond" id="inputlogo" name="logo">
+    <label class="form-label">*Max file size is 5MB</label><br>
+    <label class="form-label">*Image Extension is png, jpg or jpeg</label>
     @error('logo')
         <p class="text-danger text-sm mt-1">
           {{$message}}
         </p>
     @enderror
   </div>
-
+  
   <div class="mb-3">
     <label class="text-2xl mt-10">Certificate Template</label><br>
     {{-- <img src="{{asset('storage/'.$institutions->logo)}}" alt="" class="object-scale-down" style="width: 350px; height: 230px;"> --}}
     <label for="inputtemplate" class="form-label">Template {{ $institutions->template_cert == null ? "Empty" : "Exist" }}</label><br>
-    <input type="file" class="block w-1/2 text-sm text-gray-900 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none " id="inputtemplate" name="template_cert">
+    <input type="file" class="block w-1/2 text-sm text-gray-900 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none filepond" id="inputtemplate" name="template_cert">
     <label for="inputtemplate" class="form-label">*Template Extension is pdf</label>
     @error('template_cert')
         <p class="text-danger text-sm mt-1">

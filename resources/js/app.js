@@ -1,11 +1,37 @@
 // import './bootstrap';
 import 'flowbite';
-
+import * as FilePond from 'filepond';
+import 'filepond/dist/filepond.min.css';
 import Swiper, { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+// Ensure DOM is fully loaded before running script
+document.addEventListener('DOMContentLoaded', (event) => {
+  // console.log('DOM fully loaded and parsed');
+
+  // FilePond
+  const inputElements = document.querySelectorAll('input[type="file"].filepond');
+  
+  // console.log('File input elements found:', inputElements.length);  // Log the number of file input elements found
+
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  inputElements.forEach(inputElement => {
+      const pond = FilePond.create(inputElement, {
+          server: {
+              process: '/dashboard/uploadFileTemp',
+              headers: {
+                  'X-CSRF-TOKEN': csrfToken,
+              }
+          }
+      });
+      // console.log('FilePond instance created for', inputElement, pond);  // Log each FilePond instance created
+  });
+});
+
+// Swiper
 const swiper = new Swiper('.swiper-container', {
     slidesPerView: 3,
     spaceBetween: 30,

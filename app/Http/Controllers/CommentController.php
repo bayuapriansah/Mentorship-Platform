@@ -250,7 +250,7 @@ class CommentController extends Controller
         }
         $comment->save();
         $student_name_email = $participant->first_name." ".$participant->last_name;
-        $sendmail = (new MailController)->messageReminder("kevin@sustainablelivinglab.org",$student_name_email,$comment->project->name,$injection->title);
+        $sendmail = (new MailController)->messageReminder("bayu@sustainablelivinglab.org",$student_name_email,$comment->project->name,$injection->title);
         return redirect('/dashboard/messages/'.$injection->id.'/single/'.$participant->id);
     }
 
@@ -263,6 +263,13 @@ class CommentController extends Controller
             'student' => 'required',
             'message' => 'required',
         ]);
+
+        $link = route('student.taskDetail', ['student' => $validated['student'], 'project' => $validated['project'], 'task' => $validated['injection']]);
+        // dd($link);
+        $student = Student::findOrFail($validated['student']);
+        $project = Project::findOrFail($validated['project']);
+        $projectSection = ProjectSection::findOrFail($validated['injection']);
+        
         $comment = new Comment;
         if(Auth::guard('web')->check()){
             $comment->user_id = Auth::guard('web')->user()->id;
@@ -286,6 +293,8 @@ class CommentController extends Controller
             $comment->file = $file;
         }
         $comment->save();
+        $student_name = $student->first_name." ".$student->last_name;
+        $sendmail = (new MailController)->messageReminder("bayu@sustainablelivinglab.org",$student_name,$project->name,$projectSection->title,$link);
         return redirect('/dashboard/messages/'.$validated['injection'].'/single/'.$validated['student']);
     }
 }

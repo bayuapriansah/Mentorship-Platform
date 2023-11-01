@@ -20,6 +20,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\TheWorldController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubmissionController;
@@ -28,9 +29,9 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FaceDetectionController;
+use App\Http\Controllers\UploadHandlerController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
-use App\Http\Controllers\HomepageController;
 // use App\Http\Controllers\ChatbotController;
 
 /*
@@ -185,6 +186,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     // dashboard page
 
     Route::middleware(['auth:web'])->group(function(){
+        // Upload File Temporary
+        Route::post('/uploadFileTemp', [UploadHandlerController::class, 'uploadFileTemp'])->name('upload.handler.temp');
+        // Upload File Temporary
         Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
         // Student in institutions
         Route::get('/institutions/{institution}/students/{student}/manage', [StudentController::class, 'manage' ])->name('students.manage');
