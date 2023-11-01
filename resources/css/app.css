@@ -203,9 +203,9 @@ body {
   overflow-x: hidden;
 }
 
-/* .swiper-container {
-  overflow-x: hidden;
-} */
+.swiper-container {
+    overflow-x: hidden;
+  }
 
 /* .hidden {
   display: none;
@@ -250,6 +250,10 @@ p {
 }
 
 .swip-testimonial {
+    overflow: hidden;
+}
+
+.swip-container {
     overflow: hidden;
 }
 

@@ -153,13 +153,14 @@
                 </button>
             </div>
         </div>
+
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 @foreach ($projects as $project)
                     <!-- Slide -->
                     <div class="swiper-slide">
                         <div
-                            class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-[250px] overflow-hidden">
+                            class="block p-3 rounded-lg shadow-lg hover:shadow-xl hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
                             <div class="flex space-x-2">
                                 <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
                                     <img src="{{ asset('storage/' . $project->company->logo) }}"
