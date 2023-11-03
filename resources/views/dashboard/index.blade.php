@@ -7,12 +7,12 @@
         <div
             class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
             <p class="font-medium text-[15px]  text-left">Total Supervisors</p>
-            <p class="text-right text-dark-blue text-3xl">{{$students}}</p>
+            <p class="text-right text-dark-blue text-3xl">{{$mentors}}</p>
         </div>
         <div
             class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">
             <p class="font-medium text-[15px]  text-left">Total Student</p>
-            <p class="text-right text-dark-blue text-3xl">{{$mentors}}</p>
+            <p class="text-right text-dark-blue text-3xl">{{$students}}</p>
         </div>
         <div
             class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">

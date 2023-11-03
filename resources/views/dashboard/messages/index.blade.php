@@ -52,3 +52,12 @@
 </table>
 
 @endsection
+@section('more-js')
+<script>
+  $(document).ready(function() {
+    let table = $('#dataTable').DataTable({
+      pageLength : 50
+    });
+  });
+</script>
+@endsection

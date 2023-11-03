@@ -195,6 +195,7 @@
     $(document).ready(function() {
 
       let table = $('#dataTable').DataTable({
+        pageLength : 50
       });
       // SuspendActiveBtn
       // $('.view-details').html('<i class="fa-solid fa-chevron-down"></i>');
@@ -294,6 +295,7 @@
     $(document).ready(function() {
 
       let table = $('#dataTable').DataTable({
+        pageLength : 50
       });
       // SuspendActiveBtn
       // $('.view-details').html('<i class="fa-solid fa-chevron-down"></i>');
