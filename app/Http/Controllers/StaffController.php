@@ -21,7 +21,7 @@ class StaffController extends Controller
 {
     public function index()
     {
-      $staffs = Mentor::where('institution_id',0)->get();
+      $staffs = Mentor::where('institution_id', 0)->where('offboard', 0)->get();
       return view('dashboard.staffs.index', compact('staffs'));
     }
 
