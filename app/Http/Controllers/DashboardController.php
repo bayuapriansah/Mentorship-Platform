@@ -57,7 +57,9 @@ class DashboardController extends Controller
 
         $data['student_complete_all'] = Student::whereHas('enrolled_projects', function($q) {
             $q->where('is_submited', 1);
-        }, '=', 4)->count();
+        }, '=', 4)->whereDoesntHave('enrolled_projects', function($q) {
+            $q->where('is_submited', 0);
+        })->count();
 
         $data['student_complete_3'] = Student::whereHas('enrolled_projects', function($q) {
             $q->where('is_submited', 1);
@@ -609,7 +611,9 @@ class DashboardController extends Controller
         // Initialize the query
         $query = Student::whereHas('enrolled_projects', function($q) {
             $q->where('is_submited', 1);
-        }, '=', 4);
+        }, '=', 4)->whereDoesntHave('enrolled_projects', function($q) {
+            $q->where('is_submited', 0);
+        });
 
         if (Auth::guard('web')->check()) {
             // No additional conditions for web guard
