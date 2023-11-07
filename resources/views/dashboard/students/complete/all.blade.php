@@ -112,11 +112,11 @@
             @endif
             @if (Route::is('dashboard.student.completeAll'))
               <br>
-              {{-- @dd($student->enrolled_projects[$lastIndex]->project->status == 'private_project') --}}
-              @if ($student->enrolled_projects[$lastIndex]->project->status == 'private_project')
-              <button class="py-1 px-4 bg-dark-blue hover:bg-darker-blue rounded-md text-white cursor-default">
-                Already Assigned
-              </button>
+              {{-- @dd($student->enrolled_projects[$lastIndex]->is_submited) --}}
+              @if ($student->enrolled_projects[$lastIndex]->is_submited == 1)
+                <button class="py-1 px-4 bg-dark-blue hover:bg-darker-blue rounded-md text-white cursor-default">
+                    Already Assigned
+                </button>
               @else
                 <a href="/dashboard/completed_all/{{$student->id}}/">
                   <button class="py-1 bg-dark-blue hover:bg-darker-blue rounded-md text-white">

@@ -607,9 +607,9 @@ class DashboardController extends Controller
         $data = [];
 
         // Initialize the query
-        $query = Student::withCount(['enrolled_projects' => function($q) {
+        $query = Student::whereHas('enrolled_projects', function($q) {
             $q->where('is_submited', 1);
-        }])->having('enrolled_projects_count', '=', 4);
+        }, '=', 4);
 
         if (Auth::guard('web')->check()) {
             // No additional conditions for web guard
@@ -630,7 +630,28 @@ class DashboardController extends Controller
 
     public function finalPresentationOngoing()
     {
-        return $this->studentCompleteAll();
+        $data = [];
+
+        // Students enrolled in project_id = 5 and have submitted
+        $query = Student::whereHas('enrolled_projects', function($q) {
+            $q->where('project_id', 5)->where('is_submited', 0);
+        });
+
+        if (Auth::guard('web')->check()) {
+            // No additional conditions for web guard
+        } elseif (Auth::guard('mentor')->check()) {
+            $mentor = Auth::guard('mentor')->user();
+            if ($mentor->institution_id != 0) {
+                $query->where('mentor_id', $mentor->id);
+            } else {
+                $query->where('staff_id', $mentor->id);
+            }
+        }
+
+        $data['students'] = $query->get();
+        $data['enrolled_projects'] = EnrolledProject::all();
+
+        return view('dashboard.students.complete.all', $data);
     }
 
     public function finalPresentationComplete()
