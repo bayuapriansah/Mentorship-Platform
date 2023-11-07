@@ -51,7 +51,7 @@ class DashboardController extends Controller
 
         $data['students'] = Student::count();
         $data['mentors']  = Mentor::where('institution_id', '>', 0)->count();
-        $data['staffs']   = Mentor::where('institution_id', 0)->count();
+        $data['staffs']   = Mentor::where('institution_id', 0)->where('offboard',0)->count();
         $data['eProjects'] = EnrolledProject::count();
         $data['companies'] = Company::count();
 
