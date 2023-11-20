@@ -6,6 +6,16 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+const swiperProject =  new Swiper('.swiper-project-container', {
+    direction: 'vertical',
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+    navigation: {
+    nextEl: '#swiper-project-button-next',
+    prevEl: '#swiper-project-button-prev',
+    }
+});
+
 const swiper = new Swiper('.swiper-container', {
     slidesPerView: 3,
     spaceBetween: 30,
@@ -33,7 +43,7 @@ const swiper = new Swiper('.swiper-container', {
     },
     modules: [Navigation, Pagination],
   });
-  
+
   const swiperTestimonial = new Swiper('.swip-testimonial', {
     slidesPerView: 3,
     spaceBetween: 30,

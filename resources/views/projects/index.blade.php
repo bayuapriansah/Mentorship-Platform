@@ -28,15 +28,15 @@
       <div class="grid md:grid-cols-4 gap-4 items-start">
         <div class="relative col-span-3">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="m-0 text-2xl font-medium text-dark-blue font-semibold text-justify justify-start">Internship Projects</h2>
+                <h2 class="m-0 text-2xl text-dark-blue font-semibold text-justify justify-start">Internship Projects</h2>
                 <div class="flex space-x-4">
-                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-prev">
+                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-project-button-prev">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             class="h-6 w-6 text-dark-blue">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
-                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-next">
+                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-project-button-next">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             class="h-6 w-6 text-dark-blue">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="swiper-container">
+            <div class="swiper-project-container">
                 <div class="swiper-wrapper">
                     @foreach($projects as $project)
                         <!-- Slide -->
@@ -80,6 +80,7 @@
                     @endforeach
                 </div>
             </div>
+
           </div>
           <div class="relative">
             <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
@@ -95,15 +96,15 @@
             </div>
             <h1 class="m-0 font-bold text-xl text-justify justify-start">About intel digital readliness</h1>
             <p class="text-grey font-normal text-sm text-justify py-4">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
-          </div>    
+          </div>
       </div>
     </div>
 </section>
 
 @endsection
-@section('more-js')
+{{-- @section('more-js')
 <script>
-  var swiper = new Swiper('.swiper-container', {
+  var swiper = new Swiper('.swiper-project-container', {
       direction: 'vertical',
       slidesPerView: 'auto',
       spaceBetween: 10,
@@ -113,4 +114,4 @@
     },
   });
 </script>
-@endsection
+@endsection --}}

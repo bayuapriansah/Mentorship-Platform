@@ -69,33 +69,36 @@
             overflow: visible !important;
           }
         </style>
-        <div>
-          <div class="text-dark-blue font-normal mb-2">Change Task Completion Status</div>
-          <button id="detailButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeGradeModal">
-            More Detail
-          </button>
-        </div>
+          @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || Auth::guard('web')->check())
 
-        <div class="modal fade" id="changeGradeModal" tabindex="-1" aria-labelledby="changeGradeModalLabel" aria-hidden="true" style="display: none;">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="changeGradeModalLabel">Change Students Grade</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form action="{{ route('dashboard.submission.changeGrade', ['project' => $project->id, 'submission' => $submission->id]) }}" method="post">
-                  @csrf
-                  <div class="mb-3">
-                    <textarea id="comment" rows="4" class="form-control" name="messageFeedback" placeholder="Add Comments (Optional)"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Change Grade</button>
-                </form>
+          <div>
+            <div class="text-dark-blue font-normal mb-2">Change Task Completion Status</div>
+            <button id="detailButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeGradeModal">
+              More Detail
+            </button>
+          </div>
+
+          <div class="modal fade" id="changeGradeModal" tabindex="-1" aria-labelledby="changeGradeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="changeGradeModalLabel">Change Students Grade</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="{{ route('dashboard.submission.changeGrade', ['project' => $project->id, 'submission' => $submission->id]) }}" method="post">
+                    @csrf
+                    <div class="mb-3">
+                      <textarea id="comment" rows="4" class="form-control" name="messageFeedback" placeholder="Add Comments (Optional)"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Grade</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        
+
+          @endif   
 
         @endif
     @endif
@@ -138,48 +141,51 @@
   @if (!Auth::guard('customer')->check())
     @if(Auth::guard('web')->check() || Auth::guard('mentor')->user()->id == $submission->student->mentor_id || Auth::guard('mentor')->user()->id == $submission->student->staff_id )
       @if(!$submission->grade)
-        <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
-          @csrf
-          <div class="px-4 py-2 bg-white rounded-lg border border-light-blue">
-              <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" placeholder="Add Comments (Optional)"></textarea>
-          </div>
-          <div class="flex space-x-6">
-            {{-- data-modal-target="defaultModal" data-modal-toggle="defaultModal" --}}
-            
-            <input type="submit" class="text-white text-sm font-normal bg-[#11BF61] hover:bg-green-600 cursor-pointer px-12 py-3 mt-5  rounded-full" name="pass" value="PASS">
+          @if (optional(Auth::guard('mentor')->user())->institution_id == 0 || Auth::guard('web')->check())
 
-            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white text-sm font-normal bg-[#AB0606] hover:bg-red-800 cursor-pointer px-12 py-3 mt-5  rounded-full" type="button">
-              NEED REVISION
-            </button>
-            <div id="popup-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-              <div class="relative w-full h-full max-w-md md:h-auto ">
-                <div class="relative bg-white rounded-lg border border-light-blue shadow ">
-                  <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-hide="popup-modal">
-                      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                      <span class="sr-only">Close modal</span>
-                  </button>
-                  <div class="p-6 text-left">
-                      <p class="text-dark-blue font-medium text-xl">Are you sure you want to mark this submission as revise submission?</p>
-                      <p class="text-base">Once submission is marked as revise, you can let the student re-submit the solution.</p>
-                      <br>
-                      <div class="flex space-x-4">
-                        <button type="submit" name="revision" value="revision" class="bg-dark-blue w-1/2 rounded-lg text-white py-2">
-                          Confirm
-                        </button>
-                        <button type="button" data-modal-hide="popup-modal" type="button" class="bg-[#B52809] w-1/2 rounded-lg text-white py-2">
-                          Cancel
-                        </button>
-                      </div>
-                      {{-- <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                          Yes, I'm sure
+            <form action="/dashboard/submissions/project/{{$project->id}}/view/{{$submission->id}}/adminGrade" method="post">
+              @csrf
+              <div class="px-4 py-2 bg-white rounded-lg border border-light-blue">
+                  <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0  focus:outline-none" name="message" placeholder="Add Comments (Optional)"></textarea>
+              </div>
+              <div class="flex space-x-6">
+                {{-- data-modal-target="defaultModal" data-modal-toggle="defaultModal" --}}
+                
+                <input type="submit" class="text-white text-sm font-normal bg-[#11BF61] hover:bg-green-600 cursor-pointer px-12 py-3 mt-5  rounded-full" name="pass" value="PASS">
+
+                <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white text-sm font-normal bg-[#AB0606] hover:bg-red-800 cursor-pointer px-12 py-3 mt-5  rounded-full" type="button">
+                  NEED REVISION
+                </button>
+                <div id="popup-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                  <div class="relative w-full h-full max-w-md md:h-auto ">
+                    <div class="relative bg-white rounded-lg border border-light-blue shadow ">
+                      <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-hide="popup-modal">
+                          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          <span class="sr-only">Close modal</span>
                       </button>
-                      <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button> --}}
+                      <div class="p-6 text-left">
+                          <p class="text-dark-blue font-medium text-xl">Are you sure you want to mark this submission as revise submission?</p>
+                          <p class="text-base">Once submission is marked as revise, you can let the student re-submit the solution.</p>
+                          <br>
+                          <div class="flex space-x-4">
+                            <button type="submit" name="revision" value="revision" class="bg-dark-blue w-1/2 rounded-lg text-white py-2">
+                              Confirm
+                            </button>
+                            <button type="button" data-modal-hide="popup-modal" type="button" class="bg-[#B52809] w-1/2 rounded-lg text-white py-2">
+                              Cancel
+                            </button>
+                          </div>
+                          {{-- <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                              Yes, I'm sure
+                          </button>
+                          <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button> --}}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </form>
+            </form>
+          @endif
       @endif
     @endif 
   @endif
