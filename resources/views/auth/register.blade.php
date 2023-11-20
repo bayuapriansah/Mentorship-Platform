@@ -1,11 +1,11 @@
 @extends('layouts.index')
 @section('content')
 <section id="register" class="w-full">
-  <div class="bg-darker-blue">
+  <div class="bg-black">
     <div class="max-w-[1366px] mx-auto px-16 py-10 grid grid-cols-12 gap-11 grid-flow-col ">
       <div class="col-span-7 relative">
         <h1 class="font-bold text-white text-3xl leading-10 relative z-20 pb-7">{{ $regState == 0 ? "Register" : "Complete Registration" }}</h1>
-        <p class="m-0 text-light-blue">{{ $regState == 0 ? "Fill out the registration form below to sign up for the platform." : "Fill out the form below to complete registration." }}</p>
+        <p class="m-0 text-white">{{ $regState == 0 ? "Fill out the registration form below to sign up for the platform." : "Fill out the form below to complete registration." }}</p>
         <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-2 ">
       </div>
       <div class="col-start-10 col-span-4 relative ">
@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
-    
+
     <div class="col-span-6">
       @include('flash-message')
         @if ($regState == 0)
@@ -176,7 +176,7 @@
               <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
               This email address is already registered!
             </div> --}}
-            <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Sign Up</button>
+            <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-primary-darker border-solid border-primary-darker text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Sign Up</button>
           </form>
         @elseif ($regState == 1)
         {{-- reg state 1 if we access register from email completion register --}}
@@ -303,13 +303,13 @@
             <div class="mt-4">
               @include('flash-message')
             </div>
-            <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Sign Up</button>
+            <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-primary-darker border-solid border-primary-darker text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Sign Up</button>
           </form>
           @endif
     </div>
     <div class="col-start-7 col-span-6 relative">
       <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
-      <img src="{{asset('assets/img/home2.png')}}" class="relative z-20" alt="">
+      <img src="{{asset('assets/img/main/DBanner.png')}}" class="relative z-20" alt="">
 
       <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
       <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >

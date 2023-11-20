@@ -21,11 +21,11 @@
 @extends('layouts.index')
 @section('content')
 <section id="login" class="w-full">
-  <div class="w-full bg-lightest-blue">
-    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-11 grid-flow-col ">
+  <div class="w-full bg-black">
+    <div class="max-w-[1366px] mx-auto px-16 pb-16 pt-16 grid grid-cols-12 gap-11 grid-flow-col ">
       <div class="col-span-6">
-        <h1 class="intelOne text-dark-blue font-bold text-4xl leading-11">Login</h1>
-        <p class="intelOne font-light text-black text-lg leading-6 py-6">Sign in to your account to continue.</p>
+        <h1 class="intelOne text-primary font-bold text-4xl leading-11">Login</h1>
+        <p class="intelOne font-light text-white text-lg leading-6 py-6">Sign in to your account to continue.</p>
         <form action="/authenticate" method="post" id="register">
           @csrf
           <input type="email" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none {{old('email') != null ? 'border-red-500' : ''}}" value="{{ $email}}" placeholder="Email" id="email" name="email" required>
@@ -49,14 +49,14 @@
           </div> --}}
 
           <div class="flex justify-between items-center">
-            <button class="py-2.5 px-11 rounded-full border-2 bg-darker-blue border-solid hover:bg-dark-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Login</button>
-            <a href="/forgot-password" class="text-sm text-dark-blue hover:text-darker-blue text-right">Forgot password?</a>
+            <button class="py-2.5 px-11 rounded-full border-2 bg-primary-darker border-solid hover:bg-primary text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Login</button>
+            <a href="/forgot-password" class="text-sm text-primary hover:text-primary-darker text-right">Forgot password?</a>
           </div>
         </form>
       </div>
       <div class="col-start-7 col-span-6 relative">
         <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
-        <img src="{{asset('assets/img/home1.png')}}" class="relative z-20" alt="">
+        <img src="{{asset('assets/img/main/DBanner.png')}}" class="relative z-20" alt="">
 
         <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
         <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >

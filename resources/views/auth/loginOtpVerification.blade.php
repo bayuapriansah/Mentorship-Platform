@@ -6,7 +6,7 @@
     <div class=" card col-6 p-4 bg-light">
       <form method="post" action="{{ route('otp.getlogin') }}">
         @csrf
-        
+
         <h3>LOGIN</h3>
         <input type="hidden" name="user_id" value="{{$user_id}}">
         <label for="email" class="form-label">Email</label>
@@ -61,11 +61,11 @@
       <div class="col-start-7 col-span-6 relative">
         <!-- block absolute top-1/2 -translate-y-1/2 right-7 max-w-[1366px]  -->
         <img src="{{asset('assets/img/home1.png')}}" class="relative z-20" alt="">
-  
+
         <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true" >
         <img src="{{asset('assets/img/dots-2.png')}}" alt="dots" class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true" >
         <!-- <img src="./assets/img/dots-1.png" alt="dots" class="hidden lg:block absolute top-1/2 -translate-y-1/2 -left-24 xl:-left-7" aria-hidden="true" > -->
-        
+
       </div>
     </div>
   </div>

@@ -1,27 +1,19 @@
 @extends('layouts.index')
 @section('content')
     {{-- Body Contents --}}
-    <div class="max-w-full bg-darker-blue">
-        <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20 bg-darker-blue">
-            <div class="grid md:grid-cols-2 gap-4 items-center">
-                <div class="my-auto">
-                    <h2 class="intelOne text-white font-bold text-3xl leading-11 py-4">
-                        <span class="text-light-brown">Simulated Internship</span> Platform for <span
-                            class="text-light-brown">Industry Readiness</span>
+    <div style="background-image: url({{ asset('assets/img/main/banner.png') }}); background-size: cover;" class="max-w-full bg-no-repeat phone:bg-right-min-28 hd:bg-top-min-20 laptop:bg-top-min-20 fhd:bg-top-min-32 py-24">
+        <div class="max-w-screen-xl mx-auto px-6 hd:py-24 ">
+            <div class="grid md:grid-cols-2 gap-4 items-center ">
+                <div class="my-auto px-8 py-4 mt-48 hd:mt-0 hd:px-16 hd:py-8">
+                    <h2 class="intelOne text-white font-bold text-xl hd:text-3xl leading-11">
+                        <span>Intel AI Global Impact Festival</span> <span class="text-primary"> Mentorship Platform</span>
                     </h2>
-                    <span class="intelOne text-white py-6 font-light text-lg leading-6">Join today to work on real-world
+                    <span class="intelOne text-white font-light text-sm hd:text-lg leading-6">Join today to work on real-world
                         projects and kick start your career!</span>
                     <div class="flex py-4">
                         <a href="{{ route('multiLogIn') }}"
-                            class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-16 py-3.5 rounded-full">GetStarted</a>
+                           class="intelOne text-white text-sm font-normal bg-primary hover:bg-primary-700 px-8 py-1.5 hd:px-16 hd:py-3.5 rounded-full">Get Started</a>
                     </div>
-                </div>
-                <div class="relative my-auto">
-                    <img src="{{ asset('assets/img/home1.png') }}" class="relative z-40" alt="">
-                    <img src="{{ asset('assets/img/dots-1.png') }}" loading="lazy" alt="dots"
-                        class="absolute z-0 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true">
-                    <img src="{{ asset('assets/img/dots-2.png') }}" loading="lazy" alt="dots"
-                        class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true">
                 </div>
             </div>
         </div>
@@ -31,7 +23,7 @@
     <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
         <div class="grid md:grid-cols-2 gap-4 items-center">
             <div class="my-auto">
-                <h2 class="intelOne text-dark-blue font-bold text-4xl">AI for <br>Future Workforce</h2>
+                <h2 class="intelOne text-primary font-bold text-4xl"><span class="text-black">Intel AI Global Festival</span><br>Mentorship Platform</h2>
             </div>
             <div class="relative my-auto">
                 <p class="m-0 text-black text-justify">Intel® AI For Workforce is a global AI skilling program for
@@ -58,7 +50,7 @@
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
                 <img src="{{ asset('assets/img/for_students.png') }}" loading="lazy" class="relative shadow-lg rounded-2xl z-20" alt="for students">
-                <h1 class="text-dark-blue text-2xl font-bold py-3">For Students</h1>
+                <h1 class="text-primary text-2xl font-bold py-3">For Students</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Acquire Employability Skills, Gain Industry
                     Experience, Strengthen Project Portfolio</p>
             </div>
@@ -66,7 +58,7 @@
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
                 <img src="{{ asset('assets/img/for_institution.png') }}" loading="lazy" class="relative shadow-lg rounded-2xl z-20" alt="for students">
-                <h1 class="text-dark-blue text-2xl font-bold py-3">For Institutes</h1>
+                <h1 class="text-primary text-2xl font-bold py-3">For Institutes</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Enhanced Student Employability, Collaborate
                     with Industry leaders, Supervise Real-World AI Projects</p>
             </div>
@@ -74,7 +66,7 @@
         <div class="md:flex-1">
             <div class="flex flex-col px-4">
                 <img src="{{ asset('assets/img/for_industries.png') }}" loading="lazy" class="relative shadow-lg rounded-2xl z-20" alt="for students">
-                <h1 class="text-dark-blue text-2xl font-bold py-3">For Industries</h1>
+                <h1 class="text-primary text-2xl font-bold py-3">For Industries</h1>
                 <p class="text-black font-normal text-sm text-justify py-3">Identify Top Future Talents, Collaborate
                     with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
             </div>
@@ -82,19 +74,19 @@
     </div>
 
     {{-- Body Content 4.1 --}}
-    <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
+    {{-- <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="intelOne text-dark-blue font-bold text-3xl pb-8">Testimonial From Students</h2>
+            <h2 class="intelOne text-primary font-bold text-3xl pb-8">Testimonial From Students</h2>
             <div class="flex space-x-4">
-                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="testimonial-swiper-button-prev">
+                <button class="bg-white border-2 border-primary rounded-full p-2" id="testimonial-swiper-button-prev">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        class="h-6 w-6 text-dark-blue">
+                        class="h-6 w-6 text-primary">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="testimonial-swiper-button-next">
+                <button class="bg-white border-2 border-primary rounded-full p-2" id="testimonial-swiper-button-next">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        class="h-6 w-6 text-dark-blue">
+                        class="h-6 w-6 text-primary">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
@@ -106,22 +98,16 @@
                     <!-- Slide -->
                     <div class="swiper-slide">
                         <div
-                            class="block p-3 rounded-lg shadow-lg hover:shadow-xl hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
+                            class="block p-3 rounded-lg shadow-lg hover:shadow-xl hover:border-2 border-2 hover:border-primary-darker border-[#A4AADC] bg-white max-w-sm h-auto overflow-hidden">
                             <div class="flex space-x-2">
                                 <div class="flex-col">
                                     <p
-                                        class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis px-2 overflow-hidden">
+                                        class="intelOne text-primary font-bold text-xl leading-7 m-0 overflow-ellipsis px-2 overflow-hidden">
                                         {{ $testimonial['name'] }}
                                     </p>
                                     <p class="text-black font-normal text-sm mt-2 overflow-ellipsis px-2 overflow-hidden">
                                         Student
                                     </p>
-                                    {{-- <div class="pt-2">
-                                        <p
-                                            class="text-dark-blue font-normal text-sm bg-lightest-blue py-0.5 text-center shadow-lg rounded-lg p-4 overflow-ellipsis px-2 overflow-hidden">
-                                            {{ $testimonial['email'] }}
-                                        </p>
-                                    </div> --}}
                                 </div>
                             </div>
                             <div class="text-grey font-normal text-base text-justify mb-2 py-4 overflow-ellipsis px-2 overflow-hidden">
@@ -132,22 +118,22 @@
                 @endforeach
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Body Content 4 --}}
     <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="intelOne text-dark-blue font-bold text-3xl pb-8">Internship Projects</h2>
+            <h2 class="intelOne text-primary font-bold text-3xl pb-8">Skill Focus Track Projects</h2>
             <div class="flex space-x-4">
-                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-prev">
+                <button class="bg-white border-2 border-primary rounded-full p-2" id="swiper-button-prev">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        class="h-6 w-6 text-dark-blue">
+                        class="h-6 w-6 text-primary">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-button-next">
+                <button class="bg-white border-2 border-primary rounded-full p-2" id="swiper-button-next">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        class="h-6 w-6 text-dark-blue">
+                        class="h-6 w-6 text-primary">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
@@ -159,7 +145,7 @@
                     <!-- Slide -->
                     <div class="swiper-slide">
                         <div
-                            class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-[250px] overflow-hidden">
+                            class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-primary-darker border-[#A4AADC] bg-white max-w-sm h-[250px] overflow-hidden">
                             <div class="flex space-x-2">
                                 <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
                                     <img src="{{ asset('storage/' . $project->company->logo) }}"
@@ -167,14 +153,14 @@
                                 </div>
                                 <div class="flex-col">
                                     <p
-                                        class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">
+                                        class="intelOne text-primary font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">
                                         {{ substr($project->name, 0, 18) }}{{ strlen($project->name) > 18 ? '...' : '' }}
                                     </p>
                                     <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">
                                         {{ $project->company->name }}</p>
                                     <div class="pt-2">
                                         <p
-                                            class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
+                                            class="text-primary font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
                                             {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
                                         </p>
                                     </div>
@@ -186,7 +172,7 @@
                                 <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span
                                         class="font-medium">{{ $project->period }} {{ strtolower($project->name) == "onboarding week" ? 'Week' : ($project->period > 1 ? 'Months' : 'Month') }}</span></p>
                                 <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}"
-                                    class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full ">View
+                                    class="intelOne text-white text-sm font-normal bg-primary-darker hover:bg-primary px-3 py-2 rounded-full ">View
                                     Project</a>
                             </div>
                         </div>
@@ -196,8 +182,74 @@
         </div>
 
         <div class="flex justify-end pt-6">
-            <a href="{{ route('projects.index') }}" class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid px-4 py-2">View All Projects</a>
+            <a href="{{ route('projects.index') }}" class="border-primary text-primary rounded-full border-[1px] border-solid px-4 py-2">View All Projects</a>
         </div>
+    </div>
+
+    {{-- Body Content 4 --}}
+    <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="intelOne text-primary font-bold text-3xl pb-8">Project Focus Track</h2>
+            <div class="flex space-x-4">
+                <button class="bg-white border-2 border-primary rounded-full p-2" id="swiper-button-prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="h-6 w-6 text-primary">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button class="bg-white border-2 border-primary rounded-full p-2" id="swiper-button-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="h-6 w-6 text-primary">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        {{-- <div class="swiper-container">
+            <div class="swiper-wrapper">
+                @foreach ($projects as $project)
+                    <!-- Slide -->
+                    <div class="swiper-slide">
+                        <div
+                            class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-primary-darker border-[#A4AADC] bg-white max-w-sm h-[250px] overflow-hidden">
+                            <div class="flex space-x-2">
+                                <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
+                                    <img src="{{ asset('storage/' . $project->company->logo) }}"
+                                        class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
+                                </div>
+                                <div class="flex-col">
+                                    <p
+                                        class="intelOne text-primary font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">
+                                        {{ substr($project->name, 0, 18) }}{{ strlen($project->name) > 18 ? '...' : '' }}
+                                    </p>
+                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">
+                                        {{ $project->company->name }}</p>
+                                    <div class="pt-2">
+                                        <p
+                                            class="text-primary font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
+                                            {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-grey font-normal text-base mb-2 pt-3 overflow-ellipsis overflow-hidden">
+                                {{ substr($project->overview, 0, 62) }}...</div>
+                            <div class="flex justify-between">
+                                <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span
+                                        class="font-medium">{{ $project->period }} {{ strtolower($project->name) == "onboarding week" ? 'Week' : ($project->period > 1 ? 'Months' : 'Month') }}</span></p>
+                                <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}"
+                                    class="intelOne text-white text-sm font-normal bg-primary-darker hover:bg-primary px-3 py-2 rounded-full ">View
+                                    Project</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div> --}}
+
+        {{-- <div class="flex justify-end pt-6">
+            <a href="{{ route('projects.index') }}" class="border-primary text-primary rounded-full border-[1px] border-solid px-4 py-2">View All Projects</a>
+        </div> --}}
     </div>
 
 
@@ -214,7 +266,7 @@
                 </div>
             </div>
             <div class="relative">
-                <h1 class="font-bold text-2xl mb-4 text-dark-blue text-justify">Learning Never Stops</h1>
+                <h1 class="font-bold text-2xl mb-4 text-primary text-justify">Learning Never Stops</h1>
                 <p class="m-0 text-black text-justify">When he was 16 years old, Feridoon Ghanbari and his family left
                     Iran to live in the U.S. With time spent in the Army as a combat medic and the Air Force as a
                     guidance and navigation engineer—the military has shaped his life. Afterward, he moved to New
