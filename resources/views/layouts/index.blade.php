@@ -19,129 +19,90 @@
 </head>
 
 <body>
-    {{-- NAVBAR --}}
-    <nav class="bg-white text-primary px-6 py-4">
-        <div class="max-w-screen-xl flex flex-col md:flex-row items-center justify-between mx-auto">
-            <div class="text-lg font-semibold mb-4 md:mb-0">
-                <a href="{{ route('index') }}" class="text-dark-blue no-underline hover:text-lightest-blue">
-                    <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" class="" alt="Impact Festival Logo">
-                </a>
-            </div>
-            <div class="flex justify-center space-x-4 flex-grow mb-4 gap-5 tab:gap-5 md:mb-0">
-                <a href="{{ route('index') }}"
-                    class="text-primary intelOne no-underline hover:text-primary-500">Home</a>
-                <a href="{{ route('projects.index') }}"
-                    class="text-primary intelOne no-underline hover:text-primary-500">Internship
-                    Projects</a>
-                <a href="#" data-tooltip-target="Industry-Partners-hover" data-tooltip-trigger="hover"
-                    class="text-primary intelOne no-underline hover:text-primary-500">Industry Partners</a>
-            </div>
-            <div class="space-x-4 gap-12">
-                @if (isLoggedIn())
-                    <button id="dropdownRightEndButton" data-dropdown-toggle="dropdownRightEnd"
-                        data-dropdown-placement="right-end"
-                        class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
-                        type="button">
-                        <span class="sr-only">Open user menu</span>
-                        <i class="fa-solid fa-user fa-fade mr-2"></i>
-                        {{-- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="w-8 h-8 mr-2 rounded-full">
-                            <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                            <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
-                        </svg> --}}
-                        {{ nameUserAuth() }}
-                        <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                @else
-                    <a href="{{ route('multiLogIn') }}"
-                        class="border-primary hover:border-primary-500 hover:text-primary-800 text-primary rounded-full border-[1px] border-solid px-4 py-2">Login</a>
-                    <a href="{{ route('registerPage') }}"
-                        class="border-primary bg-primary hover:border-primary-500 hover:bg-primary-800 text-white rounded-full border-[1px] border-solid px-4 py-2">Register</a>
-                        {{-- need to put it here as emergency button to logout --}}
-                        {{-- <form class="inline" method="post" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log Out</button>
-                        </form> --}}
-                @endif
-            </div>
-            {{-- Navbar Componet --}}
-            <div id="Industry-Partners-hover" role="tooltip"
-                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                Coming Soon
-                <div class="tooltip-arrow" data-popper-arrow></div>
-            </div>
+    {{-- Navbar 2 --}}
+    <nav class="bg-white border-gray-200 dark:bg-gray-900 px-12 phone:px-4">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="{{ route('index') }}" class="text-dark-blue no-underline hover:text-lightest-blue">
+                <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" class="" alt="Impact Festival Logo">
+            </a>
+        <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             @if (isLoggedIn())
+                <button id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom" class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+                    type="button">
+                    <span class="sr-only">Open user menu</span>
+                    <i class="fa-solid fa-user fa-fade mr-2"></i>
+                    {{ nameUserAuth() }}
+                    <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
                 <!-- Dropdown menu -->
-                <div id="dropdownRightEnd"
-                    class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                        <div class="font-medium">{{ nameUserAuth() }}</div>
-                        <div class="truncate">{{ emailUserAuth() }}</div>
+                <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                    <div class="px-4 py-3">
+                    <span class="block text-sm text-gray-900 dark:text-white">{{ nameUserAuth() }}</span>
+                    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ emailUserAuth() }}</span>
                     </div>
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRightEndButton">
-                        <li>
-                            @if (Auth::guard('student')->check())
-                            <a href="{{ route('student.allProjects', ['student' => Auth::guard('student')->user()->id]) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
-                            @elseif(Auth::guard('web')->check())
-                            <a href="{{ route('dashboard.admin') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
-                            @elseif(Auth::guard('mentor')->check())
-                            <a href="{{ route('dashboard.mentor') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
-                            @elseif(Auth::guard('customer')->check())
-                             <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
-                             @endif
-
-                        </li>
-                    </ul>
-                    <div class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                        <a href="#"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log Out</a>
-
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                        @if (Auth::guard('student')->check())
+                            <a href="{{ route('student.allProjects', ['student' => Auth::guard('student')->user()->id]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                        @elseif(Auth::guard('web')->check())
+                            <a href="{{ route('dashboard.admin') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                        @elseif(Auth::guard('mentor')->check())
+                            <a href="{{ route('dashboard.mentor') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                        @elseif(Auth::guard('customer')->check())
+                            <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                         @endif
+                    </li>
+                    <li>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
                         <form id="logout-form" class="inline" method="post" action="{{ route('logout') }}" style="display: none;">
                             @csrf
                         </form>
-                    </div>
+                    </li>
+                    </ul>
                 </div>
+                <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                    </svg>
+                </button>
+            @else
+                <a href="{{ route('multiLogIn') }}"
+                    class="border-primary hover:border-primary-500 hover:text-primary-800 text-primary rounded-full border-[1px] border-solid px-4 py-2">Login</a>
+                <a href="{{ route('registerPage') }}"
+                    class="border-primary bg-primary hover:border-primary-500 hover:bg-primary-800 text-white rounded-full border-[1px] border-solid px-4 py-2">Register</a>
             @endif
-            {{-- End Navbar Component --}}
         </div>
-    </nav>
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+          <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <li>
+              <a href="{{ route('index') }}" class="block py-2 px-3 rounded {{ Request::routeIs('index') ? 'text-primary-800 hover:text-black' : 'text-black hover:text-primary-800' }}" aria-current="page">Home</a>
+            </li>
+            <li>
+              <a href="{{ route('projects.index') }}" class="block py-2 px-3 rounded {{ Request::routeIs('projects.index') ? 'text-primary-800 hover:text-black' : 'text-black hover:text-primary-800' }}">Skill Track</a>
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-3 rounded {{ Request::routeIs('projects.index') ? 'text-primary-800 hover:text-black' : 'text-black hover:text-primary-800' }}">Project Track</a>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </nav>
+
+    {{-- Navbar 2 End --}}
 
     <main>
         @yield('content')
     </main>
-    {{-- <button id="chat-button" class="fixed bottom-0 right-0 m-6">
-        <i class="fas fa-comment"></i> Chat
-    </button>
-    <div id="chat-container" class="hidden fixed bottom-0 right-0 m-6 chat-container">
-        <div class="bg-white p-2 rounded-lg shadow-lg chat-box">
-            <div class="chat-header flex justify-between items-center">
-                <div class="flex items-center">
-                    <i class="fa-solid fa-robot bot-logo"></i>
-                    <span class="bot-name ml-2">SimmyBot</span>
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                </div>
-                <button id="close-chat" class="close-chat">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="chat-box" class="chat-messages">
-                <!-- Chat messages will go here -->
-            </div>
-            <input id="user-input" class="mt-4 p-2 w-full rounded" placeholder="Type your message...">
-        </div>
-    </div> --}}
+
     <!-- Footer -->
-    <footer class="bg-primary-footer dark:bg-gray-900">
-        <div class="max-w-screen-xl mx-auto px-6 py-4" id="AiForFuture">
+    <footer class="bg-[#E9E9E9]">
+        <div class="max-w-screen-xl mx-auto px-12 py-4" id="AiForFuture">
             <div class="p-4 py-6 lg:py-8">
                 <div class="mb-6 md:mb-0">
                     <a href="/" class="flex items-center">
@@ -152,7 +113,7 @@
             </div>
             <div class="grid md:grid-cols-2 gap-12 items-start">
                 <div class="relative">
-                    <p class="text-justify text-white">Intel technologies may require enabled
+                    <p class="text-justify text-black">Intel technologies may require enabled
                         hardware, software, or service activation. No product or component can be absolutely secure.
                         Your costs and results may vary. Performance varies by use, configuration, and other factors.
                         See our complete legal <a
@@ -167,29 +128,24 @@
                 <div class="relative">
                     <div class="md:flex col-start-8 col-span-4">
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Info</h2>
-                            <ul class="text-white dark:text-gray-400 font-normal">
+                            <h2 class="mb-6 text-sm font-semibold text-black uppercase dark:text-black">Info</h2>
+                            <ul class="text-black dark:text-gray-400 font-normal">
                                 <li class="mb-4">
                                     <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Industry Partners</a>
+                                        data-tooltip-trigger="hover" class="hover:underline">Project Track</a>
                                 </li>
                                 <li class="mb-4">
                                     <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Institution</a>
+                                        data-tooltip-trigger="hover" class="hover:underline">Skill Track</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('students.info') }}" class="hover:underline">For Students</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Support</h2>
-                            <ul class="text-white dark:text-gray-400 font-normal">
-                                <li class="mb-4">
-                                    {{-- <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline ">About Us</a> --}}
-                                    <a href="/#AiForFuture" class="hover:underline ">About Us</a>
-                                </li>
+                            <h2 class="mb-6 text-sm font-semibold text-black uppercase dark:text-black">Support</h2>
+                            <ul class="text-black dark:text-gray-400 font-normal">
                                 <li class="mb-4">
                                     <a href="{{ route('faq') }}" class="hover:underline">FAQs</a>
                                 </li>
@@ -199,8 +155,8 @@
                             </ul>
                         </div>
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Legal</h2>
-                            <ul class="text-white dark:text-gray-400 font-normal">
+                            <h2 class="mb-6 text-sm font-semibold text-black uppercase dark:text-black">Legal</h2>
+                            <ul class="text-black dark:text-gray-400 font-normal">
                                 <li class="mb-4">
                                     <a href="{{ route('privacy-policy') }}" class="hover:underline">Privacy
                                         Policy</a>
@@ -216,7 +172,7 @@
             </div>
             <hr class="my-6 border-black border-t-2 sm:mx-auto lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
-                <span class="text-sm text-white sm:text-center dark:text-gray-400">© {{ date('Y') }} <a
+                <span class="text-sm text-black sm:text-center dark:text-gray-400">© {{ date('Y') }} <a
                         href="/" class="hover:underline">Simulated Internship</a>. All Rights Reserved.
                 </span>
 

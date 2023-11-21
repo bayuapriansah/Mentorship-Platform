@@ -298,4 +298,23 @@ padding: 10px;
 border-radius: 5px;
 }
 
-/* CHATBOT CUSTOM CSS */
+/* Targeting the scrollbar itself */
+::-webkit-scrollbar {
+    width: 0px; /* or any smaller size */
+    height: 8px; /* for horizontal scrollbars */
+}
+
+/* Targeting the scrollbar track (the part the thumb slides along) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* or any color of choice */
+}
+
+/* Targeting the scrollbar thumb (the draggable element) */
+::-webkit-scrollbar-thumb {
+    background: #888; /* or any color of choice */
+}
+
+/* Hover effect for the thumb */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* or any color of choice */
+}
