@@ -21,7 +21,7 @@
 
     {{-- Body Content 2 --}}
     <div class="max-w-screen-xl mx-auto px-6 flex flex-col items-center">
-        <h2 class="font-bold text-4xl text-center">
+        <h2 class="font-bold text-4xl text-center text-darker-blue">
             Intel Impact Festival<br>
             <span class="text-primary">
                 Mentorship Program
@@ -37,20 +37,24 @@
 
     {{-- Body Content 3 --}}
     <div class="max-w-screen-tab mt-[5.75rem] mx-auto">
-        <div class="w-full flex items-center gap-14">
+        <div class="relative w-full flex items-center gap-14">
+            <div class="absolute -top-5 left-4 w-11 h-11 bg-secondary-cr2 rounded-lg"></div>
+
             <img src="{{ asset('/assets/img/home/skills-track.png') }}" alt="Skills Track">
 
             <div class="flex flex-col gap-2">
-                <h2 class="font-bold text-2xl">
+                <h2 class="font-bold text-2xl text-darker-blue">
                     Skills Track
                 </h2>
                 <p class="text-justify">Students will take on real-world projects specifically developed for them to hone their technical AI skills.</p>
             </div>
         </div>
 
-        <div class="w-full mt-28 flex items-center gap-14">
+        <div class="relative w-full mt-28 flex items-center gap-14">
+            <div class="absolute -bottom-5 right-12 w-11 h-11 bg-secondary-cr2 rounded-lg"></div>
+
             <div class="flex flex-col gap-2">
-                <h2 class="font-bold text-2xl text-right">
+                <h2 class="font-bold text-2xl text-right text-darker-blue">
                     Project Track
                 </h2>
                 <p class="text-justify">Students will extend their personal projects submitted to the Intel AI Impact Festival with the focus on polishing their project and preparing to take the project to the next level as a new business venture.</p>
@@ -60,13 +64,40 @@
         </div>
     </div>
 
+    {{-- Body Content 4 --}}
     <div class="max-w-screen-xl mt-[8rem] mx-auto px-24 flex flex-col items-center">
-        <h1 class="font-bold text-3xl">
+        <h1 class="font-bold text-darker-blue text-3xl">
             Skills Track
         </h1>
+
+        <div class="mt-12 flex flex-wrap gap-[3.25rem]">
+            @foreach ($projects as $project)
+                <div class="w-[316px] min-h-[405px] rounded-lg shadow-xl"></div>
+            @endforeach
+        </div>
     </div>
 
-    {{-- OLD Body Content 3 --}}
+    {{-- Body Content 5 --}}
+    <div class="relative max-w-screen-xl mt-[12.5rem] mb-[9.25rem] mx-auto px-6 flex justify-center items-center gap-72">
+        <div class="relative">
+            <img src="{{ asset('/assets/img/home/pj1.png') }}" alt="Project Track">
+            <img src="{{ asset('/assets/img/home/pj2.png') }}" alt="Project Track" class="absolute top-[3.5rem] -right-[12.5rem]">
+        </div>
+
+        <div class="flex flex-col items-center gap-2">
+            <h1 class="font-bold text-2xl text-darker-blue">
+                Project Track
+            </h1>
+
+            <a href="#" class="text-white bg-primary px-8 py-2 text-xl rounded-full">
+                View Project Planner
+            </a>
+        </div>
+
+        <img src="{{ asset('/assets/img/home/bubble-decoration.png') }}" alt="Decoration" class="absolute bottom-0 -right-8 w-[339px]">
+    </div>
+
+    {{-- Body Content 3 --}}
     {{-- <div class="max-w-screen-xl mx-auto px-6 pt-20 mb-0 flex flex-col md:flex-row md:space-x-4 relative">
         <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots" class="absolute z-10 -top-32 right-0"
             aria-hidden="true">

@@ -32,6 +32,7 @@ module.exports = {
         'primary-dark' : '#c44d14',
         'primary-darker' : '#ab4311',
         'primary-footer' : '#F68E53',
+        'secondary-cr2': '#FF8F51',
         'dark-blue' : '#000F8A',
         'darker-blue' : '#000864',
         'light-brown' : '#DEAA51',
