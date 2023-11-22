@@ -20,29 +20,54 @@
     </div>
 
     {{-- Body Content 2 --}}
-    <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
-        <div class="grid md:grid-cols-2 gap-4 items-center">
-            <div class="my-auto">
-                <h2 class="intelOne text-primary font-bold text-4xl"><span class="text-black">Intel AI Global Festival</span><br>Mentorship Platform</h2>
-            </div>
-            <div class="relative my-auto">
-                <p class="m-0 text-black text-justify">Intel® AI For Workforce is a global AI skilling program for
-                    vocational students for building an AI-ready workforce. The program aims to address the AI skill
-                    crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the
-                    necessary skills for employability in the digital economy. The program offers comprehensive,
-                    modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
-                <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
-                    <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/K9iflwQqVsA"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-                        allowfullscreen loading="lazy"></iframe>
-                </div>
-            </div>
-        </div>
+    <div class="max-w-screen-xl mx-auto px-6 flex flex-col items-center">
+        <h2 class="font-bold text-4xl text-center">
+            Intel Impact Festival<br>
+            <span class="text-primary">
+                Mentorship Program
+            </span>
+        </h2>
+
+        <p class="mt-[2.625rem] text-black text-center text-lg max-w-screen-tab">Intel® AI For Workforce is a global AI skilling program for
+            vocational students for building an AI-ready workforce. The program aims to address the AI skill
+            crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the
+            necessary skills for employability in the digital economy. The program offers comprehensive,
+            modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
     </div>
 
     {{-- Body Content 3 --}}
-    <div class="max-w-screen-xl mx-auto px-6 pt-20 mb-0 flex flex-col md:flex-row md:space-x-4 relative">
+    <div class="max-w-screen-tab mt-[5.75rem] mx-auto">
+        <div class="w-full flex items-center gap-14">
+            <img src="{{ asset('/assets/img/home/skills-track.png') }}" alt="Skills Track">
+
+            <div class="flex flex-col gap-2">
+                <h2 class="font-bold text-2xl">
+                    Skills Track
+                </h2>
+                <p class="text-justify">Students will take on real-world projects specifically developed for them to hone their technical AI skills.</p>
+            </div>
+        </div>
+
+        <div class="w-full mt-28 flex items-center gap-14">
+            <div class="flex flex-col gap-2">
+                <h2 class="font-bold text-2xl text-right">
+                    Project Track
+                </h2>
+                <p class="text-justify">Students will extend their personal projects submitted to the Intel AI Impact Festival with the focus on polishing their project and preparing to take the project to the next level as a new business venture.</p>
+            </div>
+
+            <img src="{{ asset('/assets/img/home/project-track.png') }}" alt="Skills Track">
+        </div>
+    </div>
+
+    <div class="max-w-screen-xl mt-[8rem] mx-auto px-24 flex flex-col items-center">
+        <h1 class="font-bold text-3xl">
+            Skills Track
+        </h1>
+    </div>
+
+    {{-- OLD Body Content 3 --}}
+    {{-- <div class="max-w-screen-xl mx-auto px-6 pt-20 mb-0 flex flex-col md:flex-row md:space-x-4 relative">
         <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots" class="absolute z-10 -top-32 right-0"
             aria-hidden="true">
         <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots" class="absolute z-10 top-10 left-0 "
@@ -71,7 +96,7 @@
                     with Top Institutions, Explore Fresh Perspectives on Industry Use-Cases</p>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Body Content 4.1 --}}
     {{-- <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
@@ -121,7 +146,7 @@
     </div> --}}
 
     {{-- Body Content 4 --}}
-    <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
+    {{-- <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
         <div class="flex justify-between items-center mb-4">
             <h2 class="intelOne text-primary font-bold text-3xl pb-8">Skill Focus Track Projects</h2>
             <div class="flex space-x-4">
@@ -184,11 +209,11 @@
         <div class="flex justify-end pt-6">
             <a href="{{ route('projects.index') }}" class="border-primary text-primary rounded-full border-[1px] border-solid px-4 py-2">View All Projects</a>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Body Content 4 --}}
-    <div class="max-w-screen-xl mx-auto px-6 py-4 relative">
-        <div class="flex justify-between items-center mb-4">
+    {{-- <div class="max-w-screen-xl mx-auto px-6 py-4 relative"> --}}
+        {{-- <div class="flex justify-between items-center mb-4">
             <h2 class="intelOne text-primary font-bold text-3xl pb-8">Project Focus Track</h2>
             <div class="flex space-x-4">
                 <button class="bg-white border-2 border-primary rounded-full p-2" id="swiper-button-prev">
@@ -204,7 +229,7 @@
                     </svg>
                 </button>
             </div>
-        </div>
+        </div> --}}
         {{-- <div class="swiper-container">
             <div class="swiper-wrapper">
                 @foreach ($projects as $project)
@@ -250,11 +275,11 @@
         {{-- <div class="flex justify-end pt-6">
             <a href="{{ route('projects.index') }}" class="border-primary text-primary rounded-full border-[1px] border-solid px-4 py-2">View All Projects</a>
         </div> --}}
-    </div>
+    {{-- </div> --}}
 
 
     <!-- Body Content 5 -->
-    <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
+    {{-- <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
         <div class="grid md:grid-cols-2 gap-4 items-start">
             <!-- Changed here -->
             <div class="relative">
@@ -278,5 +303,5 @@
                     AI skills for employability in the digital economy.</p>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
