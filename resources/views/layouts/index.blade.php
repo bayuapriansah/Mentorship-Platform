@@ -16,6 +16,8 @@
     {{-- <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet"> --}}
     @vite(['resources/css/app.css','resources/js/app.js'])
     <meta name="theme-color" content="#712cf9">
+
+    @yield('more-css')
 </head>
 
 <body>
@@ -24,17 +26,23 @@
         <div class="max-w-screen-xl flex flex-col md:flex-row items-center justify-between mx-auto">
             <div class="text-lg font-semibold mb-4 md:mb-0">
                 <a href="{{ route('index') }}" class="text-dark-blue no-underline hover:text-lightest-blue">
-                    <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" class="" alt="Impact Festival Logo">
+                    <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" alt="Impact Festival Logo">
                 </a>
             </div>
             <div class="flex justify-center space-x-4 flex-grow mb-4 gap-5 tab:gap-5 md:mb-0">
-                <a href="{{ route('index') }}"
-                    class="text-primary intelOne no-underline hover:text-primary-500">Home</a>
-                <a href="{{ route('projects.index') }}"
-                    class="text-primary intelOne no-underline hover:text-primary-500">Internship
-                    Projects</a>
-                <a href="#" data-tooltip-target="Industry-Partners-hover" data-tooltip-trigger="hover"
-                    class="text-primary intelOne no-underline hover:text-primary-500">Industry Partners</a>
+                <a
+                    href="{{ route('index') }}"
+                    class="text-[#080808] text-sm intelOne no-underline hover:text-primary"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="{{ route('projects.index') }}"
+                    class="text-[#080808] text-sm intelOne no-underline hover:text-primary"
+                >
+                    Available Project(s)
+                </a>
             </div>
             <div class="space-x-4 gap-12">
                 @if (isLoggedIn())
@@ -57,15 +65,12 @@
                         </svg>
                     </button>
                 @else
-                    <a href="{{ route('multiLogIn') }}"
-                        class="border-primary hover:border-primary-500 hover:text-primary-800 text-primary rounded-full border-[1px] border-solid px-4 py-2">Login</a>
-                    <a href="{{ route('registerPage') }}"
-                        class="border-primary bg-primary hover:border-primary-500 hover:bg-primary-800 text-white rounded-full border-[1px] border-solid px-4 py-2">Register</a>
-                        {{-- need to put it here as emergency button to logout --}}
-                        {{-- <form class="inline" method="post" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log Out</button>
-                        </form> --}}
+                    <a
+                        href="{{ route('multiLogIn') }}"
+                        class="border-primary bg-primary hover:border-primary-500 hover:bg-primary-800 text-white text-sm rounded-full border-[1px] border-solid px-10 py-2"
+                    >
+                        Log in
+                    </a>
                 @endif
             </div>
             {{-- Navbar Componet --}}
@@ -140,35 +145,35 @@
         </div>
     </div> --}}
     <!-- Footer -->
-    <footer class="bg-primary-footer dark:bg-gray-900">
+    <footer class="bg-[#e9e9e9] border-[#838383] text-black">
         <div class="max-w-screen-xl mx-auto px-6 py-4" id="AiForFuture">
             <div class="p-4 py-6 lg:py-8">
                 <div class="mb-6 md:mb-0">
                     <a href="/" class="flex items-center">
-                        <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}"
-                            class="object-scale-down h-15 w-auto py-4" alt="Intel Digital Readiness Logo" />
+                        <img src="{{ asset('assets/img/logo/footer-logo.svg') }}"
+                            class="tab:scale-125" alt="Intel Digital Readiness Logo" />
                     </a>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 gap-12 items-start">
                 <div class="relative">
-                    <p class="text-justify text-white">Intel technologies may require enabled
+                    <p class="text-justify">Intel technologies may require enabled
                         hardware, software, or service activation. No product or component can be absolutely secure.
                         Your costs and results may vary. Performance varies by use, configuration, and other factors.
                         See our complete legal <a
                             href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C"
-                            class="text-black font-bold">Notices and Disclaimers</a>. Intel is committed to respecting
+                            class="text-primary font-bold">Notices and Disclaimers</a>. Intel is committed to respecting
                         human rights and avoiding complicity in human rights abuses. See <a
                             href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html"
-                            class="text-black font-bold">Intel’s Global Human Rights Principles</a>. Intel’s products
+                            class="text-primary font-bold">Intel’s Global Human Rights Principles</a>. Intel’s products
                         and software are intended only to be used in applications that do not cause or contribute to a
                         violation of an internationally recognized human right.</p>
                 </div>
-                <div class="relative">
+                <div class="relative tab:-top-10">
                     <div class="md:flex col-start-8 col-span-4">
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Info</h2>
-                            <ul class="text-white dark:text-gray-400 font-normal">
+                            <h2 class="mb-6 text-sm font-semibold uppercase">Info</h2>
+                            <ul class="font-normal">
                                 <li class="mb-4">
                                     <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
                                         data-tooltip-trigger="hover" class="hover:underline">For Industry Partners</a>
@@ -183,8 +188,8 @@
                             </ul>
                         </div>
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Support</h2>
-                            <ul class="text-white dark:text-gray-400 font-normal">
+                            <h2 class="mb-6 text-sm font-semibold uppercase">Support</h2>
+                            <ul class="font-normal">
                                 <li class="mb-4">
                                     {{-- <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
                                         data-tooltip-trigger="hover" class="hover:underline ">About Us</a> --}}
@@ -199,8 +204,8 @@
                             </ul>
                         </div>
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Legal</h2>
-                            <ul class="text-white dark:text-gray-400 font-normal">
+                            <h2 class="mb-6 text-sm font-semibold uppercase">Legal</h2>
+                            <ul class="font-normal">
                                 <li class="mb-4">
                                     <a href="{{ route('privacy-policy') }}" class="hover:underline">Privacy
                                         Policy</a>
@@ -214,10 +219,10 @@
                     </div>
                 </div>
             </div>
-            <hr class="my-6 border-black border-t-2 sm:mx-auto lg:my-8" />
+            <hr class="my-6 border-black sm:mx-auto lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
-                <span class="text-sm text-white sm:text-center dark:text-gray-400">© {{ date('Y') }} <a
-                        href="/" class="hover:underline">Simulated Internship</a>. All Rights Reserved.
+                <span class="text-sm text-center tab:text-left">&copy; {{ date('Y') }} <a
+                        href="{{ url('/') }}" class="hover:underline">Intel Simulated Internships</a>. All Rights Reserved.
                 </span>
 
             </div>
