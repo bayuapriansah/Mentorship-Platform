@@ -26,16 +26,21 @@
     <div class="max-w-screen-xl my-6 p-6 mx-auto ">
         <h1 class="text-center text-4xl font-bold text-dark-blue">Skills Track</h1>
     </div>
-    <div class="max-w-screen-xl my-6 p-6 mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="max-w-screen-xl my-6 p-6 mx-auto">
         @foreach ($projects as $project)
             <div class="max-w-full p-6 mb-6 bg-white border-2 border-gray-300 hover:border-darker-blue rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <div class="flex space-x-2">
-                    <div class="my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
-                        <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
+                <div class="flex space-x-2 mb-4">
+                    <div class="my-auto mr-2">
+                        <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-14 border border-[#A4AADC] object-cover mx-auto rounded-lg" alt="Logo">
                     </div>
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-dark-blue dark:text-white">{{$project->name}}</h5>
-                    </a>
+                    <div class="flex-col">
+                        <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}">
+                            <h5 class="text-2xl font-bold tracking-tight text-dark-blue dark:text-white">{{$project->name}}</h5>
+                        </a>
+                        <p class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
+                            {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
+                        </p>
+                    </div>
                 </div>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $project->overview }}</p>
 
