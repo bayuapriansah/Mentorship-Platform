@@ -122,7 +122,7 @@
       <a href="{{ route('index') }}" class="col-span-2">
         <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" alt="Impact Festival Logo">
       </a>
-      <ul class="col-start-4 col-span-5 flex justify-end gap-16 text-black">
+      <ul class="col-start-4 col-span-5 flex justify-end gap-[3.5rem] text-black">
         <li class="text-black font-light text-sm">
             <a href="{{ route('index') }}">
                 Home
