@@ -21,15 +21,16 @@ use App\Http\Controllers\InstitutionController;
 
 class AuthController extends Controller
 {
-
-    public function multiLogIn(){
+    public function multiLogIn() {
         $guards = ['customer', 'web', 'mentor', 'student'];
+
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 return redirect()->route('index');
             }
         }
-        return (new AuthOtpController)->login();
+
+        return view('auth.login');
     }
 
     public function multiLogInCheck(Request $request){
