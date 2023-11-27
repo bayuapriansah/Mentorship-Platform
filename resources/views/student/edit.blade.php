@@ -37,7 +37,7 @@
 
                     <div id="change-photo-dropdown" class="z-10 hidden min-w-[281px] bg-[#F4F4F5] border border-grey shadow-xl divide-y rounded-xl">
                         <ul class="py-2 text-sm font-medium" aria-labelledby="dropdownDefaultButton">
-                          <li>
+                          <li class="hover:bg-gray-300">
                             <button type="button" class="w-full px-4 py-2 flex justify-between items-center">
                                 Photo Library
 
@@ -47,7 +47,7 @@
                             </button>
                           </li>
 
-                          <li>
+                          <li class="border-y-2 hover:bg-gray-300">
                             <button type="button" class="w-full px-4 py-2 flex justify-between items-center">
                                 Take Photo or Video
 
@@ -55,7 +55,7 @@
                             </button>
                           </li>
 
-                          <li>
+                          <li class="hover:bg-gray-300">
                             <button id="browse-photo-btn" type="button" class="w-full px-4 py-2 flex justify-between items-center">
                                 Browse
 
