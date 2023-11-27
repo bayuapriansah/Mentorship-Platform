@@ -23,10 +23,47 @@
                         class="w-[145px] h-[145px] mt-8 mx-auto rounded-full object-cover"
                     >
 
-                    <label for="file-upload" class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
+                    {{-- <label for="file-upload" class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
                         Change Photo
                         <input id="file-upload" name="profile_picture" type="file" hidden />
-                    </label>
+                    </label> --}}
+
+                    {{-- Change Photo --}}
+                    <button type="button" data-dropdown-toggle="change-photo-dropdown" class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
+                        Change Photo
+                    </button>
+
+                    <input id="input-photo-file" name="profile_picture" type="file" hidden />
+
+                    <div id="change-photo-dropdown" class="z-10 hidden min-w-[281px] bg-[#F4F4F5] border border-grey shadow-xl divide-y rounded-xl">
+                        <ul class="py-2 text-sm font-medium" aria-labelledby="dropdownDefaultButton">
+                          <li>
+                            <button type="button" class="w-full px-4 py-2 flex justify-between items-center">
+                                Photo Library
+
+                                <div class="-scale-y-100">
+                                    <i class="far fa-clone"></i>
+                                </div>
+                            </button>
+                          </li>
+
+                          <li>
+                            <button type="button" class="w-full px-4 py-2 flex justify-between items-center">
+                                Take Photo or Video
+
+                                <i class="fas fa-camera"></i>
+                            </button>
+                          </li>
+
+                          <li>
+                            <button id="browse-photo-btn" type="button" class="w-full px-4 py-2 flex justify-between items-center">
+                                Browse
+
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                          </li>
+                        </ul>
+                    </div>
 
                     <div class="mt-10 flex flex-col gap-4">
                         {{-- Name --}}
@@ -270,9 +307,9 @@
 
                         {{-- Change Track --}}
                         <div class="mt-3 flex items-center gap-8">
-                            <a href="#" class="py-3 px-10 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium hover:bg-primary hover:text-white transition-colors duration-200">
+                            <button type="button" data-modal-target="change-track-confirm-modal" data-modal-toggle="change-track-confirm-modal" class="py-3 px-10 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium hover:bg-primary hover:text-white transition-colors duration-200">
                                 Change Track
-                            </a>
+                            </button>
 
                             <p class="text-black text-xs text-justify font-light">
                                 You can only change your track once and will not be able
@@ -290,8 +327,94 @@
             </button>
         </div>
     </div>
+
+    {{-- Change Track Confirm --}}
+    <div id="change-track-confirm-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div
+                    class="w-[253px] h-[138px] absolute top-0 -right-1"
+                    style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.092px -9.628px / 100.073% 106.977% no-repeat;"
+                ></div>
+                <!-- Modal body -->
+                <div class="px-12 py-11 flex flex-col items-center">
+                    <p class="text-center text-xl text-darker-blue font-medium">
+                        Are you sure you want to change your mentorship track?
+                    </p>
+                    <p class="mt-4 text-center text-lg">
+                        You can only change your track once and will not be able to return to your previous
+                        work once you change.
+                    </p>
+
+                    <div class="mt-6 flex justify-center items-center gap-4">
+                        <button
+                            data-modal-hide="change-track-confirm-modal"
+                            data-modal-target="change-track-modal"
+                            data-modal-toggle="change-track-modal"
+                            class="min-w-[101px] py-2 px-3 bg-primary border border-primary rounded-full text-sm text-white"
+                        >
+                            Yes
+                        </button>
+
+                        <button data-modal-hide="change-track-confirm-modal" class="min-w-[101px] py-2 px-3 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Change Track --}}
+    <div id="change-track-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div
+                    class="w-[253px] h-[138px] absolute top-0 -right-1"
+                    style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.092px -9.628px / 100.073% 106.977% no-repeat;"
+                ></div>
+
+                <!-- Modal body -->
+                <div class="px-12 py-11 flex flex-col items-center">
+                    <p class="text-center text-xl text-darker-blue font-medium">
+                        Please Confirm!
+                    </p>
+
+                    <p class="mt-4 text-center text-lg">
+                        Please confirm you wish to change your mentorship track.
+                        To confirm, type "<span class="font-semibold">Change My Track</span>" in the box below.
+                    </p>
+
+                    <input
+                        type="text"
+                        placeholder='Please type "Change My Track" to confirm'
+                        class="w-full mt-3 border border-light-blue rounded-lg h-12 py-2 px-4 text-lightest-grey::placeholder placeholder:font-thin leading-tight focus:outline-none"
+                    >
+
+                    <div class="mt-6 flex justify-center items-center gap-4">
+                        <button class="min-w-[101px] py-2 px-3 bg-primary border border-primary rounded-full text-sm text-white"
+                        >
+                            Yes
+                        </button>
+
+                        <button data-modal-hide="change-track-modal" class="min-w-[101px] py-2 px-3 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('more-js')
+    <script>
+        $('#browse-photo-btn').on('click', function() {
+            $('#input-photo-file').click()
+        })
+    </script>
+
     {{-- <script>
         $(document).ready(function() {
             $('#inputInstitution').on('change', function() {
