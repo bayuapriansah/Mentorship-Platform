@@ -307,7 +307,7 @@
 
                         {{-- Change Track --}}
                         <div class="mt-3 flex items-center gap-8">
-                            <button type="button" data-modal-target="change-track-confirm-modal" data-modal-toggle="change-track-confirm-modal" class="py-3 px-10 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium hover:bg-primary hover:text-white transition-colors duration-200">
+                            <button type="button" data-modal-target="change-track-confirm-modal" data-modal-toggle="change-track-confirm-modal" class="py-3 px-10 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium">
                                 Change Track
                             </button>
 

@@ -120,7 +120,7 @@
   <div class="w-full bg-white">
     <nav class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-14 grid-flow-col items-center">
       <a href="{{ route('index') }}" class="col-span-2">
-        <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" alt="Impact Festival Logo">
+        <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" alt="Impact Festival Logo" class="scale-125">
       </a>
       <ul class="col-start-4 col-span-5 flex justify-end gap-[3.5rem] text-black">
         <li class="text-black font-light text-sm">
@@ -400,11 +400,11 @@
             <div class="grid md:grid-cols-2 gap-12 items-start">
                 <div class="relative">
                     <p class="text-justify">Intel technologies may require enabled
-                        hardware, software, or service activation. No product or component can be absolutely secure.
-                        Your costs and results may vary. Performance varies by use, configuration, and other factors.
-                        See our complete legal <a
+                        hardware, software, or service activation. // No product or component can be absolutely secure.
+                        // Your costs and results may vary. // Performance varies by use, configuration, and other factors.
+                        // See our complete legal <a
                             href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C"
-                            class="text-primary font-bold">Notices and Disclaimers</a>. Intel is committed to respecting
+                            class="text-primary font-bold">Notices and Disclaimers</a>. // Intel is committed to respecting
                         human rights and avoiding complicity in human rights abuses. See <a
                             href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html"
                             class="text-primary font-bold">Intel’s Global Human Rights Principles</a>. Intel’s products
