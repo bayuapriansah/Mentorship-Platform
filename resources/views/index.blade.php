@@ -95,7 +95,7 @@
             </a>
 
             <div class="col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:ml-8 flex flex-col gap-2">
-                <a href="#" class="font-bold text-darker-blue text-2xl">
+                <a href="#" class="font-bold text-darker-blue text-2xl hover:underline">
                     Skills Track Information
                 </a>
 
@@ -109,7 +109,7 @@
             <div class="absolute -top-5 tab:top-[initial] left-4 tab:left-[initial] tab:-bottom-5 tab:right-12 w-11 h-11 bg-secondary-cr2 rounded-lg"></div>
 
             <div class="hidden tab:flex col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl tab:text-[1.4rem] text-darker-blue">
+                <a href="#" class="font-bold text-2xl tab:text-[1.4rem] text-darker-blue hover:underline">
                     Entrepreneur Track Information
                 </a>
 
@@ -128,7 +128,7 @@
 
 
             <div class="flex tab:hidden col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl text-darker-blue">
+                <a href="#" class="font-bold text-2xl text-darker-blue hover:underline">
                     Entrepreneur Track Information
                 </a>
 
