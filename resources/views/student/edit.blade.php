@@ -181,7 +181,7 @@
                         </div>
 
                         {{-- Institution --}}
-                        <div>
+                        <div class="flex gap-3">
                             <select
                                 id="institution-dropdown"
                                 name="institution"
@@ -204,7 +204,7 @@
                         </div>
 
                         {{-- Email --}}
-                        <div>
+                        <div class="flex gap-3">
                             <input
                                 type="text"
                                 value="{{ $student->email }}"
@@ -220,7 +220,7 @@
                         </div>
 
                         {{-- Year of Study --}}
-                        <div>
+                        <div class="flex gap-3">
                             <select
                                 id="year_of_study"
                                 name="year_of_study"
@@ -247,7 +247,7 @@
                         @endphp
 
                         {{-- Degree --}}
-                        <div>
+                        <div class="flex gap-3">
                             <select
                                 id="degree-dropdown"
                                 name="degree"
@@ -268,7 +268,7 @@
                         </div>
 
                         {{-- Study Program --}}
-                        <div>
+                        <div class="flex gap-3">
                             <select
                                 id="study-dropdown"
                                 name="study"
@@ -290,8 +290,13 @@
                             @enderror
                         </div>
 
+                        {{-- Change Password Button --}}
+                        <button type="button" data-modal-target="change-password-modal" data-modal-toggle="change-password-modal" class="w-max mt-2 py-3 px-6 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium">
+                            Change Password
+                        </button>
+
                         {{-- Mentorship Type --}}
-                        <div class="mt-2">
+                        <div class="mt-2 pr-3">
                             <h5 class="text-darker-blue text-xl font-medium">
                                 Mentorship Type
                                 <span class="text-red-600">*</span>
@@ -328,6 +333,89 @@
         </div>
     </div>
 
+    {{-- Change Password --}}
+    <div id="change-password-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div
+                    class="w-[253px] h-[138px] absolute top-0 right-0"
+                    style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.092px -9.628px / 100.073% 106.977% no-repeat;"
+                ></div>
+                <!-- Modal body -->
+                <div class="px-12 py-11 flex flex-col items-center">
+                    <p class="text-center text-[1.4rem] text-darker-blue font-medium">
+                        Change Password
+                    </p>
+
+                    <div class="w-full relative">
+                        <input
+                            type="password"
+                            id="input-current-password"
+                            placeholder="Current Password"
+                            class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-current-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <div class="w-full relative">
+                        <input
+                            type="password"
+                            id="input-new-password"
+                            placeholder="New Password"
+                            class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-new-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <div class="w-full relative">
+                        <input
+                            type="password"
+                            id="input-confirm-new-password"
+                            placeholder="Confirm New Password"
+                            class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-confirm-new-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <div class="mt-6 flex justify-center items-center gap-4">
+                        <button class="min-w-[145px] p-3 bg-primary border border-primary rounded-full text-sm text-white">
+                            Save Password
+                        </button>
+
+                        <button data-modal-hide="change-password-modal" class="min-w-[145px] p-3 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Change Track Confirm --}}
     <div id="change-track-confirm-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-2xl max-h-full">
@@ -352,12 +440,12 @@
                             data-modal-hide="change-track-confirm-modal"
                             data-modal-target="change-track-modal"
                             data-modal-toggle="change-track-modal"
-                            class="min-w-[101px] py-2 px-3 bg-primary border border-primary rounded-full text-sm text-white"
+                            class="min-w-[101px] p-2 bg-primary border border-primary rounded-full text-sm text-white"
                         >
                             Yes
                         </button>
 
-                        <button data-modal-hide="change-track-confirm-modal" class="min-w-[101px] py-2 px-3 border border-primary rounded-full text-sm text-primary">
+                        <button data-modal-hide="change-track-confirm-modal" class="min-w-[101px] p-2 border border-primary rounded-full text-sm text-primary">
                             Cancel
                         </button>
                     </div>
@@ -413,6 +501,18 @@
         $('#browse-photo-btn').on('click', function() {
             $('#input-photo-file').click()
         })
+
+        function toggleShowPassword(trigger) {
+            const passwordInput = $($(trigger).attr('toggle'))
+
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                $(trigger).css('background-image', 'url("{{ asset('/assets/img/icon/eye-open.svg') }}")');
+            } else {
+                passwordInput.attr('type', 'password');
+                $(trigger).css('background-image', 'url("{{ asset('/assets/img/icon/eye-close.svg') }}")');
+            }
+        }
     </script>
 
     {{-- <script>
