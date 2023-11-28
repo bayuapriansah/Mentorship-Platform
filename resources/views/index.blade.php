@@ -4,7 +4,7 @@
 <style>
     .blue-shadow {
         border-radius: 621px;
-        opacity: 0.4;
+        opacity: 0.7;
         background: #E4E7FF;
         filter: blur(100px);
     }
@@ -40,17 +40,21 @@
 @section('content')
     {{-- Body Contents --}}
     <div style="background-image: url({{ asset('assets/img/main/banner.png') }}); background-size: cover;" class="max-w-full bg-no-repeat phone:bg-right-min-28 hd:bg-top-min-20 laptop:bg-top-min-20 fhd:bg-top-min-32 py-24">
-        <div class="max-w-screen-xl mx-auto px-6 hd:py-24 ">
-            <div class="grid md:grid-cols-2 gap-4 items-center ">
+        <div class="max-w-screen-xl mx-auto px-6 hd:py-24">
+            <div class="relative -top-16 grid md:grid-cols-2 gap-4 items-center ">
                 <div class="my-auto px-8 py-4 mt-48 hd:mt-0 hd:px-16 hd:py-8">
-                    <h2 class="intelOne text-white font-bold text-xl hd:text-3xl leading-11">
-                        <span>Intel AI Global Impact Festival</span> <span class="text-primary"> Mentorship Platform</span>
+                    <h2 class="w-max text-white font-medium text-xl tab:text-3xl leading-11">
+                        <span>Intel AI Global Impact Festival</span>
+                        <br>
+                        <span class="text-primary">
+                            Mentorship Platform
+                        </span>
                     </h2>
-                    <span class="intelOne text-white font-light text-sm hd:text-lg leading-6">Join today to work on real-world
-                        projects and kick start your career!</span>
-                    <div class="flex py-4">
-                        <a href="{{ route('multiLogIn') }}"
-                           class="intelOne text-white text-sm font-normal bg-primary hover:bg-primary-700 px-8 py-1.5 hd:px-16 hd:py-3.5 rounded-full">Get Started</a>
+
+                    <div class="mt-12">
+                        <a href="{{ route('multiLogIn') }}" class="text-white text-sm font-normal bg-primary hover:bg-primary-700 px-8 py-1.5 hd:px-16 tab:py-3.5 rounded-full">
+                            Get Started
+                        </a>
                     </div>
                 </div>
             </div>
@@ -92,7 +96,7 @@
 
             <div class="col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:ml-8 flex flex-col gap-2">
                 <a href="#" class="font-bold text-darker-blue text-2xl">
-                    Skills Track
+                    Skills Track Information
                 </a>
 
                 <p class="text-black text-justify text-sm">
@@ -105,8 +109,8 @@
             <div class="absolute -top-5 tab:top-[initial] left-4 tab:left-[initial] tab:-bottom-5 tab:right-12 w-11 h-11 bg-secondary-cr2 rounded-lg"></div>
 
             <div class="hidden tab:flex col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl tab:text-right text-darker-blue">
-                    Entrepreneur Track
+                <a href="#" class="font-bold text-2xl tab:text-[1.4rem] text-darker-blue">
+                    Entrepreneur Track Information
                 </a>
 
                 <p class="text-black text-sm text-justify">
@@ -124,8 +128,8 @@
 
 
             <div class="flex tab:hidden col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl tab:text-right text-darker-blue">
-                    Entrepreneur Track
+                <a href="#" class="font-bold text-2xl text-darker-blue">
+                    Entrepreneur Track Information
                 </a>
 
                 <p class="text-black text-sm text-justify">
