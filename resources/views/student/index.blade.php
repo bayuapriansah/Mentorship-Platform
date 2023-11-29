@@ -92,7 +92,7 @@
                             <div class="min-h-[154px] p-3 relative bg-white border border-grey rounded-xl">
                                 <div class="absolute inset-0 bg-white rounded-xl opacity-50"></div>
 
-                                <a href="#" class="absolute inset-0 flex justify-center items-center">
+                                <a href="{{ route('participant.projects.create') }}" class="absolute inset-0 flex justify-center items-center">
                                     <i class="fas fa-plus fa-10x text-primary"></i>
                                 </a>
 
