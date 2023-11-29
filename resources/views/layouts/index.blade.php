@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +15,7 @@
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" /> --}}
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" /> --}}
     {{-- <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet"> --}}
-    @vite(['resources/css/app.css','resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="theme-color" content="#712cf9">
 
     @yield('more-css')
@@ -26,22 +27,21 @@
         <div class="max-w-screen-xl flex flex-col md:flex-row items-center justify-between mx-auto">
             <div class="text-lg font-semibold mb-4 md:mb-0">
                 <a href="{{ route('index') }}" class="text-dark-blue no-underline hover:text-lightest-blue">
-                    <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}" alt="Impact Festival Logo">
+                    <img src="{{ asset('assets/img/logo/AIGlobalImpactFestival_Logo.svg') }}"
+                        alt="Impact Festival Logo">
                 </a>
             </div>
-            <div class="flex justify-center space-x-4 flex-grow mb-4 gap-5 tab:gap-5 md:mb-0">
-                <a
-                    href="{{ route('index') }}"
-                    class="text-[#080808] text-sm intelOne no-underline hover:text-primary"
-                >
+            <div class="flex justify-center space-x-12 flex-grow mb-4 gap-5 tab:gap-5 md:mb-0">
+                <a href="{{ route('index') }}" class="text-[#080808] text-sm hover:text-primary">
                     Home
                 </a>
 
-                <a
-                    href="{{ route('projects.index') }}"
-                    class="text-[#080808] text-sm intelOne no-underline hover:text-primary"
-                >
-                    Available Project(s)
+                <a href="#" class="text-[#080808] text-sm hover:text-primary">
+                    Skills Track Info
+                </a>
+
+                <a href="#" class="text-[#080808] text-sm hover:text-primary">
+                    Entrepreneur Track Info
                 </a>
             </div>
             <div class="space-x-4 gap-12">
@@ -65,10 +65,8 @@
                         </svg>
                     </button>
                 @else
-                    <a
-                        href="{{ route('multiLogIn') }}"
-                        class="border-primary bg-primary hover:border-primary-500 hover:bg-primary-800 text-white text-sm rounded-full border-[1px] border-solid px-10 py-2"
-                    >
+                    <a href="{{ route('multiLogIn') }}"
+                        class="border-primary bg-primary hover:border-primary-500 hover:bg-primary-800 text-white text-sm rounded-full border-[1px] border-solid px-10 py-2">
                         Log in
                     </a>
                 @endif
@@ -90,27 +88,29 @@
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRightEndButton">
                         <li>
                             @if (Auth::guard('student')->check())
-                            <a href="{{ route('student.allProjects', ['student' => Auth::guard('student')->user()->id]) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
+                                <a href="{{ route('student.allProjects', ['student' => Auth::guard('student')->user()->id]) }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                             @elseif(Auth::guard('web')->check())
-                            <a href="{{ route('dashboard.admin') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
+                                <a href="{{ route('dashboard.admin') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                             @elseif(Auth::guard('mentor')->check())
-                            <a href="{{ route('dashboard.mentor') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
+                                <a href="{{ route('dashboard.mentor') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                             @elseif(Auth::guard('customer')->check())
-                             <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-
-                             @endif
+                                <a href="{{ route('dashboard.customer') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                            @endif
 
                         </li>
                     </ul>
                     <div class="py-2 text-sm text-gray-700 dark:text-gray-200">
                         <a href="#"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log Out</a>
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log
+                            Out</a>
 
-                        <form id="logout-form" class="inline" method="post" action="{{ route('logout') }}" style="display: none;">
+                        <form id="logout-form" class="inline" method="post" action="{{ route('logout') }}"
+                            style="display: none;">
                             @csrf
                         </form>
                     </div>
@@ -150,8 +150,8 @@
             <div class="p-4 py-6 lg:py-8">
                 <div class="mb-6 md:mb-0">
                     <a href="/" class="flex items-center">
-                        <img src="{{ asset('assets/img/logo/footer-logo.svg') }}"
-                            class="tab:scale-125" alt="Intel Digital Readiness Logo" />
+                        <img src="{{ asset('assets/img/logo/footer-logo.svg') }}" class="tab:scale-125"
+                            alt="Intel Digital Readiness Logo" />
                     </a>
                 </div>
             </div>
@@ -159,60 +159,77 @@
                 <div class="relative">
                     <p class="text-justify">Intel technologies may require enabled
                         hardware, software, or service activation. // No product or component can be absolutely secure.
-                        // Your costs and results may vary. // Performance varies by use, configuration, and other factors.
+                        // Your costs and results may vary. // Performance varies by use, configuration, and other
+                        factors.
                         // See our complete legal <a
                             href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C"
-                            class="text-primary font-bold">Notices and Disclaimers</a>. // Intel is committed to respecting
+                            class="text-primary font-bold hover:underline">Notices and Disclaimers</a>. // Intel is
+                        committed to respecting
                         human rights and avoiding complicity in human rights abuses. See <a
                             href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html"
-                            class="text-primary font-bold">Intel’s Global Human Rights Principles</a>. Intel’s products
+                            class="text-primary font-bold hover:underline">Intel’s Global Human Rights Principles</a>.
+                        Intel’s products
                         and software are intended only to be used in applications that do not cause or contribute to a
                         violation of an internationally recognized human right.</p>
                 </div>
                 <div class="relative tab:-top-10">
                     <div class="md:flex col-start-8 col-span-4">
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold uppercase">Info</h2>
-                            <ul class="font-normal">
-                                <li class="mb-4">
-                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Industry Partners</a>
-                                </li>
-                                <li class="mb-4">
-                                    <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline">For Institution</a>
-                                </li>
+                            <h2 class="text-sm font-semibold text-darker-blue">
+                                INFO
+                            </h2>
+
+                            <ul class="mt-4 flex flex-col gap-2">
                                 <li>
-                                    <a href="{{ route('students.info') }}" class="hover:underline">For Students</a>
+                                    <a href="#" class="text-sm font-normal hover:underline">
+                                        Entrepreneur Track
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="text-sm font-normal hover:underline">
+                                        Skill Track
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold uppercase">Support</h2>
-                            <ul class="font-normal">
-                                <li class="mb-4">
-                                    {{-- <a href="/#AiForFuture" data-tooltip-target="Industry-Partners-hover"
-                                        data-tooltip-trigger="hover" class="hover:underline ">About Us</a> --}}
-                                    <a href="/#AiForFuture" class="hover:underline ">About Us</a>
-                                </li>
-                                <li class="mb-4">
-                                    <a href="{{ route('faq') }}" class="hover:underline">FAQs</a>
-                                </li>
+                            <h2 class="text-sm font-semibold text-darker-blue">
+                                SUPPORT
+                            </h2>
+
+                            <ul class="mt-4 flex flex-col gap-2">
                                 <li>
-                                    <a href="{{ route('contact') }}" class="hover:underline">Contact Us</a>
+                                    <a href="{{ route('faq') }}" class="text-sm font-normal hover:underline">
+                                        FAQs
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('contact') }}" class="text-sm font-normal hover:underline">
+                                        Contact Us
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                         <div class="mb-6 md:mb-0 md:flex-1">
-                            <h2 class="mb-6 text-sm font-semibold uppercase">Legal</h2>
-                            <ul class="font-normal">
-                                <li class="mb-4">
-                                    <a href="{{ route('privacy-policy') }}" class="hover:underline">Privacy
-                                        Policy</a>
-                                </li>
+                            <h2 class="text-sm font-semibold text-darker-blue">
+                                LEGAL
+                            </h2>
+
+                            <ul class="mt-4 flex flex-col gap-2">
                                 <li>
-                                    <a href="{{ route('terms-of-use') }}" class="hover:underline">Terms &amp;
-                                        Conditions</a>
+                                    <a href="{{ route('privacy-policy') }}"
+                                        class="text-sm font-normal hover:underline">
+                                        Privacy Policies
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('terms-of-use') }}"
+                                        class="text-sm font-normal hover:underline">
+                                        Terms &amp; Conditions
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -222,7 +239,8 @@
             <hr class="my-6 border-black sm:mx-auto lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm text-center tab:text-left">&copy; {{ date('Y') }} <a
-                        href="{{ url('/') }}" class="hover:underline">Intel Simulated Internships</a>. All Rights Reserved.
+                        href="{{ url('/') }}" class="hover:underline">Mentorship Platform</a>. All
+                    Rights Reserved.
                 </span>
 
             </div>
