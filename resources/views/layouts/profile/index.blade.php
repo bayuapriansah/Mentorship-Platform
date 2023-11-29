@@ -162,7 +162,6 @@
         @else
           <li class="text-black intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjectsAvailable" class="hover:text-neutral-500">Internship Projects</a></li>
         @endif --}}
-
                 {{-- <li class="text-black intelOne font-light text-sm"><a href="#" class="hover:text-neutral-500">Certificate</a></li> --}}
                 {{-- @if (Route::is('student.support'))
         <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/support" class="hover:text-neutral-500">Support</a></li>
@@ -564,7 +563,6 @@
                                     <a href="{{ route('privacy-policy') }}"
                                         class="text-sm font-normal hover:underline">
                                         Privacy Policies
-                                    </a>
                                 </li>
 
                                 <li>
@@ -582,7 +580,6 @@
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm text-center tab:text-left">&copy; {{ date('Y') }} <a
                         href="{{ url('/') }}" class="hover:underline">Mentorship Platform</a>. All
-                    Rights Reserved.
                 </span>
 
             </div>
