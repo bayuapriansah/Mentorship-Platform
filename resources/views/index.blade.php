@@ -4,7 +4,7 @@
 <style>
     .blue-shadow {
         border-radius: 621px;
-        opacity: 0.4;
+        opacity: 0.7;
         background: #E4E7FF;
         filter: blur(100px);
     }
@@ -40,17 +40,21 @@
 @section('content')
     {{-- Body Contents --}}
     <div style="background-image: url({{ asset('assets/img/main/banner.png') }}); background-size: cover;" class="max-w-full bg-no-repeat phone:bg-right-min-28 hd:bg-top-min-20 laptop:bg-top-min-20 fhd:bg-top-min-32 py-24">
-        <div class="max-w-screen-xl mx-auto px-6 hd:py-24 ">
-            <div class="grid md:grid-cols-2 gap-4 items-center ">
+        <div class="max-w-screen-xl mx-auto px-6 hd:py-24">
+            <div class="relative -top-16 grid md:grid-cols-2 gap-4 items-center ">
                 <div class="my-auto px-8 py-4 mt-48 hd:mt-0 hd:px-16 hd:py-8">
-                    <h2 class="intelOne text-white font-bold text-xl hd:text-3xl leading-11">
-                        <span>Intel AI Global Impact Festival</span> <span class="text-primary"> Mentorship Platform</span>
+                    <h2 class="w-max text-white font-medium text-xl tab:text-3xl leading-11">
+                        <span>Intel AI Global Impact Festival</span>
+                        <br>
+                        <span class="text-primary">
+                            Mentorship Platform
+                        </span>
                     </h2>
-                    <span class="intelOne text-white font-light text-sm hd:text-lg leading-6">Join today to work on real-world
-                        projects and kick start your career!</span>
-                    <div class="flex py-4">
-                        <a href="{{ route('multiLogIn') }}"
-                           class="intelOne text-white text-sm font-normal bg-primary hover:bg-primary-700 px-8 py-1.5 hd:px-16 hd:py-3.5 rounded-full">Get Started</a>
+
+                    <div class="mt-12">
+                        <a href="{{ route('multiLogIn') }}" class="text-white text-sm font-normal bg-primary hover:bg-primary-700 px-8 py-1.5 hd:px-16 tab:py-3.5 rounded-full">
+                            Get Started
+                        </a>
                     </div>
                 </div>
             </div>
@@ -66,11 +70,13 @@
             </span>
         </h2>
 
-        <p class="max-w-screen-tab mt-6 tab:mt-[2.625rem] text-black text-center tab:text-lg">Intel® AI For Workforce is a global AI skilling program for
-            vocational students for building an AI-ready workforce. The program aims to address the AI skill
-            crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the
-            necessary skills for employability in the digital economy. The program offers comprehensive,
-            modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
+        <p class="max-w-screen-tab mt-6 tab:mt-[2.625rem] text-black text-center tab:text-lg">
+            Intel® AI Global Impact Festival 2023 is a digital readiness celebration,
+            inviting students, educators, academic leaders, governments, implementation partners,
+            and all communities from across the world to enrich lives with AI innovation.
+            This mentorship program aims to celebrate the student innovators and take their AI-enabled solutions
+            to the next level and develop their AI skills.
+        </p>
     </div>
 
     {{-- Body Content 3 --}}
@@ -91,8 +97,8 @@
             </a>
 
             <div class="col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:ml-8 flex flex-col gap-2">
-                <a href="#" class="font-bold text-darker-blue text-2xl">
-                    Skills Track
+                <a href="#" class="font-bold text-darker-blue text-2xl hover:underline">
+                    Skills Track Information
                 </a>
 
                 <p class="text-black text-justify text-sm">
@@ -105,8 +111,8 @@
             <div class="absolute -top-5 tab:top-[initial] left-4 tab:left-[initial] tab:-bottom-5 tab:right-12 w-11 h-11 bg-secondary-cr2 rounded-lg"></div>
 
             <div class="hidden tab:flex col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl tab:text-right text-darker-blue">
-                    Entrepreneur Track
+                <a href="#" class="font-bold text-2xl tab:text-[1.4rem] text-darker-blue hover:underline">
+                    Entrepreneur Track Information
                 </a>
 
                 <p class="text-black text-sm text-justify">
@@ -124,8 +130,8 @@
 
 
             <div class="flex tab:hidden col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl tab:text-right text-darker-blue">
-                    Entrepreneur Track
+                <a href="#" class="font-bold text-2xl text-darker-blue hover:underline">
+                    Entrepreneur Track Information
                 </a>
 
                 <p class="text-black text-sm text-justify">
@@ -155,7 +161,7 @@
                     </h5>
 
                     <div class="min-w-[124px] mt-4 px-4 py-1 bg-lightest-blue rounded-full text-black text-center text-xs">
-                        {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
+                        {{ $project->project_domain == 'statistical' ? 'Machine Learning' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
                     </div>
 
                     <p class="mt-4 text-sm text-justify">
