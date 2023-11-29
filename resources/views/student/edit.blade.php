@@ -17,10 +17,10 @@
 
                     {{-- Image --}}
                     <img
-                        src="{{ $student->profile_picture ? asset('storage/' . $student->profile_picture) : asset('assets/img/placeholder_pp.png') }}"
+                        src="{{ $student->profile_picture ? asset('storage/' . $student->profile_picture) : asset('assets/img/profile-placeholder.png') }}"
                         id="profile_img"
                         alt="message"
-                        class="w-[145px] h-[145px] mt-8 mx-auto rounded-full object-cover"
+                        class="w-[145px] h-[145px] mt-8 mx-auto rounded-full object-cover ring ring-[#C5CAF3]"
                     >
 
                     {{-- <label for="file-upload" class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
