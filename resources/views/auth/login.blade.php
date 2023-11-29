@@ -55,7 +55,13 @@
                     </p>
                 @enderror
 
-                <p class="mt-5 font-light text-white text-xs">
+                <div class="mt-2 flex">
+                    <a href="{{ route('forgotPassword') }}" class="ml-auto text-xs text-[#FF8F51]">
+                        Forgot Password?
+                    </a>
+                </div>
+
+                <p class="font-light text-white text-xs">
                     Please check the box below to proceed.
                 </p>
 
@@ -72,7 +78,7 @@
 
                 <button
                     type="submit"
-                    class="mt-9 py-3 px-20 bg-primary rounded-full font-500 text-center text-white text-lg"
+                    class="mt-6 py-3 px-20 bg-primary rounded-full font-500 text-center text-white text-lg"
                 >
                     Login
                 </button>
