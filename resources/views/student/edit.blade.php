@@ -38,26 +38,8 @@
                     <div id="change-photo-dropdown" class="z-10 hidden min-w-[281px] bg-[#F4F4F5] border border-grey shadow-xl divide-y rounded-xl">
                         <ul class="py-2 text-sm font-medium" aria-labelledby="dropdownDefaultButton">
                           <li class="hover:bg-gray-300">
-                            <button type="button" class="w-full px-4 py-2 flex justify-between items-center">
-                                Photo Library
-
-                                <div class="-scale-y-100">
-                                    <i class="far fa-clone"></i>
-                                </div>
-                            </button>
-                          </li>
-
-                          <li class="border-y-2 hover:bg-gray-300">
-                            <button type="button" class="w-full px-4 py-2 flex justify-between items-center">
-                                Take Photo or Video
-
-                                <i class="fas fa-camera"></i>
-                            </button>
-                          </li>
-
-                          <li class="hover:bg-gray-300">
                             <button id="browse-photo-btn" type="button" class="w-full px-4 py-2 flex justify-between items-center">
-                                Browse
+                                Browse Photo
 
                                 <i class="fas fa-ellipsis-h"></i>
                             </button>
@@ -182,19 +164,13 @@
 
                         {{-- Institution --}}
                         <div class="flex gap-3">
-                            <select
-                                id="institution-dropdown"
-                                name="institution"
-                                class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
+                            <input
+                                type="text"
+                                value="Brown University"
+                                placeholder="Institution *"
+                                class="w-full border border-light-blue rounded-lg h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
                                 required
                             >
-                                <option value="" class="" id="emptyInstitution" hidden>Institution *</option>
-                                <option>Harvard University</option>
-                                <option>Massachusetts Institute of Technology</option>
-                                <option>Princeton University</option>
-                                <option selected>Deakin University</option>
-                                <option>UC Berkeley</option>
-                            </select>
                             <br>
                             @error('institution')
                                 <p class="text-red-600 text-sm mt-1">
