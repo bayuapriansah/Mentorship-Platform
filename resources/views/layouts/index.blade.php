@@ -158,11 +158,11 @@
             <div class="grid md:grid-cols-2 gap-12 items-start">
                 <div class="relative">
                     <p class="text-justify">Intel technologies may require enabled
-                        hardware, software, or service activation. No product or component can be absolutely secure.
-                        Your costs and results may vary. Performance varies by use, configuration, and other factors.
-                        See our complete legal <a
+                        hardware, software, or service activation. // No product or component can be absolutely secure.
+                        // Your costs and results may vary. // Performance varies by use, configuration, and other factors.
+                        // See our complete legal <a
                             href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C"
-                            class="text-primary font-bold">Notices and Disclaimers</a>. Intel is committed to respecting
+                            class="text-primary font-bold">Notices and Disclaimers</a>. // Intel is committed to respecting
                         human rights and avoiding complicity in human rights abuses. See <a
                             href="https://www.intel.com/content/www/us/en/policy/policy-human-rights.html"
                             class="text-primary font-bold">Intel’s Global Human Rights Principles</a>. Intel’s products

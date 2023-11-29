@@ -1,169 +1,534 @@
 @extends('layouts.profile.index')
 @section('content')
-<div class="container py-6  mx-auto px-16">
-  <div class="bg-white py-8 px-14 rounded-xl">
-    <div class="flex justify-between">
-      <p class="text-2xl text-dark-blue font-medium">Edit Profile</p>
-      @include('flash-message')
-    </div>
-    
-    <div class="flex flex-col justify-center items-center">
-      
-      <form action="/profile/{{Auth::guard('student')->user()->id}}" method="post" enctype="multipart/form-data">
-        @method('patch')
-        @csrf
-        <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('assets/img/placeholder_pp.png') }}" class="w-[145px] h-[145px] mx-auto mt-14 rounded-full object-cover" id="profile_img"  alt="message">
-        {{-- <label for="profilePicture">
-          <button class="bg-light-blue flex mx-auto py-2 px-6 mt-[18px] rounded-full text-white" type="button">Change photo</button>
-          <input type="file" id="profilePicture">
-        </label> --}}
-        <label for="file-upload" class="bg-light-blue hover:bg-dark-blue flex mx-auto py-2 px-auto justify-center cursor-pointer mt-[18px] rounded-full text-white w-1/3">
-          Change photo
-          <input id="file-upload" name="profile_picture" type="file" hidden/>
-        </label>
-        <div class="mt-14">
-          <div class="flex justify-between">
-            <input class="border border-light-blue rounded-lg w-64 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="firstname" type="text" value="{{$student->first_name}}" placeholder="First Name *" name="first_name" required><br>
-            @error('first_name')
-                <p class="text-red-600 text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-            <input class="border border-light-blue rounded-lg w-64 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none" id="lastname" type="text" value="{{$student->last_name}}" placeholder="Last Name *" name="last_name" required><br>
-            @error('last_name')
-                <p class="text-red-600 text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div>
-          <div class="flex justify-between mt-4">
-            <input class="border border-light-blue rounded-lg w-64 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight mr-5 focus:outline-none" id="dob" type="date" placeholder="Date of birth" value="{{$student->date_of_birth}}" name="date_of_birth" required><br>
-            @error('date_of_birth')
-                <p class="text-red-600 text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-            
-            <select id="sex" class="border border-light-blue rounded-lg w-64 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none" name="sex" required>
-              <option value="" class="" id="emptySex" hidden>Sex *</option>
-              <option value="male" {{$student->sex == 'male' ? 'selected' : ''}}>Male</option>
-              <option value="female" {{$student->sex == 'female' ? 'selected' : ''}}>Female</option>
-            </select><br>
-            @error('sex')
-                <p class="text-red-600 text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div>
-          
-          <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight bg-gray-300 invalid:text-black text-black cursor-not-allowed focus:outline-none" name="institution" disabled>
-            <option value="" hidden class="text-black">{{$student->institution->name}}</option>
-          </select><br>
-          @error('institution')
-              <p class="text-red-600 text-sm mt-1">
-                {{$message}}
-              </p>
-          @enderror 
+    <div class="mx-auto px-16 py-11 bg-white">
+        <div class="px-[4.5rem] pt-6 pb-7 bg-[#fafafa] border border-grey rounded-xl">
+            <div class="flex justify-between">
+                <h1 class="text-2xl text-darker-blue font-medium">
+                    Edit Profile
+                </h1>
 
-          <div class="flex justify-between mt-4">
-            <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{$student->country}}" placeholder="Country *" name="country" readonly required>
-            <br>
-            @error('country')
-                <p class="text-red-600 text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
+                @include('flash-message')
+            </div>
 
-            <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight bg-gray-300 cursor-not-allowed focus:outline-none" id="ForState" type="text" value="{{$student->state}}" placeholder="State *" name="state" readonly required>
-            <br>
-            @error('state')
-                <p class="text-red-600 text-sm mt-1">
-                  {{$message}}
-                </p>
-            @enderror
-          </div>
+            <div class="flex flex-col justify-center items-center">
+                <form action="/profile/{{ Auth::guard('student')->user()->id }}" method="post" enctype="multipart/form-data">
+                    @method('patch')
+                    @csrf
 
-          @php
-            $study_programs = ['Artificial Intelligence and Machine Learning', 'Computer Science','Computing Systems', 'Software Engineering'];
-          @endphp
-          <select id="inputStudy" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="study_program" required>
-            <option value="" hidden>Study Name</option>
-            @foreach($study_programs as $study_program)
-            <option value="{{$study_program}}" {{$student->study_program == $study_program ? 'selected':''}}>{{$study_program}}</option>
-            @endforeach
-            @if($student->study_program != $study_program)
-            <option value="{{$student->study_program}}" selected>{{$student->study_program}}</option>
-            @endif
-            <option value="other">Other</option>
-          </select><br>
-          @error('study_program')
-              <p class="text-red-600 text-sm mt-1">
-                {{$message}}
-              </p>
-          @enderror 
+                    {{-- Image --}}
+                    <img
+                        src="{{ $student->profile_picture ? asset('storage/' . $student->profile_picture) : asset('assets/img/profile-placeholder.png') }}"
+                        id="profile_img"
+                        alt="message"
+                        class="w-[145px] h-[145px] mt-8 mx-auto rounded-full object-cover ring ring-[#C5CAF3]"
+                    >
 
-          <input type="study_program_form" id="study_program_form" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('study_program_form') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{old('study_program_form')}}" placeholder="Study Program" id="study_program_form" name="study_program_form">
-          
-          <select id="year_of_study" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="year_of_study" required>
-            <option value="" hidden >Year of study *</option>
-            <option value="1st" {{$student->year_of_study == '1st' ? 'selected' : ''}}>1st</option>
-            <option value="2nd" {{$student->year_of_study == '2nd' ? 'selected' : ''}}>2nd</option>
-            <option value="3rd" {{$student->year_of_study == '3rd' ? 'selected' : ''}}>3rd</option>
-            <option value="4th" {{$student->year_of_study == '4th' ? 'selected' : ''}}>4th</option>
-            <option value="5+" {{$student->year_of_study == '5+' ? 'selected' : ''}}>5+</option>
-          </select><br>
-          @error('year_of_study')
-              <p class="text-red-600 text-sm mt-1">
-                {{$message}}
-              </p>
-          @enderror
-        <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne flex mx-auto" type="submit">Update Profile</button>
+                    {{-- <label for="file-upload" class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
+                        Change Photo
+                        <input id="file-upload" name="profile_picture" type="file" hidden />
+                    </label> --}}
 
+                    {{-- Change Photo --}}
+                    <button type="button" data-dropdown-toggle="change-photo-dropdown" class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
+                        Change Photo
+                    </button>
+
+                    <input id="input-photo-file" name="profile_picture" type="file" hidden />
+
+                    <div id="change-photo-dropdown" class="z-10 hidden min-w-[281px] bg-[#F4F4F5] border border-grey shadow-xl divide-y rounded-xl">
+                        <ul class="py-2 text-sm font-medium" aria-labelledby="dropdownDefaultButton">
+                          <li class="hover:bg-gray-300">
+                            <button id="browse-photo-btn" type="button" class="w-full px-4 py-2 flex justify-between items-center">
+                                Browse Photo
+
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                          </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-10 flex flex-col gap-4">
+                        {{-- Name --}}
+                        <div class="flex gap-3">
+                            <input
+                                type="text"
+                                id="firstname"
+                                name="first_name"
+                                value="{{ $student->first_name }}"
+                                placeholder="First Name *"
+                                class="border border-light-blue rounded-lg w-64 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                                required
+                            >
+                            <br>
+                            @error('first_name')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+
+                            <input
+                                type="text"
+                                id="lastname"
+                                name="last_name"
+                                value="{{ $student->last_name }}"
+                                placeholder="Last Name *"
+                                class="border border-light-blue rounded-lg w-64 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                                required
+                            >
+                            <br>
+                            @error('last_name')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        {{-- DOB & Gender --}}
+                        <div class="flex gap-3">
+                            <input
+                                type="date"
+                                id="dob"
+                                name="date_of_birth"
+                                value="{{ $student->date_of_birth }}"
+                                placeholder="Date of birth"
+                                class="border border-light-blue rounded-lg w-64 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none"
+                                required
+                            >
+                            <br>
+                            @error('date_of_birth')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+
+                            <select
+                                id="sex"
+                                name="sex"
+                                class="border border-light-blue rounded-lg w-64 h-11 py-2 px-4 invalid:text-lightest-grey leading-tight focus:outline-none"
+                                required
+                            >
+                                <option value="" class="" id="emptySex" hidden>Sex *</option>
+                                <option value="male" {{ $student->sex == 'male' ? 'selected' : '' }}>Male</option>
+                                <option value="female" {{ $student->sex == 'female' ? 'selected' : '' }}>Female</option>
+                            </select>
+                            <br>
+                            @error('sex')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        {{-- Country and State --}}
+                        <div class="flex gap-3">
+                            <select
+                                id="country-dropdown"
+                                name="country"
+                                class="border border-light-blue rounded-lg w-64 h-11 py-2 px-4 leading-tight focus:outline-none"
+                                required
+                            >
+                                <option value="" class="" id="emptyCountry" hidden>Country *</option>
+                                <option>Australia</option>
+                                <option>Andorra</option>
+                                <option>Belgium</option>
+                                <option>China</option>
+                                <option selected>United States</option>
+                            </select>
+                            <br>
+                            @error('country')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+
+                            <select
+                                id="state-dropdown"
+                                name="state"
+                                class="border border-light-blue rounded-lg w-64 h-11 py-2 px-4 leading-tight focus:outline-none"
+                                required
+                            >
+                                <option value="" class="" id="emptyState" hidden>State *</option>
+                                <option>California</option>
+                                <option>Hawaii</option>
+                                <option>Idaho</option>
+                                <option>Tennessee</option>
+                                <option selected>Texas</option>
+                            </select>
+                            <br>
+                            @error('state')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        {{-- Institution --}}
+                        <div class="flex gap-3">
+                            <input
+                                type="text"
+                                value="Brown University"
+                                placeholder="Institution *"
+                                class="w-full border border-light-blue rounded-lg h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                                required
+                            >
+                            <br>
+                            @error('institution')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        {{-- Email --}}
+                        <div class="flex gap-3">
+                            <input
+                                type="text"
+                                value="{{ $student->email }}"
+                                class="w-full border border-light-blue rounded-lg h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                                readonly
+                            >
+                            <br>
+                            @error('first_name')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        {{-- Year of Study --}}
+                        <div class="flex gap-3">
+                            <select
+                                id="year_of_study"
+                                name="year_of_study"
+                                class="text w-full border border-light-blue rounded-lg h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none"
+                                required
+                            >
+                                <option value="" hidden>Year of study *</option>
+                                <option value="1st" {{ $student->year_of_study == '1st' ? 'selected' : '' }}>1st Year</option>
+                                <option value="2nd" {{ $student->year_of_study == '2nd' ? 'selected' : '' }}>2nd Year</option>
+                                <option value="3rd" {{ $student->year_of_study == '3rd' ? 'selected' : '' }}>3rd Year</option>
+                                <option value="4th" {{ $student->year_of_study == '4th' ? 'selected' : '' }}>4th Year</option>
+                                <option value="5+" {{ $student->year_of_study == '5+' ? 'selected' : '' }}>5+ Year</option>
+                            </select>
+                            <br>
+                            @error('year_of_study')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        @php
+                            $study_programs = ['Artificial Intelligence and Machine Learning', 'Computer Science', 'Computing Systems', 'Software Engineering'];
+                        @endphp
+
+                        {{-- Degree --}}
+                        <div class="flex gap-3">
+                            <select
+                                id="degree-dropdown"
+                                name="degree"
+                                class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
+                                required
+                            >
+                                <option value="" class="" id="emptyDegree" hidden>Degree *</option>
+                                <option selected>Bachelor of Technology</option>
+                                <option>Bachelor of Applied Science</option>
+                                <option>Bachelor of Engineering</option>
+                            </select>
+                            <br>
+                            @error('degree')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        {{-- Study Program --}}
+                        <div class="flex gap-3">
+                            <select
+                                id="study-dropdown"
+                                name="study"
+                                class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
+                                required
+                            >
+                                <option value="" class="" id="emptyStudy" hidden>Study Program *</option>
+                                <option selected>Computer Science & Engineering</option>
+
+                                @foreach ($study_programs as $study)
+                                    <option>{{ $study }}</option>
+                                @endforeach
+                            </select>
+                            <br>
+                            @error('study')
+                                <p class="text-red-600 text-sm mt-1">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        {{-- Change Password Button --}}
+                        <button type="button" data-modal-target="change-password-modal" data-modal-toggle="change-password-modal" class="w-max mt-2 py-3 px-6 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium">
+                            Change Password
+                        </button>
+
+                        {{-- Mentorship Type --}}
+                        <div class="mt-2 pr-3">
+                            <h5 class="text-darker-blue text-xl font-medium">
+                                Mentorship Type
+                                <span class="text-red-600">*</span>
+                            </h5>
+
+                            <input
+                                type="text"
+                                value="Skill Track"
+                                class="w-full mt-3 font-medium bg-light-grey border border-light-blue rounded-lg h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                                readonly
+                            >
+                        </div>
+
+                        {{-- Change Track --}}
+                        <div class="mt-3 flex items-center gap-8">
+                            <button type="button" data-modal-target="change-track-confirm-modal" data-modal-toggle="change-track-confirm-modal" class="py-3 px-10 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium">
+                                Change Track
+                            </button>
+
+                            <p class="text-black text-xs text-justify font-light">
+                                You can only change your track once and will not be able
+                                to<br>return to your previous work once you change.
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-      </form>
+
+        <div class="mt-[3.2rem] flex justify-center">
+            <button type="button" class="py-3 px-10 rounded-full bg-primary border-2 border-solid border-primary text-center text-white text-lg font-medium">
+                Update Profile
+            </button>
+        </div>
     </div>
-  </div>
-</div>
+
+    {{-- Change Password --}}
+    <div id="change-password-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div
+                    class="w-[253px] h-[138px] absolute top-0 right-0"
+                    style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.092px -9.628px / 100.073% 106.977% no-repeat;"
+                ></div>
+                <!-- Modal body -->
+                <div class="px-12 py-11 flex flex-col items-center">
+                    <p class="text-center text-[1.4rem] text-darker-blue font-medium">
+                        Change Password
+                    </p>
+
+                    <div class="w-full relative">
+                        <input
+                            type="password"
+                            id="input-current-password"
+                            placeholder="Current Password"
+                            class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-current-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <div class="w-full relative">
+                        <input
+                            type="password"
+                            id="input-new-password"
+                            placeholder="New Password"
+                            class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-new-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <div class="w-full relative">
+                        <input
+                            type="password"
+                            id="input-confirm-new-password"
+                            placeholder="Confirm New Password"
+                            class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-confirm-new-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <div class="mt-6 flex justify-center items-center gap-4">
+                        <button class="min-w-[145px] p-3 bg-primary border border-primary rounded-full text-sm text-white">
+                            Save Password
+                        </button>
+
+                        <button data-modal-hide="change-password-modal" class="min-w-[145px] p-3 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Change Track Confirm --}}
+    <div id="change-track-confirm-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div
+                    class="w-[253px] h-[138px] absolute top-0 -right-1"
+                    style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.092px -9.628px / 100.073% 106.977% no-repeat;"
+                ></div>
+                <!-- Modal body -->
+                <div class="px-12 py-11 flex flex-col items-center">
+                    <p class="text-center text-xl text-darker-blue font-medium">
+                        Are you sure you want to change your mentorship track?
+                    </p>
+                    <p class="mt-4 text-center text-lg">
+                        You can only change your track once and will not be able to return to your previous
+                        work once you change.
+                    </p>
+
+                    <div class="mt-6 flex justify-center items-center gap-4">
+                        <button
+                            data-modal-hide="change-track-confirm-modal"
+                            data-modal-target="change-track-modal"
+                            data-modal-toggle="change-track-modal"
+                            class="min-w-[101px] p-2 bg-primary border border-primary rounded-full text-sm text-white"
+                        >
+                            Yes
+                        </button>
+
+                        <button data-modal-hide="change-track-confirm-modal" class="min-w-[101px] p-2 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Change Track --}}
+    <div id="change-track-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div
+                    class="w-[253px] h-[138px] absolute top-0 -right-1"
+                    style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.092px -9.628px / 100.073% 106.977% no-repeat;"
+                ></div>
+
+                <!-- Modal body -->
+                <div class="px-12 py-11 flex flex-col items-center">
+                    <p class="text-center text-xl text-darker-blue font-medium">
+                        Please Confirm!
+                    </p>
+
+                    <p class="mt-4 text-center text-lg">
+                        Please confirm you wish to change your mentorship track.
+                        To confirm, type "<span class="font-semibold">Change My Track</span>" in the box below.
+                    </p>
+
+                    <input
+                        type="text"
+                        placeholder='Please type "Change My Track" to confirm'
+                        class="w-full mt-3 border border-light-blue rounded-lg h-12 py-2 px-4 text-lightest-grey::placeholder placeholder:font-thin leading-tight focus:outline-none"
+                    >
+
+                    <div class="mt-6 flex justify-center items-center gap-4">
+                        <button class="min-w-[101px] py-2 px-3 bg-primary border border-primary rounded-full text-sm text-white"
+                        >
+                            Yes
+                        </button>
+
+                        <button data-modal-hide="change-track-modal" class="min-w-[101px] py-2 px-3 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('more-js')
-<script>
-  $(document).ready(function () {
-      $('#inputInstitution').on('change', function () {
-          var institutionVal = this.value;
-          var base_url = window.location.origin;
-          $.ajax({
-              url: base_url+"/api/institution/"+institutionVal,
-              contentType: "application/json",
-              dataType: 'json',
-              success: function (result) {
-                // console.log(institutionVal);
-                $('#ForCountry').val(result.countries);
-                $('#ForState').val(result.states);
-              }
-          });
-      });
+    <script>
+        $('#browse-photo-btn').on('click', function() {
+            $('#input-photo-file').click()
+        })
 
-      $('#study_program_form').hide();
-      $("#inputStudy").change(function(){
-        var values = $("#inputStudy option:selected").val();
-        if(values=='other'){
-          $('#study_program_form').show();
-        }else{
-          $('#study_program_form').hide();
-        }
-      });
-      $("#file-upload").change(function(e){
-        var file = $("input[type=file]").get(0).files[0];
-        if(file){
-            var reader = new FileReader();
-            reader.onload = function(){
-                $("#profile_img").attr("src", reader.result);
+        function toggleShowPassword(trigger) {
+            const passwordInput = $($(trigger).attr('toggle'))
+
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                $(trigger).css('background-image', 'url("{{ asset('/assets/img/icon/eye-open.svg') }}")');
+            } else {
+                passwordInput.attr('type', 'password');
+                $(trigger).css('background-image', 'url("{{ asset('/assets/img/icon/eye-close.svg') }}")');
             }
-            reader.readAsDataURL(file);
         }
-        console.log(file)
-        // $('#file-name').html($('#file-upload').files())
-      });
-  });
-</script>
+    </script>
+
+    {{-- <script>
+        $(document).ready(function() {
+            $('#inputInstitution').on('change', function() {
+                var institutionVal = this.value;
+                var base_url = window.location.origin;
+                $.ajax({
+                    url: base_url + "/api/institution/" + institutionVal,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result) {
+                        // console.log(institutionVal);
+                        $('#ForCountry').val(result.countries);
+                        $('#ForState').val(result.states);
+                    }
+                });
+            });
+
+            $('#study_program_form').hide();
+            $("#inputStudy").change(function() {
+                var values = $("#inputStudy option:selected").val();
+                if (values == 'other') {
+                    $('#study_program_form').show();
+                } else {
+                    $('#study_program_form').hide();
+                }
+            });
+            $("#file-upload").change(function(e) {
+                var file = $("input[type=file]").get(0).files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        $("#profile_img").attr("src", reader.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
+                console.log(file)
+                // $('#file-name').html($('#file-upload').files())
+            });
+        });
+    </script> --}}
 @endsection
