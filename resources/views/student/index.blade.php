@@ -40,23 +40,25 @@
                                                 class="w-16 h-9 object-scale-down  mx-auto " alt="">
                                         </div>
                                         <div class="flex-col">
-                                            <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0">
-                                                {{ $enrolled_project->project->name }}</p>
-                                            <p class="text-black font-normal text-sm m-0">
-                                                {{ $enrolled_project->project->company->name }}
-                                            <p
-                                                class="text-dark-blue font-normal text-sm bg-lightest-blue  rounded-full w-32 text-center m-0">
-                                                @if ($enrolled_project->project->project_domain == 'statistical')
-                                                    Statistical Data
-                                                @elseif($enrolled_project->project->project_domain == 'computer_vision')
-                                                    Computer Vision
-                                                @else
-                                                    NLP
-                                                @endif
-                                                </span>
+                                            <p class="text-darker-blue font-bold text-sm">
+                                                {{ $enrolled_project->project->name }}
+                                            </p>
+
+                                            <div class="min-w-[112px] mt-2 px-2 py-1 bg-lightest-blue rounded-full text-center text-xs font-medium">
+                                                @switch($enrolled_project->project->project_domain)
+                                                    @case('statistical')
+                                                        Statistical Data
+                                                        @break
+                                                    @case('computer_vision')
+                                                        Computer Vision
+                                                        @break
+                                                    @default
+                                                        NLP
+                                                @endswitch
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="intelOne text-grey font-normal text-xs py-2 m-0">
+                                    <div class="text-grey font-normal text-xs py-2 m-0">
                                         {{ substr($enrolled_project->project->overview, 0, 250) }}...
                                     </div>
                                     <div class="flex justify-between mt-0">
@@ -71,14 +73,14 @@
                                         <div class="flex items-center gap-4">
                                             <a
                                                 href="#"
-                                                class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-2 rounded-full"
+                                                class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
                                             >
                                                 Edit
                                             </a>
 
                                             <a
                                                 href="/profile/{{ Auth::guard('student')->user()->id }}/enrolled/{{ $enrolled_project->project->id }}/detail"
-                                                class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-2 rounded-full"
+                                                class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
                                             >
                                                 View Project
                                             </a>
