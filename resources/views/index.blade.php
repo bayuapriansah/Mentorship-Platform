@@ -70,11 +70,13 @@
             </span>
         </h2>
 
-        <p class="max-w-screen-tab mt-6 tab:mt-[2.625rem] text-black text-center tab:text-lg">Intel® AI For Workforce is a global AI skilling program for
-            vocational students for building an AI-ready workforce. The program aims to address the AI skill
-            crisis to cater to growing job demands related to AI/ML by empowering the future workforce with the
-            necessary skills for employability in the digital economy. The program offers comprehensive,
-            modular, experiential, and flexible AI content delivered through engaging learning experiences.</p>
+        <p class="max-w-screen-tab mt-6 tab:mt-[2.625rem] text-black text-center tab:text-lg">
+            Intel® AI Global Impact Festival 2023 is a digital readiness celebration,
+            inviting students, educators, academic leaders, governments, implementation partners,
+            and all communities from across the world to enrich lives with AI innovation.
+            This mentorship program aims to celebrate the student innovators and take their AI-enabled solutions
+            to the next level and develop their AI skills.
+        </p>
     </div>
 
     {{-- Body Content 3 --}}
@@ -159,7 +161,7 @@
                     </h5>
 
                     <div class="min-w-[124px] mt-4 px-4 py-1 bg-lightest-blue rounded-full text-black text-center text-xs">
-                        {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
+                        {{ $project->project_domain == 'statistical' ? 'Machine Learning' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}
                     </div>
 
                     <p class="mt-4 text-sm text-justify">
