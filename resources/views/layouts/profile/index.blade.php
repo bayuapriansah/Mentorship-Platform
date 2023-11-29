@@ -581,7 +581,7 @@
             <hr class="my-6 border-black sm:mx-auto lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm text-center tab:text-left">&copy; {{ date('Y') }} <a
-                        href="{{ url('/') }}" class="hover:underline">Intel Simulated Internships</a>. All
+                        href="{{ url('/') }}" class="hover:underline">Mentorship Platform</a>. All
                     Rights Reserved.
                 </span>
 
