@@ -1,4 +1,4 @@
-<aside class="w-full bg-white absolute z-[10] -top-5 rounded-xl border border-light-blue p-5">
+<aside class="w-full bg-[#FAFAFA] absolute z-[10] -top-5 rounded-xl border border-grey p-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
@@ -67,12 +67,13 @@
 
   <div class="flex flex-col mt-8 ">
     <div class="mx-auto">
-      <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('assets/img/placeholder_pp.png') }}" class="w-[100px] h-[100px] rounded-full  mx-auto object-cover"  alt="message">
-      <p class="text-dark-blue font-normal text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
+      <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('/assets/img/profile-placeholder.png') }}" class="w-[100px] h-[100px] rounded-full  mx-auto object-cover ring ring-[#C5CAF3]"  alt="Avatar">
+      <p class="mt-4 text-dark-blue font-normal text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
       <p class="text-black font-normal text-sm text-center">{{$student->year_of_study}} Year, {{$student->study_program}} </p>
-      <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mx-auto object-scale-down" alt="">
-      <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
-      <p class="text-black font-normal text-sm text-center">Internship Status:
+      {{-- <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo"> --}}
+      <img src="{{ asset('/assets/img/institution-placeholder.png') }}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo">
+      <p class="mt-2 text-dark-blue font-bold text-sm text-center">{{$student->institution->name}}</p>
+      <p class="mt-2 text-black font-normal text-sm text-center">Mentorship Status :
 
         @php
           $totalMonth = $completed_months->map(function ($item) {
@@ -95,9 +96,27 @@
         <span class="text-[#F8AC2A]">Ongoing</span>
         @endif  --}}
       </p>
+
+      <p class="mt-2 text-center text-sm text-[#2C2C2C]">
+        Mentorship Type :
+        <span class="font-medium text-darker-blue">
+            Entrepreneur Track
+        </span>
+      </p>
     </div>
   </div>
-  <div class="flex  mt-8 ">
+
+  <div class="mt-4 flex flex-col justify-center text-center text-sm">
+    <p class="text-[#2C2C2C]">
+        Team Members:
+    </p>
+
+    <p class="font-medium text-darker-blue">Ady</p>
+    <p class="font-medium text-darker-blue">Bayu</p>
+    <p class="font-medium text-darker-blue">Kevin</p>
+  </div>
+
+  <div class="flex">
     {{-- <div>
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',0)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Enrolled</p>
@@ -106,8 +125,8 @@
   @php
    $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d M Y');
   @endphp
-      <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
-      <p class="text-light-black text-sm font-normal">Projects Completed</p>
+      {{-- <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
+      <p class="text-light-black text-sm font-normal">Projects Completed</p> --}}
     </div>
   </div>
   <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
@@ -198,7 +217,7 @@
     {{-- SECTION TO SHOW TASK PROGRESS --}}
     @else
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
-    <p class="text-black text-xs font-normal">Internship Timeline</p>
+    <p class="text-black text-xs font-normal">Mentorship Timeline</p>
     {{-- <span>s</span> --}}
 
     <div class="flex justify-between">
@@ -250,7 +269,7 @@
     <div class="flex flex-col mt-8 ">
       @if($submissionData == null)
         @if (\Carbon\Carbon::now()->format('Y-m-d') <= $student->end_date)
-          <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
+          <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-primary rounded-full p-2 mx-auto w-3/4">Submit Task</button>
         @endif
       @else
         <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
