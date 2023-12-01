@@ -1,4 +1,4 @@
-<aside class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
+<aside class="w-full bg-white absolute z-[10] -top-5 rounded-xl border border-light-blue p-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
@@ -238,7 +238,7 @@
         <p class="text-black text-xs">{{\Carbon\Carbon::parse($student->end_date)->format('d M Y')}}</p>
       @endif
     </div>
-    
+
     @if($student->is_confirm == 0)
       <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
     @endif
@@ -324,7 +324,7 @@
         return $item['period'] ;
       });
     @endphp
-    
+
     {{-- @if($total = $totalMonth->sum()==5 && \Carbon\Carbon::now() >= $student->end_date) --}}
     @if($enrolled_projects->where('is_submited',1)->count()==5)
       @if($student->feedback_done == null)
@@ -350,7 +350,7 @@
                       <form class="space-y-6" action="{{ route('student.feedback', $student->id) }}" method="POST">
                         @csrf
                           <div>
-                              <label for="feedback" class="block mb-2 text-sm text-gray-900 dark:text-white">We would be grateful if you could take a moment to share your feedback or a testimonial about your time with us.</label>                        
+                              <label for="feedback" class="block mb-2 text-sm text-gray-900 dark:text-white">We would be grateful if you could take a moment to share your feedback or a testimonial about your time with us.</label>
                               <textarea id="feedback" name="feedback" rows="4" maxlength="1000" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
                               <span id="counter">0/1000</span>
                           </div>
@@ -359,7 +359,7 @@
                   </div>
                 </div>
             </div>
-        </div> 
+        </div>
       @elseif($student->feedback_done == 1)
         <p class="text-dark-blue font-medium text-sm text-center my-3">Congratulations!</p>
         <a href="/profile/{{Auth::guard('student')->user()->id}}/{{ $student->institution->id }}/certificate" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a>

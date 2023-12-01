@@ -1,176 +1,179 @@
+@php
+    $appliedDate = \Carbon\Carbon::parse(
+        $project->enrolled_project
+            ->where('student_id', Auth::guard('student')->user()->id)
+            ->where('project_id', $project->id)
+            ->first()->created_at,
+    )->startOfDay();
+
+    $enrolledDate = $appliedDate->format('d M Y');
+
+    $completedDate = \Carbon\Carbon::parse(
+        $project->enrolled_project
+                ->where('student_id', Auth::guard('student')->user()->id)
+                ->where('project_id', $project->id)
+                ->first()->updated_at,
+    )->startOfDay()->format('d M Y');
+    $now = \Carbon\Carbon::now()->startOfDay();
+
+    // Datasets
+    if ($project->dataset) {
+        $datasets_array = explode(';', $project->dataset);
+    }
+@endphp
+
 @extends('layouts.profile.index')
 @section('content')
-{{-- {{ dd($__data) }} --}}
-    {{-- @dd($submission_data) --}}
-    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center min-h-screen">
-        <div class="col-span-8">
-            <div class="grid grid-cols-12 gap-4 grid-flow-col">
-                <div class="col-span-6 my-auto">
-                    <a href="/profile/{{ Auth::guard('student')->user()->id }}/allProjects"
-                        class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue"><i
-                            class="fa-solid fa-arrow-left pr-2"></i>back</a>
-                    <h2 class="text-dark-blue text-2xl font-medium mb-3">{{ $project->name }}</h2>
-                    <span
-                        class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">
-                        @if ($project->project_domain == 'statistical')
-                          Statistical Data
-                        @elseif($project->project_domain == 'computer_vision')
-                          Computer Vision
-                        @else
-                          NLP
-                        @endif
-                    </span>
-                </div>
-                <div class="col-span-6 relative">
-                    <img src="{{ asset('assets/img/icon/profile/dots.png') }}" class="absolute z-10 right-0 -top-3 ">
-                    <div
-                        class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-10 top-10 ">
-                        <img src="{{ asset('storage/' . $project->company->logo) }}"
-                            class="w-16 h-9 object-scale-down mx-auto " alt="">
-                    </div>
-                </div>
+
+<div class="max-w-[1366px] mx-auto px-16 pt-4 pb-40 bg-white">
+    <div class="w-[850px] relative">
+        {{-- Top Right Content --}}
+        <div
+            class="w-[233px] h-[100px] absolute top-0 right-0"
+            style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.084px -8.927px / 100.073% 126.737% no-repeat;"
+        ></div>
+
+        <div class="w-[30px] h-[30px] absolute top-[45px] right-[110px] bg-[#DEAA51] rounded-lg"></div>
+
+        <div class="absolute top-14 right-16 flex flex-col items-end">
+            <img src="{{ asset('storage/' . $project->company->logo) }}" alt="Logo" class="w-16 h-16 object-cover bg-slate-200 rounded-xl text-black text-center">
+
+            @if ($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->where('is_submited', 1)->first())
+                <p class="mt-[1.4rem] text-sm text-right">
+                    Completed On <br> {{ $completedDate }}
+                </p>
+            @else
+                <p class="mt-[1.4rem] text-sm text-right">
+                    Enrolled On <br> {{ $enrolledDate }}
+                </p>
+
+                <p class="mt-2 flex gap-2 items-center font-medium text-[#6672D3] text-xs">
+                    <span class="w-[10px] h-[10px] bg-[#6672D3] rounded-full"></span>
+                    In Progress
+                </p>
+            @endif
+
+
+            <div class="mt-4 p-3 flex items-center gap-2 border border-darker-blue rounded-lg text-darker-blue">
+                <i class="far fa-calendar fa-lg"></i>
+
+                <p class="text-sm">
+                    Duration: 10 Weeks
+                </p>
             </div>
-            <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
-                <div class="col-span-7 relative my-auto">
-                    <h1 class="text-dark-blue text-[22px] font-medium">Project Details</h1>
-                </div>
-                <div class="col-end-13 col-span-3">
-                    {{-- <button  class="intelOne text-white text-sm font-normal bg-darker-blue px-12 py-2 rounded-full absolute cursor-default ">Enrolled</button>  --}}
-                    @php
-                        $appliedDate = \Carbon\Carbon::parse(
-                            $project->enrolled_project
-                                ->where('student_id', Auth::guard('student')->user()->id)
-                                ->where('project_id', $project->id)
-                                ->first()->created_at,
-                        )->startOfDay();
-                        $enrolledDate = $appliedDate->format('d M Y');
-                        
-                        $completedDate = \Carbon\Carbon::parse(
-                            $project->enrolled_project
-                                ->where('student_id', Auth::guard('student')->user()->id)
-                                ->where('project_id', $project->id)
-                                ->first()->updated_at,
-                        )
-                            ->startOfDay()
-                            ->format('d M Y');
-                        // $co
-                        
-                        $now = \Carbon\Carbon::now()->startOfDay();
-                    @endphp
-                    {{-- @dd($completedDate) --}}
-                    <p class="font-normal text-sm text-right">
-                        @if ($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->where('is_submited', 1)->first())
-                            Completed On <br> {{ $completedDate }}
-                        @else
-                            Enrolled On <br> {{ $enrolledDate }}
-                        @endif
+        </div>
 
-                    </p>
+        {{-- Main Content --}}
+        <a href="/profile/{{ Auth::guard('student')->user()->id }}/allProjects" class="text-darker-blue text-sm hover:underline">
+            < Go Back
+        </a>
 
-                </div>
+        {{-- Project Name --}}
+        <h1 class="mt-6 font-medium text-darker-blue text-2xl">
+            {{ $project->name }}
+        </h1>
+
+        {{-- Domain --}}
+        <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-[#E9E9E9] border border-grey rounded-full flex justify-center text-grey">
+            @if ($project->project_domain == 'statistical')
+                Machine Learning
+            @elseif($project->project_domain == 'computer_vision')
+                Computer Vision
+            @else
+                NLP
+            @endif
+        </div>
+
+        {{-- Details --}}
+        <h1 class="w-[545px] mt-10 font-medium text-darker-blue text-[1.4rem]">
+            Project Details
+        </h1>
+
+        <div class="w-[545px] mt-4 text-sm text-justify problem">
+            {!! $project->problem !!}
+        </div>
+
+        {{-- Overview --}}
+        @if ($project->overview)
+            <h1 class="mt-4 font-medium text-darker-blue text-[1.4rem]">
+                Overview
+            </h1>
+
+            <div class="w-[545px] mt-4 flex flex-col gap-4 text-sm text-justify">
+                <p>
+                    {{ $project->overview }}
+                </p>
             </div>
+        @endif
 
-            <div class="grid grid-cols-12 gap-8 grid-flow-col mt-14">
-                <div class="col-span-10 text-justify">
-                    <div class="problem">
-                        {!! $project->problem !!}
-                    </div>
-                    @if ($project->overview)
-                        <div class="mb-6">
-                            <h1 class="text-dark-blue text-[22px] font-medium">Overview</h1>
-                            <p class="text-grey text-sm">
-                                {{ $project->overview }}
+        {{-- Datasets --}}
+        @if ($project->dataset)
+            <h1 class="mt-10 font-medium text-darker-blue text-[1.4rem]">
+                Datasets
+            </h1>
+
+            <div class="mt-4 flex flex-wrap gap-5">
+                @foreach ($datasets_array as $dataset)
+                    <a href="{{ $dataset }}" class="w-[172px] h-[37px] px-3 py-1 bg-primary rounded-lg flex justify-between items-center font-medium text-white">
+                        <span>URL {{ $loop->iteration }}</span>
+                        <span>></span>
+                    </a>
+                @endforeach
+            </div>
+        @endif
+
+        {{-- Tasks --}}
+        <h1 class="mt-16 font-medium text-darker-blue text-[1.4rem]">
+            Tasks
+        </h1>
+
+        <div class="mt-4 flex flex-col gap-2">
+            @foreach ($submission_data->sortByDesc('taskNumber') as $data)
+            @if(\Carbon\Carbon::now()->greaterThan(\Carbon\Carbon::parse($data->release_date)))
+            <a href="{{ route('student.taskDetail', [Auth::guard('student')->user()->id,$project->id, $data->section_id]) }}" class="w-full py-4 pl-7 pr-[1.4rem] @if($data->is_complete == 1) bg-white @else bg-[#F8F8F8] @endif border border-darker-blue rounded-lg grid grid-cols-12 items-center gap-1 cursor-pointer re-ordering-position-{{ $data->taskNumber }}">
+                <p class="col-span-6 font-medium text-darker-blue text-sm">
+                    Task {{ $data->taskNumber }} :
+                    {{ substr($data->projectSection->title, 0, 30) }}...
+                </p>
+
+                <p class="col-span-3 font-medium text-light-black text-xs">
+                    {{ \Carbon\Carbon::parse($data->release_date)->format('dS') }} - {{ \Carbon\Carbon::parse($data->dueDate)->format('dS F Y') }}
+                </p>
+
+                @if ($data->is_complete == 1)
+                    @if($submi_data->grade)
+                        @if ($submi_data->grade->status == 1)
+                            <p class="col-span-2 flex gap-2 items-center font-medium text-[#11BF61] text-xs">
+                                <span class="w-[10px] h-[10px] bg-[#11BF61] rounded-full"></span>
+                                Completed
                             </p>
-                        </div>
+                        @else
+                            <p class="col-span-2 flex gap-2 items-center font-medium text-[#EA0202] text-xs">
+                                <span class="w-[10px] h-[10px] bg-[#EA0202] rounded-full"></span>
+                                Revise
+                            </p>
+                        @endif
+                    @else
+                        <p class="col-span-2 flex gap-2 items-center font-medium text-[#DEAA51] text-xs">
+                            <span class="w-[10px] h-[10px] bg-[#DEAA51] rounded-full"></span>
+                            In Review
+                        </p>
                     @endif
-                    @if ($project->dataset)
-                        @php
-                            $datasets_array = explode(';', $project->dataset);
-                            $no = 1;
-                        @endphp
-                        <div class="mb-6">
-                            <h1 class="text-dark-blue text-[22px] font-medium mb-1">Dataset</h1>
-                            @foreach ($datasets_array as $dataset_array)
-                                <a href="{{ $dataset_array }}"
-                                    class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2"
-                                    target="_blank">Dataset {{ $no }} <i
-                                        class="fa-solid fa-chevron-right"></i></a>
-                                @php $no++ @endphp
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-                <div class="col-start-11 col-span-3">
-                    <div
-                        class="border border-light-blue rounded-[10px] bg-white p-2 absolute mt-14  flex  float-right space-x-3 ">
-                        <i class="fa-regular fa-calendar"></i>
-                        <p class="font-normal text-sm text-light-blue">Duration: <span
-                                class="text-dark-blue">{{ $project->period }} Month(s)</span></p>
-                    </div>
-                </div>
-            </div>
+                @else
+                    <p class="col-span-2"></p>
+                @endif
 
-            <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3 ">
-              <div class="col-span-12">
-                  @php
-                  $no = 1;
-                  $nn = 1;
-                  $todayDate = \Carbon\Carbon::now();
-                  @endphp
-                  @foreach ($submission_data->sortByDesc('taskNumber') as $submi_data)
-                  {{-- @dd($submi_data->projectSection) --}}
-                  @if($todayDate->greaterThan(\Carbon\Carbon::parse($submi_data->release_date)))
-                      <div
-                          class="border border-dark-blue px-7 py-4 rounded-xl mb-2 font-medium re-ordering-position-{{ $submi_data->taskNumber }}">
-                          <a href="{{ route('student.taskDetail',[Auth::guard('student')->user()->id,$project->id,$submi_data->section_id]) }}"
-                            {{-- /profile/{{ Auth::guard('student')->user()->id }}/enrolled/{{ $project->id }}/task/{{ $project_section->id }} --}}
-                              class="grid grid-cols-12 gap-4 grid-flow-col">
-                              <div class="col-span-5">Task {{ $submi_data->taskNumber }}:
-                                  {{ substr($submi_data->projectSection->title, 0, 30) }}...</div>
-                              <span
-                                  class="col-start-6 col-span-3 text-sm font-normal text-justify inline-block">{{ \Carbon\Carbon::parse($submi_data->release_date)->format('dS') }} - {{ \Carbon\Carbon::parse($submi_data->dueDate)->format('dS F Y') }}
-                                  {{-- {{ $appliedDate->format('g:ia') }} --}}
-                                </span>
-                              <div class="col-start-9 col-span-2 items-center">
-                                  @if ($submi_data->is_complete == 0)
-                                      {{-- <span class="text-light-brown"><i
-                                              class="fa-solid fa-circle text-light-brown fa-xs mr-2"></i> Not Submitted
-                                      </span> --}}
-                                  @elseif($submi_data->is_complete == 1)
-                                      @if($submi_data->grade)
-                                          @if ($submi_data->grade->status == 1)
-                                              <span class="text-[#11BF61]"><i
-                                                      class="fa-solid fa-circle text-[#11BF61] fa-xs mr-2"></i>
-                                                  Complete</span>
-                                          @elseif($submi_data->grade->status == 0)
-                                              <span class="text-[#EA0202]"><i
-                                                      class="fa-solid fa-circle text-[#EA0202] fa-xs mr-2"></i>
-                                                  Revise</span>
-                                          @endif
-                                      @else
-                                          <span class="text-light-brown"><i
-                                                  class="fa-solid fa-circle text-light-brown fa-xs mr-2"></i> In Review
-                                          </span>
-                                      @endif
-                                  @else
-                                      <span class="text-light-brown"><i
-                                              class="fa-solid fa-circle text-light-brown fa-xs mr-2"></i> There's Trouble</span>
-                                  @endif
-                              </div>
-                              <div class="col-start-12 col-span-2">
-                                  <i class="fa-solid fa-chevron-right text-dark-blue"></i>
-                              </div>
-                          </a>
-                      </div>
-                  @endif
-                  @endforeach
-              </div>
-          </div>
-
+                <div class="col-span-1 text-[#000F8A] justify-self-end">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+            @endif
+            @endforeach
         </div>
     </div>
-    </div>
+</div>
 @endsection
+
 @section('more-js')
     <script>
         var elements = $(".re-ordering-position-*");

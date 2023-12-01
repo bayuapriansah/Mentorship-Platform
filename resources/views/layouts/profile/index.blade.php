@@ -172,7 +172,7 @@
             </ul>
 
             <div class="col-start-9 col-span-4 flex relative ">
-                @if (!Route::is('student.edit') && !Route::is('student.allNotification') && !Route::is('participant.projects.create') && !Route::is('participant.projects.add-task'))
+                @if (!Route::is('student.edit', 'student.allNotification', 'participant.projects.create', 'participant.projects.add-task'))
                     @include('layouts.profile.sidebar')
                 @else
                     <div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-4">
