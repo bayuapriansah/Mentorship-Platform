@@ -1,24 +1,27 @@
 @extends('layouts.index')
 @section('content')
-{{-- Body Contents --}}
-<div style="background-image: url({{ asset('assets/img/for_students/two-students.jpeg') }}); background-size: cover;" class="max-w-full bg-no-repeat phone:bg-right-min-28 hd:bg-top-min-20 laptop:bg-top-min-20 fhd:bg-top-min-32 py-24">
-    <div class="max-w-screen-xl mx-auto px-6 hd:py-24 ">
-        <div class="grid md:grid-cols-2 gap-4 items-center ">
-            <div class="my-auto bg-darker-blue/[0.9] rounded-2xl px-8 py-4 mt-48 hd:mt-0 hd:px-16 hd:py-8">
-                <h2 class="intelOne text-white font-bold text-xl hd:text-3xl leading-11">
-                    <span>Information for</span> <span class="text-light-brown"> Students</span>
+    <div style="background-image: url({{ asset('assets/img/main/bannerSkillTrack.png') }});"
+    class="max-w-full bg-no-repeat bg-cover py-0 phone:py-12 hd:py-24 laptop:py-36 fhd:py-72 2k:py-80">
+        <div class="grid grid-cols-2 max-w-screen-xl mx-auto">
+            <div class="max-w-screen-xl mx-auto">
+                <h2 class="intelOne text-white font-bold rounded-xl bg-primary-800/[0.9] text-xl phone:text-2xl hd:text-4xl">
+                    <span class="text-white">Skill Track Information</span>
                 </h2>
-                <span class="intelOne text-white font-light text-sm hd:text-lg leading-6">Join today to work on real-world
-                    projects and kick start your career!</span>
-                <div class="flex py-4">
-                    <a href="{{ route('multiLogIn') }}"
-                       class="intelOne text-dark-blue text-sm font-normal bg-white hover:bg-neutral-300 px-8 py-1.5 hd:px-16 hd:py-3.5 rounded-full">Get Started</a>
-                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="max-w-screen-xl my-6 p-6 mx-auto ">
+        <h1 class="text-center text-4xl font-bold text-dark-blue">Skills Track</h1>
+    </div>
+    <div class="max-w-screen-xl my-6 p-6 mx-auto">
+        <p class="mb-4 text-black text-center">
+            On this platform, students will have the opportunity to work on AI projects in an online work-like environment. Most projects or tutorials found online walk students through projects step by step, giving them a clear pathway from the original idea to a solution. On this platform, the projects students will be working on have been designed to walk students through a project as it manifests itself in a work-like setting. The goal is for students to develop their independence by finding solutions to problems, time management and responsibility by meeting deadlines, and accountability for their work as the owners of their tasks. Once the students have completed their simulated internship, not only will they have grown as developers, but they will have grown their project portfolio.
+        </p>
+        <p class="m-0 text-black text-center">
+            The projects our students will be working on have been designed to give students practical skills that will be beneficial in industry. From this program, students will work on the following skills:
+        </p>
+    </div>
     {{-- Body Content 2 --}}
     <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
         <div class="grid md:grid-cols-2 gap-4 items-center">

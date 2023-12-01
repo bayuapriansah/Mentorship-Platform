@@ -10,12 +10,12 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        '2k': '2560px',
-        'fhd': '1920px',
-        'laptop': '1366px',
-        'hd': '1280px',
-        'tab': '800px',
-        'phone': '375px',
+        '2k': '2559px',
+        'fhd': '1919px',
+        'laptop': '1365px',
+        'hd': '1279px',
+        'tab': '799px',
+        'phone': '374px',
       },
       colors: {
         'primary' : '#E96424',
