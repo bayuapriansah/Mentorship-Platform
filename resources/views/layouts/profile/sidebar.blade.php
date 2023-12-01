@@ -72,7 +72,7 @@
       <p class="text-black font-normal text-sm text-center">{{$student->year_of_study}} Year, {{$student->study_program}} </p>
       {{-- <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo"> --}}
       <img src="{{ asset('/assets/img/institution-placeholder.png') }}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo">
-      <p class="mt-2 text-dark-blue font-bold text-sm text-center">{{$student->institution->name}}</p>
+      <p class="mt-2 text-darker-blue font-medium text-sm text-center">{{$student->institution->name}}</p>
       <p class="mt-2 text-black font-normal text-sm text-center">Mentorship Status :
 
         @php
