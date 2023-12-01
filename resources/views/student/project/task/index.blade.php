@@ -94,7 +94,7 @@
       </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-10  my-auto">
-        <h1 class="font-medium text-darker-blue text-[1.4rem] mb-2">Discussion</h1>
+        <h1 class="font-medium text-darker-blue text-[1.4rem] mb-2">Discussion / Messages</h1>
         @if ($comments->count())
         <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
           @php $no=1;  @endphp
@@ -204,7 +204,7 @@
     </div>
     <!-- Modal toggle -->
     <!-- Main modal -->
-    <div id="staticModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+    <div id="staticModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
 
         <div class="relative w-full h-full max-w-2xl md:h-auto">
             <!-- Modal content -->

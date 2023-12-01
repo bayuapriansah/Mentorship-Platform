@@ -1,6 +1,6 @@
 @extends('layouts.profile.index')
 @section('content')
-    <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center">
+    <div class="max-w-[1366px] mx-auto px-16 pt-16 bg-white grid grid-cols-12 gap-8 grid-flow-col items-center">
         <div class="col-span-8">
             <div class="grid grid-cols-12 gap-4 grid-flow-col">
                 <div class="col-span-3">
@@ -47,7 +47,7 @@
                                             <div class="min-w-[112px] mt-2 px-2 py-1 bg-lightest-blue rounded-full text-center text-xs font-medium">
                                                 @switch($enrolled_project->project->project_domain)
                                                     @case('statistical')
-                                                        Statistical Data
+                                                        Machine Learning
                                                         @break
                                                     @case('computer_vision')
                                                         Computer Vision
@@ -72,10 +72,10 @@
 
                                         <div class="flex items-center gap-4">
                                             <a
-                                                href="#"
-                                                class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
+                                                href="{{ route('participant.projects.create') }}"
+                                                class="text-primary text-sm font-normal bg-white border border-primary px-12 py-2 rounded-full"
                                             >
-                                                Edit
+                                                Edit Project
                                             </a>
 
                                             <a
