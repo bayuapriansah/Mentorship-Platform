@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    {{-- Body Content 2 --}}
+    {{-- Intro --}}
     <div class="max-w-screen-xl mt-10 hd:mt-0 mx-auto px-6 flex flex-col items-center">
         <h2 class="font-bold text-2xl tab:text-3xl text-center text-darker-blue">
             Intel AI Global Impact Festival<br>
@@ -79,7 +79,7 @@
         </p>
     </div>
 
-    {{-- Body Content 3 --}}
+    {{-- Tracks --}}
     <div class="relative max-w-screen-tab mt-[5.75rem] mx-auto px-6">
         {{-- <img src="{{ asset('/assets/img/home/bubble-decoration.png') }}" alt="Decoration" class="hidden tab:block absolute top-1/4 -left-[33%]"> --}}
         <div class="bubble-decoration-1 hidden tab:block absolute top-1/4 -left-[33%]"></div>
@@ -141,7 +141,7 @@
         </div>
     </div>
 
-    {{-- Body Content 4 --}}
+    {{-- Projects--}}
     <div class="max-w-screen-xl mt-[8rem] mx-auto px-24 flex flex-col items-center">
         <h1 class="font-bold text-darker-blue text-3xl">
             Skills Track
@@ -151,9 +151,11 @@
             @foreach ($projects as $project)
                 <div class="project-card w-[316px] min-h-[405px] pt-7 pb-10 px-6 flex flex-col items-center">
                     <img
-                        src="{{ 'storage/' . $project->company->logo }}"
+                        {{-- src="{{ 'storage/' . $project->company->logo }}" --}}
+                        src="{{ $project->company->logo ? asset('storage/' . $project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                        onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
                         alt="Logo"
-                        class="w-20 h-20 rounded-lg tab:rounded-xl bg-slate-200 text-black text-center"
+                        class="w-20 h-20 rounded-lg tab:rounded-xl bg-white border border-grey text-black text-center"
                     >
 
                     <h5 class="mt-4 font-bold text-lg text-darker-blue">
@@ -171,8 +173,6 @@
                     <p class="mt-2 mb-9 text-black self-start">
                         Duration:
                         <span class="font-[500]">
-                            {{-- {{ $project->period }}
-                            {{ $project->period > 1 ? 'Weeks' : 'Week' }} --}}
                             10 Weeks
                         </span>
                     </p>
@@ -188,14 +188,14 @@
         </div>
     </div>
 
-    {{-- Body Content 5 --}}
+    {{-- Project Planner --}}
     <div class="relative max-w-screen-xl mt-[12.5rem] mb-[9.25rem] mx-auto px-6 flex flex-col tab:flex-row justify-center items-center gap-10 tab:gap-72">
         <div class="relative">
             <img src="{{ asset('/assets/img/home/planner-1.png') }}" alt="Image">
             <img src="{{ asset('/assets/img/home/planner-2.png') }}" alt="Image" class="absolute top-[3.5rem] -right-[12.5rem]">
         </div>
 
-        <div class="flex flex-col items-center gap-2">
+        <div class="relative z-[2] flex flex-col items-center gap-2">
             <h1 class="font-bold text-2xl text-darker-blue">
                 Entrepreneur Track
             </h1>
@@ -205,6 +205,22 @@
             </a>
         </div>
 
-        <div class="bubble-decoration-2 hidden tab:block absolute bottom-0 -right-8"></div>
+        <div class="bubble-decoration-2 hidden tab:block absolute z-[2] -bottom-0 -right-8"></div>
+        <div class="hidden tab:block absolute -bottom-60 -right-[10%] w-[621px] h-[621px] blue-shadow"></div>
+    </div>
+
+    {{-- Mentorship Timeline --}}
+    <div class="relative max-w-screen-xl mt-48 mb-[9.25rem] mx-auto px-6 pb-20 flex flex-col items-center gap-14">
+        <h1 class="text-3xl text-center text-darker-blue font-bold">
+            Mentorship Timeline
+        </h1>
+
+        <img
+            src="{{ asset('/assets/img/home/mentorship-timeline.png') }}"
+            alt="Mentorship Timeline"
+            class="w-[786px] relative z-[2]"
+        >
+
+        <div class="hidden tab:block absolute -bottom-[35%] -left-[30%] w-[621px] h-[621px] blue-shadow"></div>
     </div>
 @endsection
