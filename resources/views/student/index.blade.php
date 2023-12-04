@@ -9,17 +9,26 @@
             </div>
             <div class="grid grid-cols-12 gap-4 grid-flow-col">
                 <div class="col-span-12">
-                    <div class="border-b border-gray-200">
-                        <h1 class="w-max py-2 border-b-2 border-dark-blue text-darker-blue text-2xl font-medium">
-                            My Project
+                    <div class="flex items-center gap-8 border-b border-gray-200">
+                        <h1 class="w-max py-2 border-b-2 border-darker-blue text-darker-blue text-2xl font-medium">
+                            <a href="{{ route('student.allProjects', ['student' => auth()->user()->id]) }}">
+                                My Project
+                            </a>
                         </h1>
+
+                        @if (isSkillsTrack())
+                            <h1 class="w-max py-2 text-grey text-xl">
+                                <a href="{{ route('student.allProjectsAvailable', ['student' => auth()->user()->id]) }}?is_skills_track">
+                                    Available Projects
+                                </a>
+                            </h1>
+                        @endif
                     </div>
 
                     <div class="mt-12 min-h-[500px]">
                         @forelse($enrolled_projects as $enrolled_project)
                             @if ($enrolled_project->project)
-                                <div
-                                    class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
+                                <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
                                     <div class="flex space-x-2">
                                         <div class=" my-auto border border-light-blue rounded-xl py-4 px-2 mr-2 relative">
                                             @if ($enrolled_project->is_submited == 0)
@@ -35,9 +44,12 @@
                                                     <span class="ml-2">Completed</span>
                                                 </div>
                                             @endif
-                                            {{-- @dd($enrolled_project) --}}
-                                            <img src="{{ asset('storage/' . $enrolled_project->project->company->logo) }}"
-                                                class="w-16 h-9 object-scale-down  mx-auto " alt="">
+                                            <img
+                                                src="{{ $enrolled_project->project->company->logo ? asset('storage/' . $enrolled_project->project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                                                onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
+                                                alt="Logo"
+                                                class="w-16 h-9 object-scale-down mx-auto"
+                                            >
                                         </div>
                                         <div class="flex-col">
                                             <p class="text-darker-blue font-bold text-sm">
@@ -71,12 +83,14 @@
                                         </p>
 
                                         <div class="flex items-center gap-4">
-                                            <a
-                                                href="{{ route('participant.projects.create') }}"
-                                                class="text-primary text-sm font-normal bg-white border border-primary px-12 py-2 rounded-full"
-                                            >
-                                                Edit Project
-                                            </a>
+                                            @if (!isSkillsTrack())
+                                                <a
+                                                    href="{{ route('participant.projects.create') }}"
+                                                    class="text-primary text-sm font-normal bg-white border border-primary px-12 py-2 rounded-full"
+                                                >
+                                                    Edit Project
+                                                </a>
+                                            @endif
 
                                             <a
                                                 href="/profile/{{ Auth::guard('student')->user()->id }}/enrolled/{{ $enrolled_project->project->id }}/detail"
@@ -89,29 +103,36 @@
                                 </div>
                             @endif
                         @empty
-                            <div class="min-h-[154px] p-3 relative bg-white border border-grey rounded-xl">
-                                <div class="absolute inset-0 bg-white rounded-xl opacity-50"></div>
+                            @if (isSkillsTrack())
+                                <p class="w-[548px] mx-auto text-center text-darker-blue text-2xl">
+                                    Get started with Intel Mentorhip program.<br>
+                                    You need to enroll in 1 <span class="font-medium">projects</span> for your internship.
+                                </p>
+                            @else
+                                <div class="min-h-[154px] p-3 relative bg-white border border-grey rounded-xl">
+                                    <div class="absolute inset-0 bg-white rounded-xl opacity-50"></div>
 
-                                <a href="{{ route('participant.projects.create') }}" class="absolute inset-0 flex justify-center items-center">
-                                    <i class="fas fa-plus fa-10x text-primary"></i>
-                                </a>
+                                    <a href="{{ route('participant.projects.create') }}" class="absolute inset-0 flex justify-center items-center">
+                                        <i class="fas fa-plus fa-10x text-primary"></i>
+                                    </a>
 
-                                <div class="flex gap-2 items-end">
-                                    <div class="h-16 w-16 border border-grey rounded-lg bg-gradient-to-r from-gray-400 to-gray-100"></div>
+                                    <div class="flex gap-2 items-end">
+                                        <div class="h-16 w-16 border border-grey rounded-lg bg-gradient-to-r from-gray-400 to-gray-100"></div>
 
-                                    <div class="flex flex-col gap-2 w-full">
-                                        <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
-                                        <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
+                                        <div class="flex flex-col gap-2 w-full">
+                                            <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
+                                            <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
+                                    <div class="mt-1 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
+
+                                    <div class="w-max ml-auto text-white text-sm font-normal bg-primary px-8 py-1 rounded-full">
+                                        View Project
                                     </div>
                                 </div>
-
-                                <div class="mt-2 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
-                                <div class="mt-1 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
-
-                                <div class="w-max ml-auto text-white text-sm font-normal bg-primary px-8 py-1 rounded-full">
-                                    View Project
-                                </div>
-                            </div>
+                            @endif
                         @endforelse
                     </div>
                 </div>

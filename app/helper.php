@@ -40,11 +40,11 @@ if (!function_exists('decData')) {
 
 if(!function_exists('isLoggedIn')){
     function isLoggedIn() {
-        return Auth::guard('student')->check() || 
-               Auth::guard('web')->check() || 
-               Auth::guard('mentor')->check() || 
+        return Auth::guard('student')->check() ||
+               Auth::guard('web')->check() ||
+               Auth::guard('mentor')->check() ||
                Auth::guard('customer')->check();
-    }    
+    }
 }
 
 if (!function_exists('emailUserAuth')) {
@@ -287,5 +287,12 @@ if(!function_exists('commentPerSection')){
             ->get();
         }
         return $comments;
+    }
+}
+
+if (!function_exists('isSkillsTrack')) {
+    function isSkillsTrack()
+    {
+        return request()->query->has('is_skills_track');
     }
 }

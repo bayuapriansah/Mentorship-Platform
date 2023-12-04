@@ -67,11 +67,23 @@
 
   <div class="flex flex-col mt-8 ">
     <div class="mx-auto">
-      <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('/assets/img/profile-placeholder.png') }}" class="w-[100px] h-[100px] rounded-full  mx-auto object-cover ring ring-[#C5CAF3]"  alt="Avatar">
-      <p class="mt-4 text-dark-blue font-normal text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
-      <p class="text-black font-normal text-sm text-center">{{$student->year_of_study}} Year, {{$student->study_program}} </p>
-      {{-- <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo"> --}}
-      <img src="{{ asset('/assets/img/institution-placeholder.png') }}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo">
+      <img
+          src="{{ $student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('/assets/img/profile-placeholder.png') }}"
+          onerror="this.src = `{{ asset('/assets/img/profile-placeholder.png') }}`"
+          alt="Avatar"
+          class="w-[100px] h-[100px] rounded-full  mx-auto object-cover ring ring-[#C5CAF3]"
+      >
+      <p class="mt-4 text-darker-blue text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
+      <p class="mt-2 text-black text-sm text-center">{{$student->year_of_study}} Year, B.Tech in<br> {{$student->study_program}} </p>
+      <div class="w-12 h-12 mt-2 mx-auto bg-white rounded-full flex justify-center items-center">
+          <img
+              src="{{ $student->institution->logo ? asset('storage/'.$student->institution->logo) : asset('/assets/img/institution-placeholder.png') }}"
+              onerror="this.src = `{{ asset('/assets/img/institution-placeholder.png') }}`"
+              alt="Logo"
+              class="w-3/4 h-3/4 object-scale-down"
+          >
+      </div>
+      {{-- <img src="{{ asset('/assets/img/institution-placeholder.png') }}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo"> --}}
       <p class="mt-2 text-darker-blue font-medium text-sm text-center">{{$student->institution->name}}</p>
       <p class="mt-2 text-black font-normal text-sm text-center">Mentorship Status :
 
@@ -100,21 +112,27 @@
       <p class="mt-2 text-center text-sm text-[#2C2C2C]">
         Mentorship Type :
         <span class="font-medium text-darker-blue">
-            Entrepreneur Track
+            @if (isSkillsTrack())
+                Skills Track
+            @else
+                Entrepreneur Track
+            @endif
         </span>
       </p>
     </div>
   </div>
 
-  <div class="mt-4 flex flex-col justify-center text-center text-sm">
-    <p class="text-[#2C2C2C]">
-        Team Members:
-    </p>
+  @if (!isSkillsTrack())
+    <div class="mt-4 flex flex-col justify-center text-center text-sm">
+        <p class="text-[#2C2C2C]">
+            Team Members:
+        </p>
 
-    <p class="font-medium text-darker-blue">Ady</p>
-    <p class="font-medium text-darker-blue">Bayu</p>
-    <p class="font-medium text-darker-blue">Kevin</p>
-  </div>
+        <p class="font-medium text-darker-blue">Ady</p>
+        <p class="font-medium text-darker-blue">Bayu</p>
+        <p class="font-medium text-darker-blue">Kevin</p>
+    </div>
+  @endif
 
   <div class="flex">
     {{-- <div>

@@ -31,8 +31,14 @@
             style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.084px -8.927px / 100.073% 126.737% no-repeat;"
         ></div>
 
-        <div class="w-[30px] h-[30px] absolute top-[43px] right-[120px] bg-[#DEAA51] rounded-lg"></div>
-        <img src="{{ asset('storage/'.$task->project->company->logo) }}" alt="Logo" class="absolute top-[55px] right-[75px] w-16 h-16 object-cover bg-slate-200 rounded-xl text-black text-center">
+        <div class="w-[30px] h-[30px] absolute top-[43px] right-[120px] bg-[#FF8F51] rounded-lg"></div>
+
+        <img
+            src="{{ $task->project->company->logo ? asset('storage/'.$task->project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+            onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
+            alt="Logo"
+            class="absolute top-[55px] right-[75px] w-16 h-16 object-cover bg-white border border-grey rounded-xl text-black text-center"
+        >
 
         <p class="absolute -bottom-12 right-[75px] mt-2 flex gap-2 items-center font-medium text-[#6672D3] text-xs">
             <span class="w-[10px] h-[10px] bg-[#6672D3] rounded-full"></span>
@@ -48,7 +54,7 @@
 
     {{-- Task Description --}}
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-3">
-        <div class="col-span-9 problem text-justify">
+        <div class="col-span-9 problem text-justify text-black font-normal">
             {!!$task->description!!}
         </div>
     </div>
@@ -94,7 +100,7 @@
       </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-10  my-auto">
-        <h1 class="font-medium text-darker-blue text-[1.4rem] mb-2">Discussion / Messages</h1>
+        <h1 class="font-medium text-darker-blue text-[1.4rem] mb-2">Messages</h1>
         @if ($comments->count())
         <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
           @php $no=1;  @endphp

@@ -33,10 +33,15 @@
             style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.084px -8.927px / 100.073% 126.737% no-repeat;"
         ></div>
 
-        <div class="w-[30px] h-[30px] absolute top-[45px] right-[110px] bg-[#DEAA51] rounded-lg"></div>
+        <div class="w-[30px] h-[30px] absolute top-[45px] right-[110px] bg-[#FF8F51] rounded-lg"></div>
 
         <div class="absolute top-14 right-16 flex flex-col items-end">
-            <img src="{{ asset('storage/' . $project->company->logo) }}" alt="Logo" class="w-16 h-16 object-cover bg-slate-200 rounded-xl text-black text-center">
+            <img
+                src="{{ $project->company->logo ? asset('storage/' . $project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
+                alt="Logo"
+                class="w-16 h-16 object-cover bg-white border border-grey rounded-xl text-black text-center"
+            >
 
             @if ($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->where('is_submited', 1)->first())
                 <p class="mt-[1.4rem] text-sm text-right">
@@ -89,7 +94,7 @@
             Project Details
         </h1>
 
-        <div class="w-[545px] mt-4 text-sm text-justify problem">
+        <div class="problem w-[545px] mt-4 text-sm text-justify text-black font-normal">
             {!! $project->problem !!}
         </div>
 
