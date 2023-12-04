@@ -219,7 +219,7 @@
                 <div class="px-6 pt-6 pb-4">
                     <p class="text-base leading-relaxed text-gray-500 ">
                       <div class="pb-20">
-                        <h1 class="text-darker-blue font-medium text-[22px] mb-5">Upload Assignments </h1>
+                        <h1 class="text-darker-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
                         @if($submissionData == null)
                           <form action="{{ route('student.taskSubmit',[$student->id,$task->project->id,$task->id,$submissionId->id]) }}" method="POST" enctype="multipart/form-data">
                         @else
