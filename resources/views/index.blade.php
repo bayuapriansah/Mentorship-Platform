@@ -210,7 +210,7 @@
     </div>
 
     {{-- Mentorship Timeline --}}
-    <div class="relative max-w-screen-xl mt-48 mb-[9.25rem] mx-auto px-6 pb-20 flex flex-col items-center gap-14">
+    <div class="relative max-w-screen-xl mt-48 mb-[9.25rem] mx-auto px-6 pb-20 flex flex-col items-center gap-[4.25rem]">
         <h1 class="text-3xl text-center text-darker-blue font-bold">
             Mentorship Timeline
         </h1>
@@ -218,7 +218,7 @@
         <img
             src="{{ asset('/assets/img/home/mentorship-timeline.png') }}"
             alt="Mentorship Timeline"
-            class="w-[786px] relative z-[2]"
+            class="w-[1066px] relative z-[2]"
         >
 
         <div class="hidden tab:block absolute -bottom-[35%] -left-[30%] w-[621px] h-[621px] blue-shadow"></div>
