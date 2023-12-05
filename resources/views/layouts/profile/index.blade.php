@@ -140,8 +140,8 @@
                 </li>
 
                 <li class="text-black font-light text-sm">
-                    <a href="{{ route('projects.index') }}">
-                        Available Project(s)
+                    <a href="#">
+                        Internal Document
                     </a>
                 </li>
 
