@@ -88,7 +88,7 @@
         <div class="relative w-full grid grid-cols-4 tab:items-center">
             <div class="absolute -top-5 left-4 w-11 h-11 bg-secondary-cr2 rounded-lg"></div>
 
-            <a href="#" class="col-span-4 tab:col-span-2">
+            <a href="{{ route('track-info.skills-track') }}" class="col-span-4 tab:col-span-2">
                 <img
                     src="{{ asset('/assets/img/home/skills-track-illustration.jpg') }}"
                     alt="Skills Track"
@@ -97,7 +97,7 @@
             </a>
 
             <div class="col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:ml-8 flex flex-col gap-2">
-                <a href="#" class="font-bold text-darker-blue text-2xl hover:underline">
+                <a href="{{ route('track-info.skills-track') }}" class="font-bold text-darker-blue text-2xl hover:underline">
                     Skills Track Information
                 </a>
 
@@ -111,7 +111,7 @@
             <div class="absolute -top-5 tab:top-[initial] left-4 tab:left-[initial] tab:-bottom-5 tab:right-12 w-11 h-11 bg-secondary-cr2 rounded-lg"></div>
 
             <div class="hidden tab:flex col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl tab:text-[1.4rem] text-darker-blue hover:underline">
+                <a href="{{ route('track-info.entrepreneur-track') }}" class="font-bold text-2xl tab:text-[1.4rem] text-darker-blue hover:underline">
                     Entrepreneur Track Information
                 </a>
 
@@ -120,7 +120,7 @@
                 </p>
             </div>
 
-            <a href="#" class="col-span-4 tab:col-span-2">
+            <a href="{{ route('track-info.entrepreneur-track') }}" class="col-span-4 tab:col-span-2">
                 <img
                     src="{{ asset('/assets/img/home/entrepreneur-track-illustration.jpg') }}"
                     alt="Project Track"
@@ -130,7 +130,7 @@
 
 
             <div class="flex tab:hidden col-span-4 tab:col-span-2 mt-8 tab:mt-0 tab:mr-10 flex-col gap-2">
-                <a href="#" class="font-bold text-2xl text-darker-blue hover:underline">
+                <a href="{{ route('track-info.entrepreneur-track') }}" class="font-bold text-2xl text-darker-blue hover:underline">
                     Entrepreneur Track Information
                 </a>
 

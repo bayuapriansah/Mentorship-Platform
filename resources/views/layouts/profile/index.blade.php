@@ -522,14 +522,14 @@
 
                             <ul class="mt-4 flex flex-col gap-2">
                                 <li>
-                                    <a href="#" class="text-sm font-normal hover:underline">
+                                    <a href="{{ route('track-info.entrepreneur-track') }}" class="text-sm font-normal hover:underline">
                                         Entrepreneur Track
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" class="text-sm font-normal hover:underline">
-                                        Skill Track
+                                    <a href="{{ route('track-info.skills-track') }}" class="text-sm font-normal hover:underline">
+                                        Skills Track
                                     </a>
                                 </li>
                             </ul>

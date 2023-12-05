@@ -82,6 +82,8 @@ Route::get('/adminpage', function () {
 //     return view('index');
 // })->name('index');
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::view('/track-info/skills-track', 'skills-track-info')->name('track-info.skills-track');
+Route::view('/track-info/entrepreneur-track', 'entrepreneur-track-info')->name('track-info.entrepreneur-track');
 // for debugging temp
 // Route::get('/ccc/{student}/{project}', [ProjectController::class, 'appliedDetail'])->name('ccc');
 // Route::get('/viewbulk', [EmailBulkInvitationController::class, 'index'])->name('view.bulk.email');
