@@ -16,7 +16,7 @@
                             </a>
                         </h1>
 
-                        @if (isSkillsTrack())
+                        @if (isSkillsTrack() && !DB::table('enrolled_projects')->where('student_id', auth()->user()->id)->exists())
                             <h1 class="w-max py-2 text-grey text-xl">
                                 <a href="{{ route('student.allProjectsAvailable', ['student' => auth()->user()->id]) }}?is_skills_track">
                                     Available Projects
