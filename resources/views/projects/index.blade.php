@@ -1,117 +1,89 @@
 @extends('layouts.index')
 @section('content')
+{{-- Hero Banner --}}
+<div class="h-[539px] bg-black bg-cover bg-center" style="background-image: url({{ asset('/assets/img/main/background-1.svg') }})">
+    <div class="max-w-screen-xl mx-auto pl-8 pr-28 py-12 flex justify-between">
+        <div class="w-[442px] my-auto flex flex-col gap-4">
+            <h1 class="text-[#FF8F51] text-3xl font-bold">
+                View Projects
+            </h1>
 
-<section id="project" class="w-full">
-    {{-- Body Contents --}}
-    <div class="max-w-full bg-darker-blue">
-        <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20 bg-darker-blue">
-            <div class="grid md:grid-cols-2 gap-4 items-center">
-                <div class="my-auto">
-                    <h2 class="intelOne text-white font-bold text-3xl leading-11 py-4">
-                        <span>Internship <span class="text-light-brown">Projects</span>
-                    </h2>
-                    <span class="intelOne text-white py-6 font-light text-lg leading-6">Take a look at the active projects being offered by our industry partners</span>
-                </div>
-                <div class="relative my-auto">
-                    <img src="{{asset('assets/img/internship-projects.png')}}" class="relative z-40" alt="">
-                    <img src="{{ asset('assets/img/dots-1.png') }}" alt="dots"
-                        class="absolute z-0 top-1/4 -translate-y-2/4 right-7 " aria-hidden="true">
-                    <img src="{{ asset('assets/img/dots-2.png') }}" alt="dots"
-                        class="absolute z-10 top-2/4 -translate-y-1/4 left-7 " aria-hidden="true">
-                </div>
-            </div>
+            <p class="text-white text-lg font-light">
+                Take a look at the projects available for the skills track of the mentorship program.
+            </p>
         </div>
+
+        <img
+            src="{{ asset('/assets/img/main/DBanner.png') }}"
+            alt="Illustration"
+            class="w-[453px]"
+        >
     </div>
+</div>
 
-    {{-- Body Content 2 --}}
-    <div class="max-w-screen-xl mx-auto px-6 py-4 pt-20" id="AiForFuture">
-      <div class="grid md:grid-cols-4 gap-4 items-start">
-        <div class="relative col-span-3">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="m-0 text-2xl text-dark-blue font-semibold text-justify justify-start">Internship Projects</h2>
-                <div class="flex space-x-4">
-                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-project-button-prev">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="h-6 w-6 text-dark-blue">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <button class="bg-white border-2 border-dark-blue rounded-full p-2" id="swiper-project-button-next">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="h-6 w-6 text-dark-blue">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+{{-- Project List --}}
+<div class="relative overflow-y-clip">
+    <div class="max-w-screen-xl mx-auto px-6 py-[4.4rem]">
+        <h1 class="text-center text-3xl text-darker-blue font-bold">
+            Skills Track
+        </h1>
 
-            <div class="swiper-project-container">
-                <div class="swiper-wrapper">
-                    @foreach($projects as $project)
-                        <!-- Slide -->
-                        <div class="swiper-slide">
-                            <div
-                                class="block p-5 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-3xl h-[250px] overflow-hidden">
-                                <div class="flex space-x-2">
-                                    <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
-                                        <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
-                                    </div>
-                                    <div class="flex-col">
-                                        <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">{{$project->name}}</p>
-                                        <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">{{$project->company->name}}</p>
-                                        <div class="pt-2">
-                                            <p
-                                            class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
-                                            {{ $project->project_domain == 'statistical' ? 'Statistical Data' : ($project->project_domain == 'computer_vision' ? 'Computer Vision' : 'NLP') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-grey font-normal text-base mb-2 pt-3 overflow-ellipsis overflow-hidden">
-                                    {{ $project->overview }}</div>
-                                <div class="flex justify-between">
-                                    <p class="intelOne text-black text-sm font-normal my-auto">Duration: <span
-                                      class="font-medium">{{ $project->period }} {{ strtolower($project->name) == "onboarding week" ? 'Week' : ($project->period > 1 ? 'Months' : 'Month') }}</span></p>
-                                    <a href="{{ isLoggedIn() ? route('projects.show', ['project' => $project->id]) : route('multiLogIn') }}"
-                                        class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-3 py-2 rounded-full ">View
-                                        Project</a>
-                                </div>
+        <div class="mt-8 flex flex-col items-center gap-12">
+            @foreach ($projects as $project)
+                {{-- Project Card --}}
+                <div class="relative z-[2] w-[730px] min-h-[251px] px-7 pt-9 pb-6 bg-white border border-grey rounded-xl">
+                    {{-- Name and Logo --}}
+                    <div class="flex items-center gap-3">
+                        <img
+                            src="{{ $project->company->logo ? asset('storage/' . $project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                            onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
+                            alt="Logo"
+                            class="w-20 h-20 bg-white border border-grey rounded-xl object-scale-down"
+                        >
+
+                        <div class="flex flex-col gap-2">
+                            <h6 class="text-lg text-darker-blue font-bold">
+                                {{ $project->name }}
+                            </h6>
+
+                            <div class="min-w-[136px] py-1 px-2 bg-[#E4E7FF] rounded-full flex justify-center items-center text-xs text-[#010101]">
+                                @if ($project->project_domain === 'statistical')
+                                    Machine Learning
+                                @elseif ($project->project_domain === 'computer_vision')
+                                    Computer Vision
+                                @else
+                                    NLP
+                                @endif
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+
+                    {{-- Overview --}}
+                    <p class="mt-3 text-sm text-justify">
+                        {{ $project->overview }}
+                    </p>
+
+                    {{-- Duration and CTA --}}
+                    <div class="mt-3 flex justify-between items-center">
+                        <p class="text-sm">
+                            Duration
+                            <span class="font-medium">10 Weeks</span>
+                        </p>
+
+                        <a href="{{ route('projects.show', ['project' => $project->id]) }}" class="w-[140.63px] h-[38.03px] flex justify-center items-center bg-primary rounded-full text-sm text-white">
+                            View Project
+                        </a>
+                    </div>
                 </div>
-            </div>
+            @endforeach
+        </div>
 
-          </div>
-          <div class="relative">
-            <div class="relative z-30 rounded-lg overflow-hidden" style="padding-bottom: 56.25%">
-              <iframe class="absolute inset-0 w-full h-full py-4" src="https://www.youtube.com/embed/aZLE-c7I7uk"
-              title="YouTube video player" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-              allowfullscreen></iframe>
-            </div>
-            <h1 class="m-0 font-bold text-xl text-justify justify-start">Quick start video to get you going</h1>
-            <p class="text-grey font-normal text-sm text-justify py-4">Facilitate your internship experience with this quick-start video - a step-by-step guide to give you a jumpstart! The video includes essential information about what to expect during the internship, how to navigate the platform, and success tips to make the most of the opportunity.</p>
-            <div class="relative z-30 rounded-lg overflow-hidden py-6">
-              <img src="{{asset('assets/img/image19.png')}}" class="w-full h-full" alt="">
-            </div>
-            <h1 class="m-0 font-bold text-xl text-justify justify-start">About intel digital readliness</h1>
-            <p class="text-grey font-normal text-sm text-justify py-4">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
-          </div>
-      </div>
     </div>
-</section>
 
+    {{-- Wave Effect --}}
+    <div
+        class="absolute -bottom-[15%] left-1/2 -translate-x-1/2 w-[1558px] h-[645.315px] bg-center bg-cover bg-no-repeat"
+        style="background-image: url({{ asset('/assets/img/purple-wave.svg') }})"
+    ></div>
+</div>
 @endsection
-{{-- @section('more-js')
-<script>
-  var swiper = new Swiper('.swiper-project-container', {
-      direction: 'vertical',
-      slidesPerView: 'auto',
-      spaceBetween: 10,
-      navigation: {
-      nextEl: '#swiper-button-next',
-      prevEl: '#swiper-button-prev',
-    },
-  });
-</script>
-@endsection --}}

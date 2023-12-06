@@ -36,11 +36,11 @@
                     Home
                 </a>
 
-                <a href="#" class="text-[#080808] text-sm hover:text-primary">
+                <a href="{{ route('track-info.skills-track') }}" class="text-[#080808] text-sm hover:text-primary">
                     Skills Track Info
                 </a>
 
-                <a href="#" class="text-[#080808] text-sm hover:text-primary">
+                <a href="{{ route('track-info.entrepreneur-track') }}" class="text-[#080808] text-sm hover:text-primary">
                     Entrepreneur Track Info
                 </a>
             </div>
@@ -181,14 +181,14 @@
 
                             <ul class="mt-4 flex flex-col gap-2">
                                 <li>
-                                    <a href="#" class="text-sm font-normal hover:underline">
+                                    <a href="{{ route('track-info.entrepreneur-track') }}" class="text-sm font-normal hover:underline">
                                         Entrepreneur Track
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" class="text-sm font-normal hover:underline">
-                                        Skill Track
+                                    <a href="{{ route('track-info.skills-track') }}" class="text-sm font-normal hover:underline">
+                                        Skills Track
                                     </a>
                                 </li>
                             </ul>
