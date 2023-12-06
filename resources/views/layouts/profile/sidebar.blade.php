@@ -1,4 +1,4 @@
-<aside class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-5">
+<aside class="w-full bg-[#FAFAFA] absolute z-[10] -top-5 rounded-xl border border-grey p-5">
   <div class="grid grid-cols-12 gap-2 grid-flow-col">
     <div class="col-span-2">
       <button type="button" data-modal-target="notification-modal" data-modal-toggle="notification-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
@@ -67,12 +67,25 @@
 
   <div class="flex flex-col mt-8 ">
     <div class="mx-auto">
-      <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('assets/img/placeholder_pp.png') }}" class="w-[100px] h-[100px] rounded-full  mx-auto object-cover"  alt="message">
-      <p class="text-dark-blue font-normal text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
-      <p class="text-black font-normal text-sm text-center">{{$student->year_of_study}} Year, {{$student->study_program}} </p>
-      <img src="{{asset('storage/'.$student->institution->logo)}}" class="h-[53px] w-[53px] mx-auto object-scale-down" alt="">
-      <p class="text-dark-blue font-bold text-sm text-center ">{{$student->institution->name}}</p>
-      <p class="text-black font-normal text-sm text-center">Internship Status:
+      <img
+          src="{{ $student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('/assets/img/profile-placeholder.png') }}"
+          onerror="this.src = `{{ asset('/assets/img/profile-placeholder.png') }}`"
+          alt="Avatar"
+          class="w-[100px] h-[100px] rounded-full  mx-auto object-cover ring ring-[#C5CAF3]"
+      >
+      <p class="mt-4 text-darker-blue text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
+      <p class="mt-2 text-black text-sm text-center">{{$student->year_of_study}} Year, B.Tech in<br> {{$student->study_program}} </p>
+      <div class="w-12 h-12 mt-2 mx-auto bg-white rounded-full flex justify-center items-center">
+          <img
+              src="{{ $student->institution->logo ? asset('storage/'.$student->institution->logo) : asset('/assets/img/institution-placeholder.png') }}"
+              onerror="this.src = `{{ asset('/assets/img/institution-placeholder.png') }}`"
+              alt="Logo"
+              class="w-3/4 h-3/4 object-scale-down"
+          >
+      </div>
+      {{-- <img src="{{ asset('/assets/img/institution-placeholder.png') }}" class="h-[53px] w-[53px] mt-2 mx-auto object-scale-down border rounded-full" alt="Logo"> --}}
+      <p class="mt-2 text-darker-blue font-medium text-sm text-center">{{$student->institution->name}}</p>
+      <p class="mt-2 text-black font-normal text-sm text-center">Mentorship Status :
 
         @php
           $totalMonth = $completed_months->map(function ($item) {
@@ -95,9 +108,33 @@
         <span class="text-[#F8AC2A]">Ongoing</span>
         @endif  --}}
       </p>
+
+      <p class="mt-2 text-center text-sm text-[#2C2C2C]">
+        Mentorship Type :
+        <span class="font-medium text-darker-blue">
+            @if (isSkillsTrack())
+                Skills Track
+            @else
+                Entrepreneur Track
+            @endif
+        </span>
+      </p>
     </div>
   </div>
-  <div class="flex  mt-8 ">
+
+  @if (!isSkillsTrack())
+    <div class="mt-4 flex flex-col justify-center text-center text-sm">
+        <p class="text-[#2C2C2C]">
+            Team Members:
+        </p>
+
+        <p class="font-medium text-darker-blue">Ady</p>
+        <p class="font-medium text-darker-blue">Bayu</p>
+        <p class="font-medium text-darker-blue">Kevin</p>
+    </div>
+  @endif
+
+  <div class="flex">
     {{-- <div>
       <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',0)->count()}}</p>
       <p class="text-light-black text-sm font-normal">Projects Enrolled</p>
@@ -106,8 +143,8 @@
   @php
    $start_date  = \Carbon\Carbon::parse($student->created_at)->format('d M Y');
   @endphp
-      <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
-      <p class="text-light-black text-sm font-normal">Projects Completed</p>
+      {{-- <p class="text-center text-dark-blue font-bold text-lg p-2 border-2 border-light-blue w-12 py-auto mx-auto object-fit rounded-full">{{$enrolled_projects->where('is_submited',1)->count()}}</p>
+      <p class="text-light-black text-sm font-normal">Projects Completed</p> --}}
     </div>
   </div>
   <div class="mx-auto border border-light-blue rounded-xl mt-7 text-center p-3">
@@ -198,7 +235,7 @@
     {{-- SECTION TO SHOW TASK PROGRESS --}}
     @else
     {{-- SECTION TO SHOW INTERNSHIP PROGRESS --}}
-    <p class="text-black text-xs font-normal">Internship Timeline</p>
+    <p class="text-black text-xs font-normal">Mentorship Timeline</p>
     {{-- <span>s</span> --}}
 
     <div class="flex justify-between">
@@ -238,7 +275,7 @@
         <p class="text-black text-xs">{{\Carbon\Carbon::parse($student->end_date)->format('d M Y')}}</p>
       @endif
     </div>
-    
+
     @if($student->is_confirm == 0)
       <p class="text-dark-blue text-[8px] font-normal">Internship Project has not yet started</p>
     @endif
@@ -250,7 +287,7 @@
     <div class="flex flex-col mt-8 ">
       @if($submissionData == null)
         @if (\Carbon\Carbon::now()->format('Y-m-d') <= $student->end_date)
-          <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Task Submission</button>
+          <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-primary rounded-full p-2 mx-auto w-3/4">Submit Task</button>
         @endif
       @else
         <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
@@ -324,7 +361,7 @@
         return $item['period'] ;
       });
     @endphp
-    
+
     {{-- @if($total = $totalMonth->sum()==5 && \Carbon\Carbon::now() >= $student->end_date) --}}
     @if($enrolled_projects->where('is_submited',1)->count()==5)
       @if($student->feedback_done == null)
@@ -350,7 +387,7 @@
                       <form class="space-y-6" action="{{ route('student.feedback', $student->id) }}" method="POST">
                         @csrf
                           <div>
-                              <label for="feedback" class="block mb-2 text-sm text-gray-900 dark:text-white">We would be grateful if you could take a moment to share your feedback or a testimonial about your time with us.</label>                        
+                              <label for="feedback" class="block mb-2 text-sm text-gray-900 dark:text-white">We would be grateful if you could take a moment to share your feedback or a testimonial about your time with us.</label>
                               <textarea id="feedback" name="feedback" rows="4" maxlength="1000" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
                               <span id="counter">0/1000</span>
                           </div>
@@ -359,7 +396,7 @@
                   </div>
                 </div>
             </div>
-        </div> 
+        </div>
       @elseif($student->feedback_done == 1)
         <p class="text-dark-blue font-medium text-sm text-center my-3">Congratulations!</p>
         <a href="/profile/{{Auth::guard('student')->user()->id}}/{{ $student->institution->id }}/certificate" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a>

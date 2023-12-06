@@ -1,64 +1,81 @@
 @extends('layouts.profile.index')
 @section('content')
 @include('flash-message')
-<div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col items-center pb-36 min-h-[500px]">
+<div class="max-w-[1366px] mx-auto px-16 pt-4 pb-40 grid grid-cols-12 gap-8 grid-flow-col items-center min-h-[500px] bg-white">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">
       <div class="col-span-8 my-auto">
-        <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$task->project->id}}/detail" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue"><i class="fa-solid fa-arrow-left pr-2"></i>back</a>
+        <a href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$task->project->id}}/detail" class="text-darker-blue text-sm hover:underline">
+            < Go Back
+        </a>
 
-        <h2 class="text-dark-blue text-2xl font-medium mt-4 mb-3">{{$task->project->name}}</h2>
-        <span class="intelOne text-dark-blue text-sm font-normal bg-lightest-blue capitalize px-10 py-2 rounded-full relative z-30 ">
+        {{-- Project Name --}}
+        <h1 class="mt-6 font-medium text-darker-blue text-2xl">
+            {{ $task->project->name }}
+        </h1>
+
+        {{-- Domain --}}
+        <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-primary border border-primary rounded-full flex justify-center text-white">
             @if ($project->project_domain == 'statistical')
-              Statistical Data
+                Machine Learning
             @elseif($project->project_domain == 'computer_vision')
-              Computer Vision
+                Computer Vision
             @else
-              NLP
+                NLP
             @endif
-        </span>
-      </div>
-      <div class="col-span-4 relative">
-        <img src="{{asset('assets/img/icon/profile/dots.png')}}" class="absolute z-10 right-0 -top-3 ">
-        <div class=" my-auto border-[1px] border-light-blue bg-white rounded-xl px-2 py-4 absolute z-30 right-10 top-10 ">
-          <img src="{{asset('storage/'.$task->project->company->logo)}}" class="w-16 h-9 object-scale-down mx-auto " alt="">
         </div>
       </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 grid-flow-col mt-14">
-      <div class="col-span-7 relative my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium">Task {{$task->section}} : {{$task->title}}</h1>
+      <div class="col-span-4 relative -right-12">
+        <div
+            class="w-[233px] h-[100px] absolute top-0 right-2"
+            style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.084px -8.927px / 100.073% 126.737% no-repeat;"
+        ></div>
+
+        <div class="w-[30px] h-[30px] absolute top-[43px] right-[120px] bg-[#FF8F51] rounded-lg"></div>
+
+        <img
+            src="{{ $task->project->company->logo ? asset('storage/'.$task->project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+            onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
+            alt="Logo"
+            class="absolute top-[55px] right-[75px] w-16 h-16 object-cover bg-white border border-grey rounded-xl text-black text-center"
+        >
+
+        <p class="absolute -bottom-12 right-[75px] mt-2 flex gap-2 items-center font-medium text-[#6672D3] text-xs">
+            <span class="w-[10px] h-[10px] bg-[#6672D3] rounded-full"></span>
+            In Progress
+        </p>
       </div>
-      {{-- <div class="col-start-10 col-span-3">
-          <span class="intelOne text-black text-sm font-normal">due date</span>
-      </div> --}}
     </div>
+
+    {{-- Task Title --}}
+    <h2 class="w-[545px] mt-6 font-medium text-[1.4rem]">
+        Task {{$task->section}} : {{$task->title}}
+    </h2>
+
+    {{-- Task Description --}}
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-3">
-      <div class="col-span-9 problem text-justify">
-        {!!$task->description!!}
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 grid-flow-col mt-2">
-      <div class="col-span-7 relative my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium">Attachment</h1>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 grid-flow-col mb-3">
-      <div class="col-span-9">
-        @forelse($task->sectionSubsections as $subsection)
-        <div class="border border-dark-blue bg-white px-7 py-4 rounded-xl mb-2 font-medium ">
-          <a href="{{asset('storage/'.$subsection->file1)}}" class="flex justify-between items-center" download>
-            <div class=" flex ">
-              <img src="{{asset("assets/img/icon/Vector.png")}}" alt="" class="pr-8">
-              {{$subsection->title}} {{substr($subsection->file1, strpos($subsection->file1, '.'))}}
-            </div>
-            <img src="{{asset('assets/img/icon/download.png')}}" alt="">
-          </a>
+        <div class="col-span-9 problem text-justify text-black font-normal">
+            {!!$task->description!!}
         </div>
+    </div>
+
+    {{-- Attachments --}}
+    <h1 class="mt-10 font-medium text-darker-blue text-[1.4rem]">
+        Attachments
+    </h1>
+
+    <div class="mt-4 flex flex-col gap-3">
+        @forelse($task->sectionSubsections as $subsection)
+            <a href="{{ asset('storage/'.$subsection->file1) }}" class="w-[545px] py-5 pl-6 pr-7 border border-grey rounded-xl flex items-center">
+                <i class="fas fa-file-alt fa-lg"></i>
+                <p class="pl-7 text-sm">
+                    {{$subsection->title}} {{substr($subsection->file1, strpos($subsection->file1, '.'))}}
+                </p>
+                <i class="fas fa-download fa-lg ml-auto"></i>
+            </a>
         @empty
           No Attachment
         @endforelse
-      </div>
     </div>
 
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-2">
@@ -66,24 +83,24 @@
           @if ($project->dataset)
               @php
                   $datasets_array = explode(';', $project->dataset);
-                  $no = 1;
               @endphp
               <div class="mb-6">
-                  <h1 class="text-dark-blue text-[22px] font-medium mb-1">Dataset</h1>
-                  @foreach ($datasets_array as $dataset_array)
-                      <a href="{{ $dataset_array }}"
-                          class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2"
-                          target="_blank">Dataset {{ $no }} <i
-                              class="fa-solid fa-chevron-right"></i></a>
-                      @php $no++ @endphp
-                  @endforeach
+                    <h1 class="mt-8 font-medium text-darker-blue text-[1.4rem]">Dataset</h1>
+                    <div class="mt-4 flex flex-wrap gap-5">
+                        @foreach ($datasets_array as $dataset_array)
+                            <a href="{{ $dataset_array }}" class="w-[172px] h-[37px] px-3 py-1 bg-primary rounded-lg flex justify-between items-center font-medium text-white">
+                                <span>URL {{ $loop->iteration }}</span>
+                                <span>></span>
+                            </a>
+                        @endforeach
+                    </div>
               </div>
           @endif
       </div>
       </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-10  my-auto">
-        <h1 class="text-dark-blue text-[22px] font-medium  mb-2">Discussion</h1>
+        <h1 class="font-medium text-darker-blue text-[1.4rem] mb-2">Messages</h1>
         @if ($comments->count())
         <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
           @php $no=1;  @endphp
@@ -106,7 +123,7 @@
                     </span><br>
                     <span class="font-light receiver text-xs">
                       @if($comment->mentor_id == null && $comment->user_id == null && $comment->companies_id == null)
-                        to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}}(Supervisor), {{$comment->student->staff->first_name}}  {{$comment->student->staff->first_name}}(Customer), 
+                        to: {{$comment->student->mentor->first_name}} {{$comment->student->mentor->last_name}}(Supervisor), {{$comment->student->staff->first_name}}  {{$comment->student->staff->first_name}}(Customer),
                         @foreach ($admins as $admin)
                           <span class="font-light text-black">{{$admin->name}}(Admin); </span>
                         @endforeach
@@ -118,7 +135,7 @@
                     <span class="font-light message-top">{!!$mess = substr($comment->message,0,39)!!} {{strlen($mess)>38?'...':''}}</span>
                   </div>
                 </div>
-        
+
                 <div class="text-xs text-light-blue font-light">
                   {{$comment->created_at->format('d M Y')}}
                   <i class="fa-sharp fa-solid fa-reply"></i>
@@ -145,7 +162,7 @@
         @endif
         <div class="border border-light-blue p-6 rounded-xl bg-white space-y-2" id="message-form">
           <p class="border-b-2 text-dark-blue font-medium">
-            To: 
+            To:
             <span class="font-light text-black pl-4 capitalize">
               {{$student->mentor->first_name}} {{$student->mentor->last_name}} (Supervisor);
               @if ($student->staff_id)
@@ -153,7 +170,7 @@
               @endif
             </span>
           </p>
-          <p class="border-b-2 text-dark-blue font-medium capitalize">CC: 
+          <p class="border-b-2 text-dark-blue font-medium capitalize">CC:
             <span class="pl-3">
               @foreach ($admins as $admin)
                 <span class="font-light text-black">{{$admin->name}}(Admin); </span>
@@ -193,23 +210,16 @@
     </div>
     <!-- Modal toggle -->
     <!-- Main modal -->
-    <div id="staticModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-      
+    <div id="staticModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+
         <div class="relative w-full h-full max-w-2xl md:h-auto">
             <!-- Modal content -->
             <div class="relative border border-light-blue border-inherit shadow drop-shadow-2xl hover:drop-shadow-xl bg-white rounded-lg  ">
-                <!-- Modal header -->
-                <div class="flex items-start justify-between p-4  ">
-
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-hide="staticModal">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </button>
-                </div>
                 <!-- Modal body -->
-                <div class="px-6 py-2 ">
+                <div class="px-6 pt-6 pb-4">
                     <p class="text-base leading-relaxed text-gray-500 ">
                       <div class="pb-20">
-                        <h1 class="text-dark-blue font-medium text-[22px] mb-5">Upload Assignments </h1>
+                        <h1 class="text-darker-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
                         @if($submissionData == null)
                           <form action="{{ route('student.taskSubmit',[$student->id,$task->project->id,$task->id,$submissionId->id]) }}" method="POST" enctype="multipart/form-data">
                         @else
@@ -220,20 +230,20 @@
                           <div class="relative cursor-pointer " id="drop-area">
                           {{-- <div class="relative cursor-pointer " id="drop-area"> --}}
                             <div>
-                              <h1 class="text-dark-blue font-medium text-sm mb-1">File Link</h1>
-                                <input class="border border-light-blue rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 mb-2 focus:outline-none" type="text" placeholder="File Link" name="glablink">
+                              <h1 class="text-darker-blue font-medium mb-2">File Link</h1>
+                                <input class="border border-grey rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="File Link" name="glablink">
                                 <p class="text-sm text-red-600" id="link_error" style="display: none;">*Please enter a link from Google Docs, Google Drive, or Google Colab</p>
                             </div>
-                            <div>
-                              <h1 class="text-dark-blue font-medium text-sm mb-1">Additional Resources (Datasets, Reports, etc.)</h1>
-                              <input class="border border-light-blue rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Optional" name="dataset">
-                              <p class="text-xs text-dark-blue">*You can add more than one dataset by separating them with commas (,) </p><br>
+                            <div class="mt-4">
+                              <h1 class="text-darker-blue font-medium mb-2">Additional Resources (Datasets, Reports, etc.)</h1>
+                              <input class="border border-grey rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="Optional" name="dataset">
+                              <p class="mt-2 text-xs text-darker-blue">*You can add more than one dataset by separating them with commas (,) </p><br>
                               {{-- <input type="text" class="w-full px-4 py-6 text-sm border border-gray-300 rounded outline-none"  name="tags"  value="Alpine Js, Tailwind CSS, PHP8.0" autofocus/> --}}
                             </div>
-                            <a class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
-                            <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-8 py-3 mt-5 items-end rounded-full shadow-xl float-right" type="button" style="display: none;" id="cancel">Cancel</a>
-                            <button class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-8 py-3 mt-5 items-end rounded-full shadow-xl float-right" style="display: none;" id="submit"type="submit">Yes, Submit</button>
-                            <h1 id="text-confirm" class="intelOne text-dark-blue text-sm font-bold py-3 mt-5 items-end float-left cursor-text" style="display: none;">Are you sure you want to make the task submission?</h1>
+                            <a class="intelOne text-white text-sm font-normal bg-primary px-12 py-3 mt-5 items-end rounded-full float-right" type="button" style="display: block;" id="confirm">Confirm Submission</a>
+                            <a class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-6 py-2 mt-5 ml-1 items-end rounded-full float-right" type="button" style="display: none;" id="cancel">Cancel</a>
+                            <button class="intelOne text-white text-sm font-normal bg-primary px-6 py-2 mt-5 items-end rounded-full float-right" style="display: none;" id="submit"type="submit">Yes, Submit</button>
+                            <h1 id="text-confirm" class="intelOne text-darker-blue text-sm font-bold py-3 mt-5 items-end float-left cursor-text" style="display: none;">Are you sure you want to make the task submission?</h1>
                           </div>
                         </form>
                     </div>
@@ -407,12 +417,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         let url = linkInput.value.trim();
 
         // Remove www. if present
-        
+
         // Ensure the URL starts with either http:// or https://
         if (!url.match(/^https?:\/\//)) {
           url = 'https://' + url;
         }
-        
+
         // Move the www removal after ensuring the URL starts with http:// or https://
         url = url.replace(/^https?:\/\/www\./, 'https://');
 
