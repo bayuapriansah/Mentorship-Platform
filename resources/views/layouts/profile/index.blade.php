@@ -483,7 +483,7 @@
             </div>
         </div>
     </div>
-    <main class="bg-profile-grey ">
+    <main class="bg-white min-h-screen">
         @yield('content')
     </main>
 
