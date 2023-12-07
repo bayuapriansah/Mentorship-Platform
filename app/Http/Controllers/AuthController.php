@@ -240,7 +240,8 @@ class AuthController extends Controller
         ]);
         $action_link = route('showResetForm',['token'=>$token, 'email'=>$request->email]);
         $sendmail = (new MailController)->emailResetPassword($request->email,$action_link);
-        return back()->with('successTailwind',"We've send you password reset email");
+
+        return redirect()->back()->with('reset-password-link-sent', 'ok');
     }
 
     public function showResetForm(Request $request, $token=null)
