@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simulated Internship</title>
+    <title>
+        @yield('title', 'Mentorship Platform')
+    </title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icon/favicon.ico') }}">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
@@ -481,7 +483,7 @@
             </div>
         </div>
     </div>
-    <main class="bg-profile-grey ">
+    <main class="bg-white min-h-screen">
         @yield('content')
     </main>
 
