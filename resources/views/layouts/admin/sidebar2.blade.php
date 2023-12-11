@@ -64,7 +64,7 @@
           <a href="/dashboard/customers" class="font-medium">Customers</a>
         @else
           <a href="/dashboard/customers">Customers</a>
-        @endif    
+        @endif
     </li>
   @endif
 </ul>

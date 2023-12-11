@@ -79,7 +79,7 @@ class DashboardController extends Controller
             $q->where('project_id', 5)->where('is_submited', 1);
         })->count();
 
-        return view('dashboard.index', $data);
+        return view('dashboard.reindex', $data);
     }
 
     public function singleSubmissionReadNotification($projectID,$submissionID,$studentId){
