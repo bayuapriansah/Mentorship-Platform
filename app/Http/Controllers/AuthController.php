@@ -78,54 +78,68 @@ class AuthController extends Controller
             'first_name' => ['required'],
             'last_name' => ['required'],
             'date_of_birth' => ['required'],
-            'email' => ['required'],
             'sex' => ['required', 'in:male,female'],
-            'state' => ['required'],
+            'team_name' => ['required'],
             'country' => ['required'],
+            'state' => ['required'],
             'institution' => ['required'],
             'study_program' => ['required'],
             'year_of_study' => ['required'],
+            'mentorship_type' => ['required', 'in:skills_track,entrepreneur_track'],
+            'email' => ['required'],
+            'password' => ['required'],
             'g-recaptcha-response' => 'required|recaptcha',
         ],[
           'first_name.required' => 'First name is required',
           'last_name.required' => 'Last name is required',
           'date_of_birth.required' => 'Date of birth is required',
-          'email.required' => 'Email is required',
           'sex.required' => 'Sex is required',
           'sex.in' => 'Sex must be Male or Female',
+          'team_name.required' => 'Team name is required',
+          'country.required' => 'Country is required',
           'state.required' => 'State is required',
           'institution.required' => 'Institution is required',
-          'country.required' => 'Country is required',
           'study_program.required' => 'Study program is required',
           'year_of_study.required' => 'Year of study program is required',
+          'mentorship_type.required' => 'Mentorship type is required',
+          'mentorship_type.in' => 'Mentorship type must be Skills Track or Entrepreneur Track',
+          'email.required' => 'Email is required',
+          'password.required' => 'Password is required',
           'g-recaptcha-response.required' => 'Captcha is required',
-
         ]);
 
         if($validator->fails()){
             Session::flash('g-recaptcha-response', 'Google reCAPTCHA validation failed, please try again.');
             return redirect('/register')->withErrors($validator)->withInput();
         }
+
         $validated = $validator->validated();
         $existing_student = Student::where('email',$validated['email'])->first();
-        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->where('is_confirm',1)->first();
-        $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();
+
+        $mentor = Mentor::inRandomOrder()->where('institution_id', '!=', 0)->where('is_confirm', 1)->first();
+        $staff = Mentor::inRandomOrder()->where('institution_id', 0)->where('is_confirm', 1)->first();
+
         if($existing_student == null){
             $student = new Student;
             $student->first_name = $validated['first_name'];
             $student->last_name = $validated['last_name'];
             $student->date_of_birth = $validated['date_of_birth'];
-            $student->email = $validated['email'];
             $student->sex = $validated['sex'];
-            $student->state = $validated['state'];
+            $student->team_name = $validated['team_name'];
             $student->country = $validated['country'];
-            $student->institution_id = $validated['institution'];
+            $student->state = $validated['state'];
+            $student->institution = $validated['institution'];
+
             if($validated['study_program']=='other'){
                 $student->study_program = $request->study_program_form;
             }else{
                 $student->study_program = $validated['study_program'];
             }
+
             $student->year_of_study = $validated['year_of_study'];
+            $student->mentorship_type = $validated['mentorship_type'];
+            $student->email = $validated['email'];
+            $student->password = Hash::make($validated['password']);
             $student->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
             $student->is_confirm = 0;
             $student->mentor_id = $mentor->id;
