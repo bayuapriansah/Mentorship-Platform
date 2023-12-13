@@ -480,8 +480,7 @@
                             name="country"
                             value="{{ $checkStudent->country }}"
                             placeholder="Country *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight  bg-[#EDEDED] cursor-not-allowed focus:outline-none"
-                            readonly
+                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight  bg-[#EDEDED] focus:outline-none"
                             required
                         >
 
@@ -499,8 +498,7 @@
                             name="state"
                             value="{{ $checkStudent->state }}"
                             placeholder="City *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight bg-[#EDEDED] cursor-not-allowed focus:outline-none"
-                            readonly
+                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight bg-[#EDEDED] focus:outline-none"
                             required
                         >
 
@@ -517,9 +515,10 @@
                     <input
                         type="text"
                         name="institution"
-                        value="{{ $checkStudent->institution }}"
+                        value="{{ $checkStudent->institution->name }}"
                         placeholder="Educational Institution"
-                        class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
+                        class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight cursor-not-allowed focus:outline-none"
+                        readonly
                     >
 
                     @error('institution')
@@ -606,6 +605,61 @@
                             {{ $message }}
                         </p>
                     @enderror
+                </div>
+
+                {{-- Password --}}
+                <div class="mt-4">
+                    <div class="relative">
+                        <input
+                            type="password"
+                            id="input-password"
+                            name="password"
+                            placeholder="Password *"
+                            onkeyup="validatePasswordConfirm()"
+                            class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    @error('password')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                {{-- Confirm Password --}}
+                <div class="mt-4">
+                    <div class="relative">
+                        <input
+                            type="password"
+                            id="input-confirm-password"
+                            placeholder="Confirm Password *"
+                            onkeyup="validatePasswordConfirm()"
+                            class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
+
+                        <span
+                            toggle="#input-confirm-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <small id="input-confirm-password-warning" style="display: none;" class="text-red-600 text-sm mt-1">
+                        Passwords do not match
+                    </small>
                 </div>
 
                 {{-- Accept Terms & Conditions --}}
