@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use PhpParser\Node\Stmt\Break_;
@@ -137,6 +138,7 @@ class StudentController extends Controller
         }elseif($checkStudent){
             $GetInstituionData = (new InstitutionController)->GetInstituionData();
             $regState = 1;
+            $countries = DB::table('countries')->orderBy('name')->get();
             return view('auth.register', compact(['checkStudent','GetInstituionData','regState']));
         }
     }

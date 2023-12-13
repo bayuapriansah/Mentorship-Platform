@@ -5,9 +5,6 @@
         'Computing Systems',
         'Software Engineering'
     ];
-
-    $checkStudent = \App\Models\Student::where('email', 'sadam@sl2.org')->first();
-    // $regState = 1;
 @endphp
 
 @extends('layouts.index')
