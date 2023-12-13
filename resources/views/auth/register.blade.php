@@ -23,12 +23,21 @@
 </div>
 
 <div class="max-w-[1366px] mx-auto pl-[4.5rem] pr-[5.4rem] pt-12 pb-[4.7rem] flex">
+    {{-- Check if any errors --}}
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <p class="text-red-600 text-sm mt-1">
+                {{ $error }}
+            </p>
+        @endforeach
+    @endif
+
     {{-- Form --}}
     <div class="w-[442px]">
         @include('flash-message')
         @if ($regState == 0)
             {{-- reg state 0 if we access register just from the page --}}
-            <form action="{{ route('register') }}" method="post">
+            <form action="{{ route('register') }}" method="post" onsubmit="return validateForm()">
                 @csrf
 
                 {{-- Name --}}
@@ -77,7 +86,7 @@
                             id="dob"
                             type="text"
                             name="date_of_birth"
-                            value="{{old('date_of_birth')}}"
+                            value="{{ old('date_of_birth') }}"
                             placeholder="Date of Birth *"
                             onfocus="(this.type='date')"
                             onblur="(this.type='text')"
@@ -111,9 +120,18 @@
                 <div class="mt-4">
                     <input
                         type="text"
+                        name="team_name"
+                        value="{{ old('team_name') }}"
                         placeholder="Name of Team *"
                         class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
+                        required
                     >
+
+                    @error('team_name')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Country & State --}}
@@ -125,8 +143,7 @@
                             name="country"
                             value="{{ old('country') }}"
                             placeholder="Country *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight  bg-[#EDEDED] cursor-not-allowed focus:outline-none"
-                            readonly
+                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight  bg-[#EDEDED] focus:outline-none"
                             required
                         >
 
@@ -144,8 +161,7 @@
                             name="state"
                             value="{{ old('state') }}"
                             placeholder="City *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight bg-[#EDEDED] cursor-not-allowed focus:outline-none"
-                            readonly
+                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight bg-[#EDEDED] focus:outline-none"
                             required
                         >
 
@@ -161,9 +177,18 @@
                 <div class="mt-4">
                     <input
                         type="text"
-                        placeholder="Educational Institution"
+                        name="institution"
+                        value="{{ old('institution') }}"
+                        placeholder="Educational Institution *"
                         class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
+                        required
                     >
+
+                    @error('institution')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Study Program --}}
@@ -178,7 +203,7 @@
 
                     @error('study_program')
                         <p class="text-red-600 text-sm mt-1">
-                            {{$message}}
+                            {{ $message }}
                         </p>
                     @enderror
 
@@ -217,58 +242,84 @@
 
                     @error('email')
                         <p class="text-red-600 text-sm mt-1">
-                            {{$message}}
+                            {{ $message }}
                         </p>
                     @enderror
                 </div>
 
                 {{-- Mentorship Type --}}
                 <div class="mt-4">
-                    <select class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none">
+                    <select name="mentorship_type" class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none" required>
                         <option value="" hidden>Mentorship Type *</option>
-                        <option>Skills Track</option>
-                        <option>Entrepreneur Track</option>
+                        <option value="skills_track" {{ old('mentorship_type') == 'skills_track' ? 'selected' : '' }}>
+                            Skills Track
+                        </option>
+
+                        <option value="entrepreneur_track" {{ old('mentorship_type') == 'entrepreneur_track' ? 'selected' : '' }}>
+                            Entrepreneur Track
+                        </option>
                     </select>
+
+                    @error('mentorship_type')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Password --}}
-                <div class="mt-4 relative">
-                    <input
-                        type="password"
-                        id="input-password"
-                        name="password"
-                        placeholder="Password *"
-                        class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
-                        required
-                    >
+                <div class="mt-4">
+                    <div class="relative">
+                        <input
+                            type="password"
+                            id="input-password"
+                            name="password"
+                            placeholder="Password *"
+                            onkeyup="validatePasswordConfirm()"
+                            class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
 
-                    <span
-                        toggle="#input-password"
-                        onclick="toggleShowPassword(this)"
-                        class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
-                        style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
-                    >
-                    </span>
+                        <span
+                            toggle="#input-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    @error('password')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Confirm Password --}}
-                <div class="mt-4 relative">
-                    <input
-                        type="password"
-                        id="input-confirm-password"
-                        name="password"
-                        placeholder="Confirm Password *"
-                        class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
-                        required
-                    >
+                <div class="mt-4">
+                    <div class="relative">
+                        <input
+                            type="password"
+                            id="input-confirm-password"
+                            placeholder="Confirm Password *"
+                            onkeyup="validatePasswordConfirm()"
+                            class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
 
-                    <span
-                        toggle="#input-confirm-password"
-                        onclick="toggleShowPassword(this)"
-                        class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
-                        style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
-                    >
-                    </span>
+                        <span
+                            toggle="#input-confirm-password"
+                            onclick="toggleShowPassword(this)"
+                            class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    <small id="input-confirm-password-warning" style="display: none;" class="text-red-600 text-sm mt-1">
+                        Passwords do not match
+                    </small>
                 </div>
 
                 {{-- Accept Terms & Conditions --}}
@@ -406,9 +457,18 @@
                 <div class="mt-4">
                     <input
                         type="text"
+                        name="team_name"
+                        value="{{ $checkStudent->team_name }}"
                         placeholder="Name of Team *"
                         class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
+                        required
                     >
+
+                    @error('team_name')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Country & State --}}
@@ -456,9 +516,17 @@
                 <div class="mt-4">
                     <input
                         type="text"
+                        name="institution"
+                        value="{{ $checkStudent->institution }}"
                         placeholder="Educational Institution"
                         class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
                     >
+
+                    @error('institution')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Study Program --}}
@@ -522,51 +590,22 @@
 
                 {{-- Mentorship Type --}}
                 <div class="mt-4">
-                    <select class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none">
+                    <select name="mentorship_type" class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none" required>
                         <option value="" hidden>Mentorship Type *</option>
-                        <option>Skills Track</option>
-                        <option>Entrepreneur Track</option>
+                        <option value="skills_track" {{ old('mentorship_type') == 'skills_track' ? 'selected' : '' }}>
+                            Skills Track
+                        </option>
+
+                        <option value="entrepreneur_track" {{ old('mentorship_type') == 'entrepreneur_track' ? 'selected' : '' }}>
+                            Entrepreneur Track
+                        </option>
                     </select>
-                </div>
 
-                {{-- Password --}}
-                <div class="mt-4 relative">
-                    <input
-                        type="password"
-                        id="input-password"
-                        name="password"
-                        placeholder="Password *"
-                        class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
-                        required
-                    >
-
-                    <span
-                        toggle="#input-password"
-                        onclick="toggleShowPassword(this)"
-                        class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
-                        style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
-                    >
-                    </span>
-                </div>
-
-                {{-- Confirm Password --}}
-                <div class="mt-4 relative">
-                    <input
-                        type="password"
-                        id="input-confirm-password"
-                        name="password"
-                        placeholder="Confirm Password *"
-                        class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
-                        required
-                    >
-
-                    <span
-                        toggle="#input-confirm-password"
-                        onclick="toggleShowPassword(this)"
-                        class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
-                        style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
-                    >
-                    </span>
+                    @error('mentorship_type')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Accept Terms & Conditions --}}
@@ -643,6 +682,27 @@
             passwordInput.attr('type', 'password');
             $(trigger).css('background-image', 'url("{{ asset('/assets/img/icon/eye-close.svg') }}")');
         }
+    }
+
+    function validatePasswordConfirm() {
+        const password = document.getElementById('input-password').value;
+        const confirmPassword = document.getElementById('input-confirm-password').value;
+
+        if (password !== confirmPassword) {
+            document.getElementById('input-confirm-password-warning').style.display = 'block';
+        } else {
+            document.getElementById('input-confirm-password-warning').style.display = 'none';
+        }
+
+        return password === confirmPassword;
+    }
+
+    function validateForm() {
+        if (!validatePasswordConfirm()) {
+            return false;
+        }
+
+        return true;
     }
 </script>
 

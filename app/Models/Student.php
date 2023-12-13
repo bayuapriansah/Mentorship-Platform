@@ -15,7 +15,8 @@ class Student extends Authenticatable
 
     protected $guard = 'student';
 
-    protected $fillable = ['name', 'email', 'password', 'institution_id'];
+    // protected $fillable = ['name', 'email', 'password', 'institution_id'];
+    protected $guarded = [];
 
     public function projects()
     {
@@ -45,7 +46,7 @@ class Student extends Authenticatable
     {
         return $this->hasMany(EnrolledProject::class);
     }
-    
+
     public function submissions()
     {
         return $this->hasMany(Submission::class);
@@ -55,5 +56,5 @@ class Student extends Authenticatable
     {
         return $this->hasOne(Feedback::class);
     }
-    
+
 }
