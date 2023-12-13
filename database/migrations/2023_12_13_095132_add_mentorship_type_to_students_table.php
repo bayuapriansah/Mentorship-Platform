@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             $table->enum('mentorship_type', ['skills_track', 'entrepreneur_track'])
-                    ->default('skills_track')
+                    ->nullable()
                     ->after('password');
         });
     }
