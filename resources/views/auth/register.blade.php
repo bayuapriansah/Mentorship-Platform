@@ -5,6 +5,9 @@
         'Computing Systems',
         'Software Engineering'
     ];
+
+    $checkStudent = \App\Models\Student::where('email', 'sadam@sl2.org')->first();
+    // $regState = 1;
 @endphp
 
 @extends('layouts.index')
@@ -23,15 +26,6 @@
 </div>
 
 <div class="max-w-[1366px] mx-auto pl-[4.5rem] pr-[5.4rem] pt-12 pb-[4.7rem] flex">
-    {{-- Check if any errors --}}
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <p class="text-red-600 text-sm mt-1">
-                {{ $error }}
-            </p>
-        @endforeach
-    @endif
-
     {{-- Form --}}
     <div class="w-[442px]">
         @include('flash-message')
@@ -134,43 +128,23 @@
                     @enderror
                 </div>
 
-                {{-- Country & State --}}
-                <div class="mt-4 grid grid-cols-2 gap-2">
-                    <div class="col-span-1">
-                        <input
-                            id="ForCountry"
-                            type="text"
-                            name="country"
-                            value="{{ old('country') }}"
-                            placeholder="Country *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight  bg-[#EDEDED] focus:outline-none"
-                            required
-                        >
+                {{-- Country --}}
+                <div class="mt-4">
+                    <select id="inputStudy" name="country" class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none" required>
+                        <option value="" hidden>Country *</option>
 
-                        @error('country')
-                            <p class="text-red-600 text-sm mt-1">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
+                        @foreach($countries as $country)
+                            <option value="{{ $country->name }}" {{ old('country') == $country->name ? 'selected' : '' }}>
+                                {{ $country->name }}
+                            </option>
+                        @endforeach
+                    </select>
 
-                    <div class="col-span-1">
-                        <input
-                            id="ForState"
-                            type="text"
-                            name="state"
-                            value="{{ old('state') }}"
-                            placeholder="City *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight bg-[#EDEDED] focus:outline-none"
-                            required
-                        >
-
-                        @error('state')
-                            <p class="text-red-600 text-sm mt-1">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
+                    @error('country')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Institution --}}
@@ -471,54 +445,35 @@
                     @enderror
                 </div>
 
-                {{-- Country & State --}}
-                <div class="mt-4 grid grid-cols-2 gap-2">
-                    <div class="col-span-1">
-                        <input
-                            id="ForCountry"
-                            type="text"
-                            name="country"
-                            value="{{ $checkStudent->country }}"
-                            placeholder="Country *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight  bg-[#EDEDED] focus:outline-none"
-                            required
-                        >
+                {{-- Country --}}
+                <div class="mt-4">
+                    <select id="inputStudy" name="country" class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none" required>
+                        <option value="" hidden>Country *</option>
 
-                        @error('country')
-                            <p class="text-red-600 text-sm mt-1">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
+                        @foreach($countries as $country)
+                            <option value="{{ $country->name }}" {{ $checkStudent->country == $country->name ? 'selected' : '' }}>
+                                {{ $country->name }}
+                            </option>
+                        @endforeach
+                    </select>
 
-                    <div class="col-span-1">
-                        <input
-                            id="ForState"
-                            type="text"
-                            name="state"
-                            value="{{ $checkStudent->state }}"
-                            placeholder="City *"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight bg-[#EDEDED] focus:outline-none"
-                            required
-                        >
-
-                        @error('state')
-                            <p class="text-red-600 text-sm mt-1">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
+                    @error('country')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Institution --}}
                 <div class="mt-4">
                     <input
                         type="text"
-                        name="institution"
+                        name="institution_name"
                         value="{{ $checkStudent->institution->name }}"
                         placeholder="Educational Institution"
-                        class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight cursor-not-allowed focus:outline-none"
+                        class="border border-grey rounded-lg w-full h-11 py-2 px-4 bg-[#EDEDED] leading-tight cursor-not-allowed focus:outline-none"
                         readonly
+                        required
                     >
 
                     @error('institution')
@@ -534,7 +489,9 @@
                         <option value="" hidden>Study Program</option>
 
                         @foreach($study_programs as $study_program)
-                            <option value="{{$study_program}}">{{$study_program}}</option>
+                            <option value="{{ $study_program }}" {{ $checkStudent->study_program == $study_program ? 'selected' : '' }}>
+                                {{ $study_program }}
+                            </option>
                         @endforeach
 
                         <option value="other">Other</option>
@@ -553,16 +510,16 @@
                 <div class="mt-4">
                     <select id="year_of_study" name="year_of_study" class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none" required>
                         <option value="" hidden>Year of study *</option>
-                        <option value="1st">1st</option>
-                        <option value="2nd">2nd</option>
-                        <option value="3rd">3rd</option>
-                        <option value="4th">4th</option>
-                        <option value="5+">5+</option>
+                        <option value="1st" {{ $checkStudent->year_of_study == '1st' ? 'selected' : '' }}>1st</option>
+                        <option value="2nd" {{ $checkStudent->year_of_study == '2nd' ? 'selected' : '' }}>2nd</option>
+                        <option value="3rd" {{ $checkStudent->year_of_study == '3rd' ? 'selected' : '' }}>3rd</option>
+                        <option value="4th" {{ $checkStudent->year_of_study == '4th' ? 'selected' : '' }}>4th</option>
+                        <option value="5+" {{ $checkStudent->year_of_study == '5+' ? 'selected' : '' }}>5+</option>
                     </select>
 
                     @error('year_of_study')
                         <p class="text-red-600 text-sm mt-1">
-                            {{$message}}
+                            {{ $message }}
                         </p>
                     @enderror
                 </div>
@@ -575,14 +532,14 @@
                         name="email"
                         value="{{ $checkStudent->email }}"
                         placeholder="email address *"
-                        class="w-full border border-grey rounded-lg h-11 py-2 px-4 leading-tight focus:outline-none cursor-not-allowed"
+                        class="w-full border border-grey rounded-lg h-11 py-2 px-4 bg-[#EDEDED] leading-tight focus:outline-none cursor-not-allowed"
                         required
                         readonly
                     >
 
                     @error('email')
                         <p class="text-red-600 text-sm mt-1">
-                            {{$message}}
+                            {{ $message }}
                         </p>
                     @enderror
                 </div>
@@ -591,11 +548,12 @@
                 <div class="mt-4">
                     <select name="mentorship_type" class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none" required>
                         <option value="" hidden>Mentorship Type *</option>
-                        <option value="skills_track" {{ old('mentorship_type') == 'skills_track' ? 'selected' : '' }}>
+
+                        <option value="skills_track" {{ $checkStudent->mentorship_type == 'skills_track' ? 'selected' : '' }}>
                             Skills Track
                         </option>
 
-                        <option value="entrepreneur_track" {{ old('mentorship_type') == 'entrepreneur_track' ? 'selected' : '' }}>
+                        <option value="entrepreneur_track" {{ $checkStudent->mentorship_type == 'entrepreneur_track' ? 'selected' : '' }}>
                             Entrepreneur Track
                         </option>
                     </select>

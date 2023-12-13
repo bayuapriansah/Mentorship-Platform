@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use PhpParser\Node\Stmt\Break_;
 use setasign\Fpdi\Fpdi;
@@ -68,10 +69,10 @@ class StudentController extends Controller
     public function index()
     {
         // Using a ternary operator to keep it more readable and less repetitive.
-        $guard = Auth::guard('web')->check() ? 'web' : 
-                 (Auth::guard('mentor')->check() ? 'mentor' : 
+        $guard = Auth::guard('web')->check() ? 'web' :
+                 (Auth::guard('mentor')->check() ? 'mentor' :
                  (Auth::guard('customer')->check() ? 'customer' : null));
-    
+
         switch ($guard) {
             case 'web':
                 $students = Student::get();
@@ -95,9 +96,9 @@ class StudentController extends Controller
                 abort(403, 'Unauthorized action.');
                 break;
         }
-    
+
         $enrolled_projects = EnrolledProject::get();
-    
+
         return view('dashboard.students.index', compact('students', 'enrolled_projects'));
     }
     // End of refactor first code
@@ -115,13 +116,13 @@ class StudentController extends Controller
     {
         $isWebGuardActive = Auth::guard('web')->check();
         $mentorInstitutionId = optional(Auth::guard('mentor')->user())->institution_id;
-    
+
         if (!$isWebGuardActive || $mentorInstitutionId != 0) {
             return redirect()->back();
         }
-    
+
         $students = Student::has('feedback')->get();
-    
+
         return view('dashboard.students.testimonial.index', compact('students'));
     }
     // end of 2nd code refactor
@@ -499,15 +500,34 @@ class StudentController extends Controller
             'first_name' => ['required'],
             'last_name' => ['required'],
             'date_of_birth' => ['required'],
-            'sex' => ['required'],
-            'institution' => ['required'],
+            'sex' => ['required', 'in:male,female'],
+            'team_name' => ['required'],
             'country' => ['required'],
-            'state' => ['required'],
+            // 'state' => ['required'],
+            'institution_name' => ['required'],
             'study_program' => ['required'],
             'year_of_study' => ['required'],
+            'mentorship_type' => ['required', 'in:skills_track,entrepreneur_track'],
             'email' => ['required'],
+            'password' => ['required'],
             'g-recaptcha-response' => 'required|recaptcha',
-            'tnc' => ['required']
+        ],[
+          'first_name.required' => 'First name is required',
+          'last_name.required' => 'Last name is required',
+          'date_of_birth.required' => 'Date of birth is required',
+          'sex.required' => 'Sex is required',
+          'sex.in' => 'Sex must be Male or Female',
+          'team_name.required' => 'Team name is required',
+          'country.required' => 'Country is required',
+        //   'state.required' => 'State is required',
+          'institution_name.required' => 'Institution is required',
+          'study_program.required' => 'Study program is required',
+          'year_of_study.required' => 'Year of study program is required',
+          'mentorship_type.required' => 'Mentorship type is required',
+          'mentorship_type.in' => 'Mentorship type must be Skills Track or Entrepreneur Track',
+          'email.required' => 'Email is required',
+          'password.required' => 'Password is required',
+          'g-recaptcha-response.required' => 'Captcha is required',
         ]);
 
         if($validator->fails()){
@@ -518,30 +538,37 @@ class StudentController extends Controller
         $validated = $validator->validated();
 
         // to get randomly id mentors
-        $mentor = Mentor::inRandomOrder()->where('institution_id',$validated['institution'])->where('is_confirm',1)->first();
+        $mentor = Mentor::inRandomOrder()->where('institution_id', '!=', 0)->where('is_confirm', 1)->first();
+
         if($mentor == null){
-          return back()->with('errorTailwind', "Your institute supervisor haven't registered yet");
+            return back()->with('errorTailwind', "Your institute supervisor haven't registered yet");
         }
+
         $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();
-        $regStudent = Student::where('email',$validated['email'])->first();
-        $regStudent->first_name = $validated['first_name'];
-        $regStudent->last_name = $validated['last_name'];
-        $regStudent->email = $validated['email'];
-        $regStudent->sex = $validated['sex'];
-        $regStudent->state = $validated['state'];
-        $regStudent->country = $validated['country'];
-        $regStudent->date_of_birth = $validated['date_of_birth'];
-        $regStudent->institution_id = $validated['institution'];
-        $regStudent->study_program = $validated['study_program'];
-        $regStudent->year_of_study = $validated['year_of_study'];
+
         // just for note, is confirm and the end_date we dont need to set in here because when we enter the route verified the is confirm and the end_date  will be handled by the route
         // $regStudent->is_confirm = 1;
         // $regStudent->end_date = \Carbon\Carbon::now()->addMonth(4)->toDateString();
-        dd($mentor);
+
+        $regStudent = Student::where('email',$validated['email'])->first();
+        $regStudent->first_name = $validated['first_name'];
+        $regStudent->last_name = $validated['last_name'];
+        $regStudent->date_of_birth = $validated['date_of_birth'];
+        $regStudent->sex = $validated['sex'];
+        $regStudent->team_name = $validated['team_name'];
+        $regStudent->country = $validated['country'];
+        // $regStudent->state = $validated['state'];
+        $regStudent->institution_name = $validated['institution_name'];
+        $regStudent->study_program = $validated['study_program'];
+        $regStudent->year_of_study = $validated['year_of_study'];
+        $regStudent->mentorship_type = $validated['mentorship_type'];
+        $regStudent->email = $validated['email'];
+        $regStudent->password = Hash::make($validated['password']);
         $regStudent->mentor_id = $mentor->id;
         $regStudent->staff_id = $staff->id;
         $regStudent->save();
         $emailEnc = (new SimintEncryption)->encData($validated['email']);
+
         return redirect()->route('verified',[$emailEnc]);
     }
 
@@ -824,22 +851,22 @@ class StudentController extends Controller
         if ($student_id != Auth::guard('student')->user()->id) {
             abort(403);
         }
-        
+
         $validated = Validator::make($request->all(), [
             'glablink' => 'required',
         ]);
-        
+
         if ($validated->fails()) {
             $error_message = $request->hasFile('file')
                 ? 'You cannot upload a file size larger than 5MB'
                 : 'No file was uploaded';
-    
+
             return redirect()
                 ->route('student.taskDetail', [$student_id, $project_id, $task_id])
                 ->with('errorTailwind', $error_message)
                 ->withErrors($validated);
         }
-    
+
         if ($request->dataset) {
           $dataset_array = json_decode($request->dataset, true);
           $dataset_values = array_column($dataset_array, 'value');
@@ -867,7 +894,7 @@ class StudentController extends Controller
             $appliedDateStart,
             $appliedDateEnd
         );
-    
+
         $student = Student::where('id', $student_id)->first();
         $task = ProjectSection::findOrFail($task_id);
         $tiempoAdicional = ProjectSection::where('project_id', $project_id)
@@ -885,20 +912,20 @@ class StudentController extends Controller
         $submission->file = $glablink;
         $submission->dataset = $request->dataset ? $dataset_result : null;
         $submission->save();
-        
+
         $submission_date_override = Submission::where('project_id', $project_id)
             ->where('student_id', Auth::guard('student')->user()->id)
             ->where('is_complete', 0)
             ->first();
-    
+
         if ($submission_date_override != null) {
             $submission_date_override->release_date = Carbon::now()->format('Y-m-d');
             $submission_date_override->dueDate = Carbon::now()->addDays($tiempoAdicional->duration)->format('Y-m-d');
             $submission_date_override->save();
         }
-    
+
         return redirect('/profile/' . $student_id . '/enrolled/' . $project_id . '/task/' . $task_id);
-    }    
+    }
 
     public function taskResubmit(Request $request, $student_id, $project_id, $task_id, $submission_id )
     {
@@ -1016,7 +1043,7 @@ class StudentController extends Controller
         if(Auth::guard('student')->user()->institution_id != $institution_id){
             abort(404);
         }
-        
+
         if (!Auth::guard('student')->check()) {
             abort(404);
         }
@@ -1026,7 +1053,7 @@ class StudentController extends Controller
         }
 
         $studentSerialNumber = $student->serial_number;
-        
+
         if($studentSerialNumber == null){
             $highestSerialNumber = Student::where('institution_id', $institution_id)
                                     ->max('serial_number') ?? 0;
@@ -1074,8 +1101,8 @@ class StudentController extends Controller
         $pdf->AddPage();
         $pdf->setSourceFile($templateFile);
         $pdf->useTemplate($pdf->importPage(1), null, null, null, null, true);
-        
-        // Tambahkan custom font    
+
+        // Tambahkan custom font
         $pdf->AddFont('InteloneDisplay', '', 'IntelOneDisplayRegular.php');
         $pdf->AddFont('InteloneDisplayLight', '', 'intelone-display-light.php');
         $pdf->SetFont('InteloneDisplayLight', '', 37);
@@ -1099,7 +1126,7 @@ class StudentController extends Controller
             $pdf->MultiCell(50, -30, "AI4FW".$formattedDateSerial.$serialNombre, 0, 'L');
             // $pdf->SetXY(152.5, 83);
             // $pdf->MultiCell(150, 10, "AI internship under", 0, 'L');
-        
+
         // Simpan sertifikat sebagai file PDF
         $certificateFilename = "{$name}_SIP.pdf";
         // 1. Save the generated PDF to a temporary file.
@@ -1121,12 +1148,12 @@ class StudentController extends Controller
         if (!$student_name) {
             return redirect()->back();
         }
-    
+
         // 2. Cek field feedback_done
         if ($student_name->feedback_done == 1) {
             return redirect()->back();
         }
-    
+
         // 3. Validasi data request
         $validated = $request->validate([
             'feedback' => 'required|min:25',
@@ -1134,19 +1161,19 @@ class StudentController extends Controller
             'feedback.required' => 'Feedback cannot be empty',
             'feedback.min' => 'Your feedback is too short',
         ]);
-        
-        
+
+
 
         // 4 & 5. Insert ke table feedback
         $feedback = new Feedback();
         $feedback->feedback = $request->input('feedback');
         $feedback->student_id = $student->id;
         $feedback->save();
-    
+
         // 6. Update field feedback_done pada table student
         $student_name->feedback_done = 1;
         $student_name->save();
-    
+
         return redirect()->back()->with('success', 'Thank you for your feedback');
     }
 
