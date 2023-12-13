@@ -82,7 +82,7 @@ class AuthController extends Controller
             'team_name' => ['required'],
             'country' => ['required'],
             'state' => ['required'],
-            'institution' => ['required'],
+            'institution_name' => ['required'],
             'study_program' => ['required'],
             'year_of_study' => ['required'],
             'mentorship_type' => ['required', 'in:skills_track,entrepreneur_track'],
@@ -98,7 +98,7 @@ class AuthController extends Controller
           'team_name.required' => 'Team name is required',
           'country.required' => 'Country is required',
           'state.required' => 'State is required',
-          'institution.required' => 'Institution is required',
+          'institution_name.required' => 'Institution is required',
           'study_program.required' => 'Study program is required',
           'year_of_study.required' => 'Year of study program is required',
           'mentorship_type.required' => 'Mentorship type is required',
@@ -128,7 +128,7 @@ class AuthController extends Controller
             $student->team_name = $validated['team_name'];
             $student->country = $validated['country'];
             $student->state = $validated['state'];
-            $student->institution = $validated['institution'];
+            $student->institution_name = $validated['institution_name'];
 
             if($validated['study_program']=='other'){
                 $student->study_program = $request->study_program_form;
