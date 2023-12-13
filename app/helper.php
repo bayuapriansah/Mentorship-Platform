@@ -293,6 +293,7 @@ if(!function_exists('commentPerSection')){
 if (!function_exists('isSkillsTrack')) {
     function isSkillsTrack()
     {
-        return request()->query->has('is_skills_track');
+        // return request()->query->has('is_skills_track');
+        return auth('student')->user()->mentorship_type == 'skills_track';
     }
 }
