@@ -139,7 +139,7 @@ class StudentController extends Controller
             $GetInstituionData = (new InstitutionController)->GetInstituionData();
             $regState = 1;
             $countries = DB::table('countries')->orderBy('name')->get();
-            return view('auth.register', compact(['checkStudent','GetInstituionData','regState']));
+            return view('auth.register', compact(['countries', 'checkStudent','GetInstituionData','regState']));
         }
     }
 
