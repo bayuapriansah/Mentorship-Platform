@@ -177,14 +177,14 @@
                 <div class="mt-4">
                     <input
                         type="text"
-                        name="institution"
-                        value="{{ old('institution') }}"
+                        name="institution_name"
+                        value="{{ old('institution_name') }}"
                         placeholder="Educational Institution *"
                         class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
                         required
                     >
 
-                    @error('institution')
+                    @error('institution_name')
                         <p class="text-red-600 text-sm mt-1">
                             {{ $message }}
                         </p>
