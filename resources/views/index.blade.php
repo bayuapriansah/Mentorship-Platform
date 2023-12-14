@@ -42,7 +42,7 @@
 <div class="min-h-[536px] bg-black bg-center bg-cover bg-no-repeat" style="background-image: url({{ asset('/assets/img/main/banner.png') }})">
     <div class="max-w-screen-xl mx-auto px-8 tab:px-[4.5rem] pt-48">
         <h1 class="text-white font-medium text-xl tab:text-3xl">
-            <span>Intel AI Global Impact Festival</span>
+            <span>Intel® AI Global Impact Festival</span>
             <br>
             <span class="text-primary">
                 Mentorship Platform
@@ -60,7 +60,7 @@
 {{-- Intro --}}
 <div class="max-w-screen-xl mt-10 tab:mt-20 mx-auto px-6 flex flex-col items-center">
     <h2 class="font-bold text-2xl tab:text-3xl text-center text-darker-blue">
-        Intel AI Global Impact Festival<br>
+        Intel® AI Global Impact Festival<br>
         <span class="text-primary">
             Mentorship Program
         </span>

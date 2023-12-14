@@ -490,11 +490,14 @@
     <!-- Footer -->
     <footer class="bg-[#e9e9e9] border-[#838383] text-black">
         <div class="max-w-screen-xl mx-auto px-6 py-4" id="AiForFuture">
-            <div class="p-4 py-6 lg:py-8">
+            <div class="py-6 lg:py-8">
                 <div class="mb-6 md:mb-0">
-                    <a href="/" class="flex items-center">
-                        <img src="{{ asset('assets/img/logo/footer-logo.svg') }}" class="tab:scale-125"
-                            alt="Intel Digital Readiness Logo" />
+                    <a href="{{ url('/') }}" class="flex items-center">
+                        <img
+                            src="{{ asset('assets/img/logo/primary-logo.png') }}"
+                            alt="Intel Digital Readiness Logo"
+                            class="w-[144.07px] h-[76px]"
+                        >
                     </a>
                 </div>
             </div>
