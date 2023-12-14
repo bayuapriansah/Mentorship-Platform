@@ -144,10 +144,9 @@
                 <p class="col-span-3 font-medium text-light-black text-xs">
                     {{ \Carbon\Carbon::parse($data->release_date)->format('dS') }} - {{ \Carbon\Carbon::parse($data->dueDate)->format('dS F Y') }}
                 </p>
-
                 @if ($data->is_complete == 1)
-                    @if($submi_data->grade)
-                        @if ($submi_data->grade->status == 1)
+                    @if($data->grade)
+                        @if ($data->grade->status == 1)
                             <p class="col-span-2 flex gap-2 items-center font-medium text-[#11BF61] text-xs">
                                 <span class="w-[10px] h-[10px] bg-[#11BF61] rounded-full"></span>
                                 Completed
