@@ -18,77 +18,9 @@
             width: 800px !important;
         }
 
-        .main-content {
+        .banner {
             width: 100%;
-            background-color: white;
-            padding: 70px 50px 100px 50px;
-        }
-
-        .main-content .logo {
-            width: 158.44px;
-            height: 84px;
-        }
-
-        .main-content .description {
-            font-size: 20px;
-            color: #000000;
-            margin-top: 48px;
-        }
-
-        .main-content .cta-text {
-            font-size: 26px;
-            font-weight: 500;
-            color: #000864;
-            margin-top: 20px;
-        }
-
-        .main-content .cta-button {
-            display: inline-block;
-            background-color: #E96424;
-            border-radius: 60px;
-            text-decoration: none;
-            text-align: center;
-            font-weight: bold;
-            font-size: 20;
-            color: #ffffff;
-            margin-top: 32px;
-            padding: 12px 44px 12px 44px;
-        }
-
-        .main-content .closing-1 {
-            width: 586px;
-            font-size: 16px;
-            color: #000000;
-            margin-top: 38px;
-        }
-
-        .main-content .cta-link {
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: bold;
-            color: #000864;
-            margin-top: 18px;
-        }
-
-        .main-content .cta-link:hover {
-            text-decoration: underline !important;
-        }
-
-        .main-content .closing-2 {
-            font-size: 16px;
-            color: #000000;
-            margin-top: 24px;
-        }
-
-        .main-content .regards {
-            margin-top: 68px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #000000;
-        }
-
-        .main-content .regards span {
-            color: #E96424;
+            height: auto;
         }
 
         .footer {
@@ -150,48 +82,11 @@
                         <tbody>
                             <tr>
                                 <td>
+                                    <!-- Banner -->
+                                    <img src="{{ $message->embed(public_path('assets/img/email/banner.png')) }}" alt="Banner" class="banner">
+
                                     <!-- Main Content -->
-                                    <table>
-                                        <tr>
-                                            <td class="main-content">
-                                                <!-- Logo -->
-                                                <img src="{{ $message->embed(public_path('assets/img/logo/primary-logo.png')) }}" alt="Logo" class="logo">
-
-                                                <p class="description">
-                                                    You have made a request to reset your password.
-                                                </p>
-
-                                                <p class="cta-text">
-                                                    Please click the button below to reset your password.
-                                                </p>
-
-                                                <a href="{{ $data['link'] }}" class="cta-button">
-                                                    Click Here
-                                                </a>
-
-                                                <p class="closing-1">
-                                                    If the button above does not work, please use the following link by
-                                                    copying and pasting it into your browser
-                                                </p>
-
-                                                <a href="{{ $data['link'] }}" class="cta-link">
-                                                    {{ $data['link'] }}
-                                                </a>
-
-                                                <p class="closing-2">
-                                                    If you received this email but did not request to reset your password,
-                                                    please change the password to your account immediately.
-                                                </p>
-
-                                                <p class="regards">
-                                                    Regards,<br>
-                                                    <span>
-                                                        SL2 Admin
-                                                    </span>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    @yield('main-content')
                                     <!-- ./Main Content -->
 
                                     <!-- Footer -->

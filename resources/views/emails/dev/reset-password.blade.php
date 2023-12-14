@@ -165,7 +165,7 @@
                                                     Please click the button below to reset your password.
                                                 </p>
 
-                                                <a href="{{ $data['link'] }}" class="cta-button">
+                                                <a href="{{ url('/') }}" class="cta-button">
                                                     Click Here
                                                 </a>
 
@@ -174,8 +174,8 @@
                                                     copying and pasting it into your browser
                                                 </p>
 
-                                                <a href="{{ $data['link'] }}" class="cta-link">
-                                                    {{ $data['link'] }}
+                                                <a href="https://example.com/link" class="cta-link">
+                                                    https://example.com/link
                                                 </a>
 
                                                 <p class="closing-2">
