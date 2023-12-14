@@ -1,4 +1,4 @@
-@extends('emails.dev.layout-1')
+@extends('emails.layout-1')
 
 @section('css')
     <style type="text/css">
@@ -8,16 +8,6 @@
             width: 100%;
             background-color: white;
             padding: 35px 58px 100px 58px;
-        }
-
-        .main-content .top-right-dots {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 339px;
-            height: 186px;
-            background-color: red;
-            background-image: url("{{ public_path('assets/img/icon/profile/dots.png') }}");
         }
 
         .main-content .title {
@@ -50,7 +40,7 @@
             text-decoration: none;
             text-align: center;
             font-weight: bold;
-            font-size: 20;
+            font-size: 20px;
             color: #ffffff;
             margin-top: 20px;
             padding: 18px 36px 18px 36px;
@@ -80,18 +70,22 @@
 <table>
     <tr>
         <td class="main-content">
-            {{-- <div class="top-right-dots"></div> --}}
-
             <h1 class="title">
-                Confirm your email address to get started with <span>Mentorship Platform</span>.
+                Confirm your email address to get started with the
+                Intel AI Global Impact Festival
+                <span>
+                    Mentorship Program
+                </span>.
             </h1>
 
             <p class="description">
-                Once you've confirmed that john.doe@sl2.org is your email address, we will help you find internship programs to join.
+                Once you've confirmed that
+                john.doe@sl2.org
+                is your email, you can get started with the program.
             </p>
 
             <p class="cta-text">
-                Click on the button below to confirm,
+                Click the button below to confirm,
             </p>
 
             <a href="{{ url('/') }}" class="cta-button">
@@ -99,11 +93,11 @@
             </a>
 
             <p class="closing">
-                If you didn't request this email, there is nothing to worry about - you can safely ignore it
+                If you did not request this email, you can safely ignore it.
             </p>
 
             <p class="regards">
-                Thank You,<br>
+                Regards,<br>
                 <span>
                     SL2 Admin
                 </span>

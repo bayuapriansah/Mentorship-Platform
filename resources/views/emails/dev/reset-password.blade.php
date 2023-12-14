@@ -15,7 +15,7 @@
         }
 
         table.container {
-            width: 95% !important;
+            width: 800px !important;
         }
 
         .main-content {
@@ -96,28 +96,28 @@
             padding: 58px 58px 25px 64px;
         }
 
-        .footer-logo {
+        .footer .logo {
             width: 141.46px;
-            height: auto;
+            height: 75px;
         }
 
-        .footer-links-container {
+        .footer .links {
             text-align: end;
             padding-top: 18px;
         }
 
-        .footer-links-container a {
+        .footer .links a {
             color: #000000;
             font-size: 12px;
             margin-left: 24px;
             text-decoration: none;
         }
 
-        .footer-links-container a:hover {
+        .footer .links a:hover {
             text-decoration: underline !important;
         }
 
-        .footer-divider {
+        .footer .divider {
             width: 100%;
             height: 1px;
             background-color: #838383;
@@ -125,9 +125,15 @@
             margin-bottom: 20px;
         }
 
-        .copyright {
+        .footer .copyright {
             margin-left: 12px;
-            font-size: 12;
+            font-size: 12px;
+            color: #000000;
+        }
+
+        .footer .sl2-logo {
+            width: 40px;
+            height: auto;
         }
     </style>
 
@@ -149,14 +155,14 @@
                                         <tr>
                                             <td class="main-content">
                                                 <!-- Logo -->
-                                                <img src="{{ $message->embed(public_path('assets/img/email/footer-logo.png')) }}" alt="Logo" class="logo">
+                                                <img src="{{ $message->embed(public_path('assets/img/logo/primary-logo.png')) }}" alt="Logo" class="logo">
 
                                                 <p class="description">
                                                     You have made a request to reset your password.
                                                 </p>
 
                                                 <p class="cta-text">
-                                                    Please click the button below
+                                                    Please click the button below to reset your password.
                                                 </p>
 
                                                 <a href="{{ url('/') }}" class="cta-button">
@@ -164,7 +170,8 @@
                                                 </a>
 
                                                 <p class="closing-1">
-                                                    If the button above does not work, please use the following link by copying and pasting it into your browser
+                                                    If the button above does not work, please use the following link by
+                                                    copying and pasting it into your browser
                                                 </p>
 
                                                 <a href="https://example.com/link" class="cta-link">
@@ -172,11 +179,12 @@
                                                 </a>
 
                                                 <p class="closing-2">
-                                                    If you did not reset your password and you receive this email change your password immediately!
+                                                    If you received this email but did not request to reset your password,
+                                                    please change the password to your account immediately.
                                                 </p>
 
                                                 <p class="regards">
-                                                    Thank You,<br>
+                                                    Regards,<br>
                                                     <span>
                                                         SL2 Admin
                                                     </span>
@@ -192,10 +200,10 @@
                                             <tr>
                                                 <th class="small-6 large-6 first columns">
                                                     <!-- Logo -->
-                                                    <img src="{{ $message->embed(public_path('assets/img/email/footer-logo.png')) }}" alt="Logo" class="footer-logo">
+                                                    <img src="{{ $message->embed(public_path('assets/img/logo/primary-logo.png')) }}" alt="Logo" class="logo">
                                                 </th>
 
-                                                <th class="small-6 large-6 last columns footer-links-container">
+                                                <th class="small-6 large-6 last columns links">
                                                     <!-- Links -->
                                                     <a href="{{ route('privacy-policy') }}" target="_blank">
                                                         Policies
@@ -210,11 +218,24 @@
                                             </tr>
                                         </table>
 
-                                        <hr class="footer-divider">
+                                        <hr class="divider">
 
-                                        <p class="copyright">
-                                            © {{ date('Y') }} Intel Mentorship Platform. All rights reserved.
-                                        </p>
+                                        <table class="row">
+                                            <tr>
+                                                <!-- Copyright  -->
+                                                <th class="small-11 large-11 first columns">
+                                                    <p class="copyright">
+                                                        © {{ date('Y') }} Intel Mentorship Platform. All rights reserved.
+                                                    </p>
+                                                </th>
+
+                                                <!-- SL2 Logo -->
+                                                <th class="small-1 large-1 last columns">
+                                                    <img src="{{ $message->embed(public_path('assets/img/logo/sl2-logo.png')) }}" alt="Logo" class="sl2-logo">
+                                                </th>
+                                            </tr>
+                                        </table>
+
                                     </div>
                                     <!-- ./Footer -->
                                 </td>

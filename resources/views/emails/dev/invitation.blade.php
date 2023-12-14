@@ -1,4 +1,4 @@
-@extends('emails.dev.layout-1')
+@extends('emails.layout-1')
 
 @section('css')
     <style type="text/css">
@@ -21,7 +21,6 @@
         }
 
         .main-content .description {
-            width: 548px;
             margin-top: 35px;
             font-size: 20px;
             color: #000000;
@@ -34,7 +33,7 @@
             text-decoration: none;
             text-align: center;
             font-weight: bold;
-            font-size: 20;
+            font-size: 20px;
             color: #ffffff;
             margin-top: 32px;
             padding: 20px 50px 20px 50px;
@@ -65,14 +64,14 @@
     <tr>
         <td class="main-content">
             <h1 class="title">
-                You've been invited to join<br>
+                You've been invited to join the Intel AI Global Impact Festival
                 <span>
-                    Mentorship Platform.
+                    Mentorship Program.
                 </span>
             </h1>
 
             <p class="description">
-                Please click on the link below to accept invitation and proceed to the registration page.
+                Please click on the link below to accept the invitation and proceed to the registration page.
             </p>
 
             <a href="{{ url('/') }}" class="cta-button">
@@ -80,11 +79,16 @@
             </a>
 
             <p class="closing">
-                Please note that this invitation will expire in next 10 days. Please accept the invitation before that. For assistance please contact Simulated Internship support at 033-123-4567 or mail us at help@simulatedinternship.com
+                Please note that this invitation will expire in the next 10 days.
+                Please accept the invitation before
+                <strong>
+                    Feb 14, 2024
+                </strong>
+                For assistance, please contact our support team at help@simulatedinternship.com
             </p>
 
             <p class="regards">
-                Thank You,<br>
+                Regards,<br>
                 <span>
                     SL2 Admin
                 </span>

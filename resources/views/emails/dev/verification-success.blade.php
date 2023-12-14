@@ -1,4 +1,4 @@
-@extends('emails.dev.layout-1')
+@extends('emails.layout-1')
 
 @section('css')
     <style type="text/css">
@@ -16,18 +16,10 @@
             color: #000864;
         }
 
-        .main-content .description-1, .main-content .description-2 {
+        .main-content .description {
             font-size: 20px;
-            text-align: justify;
             color: #000000;
-        }
-
-        .main-content .description-1 {
             margin-top: 40px;
-        }
-
-        .main-content .description-2 {
-            margin-top: 18px;
         }
 
         .main-content .cta-button {
@@ -37,7 +29,7 @@
             text-decoration: none;
             text-align: center;
             font-weight: bold;
-            font-size: 20;
+            font-size: 20px;
             font-weight: 500;
             color: #ffffff;
             margin-top: 65px;
@@ -62,15 +54,11 @@
     <tr>
         <td class="main-content">
             <h1 class="title">
-                Congratulations! You have been successfully onboarded into our platform.
+                Congratulations! You have been successfully onboarded to the platform.
             </h1>
 
-            <p class="description-1">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            </p>
-
-            <p class="description-2">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            <p class="description">
+                Get started on your mentorship today!
             </p>
 
             <a href="{{ url('/') }}" class="cta-button">
@@ -78,7 +66,7 @@
             </a>
 
             <p class="regards">
-                Thank You,<br>
+                Regards,<br>
                 <span>
                     SL2 Admin
                 </span>
