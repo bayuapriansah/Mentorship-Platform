@@ -183,6 +183,7 @@ class AuthController extends Controller
             'email' => ['required'],
             'password' => ['required']
         ]);
+
         // dd($request->all());
         if(Auth::guard('student')->attempt($validated)){
             $request->session()->regenerate();
@@ -197,7 +198,11 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect('/')->with('success','Logged in admin');
         }else{
-            return $this->login($validated['email'])->with('error','Invalid Login Credentials: Your email or password is incorrect. Please review your information and try again.');
+            // dd('yaya');
+            return redirect()
+                    ->back()
+                    ->withInput(['email' => $validated['email']])
+                    ->with('error', 'Your email or password is incorrect. Please review your information and try again.');
         }
     }
 
@@ -238,7 +243,12 @@ class AuthController extends Controller
                 'required',
                 'email',
                 function ($attribute, $value, $fail) {
-                    if (!DB::table('users')->where('email', $value)->exists() && !DB::table('mentors')->where('email', $value)->exists() && !DB::table('customers')->where('email', $value)->exists()) {
+                    if (
+                        !DB::table('users')->where('email', $value)->exists() &&
+                        !DB::table('mentors')->where('email', $value)->exists() &&
+                        !DB::table('customers')->where('email', $value)->exists() &&
+                        !DB::table('students')->where('email', $value)->exists()
+                    ) {
                         $fail('This email is not registered.');
                     }
                 }
@@ -269,70 +279,50 @@ class AuthController extends Controller
 
     public function resetPassword(Request $request)
     {
-        // dd($request->all());
         $request->validate([
-            // 'email' => 'required|email|exists:users,email|exists:mentors,email|exists:customers,email',
-            'email' => [
-                'required',
-                'email',
-                function ($attribute, $value, $fail) {
-                    if (!DB::table('users')->where('email', $value)->exists() && !DB::table('mentors')->where('email', $value)->exists() && !DB::table('customers')->where('email', $value)->exists()) {
-                        $fail('This email is not registered.');
-                    }
-                }
-            ],
+            'token' => 'required',
             'password' => 'required|min:5|confirmed',
             'password_confirmation' => 'required'
         ],
         [
-            'email.required' => 'Please enter valid email address',
-            'email.email' => 'Please enter valid email address',
-            'email.exists' => 'This email is not registered',
-            'password.required'=> 'Please enter your new password',
-            'password.min'=> 'Password minimum character is 5',
+            'token.required' => 'Invalid Token',
+            'password.required' => 'Please enter your new password',
+            'password.min' => 'Password minimum character is 5',
             'password.confirmed' => 'Password confirmation must be the same',
-            'password_confirmation.required'=> 'Please enter your confirmation password',
+            'password_confirmation.required' => 'Please enter your confirmation password',
         ]);
 
-        $checkToken = DB::table('password_resets')->where([
-            'email'=>$request->email,
-            'token'=>$request->token,
-        ])->first();
+        $checkToken = DB::table('password_resets')->where('token', $request->input('token'))->first();
 
-        if(!$checkToken){
+        if (!$checkToken) {
             return back()->withInput()->with('error', 'Invalid Token');
-        }else{
-            $usersExist = User::where('email',$request->email)->first();
-            $mentorsExist = Mentor::where('email',$request->email)->first();
-            $customerExist = Customer::where('email',$request->email)->first();
-            if($usersExist){
-                User::where('email',$request->email)->update([
+        } else {
+            $usersExist = User::where('email',$checkToken->email)->first();
+            $mentorsExist = Mentor::where('email',$checkToken->email)->first();
+            $customerExist = Customer::where('email',$checkToken->email)->first();
+            $studentExist = Student::where('email',$checkToken->email)->first();
+
+            if ($usersExist) {
+                User::where('email', $checkToken->email)->update([
                     'password' =>Hash::make($request->password)
                 ]);
-
-                DB::table('password_resets')->where([
-                    'email'=>$request->email
-                ])->delete();
-            }elseif($mentorsExist){
-                Mentor::where('email',$request->email)->update([
+            } elseif ($mentorsExist) {
+                Mentor::where('email', $checkToken->email)->update([
                     'password' =>Hash::make($request->password)
                 ]);
-
-                DB::table('password_resets')->where([
-                    'email'=>$request->email
-                ])->delete();
-            }elseif($customerExist){
-                Customer::where('email',$request->email)->update([
+            } elseif ($customerExist) {
+                Customer::where('email', $checkToken->email)->update([
                     'password' =>Hash::make($request->password)
                 ]);
-
-                DB::table('password_resets')->where([
-                    'email'=>$request->email
-                ])->delete();
+            } elseif ($studentExist) {
+                Student::where('email', $checkToken->email)->update([
+                    'password' =>Hash::make($request->password)
+                ]);
             }
+
+            DB::table('password_resets')->where('email', $checkToken->email)->delete();
         }
 
         return redirect()->route('login')->with('successTailwind', 'Your password has been changed, You can login with new password');
     }
-
 }

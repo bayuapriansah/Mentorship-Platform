@@ -87,12 +87,11 @@ class MailController extends Controller
         }
     }
 
-    public function emailResetPassword($mailto, $urlInvitation) //Just Email
+    public function emailResetPassword($mailto, $link) //Just Email
     {
         $data = [
             'subject' => 'Reset Password',
-            'body' => $mailto,
-            'body2' => $urlInvitation,
+            'link' => $link,
             'type' => 'reset',
         ];
         try

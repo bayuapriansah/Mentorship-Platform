@@ -30,30 +30,32 @@
                     @enderror
                 </div>
 
-                <div class="relative">
-                    <input
-                        type="password"
-                        id="input-password"
-                        name="password"
-                        placeholder="Password"
-                        class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
-                        required
-                    >
+                <div>
+                    <div class="relative">
+                        <input
+                            type="password"
+                            id="input-password"
+                            name="password"
+                            placeholder="Password"
+                            class="w-full mt-5 border border-light-blue rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+                            required
+                        >
 
-                    <span
-                        id="toggle-password"
-                        toggle="#input-password"
-                        class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
-                        style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
-                    >
-                    </span>
+                        <span
+                            id="toggle-password"
+                            toggle="#input-password"
+                            class="absolute top-[55%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                            style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+                        >
+                        </span>
+                    </div>
+
+                    @error('password')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
-
-                @error('password')
-                    <p class="text-red-600 text-sm mt-1">
-                        {{ $message }}
-                    </p>
-                @enderror
 
                 <div class="mt-2 flex">
                     <a href="{{ route('forgotPassword') }}" class="ml-auto text-xs text-[#FF8F51]">
