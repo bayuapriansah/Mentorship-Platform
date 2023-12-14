@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailNotify;
+use Carbon\Carbon;
 use Exception;
 class MailController extends Controller
 {
@@ -36,14 +37,13 @@ class MailController extends Controller
     public function emailregister($mailto,$urlInvitation) //Just Email
     {
         $data = [
-            'subject' => 'Registration Completed',
-            'body' => $mailto,
-            // 'body2' => (new SimintEncryption)->encData($mailto),
-            'body2' => $urlInvitation,
-            'type' => 'welcome',
+            'subject' => 'Confirm Your Email Address',
+            'email' => $mailto,
+            'url' => $urlInvitation,
+            'type' => 'verify-email',
         ];
-        try
-        {
+
+        try {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Registration Email sent successfully']);
         } catch (\Exception $th) {
@@ -158,20 +158,28 @@ class MailController extends Controller
         }
     }
 
-    public function EmailStudentInvitation($mailto,$urlInvitation) //Email, urlInvitation
+    public function EmailStudentInvitation($mailto, $urlInvitation) //Email, urlInvitation
     {
         $data = [
-            'subject' => 'Invitation to be a Student',
-            'body' => $mailto,
-            'body2' => $urlInvitation,
-            'type' => 'welcome',
+            'subject' => 'Invitation to Join Mentorship Program',
+            'expired_date' => Carbon::now()->addDays(10)->format('F j, Y'),
+            'url' => $urlInvitation,
+            'type' => 'invitation',
         ];
-        try
-        {
+
+        try {
             Mail::to($mailto)->send(new MailNotify($data));
             return response()->json(['Mentor Invitation  Email sent successfully']);
         } catch (\Exception $th) {
             return response()->json(['Sorry Something went wrong']);
         }
+    }
+
+    public function EmailStudentVerificationSuccess($email)
+    {
+        Mail::to($email)->send(new MailNotify([
+            'subject' => 'Registration Completed',
+            'type' => 'verification-success',
+        ]));
     }
 }

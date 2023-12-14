@@ -219,15 +219,19 @@ class AuthController extends Controller
     public function verified($email)
     {
         $email = (new SimintEncryption)->decData($email);
-        $registeredEmail = Student::where('email', $email)->where('is_confirm', 0)->first();
-        if($registeredEmail){
-            $registeredEmail->is_confirm = 1;
-            $registeredEmail->end_date = $registeredEmail->created_at->addMonth(4)->toDateString();
-            $registeredEmail->save();
-            return view('auth.verified');
-        }else{
+        $student = Student::where('email', $email)->where('is_confirm', 0)->first();
+
+        if (!$student) {
             return redirect()->route('index');
         }
+
+        $student->is_confirm = 1;
+        $student->end_date = $student->created_at->addMonth(4)->toDateString();
+        $student->save();
+
+        (new MailController)->EmailStudentVerificationSuccess($student->email);
+
+        return view('auth.verified');
     }
 
     public function forgotPassword()

@@ -570,8 +570,11 @@ class StudentController extends Controller
         $regStudent->staff_id = $staff->id;
         $regStudent->save();
         $emailEnc = (new SimintEncryption)->encData($validated['email']);
+        $link = route('verified', [$emailEnc]);
+        $sendmail = (new MailController)->emailregister($validated['email'],$link);
 
-        return redirect()->route('verified',[$emailEnc]);
+        // return redirect()->route('verified',[$emailEnc]);
+        return redirect()->route('verify',[$emailEnc]);
     }
 
     /**
