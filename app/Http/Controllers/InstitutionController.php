@@ -85,14 +85,19 @@ class InstitutionController extends Controller
                 ){
                 $logo = Storage::disk('public')->put('institutions', $validated['logo']);
                 $institutions->logo = $logo;
-            }else{
-                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg. Or image size is too large');
+            } else {
+                toastr()->error('file extension is not png, jpg or jpeg. Or image size is too large');
+
+                return redirect('dashboard/institutions_partners/');
             }
 
         }
         $institutions->save();
         $message = "Successfully Created Institution Data";
-        return redirect()->route('dashboard.institutions_partners')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.institutions_partners');
     }
 
     /**
@@ -153,12 +158,14 @@ class InstitutionController extends Controller
                 ){
                 $logo = Storage::disk('public')->put('institutions', $request->logo);
                 $institutions->logo = $logo;
-            }else{
-                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is not png, jpg or jpeg. Or image size is too large');
+            } else {
+                toastr()->error('file extension is not png, jpg or jpeg. Or image size is too large');
+
+                return redirect('dashboard/institutions_partners/');
             }
         }
         if($request->hasFile('template_cert')){
-            
+
             // dd($request->template_cert);
             if($institutions->template_cert && Storage::exists($institutions->template_cert)) {
                 Storage::disk('public')->delete($institutions->template_cert);
@@ -168,13 +175,18 @@ class InstitutionController extends Controller
              if( $request->file('template_cert')->extension() =='pdf' && $request->file('template_cert')->getSize() <=5000000){
                 $template_cert = Storage::disk('public')->put('institutions/template', $request->template_cert);
                 $institutions->template_cert = $template_cert;
-            }else{
-                return redirect('dashboard/institutions_partners/')->with('error', 'file extension is pdf or template size is too large');
+            } else {
+                toastr()->error('file extension is pdf or template size is too large');
+
+                return redirect('dashboard/institutions_partners/');
             }
         }
         $institutions->save();
         $message = "Successfully Edited Institution Data";
-        return redirect()->route('dashboard.institutions_partners')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.institutions_partners');
     }
 
     public function institutionStudents(Institution $institution)
@@ -201,7 +213,10 @@ class InstitutionController extends Controller
 
         }
         $institution->save();
-        return redirect()->route('dashboard.institutions_partners')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.institutions_partners');
     }
 
     /**
@@ -216,6 +231,8 @@ class InstitutionController extends Controller
         $institution->delete();
         $message = "Successfully Delete Institution";
 
-        return redirect('dashboard/institutions')->with('errorTailwind', $message);
+        toastr()->success($message);
+
+        return redirect('dashboard/institutions');
     }
 }

@@ -2,12 +2,11 @@
 @section('content')
 <div class="container">
   <div class="p-5 mb-4 text-center">
-    @include('flash-message')
     <img src="{{asset('assets/img/image.png')}}" alt="" width="100%" height="250px">
   </div>
 
   <h1 class="mb-4">My Projects</h1>
-  
+
   <div class="row">
     <div class="col-9">
     @foreach($applied_project as $project)
@@ -57,9 +56,9 @@
       @include('projects.sidebar')
     </div>
   </div>
-  
+
   {{-- <div class="card mt-5 text-center bg-light">
-    
+
   </div> --}}
 
   <div class="mt-5 text-center">
@@ -72,7 +71,7 @@
     <p>Download the dataset here</p>
   </div>
 
-  
+
 
   <h2 class="mt-5">Get help for your project</h2>
   <a href="#" class="link-primary">Link to discussion forum</a><br>

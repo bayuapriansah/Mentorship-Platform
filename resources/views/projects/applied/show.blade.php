@@ -4,7 +4,7 @@
   <div class="p-5 mb-4 text-center">
     <img src="{{asset('assets/img/image.png')}}" alt="" width="100%" height="250px">
   </div>
-  @include('flash-message')
+
   <div class="row">
     <div class="col-9">
       <div class="row">
@@ -24,9 +24,9 @@
             </div>
             <div class="row">
               <div class="col">
-                @php 
+                @php
                   $appliedDate = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', $student_id)->where('project_id', $project->id)->first()->created_at);
-                  $date = $appliedDate->format('Y-m-d'); 
+                  $date = $appliedDate->format('Y-m-d');
                 @endphp
                 <p>applied at {{$date}}</p>
               </div>
@@ -43,13 +43,13 @@
             </div>
             <div class="row">
               <div class="col">
-                
+
               </div>
             </div>
             <div class="row mt-4">
               <div class="col">
                 <div class="accordion" id="accordionExample">
-                  @php 
+                  @php
                     $no = 1;
                     $isErrorPrevious = false;
                     $ErrorId = 0;
@@ -75,7 +75,7 @@
                         @endphp
                         @foreach($project_section->sectionSubsections as $subsection)
                         @if (!isset($subsection->submission))
-                        
+
                             @if (!$isErrorPrevious)
                                 @php
                                     $ErrorId = $project_section->id
@@ -85,7 +85,7 @@
                             @php
                                 $isErrorPrevious = true;
                             @endphp
-                            
+
                         @endif
                         @if (!$subsection->submission && $isNotCompleted != 0)
                         {{-- <p>KONDISI 1</p> --}}
@@ -99,7 +99,7 @@
                         </a>
                         @elseif (!$subsection->submission && $isNotCompleted == 0)
                         {{-- make sure link cant be accessed if time not meet yet --}}
-                        {{-- @if($section_complete == 'selesai' && )   --}}                          
+                        {{-- @if($section_complete == 'selesai' && )   --}}
                         {{-- <p>KONDISI 2</p> --}}
 
                           <a style="color: red !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/task/{{$project_section->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
@@ -112,7 +112,7 @@
                                 $isNotCompleted = 1;
                             @endphp
                         @elseif($subsection->submission)
-                        {{-- make sure link cant be accessed if time not meet yet --}}                          
+                        {{-- make sure link cant be accessed if time not meet yet --}}
                         {{-- <p>KONDISI 3</p> --}}
 
                           <a  style="color: green !important" href="/projects/{{$student_id}}/applied/{{$project->id}}/task/{{$project_section->id}}/detail/{{$subsection->id}}/submission" class="text-decoration-none text-dark"  >
@@ -122,7 +122,7 @@
                             </div>
                           </a>
 
-                        @else 
+                        @else
                         {{-- <p>
                           KONDISI 4
                         </p> --}}
@@ -130,7 +130,7 @@
                           <div class="card p-4 mb-2 ">
                               <div class="text-muted">{{$subsection->category}} {{$subsection->submission ? '[completed]': '[not complete yet]'}}</div>
                               {{$subsection->title}}
-                          </div> 
+                          </div>
                         </a>
                         @endif
                         @endforeach
@@ -142,7 +142,7 @@
                 </div>
               </div>
             </div>
-            
+
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@
     <p>Download the dataset here</p>
   </div>
 
-  
+
 
   <h2 class="mt-5">Get help for your project</h2>
   <a href="#" class="link-primary">Link to discussion forum</a><br>

@@ -57,7 +57,7 @@
                       {{$message}}
                     </p>
                 @enderror
-              
+
               @if ($checkMentor->insittution_id)
                 <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="institution" required>
                   <option value="{{ $checkMentor->institution_id }}" selected>{{ $checkMentor->institution->name }}</option>
@@ -68,7 +68,7 @@
                     </p>
                 @enderror
               @endif
-              
+
               @if ($checkMentor->insittution_id)
                 <div class="flex justify-between mt-4">
                   <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{old('country')}}" placeholder="Country *" name="country" readonly required>
@@ -113,9 +113,6 @@
               <div class="flex items-center mt-4">
                 <input type="checkbox" class="checked:bg-blue-500 mr-4" name="tnc" required>
                 <p class="text-sm font-normal leading-4">I accept the <span class="text-dark-blue text-sm font-normal leading-4" >Terms & Conditions and Privacy Policies</span></p>
-              </div>
-              <div class="mt-4">
-                @include('flash-message')
               </div>
               <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Sign Up</button>
             </form>

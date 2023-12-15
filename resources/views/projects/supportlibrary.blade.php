@@ -1,8 +1,6 @@
 @extends('layouts.index')
 @section('content')
 <div class="container">
-  @include('flash-message')
-
   <div class="text-center mb-5">
     <img src="https://www.shutterstock.com/shutterstock/photos/1865153395/display_1500/stock-photo-portrait-of-young-smiling-woman-looking-at-camera-with-crossed-arms-happy-girl-standing-in-1865153395.jpg" class="text-center" width="100%" height="800px">
     <P>
@@ -21,8 +19,8 @@
                 <td style="text-align: right">100 <i class="bi bi-cloud-arrow-down"></i></td>
             </tr>
             @endfor
-        </tbody>                                                                                                
-    </table>    
+        </tbody>
+    </table>
 
   </div>
 </div>

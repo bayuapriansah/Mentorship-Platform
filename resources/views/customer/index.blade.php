@@ -86,9 +86,6 @@
                 <input type="checkbox" class="checked:bg-blue-500 mr-4" name="tnc" required>
                 <p class="text-sm font-normal leading-4">I accept the <span class="text-dark-blue text-sm font-normal leading-4" >Terms & Conditions and Privacy Policies</span></p>
               </div>
-              <div class="mt-4">
-                @include('flash-message')
-              </div>
               <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Sign Up</button>
             </form>
       </div>

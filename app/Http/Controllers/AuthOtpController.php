@@ -107,9 +107,13 @@ class AuthOtpController extends Controller
             $verificationCode = VerificationCode::where('user_id', $encId)->where('email', $encEmail)->where('otp', $request->otp)->first();
             $now = Carbon::now();
             if(!$verificationCode){
-                return redirect()->route('otp.verification',[$request->user_id,$theMail])->with('error', 'Your OTP code invalid');
-            }elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
-                return redirect()->route('otp.login')->with('error', 'Your verification code has expired');
+                toastr()->error('Your OTP code invalid');
+
+                return redirect()->route('otp.verification',[$request->user_id,$theMail]);
+            } elseif($verificationCode && $now->isAfter($verificationCode->expired_at)) {
+                toastr()->error('Your verification code has expired');
+
+                return redirect()->route('otp.login');
             }
 
             $data_user = Student::where('id', $encId)->where('email', $encEmail)->first();
@@ -134,7 +138,10 @@ class AuthOtpController extends Controller
                     'expired_at' => $now
                 ]);
                 Auth::guard('mentor')->login($data_user);
-                return redirect('/')->with('success', 'You are logged in');
+
+                toastr()->success('You are logged in');
+
+                return redirect('/');
             }else{
                 if(!$data_user->email == 'student@mail.test'){
                     $verificationCode->update([
@@ -142,7 +149,10 @@ class AuthOtpController extends Controller
                     ]);
                 }
                 Auth::guard('student')->login($data_user);
-                return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjects')->with('success', 'You are logged in');
+
+                toastr()->success('You are logged in');
+
+                return redirect('/profile/'.Auth::guard('student')->user()->id.'/allProjects');
             }
         }elseif($request->input('action') == 'otp'){
             $this->generate($request);

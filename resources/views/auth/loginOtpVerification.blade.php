@@ -2,7 +2,6 @@
 @section('content')
 {{--<div class="container">
   <div class="row justify-content-center">
-    @include('flash-message')
     <div class=" card col-6 p-4 bg-light">
       <form method="post" action="{{ route('otp.getlogin') }}">
         @csrf
@@ -41,7 +40,6 @@
           </div> --}}
           <div class="grid grid-cols-[300px_minmax(200px,_1fr)_100px]">
             <div class="mt-2">
-              {{-- @include('flash-message') --}}
               <div class="alert alert-success alert-dismissible fade show" role="alert" id="pleaseOtp" style="display: none;">
                 Please Enter your OTP First
               </div>

@@ -96,7 +96,9 @@ class SubmissionController extends Controller
     {
         if (Auth::guard('mentor')->check()) {
             if($submission->student->mentor_id != Auth::guard('mentor')->user()->id && $submission->student->staff_id != Auth::guard('mentor')->user()->id){
-              return back()->with('errorTailwind', 'You cannot evaluate a student whom you did not supervise');
+                toastr()->error('You cannot evaluate a student whom you did not supervise');
+
+                return back();
             }
         }
         if($request->message){
@@ -189,12 +191,14 @@ class SubmissionController extends Controller
             $comment->save();
         }
         if(!$changeGrade){
-            return redirect()->back()->with('errorTailwind', 'You cant do that');
+            toastr()->error('You cant do that');
+
+            return redirect()->back();
         }else{
             $changeGrade->status = $changeGrade->status == 0 ? 1 : 0 ;
             $changeGrade->save();
         }
-        
+
         $project_sections = ProjectSection::where('project_id', $project->id)->get();
         $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first()->is_submited;
         $submissionData = Submission::whereHas('grade', function($q){
@@ -223,9 +227,12 @@ class SubmissionController extends Controller
                 $success_project->is_submited = 1;
                 $success_project->flag_checkpoint = $dataDate;
                 $success_project->save();
-            }          
+            }
         }
-        return redirect()->back()->with('success', 'Success Update Grades');
+
+        toastr()->success('Success Update Grades');
+
+        return redirect()->back();
     }
 
     /**

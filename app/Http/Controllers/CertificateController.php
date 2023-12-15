@@ -30,7 +30,9 @@ class CertificateController extends Controller
                 $certificate = Storage::disk('public')->put('students/'.$student->id.'/certificate', $request->file('certificate'));
                 $student->certificate = $certificate;
             }else{
-                return back()->with('error', 'file extension is pdf');
+                toastr()->error('file extension is not pdf');
+
+                return back();
             }
         }
 
@@ -42,11 +44,16 @@ class CertificateController extends Controller
             $certificate = Storage::disk('public')->put('students/'.$student->id.'/certificate', $request->file('certificate'));
             $student->certificate = $certificate;
         }else{
-            return back()->with('error', 'file extension is not pd');
+            toastr()->error('file extension is not pdf');
+
+            return back();
         }
       }
 
       $student->save();
-      return redirect('/dashboard/certificate')->with('successTailwind','Profile updated successfully');
+
+      toastr()->success('Profile updated successfully');
+
+      return redirect('/dashboard/certificate');
     }
 }

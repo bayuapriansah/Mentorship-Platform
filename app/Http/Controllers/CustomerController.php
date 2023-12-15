@@ -38,7 +38,10 @@ class CustomerController extends Controller
         $member->last_name = $request->last_name;
         $member->save();
         $message = "Successfully Updated Account";
-        return redirect('/dashboard/partners/'.$partner->id.'/members')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect('/dashboard/partners/'.$partner->id.'/members');
     }
     public function partnerMemberSuspend(Company $partner, Customer $member)
     {
@@ -51,15 +54,20 @@ class CustomerController extends Controller
             $message = "Successfully activate member account";
         }
         $member->save();
-        return redirect('/dashboard/partners/'.$partner->id.'/members')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect('/dashboard/partners/'.$partner->id.'/members');
     }
     public function destroy(Company $partner, Customer $member)
     {
         $member = Customer::find($member->id);
         $member->delete();
         $message = "Successfully delete member account";
-        return redirect('/dashboard/partners/'.$partner->id.'/members')->with('error', $message);
 
+        toastr()->success($message);
+
+        return redirect('/dashboard/partners/'.$partner->id.'/members');
     }
 
     public function invite(Company $partner)
@@ -89,12 +97,16 @@ class CustomerController extends Controller
                 $CompaniesLogo = $companies_detail->logo;
                 $sendmail = $this->EmailMemberInvitation($members->email,$link,$nameCompanies,$CompaniesLogo);
                 $message .= "\n$email";
-            }else{
-                return redirect()->back()->with('error', 'Email is already registered');
+            } else {
+                toastr()->error('Email is already registered');
+
+                return redirect()->back();
             }
         }
 
-        return redirect()->route('dashboard.partner.partnerMember', [$partner_id])->with('successTailwind', $message);
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.partner.partnerMember', [$partner_id]);
     }
 
     public function EmailMemberInvitation($mailto, $urlInvitation, $nameInstitution, $logo)
@@ -162,7 +174,10 @@ class CustomerController extends Controller
             $company->save();
             // $sendmail = (new MailController)->EmailMemberRegister($company->email);
             $message = "Successfully Register as Customer, Now you can login to your account";
-            return redirect()->route('login')->with('success', $message);
+
+            toastr()->success($message);
+
+            return redirect()->route('login');
         }else{
             return redirect()->back();
         }

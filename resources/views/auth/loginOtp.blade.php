@@ -2,7 +2,6 @@
 @section('content')
 {{-- <div class="container">
   <div class="row justify-content-center">
-    @include('flash-message')
     <div class=" card col-6 p-4 bg-light">
       <form method="post" action="{{ route('otp.generate') }}">
         @csrf
@@ -41,9 +40,6 @@
               {{Session::get('g-recaptcha-response')}}
               </p>
             @endif
-          <div class="mt-4">
-            @include('flash-message')
-          </div>
           {{-- <div class="bg-red-alert intelOne text-sm p-4 w-2/3 rounded-lg mt-4 flex" role="alert">
             <img src="{{asset('assets/img/close.png')}}" class=" mr-4" alt="">
             This email address is already registered!

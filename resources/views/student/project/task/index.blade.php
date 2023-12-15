@@ -1,6 +1,5 @@
 @extends('layouts.profile.index')
 @section('content')
-@include('flash-message')
 <div class="max-w-[1366px] mx-auto px-16 pt-4 pb-40 grid grid-cols-12 gap-8 grid-flow-col items-center min-h-[500px] bg-white">
   <div class="col-span-8">
     <div class="grid grid-cols-12 gap-4 grid-flow-col">

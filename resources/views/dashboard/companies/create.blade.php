@@ -8,7 +8,6 @@
   <h3 class="text-dark-blue font-medium text-xl">Partners</h3>
 </div>
 
-@include('flash-message')
 <form action="/dashboard/partners" method="post" enctype="multipart/form-data">
   @csrf
   <div class="mb-3">
@@ -48,7 +47,7 @@
           {{$message}}
         </p>
     @enderror --}}
-    
+
   <input class="block w-1/2 text-sm text-gray-900 border border-light-blue rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 p-3 focus:outline-none " id="file_input" type="file" name="logo">
   <label for="inputlogo" class="form-label">*Max file size is 5MB</label><br>
   <label for="inputlogo" class="form-label">*Image Extension is png, jpg or jpeg</label>

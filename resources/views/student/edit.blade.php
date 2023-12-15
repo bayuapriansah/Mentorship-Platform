@@ -6,8 +6,6 @@
                 <h1 class="text-2xl text-darker-blue font-medium">
                     Edit Profile
                 </h1>
-
-                @include('flash-message')
             </div>
 
             <div class="flex flex-col justify-center items-center">

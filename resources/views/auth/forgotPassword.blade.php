@@ -47,10 +47,6 @@
                 <button type="submit" class="w-[190px] h-[51px] mt-8 rounded-full bg-primary text-white font-medium text-lg">
                     Send Instructions
                 </button>
-
-                <div class="mt-4">
-                    @include('flash-message')
-                </div>
             </form>
 
             <img

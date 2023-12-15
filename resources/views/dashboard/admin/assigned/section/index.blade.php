@@ -11,7 +11,6 @@
   <div class="row mt-4">
     <div class="col">
       <div class="card p-4">
-        @include('flash-message')
       <table id="dataTable" class="display responsive w-100" style="width: 100%">
         <thead>
           <tr>

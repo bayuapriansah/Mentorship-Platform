@@ -6,7 +6,7 @@
       <div class="col-span-7 relative">
         <h1 class="font-bold text-white text-3xl leading-10 relative z-20 ">Contact Us</h1>
         <img src="{{asset('assets/img/dotsdetail_1.png')}}" class="absolute z-10 w-[156px] h-[137px] -left-10 -top-6 ">
-        
+
       </div>
       <div class="col-start-10 col-span-4 relative ">
         <img src="{{asset('assets/img/dots-1.png')}}" alt="dots" class="absolute z-10 -top-16 right-0 " aria-hidden="true" >
@@ -16,13 +16,10 @@
   </div>
   <div class="max-w-[1366px] mx-auto px-16 py-16 grid grid-cols-12 gap-11 grid-flow-col">
     <div class="col-span-7">
-      <div class="mt-4">
-        @include('flash-message')
-      </div>
       <form action="/contact" method="post">
         @csrf
         <div class="mb-3 flex justify-between">
-          <input type="text" name="first_name" placeholder="First Name*" class="border border-light-blue rounded-lg w-1/2 mr-5 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" 
+          <input type="text" name="first_name" placeholder="First Name*" class="border border-light-blue rounded-lg w-1/2 mr-5 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"
           @if (Auth::guard('student')->check())
             value={{Auth::guard('student')->user()->first_name}}
             disabled

@@ -20,7 +20,7 @@
     <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Member <i class="fa-solid fa-chevron-right"></i> Invite</h3>
     </div>
 @endif
-@include('flash-message')
+
 @if(Auth::guard('customer')->check())
     <form action="/dashboard/customer/sendInvitePartner/{{Auth::guard('customer')->user()->company_id}}" method="post" enctype="multipart/form-data">
 @else

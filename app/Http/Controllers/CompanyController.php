@@ -53,19 +53,22 @@ class CompanyController extends Controller
     public function store(StoreCompanyRequest $request)
     {
         $validated = $request->validated();
-    
+
         $company = new Company;
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
-    
+
         if ($request->hasFile('logo')) {
             $logo = $this->uploadLogo($request->file('logo'));
             $company->logo = $logo;
         }
-    
+
         $company->save();
-        return redirect('dashboard/institutions_partners/')->with('successTailwind', 'Partner has been added');
+
+        toastr()->success('Partner has been added');
+
+        return redirect('dashboard/institutions_partners/');
     }
 
     /**
@@ -101,25 +104,28 @@ class CompanyController extends Controller
     public function update($id, UpdateCompanyRequest $request)
     {
         $validated = $request->validated();
-    
+
         $company = Company::find($id);
         $company->name = $validated['name'];
         $company->address = $validated['address'];
         $company->email = $validated['email'];
-    
+
         if ($request->hasFile('logo')) {
             if (Storage::path($company->logo)) {
                 Storage::disk('public')->delete($company->logo);
             }
-    
+
             $logo = $this->uploadLogo($request->file('logo'));
             $company->logo = $logo;
         }
-    
+
         $company->save();
-        return redirect('dashboard/institutions_partners')->with('successTailwind', 'Partner has been edited');
+
+        toastr()->success('Partner has been edited');
+
+        return redirect('dashboard/institutions_partners');
     }
-    
+
     // Upload Logo Function
     private function uploadLogo($logo)
     {
@@ -136,6 +142,9 @@ class CompanyController extends Controller
     {
         $company = Company::findOrFail($id);
         $company->delete();
-        return redirect('dashboard/institutions')->with('successTailwind', 'Partner has been deleted');
+
+        toastr()->success('Partner has been deleted');
+
+        return redirect('dashboard/institutions');
     }
 }

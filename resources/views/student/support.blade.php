@@ -3,14 +3,10 @@
 <div class="min-h-screen">
   <div class="max-w-[1366px] mx-auto px-16 pt-16 grid grid-cols-12 gap-8 grid-flow-col ">
     <div class="col-span-8">
-      {{-- <div class="mt-4">
-        @include('flash-message')
-      </div> --}}
       <div class="flex justify-between">
         <h1 class="text-dark-blue text-2xl font-medium flex items-center">Contact Support</h1>
-        @include('flash-message')
       </div>
-      <p>Contact the Simulated Internship Platform team for any technical support that you require. 
+      <p>Contact the Simulated Internship Platform team for any technical support that you require.
         For project support, kindly use the chat feature available under each project task.</p>
     </div>
   </div>

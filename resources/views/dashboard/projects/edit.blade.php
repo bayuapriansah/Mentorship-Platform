@@ -30,7 +30,7 @@
   <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
-@include('flash-message')
+
 @if (Route::is('dashboard.partner.partnerProjectsEdit'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
@@ -302,7 +302,7 @@
       <script>
         $(document).ready(function () {
           $('#inputinstitution').hide();
-          
+
           });
       </script>
     @endsection

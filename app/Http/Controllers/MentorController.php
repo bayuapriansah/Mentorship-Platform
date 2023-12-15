@@ -68,12 +68,16 @@ class MentorController extends Controller
                 $sendmail = $this->EmailMentorInvitation($mentors->email,$link,$nameInstitution,$InstitutionLogo);
                 // dd($sendmail);
                 $message .= "\n$email";
-            }else{
-                return redirect()->back()->with('error', 'Email is already registered');
+            } else {
+                toastr()->error('Email is already registered');
+
+                return redirect()->back();
             }
         }
 
-        return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id])->with('successTailwind', $message);
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.institutionSupervisors', ['institution'=>$institution_id]);
     }
 
     public function EmailMentorInvitation($mailto, $urlInvitation, $nameInstitution, $logo)
@@ -177,7 +181,10 @@ class MentorController extends Controller
         $supervisor->state = $validated['state'];
         $supervisor->save();
         $message = "Successfully updated mentor data";
-        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message );
+
+        toastr()->success($message);
+
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors');
     }
 
     /**
@@ -230,7 +237,10 @@ class MentorController extends Controller
             }else{
               $message = "Successfully Register as Staff Member, Now you can login to your account";
             }
-            return redirect()->route('login')->with('success', $message);
+
+            toastr()->success($message);
+
+            return redirect()->route('login');
         }else{
             return redirect()->back();
         }
@@ -257,7 +267,10 @@ class MentorController extends Controller
             $message = "Successfully Activate Account";
         }
         $supervisor->save();
-        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors');
     }
     /**
      * Remove the specified resource from storage.
@@ -284,7 +297,10 @@ class MentorController extends Controller
 
 
         $message = "Successfully Delete Account";
-        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect('/dashboard/institutions/'.$institution->id.'/supervisors');
     }
 
     // Register mentor

@@ -73,11 +73,16 @@ class StaffController extends Controller
               $sendmail = $this->StaffMemberInvitation($mentors->email,$link);
               // dd($sendmail);
               $message .= "\n$email";
-          }else{
-              return redirect()->back()->with('error', 'Email is already registered');
+          } else {
+              toastr()->error('Email is already registered');
+
+              return redirect()->back();
           }
         }
-        return redirect()->route('dashboard.staffs.index')->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.staffs.index');
     }
 
     public function edit(Mentor $staff)
@@ -99,7 +104,10 @@ class StaffController extends Controller
     $supervisor->last_name = $validated['last_name'];
     $supervisor->save();
     $message = "Successfully updated Staff Member";
-    return redirect('/dashboard/staffs')->with('successTailwind', $message );
+
+    toastr()->success($message);
+
+    return redirect('/dashboard/staffs');
     }
 
     public function suspend(Mentor $staff)
@@ -123,10 +131,16 @@ class StaffController extends Controller
           $message = "Successfully Activate Account";
         }
         $staff->save();
-        return back()->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return back();
       }else{
         $message = "Cant deactivate staff member";
-        return back()->with('errorTailwind', $message);
+
+        toastr()->error($message);
+
+        return back();
       }
     }
 
@@ -147,10 +161,16 @@ class StaffController extends Controller
         $staff->delete();
 
         $message = "Successfully Delete Account";
-        return back()->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return back();
       }else{
         $message = "Cant delete staff member";
-        return back()->with('errorTailwind', $message);
+
+        toastr()->error($message);
+
+        return back();
       }
     }
 }

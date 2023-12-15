@@ -25,7 +25,6 @@
 <div class="max-w-[1366px] mx-auto pl-[4.5rem] pr-[5.4rem] pt-12 pb-[4.7rem] flex">
     {{-- Form --}}
     <div class="w-[442px]">
-        @include('flash-message')
         @if ($regState == 0)
             {{-- reg state 0 if we access register just from the page --}}
             <form action="{{ route('register') }}" method="post" onsubmit="return validateForm()">
@@ -332,11 +331,6 @@
                             {{ Session::get('g-recaptcha-response') }}
                         </p>
                     @endif
-                </div>
-
-
-                <div class="mt-4">
-                    @include('flash-message')
                 </div>
 
                 <button type="submit" class="mt-6 w-[190px] h-[51px] bg-primary rounded-full text-white text-lg font-medium">
@@ -656,11 +650,6 @@
                             {{ Session::get('g-recaptcha-response') }}
                         </p>
                     @endif
-                </div>
-
-
-                <div class="mt-4">
-                    @include('flash-message')
                 </div>
 
                 <button type="submit" class="mt-6 w-[190px] h-[51px] bg-primary rounded-full text-white text-lg font-medium">

@@ -8,7 +8,7 @@
   <h3 class="text-dark-blue font-medium text-xl">{{$institution->name}} <i class="fa-solid fa-chevron-right"></i> Students</h3>
   <a href="/dashboard/institutions/{{$institution->id}}/students/invite" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Student</a>
 </div>
-@include('flash-message')
+
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -104,7 +104,7 @@
                   data-student-end_date = {{date_format(new DateTime($student->end_date), "d-M-Y")}}
                   data-timeline="{{$collection->toJson()}}"
                   data-date="{{$dataDate >=100 ? 100: $dataDate}}"
-                  data-flag = "@php 
+                  data-flag = "@php
                                 $tipNumber = 1 ;
                                 $arr = $enrolled_projects->where('is_submited',1)->where('student_id',  $student->id);
                               @endphp
@@ -121,7 +121,7 @@
                               <p class='absolute mt-3 font-medium text-left text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?99-4:$enrolled_project->flag_checkpoint-2}}%'>Project {{$num}}</p>
                               @php $num++ @endphp
                               @endforeach
-                              "                         
+                              "
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
     </tr>
@@ -134,7 +134,7 @@
 @section('more-js')
 <script>
   $(document).ready(function() {
-      
+
       let table = $('#dataTable').DataTable({
       });
       // SuspendActiveBtn
@@ -194,7 +194,7 @@
                   ${dataFlag}
                   <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
                     <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
-                  </div>  
+                  </div>
                   ${dataInfo}
                 </div>
                 <p class="text-black text-xs ">${studentEnd}</p>

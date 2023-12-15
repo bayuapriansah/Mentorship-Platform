@@ -10,7 +10,7 @@
       <h1 class="h3 mb-0 text-gray-800">Manage task for {{$project->name}}</h1>
       <h5>
         {{-- @dd($project->period) --}}
-        
+
       </h5>
   </div>
 
@@ -29,7 +29,7 @@
                 </p>
             @enderror
           </div>
-          
+
           <div class="mb-3">
             <label for="inputsection" class="form-label">Description</label>
             <textarea name="description" id="sectionDesc" cols="30" rows="10">{{old('description')}}</textarea>
@@ -79,7 +79,6 @@
         <h1 class="h3 mb-0 text-gray-800">Task Lists</h1>
       </div>
       <div class="card p-4">
-        @include('flash-message')
       <table id="myTable" class="display responsive w-100" style="width: 100%">
         <thead>
           <tr>
@@ -112,14 +111,14 @@
                   <i class="fa-solid fa-arrow-down"></i>
                 </button>
                 {!! Form::close() !!}
-                
+
               </div>
             </td>
             <td>{{$project_section->section}}</td>
             <td>{{substr($project_section->title,0,20)}}...</td>
             <td>
               {{substr($project_section->description,0,70)}}...
-              
+
               <div class="collapse my-3" id="collapseExample{{$no}}">
                 <div class="card card-body">
                  <ul class="m-0">

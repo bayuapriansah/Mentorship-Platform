@@ -15,7 +15,7 @@
 @else
   <div class="flex justify-between mb-10">
     <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-    <a href="/dashboard/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> 
+    <a href="/dashboard/projects/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i>
       @if(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
         Submit Project Proposal
       @else
@@ -37,7 +37,6 @@
 @endif
 <!-- Content Row -->
 
-@include('flash-message')
 {{-- allStudent Table --}}
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16 allStudent">
   <thead class="text-dark-blue">
@@ -145,7 +144,7 @@
                       @endif
                     </form>
                   </li>
-                
+
                   <li>
                     @if (Route::is('dashboard.partner.partnerProjects'))
                     <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post">
@@ -218,7 +217,7 @@
                 }
               @endphp
           @endforeach
-          <a href="/dashboard/enrollment/project/{{encData($project->id)}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>  
+          <a href="/dashboard/enrollment/project/{{encData($project->id)}}" class="py-1 px-8 bg-dark-blue hover:bg-darker-blue rounded-md text-white">{{$count}}</a>
       </td>
       <td class="text-[#6672D3]">{{$project->created_at->format('d/m/Y')}}</td>
       <td class="capitalize">
@@ -267,7 +266,7 @@
                       @endif
                     </form>
                   </li>
-                
+
                   <li>
                     @if (Route::is('dashboard.partner.partnerProjects'))
                     <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post">
