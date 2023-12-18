@@ -29,8 +29,6 @@
 </div>
 @endif
 
-
-@include('flash-message')
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -91,7 +89,7 @@
                   data-student-text="{{$student->is_confirm == 1 ? 'Internship Timeline': 'Student not completed the registration yet'}}"
                   data-student-end_date = {{date_format(new DateTime($student->end_date), "d-M-Y")}}
                   data-date="{{$dataDate >=100 ? 100: $dataDate}}"
-                  data-flag = "@php 
+                  data-flag = "@php
                                 $tipNumber = 1 ;
                                 $arr = $enrolled_projects->where('is_submited',1)->where('student_id',  $student->id);
                               @endphp
@@ -115,7 +113,7 @@
         <td>{{$student->first_name}} {{$student->last_name}}</td>
         <td>
           {{$student->email}}
-          
+
         </td>
         <td>
           @if($student->institution)
@@ -191,7 +189,7 @@
                   data-student-end_date = {{date_format(new DateTime($student->end_date), "d-M-Y")}}
                   data-timeline="{{$collection->toJson()}}"
                   data-date="{{$dataDate >=100 ? 100: $dataDate}}"
-                  data-flag = "@php 
+                  data-flag = "@php
                                 $tipNumber = 1 ;
                                 $arr = $enrolled_projects->where('is_submited',1)->where('student_id',  $student->id);
                               @endphp
@@ -207,7 +205,7 @@
                               <p class='absolute font-medium text-left flex-wrap overflow-hidden whitespace-nowrap text-[8px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?100-6:$enrolled_project->flag_checkpoint-2}}%'>{{Carbon\Carbon::parse($enrolled_project->updated_at)->format('d M Y')}}</p>
                               <p class='absolute mt-3 font-medium text-left text-[10px]' style='margin-left: {{$enrolled_project->flag_checkpoint>=90?99-4:$enrolled_project->flag_checkpoint-2}}%'>Project {{$num}}</p>
                               @php $num++ @endphp
-                              @endforeach"            
+                              @endforeach"
                   data-status-student = " @if($student->enrolled_projects->count() >=1)
                                             @if($student->enrolled_projects->where('is_submited',0)->last())
                                               Enrolled in '{{$student->enrolled_projects->where('is_submited',0)->last()->project->name}}'
@@ -220,8 +218,8 @@
           ><i class="fa-solid fa-chevron-down"></i></button>
         </td>
       @endif
-      
-      
+
+
     </tr>
     @php $no++ @endphp
     @endforeach
@@ -233,7 +231,7 @@
   @section('more-js')
   <script>
     $(document).ready(function() {
-      
+
       let table = $('#dataTable').DataTable({
       });
       // SuspendActiveBtn
@@ -295,7 +293,7 @@
                   ${dataFlag}
                   <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
                     <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
-                  </div>  
+                  </div>
                   ${dataInfo}
                 </div>
                 <p class="text-black text-xs ">${studentEnd}</p>
@@ -332,7 +330,7 @@
   @section('more-js')
   <script>
     $(document).ready(function() {
-      
+
       let table = $('#dataTable').DataTable({
       });
       // SuspendActiveBtn
@@ -393,7 +391,7 @@
                   ${dataFlag}
                   <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
                     <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
-                  </div>  
+                  </div>
                   ${dataInfo}
                 </div>
                 <p class="text-black text-xs ">${studentEnd}</p>
@@ -412,7 +410,7 @@
   @section('more-js')
   <script>
     $(document).ready(function() {
-      
+
       let table = $('#dataTable').DataTable({
       });
       // SuspendActiveBtn
@@ -470,7 +468,7 @@
                   ${dataFlag}
                   <div class="bg-gray-200 rounded-full h-1.5 mt-4 ">
                     <div class="bg-[#11BF61] h-1.5 rounded-full " style="width:${dataDate}%"></div>
-                  </div>  
+                  </div>
                   ${dataInfo}
                 </div>
                 <p class="text-black text-xs ">${studentEnd}</p>

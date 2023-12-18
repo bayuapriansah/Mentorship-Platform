@@ -21,7 +21,7 @@
   <a href="/dashboard/projects/{{$project->id}}/edit" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
-@include('flash-message')
+
 @if (Route::is('dashboard.partner.partnerProjectsInjectionEdit'))
 <form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
@@ -139,7 +139,7 @@
         @else
           <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment"><i class="fa-solid fa-circle-plus"></i> Add Attachment</a>
         @endif
-        
+
       @endif
     </div>
   </div>
@@ -153,7 +153,7 @@
           <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
         @else
         <a href="/dashboard/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a>
-          
+
         @endif
     </div>
 

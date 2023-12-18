@@ -5,8 +5,6 @@
         <h3 class="text-dark-blue font-medium text-xl" id="BitTitle">Students Testimonial</h3>
     </div>
 
-    @include('flash-message')
-
     <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
         <thead class="text-dark-blue">
             <tr>

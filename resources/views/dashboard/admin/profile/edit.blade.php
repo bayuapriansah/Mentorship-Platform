@@ -2,10 +2,9 @@
 @section('content')
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Edit Profile</h3>
-  @include('flash-message')
 </div>
 
-@if (Auth::guard('web')->check()) 
+@if (Auth::guard('web')->check())
 <form action="/dashboard/profile/{{Auth::guard('web')->user()->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
 
 @elseif(Auth::guard('mentor')->check())
@@ -60,8 +59,8 @@
       @endif
     @endif
       {{-- <input class="border bg-gray-300 border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="" type="text" value="{{$user->email}}" placeholder="Email *" name="email" readonly><br> --}}
-      
-   
+
+
     @if(Auth::guard('mentor')->check())
       @if (Auth::guard('mentor')->user()->institution_id != 0)
         <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->institution->name}}" placeholder="Last Name *" name="institution" readonly><br>
@@ -75,14 +74,14 @@
     @if (Auth::guard('mentor')->user()->institution_id != 0)
       <div class="flex justify-between mt-4">
         <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->state}}" placeholder="State" name="state" readonly><br>
-      
+
         <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->country}}" placeholder="Country" name="country" readonly><br>
       </div>
     @endif
   @elseif(Auth::guard('customer')->check())
     <div class="flex justify-between mt-4">
       <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none cursor-not-allowed" id="firstname" type="text" value="{{$user->company->address}}" placeholder="First Name *" readonly><br>
-    
+
       <input class="border bg-gray-300 border-light-blue rounded-lg w-1/2 h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="lastname" type="text" value="{{$user->company->email}}" placeholder="Last Name *" readonly><br>
     </div>
   @endif

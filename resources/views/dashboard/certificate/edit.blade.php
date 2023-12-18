@@ -3,9 +3,6 @@
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Certificate </h3>
 </div>
-<div class="mt-3">
-  @include('flash-message')
-</div>
 <form action="/dashboard/certificate/add/{{$student->id}}" method="post" enctype="multipart/form-data">
   @csrf
   @method('PATCH')

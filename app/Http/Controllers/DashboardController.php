@@ -333,7 +333,10 @@ class DashboardController extends Controller
         $user->password = Hash::make($validated['password']);
         }
         $user->save();
-        return back()->with('successTailwind', 'Profile Edited');
+
+        toastr()->success('Profile Edited');
+
+        return back();
       }elseif(Auth::guard('mentor')->check()){
         if(Auth::guard('mentor')->user()->institution_id != 0){
           $validated = $request->validate([
@@ -397,7 +400,10 @@ class DashboardController extends Controller
           }
           $mentor->save();
         }
-          return back()->with('successTailwind', 'Profile Edited');
+
+        toastr()->success('Profile Edited');
+
+        return back();
       }elseif(Auth::guard('customer')->check()){
         $validated = $request->validate([
           'first_name' => ['required'],
@@ -431,7 +437,10 @@ class DashboardController extends Controller
         $customer->password = Hash::make($validated['password']);
         }
         $customer->save();
-        return back()->with('successTailwind', 'Profile Edited');
+
+        toastr()->success('Profile Edited');
+
+        return back();
       }
       return back();
     }
@@ -463,8 +472,10 @@ class DashboardController extends Controller
     ]);
 
     $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
-    return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
 
+    toastr()->success('Your message has been successfully sent to our team.');
+
+    return back();
   }
 
   public function ContactUsMail($mailto,$validated) //Email, urlInvitation

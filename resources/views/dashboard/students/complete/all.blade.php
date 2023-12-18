@@ -22,8 +22,6 @@
 </div>
 @endif
 
-
-@include('flash-message')
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>

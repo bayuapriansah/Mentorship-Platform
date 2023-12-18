@@ -5,10 +5,6 @@
   <a href="/dashboard/staffs/invite" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Staff</a>
 </div>
 
-<div class="flex flex-row-reverse">
-  @include('flash-message')
-</div>
-
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>

@@ -74,10 +74,6 @@
                     </p>
                 @endif
 
-                <div class="mt-4">
-                    @include('flash-message')
-                </div>
-
                 <button
                     type="submit"
                     class="mt-6 py-3 px-20 bg-primary rounded-full font-500 text-center text-white text-lg"

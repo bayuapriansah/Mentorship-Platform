@@ -5,10 +5,6 @@
   <a href="/dashboard/institutions/create" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Add Institution</a>
 </div>
 
-<div class="flex flex-row-reverse">
-  @include('flash-message')
-</div>
-
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -65,7 +61,7 @@
     </tr>
   </thead>
   <tbody>
-    
+
     @php $no=1 @endphp
     @foreach($companies as $company)
     <tr>
@@ -137,7 +133,7 @@
                   @method('DELETE')
                   <button type="submit" onClick="return confirm('Delete this Institution?')" class="bg-dark-red px-6 py-2 text-white rounded-lg">Delete Institution</button>
                 </form>
-                
+
               </div>
             </div>
             <div class="space-x-8">

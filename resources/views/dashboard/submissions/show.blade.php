@@ -2,7 +2,6 @@
 @section('content')
 <div class="text-[#6973C6] hover:text-light-blue flex justify-between">
   <a href="/dashboard/submissions/project/{{$project->id}}"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-  @include('flash-message')
 </div>
 
 
@@ -98,7 +97,7 @@
             </div>
           </div>
 
-          @endif   
+          @endif
 
         @endif
     @endif
@@ -132,7 +131,7 @@
       <div class="flex flex-wrap justify-start pt-2">
         @foreach ($datasets as $dataset)
           <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
-          @php $no++ @endphp  
+          @php $no++ @endphp
         @endforeach
       </div>
     </div>
@@ -150,7 +149,7 @@
               </div>
               <div class="flex space-x-6">
                 {{-- data-modal-target="defaultModal" data-modal-toggle="defaultModal" --}}
-                
+
                 <input type="submit" class="text-white text-sm font-normal bg-[#11BF61] hover:bg-green-600 cursor-pointer px-12 py-3 mt-5  rounded-full" name="pass" value="PASS">
 
                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white text-sm font-normal bg-[#AB0606] hover:bg-red-800 cursor-pointer px-12 py-3 mt-5  rounded-full" type="button">
@@ -187,9 +186,9 @@
             </form>
           @endif
       @endif
-    @endif 
+    @endif
   @endif
-  
+
 </div>
 
 @endsection
@@ -200,7 +199,7 @@
     $('#changeGradeModal').on('show.bs.modal', function (e) {
       $('#detailButton').text('Less Detail');
     });
-  
+
     $('#changeGradeModal').on('hide.bs.modal', function (e) {
       $('#detailButton').text('More Detail');
     });

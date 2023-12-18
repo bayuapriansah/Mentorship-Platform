@@ -54,7 +54,9 @@ class AuthController extends Controller
             }elseif($studentExist){
                 return (new AuthOtpController)->generate($request);
             }else{
-                return redirect()->route('multiLogIn')->with('error','This email is not registered.');;
+                toastr()->error('This email is not registered.');
+
+                return redirect()->route('multiLogIn');
             }
         }
     }
@@ -156,7 +158,9 @@ class AuthController extends Controller
             // return redirect('/otp/login')->with('success','You\'re Success create an Student account. Thank you! 😊');
             return redirect()->route('verify',[$emailEnc]);
         }else{
-            return redirect('/register#register')->withInput()->with('error','This email address is already registered!');
+            toastr()->error('This email address is already registered!');
+
+            return redirect('/register#register')->withInput();
         }
     }
 
@@ -187,22 +191,30 @@ class AuthController extends Controller
         // dd($request->all());
         if(Auth::guard('student')->attempt($validated)){
             $request->session()->regenerate();
-            return redirect('/')->with('success','Logged in');
+            toastr()->success('Logged in');
+
+            return redirect('/');
         }elseif(Auth::guard('mentor')->attempt($validated)){
             $request->session()->regenerate();
-            return redirect('/')->with('success','Logged in mentor');
+            toastr()->success('Logged in mentor');
+
+            return redirect('/');
         }elseif(Auth::guard('customer')->attempt($validated)){
             $request->session()->regenerate();
-            return redirect('/')->with('success','Logged in');
+            toastr()->success('Logged in');
+
+            return redirect('/');
         }elseif(Auth::guard('web')->attempt($validated)){
             $request->session()->regenerate();
-            return redirect('/')->with('success','Logged in admin');
+            toastr()->success('Logged in admin');
+
+            return redirect('/');
         }else{
-            // dd('yaya');
+            toastr()->error('Your email or password is incorrect. Please review your information and try again.');
+
             return redirect()
                     ->back()
-                    ->withInput(['email' => $validated['email']])
-                    ->with('error', 'Your email or password is incorrect. Please review your information and try again.');
+                    ->withInput(['email' => $validated['email']]);
         }
     }
 
@@ -299,7 +311,9 @@ class AuthController extends Controller
         $checkToken = DB::table('password_resets')->where('token', $request->input('token'))->first();
 
         if (!$checkToken) {
-            return back()->withInput()->with('error', 'Invalid Token');
+            toastr()->error('Invalid Token');
+
+            return back()->withInput();
         } else {
             $usersExist = User::where('email',$checkToken->email)->first();
             $mentorsExist = Mentor::where('email',$checkToken->email)->first();
@@ -327,6 +341,8 @@ class AuthController extends Controller
             DB::table('password_resets')->where('email', $checkToken->email)->delete();
         }
 
-        return redirect()->route('login')->with('successTailwind', 'Your password has been changed, You can login with new password');
+        toastr()->success('Password changed successfully');
+
+        return redirect()->route('login');
     }
 }

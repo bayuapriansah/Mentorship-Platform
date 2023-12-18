@@ -24,7 +24,7 @@
   <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
 </div>
 @endif
-@include('flash-message')
+
 @if (Route::is('dashboard.partner.partnerProjectsCreate'))
 <form action="/dashboard/partners/{{$partner->id}}/projects" method="post" enctype="multipart/form-data" class="w-3/4">
 @else
@@ -317,7 +317,7 @@
           });
 
           $('#inputinstitution').hide();
-        
+
           $("#inputprojecttype").change(function(){
             var values = $("#inputprojecttype option:selected").val();
             if(values=='private'){
@@ -328,6 +328,6 @@
           });
       });
     </script>
-    @endsection    
-  @endif  
+    @endsection
+  @endif
 @endif

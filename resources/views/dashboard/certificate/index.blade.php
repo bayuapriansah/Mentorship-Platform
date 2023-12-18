@@ -3,9 +3,6 @@
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Certificate </h3>
 </div>
-<div class="mt-3">
-  @include('flash-message')
-</div>
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">
     <tr>
@@ -59,7 +56,7 @@
         <td class="text-center whitespace-nowrap">
           <a href="/dashboard/certificate/add/{{$student->id}}" class="px-5 pb-2 py-2 rounded-lg text-white bg-darker-blue hover:bg-dark-blue">Add Certificate</a>
         </td>
-      
+
     </tr>
     @php $no++ @endphp
     @endforeach

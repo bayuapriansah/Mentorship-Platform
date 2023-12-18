@@ -168,11 +168,14 @@ class StudentController extends Controller
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
                 $message .= "\n$email";
             }else{
-                return redirect()->back()->with('error', 'Email is already registered');
+                toastr()->error('Email is already registered');
+                return redirect()->back();
             }
         }
 
-        return redirect()->route('dashboard.students.index')->with('successTailwind', $message);
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.students.index');
     }
 
     public function sendInviteFromInstitution(Request $request, $institution_id)
@@ -190,11 +193,15 @@ class StudentController extends Controller
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
                 $message .= "\n$email";
             }else{
-                return redirect()->back()->with('error', 'Email is already registered');
+                toastr()->error('Email is already registered');
+
+                return redirect()->back();
             }
         }
 
-        return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id])->with('successTailwind', $message);
+        toastr()->success($message);
+
+        return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id]);
     }
 
     public function addStudentToInstitution($email,$institution_id)
@@ -302,8 +309,10 @@ class StudentController extends Controller
                 ){
                     $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
                     $student->profile_picture = $profile_picture;
-                }else{
-                    return redirect('/dashboard/students/'.$student->id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+                } else {
+                    toastr()->error('file extension is not png, jpg or jpeg');
+
+                    return redirect('/dashboard/students/'.$student->id.'/manage');
                 }
             }
 
@@ -318,11 +327,16 @@ class StudentController extends Controller
                 $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
                 $student->profile_picture = $profile_picture;
             }else{
-                return redirect('/dashboard/students/'.$student->id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+                toastr()->error('file extension is not png, jpg or jpeg');
+
+                return redirect('/dashboard/students/'.$student->id.'/manage');
             }
         }
         $student->save();
-        return redirect('/dashboard/students/')->with('successTailwind','Profile updated successfully');
+
+        toastr()->success('Profile updated successfully');
+
+        return redirect('/dashboard/students/');
 
     }
 
@@ -352,7 +366,9 @@ class StudentController extends Controller
                     $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
                     $student->profile_picture = $profile_picture;
                 }else{
-                    return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+                    toastr()->error('file extension is not png, jpg or jpeg');
+
+                    return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage');
                 }
             }
 
@@ -368,12 +384,16 @@ class StudentController extends Controller
                 // dd($profile_picture);
                 $student->profile_picture = $profile_picture;
             }else{
-                return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage')->with('error', 'file extension is not png, jpg or jpeg');
+                toastr()->error('file extension is not png, jpg or jpeg');
+
+                return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage');
             }
         }
         $student->save();
-        return redirect('/dashboard/institutions/'.$institution_id.'/students/')->with('successTailwind','Successfully edited student data');
 
+        toastr()->success('Successfully edited student data');
+
+        return redirect('/dashboard/institutions/'.$institution_id.'/students/');
     }
 
     /**
@@ -410,7 +430,10 @@ class StudentController extends Controller
         }
         $students->save();
         // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
-        return back()->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return back();
     }
 
     public function suspendAccount(request $request,$student_id)
@@ -432,7 +455,10 @@ class StudentController extends Controller
         }
         $student->save();
         // return redirect('/dashboard/institutions/'.$institution_id.'/students')->with('success', $message);
-        return back()->with('successTailwind', $message);
+
+        toastr()->success($message);
+
+        return back();
     }
 
     /**
@@ -468,8 +494,10 @@ class StudentController extends Controller
                 ){
                     $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
                     $student->profile_picture = $profile_picture;
-                }else{
-                    return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
+                } else {
+                    toastr()->error('file extension is not png, jpg or jpeg');
+
+                    return redirect('/profile/'.$id.'/edit');
                 }
             }
 
@@ -484,11 +512,16 @@ class StudentController extends Controller
                 $profile_picture = Storage::disk('public')->put('students/'.$id.'/profile_picture', $request->file('profile_picture'));
                 $student->profile_picture = $profile_picture;
             }else{
-                return redirect('/profile/'.$id.'/edit')->with('error', 'file extension is not png, jpg or jpeg');
+                toastr()->error('file extension is not png, jpg or jpeg');
+
+                return redirect('/profile/'.$id.'/edit');
             }
         }
         $student->save();
-        return redirect('/profile/'.$id.'/edit')->with('successTailwind','Profile updated successfully');
+
+        toastr()->success('Profile updated successfully');
+
+        return redirect('/profile/'.$id.'/edit');
     }
 
     /**
@@ -543,7 +576,9 @@ class StudentController extends Controller
         $mentor = Mentor::inRandomOrder()->where('institution_id', '!=', 0)->where('is_confirm', 1)->first();
 
         if($mentor == null){
-            return back()->with('errorTailwind', "Your institute supervisor haven't registered yet");
+            toastr()->error('Your institute supervisor haven\'t registered yet');
+
+            return back();
         }
 
         $staff = Mentor::inRandomOrder()->where('institution_id',0)->where('is_confirm',1)->first();
@@ -587,7 +622,10 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail($student->id);
         $student->delete();
-        return back()->with('error', 'Student Deleted');
+
+        toastr()->success('Student Deleted');
+
+        return back();
     }
 
     // STUDENT PROFILE
@@ -866,9 +904,10 @@ class StudentController extends Controller
                 ? 'You cannot upload a file size larger than 5MB'
                 : 'No file was uploaded';
 
+            toastr()->error($error_message);
+
             return redirect()
                 ->route('student.taskDetail', [$student_id, $project_id, $task_id])
-                ->with('errorTailwind', $error_message)
                 ->withErrors($validated);
         }
 
@@ -1179,7 +1218,9 @@ class StudentController extends Controller
         $student_name->feedback_done = 1;
         $student_name->save();
 
-        return redirect()->back()->with('success', 'Thank you for your feedback');
+        toastr('success', 'Thank you for your feedback');
+
+        return redirect()->back();
     }
 
     public function support(Student $student)
@@ -1220,7 +1261,10 @@ class StudentController extends Controller
       ]);
       $recipients = ['sip@sustainablelivinglab.org', 'aswathy@sustainablelivinglab.org','kevin@sustainablelivinglab.org','anip@sustainablelivinglab.org'];
       $this->SupportMail($recipients, $validated);
-      return back()->with('successTailwind', 'Your message has been successfully sent to our team.');
+
+      toastr()->success('Your message has been successfully sent to our team.');
+
+      return back();
     }
 
     public function SupportMail($mailto,$validated) //Email, urlInvitation

@@ -18,7 +18,7 @@
   <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-plus"></i> Invite Supervisors</a>
 </div>
 @endif
-@include('flash-message')
+
   <!-- Content Row -->
 <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16">
   <thead class="text-dark-blue">

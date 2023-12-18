@@ -9,14 +9,12 @@
   <a href="/dashboard/students"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
 </div>
 @endif
-<div class="mt-3">
-  @include('flash-message')
-</div>
+
 @if(Route::is('dashboard.students.manage'))
 <form action="/dashboard/institutions/{{$institution->id}}/students/{{$student->id}}/managepatch" method="post" enctype="multipart/form-data">
 @else
 <form action="/dashboard/students/{{$student->id}}/managepatch" method="post" enctype="multipart/form-data">
-@endif  
+@endif
   @method('patch')
   @csrf
   <img src="{{$student->profile_picture ? asset('storage/'.$student->profile_picture) : asset('assets/img/placeholder_pp.png') }}" class="w-[145px] h-[145px] mx-auto mt-14 rounded-full object-cover" id="profile_img"  alt="message">
@@ -102,7 +100,7 @@
           {{$message}}
         </p>
     @enderror
-    
+
     @if(Route::is('dashboard.students.manage'))
       <select id="inputInstitution" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight bg-gray-300 invalid:text-black text-black cursor-not-allowed focus:outline-none" name="institution" disabled>
         <option value="" hidden class="text-black">{{$student->institution->name}}</option>
@@ -119,7 +117,7 @@
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
         </p>
-    @enderror 
+    @enderror
 
     <div class="flex justify-between mt-4">
       <input class=" border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 bg-gray-300 cursor-not-allowed focus:outline-none" id="ForCountry" type="text" value="{{$student->country}}" placeholder="Country *" name="country" readonly required>
@@ -163,10 +161,10 @@
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
         </p>
-    @enderror 
+    @enderror
 
     <input type="study_program_form" id="study_program_form" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight {{old('study_program_form') != null ? 'border-red-500' : ''}} focus:outline-none" value="{{old('study_program_form')}}" placeholder="Study Program" id="study_program_form" name="study_program_form">
-    
+
     <select id="year_of_study" class="text w-full border border-light-blue rounded-lg mt-4 h-11 py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="year_of_study" required>
       <option value="" hidden >Year of study *</option>
       <option value="1st" {{$student->year_of_study == '1st' ? 'selected' : ''}}>1st</option>
