@@ -141,6 +141,7 @@
     }
   </style>
 
+  @yield('more-css')
 </head>
 <body>
   <div class="max-w-[2000px] mx-auto">
@@ -162,7 +163,7 @@
         $DataSubmissionNotifications = $notifications['submissionNotifications'];
       @endphp
 
-      <div class="w-full bg-profile-grey mx-auto py-11 px-10 relative">
+      <div class="w-full bg-white mx-auto py-11 px-10 relative">
         <div class="flex flex-row-reverse">
           <div class="space-x-9">
             <button type="button" data-modal-target="message-modal" data-modal-toggle="message-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">

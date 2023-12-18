@@ -21,11 +21,9 @@
     @endif
   </li>
   <li class="hover:font-medium">
-    @if(Route::is('dashboard.students.index'))
-      <a href="/dashboard/students" class="font-medium">Students</a>
-    @else
-      <a href="/dashboard/students">Students</a>
-    @endif
+    <a href="{{ route('dashboard.students.index') }}" class="{{ Route::is('dashboard.students.index') ? 'font-medium' : '' }}">
+        Participants
+    </a>
   </li>
   @if(Auth::guard('web')->check())
     <li class="hover:font-medium">
@@ -64,7 +62,7 @@
           <a href="/dashboard/customers" class="font-medium">Customers</a>
         @else
           <a href="/dashboard/customers">Customers</a>
-        @endif    
+        @endif
     </li>
   @endif
 </ul>
