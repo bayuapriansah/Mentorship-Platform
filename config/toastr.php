@@ -29,7 +29,7 @@ return array(
         'closeButton' => true,
         'progressBar' => true,
         'newestOnTop' => true,
-        'positionClass' => 'toast-top-center',
+        'positionClass' => 'toast-top-right',
         'preventDuplicates' => true,
     ],
 );
