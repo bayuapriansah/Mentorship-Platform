@@ -21,7 +21,7 @@
     @endif
   </li>
   <li class="hover:font-medium">
-    <a href="{{ route('dashboard.students.index') }}" class="{{ Route::is('dashboard.students.index') ? 'font-medium' : '' }}">
+    <a href="{{ route('dashboard.students.index') }}" class="{{ Route::is('dashboard.students.*') ? 'font-medium' : '' }}">
         Participants
     </a>
   </li>

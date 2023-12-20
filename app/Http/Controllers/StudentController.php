@@ -145,61 +145,102 @@ class StudentController extends Controller
 
     public function inviteFromInstitution(Institution $institution)
     {
+        $data = [
+            'institution' => $institution,
+            'template' => [
+                'url' => url('/download/bulk_upload_template.csv'),
+                'name' => 'Bulk Upload Template',
+            ],
+        ];
+
         if(Route::is('dashboard.students.invite')){
-            $allInstitutions = Institution::where('status',1)->get();
-            return view('dashboard.students.institution.invite', compact('allInstitutions', 'institution'));
-        }else{
-            return view('dashboard.students.institution.invite', compact('institution'));
+            $data['prevPage'] = url('/dashboard/students');
+            $data['formAction'] = route('dashboard.students.sendInviteStudent');
+        } else{
+            $data['prevPage'] = url('/dashboard/institutions/'.$institution->id.'/students');
+            $data['formAction'] = route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]);
         }
+
+        return view('dashboard.students.institution.invite', $data);
     }
 
     public function sendInvite(Request $request)
     {
-        $message = "Successfully Send Invitation to Student";
-        foreach (array_filter($request->email) as $email) {
+        if ($request->has('emails')) {
+            $emails = explode(',', $request->input('emails'));
+        } else {
+            $emails = $request->input('emails_check');
+        }
+
+        $emails = array_filter($emails, function ($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL);
+        });
+
+        if (count($emails) == 0) {
+            toastr()->error('Please enter valid emails', '', ['timeOut' => 10000]);
+            return redirect()->back()->withInput();
+        }
+
+        // TODO: Will be removed
+        $institution = Institution::orderBy('id')->first();
+        $countInvited = 0;
+
+        foreach ($emails as $email) {
             $checkStudent = Student::where('email', $email)->first();
             $checkUser = User::where('email', $email)->first();
             $checkMentor = Mentor::where('email', $email)->first();
             $checkCustomer = Customer::where('email', $email)->first();
+
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
+                $countInvited++;
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
-                $student = $this->addStudent($email, $request->institution_id);
+                $student = $this->addStudent($email, $institution->id);
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
-                $message .= "\n$email";
-            }else{
-                toastr()->error('Email is already registered');
-                return redirect()->back();
             }
         }
 
-        toastr()->success($message);
+
+        toastr()->success($countInvited.' Participant(s) invited successfully');
 
         return redirect()->route('dashboard.students.index');
     }
 
     public function sendInviteFromInstitution(Request $request, $institution_id)
     {
-        $message = "Successfully Send Invitation to Student";
-        foreach (array_filter($request->email) as $email) {
+        if ($request->has('emails')) {
+            $emails = explode(',', $request->input('emails'));
+        } else {
+            $emails = $request->input('emails_check');
+        }
+
+        $emails = array_filter($emails, function ($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL);
+        });
+
+        if (count($emails) == 0) {
+            toastr()->error('Please enter valid emails', '', ['timeOut' => 10000]);
+            return redirect()->back()->withInput();
+        }
+
+        $countInvited = 0;
+
+        foreach ($emails as $email) {
             $checkStudent = Student::where('email', $email)->first();
             $checkUser = User::where('email', $email)->first();
             $checkMentor = Mentor::where('email', $email)->first();
             $checkCustomer = Customer::where('email', $email)->first();
+
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
+                $countInvited++;
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
                 $student = $this->addStudentToInstitution($email, $institution_id);
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
-                $message .= "\n$email";
-            }else{
-                toastr()->error('Email is already registered');
-
-                return redirect()->back();
             }
         }
 
-        toastr()->success($message);
+        toastr()->success($countInvited.' Participant(s) invited successfully');
 
         return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id]);
     }
