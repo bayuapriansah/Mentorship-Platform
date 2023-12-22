@@ -26,7 +26,14 @@
                     </div>
 
                     <div class="mt-12 min-h-[500px]">
-                        @forelse($enrolled_projects as $enrolled_project)
+                        @php
+                            if(isSkillsTrack()){
+                                $projectType = $enrolled_projects;
+                            }else{
+                                $projectType = $enrolled_projects_entrepreneur;
+                            }
+                        @endphp
+                        @forelse($projectType as $enrolled_project)
                             @if ($enrolled_project->project)
                                 <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
                                     <div class="flex space-x-2">

@@ -136,8 +136,8 @@
             </a>
             <ul class="col-start-4 col-span-5 flex justify-end gap-[3.5rem] text-black">
                 <li class="text-black font-light text-sm">
-                    <a href="{{ route('index') }}">
-                        Home
+                    <a href="{{ route('student.allProjects', ['student' => Auth::guard('student')->user()->id]) }}">
+                        Dashboard
                     </a>
                 </li>
 

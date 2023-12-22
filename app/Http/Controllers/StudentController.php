@@ -712,7 +712,13 @@ class StudentController extends Controller
         if($id != Auth::guard('student')->user()->id ){
             abort(403);
         }
-        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->get();
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)
+                                            ->where('mentorshipType', 'skill')
+                                            ->get();
+
+        $enrolled_projects_entrepreneur = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)
+                                                        ->where('mentorshipType', 'entrepreneur')
+                                                        ->get();
         $completed_months = Project::whereHas('enrolled_project', function($q){
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
@@ -720,7 +726,7 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        return view('student.index', compact('enrolled_projects','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+        return view('student.index', compact('enrolled_projects','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
     }
 
     public function ongoingProjects($id)
