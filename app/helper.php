@@ -2,9 +2,17 @@
 
 use App\Models\Comment;
 use App\Models\Submission;
+use App\Models\Student;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\ReadNotification;
 use Illuminate\Support\Facades\Auth;
+
+if (!function_exists('teamList')) {
+    function teamList($teamName) {
+        $list_team = Student::where('team_name',$teamName)->get();
+        return $list_team;
+    }
+}
 
 if (!function_exists('encData')) {
     function encData($data) {

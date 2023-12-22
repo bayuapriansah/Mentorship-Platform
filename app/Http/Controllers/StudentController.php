@@ -408,6 +408,9 @@ class StudentController extends Controller
             abort(403);
         }
         $student = Student::findOrFail($student->id);
+        $countries = DB::table('countries')->orderBy('name')->get();
+        $end_date_switch = Carbon::parse($student->join_date)->addDays(20);
+        // dd($end_date_switch);
         // $newMessage = Comment::where('student_id',$student->id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student->id);
 
@@ -415,7 +418,7 @@ class StudentController extends Controller
         $notifActivityCount = $this->newNotificationActivityCount($student->id);
         $notifNewTasks = (new NotificationController)->all_notif_new_task();
         $dataMessages = (new NotificationController)->data_comment_from_admin($student->id);
-        return view('student.edit', compact('student','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+        return view('student.edit', compact('student','newMessage','newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages','end_date_switch','countries'));
     }
 
     public function suspendAccountInstitution($institution_id,$student_id)
@@ -468,6 +471,33 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
+    public function updateSwitch($id, Request $request)
+    {
+        $student = Student::findOrFail($id);
+        $student_track = Student::findOrFail($id);
+        if($request->switch == "Change My Track"){
+            if($student_track->mentorship_type == 'skills_track'){
+                $student->mentorship_type = 'entrepreneur_track';
+            }else{
+                $student->mentorship_type = 'skills_track';
+            }
+            $student->switch_skill = 1;
+            $student->save();
+            toastr()->success('Mentorship Type switch successfully '.$request->switch);
+        }else{
+            toastr()->error('There is something Wrong when change Mentorship Type switch');
+        }
+
+        return redirect('/profile/'.$id.'/edit');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
     public function update($id, Request $request)
     {
         // dd($request->all());
@@ -479,7 +509,7 @@ class StudentController extends Controller
         $student->date_of_birth = $request->date_of_birth;
         $student->sex = $request->sex;
         $student->country = $request->country;
-        $student->state = $request->state;
+        // $student->state = $request->state;
         if($request->study_program =='other'){
             $student->study_program = $request->study_program_form;
         }else{

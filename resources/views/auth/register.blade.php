@@ -3,7 +3,8 @@
         'Artificial Intelligence and Machine Learning',
         'Computer Science',
         'Computing Systems',
-        'Software Engineering'
+        'Software Engineering',
+        'Computer Science & Engineering'
     ];
 @endphp
 

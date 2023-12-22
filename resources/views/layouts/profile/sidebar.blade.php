@@ -127,10 +127,21 @@
         <p class="text-[#2C2C2C]">
             Team Members:
         </p>
-
+        @php
+            $teamStudents = teamList($student->team_name);
+        @endphp
+        @if($teamStudents->isNotEmpty())
+            @foreach($teamStudents as $student)
+                <!-- Student data display -->
+                <p class="font-medium text-darker-blue">{{ $student->first_name }}</p>
+            @endforeach
+        @else
+            <p>No students found in this team.</p>
+        @endif
+{{--
         <p class="font-medium text-darker-blue">Ady</p>
         <p class="font-medium text-darker-blue">Bayu</p>
-        <p class="font-medium text-darker-blue">Kevin</p>
+        <p class="font-medium text-darker-blue">Kevin</p> --}}
     </div>
   @endif
 
