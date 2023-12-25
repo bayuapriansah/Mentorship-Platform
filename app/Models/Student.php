@@ -57,4 +57,20 @@ class Student extends Authenticatable
         return $this->hasOne(Feedback::class);
     }
 
+    public function getMentorshipTrack()
+    {
+        switch ($this->mentorship_type) {
+            case 'skills_track':
+                return 'Skills';
+                break;
+
+            case 'entrepreneur_track':
+                return 'Entrepreneur';
+                break;
+
+            default:
+                return '-';
+                break;
+        }
+    }
 }

@@ -69,39 +69,9 @@ class StudentController extends Controller
     // }
     public function index()
     {
-        // Using a ternary operator to keep it more readable and less repetitive.
-        $guard = Auth::guard('web')->check() ? 'web' :
-                 (Auth::guard('mentor')->check() ? 'mentor' :
-                 (Auth::guard('customer')->check() ? 'customer' : null));
-
-        switch ($guard) {
-            case 'web':
-                $students = Student::get();
-                break;
-            case 'mentor':
-                $mentor = Auth::guard('mentor')->user();
-                $students = ($mentor->institution_id != 0)
-                    ? Student::where('institution_id', $mentor->institution_id)->get()
-                    : Student::where('staff_id', $mentor->id)->get();
-                break;
-            case 'customer':
-                $companyId = Auth::guard('customer')->user()->company_id;
-                $students = Student::whereHas('enrolled_projects', function ($q) use ($companyId) {
-                    $q->whereHas('project', function ($q) use ($companyId) {
-                        $q->where('company_id', $companyId);
-                    });
-                })->get();
-                break;
-            default:
-                // Handle case when no guard is active (optional, but good for completeness)
-                abort(403, 'Unauthorized action.');
-                break;
-        }
-
-        $enrolled_projects = EnrolledProject::get();
-
-        return view('dashboard.students.index', compact('students', 'enrolled_projects'));
+        return view('dashboard.students.index');
     }
+
     // End of refactor first code
 
     // 2nd code refactor
