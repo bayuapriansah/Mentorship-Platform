@@ -439,24 +439,27 @@
                                         Edit Details
                                     </a>
 
-                                    <form method="POST" action="{{ url('/dashboard/students/'. $participant->id .'/suspend') }}">
-                                        @csrf
+                                    <button
+                                        type="button"
+                                        data-modal-target="confirm-suspend-modal"
+                                        data-modal-toggle="confirm-suspend-modal"
+                                        data-suspend-id="{{ $participant->id }}"
+                                        data-suspend-institution="{{ $participant->institution->id }}"
+                                        class="suspend-btn min-w-[126px] min-h-[26px] p-2 bg-dark-yellow rounded-lg text-xs text-white"
+                                    >
+                                        Suspend Account
+                                    </button>
 
-                                        <input type="hidden" name="institution" value="{{ $participant->institution->id }}">
-
-                                        <button type="submit" onclick="return confirm('Are you sure you want to suspend this participant?')" class="min-w-[126px] min-h-[26px] p-2 bg-dark-yellow rounded-lg text-xs text-white">
-                                            Suspend Account
-                                        </button>
-                                    </form>
-
-                                    <form method="POST" action="{{ url('/dashboard/students/'. $participant->id .'') }}">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this participant?')" class="min-w-[126px] min-h-[26px] p-2 bg-dark-red rounded-lg text-xs text-white">
-                                            Delete Account
-                                        </button>
-                                    </form>
+                                    <button
+                                        type="button"
+                                        data-modal-target="confirm-delete-modal"
+                                        data-modal-toggle="confirm-delete-modal"
+                                        data-delete-id="{{ $participant->id }}"
+                                        data-delete-name="{{ $participant->first_name . ' ' . $participant->last_name }}"
+                                        class="delete-btn min-w-[126px] min-h-[26px] p-2 bg-dark-red rounded-lg text-xs text-white"
+                                    >
+                                        Delete Account
+                                    </button>
                                 </div>
                                 {{-- ./Actions --}}
                             </td>
@@ -579,8 +582,102 @@
     </div>
     {{-- ./Assign Staff Modal --}}
 
+    {{-- Confirm Suspend Modal --}}
+    <div wire:ignore id="confirm-suspend-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white border-2 border-grey rounded-xl">
+                <div
+                    class="absolute top-0 right-0 w-[110px] h-[110px]"
+                    style="background: url({{ asset('/assets/img/dots-2.png') }}), transparent -0.072px -7.605px / 181.04% 106.977% no-repeat;"
+                ></div>
+
+                <!-- Modal body -->
+                <form id="suspend-form" method="POST" class="px-24 pt-12 pb-14">
+                    @csrf
+
+                    <input id="suspend-institution" type="hidden" name="institution">
+
+                    <p class="text-center text-[1.375rem] text-darker-blue font-medium">
+                        Are you sure you want suspend this account?
+                    </p>
+
+                    <div class="mt-7 flex justify-center items-center gap-6">
+                        <button type="submit" class="min-w-[101px] p-2 bg-primary rounded-full text-sm text-white">
+                            Yes
+                        </button>
+
+                        <button type="button" data-modal-hide="confirm-suspend-modal" class="min-w-[101px] p-2 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- ./Confirm Suspend Modal --}}
+
+    {{-- Confirm Delete Modal --}}
+    <div wire:ignore id="confirm-delete-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white border-2 border-grey rounded-xl">
+                <div
+                    class="absolute top-0 right-0 w-[110px] h-[110px]"
+                    style="background: url({{ asset('/assets/img/dots-2.png') }}), transparent -0.072px -7.605px / 181.04% 106.977% no-repeat;"
+                ></div>
+
+                <!-- Modal body -->
+                <form id="delete-form" method="POST" class="px-24 pt-12 pb-14">
+                    @csrf
+                    @method('DELETE')
+
+                    <p class="text-center text-[1.375rem] text-darker-blue font-medium">
+                        Are you sure you want to delete this account permanently?
+                    </p>
+
+                    <p id="delete-participant-name" class="mt-4 text-center text-lg">
+                    </p>
+
+                    <div class="mt-7 flex justify-center items-center gap-6">
+                        <button type="submit" class="min-w-[101px] p-2 bg-primary rounded-full text-sm text-white">
+                            Yes
+                        </button>
+
+                        <button type="button" data-modal-hide="confirm-delete-modal" class="min-w-[101px] p-2 border border-primary rounded-full text-sm text-primary">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- ./Confirm Delete Modal --}}
+
     <script>
         document.addEventListener('livewire:load', function () {
+            document.querySelectorAll('.suspend-btn').forEach(function (element) {
+                element.addEventListener('click', function () {
+                    const actionUrl = "{{ url('/dashboard/students/XXX/suspend') }}"
+                    const participantId = element.getAttribute('data-suspend-id')
+                    const institutionId = element.getAttribute('data-suspend-institution')
+
+                    document.getElementById('suspend-form').setAttribute('action', actionUrl.replace('XXX', participantId))
+                    document.getElementById('suspend-institution').setAttribute('value', institutionId)
+                })
+            })
+
+            document.querySelectorAll('.delete-btn').forEach(function (element) {
+                element.addEventListener('click', function () {
+                    const actionUrl = "{{ url('/dashboard/students/XXX') }}"
+                    const participantId = element.getAttribute('data-delete-id')
+                    const participantName = element.getAttribute('data-delete-name')
+
+                    document.getElementById('delete-form').setAttribute('action', actionUrl.replace('XXX', participantId))
+                    document.getElementById('delete-participant-name').innerHTML = `You will delete the account "${participantName}"`
+                })
+            })
+
             document.getElementById('assign-mentor-btn').addEventListener('click', function () {
                 const mentor = document.querySelector('input[name="select_mentor"]:checked')
 

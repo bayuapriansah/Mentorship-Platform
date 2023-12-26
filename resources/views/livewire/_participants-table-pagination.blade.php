@@ -27,9 +27,12 @@
                                 {{ $page }}
                             </span>
                         @else
-                            <button wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled" class="hover:underline">
+                            {{-- <button wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled" class="hover:underline">
                                 {{ $page }}
-                            </button>
+                            </button> --}}
+                            <a href="?page={{ $page }}" class="hover:underline">
+                                {{ $page }}
+                            </a>
                         @endif
                     @endforeach
                 @endif
