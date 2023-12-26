@@ -252,13 +252,12 @@
 
                             toggleExpanded() {
                                 this.expanded = !this.expanded;
-                                this.$nextTick(() => {
-                                    if (this.expanded) {
-                                        document.getElementById('participant-detail-{{ $participant->id }}').removeAttribute('hidden');
-                                    } else {
-                                        document.getElementById('participant-detail-{{ $participant->id }}').setAttribute('hidden', 'hidden');
-                                    }
-                                });
+
+                                if (this.expanded) {
+                                    document.getElementById('participant-detail-{{ $participant->id }}').removeAttribute('hidden');
+                                } else {
+                                    document.getElementById('participant-detail-{{ $participant->id }}').setAttribute('hidden', 'hidden');
+                                }
                             }
                         }" class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }}">
                             <th scope="row" x-bind:class="expanded ? 'rounded-tl-lg' : 'rounded-s-lg'" class="pr-8 pl-5 py-2">
@@ -294,7 +293,7 @@
                                 {{ $participant->getMentorshipTrack() }}
                             </td>
 
-                            <template x-if="!expanded">
+                            <template x-if="expanded == false">
                                 <td class="pr-5 py-2 rounded-e-lg">
                                     <button x-on:click="toggleExpanded()" type="button" class="w-full text-center text-light-blue">
                                         <i class="fas fa-chevron-down fa-sm"></i>
@@ -302,7 +301,7 @@
                                 </td>
                             </template>
 
-                            <template x-if="expanded">
+                            <template x-if="expanded == true">
                                 <td class="pr-5 py-2 rounded-tr-lg">
                                     <button x-on:click="toggleExpanded()" type="button" class="w-full text-center text-light-blue">
                                         <i class="fas fa-chevron-up fa-sm"></i>
@@ -441,8 +440,7 @@
 
                                     <button
                                         type="button"
-                                        data-modal-target="confirm-suspend-modal"
-                                        data-modal-toggle="confirm-suspend-modal"
+                                        onclick="suspendParticipant(this)"
                                         data-suspend-id="{{ $participant->id }}"
                                         data-suspend-institution="{{ $participant->institution->id }}"
                                         class="suspend-btn min-w-[126px] min-h-[26px] p-2 bg-dark-yellow rounded-lg text-xs text-white"
@@ -452,8 +450,7 @@
 
                                     <button
                                         type="button"
-                                        data-modal-target="confirm-delete-modal"
-                                        data-modal-toggle="confirm-delete-modal"
+                                        onclick="deleteParticipant(this)"
                                         data-delete-id="{{ $participant->id }}"
                                         data-delete-name="{{ $participant->first_name . ' ' . $participant->last_name }}"
                                         class="delete-btn min-w-[126px] min-h-[26px] p-2 bg-dark-red rounded-lg text-xs text-white"
@@ -583,6 +580,14 @@
     {{-- ./Assign Staff Modal --}}
 
     {{-- Confirm Suspend Modal --}}
+    <button
+        hidden
+        id="open-confirm-suspend-modal-btn"
+        type="button"
+        data-modal-target="confirm-suspend-modal"
+        data-modal-toggle="confirm-suspend-modal"
+    ></button>
+
     <div wire:ignore id="confirm-suspend-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -618,6 +623,14 @@
     {{-- ./Confirm Suspend Modal --}}
 
     {{-- Confirm Delete Modal --}}
+    <button
+        hidden
+        id="open-confirm-delete-modal-btn"
+        type="button"
+        data-modal-target="confirm-delete-modal"
+        data-modal-toggle="confirm-delete-modal"
+    ></button>
+
     <div wire:ignore id="confirm-delete-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -655,28 +668,48 @@
     {{-- ./Confirm Delete Modal --}}
 
     <script>
+        function suspendParticipant(element) {
+            const actionUrl = "{{ url('/dashboard/students/XXX/suspend') }}"
+            const participantId = element.getAttribute('data-suspend-id')
+            const institutionId = element.getAttribute('data-suspend-institution')
+
+            document.getElementById('suspend-form').setAttribute('action', actionUrl.replace('XXX', participantId))
+            document.getElementById('suspend-institution').setAttribute('value', institutionId)
+            document.getElementById('open-confirm-suspend-modal-btn').click()
+        }
+
+        function deleteParticipant(element) {
+            const actionUrl = "{{ url('/dashboard/students/XXX') }}"
+            const participantId = element.getAttribute('data-delete-id')
+            const participantName = element.getAttribute('data-delete-name')
+
+            document.getElementById('delete-form').setAttribute('action', actionUrl.replace('XXX', participantId))
+            document.getElementById('delete-participant-name').innerHTML = `You will delete the account "${participantName}"`
+            document.getElementById('open-confirm-delete-modal-btn').click()
+        }
+
         document.addEventListener('livewire:load', function () {
-            document.querySelectorAll('.suspend-btn').forEach(function (element) {
-                element.addEventListener('click', function () {
-                    const actionUrl = "{{ url('/dashboard/students/XXX/suspend') }}"
-                    const participantId = element.getAttribute('data-suspend-id')
-                    const institutionId = element.getAttribute('data-suspend-institution')
+            // document.querySelectorAll('.suspend-btn').forEach(function (element) {
+            //     element.addEventListener('click', function () {
+            //         const actionUrl = "{{ url('/dashboard/students/XXX/suspend') }}"
+            //         const participantId = element.getAttribute('data-suspend-id')
+            //         const institutionId = element.getAttribute('data-suspend-institution')
 
-                    document.getElementById('suspend-form').setAttribute('action', actionUrl.replace('XXX', participantId))
-                    document.getElementById('suspend-institution').setAttribute('value', institutionId)
-                })
-            })
+            //         document.getElementById('suspend-form').setAttribute('action', actionUrl.replace('XXX', participantId))
+            //         document.getElementById('suspend-institution').setAttribute('value', institutionId)
+            //     })
+            // })
 
-            document.querySelectorAll('.delete-btn').forEach(function (element) {
-                element.addEventListener('click', function () {
-                    const actionUrl = "{{ url('/dashboard/students/XXX') }}"
-                    const participantId = element.getAttribute('data-delete-id')
-                    const participantName = element.getAttribute('data-delete-name')
+            // document.querySelectorAll('.delete-btn').forEach(function (element) {
+            //     element.addEventListener('click', function () {
+            //         const actionUrl = "{{ url('/dashboard/students/XXX') }}"
+            //         const participantId = element.getAttribute('data-delete-id')
+            //         const participantName = element.getAttribute('data-delete-name')
 
-                    document.getElementById('delete-form').setAttribute('action', actionUrl.replace('XXX', participantId))
-                    document.getElementById('delete-participant-name').innerHTML = `You will delete the account "${participantName}"`
-                })
-            })
+            //         document.getElementById('delete-form').setAttribute('action', actionUrl.replace('XXX', participantId))
+            //         document.getElementById('delete-participant-name').innerHTML = `You will delete the account "${participantName}"`
+            //     })
+            // })
 
             document.getElementById('assign-mentor-btn').addEventListener('click', function () {
                 const mentor = document.querySelector('input[name="select_mentor"]:checked')
