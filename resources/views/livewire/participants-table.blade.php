@@ -470,7 +470,7 @@
     {{-- ./Table --}}
 
     {{-- Pagination --}}
-    <div class="mt-5 flex items-center">
+    <div class="mt-5 px-2 flex items-center">
         <div x-cloak x-show="checkedParticipants.length == 0">
             <button disabled type="button" data-modal-target="assign-mentor-modal" data-modal-toggle="assign-mentor-modal" class="px-11 py-2 bg-[#C7C7C7] rounded-xl text-white">
                 Assign Mentor
@@ -491,7 +491,9 @@
             </button>
         </div>
 
-        {{ $participants->links() }}
+        <div class="max-w-[50%] ml-auto">
+            {{ $participants->links() }}
+        </div>
     </div>
     {{-- ./Pagination --}}
 

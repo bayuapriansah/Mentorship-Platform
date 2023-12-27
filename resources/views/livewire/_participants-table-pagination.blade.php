@@ -1,4 +1,4 @@
-<div class="max-w-[50%] ml-auto flex items-center text-sm">
+<div class="flex items-center text-sm">
     @if ($paginator->hasPages())
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
@@ -27,7 +27,7 @@
                                 {{ $page }}
                             </span>
                         @else
-                            <button wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled" class="hover:underline">
+                            <button wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" class="hover:underline">
                                 {{ $page }}
                             </button>
                         @endif

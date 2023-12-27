@@ -27,19 +27,17 @@
   </li>
   @if(Auth::guard('web')->check())
     <li class="hover:font-medium">
-        @if(Route::is('dashboard.staffs.index'))
-          <a href="/dashboard/staffs" class="font-medium">Staff</a>
-        @else
-          <a href="/dashboard/staffs">Staff</a>
-        @endif
+        <a href="{{ route('dashboard.staffs.index') }}" class="{{ Route::is('dashboard.staffs.*') ? 'font-medium' : '' }}">
+            Mentor & Staff
+        </a>
     </li>
-    <li class="hover:font-medium">
+    {{-- <li class="hover:font-medium">
         @if(Route::is('dashboard.institutions_partners'))
           <a href="/dashboard/institutions_partners" class="font-medium">Institutions & Partner</a>
         @else
           <a href="/dashboard/institutions_partners">Institutions & Partner</a>
         @endif
-    </li>
+    </li> --}}
     <li class="hover:font-medium">
         @if(Route::is('dashboard.testimonial'))
           <a href="{{ route('dashboard.testimonial') }}" class="font-medium">Testimonials</a>

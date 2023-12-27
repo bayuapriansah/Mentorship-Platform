@@ -35,7 +35,7 @@
 {{-- ./Header --}}
 
 {{-- Table --}}
-<div class="mt-5">
+<div class="mt-6">
     @livewire('participants-table')
 </div>
 {{-- ./Table --}}
