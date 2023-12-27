@@ -1,5 +1,11 @@
 @extends('layouts.admin2')
 
+@section('more-css')
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+@endsection
+
 @section('content')
 {{-- Breadcrumb --}}
 <div class="flex flex-wrap text-[1.375rem] text-dark-blue font-medium gap-3">

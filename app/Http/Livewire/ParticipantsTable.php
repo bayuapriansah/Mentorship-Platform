@@ -22,7 +22,6 @@ class ParticipantsTable extends Component
     public $staffs;
 
     public $limit = 10;
-    public $page = 1;
     public $search = '';
     public $sortField = 'created_at';
     public $sortDirection = 'asc';
