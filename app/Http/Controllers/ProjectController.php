@@ -1077,4 +1077,32 @@ class ProjectController extends Controller
         return view('dashboard.projects.index', compact('projects'));
     }
 
+    public function store(Request $request)
+    {
+        $acceptedExtensions = ['png', 'jpg', 'jpeg', 'gif'];
+        $imageFolder = 'public/uploads/';
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+
+            // Validate file extension
+            if (in_array(strtolower($extension), $acceptedExtensions)) {
+                // Generate unique file name
+                $filename = uniqid() . '.' . $extension;
+
+                // Store the file
+                $path = $file->storeAs($imageFolder, $filename);
+
+                // Generate full URL
+                $fullUrl = url(Storage::url($path));
+
+                // Return the full URL of the stored file
+                return response()->json(['location' => $fullUrl]);
+            }
+        }
+
+        // Respond with an error if validation fails
+        return response()->json(['error' => 'Invalid file'], 422);
+    }
 }

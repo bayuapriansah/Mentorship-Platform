@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Admin</title>
   <link rel="icon" type="image/x-icon" href="{{asset('assets/img/icon/favicon.ico')}}">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
@@ -15,20 +16,78 @@
   <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
   <script src="https://cdn.tiny.cloud/1/gm5482398yg3mbfrvxr3y0bok7hggsq0gervklzy8n1jpj1a/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
-    tinymce.init({
-        selector: 'textarea#problem', // Replace this CSS selector to match the placeholder element for TinyMCE
+    const imageUploadHandler = (blobInfo, progress) => new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '{{ route("dashboard.project.image-upload") }}');
+
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // Set CSRF token for Laravel
+
+            // console.log('CSRF Token:', csrfToken); // Log the CSRF token
+
+            xhr.upload.onprogress = (e) => {
+            progress(e.loaded / e.total * 100);
+            };
+
+            xhr.onload = () => {
+            if (xhr.status === 403) {
+            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+            return;
+            }
+
+            if (xhr.status < 200 || xhr.status>= 300) {
+                reject('HTTP Error: ' + xhr.status);
+                return;
+                }
+
+                const json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location != 'string') {
+                reject('Invalid JSON: ' + xhr.responseText);
+                return;
+                }
+
+                resolve(json.location);
+                // console.log(json.location);
+                // console.log(resolve(json.location));
+                };
+
+                xhr.onerror = () => {
+                reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                };
+
+                const formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                xhr.send(formData);
+                });
+
+      tinymce.init({
+        selector: 'textarea#problem',
         height: 350,
-        plugins: 'media image lists paste',
+        plugins: 'media image lists',
         menubar: 'file edit insert view format table tools help',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
-        images_upload_url: 'postAcceptor.php',
-        automatic_uploads: false,
-        paste_as_text: true
-    });
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullis | image',
+        images_upload_url: '{{ route("dashboard.project.image-upload") }}',
+        images_upload_handler: imageUploadHandler,
+        automatic_uploads: true,
+        paste_as_text: true,
+        setup: function(editor) {
+            editor.on('GetContent', function(e) {
+                var content = e.content;
+                var websiteUrl = window.location.origin; // Gets the base URL of the website
+
+                var newContent = content.replace(/data-mce-src="\.\.\/\.\.\/\.\.\/storage\/uploads\//g, 'data-mce-src="' + websiteUrl + '/storage/uploads/');
+                e.content = newContent;
+            });
+        },
+      });
+
     tinymce.init({
         selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
         height: 350,
-        plugins: 'media image lists paste',
+        plugins: 'media image lists',
         menubar: 'file edit insert view format table tools help',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
         images_upload_url: 'postAcceptor.php',
@@ -44,7 +103,7 @@
     tinymce.init({
         selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
         height: 350,
-        plugins: 'lists paste',
+        plugins: 'lists',
         menubar: '',
         toolbar: 'undo redo | styleselect | bold italic ',
         automatic_uploads: false,
@@ -292,20 +351,19 @@
 
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script> --}}
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}
-  <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  @yield('more-js')
-  <script>
-      const openToggle = (id)=>{
-        // document.getElementById(`dropdownHover${id}`).classList.add('hidden');
-        document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+@yield('more-js')
+<script>
+    const openToggle = (id)=>{
+      // document.getElementById(`dropdownHover${id}`).classList.add('hidden');
+      document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
 
-        if ( document.getElementById(`dropdownHover${id}`).classList.contains('hidden') )
+      if ( document.getElementById(`dropdownHover${id}`).classList.contains('hidden') )
 
-        document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
-      }
-  </script>
+      document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
+    }
+</script>
 </body>
-</html>

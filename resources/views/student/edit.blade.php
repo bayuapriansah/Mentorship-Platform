@@ -16,19 +16,13 @@
                             id="profile_img" alt="message"
                             class="w-[145px] h-[145px] mt-8 mx-auto rounded-full object-cover ring ring-[#C5CAF3]">
 
-                        {{-- <label for="file-upload"
-                            class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
-                            Change Photo
-                            <input id="file-upload" name="profile_picture" type="file" hidden />
-                        </label> --}}
-
                         {{-- Change Photo --}}
                         <button type="button" data-dropdown-toggle="change-photo-dropdown"
                             class="w-max mt-4 mx-auto py-2 px-6 bg-primary flex justify-center cursor-pointer rounded-full text-white font-medium">
                             Change Photo
                         </button>
 
-                        <input id="input-photo-file" name="profile_picture" type="file" hidden />
+                        <input id="input-photo-file" name="profile_picture" type="file" onchange="document.getElementById('profile_img').src = window.URL.createObjectURL(this.files[0])" hidden />
 
                         <div id="change-photo-dropdown"
                             class="z-10 hidden min-w-[281px] bg-[#F4F4F5] border border-grey shadow-xl divide-y rounded-xl">
