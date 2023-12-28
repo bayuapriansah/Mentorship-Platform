@@ -95,6 +95,34 @@
                 </button>
             </div>
             {{-- ./Filter - Mentorship Type --}}
+
+            {{-- Filter - Country --}}
+            <div class="flex flex-col">
+                <h2 class="text-lg text-darker-blue">
+                    Country
+                </h2>
+
+                <select wire:model="filterByCountry" class="mt-4 text-sm border border-primary rounded-md">
+                    <option value="" hidden>
+                        Select Country
+                    </option>
+
+                    @foreach ($countries as $country)
+                        <option value="{{ $country->name }}">
+                            {{ $country->name }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <button
+                    type="button"
+                    wire:click="$set('filterByCountry', '')"
+                    class="{{ empty($filterByCountry) ? 'hidden' : 'block' }} self-end mt-2 mr-1 text-sm hover:underline"
+                >
+                    Reset
+                </button>
+            </div>
+            {{-- ./Filter - Country --}}
         </div>
 
         <button wire:click="resetAllFilters" type="button" class="mt-8 px-8 py-2 text-sm text-white bg-primary rounded-full">
@@ -144,6 +172,14 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
+                                    Country
+                                </span>
+                            </div>
+                        </th>
+
+                        <th scope="col" class="pr-8">
+                            <div class="w-full flex justify-between items-center gap-5">
+                                <span class="text-sm text-darker-blue font-medium">
                                     Team Name
                                 </span>
                             </div>
@@ -152,7 +188,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Mentorship Track
+                                    Mentorship Type
                                 </span>
                             </div>
                         </th>
@@ -188,6 +224,10 @@
 
                             <td class="pr-8 py-2">
                                 {{ $participant->team_name }}
+                            </td>
+
+                            <td class="pr-8 py-2">
+                                {{ $participant->country }}
                             </td>
 
                             <td class="pr-8 py-2">
