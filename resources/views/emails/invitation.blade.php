@@ -79,11 +79,13 @@
             </a>
 
             <p class="closing">
-                Please note that this invitation will expire in the next 10 days.
-                Please accept the invitation before
-                <strong>
-                    {{ $data['expired_date'] }}
-                </strong>
+                @if ($data['expired_date'] !== null && $data['expired_date'] !== '')
+                    Please note that this invitation will expire in the next 10 days.
+                    Please accept the invitation before
+                    <strong>
+                        {{ $data['expired_date'] }}
+                    </strong>
+                @endif
                 For assistance, please contact our support team at help@simulatedinternship.com
             </p>
 

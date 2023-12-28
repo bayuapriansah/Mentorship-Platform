@@ -26,64 +26,63 @@ class StaffController extends Controller
 
     public function invite(Request $request)
     {
-        $data = [
+        return view('dashboard.staffs.invite', [
             'isMentor' => $request->has('is_mentor'),
-        ];
-
-        return view('dashboard.staffs.invite', $data);
-    }
-
-    public function addStaff($email){
-      return Mentor::create([
-          'email' => $email,
-          'institution_id' => 0,
-          'is_confirm' => 0
-      ]);
-    }
-
-    public function StaffMemberInvitation($mailto, $urlInvitation)
-    {
-        $data = [
-            'subject' => 'Invitation to join as a Staff Member',
-            'body' => $mailto,
-            'body2' => $urlInvitation,
-            'body3' => 'Simulated Internship Platform',
-            'type' => 'staffmember',
-        ];
-        try {
-            Mail::to($mailto)->send(new MailNotify($data));
-            return response()->json(['message' => 'Staff Invitation Email sent successfully']);
-        } catch (\Exception $exception) {
-            return response()->json(['message' => $exception->getMessage()], 500);
-        }
+        ]);
     }
 
     public function sendInvite(Request $request)
     {
-      $message = "Successfully Send Invitation to Staff Member";
-        foreach (array_filter($request->email) as $email) {
-          $checkStudent = Student::where('email', $email)->first();
-          $checkUser = User::where('email', $email)->first();
-          $checkMentor = Mentor::where('email', $email)->first();
-          $checkCustomer = Customer::where('email', $email)->first();
-          if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
-              $encEmail = (new SimintEncryption)->encData($email);
-              $link = route('supervisor.register', [$encEmail]);
-              $mentors = $this->addStaff($email);
-              // $institution_detail = Institution::where('id',$institution_id)->first();
-              // $nameInstitution = $institution_detail->name;
-              // $InstitutionLogo = $institution_dStaffMemberInvitationetail->logo;
-              $sendmail = $this->StaffMemberInvitation($mentors->email,$link);
-              // dd($sendmail);
-              $message .= "\n$email";
-          } else {
-              toastr()->error('Email is already registered');
+        $isMentor = $request->has('is_mentor') && boolval($request->input('is_mentor'));
 
-              return redirect()->back();
-          }
+        if ($request->has('emails')) {
+            $emails = explode(',', $request->input('emails'));
+        } else {
+            $emails = $request->input('emails_check');
         }
 
-        toastr()->success($message);
+        $emails = array_filter($emails, function ($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL);
+        });
+
+        if (count($emails) == 0) {
+            toastr()->error('Please enter valid emails', '', ['timeOut' => 10000]);
+            return redirect()->back()->withInput();
+        }
+
+        $countInvited = 0;
+
+        DB::transaction(function () use ($emails, $isMentor, &$countInvited) {
+            $institution_id = 0;
+
+            if ($isMentor) {
+                $institution_id = Institution::orderBy('id')->first()->id;
+            }
+
+            foreach ($emails as $email) {
+                $checkStudent = Student::where('email', $email)->first();
+                $checkUser = User::where('email', $email)->first();
+                $checkMentor = Mentor::where('email', $email)->first();
+                $checkCustomer = Customer::where('email', $email)->first();
+
+                if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
+                    Mentor::create([
+                        'email' => $email,
+                        'is_confirm' => 0,
+                        'institution_id' => $institution_id,
+                    ]);
+
+                    $encEmail = (new SimintEncryption)->encData($email);
+                    $link = route('supervisor.register', [$encEmail]);
+                    (new MailController)->EmailStaffInvitation($email, $link);
+
+                    $countInvited++;
+                }
+            }
+        });
+
+        $target = $isMentor ? 'Mentor' : 'Staff';
+        toastr()->success($countInvited . ' ' . $target .'(s) invited successfully');
 
         return redirect()->route('dashboard.staffs.index');
     }
