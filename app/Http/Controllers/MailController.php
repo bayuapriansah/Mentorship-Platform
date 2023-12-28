@@ -158,21 +158,28 @@ class MailController extends Controller
         }
     }
 
-    public function EmailStudentInvitation($mailto, $urlInvitation) //Email, urlInvitation
+    public function EmailStaffInvitation($email, $url)
+    {
+        $data = [
+            'subject' => 'Invitation to Join Mentorship Program',
+            'expired_date' => null,
+            'url' => $url,
+            'type' => 'invitation',
+        ];
+
+        Mail::to($email)->send(new MailNotify($data));
+    }
+
+    public function EmailStudentInvitation($email, $url)
     {
         $data = [
             'subject' => 'Invitation to Join Mentorship Program',
             'expired_date' => Carbon::now()->addDays(10)->format('F j, Y'),
-            'url' => $urlInvitation,
+            'url' => $url,
             'type' => 'invitation',
         ];
 
-        try {
-            Mail::to($mailto)->send(new MailNotify($data));
-            return response()->json(['Mentor Invitation  Email sent successfully']);
-        } catch (\Exception $th) {
-            return response()->json(['Sorry Something went wrong']);
-        }
+        Mail::to($email)->send(new MailNotify($data));
     }
 
     public function EmailStudentVerificationSuccess($email)
