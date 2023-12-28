@@ -69,39 +69,9 @@ class StudentController extends Controller
     // }
     public function index()
     {
-        // Using a ternary operator to keep it more readable and less repetitive.
-        $guard = Auth::guard('web')->check() ? 'web' :
-                 (Auth::guard('mentor')->check() ? 'mentor' :
-                 (Auth::guard('customer')->check() ? 'customer' : null));
-
-        switch ($guard) {
-            case 'web':
-                $students = Student::get();
-                break;
-            case 'mentor':
-                $mentor = Auth::guard('mentor')->user();
-                $students = ($mentor->institution_id != 0)
-                    ? Student::where('institution_id', $mentor->institution_id)->get()
-                    : Student::where('staff_id', $mentor->id)->get();
-                break;
-            case 'customer':
-                $companyId = Auth::guard('customer')->user()->company_id;
-                $students = Student::whereHas('enrolled_projects', function ($q) use ($companyId) {
-                    $q->whereHas('project', function ($q) use ($companyId) {
-                        $q->where('company_id', $companyId);
-                    });
-                })->get();
-                break;
-            default:
-                // Handle case when no guard is active (optional, but good for completeness)
-                abort(403, 'Unauthorized action.');
-                break;
-        }
-
-        $enrolled_projects = EnrolledProject::get();
-
-        return view('dashboard.students.index', compact('students', 'enrolled_projects'));
+        return view('dashboard.students.index');
     }
+
     // End of refactor first code
 
     // 2nd code refactor
@@ -145,61 +115,102 @@ class StudentController extends Controller
 
     public function inviteFromInstitution(Institution $institution)
     {
+        $data = [
+            'institution' => $institution,
+            'template' => [
+                'url' => url('/download/bulk_upload_template.csv'),
+                'name' => 'Bulk Upload Template',
+            ],
+        ];
+
         if(Route::is('dashboard.students.invite')){
-            $allInstitutions = Institution::where('status',1)->get();
-            return view('dashboard.students.institution.invite', compact('allInstitutions', 'institution'));
-        }else{
-            return view('dashboard.students.institution.invite', compact('institution'));
+            $data['prevPage'] = url('/dashboard/students');
+            $data['formAction'] = route('dashboard.students.sendInviteStudent');
+        } else{
+            $data['prevPage'] = url('/dashboard/institutions/'.$institution->id.'/students');
+            $data['formAction'] = route('dashboard.students.sendInviteFromInstitution', ['institution'=>$institution->id]);
         }
+
+        return view('dashboard.students.institution.invite', $data);
     }
 
     public function sendInvite(Request $request)
     {
-        $message = "Successfully Send Invitation to Student";
-        foreach (array_filter($request->email) as $email) {
+        if ($request->has('emails')) {
+            $emails = explode(',', $request->input('emails'));
+        } else {
+            $emails = $request->input('emails_check');
+        }
+
+        $emails = array_filter($emails, function ($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL);
+        });
+
+        if (count($emails) == 0) {
+            toastr()->error('Please enter valid emails', '', ['timeOut' => 10000]);
+            return redirect()->back()->withInput();
+        }
+
+        // TODO: Will be removed
+        $institution = Institution::orderBy('id')->first();
+        $countInvited = 0;
+
+        foreach ($emails as $email) {
             $checkStudent = Student::where('email', $email)->first();
             $checkUser = User::where('email', $email)->first();
             $checkMentor = Mentor::where('email', $email)->first();
             $checkCustomer = Customer::where('email', $email)->first();
+
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
+                $countInvited++;
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
-                $student = $this->addStudent($email, $request->institution_id);
+                $student = $this->addStudent($email, $institution->id);
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
-                $message .= "\n$email";
-            }else{
-                toastr()->error('Email is already registered');
-                return redirect()->back();
             }
         }
 
-        toastr()->success($message);
+
+        toastr()->success($countInvited.' Participant(s) invited successfully');
 
         return redirect()->route('dashboard.students.index');
     }
 
     public function sendInviteFromInstitution(Request $request, $institution_id)
     {
-        $message = "Successfully Send Invitation to Student";
-        foreach (array_filter($request->email) as $email) {
+        if ($request->has('emails')) {
+            $emails = explode(',', $request->input('emails'));
+        } else {
+            $emails = $request->input('emails_check');
+        }
+
+        $emails = array_filter($emails, function ($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL);
+        });
+
+        if (count($emails) == 0) {
+            toastr()->error('Please enter valid emails', '', ['timeOut' => 10000]);
+            return redirect()->back()->withInput();
+        }
+
+        $countInvited = 0;
+
+        foreach ($emails as $email) {
             $checkStudent = Student::where('email', $email)->first();
             $checkUser = User::where('email', $email)->first();
             $checkMentor = Mentor::where('email', $email)->first();
             $checkCustomer = Customer::where('email', $email)->first();
+
             if (!$checkStudent && !$checkUser && !$checkMentor && !$checkCustomer) {
+                $countInvited++;
                 $encEmail = (new SimintEncryption)->encData($email);
                 $link = route('student.register', [$encEmail]);
                 $student = $this->addStudentToInstitution($email, $institution_id);
                 $sendmail = (new MailController)->EmailStudentInvitation($student->email, $link);
-                $message .= "\n$email";
-            }else{
-                toastr()->error('Email is already registered');
-
-                return redirect()->back();
             }
         }
 
-        toastr()->success($message);
+        toastr()->success($countInvited.' Participant(s) invited successfully');
 
         return redirect()->route('dashboard.students.institutionStudents', ['institution' => $institution_id]);
     }
@@ -267,41 +278,76 @@ class StudentController extends Controller
         //
     }
 
-    public function manage(Institution $institution,Student $student)
+    public function manage(Institution $institution, Student $student)
     {
-        $mentors = Mentor::where('institution_id', $student->institution_id)->get();
-        return view('dashboard.students.edit', compact('student', 'mentors', 'institution'));
+        $data = [
+            'backUrl' => url('/dashboard/institutions/'. $institution->id .'/students'),
+            'formAction' => url('/dashboard/institutions/'. $institution->id .'/students/'. $student->id .'/managepatch'),
+            'countries' => DB::table('countries')->orderBy('name')->get(),
+            'student' => $student,
+            'institution' => $institution,
+            'year_of_studies' => ['1st', '2nd', '3rd', '4th', '5+'],
+            'study_programs' => ['Artificial Intelligence and Machine Learning', 'Computer Science', 'Computing Systems', 'Software Engineering'],
+            // 'mentors' => Mentor::where('institution_id', $student->institution_id)->get(),
+        ];
+
+        return view('dashboard.students.edit', $data);
     }
-    // manage students in sidebar menu
+
     public function manageStudent(Student $student)
     {
-        $institutions = Institution::get();
-        $supervisors = Mentor::where('institution_id', '!=', 0)->where('is_confirm', 1)->get();
-        $staffs = Mentor::where('institution_id', 0)->where('is_confirm', 1)->get();
-        return view('dashboard.students.edit', compact('student','supervisors','staffs','institutions'));
+        $data = [
+            'backUrl' => url('/dashboard/students'),
+            'formAction' => url('/dashboard/students/'. $student->id .'/managepatch'),
+            'countries' => DB::table('countries')->orderBy('name')->get(),
+            'student' => $student,
+            'institutions' => Institution::all(),
+            'year_of_studies' => ['1st', '2nd', '3rd', '4th', '5+'],
+            'study_programs' => ['Artificial Intelligence and Machine Learning', 'Computer Science', 'Computing Systems', 'Software Engineering'],
+            // 'supervisors' => Mentor::where('institution_id', '!=', 0)->where('is_confirm', 1)->get(),
+            // 'staffs' => Mentor::where('institution_id', 0)->where('is_confirm', 1)->get(),
+        ];
+
+        return view('dashboard.students.edit', $data);
     }
 
     public function manageStudentpatch(Request $request, Student $student)
     {
-        $student = Student::findOrFail($student->id);
-        $student->first_name = $request->first_name;
-        $student->last_name = $request->last_name;
-        $student->date_of_birth = $request->date_of_birth;
-        $student->end_date = $request->end_date;
-        $student->mentor_id = $request->supervisor;
-        $student->staff_id = $request->staff;
-        $student->sex = $request->sex;
-        $student->institution_id = $request->institution;
-        $student->country = $request->country;
-        $student->state = $request->state;
-        $student->email = $request->email;
-        if($request->study_program =='other'){
-            $student->study_program = $request->study_program_form;
-        }else{
-            $student->study_program = $request->study_program;
+        if ($request->input('update_type') === 'end_date') {
+            $student->end_date = $request->input('end_date');
+            $student->save();
+            toastr()->success('End date updated successfully');
+
+            return redirect()->back();
         }
-        $student->year_of_study = $request->year_of_study;
-        if($request->hasFile('profile_picture')){
+
+        if ($request->input('update_type') === 'password') {
+            $student->password = Hash::make($request->input('password'));
+            $student->save();
+            toastr()->success('Password updated successfully');
+
+            return redirect()->back();
+        }
+
+        if ($request->input('update_type') === 'mentorship_type') {
+            $student->mentorship_type = $request->input('mentorship_type');
+            $student->save();
+            toastr()->success('Mentorship type updated successfully');
+
+            return redirect()->back();
+        }
+
+        $student->first_name = $request->input('first_name');
+        $student->last_name = $request->input('last_name');
+        $student->date_of_birth = $request->input('date_of_birth');
+        $student->sex = $request->input('sex');
+        $student->country = $request->input('country');
+        $student->institution_id = $request->input('institution');
+        $student->email = $request->input('email');
+        $student->year_of_study = $request->input('year_of_study');
+        $student->study_program = $request->input('study_program');
+
+        if ($request->hasFile('profile_picture')) {
             if($student->profile_picture == null){
                 if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
@@ -310,9 +356,8 @@ class StudentController extends Controller
                     $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
                     $student->profile_picture = $profile_picture;
                 } else {
-                    toastr()->error('file extension is not png, jpg or jpeg');
-
-                    return redirect('/dashboard/students/'.$student->id.'/manage');
+                    toastr()->error('File extension is not png, jpg or jpeg');
+                    return redirect()->back();
                 }
             }
 
@@ -327,48 +372,66 @@ class StudentController extends Controller
                 $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
                 $student->profile_picture = $profile_picture;
             }else{
-                toastr()->error('file extension is not png, jpg or jpeg');
-
-                return redirect('/dashboard/students/'.$student->id.'/manage');
+                toastr()->error('File extension is not png, jpg or jpeg');
+                return redirect()->back();
             }
         }
-        $student->save();
 
+        $student->save();
         toastr()->success('Profile updated successfully');
 
-        return redirect('/dashboard/students/');
-
+        return redirect()->back();
     }
 
     public function managepatch($institution_id, $student_id, Request $request)
     {
         $student = Student::findOrFail($student_id);
-        $student->first_name = $request->first_name;
-        $student->last_name = $request->last_name;
-        $student->date_of_birth = $request->date_of_birth;
-        $student->end_date = $request->end_date;
-        $student->sex = $request->sex;
-        $student->country = $request->country;
-        $student->state = $request->state;
-        $student->mentor_id = $request->mentor_id;
-        if($request->study_program =='other'){
-            $student->study_program = $request->study_program_form;
-        }else{
-            $student->study_program = $request->study_program;
+
+        if ($request->input('update_type') === 'end_date') {
+            $student->end_date = $request->input('end_date');
+            $student->save();
+            toastr()->success('End date updated successfully');
+
+            return redirect()->back();
         }
-        $student->year_of_study = $request->year_of_study;
-        if($request->hasFile('profile_picture')){
+
+        if ($request->input('update_type') === 'password') {
+            $student->password = Hash::make($request->input('password'));
+            $student->save();
+            toastr()->success('Password updated successfully');
+
+            return redirect()->back();
+        }
+
+        if ($request->input('update_type') === 'mentorship_type') {
+            $student->mentorship_type = $request->input('mentorship_type');
+            $student->save();
+            toastr()->success('Mentorship type updated successfully');
+
+            return redirect()->back();
+        }
+
+        $student->first_name = $request->input('first_name');
+        $student->last_name = $request->input('last_name');
+        $student->date_of_birth = $request->input('date_of_birth');
+        $student->sex = $request->input('sex');
+        $student->country = $request->input('country');
+        $student->institution_id = $institution_id;
+        $student->email = $request->input('email');
+        $student->year_of_study = $request->input('year_of_study');
+        $student->study_program = $request->input('study_program');
+
+        if ($request->hasFile('profile_picture')) {
             if($student->profile_picture == null){
                 if( $request->file('profile_picture')->extension() =='png' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpg' && $request->file('profile_picture')->getSize() <=5000000 ||
                 $request->file('profile_picture')->extension() =='jpeg' && $request->file('profile_picture')->getSize() <=5000000
                 ){
-                    $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
+                    $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
                     $student->profile_picture = $profile_picture;
-                }else{
-                    toastr()->error('file extension is not png, jpg or jpeg');
-
-                    return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage');
+                } else {
+                    toastr()->error('File extension is not png, jpg or jpeg');
+                    return redirect()->back();
                 }
             }
 
@@ -380,20 +443,18 @@ class StudentController extends Controller
                 if(Storage::path($student->profile_picture)) {
                     Storage::disk('public')->delete($student->profile_picture);
                 }
-                $profile_picture = Storage::disk('public')->put('students/'.$student_id.'/profile_picture', $request->file('profile_picture'));
-                // dd($profile_picture);
+                $profile_picture = Storage::disk('public')->put('students/'.$student->id.'/profile_picture', $request->file('profile_picture'));
                 $student->profile_picture = $profile_picture;
             }else{
-                toastr()->error('file extension is not png, jpg or jpeg');
-
-                return redirect('/dashboard/institutions/'.$institution_id.'/students/'.$student_id.'/manage');
+                toastr()->error('File extension is not png, jpg or jpeg');
+                return redirect()->back();
             }
         }
+
         $student->save();
+        toastr()->success('Profile updated successfully');
 
-        toastr()->success('Successfully edited student data');
-
-        return redirect('/dashboard/institutions/'.$institution_id.'/students/');
+        return redirect()->back();
     }
 
     /**

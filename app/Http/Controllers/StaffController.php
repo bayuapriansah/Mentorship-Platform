@@ -21,13 +21,16 @@ class StaffController extends Controller
 {
     public function index()
     {
-      $staffs = Mentor::where('institution_id', 0)->where('offboard', 0)->get();
-      return view('dashboard.staffs.index', compact('staffs'));
+        return view('dashboard.staffs.index');
     }
 
-    public function invite()
+    public function invite(Request $request)
     {
-      return view('dashboard.staffs.invite');
+        $data = [
+            'isMentor' => $request->has('is_mentor'),
+        ];
+
+        return view('dashboard.staffs.invite', $data);
     }
 
     public function addStaff($email){

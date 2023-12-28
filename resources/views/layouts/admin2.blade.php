@@ -9,6 +9,7 @@
   <link rel="icon" type="image/x-icon" href="{{asset('assets/img/icon/favicon.ico')}}">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
   @vite(['resources/css/app.css','resources/js/app.js'])
 
@@ -200,6 +201,7 @@
     }
   </style>
 
+  @yield('more-css')
 </head>
 <body>
   <div class="max-w-[2000px] mx-auto">
@@ -221,7 +223,7 @@
         $DataSubmissionNotifications = $notifications['submissionNotifications'];
       @endphp
 
-      <div class="w-full bg-profile-grey mx-auto py-11 px-10 relative">
+      <div class="w-full bg-white mx-auto py-11 px-10 relative">
         <div class="flex flex-row-reverse">
           <div class="space-x-9">
             <button type="button" data-modal-target="message-modal" data-modal-toggle="message-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
@@ -351,15 +353,15 @@
 
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.js"></script> --}}
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script> --}}
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-@yield('more-js')
-<script>
-    const openToggle = (id)=>{
-      // document.getElementById(`dropdownHover${id}`).classList.add('hidden');
-      document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
+  <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  @yield('more-js')
+  <script>
+      const openToggle = (id)=>{
+        // document.getElementById(`dropdownHover${id}`).classList.add('hidden');
+        document.getElementById(`dropdownHover${id}`).classList.remove('hidden');
 
       if ( document.getElementById(`dropdownHover${id}`).classList.contains('hidden') )
 
