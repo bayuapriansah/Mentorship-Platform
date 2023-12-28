@@ -80,7 +80,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-center text-darker-blue font-medium">
-                                    Mentor Name
+                                    {{ $this->isStaff ? 'Staff' : 'Mentor' }} Name
                                 </span>
                             </div>
                         </th>
@@ -127,7 +127,13 @@
                             }
                         }" class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }}">
                             <td x-bind:class="expanded ? 'rounded-tl-lg' : 'rounded-s-lg'" class="pr-8 pl-5 py-2">
-                                {{ $mentor->first_name }} {{ $mentor->last_name }}
+                                @if (!$mentor->first_name && !$mentor->last_name)
+                                    <span class="italic text-gray-400 text-xs">
+                                        Registration is not completed yet
+                                    </span>
+                                @else
+                                    {{ $mentor->first_name }} {{ $mentor->last_name }}
+                                @endif
                             </td>
 
                             <td class="pr-8 py-2">

@@ -1,277 +1,272 @@
 @extends('layouts.admin2')
-@section('content')
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/staffs"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-</div>
 
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">
-    Invite {{ $isMentor ? 'Mentor' : 'Staff' }}
-  </h3>
-</div>
-<div id="alert-file" class="border border-red-300 w-3/4  p-4 mb-4  rounded-lg bg-gray-800 text-red-400 hidden" role="alert">
-    <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-    <span class="sr-only">Info</span>
-    <div class="ml-3 text-sm font-medium">
-        Only xlsx, xls, and csv file extensions are allowed.{{-- <ahref="#"class="font-semiboldunderlinehover:no-underline">examplelink</a>.Giveitaclickifyoulike. --}}
-    </div>
-    <button type="button" class="border border-red-300 ml-auto -mx-1.5 -my-1.5  rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 inline-flex h-8 w-8 bg-gray-800 text-red-400 hover:bg-gray-700" data-dismiss-target="#alert-file" aria-label="Close">
-      <span class="sr-only">Close</span>
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-    </button>
-  </div>
-
-<form action="{{ route('dashboard.staffs.sendInvite') }}" method="post" enctype="multipart/form-data">
-  @csrf
-  <div class="mb-3">
-    <input class="border border-light-blue rounded-lg w-3/4 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="email" type="email" value="{{old('email')}}" placeholder="Staff Member Email" name="email[]" required><br>
-    <div class="mb-3">
-        <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Invite Staff Member</button>
-      </div>
-    <div class="w-3/4 mt-4">
-            <div class="relative cursor-pointer " id="drop-area">
-            <label for="file-input">
-                <div class="relative cursor-pointer" id="drop-area">
-                <input type="file" name="file" class="absolute opacity-0" id="file-input">
-                <div class="p-6 border-2 border-dashed hover:bg-gray-50 rounded-md border-light-blue">
-                    <div class="text-center">
-                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        <p class="mt-1 text-sm text-gray-600">
-                            Click to upload or drag and drop
-                        </p>
-                        <p class="text-xs text-gray-500 ">.{{'xlsx, xls or csv'}}</p>
-                        {{-- <p class="mt-2 text-sm text-gray-600" id="file-name"></p> --}}
-                    </div>
-                </div>
-                </div>
-            </label>
-            <div id="hideornot">
-                <div id="file-name" class="mt-5 mb-4 py-4 flex justify-between items-center">
-                </div>
-            </div>
-            </div>
-    </div>
-    @error('email')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-    <a href="{{asset('assets/bulk_email.xlsx')}}" class="text-dark-blue hover:text-darker-blue">Click to download bulk email invitation format</a>
-
-  </div>
-  <div class="mb-3">
-    <!-- Select all button -->
-    <a id="selectAllBtn" class="cursor-pointer py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" style="display: none;">Select All</a>
-    <!-- Unselect all button -->
-    <a id="unselectAllBtn" class="cursor-pointer py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" style="display: none;">Unselect All</a>
-  </div>
-  <div class="w-1/4">
-    <table id="dataTable" class="bg-white rounded-xl border border-light-blue mt-16" style="display: none">
-        <thead class="text-dark-blue">
-            <tr>
-                <th>No</th>
-                <th>Select</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-            <tbody id="tableBody">
-        </tbody>
-    </table>
-  </div>
-</form>
-
+@section('more-css')
+    <style>
+        #email-list::-webkit-scrollbar-thumb {
+            background: #8C94D3;
+        }
+    </style>
 @endsection
+
+@section('content')
+{{-- Header --}}
+<div class="mb-6 flex justify-between items-center">
+    <h1 class="text-dark-blue font-medium text-[1.375rem]">
+        Invite {{ $isMentor ? 'Mentor' : 'Staff' }}
+    </h1>
+
+    <a href="{{ route('dashboard.staffs.index') }}" class="flex items-center gap-3 text-xl">
+        <i class="fas fa-times-circle mt-1 text-primary"></i>
+        Cancel
+    </a>
+</div>
+{{-- ./Header --}}
+
+{{-- Form --}}
+<form id="main-form" action="{{ route('dashboard.staffs.sendInvite') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+
+    <input type="hidden" name="is_mentor" value="{{ $isMentor }}">
+
+    <p class="text-sm">
+        Add one or more email addresses separated by comma.
+    </p>
+
+    <div class="w-3/4 mt-4 flex flex-col gap-8">
+        <input
+            type="text"
+            value="{{ old('emails') }}"
+            placeholder="Email Address *"
+            name="emails"
+            class="h-11 py-2 px-4 border border-grey rounded-lg focus:outline-none"
+            autocomplete="email"
+            required
+        >
+
+        <button type="submit" class="w-max py-2.5 px-11 bg-primary rounded-full text-white text-lg">
+            Send Invite
+        </button>
+    </div>
+</form>
+{{-- ./Form --}}
+
+{{-- Import Data --}}
+<div class="w-3/4 mt-10">
+    <h2 class="text-lg text-dark-blue">
+        Bulk Upload
+    </h2>
+
+    <div class="mt-3">
+        <label for="file-input" class="cursor-pointer">
+            <input type="file" accept=".csv" id="file-input" name="file" class="hidden">
+
+            <div class="px-6 py-8 border-2 bg-profile-grey rounded-xl border-dashed border-grey flex flex-col justify-center items-center">
+                <i class="fas fa-file fa-3x text-darker-blue"></i>
+                <p class="mt-4 text-sm text-center text-[#8A91CD]">
+                    Drag or Upload File (.csv only)
+                </p>
+            </div>
+        </label>
+    </div>
+
+    <button id="clear-file-input-btn" style="display: none;" class="w-[90%] mt-6 px-5 py-3 border border-grey rounded-xl items-center">
+        <i class="fas fa-file fa-lg text-darker-blue"></i>
+
+        <p id="file-input-name" class="ml-7 text-sm">
+            No file selected
+        </p>
+
+        <i class="fas fa-trash-alt fa-lg ml-auto text-red-700"></i>
+    </button>
+
+    <a href="{{ asset('/download/bulk_upload_template.csv') }}" target="_blank" id="download-template" class="mt-6 px-5 py-3 border border-grey rounded-xl flex items-center">
+        <i class="fas fa-file fa-lg text-darker-blue"></i>
+
+        <p class="ml-7 text-sm">
+            Bulk Upload Template
+        </p>
+
+        <i class="fas fa-download fa-lg ml-auto text-darker-blue"></i>
+    </a>
+
+    {{-- Import Result --}}
+    <form id="secondary-form" action="{{ route('dashboard.staffs.sendInvite') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+        <input type="hidden" name="is_mentor" value="{{ $isMentor }}">
+
+        <div id="import-result" style="{{ old('emails_check') ? '' : 'display: none;' }}" class="w-[90%] mt-12">
+            <p class="flex items-center gap-3 text-xl text-dark-blue">
+                <span id="import-count" class="text-2xl text-[#C58D2D] font-medium">
+                    {{ old('emails_check') ? count(old('emails_check')) : 0 }}
+
+                </span>
+                Email Addresses found
+            </p>
+
+            <div class="relative mt-4 h-96 px-6 py-4 border border-grey rounded-xl flex flex-col">
+                <div style="display: none;" class="absolute inset-0 bg-slate-400 opacity-60"></div>
+
+                <div class="flex items-center gap-3">
+                    <input @if (old('emails_check')) checked @endif type="checkbox" id="check-all-emails" class="rounded checked:bg-dark-blue checked:text-white focus:ring-0">
+                    <label for="check-all-emails">
+                        Select All
+                    </label>
+                </div>
+
+                <div id="email-list" class="flex-1 mt-4 flex flex-col gap-2 overflow-x-hidden overflow-y-auto">
+                    {{-- Email List --}}
+                    @if (old('emails_check'))
+                         @foreach (old('emails_check') as $email)
+                            <div class="flex items-center gap-3">
+                                <input checked type="checkbox" id="check-email-${i}" name="emails_check[]" value="{{ $email }}" class="rounded checked:bg-dark-blue checked:text-white focus:ring-0">
+                                <label for="check-email-{{ $loop->iteration }}">
+                                    {{ $email }}
+                                </label>
+                            </div>
+                         @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <button type="submit" class="w-max mt-6 py-2.5 px-11 bg-primary rounded-full text-white text-lg">
+                Send Invite
+            </button>
+        </div>
+    </form>
+    {{-- ./Import Result --}}
+</div>
+{{-- ./Import Data --}}
+@endsection
+
 @section('more-js')
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
-<script>
-const dropArea = document.getElementById('drop-area')
-const fileInput = document.getElementById('file-input')
-const fileName = document.getElementById('file-name')
-const emailInput = document.getElementById('email')
-const selectAllBtn = document.getElementById('selectAllBtn')
-const unselectAllBtn = document.getElementById('unselectAllBtn')
-const dataTableVisibility = document.getElementById('dataTable')
-const alertfileVisibility = document.getElementById('alert-file')
+    <script>
+        // Alert
+        function showAlert(type, message) {
+            toastr.options = {
+                'closeButton': true,
+                'debug': false,
+                'newestOnTop': true,
+                'progressBar': true,
+                'positionClass': 'toast-top-right',
+                'preventDuplicates': true,
+                'onclick': null,
+                'showDuration': '300',
+                'hideDuration': '1000',
+                'timeOut': '10000',
+                'extendedTimeOut': '1000',
+                'showEasing': 'swing',
+                'hideEasing': 'linear',
+                'showMethod': 'fadeIn',
+                'hideMethod': 'fadeOut'
+            }
 
-$('#dataTable').DataTable({
-        paging: false,
-        ordering: false,
-        info: false,
-        searching:false,
-    });
+            toastr[type](message)
+        }
 
-// Listen for file drag-and-drop events
-dropArea.addEventListener('dragover', e => {
-    e.preventDefault()
-    dropArea.classList.add('bg-gray-200')
-})
+        // Process CSV file
+        function processCSV(file) {
+            function processData(csvData) {
+                const rows = csvData.split('\n')
+                let count = 0
 
-dropArea.addEventListener('dragleave', e => {
-    e.preventDefault()
-    dropArea.classList.remove('bg-gray-200')
-})
+                for (let i = 0; i < rows.length; i++) {
+                    const columns = rows[i].split(',')
 
-dropArea.addEventListener('drop', e => {
-    let file = e.dataTransfer.files[0];
-    let fileNames = file.name;
-    let fileExtension = fileNames.substr((fileNames.lastIndexOf('.') + 1)).toLowerCase();
-    if (fileExtension !== 'xlsx' && fileExtension !== 'xls' && fileExtension !== 'csv') {
-        // alert('Only xlsx, xls, and csv file extensions are allowed.');
-        alertfileVisibility.classList.remove('hidden');
-        alertfileVisibility.classList.add('opacity-100');
-        return;
-    }else{
-        emailInput.setAttribute('readonly', true);
-        emailInput.removeAttribute('required');
-        selectAllBtn.removeAttribute("style");
-        unselectAllBtn.removeAttribute("style");
-        dataTableVisibility.removeAttribute("style");
+                    if (columns.length > 0 && columns[0].trim() !== '') {
+                        count++
 
-        let reader = new FileReader();
-        reader.readAsBinaryString(file);
-        reader.onload = function(e) {
-        let data = e.target.result;
-        let workbook = XLSX.read(data, {type: 'binary'});
-        let emailSheet = workbook.Sheets[workbook.SheetNames[0]];
-        let emails = XLSX.utils.sheet_to_json(emailSheet);
-        let tableBody = $('#tableBody');
-        tableBody.empty();
-            for (let i = 0; i < emails.length; i++)
-            {
-                let email = emails[i];
-                let row = `<tr>
-                    <td>${i + 1}</td>
-                    <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
-                    <td>${email.email}</td>
-                </tr>`;
-                tableBody.append(row);
-
-                if (i === emails.length - 1) {
-                    var checkboxes = document.querySelectorAll(".checkbox");
-                    for (var j = 0; j < checkboxes.length; j++) {
-                        checkboxes[j].checked = true;
+                        // append email to list
+                        $('#email-list').append(`
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="check-email-${i}" name="emails_check[]" value="${columns[0].trim()}" class="rounded checked:bg-dark-blue checked:text-white focus:ring-0">
+                                <label for="check-email-${i}">
+                                    ${columns[0].trim()}
+                                </label>
+                            </div>
+                        `)
                     }
                 }
+
+                $('#import-count').text(count)
+                $('#check-all-emails').prop('checked', false)
             }
-        };
 
-        e.preventDefault()
-        dropArea.classList.remove('bg-gray-200')
-        fileInput.files = e.dataTransfer.files
-        let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-        fileName.classList.add(...classesToAdd);
-        fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
-        // You can handle the files here.
-        handleUpload(e.dataTransfer.files)
-        document.querySelector('#hideornot').style.display = 'block';
-        const fileClear = document.querySelector('.fa-times')
-        fileClear.addEventListener('click', e => {
-            e.preventDefault();
-            fileName.textContent = '';
-            fileInput.value = '';
-            resetUI();
-        });
-    }
-})
+            const reader = new FileReader()
 
-// Listen for file input change events
-fileInput.addEventListener('change', e => {
-    let file = e.target.files[0];
-    let fileNames = file.name;
-    let fileExtension = fileNames.substr((fileNames.lastIndexOf('.') + 1)).toLowerCase();
-    if (fileExtension !== 'xlsx' && fileExtension !== 'xls' && fileExtension !== 'csv') {
-        // alert('Only xlsx, xls, and csv file extensions are allowed.');
-        alertfileVisibility.classList.remove('hidden');
-        alertfileVisibility.classList.add('opacity-100');
-        return;
-    }else{
-        emailInput.setAttribute('readonly', true);
-        emailInput.removeAttribute('required');
-        selectAllBtn.removeAttribute("style");
-        unselectAllBtn.removeAttribute("style");
-        dataTableVisibility.removeAttribute("style");
+            reader.onload = function (event) {
+                const csvData = event.target.result
 
-        let reader = new FileReader();
-        reader.readAsBinaryString(file);
-        reader.onload = function(e) {
-        let data = e.target.result;
-        let workbook = XLSX.read(data, {type: 'binary'});
-        let emailSheet = workbook.Sheets[workbook.SheetNames[0]];
-        let emails = XLSX.utils.sheet_to_json(emailSheet);
-        let tableBody = $('#tableBody');
-        tableBody.empty();
-            for (let i = 0; i < emails.length; i++)
-            {
-                let email = emails[i];
-                let row = `<tr>
-                    <td>${i + 1}</td>
-                    <td><input value="${email.email}" type="checkbox" class="checkbox" name="email[]"></td>
-                    <td>${email.email}</td>
-                </tr>`;
-                tableBody.append(row);
+                if (csvData.trim().length === 0) {
+                    $('#file-input').val('')
+                    showAlert('error', 'File is empty')
 
-                if (i === emails.length - 1) {
-                    var checkboxes = document.querySelectorAll(".checkbox");
-                    for (var j = 0; j < checkboxes.length; j++) {
-                        checkboxes[j].checked = true;
-                    }
+                    return
                 }
+
+                processData(csvData)
+
+                $('#file-input-name').text(file.name)
+                $('#clear-file-input-btn').css('display', 'flex')
+                $('#download-template').css('display', 'none')
+                $('#import-result').css('display', 'block')
+            };
+
+            reader.readAsText(file)
+        }
+
+        // File input change
+        $('#file-input').on('change', function() {
+            const file = $(this).get(0).files[0]
+
+            if (file) {
+                if (file.name.split('.').pop().toLowerCase() != 'csv') {
+                    $(this).val('')
+                    showAlert('error', 'Only CSV file is allowed')
+
+                    return
+                }
+
+                processCSV(file)
             }
-        };
+        })
 
-        fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
-        // You can handle the files here.
-        handleUpload(e.target.files)
-        let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-        fileName.classList.add(...classesToAdd);
-        document.querySelector('#hideornot').style.display = 'block';
-        const fileClear = document.querySelector('.fa-times')
-        fileClear.addEventListener('click', e => {
-            e.preventDefault();
-            fileName.textContent = '';
-            fileInput.value = '';
-            resetUI();
-        });
-    }
-})
+        // Clear file input
+        $('#clear-file-input-btn').on('click', function() {
+            $('#file-input').val('')
+            $('#email-list').html('')
+            $('#file-input-name').text('No file selected')
+            $('#clear-file-input-btn').css('display', 'none')
+            $('#download-template').css('display', 'flex')
+            $('#import-result').css('display', 'none')
+        })
 
-// Example function for handling file uploads
-function handleUpload(files) {
-    // console.log('Uploading files:', files)
-    // Do something with the files here
-}
+        // Select all emails
+        $('#check-all-emails').on('click', function() {
+            if ($(this).is(':checked')) {
+                $('#email-list input[type=checkbox]').prop('checked', true)
+            } else {
+                $('#email-list input[type=checkbox]').prop('checked', false)
+            }
+        })
 
-// Example function for resetting the UI
-function resetUI() {
-    // Do something to reset the UI
-    // console.log('Resetting UI');
-    document.querySelector('#hideornot').style.display = 'none';
-    emailInput.setAttribute('required',true);
-    emailInput.removeAttribute('readonly');
-    let tableBody = $('#tableBody');
-    tableBody.empty();
-    selectAllBtn.style.display = 'none';
-    unselectAllBtn.style.display = 'none';
-    dataTableVisibility.style.display = 'none';
-}
+        // Form submit
+        $('#main-form').on('submit', function() {
+            $(this).find('input').prop('readonly', true)
+            $(this).find('button[type="submit"]').prop('disabled', true).text('Processing...')
+        })
 
-document.getElementById("selectAllBtn").addEventListener("click", function() {
-    // Get all the checkboxes
-    var checkboxes = document.querySelectorAll(".checkbox");
-    // Loop through all the checkboxes and set the checked property to true
-    for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].checked = true;
-    }
-});
+        $('#secondary-form').on('submit', function(e) {
+            e.preventDefault()
+            const checkedEmails = $('#email-list input[type=checkbox]:checked')
 
-document.getElementById("unselectAllBtn").addEventListener("click", function() {
-    // Get all the checkboxes
-    var checkboxes = document.querySelectorAll(".checkbox");
-    // Loop through all the checkboxes and set the checked property to false
-    for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].checked = false;
-    }
-});
-
-</script>
+            if (checkedEmails.length === 0) {
+                showAlert('info', 'Please select at least one email address')
+            } else {
+                $(this).find('.absolute').show()
+                $(this).find('button[type="submit"]').prop('disabled', true).text('Processing...')
+                $('#secondary-form').off('submit').submit()
+            }
+        })
+    </script>
 @endsection
