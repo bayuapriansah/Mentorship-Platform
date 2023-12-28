@@ -186,5 +186,22 @@
             var bVal = parseInt(b.className.split("-")[2]);
             return bVal - aVal;
         }).appendTo('.grid');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select the elements containing your content. Adjust the selector as needed.
+            var contentElements = document.querySelectorAll('.problem');
+
+            contentElements.forEach(function(element) {
+                // Apply the fixImagePaths function to each element's HTML content
+                element.innerHTML = fixImagePaths(element.innerHTML);
+            });
+        });
+
+        function fixImagePaths(content) {
+            var websiteUrl = window.location.origin;
+            // console.log(websiteUrl);
+            var regex = /src="\.\.\/(\.\.\/)*storage\/uploads\//g;
+            return content.replace(regex, 'src="' + websiteUrl + '/storage/uploads/');
+        }
     </script>
 @endsection

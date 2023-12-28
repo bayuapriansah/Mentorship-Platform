@@ -306,6 +306,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/projects/{project}/edit', [ProjectController::class, 'dashboardIndexEdit'])->name('projects.edit');
         Route::get('/projects/{project}/show', [ProjectController::class, 'dashboardIndexShow'])->name('projects.show');
         Route::patch('/projects/{project}', [ProjectController::class, 'dashboardIndexUpdate'])->name('projects.update');
+        // Add this route for image upload
+        Route::post('/project/image-upload', [ProjectController::class, 'store'])->name('project.image-upload');
         // Route::patch('projects/{project}/publish', [ProjectController::class, 'dashboardpublish'])->name('project.publish');
         Route::patch('/projects/{project}/publishDraft', [ProjectController::class, 'dashboardpublishDraft'])->name('projects.publishDraft');
 
