@@ -182,16 +182,6 @@
                             </td>
 
                             <td class="pr-5 py-2 rounded-e-lg">
-                                {{-- <button
-                                    type="button"
-                                    data-dropdown-toggle="dropdown-options-{{ $submission->id }}"
-                                    data-dropdown-trigger="hover"
-                                    class="flex items-center gap-3"
-                                >
-                                    Options
-                                    <i class="fas fa-chevron-down text-light-blue"></i>
-                                </button> --}}
-
                                 <div class="dropdown inline-block relative">
                                     <button
                                         type="button"

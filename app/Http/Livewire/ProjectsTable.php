@@ -12,9 +12,8 @@ class ProjectsTable extends Component
 
     public $partnerId;
     public $isDraft;
-    public $unPaginatedProjects;
 
-    public $limit = 20;
+    public $limit = 10;
     public $search = '';
     public $sortField = 'name';
     public $sortDirection = 'asc';
@@ -63,8 +62,6 @@ class ProjectsTable extends Component
                         ->orWhere('project_domain', 'LIKE', $search);
         }
 
-        $this->unPaginatedProjects = $query->get();
-
         return $query->orderBy($this->sortField, $this->sortDirection)->paginate($this->limit);
     }
 
@@ -80,8 +77,6 @@ class ProjectsTable extends Component
             $query = $query->where('name', 'LIKE', $search)
                         ->orWhere('project_domain', 'LIKE', $search);
         }
-
-        $this->unPaginatedProjects = $query->get();
 
         return $query->orderBy($this->sortField, $this->sortDirection)->paginate($this->limit);
     }

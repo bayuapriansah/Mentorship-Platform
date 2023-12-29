@@ -156,15 +156,51 @@
                             </td>
 
                             <td class="pr-5 py-2 rounded-e-lg">
-                                <button
-                                    type="button"
-                                    data-dropdown-toggle="dropdown-options-{{ $project->id }}"
-                                    data-dropdown-trigger="hover"
-                                    class="flex items-center gap-3"
-                                >
-                                    Options
-                                    <i class="fas fa-chevron-down text-light-blue"></i>
-                                </button>
+                                <div class="dropdown inline-block relative">
+                                    <button
+                                        type="button"
+                                        id="dropdownHoverButton-{{ $project->id }}"
+                                        class="flex items-center gap-3"
+                                    >
+                                        Options
+                                        <i class="fas fa-chevron-down text-light-blue"></i>
+                                    </button>
+
+                                    <div class="z-10 dropdown-menu absolute right-0 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton-{{ $project->id }}">
+                                            <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                @if ($this->partnerId)
+                                                    <a href="{{ route('partner.partnerProjectsEdit', ['partner' => $this->partnerId, 'project' => $project->id]) }}" class="block">
+                                                        Edit Details
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('dashboard.projects.edit', ['project' => $project->id]) }}" class="block">
+                                                        Edit Details
+                                                    </a>
+                                                @endif
+                                            </li>
+                                            <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                @php
+                                                    $formAction = $this->partnerId ?
+                                                                    route('partner.partnerProjectsDestroy', ['partner' => $this->partnerId, 'project' => $project->id]) :
+                                                                    route('dashboard.projects.destroy', ['project' => $project->id]);
+                                                @endphp
+
+                                                <form action="{{ $formAction }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button
+                                                        type="submit"
+                                                        onclick="return confirm('Delete this project?')"
+                                                    >
+                                                        Delete Project
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -181,44 +217,4 @@
         </div>
     </div>
     {{-- ./Pagination --}}
-
-    {{-- Dropdown Options --}}
-    @foreach ($this->unPaginatedProjects as $project)
-        <div id="dropdown-options-{{ $project->id }}" class="z-10 hidden bg-white border border-grey divide-y divide-grey rounded-lg shadow-xl w-44">
-            <ul class="py-2 text-lg text-gray-700">
-                <li>
-                    @if ($this->partnerId)
-                        <a href="{{ route('partner.partnerProjectsEdit', ['partner' => $this->partnerId, 'project' => $project->id]) }}" class="block px-4 py-2 hover:bg-gray-100">
-                            Edit Details
-                        </a>
-                    @else
-                        <a href="{{ route('dashboard.projects.edit', ['project' => $project->id]) }}" class="block px-4 py-2 hover:bg-gray-100">
-                            Edit Details
-                        </a>
-                    @endif
-                </li>
-                <li>
-                    @php
-                        $formAction = $this->partnerId ?
-                                        route('partner.partnerProjectsDestroy', ['partner' => $this->partnerId, 'project' => $project->id]) :
-                                        route('dashboard.projects.destroy', ['project' => $project->id]);
-                    @endphp
-
-                    <form action="{{ $formAction }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-
-                        <button
-                            type="submit"
-                            onclick="return confirm('Delete this project?')"
-                            class="block px-4 py-2 hover:bg-gray-100"
-                        >
-                            Delete Project
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    @endforeach
-    {{-- ./Dropdown Options --}}
 </div>
