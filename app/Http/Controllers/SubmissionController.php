@@ -55,36 +55,38 @@ class SubmissionController extends Controller
     // project task submission list
     public function show(Project $project)
     {
-        if(Auth::guard('mentor')->check()){
-          if (Auth::guard('mentor')->user()->institution_id != 0){
-            if($project->id == 5){
-                return back();
-            }
-            $submissionsSupervised = Submission::with('grade')
-                                    ->where('project_id', $project->id)
-                                    ->whereHas('student', function($q){
-                                        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-                                    })->get();
-            $submissions = Submission::with('grade')
-                                    ->where('project_id', $project->id)
-                                    ->whereHas('student', function($q){
-                                        $q->where('institution_id', Auth::guard('mentor')->user()->institution_id);
-                                    })->get();
-            return view('dashboard.submissions.index', compact('project', 'submissionsSupervised', 'submissions'));
-          }else{
-            $submissions = Submission::with('grade')
-                                    ->where('project_id', $project->id)
-                                    ->whereHas('student', function($q){
-                                        $q->where('staff_id', Auth::guard('mentor')->user()->id);
-                                    })->get();
-            return view('dashboard.submissions.index', compact('project', 'submissions'));
-          }
+        // if(Auth::guard('mentor')->check()){
+        //   if (Auth::guard('mentor')->user()->institution_id != 0){
+        //     if($project->id == 5){
+        //         return back();
+        //     }
+        //     $submissionsSupervised = Submission::with('grade')
+        //                             ->where('project_id', $project->id)
+        //                             ->whereHas('student', function($q){
+        //                                 $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+        //                             })->get();
+        //     $submissions = Submission::with('grade')
+        //                             ->where('project_id', $project->id)
+        //                             ->whereHas('student', function($q){
+        //                                 $q->where('institution_id', Auth::guard('mentor')->user()->institution_id);
+        //                             })->get();
+        //     return view('dashboard.submissions.index', compact('project', 'submissionsSupervised', 'submissions'));
+        //   }else{
+        //     $submissions = Submission::with('grade')
+        //                             ->where('project_id', $project->id)
+        //                             ->whereHas('student', function($q){
+        //                                 $q->where('staff_id', Auth::guard('mentor')->user()->id);
+        //                             })->get();
+        //     return view('dashboard.submissions.index', compact('project', 'submissions'));
+        //   }
 
-        }
-        else{
-            $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
-        }
-        return view('dashboard.submissions.index', compact('project', 'submissions'));
+        // }
+        // else{
+        //     $submissions = Submission::with('grade')->where('project_id', $project->id)->get();
+        // }
+        // return view('dashboard.submissions.index', compact('project', 'submissions'));
+
+        return view('dashboard.submissions.index', compact('project'));
     }
 
     public function singleSubmission(Project $project, Submission $submission)
