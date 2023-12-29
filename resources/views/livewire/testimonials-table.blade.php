@@ -172,7 +172,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Country
+                                    Team Name
                                 </span>
                             </div>
                         </th>
@@ -180,7 +180,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Team Name
+                                    Country
                                 </span>
                             </div>
                         </th>
@@ -223,11 +223,11 @@
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $participant->team_name }}
+                                {{ $participant->team_name ?? '-' }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $participant->country }}
+                                {{ $participant->country ?? '-' }}
                             </td>
 
                             <td class="pr-8 py-2">
