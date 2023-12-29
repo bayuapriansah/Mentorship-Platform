@@ -139,8 +139,9 @@
                             </td>
 
                             <td class="pr-8 py-2">
-                                <a href="{{ route('dashboard.enrollment.show', ['id' => encData($project->id)]) }}" class="hover:underline">
+                                <a href="{{ route('dashboard.enrollment.show', ['id' => encData($project->id)]) }}" class="px-2 py-1 bg-primary rounded-lg text-sm text-white flex">
                                     {{ $project->enrolled_project->count() }}
+                                    <span class="ml-auto mr-2 text-base">></span>
                                 </a>
                             </td>
 
