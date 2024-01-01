@@ -68,66 +68,25 @@
             </div>
             {{-- Sort by --}}
 
-            {{-- Filter - Mentorship Type --}}
-            <div class="flex flex-col">
-                <h2 class="text-lg text-darker-blue">
-                    Mentorship Type
-                </h2>
+            {{-- Filter - Mentor --}}
+            @if (Auth::guard('mentor')->check() && Auth::guard('mentor')->user()->institution_id != 0)
+                <div class="flex flex-col">
+                    <h2 class="text-lg text-darker-blue">
+                        Participants
+                    </h2>
 
-                <select wire:model="filterByMentorshipType" class="mt-4 text-sm border border-primary rounded-md">
-                    <option value="" hidden>
-                        Select Mentorship Type
-                    </option>
-                    <option value="skills_track">
-                        Skills
-                    </option>
-                    <option value="entrepreneur_track">
-                        Entrepreneur
-                    </option>
-                </select>
-
-                <button
-                    type="button"
-                    wire:click="$set('filterByMentorshipType', '')"
-                    class="{{ empty($filterByMentorshipType) ? 'hidden' : 'block' }} self-end mt-2 mr-1 text-sm hover:underline"
-                >
-                    Reset
-                </button>
-            </div>
-            {{-- ./Filter - Mentorship Type --}}
-
-            {{-- Filter - Country --}}
-            <div class="flex flex-col">
-                <h2 class="text-lg text-darker-blue">
-                    Country
-                </h2>
-
-                <select wire:model="filterByCountry" class="mt-4 text-sm border border-primary rounded-md">
-                    <option value="" hidden>
-                        Select Country
-                    </option>
-
-                    @foreach ($countries as $country)
-                        <option value="{{ $country->name }}">
-                            {{ $country->name }}
+                    <select wire:model="filterByMentor" class="mt-4 text-sm border border-primary rounded-md">
+                        <option value="all">
+                            All
                         </option>
-                    @endforeach
-                </select>
-
-                <button
-                    type="button"
-                    wire:click="$set('filterByCountry', '')"
-                    class="{{ empty($filterByCountry) ? 'hidden' : 'block' }} self-end mt-2 mr-1 text-sm hover:underline"
-                >
-                    Reset
-                </button>
-            </div>
-            {{-- ./Filter - Country --}}
+                        <option value="my">
+                            My Participants
+                        </option>
+                    </select>
+                </div>
+            @endif
+            {{-- ./Filter - Mentor --}}
         </div>
-
-        <button wire:click="resetAllFilters" type="button" class="mt-8 px-8 py-2 text-sm text-white bg-primary rounded-full">
-            Reset All Filters
-        </button>
     </div>
     {{-- ./Search and Filters --}}
 
@@ -140,7 +99,7 @@
                         <th scope="col" class="pr-8 pl-5">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Full Name
+                                    Participant Name
                                 </span>
                             </div>
                         </th>
@@ -148,7 +107,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Email
+                                    Task
                                 </span>
                             </div>
                         </th>
@@ -156,7 +115,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Mentor
+                                    Started On
                                 </span>
                             </div>
                         </th>
@@ -164,7 +123,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Staff
+                                    Submitted On
                                 </span>
                             </div>
                         </th>
@@ -172,23 +131,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Team Name
-                                </span>
-                            </div>
-                        </th>
-
-                        <th scope="col" class="pr-8">
-                            <div class="w-full flex justify-between items-center gap-5">
-                                <span class="text-sm text-darker-blue font-medium">
-                                    Country
-                                </span>
-                            </div>
-                        </th>
-
-                        <th scope="col" class="pr-8">
-                            <div class="w-full flex justify-between items-center gap-5">
-                                <span class="text-sm text-darker-blue font-medium">
-                                    Mentorship Type
+                                    Status
                                 </span>
                             </div>
                         </th>
@@ -196,7 +139,7 @@
                         <th scope="col" class="pr-5">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Show Testimonials
+                                    Actions
                                 </span>
                             </div>
                         </th>
@@ -204,44 +147,61 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($participants as $participant)
+                    @foreach ($submissions as $submission)
                         <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }}">
                             <td class="pr-8 pl-5 py-2 rounded-s-lg">
-                                {{ $participant->first_name }} {{ $participant->last_name }}
+                                {{ $submission->student->first_name }} {{ $submission->student->last_name }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $participant->email }}
+                                Task {{ $submission->projectSection->section }} :
+                                {{ substr($submission->projectSection->title, 0, 34) }}
+                                {{ strlen($submission->projectSection->title) > 34 ? '...' : '' }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $participant->mentor->first_name ?? '-' }} {{ $participant->mentor->last_name ?? '' }}
+                                {{ $submission->created_at->format('d/m/Y') }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $participant->staff->first_name ?? '-' }} {{ $participant->staff->last_name ?? '' }}
+                                {{ $submission->updated_at->format('d/m/Y') }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $participant->team_name ?? '-' }}
-                            </td>
-
-                            <td class="pr-8 py-2">
-                                {{ $participant->country ?? '-' }}
-                            </td>
-
-                            <td class="pr-8 py-2">
-                                {{ $participant->getMentorshipTrack() }}
+                                @if ($submission->grade)
+                                    @if ($submission->grade->status==1)
+                                        <span class="text-[#11BF61]">PASS</span>
+                                    @elseif($submission->grade->status==0)
+                                        <span class="text-[#EA0202]">REVISE</span>
+                                    @endif
+                                @else
+                                    @if($submission->file)
+                                        <span class="text-light-brown">IN REVIEW</span>
+                                    @endif
+                                @endif
                             </td>
 
                             <td class="pr-5 py-2 rounded-e-lg">
-                                <button
-                                    type="button"
-                                    onclick="showTestimonial('{{ $participant->first_name }} {{ $participant->last_name }}', '{{ $participant->feedback ? $participant->feedback->feedback : '' }}')""
-                                    class="px-4 py-1 bg-[#E96424] rounded-lg text-white text-center text-xs"
-                                >
-                                    Show Testimonials
-                                </button>
+                                <div class="dropdown inline-block relative">
+                                    <button
+                                        type="button"
+                                        id="dropdownHoverButton-{{ $submission->id }}"
+                                        class="flex items-center gap-3"
+                                    >
+                                        Options
+                                        <i class="fas fa-chevron-down text-light-blue"></i>
+                                    </button>
+
+                                    <div class="z-10 dropdown-menu absolute right-0 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton-{{ $submission->id }}">
+                                            <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                <a href="{{ route('dashboard.submission.singleSubmission', ['project' => $this->project->id, 'submission' => $submission->id]) }}">
+                                                    View Submission
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -254,7 +214,7 @@
     {{-- Pagination --}}
     <div class="mt-5 px-2 flex items-center">
         <div class="ml-auto">
-            {{ $participants->links() }}
+            {{ $submissions->links() }}
         </div>
     </div>
     {{-- ./Pagination --}}

@@ -48,7 +48,7 @@ class Project extends Model
     {
         return $this->belongsTo(Comment::class,'id','project_id');
     }
-    
+
     public function submissions()
     {
         return $this->hasMany(Submission::class);
@@ -65,5 +65,22 @@ class Project extends Model
         // Anda bisa memodifikasi kode di atas sesuai dengan struktur dan kebutuhan aplikasi Anda.
 
         return $submission;
-    }   
+    }
+
+    public function getProjectDomainText()
+    {
+        switch ($this->project_domain) {
+            case 'statistical':
+                return 'Machine Learning';
+
+            case 'computer_vision':
+                return 'Computer Vision';
+
+            case 'nlp':
+                return 'NLP';
+
+            default:
+                return $this->project_domain;
+        }
+    }
 }

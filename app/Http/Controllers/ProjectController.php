@@ -87,29 +87,30 @@ class ProjectController extends Controller
 
     public function dashboardIndex()
     {
-        if(Auth::guard('web')->check()){
-            $projects = Project::with(['student', 'company'])->get();
-        }elseif(Auth::guard('mentor')->check()){
-            if(Auth::guard('mentor')->user()->institution_id != 0){
-                $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->where('status', 'publish')->orWhere('status')->get();
-            }else{
-                $projects = Project::where('status', 'publish')->orWhere('status', 'private_project')
-                ->whereHas('enrolled_project', function($q){
-                    $q->whereHas('student', function($q){
-                        $q->where('staff_id', Auth::guard('mentor')->user()->id );
-                    });
-                })->orWhere('proposed_by', Auth::guard('mentor')->user()->id)->get();
-            }
-        }elseif(Auth::guard('customer')->check()){
-            $projects = Project::where('company_id', Auth::guard('customer')->user()->company_id)->with(['student', 'company'])->get();
-        }
-        return view('dashboard.projects.index', compact('projects'));
+        // if(Auth::guard('web')->check()){
+        //     $projects = Project::with(['student', 'company'])->get();
+        // }elseif(Auth::guard('mentor')->check()){
+        //     if(Auth::guard('mentor')->user()->institution_id != 0){
+        //         $projects = Project::where('institution_id', Auth::guard('mentor')->user()->institution_id)->orWhere('institution_id', null)->with(['student', 'company'])->where('status', 'publish')->orWhere('status')->get();
+        //     }else{
+        //         $projects = Project::where('status', 'publish')->orWhere('status', 'private_project')
+        //         ->whereHas('enrolled_project', function($q){
+        //             $q->whereHas('student', function($q){
+        //                 $q->where('staff_id', Auth::guard('mentor')->user()->id );
+        //             });
+        //         })->orWhere('proposed_by', Auth::guard('mentor')->user()->id)->get();
+        //     }
+        // }elseif(Auth::guard('customer')->check()){
+        //     $projects = Project::where('company_id', Auth::guard('customer')->user()->company_id)->with(['student', 'company'])->get();
+        // }
+
+        return view('dashboard.projects.index');
     }
 
     public function draftIndex()
     {
-        $projects = Project::with(['student', 'company'])->where('status','draft')->get();
-        return view('dashboard.projects.index', compact('projects'));
+        // $projects = Project::with(['student', 'company'])->where('status','draft')->get();
+        return view('dashboard.projects.index');
     }
 
     public function dashboardIndexCreate()
@@ -703,8 +704,8 @@ class ProjectController extends Controller
 
     public function partnerProjects(Company $partner)
     {
-        $projects = Project::where('company_id', $partner->id)->get();
-        return view('dashboard.projects.index', compact('partner', 'projects'));
+        // $projects = Project::where('company_id', $partner->id)->get();
+        return view('dashboard.projects.index', compact('partner'));
     }
 
     public function partnerProjectsCreate(Company $partner)

@@ -89,9 +89,9 @@ document.addEventListener("DOMContentLoaded", function() {
     @foreach($enrolled_projects as $enrolled_project)
     <tr>
       <td>{{$no}}</td>
-      <td>{{$enrolled_project->student->first_name}} {{$enrolled_project->student->last_name}}</td>
-      <td>{{$enrolled_project->student->mentor->first_name}} {{$enrolled_project->student->mentor->last_name}}</td>
-      <td>{{$enrolled_project->student->institution->name}}</td>
+      <td>{{$enrolled_project->student?->first_name}} {{$enrolled_project->student?->last_name}}</td>
+      <td>{{$enrolled_project->student?->mentor?->first_name}} {{$enrolled_project->student?->mentor?->last_name}}</td>
+      <td>{{$enrolled_project->student?->institution?->name}}</td>
       <td>
         @if ($enrolled_project->is_submited == 1)
           <div class="text-green-600">Complete</div>
