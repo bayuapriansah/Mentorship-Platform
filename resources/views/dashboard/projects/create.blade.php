@@ -209,16 +209,35 @@
     @enderror
   </div>
   @endif --}}
-  <div class="mb-3 mt-7">
-    <h3 class="text-dark-blue font-medium text-xl">Add Dataset <span class="text-red-600">*</span></h3>
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" id="inputdataset" name="dataset" value="{{old('dataset')}}">
-    @error('dataset')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
+{{--  --}}
+<div class="mb-3 mt-7">
+    <div class="flex justify-between items-center">
+        <h3 class="text-dark-blue font-medium text-xl">
+            Add Dataset <span class="text-red-600">*</span>
+        </h3>
+        <!-- Add Button aligned to the right -->
+        <button id="add-dataset-btn" type="button" class="ml-2">
+            <i class="fa-solid fa-circle-plus"></i> Add
+        </button>
+    </div>
+    <div id="dataset-fields-container">
+        @php
+            $oldDatasets = old('dataset', ['']);
+        @endphp
 
+        @foreach ($oldDatasets as $oldDataset)
+            <div class="flex items-center mt-2 relative">
+                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $oldDataset }}" required>
+                <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2"><i class="fa-solid fa-minus"></i></button>
+            </div>
+        @endforeach
+    </div>
+    @error('dataset')
+        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
+{{--  --}}
   @if (Auth::guard('web')->check())
   <div class="mb-3 mt-10 flex justify-between">
     <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
@@ -269,6 +288,37 @@
           }
         });
     });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('dataset-fields-container');
+    const addButton = document.getElementById('add-dataset-btn');
+
+    addButton.addEventListener('click', function() {
+        const inputWrapper = document.createElement('div');
+        inputWrapper.className = 'relative flex items-center mt-2';
+
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
+        newInput.placeholder = 'Add Data set URLs separated by semi-colon';
+        newInput.name = 'dataset[]';
+        newInput.required = true;
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2';
+        removeButton.innerHTML = '<i class="fa-solid fa-circle-minus"></i>';
+        removeButton.onclick = function() {
+            inputWrapper.remove();
+        };
+
+        inputWrapper.appendChild(newInput);
+        inputWrapper.appendChild(removeButton);
+        container.appendChild(inputWrapper);
+    });
+});
+
+
   </script>
   @endsection
 @elseif(Auth::guard('mentor')->check())

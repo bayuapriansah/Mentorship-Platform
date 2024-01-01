@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Project extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'problem', 'image', 'batch_id', 'student_id', 'company_id'];
+    protected $fillable = ['name', 'problem', 'image', 'batch_id', 'student_id', 'company_id', 'dataset'];
+    protected $casts = [
+        'dataset' => 'array', // Add this
+    ];
 
     public function student()
     {

@@ -174,7 +174,8 @@ class ProjectController extends Controller
           $project->status = 'private_project';
         }
         $project->problem = $validated['problem'];
-        $project->dataset = $request->dataset;
+        // $project->dataset = $request->dataset;
+        $project->dataset = $request->input('dataset', []); // Default to empty array if not set
         $project->overview = $request->overview;
         $project->save();
         $message = "Successfully created a project";
