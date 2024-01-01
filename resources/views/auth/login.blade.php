@@ -68,9 +68,9 @@
                 </p>
 
                 <div class="g-recaptcha mt-2" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
-                @if (Session::has('g-recaptcha-response'))
-                    <p class="alert my-2 {{ Session::get('alert-class', 'alert-info') }}">
-                        {{ Session::get('g-recaptcha-response') }}
+                @if ($errors->has('g-recaptcha-response'))
+                    <p class="alert my-2 alert-info" style="color: red">
+                        {{ $errors->first('g-recaptcha-response') }}
                     </p>
                 @endif
 

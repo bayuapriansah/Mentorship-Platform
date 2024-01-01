@@ -21,6 +21,7 @@ use App\Models\SectionSubsection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cache;
 
 class DashboardController extends Controller
 {
@@ -45,42 +46,91 @@ class DashboardController extends Controller
     //   return view('dashboard.index', compact('students','staffs','mentors','eProjects','companies', 'student_complete_all', 'student_complete_3'));
     // }
 
+    // public function index()
+    // {
+    //     $data = [];
+
+    //     $data['students'] = Student::count();
+    //     $data['mentors']  = Mentor::where('institution_id', '>', 0)->count();
+    //     $data['staffs']   = Mentor::where('institution_id', 0)->where('offboard',0)->count();
+    //     $data['eProjects'] = EnrolledProject::count();
+    //     $data['companies'] = Company::count();
+
+    //     $data['student_complete_all'] = Student::whereHas('enrolled_projects', function($q) {
+    //         $q->where('is_submited', 1);
+    //     }, '=', 4)->whereDoesntHave('enrolled_projects', function($q) {
+    //         $q->where('is_submited', 0);
+    //     })->count();
+
+    //     $data['student_complete_3'] = Student::whereHas('enrolled_projects', function($q) {
+    //         $q->where('is_submited', 1);
+    //     }, '=', 3)->count();
+
+    //     // Students enrolled in project_id = 5 but haven't submitted yet
+    //     $data['student_final_ongoing'] = Student::whereHas('enrolled_projects', function($q) {
+    //         $q->where('project_id', 5)->where('is_submited', 0);
+    //     })->count();
+
+    //     // Students enrolled in project_id = 5 and have submitted
+    //     $data['student_final_complete'] = Student::whereHas('enrolled_projects', function($q) {
+    //         $q->where('project_id', 5)->where('is_submited', 1);
+    //     })->count();
+
+    //     return view('dashboard.index', $data);
+    // }
+
+    // Refactore code
     public function index()
     {
-        $data = [];
+        $data = Cache::remember('dashboard_data', 60 * 24, function () {
+            $data = [];
 
-        $data['students'] = Student::count();
-        $data['mentors']  = Mentor::where('institution_id', '>', 0)->count();
-        $data['staffs']   = Mentor::where('institution_id', 0)->where('offboard',0)->count();
-        $data['eProjects'] = EnrolledProject::count();
-        $data['companies'] = Company::count();
+            $data['students'] = Student::count();
+            $data['mentors']  = Mentor::where('institution_id', '>', 0)->count();
+            $data['staffs']   = Mentor::where('institution_id', 0)->where('offboard',0)->count();
+            $data['eProjects'] = EnrolledProject::count();
+            $data['companies'] = Company::count();
 
-        $data['student_complete_all'] = Student::whereHas('enrolled_projects', function($q) {
-            $q->where('is_submited', 1);
-        }, '=', 4)->whereDoesntHave('enrolled_projects', function($q) {
-            $q->where('is_submited', 0);
-        })->count();
+            // Use withCount to optimize queries
+            $studentsWithEnrolledProjects = Student::withCount([
+                'enrolled_projects as total_enrolled_projects',
+                'enrolled_projects as submitted_enrolled_projects' => function ($query) {
+                    $query->where('is_submited', 1);
+                }
+            ])->get();
 
-        $data['student_complete_3'] = Student::whereHas('enrolled_projects', function($q) {
-            $q->where('is_submited', 1);
-        }, '=', 3)->count();
+            $data['student_complete_all'] = $studentsWithEnrolledProjects->where('total_enrolled_projects', 4)
+                                                                         ->where('submitted_enrolled_projects', 4)
+                                                                         ->count();
 
-        $data['student_complete_3'] = Student::whereHas('enrolled_projects', function($q) {
-            $q->where('is_submited', 1);
-        }, '=', 3)->count();
+            $data['student_complete_3'] = $studentsWithEnrolledProjects->where('total_enrolled_projects', '>=', 3)
+                                                                       ->where('submitted_enrolled_projects', 3)
+                                                                       ->count();
 
-        // Students enrolled in project_id = 5 but haven't submitted yet
-        $data['student_final_ongoing'] = Student::whereHas('enrolled_projects', function($q) {
-            $q->where('project_id', 5)->where('is_submited', 0);
-        })->count();
+            // Combine ongoing and complete counts for project_id = 5
+            $studentsWithSpecificProject = Student::withCount([
+                'enrolled_projects as total_specific_project' => function ($query) {
+                    $query->where('project_id', 5);
+                },
+                'enrolled_projects as submitted_specific_project' => function ($query) {
+                    $query->where('project_id', 5)->where('is_submited', 1);
+                }
+            ])->get();
 
-        // Students enrolled in project_id = 5 and have submitted
-        $data['student_final_complete'] = Student::whereHas('enrolled_projects', function($q) {
-            $q->where('project_id', 5)->where('is_submited', 1);
-        })->count();
+            $data['student_final_ongoing'] = $studentsWithSpecificProject->where('total_specific_project', '>', 0)
+                                                                         ->where('submitted_specific_project', 0)
+                                                                         ->count();
+
+            $data['student_final_complete'] = $studentsWithSpecificProject->where('submitted_specific_project', '>', 0)
+                                                                           ->count();
+
+            return $data;
+        });
 
         return view('dashboard.index', $data);
     }
+
+    // Refactore code end
 
     public function singleSubmissionReadNotification($projectID,$submissionID,$studentId){
       if(Auth::guard('web')->check()){

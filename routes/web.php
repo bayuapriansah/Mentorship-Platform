@@ -45,7 +45,7 @@ use App\Http\Controllers\HomepageController;
 */
 // Route::post('/ask', [ChatbotController::class, 'ask']);
 // Experimental
-Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
+// Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
 Route::get('/face-detection', [FaceDetectionController::class, 'index']);
 Route::get('/run-face-detection', [FaceDetectionController::class, 'runFaceDetection']);
 
@@ -402,13 +402,13 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
 // Route::get('/testEnkripsi', [SimintEncryption::class, 'waktu']);
 
-Route::controller(AuthOtpController::class)->group(function(){
-    Route::get('/otp/login', 'login')->name('otp.login');
-    Route::get('/otp/generate', 'generate')->name('otp.generate.check');
-    Route::post('/otp/generate', 'generate')->name('otp.generate');
-    Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');
-    Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin');
-});
+// Route::controller(AuthOtpController::class)->group(function(){
+//     Route::get('/otp/login', 'login')->name('otp.login');
+//     Route::get('/otp/generate', 'generate')->name('otp.generate.check');
+//     Route::post('/otp/generate', 'generate')->name('otp.generate');
+//     Route::get('/otp/verification/{user_id}/{email}', 'verification')->name('otp.verification');
+//     Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin');
+// });
 Route::fallback(function() {
   abort(404);
 });

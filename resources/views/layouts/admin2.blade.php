@@ -218,9 +218,9 @@
       </div>
 
       @php
-        $notifications = getNotificationSubmission();
-        $NotificationForAdmin = $notifications['totalNotificationAdmin'];
-        $DataSubmissionNotifications = $notifications['submissionNotifications'];
+        // $notifications = getNotificationSubmission();
+        // $NotificationForAdmin = $notifications['totalNotificationAdmin'];
+        // $DataSubmissionNotifications = $notifications['submissionNotifications'];
       @endphp
 
       <div class="w-full bg-white mx-auto py-11 px-10 relative">
@@ -231,9 +231,9 @@
                 <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
               <span class="sr-only">Notifications Bell</span>
-              @if ($NotificationForAdmin > 0)
+              {{-- @if ($NotificationForAdmin > 0)
               <div class="absolute inline-flex items-center justify-center w-6 h-6 text-[10px] font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $NotificationForAdmin > 99 ? "99+" : $NotificationForAdmin}}</div>
-              @endif
+              @endif --}}
 
             </button>
 
@@ -242,9 +242,9 @@
                 <path d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
               <span class="sr-only">Notifications Message</span>
-              @if (getCommentMessages()->count() > 0)
+              {{-- @if (getCommentMessages()->count() > 0)
               <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ getCommentMessages()->count() }}</div>
-              @endif
+              @endif --}}
             </a>
 
             @if (Auth::guard('web')->check())
@@ -295,7 +295,7 @@
         </div>
       </div>
       {{-- message modal --}}
-      <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full" style="left: 23%;">
+      {{-- <div id="message-modal" data-modal-placement="top-center" tabindex="-1" class="fixed top-0 left-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full" style="left: 23%;">
         <div class="relative w-full h-full max-w-sm md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow">
@@ -319,14 +319,14 @@
                       @foreach ($DataSubmissionNotifications as $submissionNotification)
                           @if ($submissionNotification->student != NULL && (Auth::guard('web')->check() || (Auth::guard('mentor')->user() != NULL && ($submissionNotification->student->staff_id == Auth::guard('mentor')->user()->id || $submissionNotification->student->mentor_id == Auth::guard('mentor')->user()->id)) || Auth::guard('customer')->check()))
                               <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submissionNotification->project_id,$submissionNotification->id,$submissionNotification->student->id]) }}" class="mb-2 text-sm font-normal text-dark-blue">
-                                  <div id="toast-message-cta" class="relative w-full max-w-xs text-gray-500 bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
+                                  <div id="toast-message-cta" class="relative w-full max-w-xs bg-white rounded-lg shadow text-gray-400 mt-2 p-2 hover:bg-blue-100" role="alert">
                                   <div class="flex justify-between items-center">
                                       <div class="ml-3 mr-4 text-sm font-normal">
-                                      <span class="mb-1 text-sm font-semibold text-dark-blue">{{-- $numbercountpls --}}There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
+                                      <span class="mb-1 text-sm font-semibold text-dark-blue">There is New Submission, From : {{ $submissionNotification->student->first_name }} {{ $submissionNotification->student->last_name }} at Section ({{ $submissionNotification->projectSection->title }})</span>
                                       <p>
                                       <div class="mb-2 text-sm font-normal text-blue-300">{{ $submissionNotification->updated_at }}</div>
                                       </div>
-                                      <a href="{{-- route('dashboard.notification.dismiss',$submissionNotification->id) --}}#" class="absolute top-0 right-0 mr-2 mt-2 text-gray-400 hover:text-red-400 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:ring focus:ring-gray-300" onclick="this.parentElement.parentElement.style.display='none';">
+                                      <a href="#" class="absolute top-0 right-0 mr-2 mt-2 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:ring focus:ring-gray-300" onclick="this.parentElement.parentElement.style.display='none';">
                                       <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                           <path fill-rule="evenodd" d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                                       </svg>
@@ -345,7 +345,7 @@
                   </div>
                 </div>
               </div>
-      </div>
+      </div> --}}
       {{-- end message modal --}}
     </div>
   </div>

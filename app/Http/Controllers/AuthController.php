@@ -183,10 +183,17 @@ class AuthController extends Controller
     }
 
     public function authenticate(Request $request){
+        // Validate the request inputs
         $validated = $request->validate([
-            'email' => ['required'],
-            'password' => ['required']
+            'email' => 'required|email',
+            'password' => 'required',
+            'g-recaptcha-response' => 'required|recaptcha',
+        ], [
+            'g-recaptcha-response.required' => 'Captcha is required',
+            // Add more custom error messages if needed
         ]);
+
+        $validated = $request->only('email', 'password');
 
         // dd($request->all());
         if(Auth::guard('student')->attempt($validated)){
@@ -211,10 +218,10 @@ class AuthController extends Controller
             return redirect('/');
         }else{
             toastr()->error('Your email or password is incorrect. Please review your information and try again.');
-
-            return redirect()
-                    ->back()
-                    ->withInput(['email' => $validated['email']]);
+            return back()->withInput($request->only('email'));
+            // return redirect()
+            //         ->back()
+            //         ->withInput(['email' => $validated['email']]);
         }
     }
 

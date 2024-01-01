@@ -160,73 +160,137 @@ if(!function_exists('getCommentMessages')){
     }
 }
 
-if(!function_exists('getNotificationSubmission')){
-    function getNotificationSubmission(){
-        if(Auth::guard('web')->check()){
-            $submissionNotifications = Submission::where('is_complete', 1)
-            ->whereNotIn('id', function($query) {
-                $query->select('submission_id')
-                ->from('read_notifications')
-                ->where('type', 'submissions')
-                ->where('is_read', 1)
-                ->where('user_id', Auth::guard('web')->user()->id);
-            })->get();
-        }elseif(Auth::guard('mentor')->check()){
-            if(Auth::guard('mentor')->user()->institution_id != 0){
-                $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                    ->from('read_notifications')
-                    ->where('type', 'submissions')
-                    ->where('is_read', 1)
-                    ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                })
-                ->when(Auth::guard('mentor')->check(), function ($query) {
-                    $query->whereIn('student_id', function($query){
-                        $query->select('id')
-                        ->from('students')
-                        ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    });
-                })->get();
-            }else{
-                $submissionNotifications = Submission::where('is_complete', 1)
-                ->whereNotIn('id', function($query) {
-                    $query->select('submission_id')
-                    ->from('read_notifications')
-                    ->where('type', 'submissions')
-                    ->where('is_read', 1)
-                    ->where('mentor_id', Auth::guard('mentor')->user()->id);
-                })
-                ->when(Auth::guard('mentor')->check(), function ($query) {
-                    $query->whereIn('student_id', function($query){
-                        $query->select('id')
-                        ->from('students')
-                        ->where('staff_id', Auth::guard('mentor')->user()->id);
-                    });
-                })->get();
-            }
+if (!function_exists('getNotificationSubmission')) {
+    function getNotificationSubmission() {
+        $user = null;
+        $userType = null;
 
-        }elseif(Auth::guard('customer')->check()){
-            $submissionNotifications = Submission::whereHas('project', function($query){
-                $query->where('company_id', Auth::guard('customer')->user()->company_id);
-            })->where('is_complete', 1)
-            ->whereNotIn('id', function($query){
-                $query->select('submission_id')
-                ->from('read_notifications')
-                ->where('type', 'submissions')
-                ->where('is_read', 1)
-                ->where('customer_id', Auth::guard('customer')->user()->id);
-            })->get();
+        // Define the guards and their corresponding user types
+        $guards = [
+            'web' => 'user',
+            'mentor' => 'mentor',
+            'customer' => 'customer',
+        ];
+
+        // Iterate over each guard to find the authenticated user
+        foreach ($guards as $guard => $type) {
+            if (Auth::guard($guard)->check()) {
+                $user = Auth::guard($guard)->user();
+                $userType = $type;
+                break;
+            }
         }
+
+        // Early return if no user is authenticated
+        if (!$user) {
+            return [
+                'submissionNotifications' => collect(),
+                'totalNotificationAdmin' => 0,
+            ];
+        }
+
+        // Common query for all user types
+        $submissionNotifications = Submission::where('is_complete', 1)
+            ->whereNotIn('id', function($query) use ($user) {
+                $query->select('submission_id')
+                      ->from('read_notifications')
+                      ->where('type', 'submissions')
+                      ->where('is_read', 1)
+                      ->where('user_id', $user->id);
+            });
+
+        // Additional conditions for 'mentor' type
+        if ($userType === 'mentor') {
+            $submissionNotifications = $submissionNotifications->whereHas('students', function ($query) use ($user) {
+                $query->where('mentor_id', $user->id);
+            });
+        }
+
+        // Additional conditions for 'customer' type
+        if ($userType === 'customer') {
+            $submissionNotifications = $submissionNotifications->whereHas('project', function($query) use ($user) {
+                $query->where('company_id', $user->company_id);
+            });
+        }
+
+        // Execute the query
+        $submissionNotifications = $submissionNotifications->get();
         $totalNotificationAdmin = $submissionNotifications->count();
 
-        // dd(Auth::getDefaultDriver());
         return [
             'submissionNotifications' => $submissionNotifications,
             'totalNotificationAdmin' => $totalNotificationAdmin,
         ];
     }
 }
+
+// if(!function_exists('getNotificationSubmission')){
+//     function getNotificationSubmission(){
+//         if(Auth::guard('web')->check()){
+//             $submissionNotifications = Submission::where('is_complete', 1)
+//             ->whereNotIn('id', function($query) {
+//                 $query->select('submission_id')
+//                 ->from('read_notifications')
+//                 ->where('type', 'submissions')
+//                 ->where('is_read', 1)
+//                 ->where('user_id', Auth::guard('web')->user()->id);
+//             })->get();
+//         }elseif(Auth::guard('mentor')->check()){
+//             if(Auth::guard('mentor')->user()->institution_id != 0){
+//                 $submissionNotifications = Submission::where('is_complete', 1)
+//                 ->whereNotIn('id', function($query) {
+//                     $query->select('submission_id')
+//                     ->from('read_notifications')
+//                     ->where('type', 'submissions')
+//                     ->where('is_read', 1)
+//                     ->where('mentor_id', Auth::guard('mentor')->user()->id);
+//                 })
+//                 ->when(Auth::guard('mentor')->check(), function ($query) {
+//                     $query->whereIn('student_id', function($query){
+//                         $query->select('id')
+//                         ->from('students')
+//                         ->where('mentor_id', Auth::guard('mentor')->user()->id);
+//                     });
+//                 })->get();
+//             }else{
+//                 $submissionNotifications = Submission::where('is_complete', 1)
+//                 ->whereNotIn('id', function($query) {
+//                     $query->select('submission_id')
+//                     ->from('read_notifications')
+//                     ->where('type', 'submissions')
+//                     ->where('is_read', 1)
+//                     ->where('mentor_id', Auth::guard('mentor')->user()->id);
+//                 })
+//                 ->when(Auth::guard('mentor')->check(), function ($query) {
+//                     $query->whereIn('student_id', function($query){
+//                         $query->select('id')
+//                         ->from('students')
+//                         ->where('staff_id', Auth::guard('mentor')->user()->id);
+//                     });
+//                 })->get();
+//             }
+
+//         }elseif(Auth::guard('customer')->check()){
+//             $submissionNotifications = Submission::whereHas('project', function($query){
+//                 $query->where('company_id', Auth::guard('customer')->user()->company_id);
+//             })->where('is_complete', 1)
+//             ->whereNotIn('id', function($query){
+//                 $query->select('submission_id')
+//                 ->from('read_notifications')
+//                 ->where('type', 'submissions')
+//                 ->where('is_read', 1)
+//                 ->where('customer_id', Auth::guard('customer')->user()->id);
+//             })->get();
+//         }
+//         $totalNotificationAdmin = $submissionNotifications->count();
+
+//         // dd(Auth::getDefaultDriver());
+//         return [
+//             'submissionNotifications' => $submissionNotifications,
+//             'totalNotificationAdmin' => $totalNotificationAdmin,
+//         ];
+//     }
+// }
 
 if(!function_exists('commentPerSection')){
     function commentPerSection($injections){
