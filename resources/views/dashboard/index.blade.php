@@ -24,6 +24,16 @@
             </p>
         </div>
 
+        {{-- <div style="background: linear-gradient(90deg, #D4D9FF 3.41%, #ECEDF3 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+            <h2 class="text-lg text-light-black">
+                Total Login
+            </h2>
+
+            <p class="text-[2.125rem] text-end text-dark-blue font-medium">
+                {{ $loginLog }}
+            </p>
+        </div> --}}
+
         <div style="background: linear-gradient(90deg, #FBF6CC 3.41%, #FFFEF9 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
             <h2 class="text-lg text-light-black">
                 Total Mentors
@@ -356,6 +366,9 @@
             $('#participant-detail-container').css('display', 'none')
         }
 
+        let loginCounts = @json($loginCounts);
+        let loginDates = @json($loginDates);
+
         let loginChart = new ApexCharts(document.querySelector("#login-chart"), {
             chart: {
                 type: 'area',
@@ -367,7 +380,7 @@
             series: [
                 {
                     name: 'Login Frequency',
-                    data: [1100, 900, 1450, 1550, 1200, 1600, 1350]
+                    data: loginCounts
                 }
             ],
             fill: {
@@ -380,9 +393,7 @@
                 }
             },
             xaxis: {
-                categories: [
-                    'Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'
-                ]
+                categories: loginDates
             }
         })
 

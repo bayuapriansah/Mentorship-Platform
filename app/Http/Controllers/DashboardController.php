@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Mentor;
 use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Project;
 use App\Models\Student;
+use App\Models\LoginLog;
 use App\Mail\MailNotify;
 use App\Models\Customer;
 use App\Models\Submission;
@@ -79,57 +81,125 @@ class DashboardController extends Controller
     //     return view('dashboard.index', $data);
     // }
 
+    // public function index()
+    // {
+    //     $data = Cache::remember('dashboard_data', 60 * 24, function () {
+    //         $data = [];
+
+    //         $data['students'] = Student::count();
+    //         $data['mentors']  = Mentor::where('institution_id', '>', 0)->count();
+    //         $data['staffs']   = Mentor::where('institution_id', 0)->where('offboard',0)->count();
+    //         $data['eProjects'] = EnrolledProject::count();
+    //         $data['companies'] = Company::count();
+    //         $data['loginLog'] = LoginLog::count();
+
+    //         // Use withCount to optimize queries
+    //         $studentsWithEnrolledProjects = Student::withCount([
+    //             'enrolled_projects as total_enrolled_projects',
+    //             'enrolled_projects as submitted_enrolled_projects' => function ($query) {
+    //                 $query->where('is_submited', 1);
+    //             }
+    //         ])->get();
+
+    //         $data['student_complete_all'] = $studentsWithEnrolledProjects->where('total_enrolled_projects', 4)
+    //                                                                      ->where('submitted_enrolled_projects', 4)
+    //                                                                      ->count();
+
+    //         $data['student_complete_3'] = $studentsWithEnrolledProjects->where('total_enrolled_projects', '>=', 3)
+    //                                                                    ->where('submitted_enrolled_projects', 3)
+    //                                                                    ->count();
+
+    //         // Combine ongoing and complete counts for project_id = 5
+    //         $studentsWithSpecificProject = Student::withCount([
+    //             'enrolled_projects as total_specific_project' => function ($query) {
+    //                 $query->where('project_id', 5);
+    //             },
+    //             'enrolled_projects as submitted_specific_project' => function ($query) {
+    //                 $query->where('project_id', 5)->where('is_submited', 1);
+    //             }
+    //         ])->get();
+
+    //         $data['student_final_ongoing'] = $studentsWithSpecificProject->where('total_specific_project', '>', 0)
+    //                                                                      ->where('submitted_specific_project', 0)
+    //                                                                      ->count();
+
+    //         $data['student_final_complete'] = $studentsWithSpecificProject->where('submitted_specific_project', '>', 0)
+    //                                                                        ->count();
+
+    //         // Get the start and end of the current week
+    //         $startOfWeek = Carbon::now()->startOfWeek();
+    //         $endOfWeek = Carbon::now()->endOfWeek();
+
+    //         // Retrieve and count logins for each day of the current week
+    //         $loginCounts = LoginLog::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+    //             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+    //             ->groupBy('date')
+    //             ->orderBy('date', 'asc')
+    //             ->get()
+    //             ->pluck('count', 'date');
+
+    //         // Fill in missing days with zero count
+    //         for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
+    //             $formattedDate = $date->format('Y-m-d');
+    //             if (!isset($loginCounts[$formattedDate])) {
+    //                 $loginCounts[$formattedDate] = 0;
+    //             }
+    //         }
+
+    //         $data['loginCounts'] = $loginCounts->values();
+    //         $data['loginDates'] = $loginCounts->keys();
+
+    //         return $data;
+    //     });
+    //     // dd($data);
+    //     return view('dashboard.index', $data);
+    // }
     // Refactore code
     public function index()
     {
-        $data = Cache::remember('dashboard_data', 60 * 24, function () {
-            $data = [];
-
-            $data['students'] = Student::count();
-            $data['mentors']  = Mentor::where('institution_id', '>', 0)->count();
-            $data['staffs']   = Mentor::where('institution_id', 0)->where('offboard',0)->count();
-            $data['eProjects'] = EnrolledProject::count();
-            $data['companies'] = Company::count();
-
-            // Use withCount to optimize queries
-            $studentsWithEnrolledProjects = Student::withCount([
-                'enrolled_projects as total_enrolled_projects',
-                'enrolled_projects as submitted_enrolled_projects' => function ($query) {
-                    $query->where('is_submited', 1);
-                }
-            ])->get();
-
-            $data['student_complete_all'] = $studentsWithEnrolledProjects->where('total_enrolled_projects', 4)
-                                                                         ->where('submitted_enrolled_projects', 4)
-                                                                         ->count();
-
-            $data['student_complete_3'] = $studentsWithEnrolledProjects->where('total_enrolled_projects', '>=', 3)
-                                                                       ->where('submitted_enrolled_projects', 3)
-                                                                       ->count();
-
-            // Combine ongoing and complete counts for project_id = 5
-            $studentsWithSpecificProject = Student::withCount([
-                'enrolled_projects as total_specific_project' => function ($query) {
-                    $query->where('project_id', 5);
-                },
-                'enrolled_projects as submitted_specific_project' => function ($query) {
-                    $query->where('project_id', 5)->where('is_submited', 1);
-                }
-            ])->get();
-
-            $data['student_final_ongoing'] = $studentsWithSpecificProject->where('total_specific_project', '>', 0)
-                                                                         ->where('submitted_specific_project', 0)
-                                                                         ->count();
-
-            $data['student_final_complete'] = $studentsWithSpecificProject->where('submitted_specific_project', '>', 0)
-                                                                           ->count();
-
-            return $data;
+        // Cache the main dashboard data for 24 hours
+        $dashboardData = Cache::remember('dashboard_data', 60 * 24, function () {
+            return [
+                'students' => Student::count(),
+                'mentors' => Mentor::where('institution_id', '>', 0)->count(),
+                'staffs' => Mentor::where('institution_id', 0)->where('offboard', 0)->count(),
+                'eProjects' => EnrolledProject::count(),
+                'companies' => Company::count(),
+                'loginLog' => LoginLog::count(),
+                // Other data...
+            ];
         });
+
+        // Cache the login data for 1 hour
+        $loginData = Cache::remember('login_data', 60, function () {
+            $startOfWeek = Carbon::now()->startOfWeek();
+            $endOfWeek = Carbon::now()->endOfWeek();
+
+            $loginCounts = LoginLog::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->groupBy('date')
+                ->orderBy('date', 'asc')
+                ->get()
+                ->pluck('count', 'date');
+
+            for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
+                $formattedDate = $date->format('Y-m-d');
+                if (!isset($loginCounts[$formattedDate])) {
+                    $loginCounts[$formattedDate] = 0;
+                }
+            }
+
+            return [
+                'loginCounts' => $loginCounts->values(),
+                'loginDates' => $loginCounts->keys(),
+            ];
+        });
+
+        // Combine the data arrays
+        $data = array_merge($dashboardData, $loginData);
 
         return view('dashboard.index', $data);
     }
-
     // Refactore code end
 
     public function singleSubmissionReadNotification($projectID,$submissionID,$studentId){

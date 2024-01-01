@@ -9,6 +9,7 @@ use App\Models\Mentor;
 use App\Models\Company;
 use App\Models\Student;
 use App\Models\Customer;
+use App\Models\LoginLog; // Make sure to import your LoginLog model at the top
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -182,7 +183,8 @@ class AuthController extends Controller
         return view('auth.login',compact('email'));
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request)
+    {
         // Validate the request inputs
         $validated = $request->validate([
             'email' => 'required|email',
@@ -193,36 +195,51 @@ class AuthController extends Controller
             // Add more custom error messages if needed
         ]);
 
-        $validated = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-        // dd($request->all());
-        if(Auth::guard('student')->attempt($validated)){
-            $request->session()->regenerate();
-            toastr()->success('Logged in');
-
+        // Attempt to authenticate the user for each guard
+        if ($this->attemptLogin('student', $credentials, $request)) {
             return redirect('/');
-        }elseif(Auth::guard('mentor')->attempt($validated)){
-            $request->session()->regenerate();
-            toastr()->success('Logged in mentor');
-
+        } elseif ($this->attemptLogin('mentor', $credentials, $request)) {
             return redirect('/');
-        }elseif(Auth::guard('customer')->attempt($validated)){
-            $request->session()->regenerate();
-            toastr()->success('Logged in');
-
+        } elseif ($this->attemptLogin('customer', $credentials, $request)) {
             return redirect('/');
-        }elseif(Auth::guard('web')->attempt($validated)){
-            $request->session()->regenerate();
-            toastr()->success('Logged in admin');
-
+        } elseif ($this->attemptLogin('web', $credentials, $request)) {
             return redirect('/');
-        }else{
+        } else {
             toastr()->error('Your email or password is incorrect. Please review your information and try again.');
             return back()->withInput($request->only('email'));
-            // return redirect()
-            //         ->back()
-            //         ->withInput(['email' => $validated['email']]);
         }
+    }
+
+    protected function attemptLogin($guard, $credentials, $request)
+    {
+        if (Auth::guard($guard)->attempt($credentials)) {
+            // Set session expiry time to 5 minutes from now
+            $expiryTime = now()->endOfDay();
+            // $expiryTime = now()->addMinutes(5);
+            $request->session()->regenerate();
+            $request->session()->put('expiry_time', $expiryTime);
+
+            // Log the login attempt only if the guard is 'student'
+            if ($guard == 'student') {
+                $this->createLoginLog(Auth::guard($guard)->user(), $request);
+            }
+
+            toastr()->success('Logged in');
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function createLoginLog($user, $request)
+    {
+        LoginLog::create([
+            'student_id' => $user->id, // Replace 'student_id' with the appropriate field name
+            'last_ip_login' => $request->ip(),
+            'last_user_agent' => $request->header('User-Agent')
+        ]);
     }
 
     public function verifyEmail($email)

@@ -57,6 +57,11 @@ class Student extends Authenticatable
         return $this->hasOne(Feedback::class);
     }
 
+    public function loginLogs()
+    {
+        return $this->hasMany(LoginLog::class, 'student_id');
+    }
+
     public function getMentorshipTrack()
     {
         switch ($this->mentorship_type) {
