@@ -168,7 +168,7 @@
                                     <p class="text-darker-blue font-medium">
                                         Total Participants:
                                         <span class="text-black">
-                                            {{ $mentor->students->count() }}
+                                            {{ $this->isStaff ? $mentor->staffStudents->count() : $mentor->mentorStudents->count() }}
                                         </span>
                                     </p>
 

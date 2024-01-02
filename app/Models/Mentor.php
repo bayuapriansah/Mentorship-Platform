@@ -35,8 +35,13 @@ class Mentor extends Authenticatable
         return $this->belongsTo(Comment::class);
     }
 
-    public function students()
+    public function mentorStudents()
     {
         return $this->hasMany(Student::class, 'mentor_id', 'id');
+    }
+
+    public function staffStudents()
+    {
+        return $this->hasMany(Student::class, 'staff_id', 'id');
     }
 }
