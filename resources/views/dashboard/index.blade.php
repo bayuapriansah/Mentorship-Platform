@@ -14,7 +14,7 @@
 
     {{-- Cards --}}
     <div class="w-max lg:w-full mt-4 flex flex-col lg:flex-row lg:justify-between gap-6">
-        <div style="background: linear-gradient(90deg, #D4D9FF 3.41%, #ECEDF3 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+        <div style="background: linear-gradient(90deg, #D4D9FF 3.41%, #ECEDF3 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
             <h2 class="text-lg text-light-black">
                 Total Participants
             </h2>
@@ -34,7 +34,7 @@
             </p>
         </div> --}}
 
-        <div style="background: linear-gradient(90deg, #FBF6CC 3.41%, #FFFEF9 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+        <div style="background: linear-gradient(90deg, #FBF6CC 3.41%, #FFFEF9 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
             <h2 class="text-lg text-light-black">
                 Total Mentors
             </h2>
@@ -44,7 +44,7 @@
             </p>
         </div>
 
-        <div style="background: linear-gradient(90deg, #CFF8D8 3.41%, #EBF9EE 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+        <div style="background: linear-gradient(90deg, #CFF8D8 3.41%, #EBF9EE 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
             <h2 class="text-lg text-light-black">
                 Total Staffs
             </h2>
@@ -54,7 +54,7 @@
             </p>
         </div>
 
-        <div style="background: linear-gradient(90deg, #EFCBF8 3.41%, #FCEEFF 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+        <div style="background: linear-gradient(90deg, #EFCBF8 3.41%, #FCEEFF 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
             <h2 class="text-lg text-light-black">
                 Total Active Participants
             </h2>
@@ -130,8 +130,8 @@
     {{-- ./Participant --}}
 
     {{-- Charts --}}
-    <div class="mt-9 flex flex-wrap justify-between gap-8">
-        <div class="w-[408px] min-h-[293px] border border-grey rounded-2xl">
+    <div class="mt-9 flex flex-wrap justify-between">
+        <div class="w-[48%] min-h-[293px] border border-grey rounded-2xl">
             <h1 class="text-lg text-dark-blue px-5 py-3">
                 Participants Login Frequency
             </h1>
@@ -139,7 +139,7 @@
             <div id="login-chart" class="max-w-[95%] mt-2"></div>
         </div>
 
-        <div class="w-[408px] min-h-[293px] border border-grey rounded-2xl">
+        <div class="w-[48%] min-h-[293px] border border-grey rounded-2xl flex flex-col">
             <h1 class="text-lg text-dark-blue px-5 py-3">
                 Message Frequency by Participants
             </h1>
@@ -372,7 +372,7 @@
         let loginChart = new ApexCharts(document.querySelector("#login-chart"), {
             chart: {
                 type: 'area',
-                height: 240,
+                height: 300,
             },
             dataLabels: {
                 enabled: false
@@ -400,7 +400,7 @@
         let messageChart = new ApexCharts(document.querySelector("#message-chart"), {
             chart: {
                 type: 'area',
-                height: 240,
+                height: 300,
             },
             dataLabels: {
                 enabled: false
