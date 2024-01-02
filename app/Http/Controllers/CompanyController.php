@@ -52,23 +52,24 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        $validated = $request->validated();
+        dd($request->hasFile());
+        // $validated = $request->validated();
 
-        $company = new Company;
-        $company->name = $validated['name'];
-        $company->address = $validated['address'];
-        $company->email = $validated['email'];
+        // $company = new Company;
+        // $company->name = $validated['name'];
+        // $company->address = $validated['address'];
+        // $company->email = $validated['email'];
 
-        if ($request->hasFile('logo')) {
-            $logo = $this->uploadLogo($request->file('logo'));
-            $company->logo = $logo;
-        }
+        // if ($request->hasFile('logo')) {
+        //     $logo = $this->uploadLogo($request->file('logo'));
+        //     $company->logo = $logo;
+        // }
 
-        $company->save();
+        // $company->save();
 
-        toastr()->success('Partner has been added');
+        // toastr()->success('Partner has been added');
 
-        return redirect('dashboard/institutions_partners/');
+        // return redirect('dashboard/institutions_partners/');
     }
 
     /**

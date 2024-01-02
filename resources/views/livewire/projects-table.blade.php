@@ -117,6 +117,14 @@
                             </div>
                         </th>
 
+                        <th scope="col" class="pr-8">
+                            <div class="w-full flex justify-between items-center gap-5">
+                                <span class="text-sm text-darker-blue font-medium">
+                                    Status Project
+                                </span>
+                            </div>
+                        </th>
+
                         <th scope="col" class="pr-5">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
@@ -126,7 +134,6 @@
                         </th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @foreach ($projects as $project)
                         <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }}">
@@ -149,11 +156,35 @@
                                 {{ date('d/m/Y', strtotime($project->created_at)) }}
                             </td>
 
+
                             <td class="pr-8 py-2">
                                 <a href="{{ route('dashboard.submission.show', ['project' => $project->id]) }}" class="px-2 py-1 bg-primary rounded-lg text-sm text-white flex">
                                     Submission
                                     <span class="ml-auto mr-2 text-base">></span>
                                 </a>
+                            </td>
+
+                            <td class="pr-8 py-2">
+                                @php
+                                    $formattedStatus = ucfirst(str_replace('_', ' ', $project->status));
+                                @endphp
+
+                                @switch($project->status)
+                                    @case('publish')
+                                        <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $formattedStatus }}</span>
+                                        @break
+
+                                    @case('private_project')
+                                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ $formattedStatus }}</span>
+                                        @break
+
+                                    @case('draft')
+                                        <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $formattedStatus }}</span>
+                                        @break
+
+                                    @default
+                                        {{ $formattedStatus }}
+                                @endswitch
                             </td>
 
                             <td class="pr-5 py-2 rounded-e-lg">
@@ -179,6 +210,34 @@
                                                         Edit Details
                                                     </a>
                                                 @endif
+                                            </li>
+                                            <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                @php
+                                                    $formattedStatus = ucfirst(str_replace('_', ' ', $project->status));
+                                                @endphp
+
+                                                @switch($project->status)
+                                                    @case('publish')
+                                                        <a href="#" class="block">
+                                                            Draft
+                                                        </a>
+                                                        @break
+
+                                                    @case('private_project')
+                                                        {{-- <a href="#" class="block">
+                                                            It's Private
+                                                        </a> --}}
+                                                        @break
+
+                                                    @case('draft')
+                                                        <a href="#" class="block">
+                                                            Publish
+                                                        </a>
+                                                        @break
+
+                                                    @default
+                                                        {{ $formattedStatus }}
+                                                @endswitch
                                             </li>
                                             <li class="w-full cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                 @php

@@ -218,14 +218,52 @@
   </div>
   @endif --}}
   <div class="mb-3 mt-7">
+    <div class="flex justify-between items-center">
+        <h3 class="text-dark-blue font-medium text-xl">
+            Add Dataset <span class="text-red-600">*</span>
+        </h3>
+        <!-- Add Button aligned to the right -->
+        <button id="add-dataset-btn" type="button" class="ml-2">
+            <i class="fa-solid fa-circle-plus"></i> Add
+        </button>
+    </div>
+    <div id="dataset-fields-container">
+        @php
+            // Ensure that $project->dataset is always an array
+            $datasets = $project->dataset ?? [];
+        @endphp
+
+        @foreach ($datasets as $index => $datasetUrl)
+            <div class="flex items-center mt-2 relative">
+                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
+                @if ($index > 0)
+                    <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fa-solid fa-circle-minus"></i></button>
+                @endif
+            </div>
+        @endforeach
+
+        @if (count($datasets) === 0)
+            <div class="flex items-center mt-2 relative">
+                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" required>
+            </div>
+        @endif
+    </div>
+
+    @error('dataset')
+        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
+
+  {{-- <div class="mb-3 mt-7">
     <h3 class="text-dark-blue font-medium text-xl">Add Dataset <span class="text-red-600">*</span></h3>
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" id="inputdataset" name="dataset" value="{{$project->dataset}}">
+    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" id="dataset[]" name="dataset" value="{{$project->dataset}}">
     @error('dataset')
         <p class="text-red-600 text-sm mt-1">
           {{$message}}
         </p>
     @enderror
-  </div>
+  </div> --}}
   @if (Auth::guard('web')->check())
     <div class="mb-3 mt-10 flex justify-between">
       <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
@@ -283,17 +321,66 @@
 @if (Auth::guard('web')->check()|| Auth::guard('customer')->check())
   @section('more-js')
   <script>
-    $(document).ready(function () {
-      $('#inputinstitution').hide();
-        $("#inputprojecttype").change(function(){
-          var values = $("#inputprojecttype option:selected").val();
-          if(values=='private'){
-            $('#inputinstitution').show();
-          }else{
-            $('#inputinstitution').hide();
-          }
-        });
+      $(document).ready(function() {
+          $('#inputinstitution').hide();
+          $("#inputprojecttype").change(function() {
+              var values = $("#inputprojecttype option:selected").val();
+              if (values == 'private') {
+                  $('#inputinstitution').show();
+              } else {
+                  $('#inputinstitution').hide();
+              }
+          });
       });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('dataset-fields-container');
+    const addButton = document.getElementById('add-dataset-btn');
+
+    addButton.addEventListener('click', function() {
+        addDatasetInputField('');
+    });
+
+    function addDatasetInputField(value) {
+        const inputWrapper = document.createElement('div');
+        inputWrapper.className = 'flex items-center mt-2 relative';
+
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
+        newInput.placeholder = 'Add Data set URLs separated by semi-colon';
+        newInput.name = 'dataset[]';
+        newInput.value = value;
+        newInput.required = true;
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2';
+        removeButton.innerHTML = '<i class="fa-solid fa-circle-minus"></i>';
+        removeButton.onclick = function() {
+            inputWrapper.remove();
+        };
+
+        inputWrapper.appendChild(newInput);
+        inputWrapper.appendChild(removeButton);
+        container.appendChild(inputWrapper);
+    }
+
+    // Function to remove dataset input field
+    window.removeDatasetInputField = function(button) {
+        button.parentElement.remove();
+    };
+
+    // Add remove functionality to existing dataset input fields
+    const existingRemoveButtons = container.querySelectorAll('.remove-dataset-btn');
+    existingRemoveButtons.forEach(button => {
+        button.onclick = function() {
+            this.parentElement.remove();
+        };
+    });
+});
+
+
   </script>
   @endsection
 @elseif(Auth::guard('mentor')->check() )

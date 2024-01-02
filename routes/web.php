@@ -270,7 +270,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         // Customer
         Route::get('partners/{partner}/members', [CustomerController::class, 'indexPartner'])->name('partner.partnerMember');
         Route::get('/partners/{partner}/members/{member}/edit', [CustomerController::class, 'partnerMemberEdit'])->name('partner.partnerMemberEdit');
-        Route::patch('/parners/{partner}/members/{member}', [CustomerController::class, 'partnerMemberUpdate'])->name('partner.partnerMemberUpdate');
+        Route::patch('/partners/{partner}/members/{member}', [CustomerController::class, 'partnerMemberUpdate'])->name('partner.partnerMemberUpdate');
         Route::get('partners/{partner}/members/invite', [CustomerController::class, 'invite'])->name('partner.invite');
         // /dashboard/partners/{{$partner->id}}/members/{{$member->id}}/suspend
         Route::get('/partners/{partner}/members/{member}/suspend', [CustomerController::class, 'partnerMemberSuspend'])->name('mentors.partnerMemberSuspend');

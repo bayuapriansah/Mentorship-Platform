@@ -215,20 +215,22 @@
         <h3 class="text-dark-blue font-medium text-xl">
             Add Dataset <span class="text-red-600">*</span>
         </h3>
-        <!-- Add Button aligned to the right -->
         <button id="add-dataset-btn" type="button" class="ml-2">
             <i class="fa-solid fa-circle-plus"></i> Add
         </button>
     </div>
     <div id="dataset-fields-container">
         @php
-            $oldDatasets = old('dataset', ['']);
+            $datasets = old('dataset', isset($project) ? $project->dataset : ['']);
+            $datasetCount = count($datasets);
         @endphp
 
-        @foreach ($oldDatasets as $oldDataset)
+        @foreach ($datasets as $index => $datasetUrl)
             <div class="flex items-center mt-2 relative">
-                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $oldDataset }}" required>
-                <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2"><i class="fa-solid fa-minus"></i></button>
+                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
+                @if ($index > 0)
+                    <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fa-solid fa-circle-minus"></i></button>
+                @endif
             </div>
         @endforeach
     </div>
@@ -236,6 +238,8 @@
         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
     @enderror
 </div>
+
+
 
 {{--  --}}
   @if (Auth::guard('web')->check())
@@ -289,19 +293,24 @@
         });
     });
 
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('dataset-fields-container');
     const addButton = document.getElementById('add-dataset-btn');
 
     addButton.addEventListener('click', function() {
+        addDatasetInputField('');
+    });
+
+    function addDatasetInputField(value) {
         const inputWrapper = document.createElement('div');
-        inputWrapper.className = 'relative flex items-center mt-2';
+        inputWrapper.className = 'flex items-center mt-2 relative';
 
         const newInput = document.createElement('input');
         newInput.type = 'text';
         newInput.className = 'dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
         newInput.placeholder = 'Add Data set URLs separated by semi-colon';
         newInput.name = 'dataset[]';
+        newInput.value = value;
         newInput.required = true;
 
         const removeButton = document.createElement('button');
@@ -315,9 +324,21 @@ document.addEventListener('DOMContentLoaded', function() {
         inputWrapper.appendChild(newInput);
         inputWrapper.appendChild(removeButton);
         container.appendChild(inputWrapper);
+    }
+
+    // Function to remove dataset input field
+    window.removeDatasetInputField = function(button) {
+        button.parentElement.remove();
+    };
+
+    // Add remove functionality to existing dataset input fields
+    const existingRemoveButtons = container.querySelectorAll('.remove-dataset-btn');
+    existingRemoveButtons.forEach(button => {
+        button.onclick = function() {
+            this.parentElement.remove();
+        };
     });
 });
-
 
   </script>
   @endsection
