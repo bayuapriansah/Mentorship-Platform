@@ -80,18 +80,11 @@
 
                 <div class="flex items-center gap-4">
                     <select wire:model="sortField" class="text-sm border border-primary rounded-md">
-                        <option value="created_at">
-                            Data Input Time
-                        </option>
-                        <option value="first_name">
-                            Name
-                        </option>
-                        <option value="team_name">
-                            Team Name
-                        </option>
-                        <option value="country">
-                            Country
-                        </option>
+                        @foreach ($sortOptions as $key => $value)
+                            <option value="{{ $key }}">
+                                {{ $value }}
+                            </option>
+                        @endforeach
                     </select>
 
                     <select wire:model="sortDirection" class="text-sm border border-primary rounded-md">
