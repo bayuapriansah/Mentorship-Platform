@@ -39,31 +39,31 @@ class CommentController extends Controller
 
     public function index()
     {
-        if(Auth::guard('web')->check()){
-            $injections = ProjectSection::whereHas('comment')->get();
-        }elseif(Auth::guard('mentor')->check()){
-            if(Auth::guard('mentor')->user()->institution_id != 0){
-                $injections = ProjectSection::whereHas('comment', function($q){
-                    $q->whereHas('student', function($q){
-                        $q->where('mentor_id', Auth::guard('mentor')->user()->id);
-                    });
-                })->get();
-            }else{
-                $injections = ProjectSection::whereHas('comment', function($q){
-                    $q->whereHas('student', function($q){
-                        $q->where('staff_id', Auth::guard('mentor')->user()->id);
-                    });
-                })->get();
-            }
-        }elseif(Auth::guard('customer')->check()){
+        // if(Auth::guard('web')->check()){
+        //     $injections = ProjectSection::whereHas('comment')->get();
+        // }elseif(Auth::guard('mentor')->check()){
+        //     if(Auth::guard('mentor')->user()->institution_id != 0){
+        //         $injections = ProjectSection::whereHas('comment', function($q){
+        //             $q->whereHas('student', function($q){
+        //                 $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+        //             });
+        //         })->get();
+        //     }else{
+        //         $injections = ProjectSection::whereHas('comment', function($q){
+        //             $q->whereHas('student', function($q){
+        //                 $q->where('staff_id', Auth::guard('mentor')->user()->id);
+        //             });
+        //         })->get();
+        //     }
+        // }elseif(Auth::guard('customer')->check()){
 
-            $injections = ProjectSection::whereHas('comment', function($q){
-                $q->whereHas('project', function($q){
-                    $q->where('company_id', Auth::guard('customer')->user()->company_id);
-                });
-            })->get();
-        }
-        return view('dashboard.messages.index', compact('injections'));
+        //     $injections = ProjectSection::whereHas('comment', function($q){
+        //         $q->whereHas('project', function($q){
+        //             $q->where('company_id', Auth::guard('customer')->user()->company_id);
+        //         });
+        //     })->get();
+        // }
+        return view('dashboard.messages.index');
     }
 
     public function create()
