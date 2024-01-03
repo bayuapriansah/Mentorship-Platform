@@ -23,13 +23,17 @@ class ParticipantsTable extends Component
 
     public $limit = 10;
     public $search = '';
-    public $sortField = 'created_at';
+    public $sortField = 'first_name';
     public $sortDirection = 'asc';
     public $filterByMentorshipType = '';
     public $filterByCountry = '';
 
-    protected $queryString = [
-        'page' => ['except' => 1],
+    public $sortOptions = [
+        'first_name' => 'Participant Name',
+        'mentor.name' => 'Mentor Name',
+        'staff.name' => 'Staff Name',
+        'country' => 'Country',
+        'team_name' => 'Team Name',
     ];
 
     public function render()
@@ -115,7 +119,29 @@ class ParticipantsTable extends Component
             $query = $query->where('country', $this->filterByCountry);
         }
 
-        return $query->orderBy($this->sortField, $this->sortDirection)->paginate($this->limit);
+        $query = $this->sortData($query);
+
+        return $query->paginate($this->limit);
+    }
+
+    public function sortData($query)
+    {
+        switch ($this->sortField) {
+            case 'mentor.name':
+                return $query->orderBy(
+                    Mentor::select('first_name')->whereColumn('id', 'students.mentor_id'),
+                    $this->sortDirection
+                );
+
+            case 'staff.name':
+                return $query->orderBy(
+                    Mentor::select('first_name')->whereColumn('id', 'students.staff_id'),
+                    $this->sortDirection
+                );
+
+            default:
+                return $query->orderBy($this->sortField, $this->sortDirection);
+        }
     }
 
     public function updatingSearch()
