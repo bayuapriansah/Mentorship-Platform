@@ -9,24 +9,30 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Nnjeim\World\Models\Country;
 
 class ProjectEnrollmentTable extends Component
 {
     use WithPagination;
 
     public Project $project;
+    public $countries;
 
     public $limit = 10;
     public $search = '';
     public $sortField = 'student.name';
     public $sortDirection = 'asc';
+    public $filterByStatus = '';
+    public $filterByCountry = '';
     public $filterByMentor = 'all';
 
     public $sortOptions = [
         'student.name' => 'Participant Name',
         'student.mentor.name' => 'Mentor Name',
+        'student.staff.name' => 'Staff Name',
+        'student.country' => 'Country',
         'student.team_name' => 'Team Name',
-        'student.institution.name' => 'Institution Name',
+        // 'student.institution.name' => 'Institution Name',
     ];
 
     public function render()
@@ -38,6 +44,7 @@ class ProjectEnrollmentTable extends Component
 
     public function mount(Project $project)
     {
+        $this->countries = Country::orderBy('name')->get();
         $this->project = $project;
     }
 
@@ -72,8 +79,24 @@ class ProjectEnrollmentTable extends Component
             $search = '%'. $this->search. '%';
 
             $query = $query->whereHas('student', function ($q) use ($search) {
-                            $q->whereRaw("CONCAT(first_name,' ', last_name) LIKE ?", [$search]);
+                            $q->join('mentors as m', 'm.id', '=', 'students.mentor_id')
+                                ->join('mentors as s', 's.id', '=', 'students.staff_id')
+                                ->whereRaw("CONCAT(students.first_name, ' ', students.last_name) LIKE ?", [$search])
+                                ->orWhere('students.team_name', 'LIKE', $search)
+                                ->orWhere('students.country', 'LIKE', $search)
+                                ->orWhereRaw("CONCAT(m.first_name, ' ', m.last_name) LIKE ?", [$search])
+                                ->orWhereRaw("CONCAT(s.first_name, ' ', s.last_name) LIKE ?", [$search]);
                         });
+        }
+
+        if ($this->filterByStatus !== '') {
+            $query = $query->where('is_submited', $this->filterByStatus === '1');
+        }
+
+        if (!empty($this->filterByCountry)) {
+            $query = $query->whereHas('student', function ($q) {
+                        $q->where('country', $this->filterByCountry);
+                    });
         }
 
         $query = $this->sortData($query);
@@ -90,6 +113,12 @@ class ProjectEnrollmentTable extends Component
                     $this->sortDirection
                 );
 
+            case 'student.country':
+                return $query->orderBy(
+                    Student::select('country')->whereColumn('id', 'enrolled_projects.student_id'),
+                    $this->sortDirection
+                );
+
             case 'student.team_name':
                 return $query->orderBy(
                     Student::select('team_name')->whereColumn('id', 'enrolled_projects.student_id'),
@@ -99,6 +128,14 @@ class ProjectEnrollmentTable extends Component
             case 'student.mentor.name':
                 return $query->orderBy(
                     Student::join('mentors','mentors.id', '=', 'students.mentor_id')
+                            ->select('mentors.first_name')
+                            ->whereColumn('students.id', 'enrolled_projects.student_id'),
+                    $this->sortDirection
+                );
+
+            case 'student.staff.name':
+                return $query->orderBy(
+                    Student::join('mentors','mentors.id', '=', 'students.staff_id')
                             ->select('mentors.first_name')
                             ->whereColumn('students.id', 'enrolled_projects.student_id'),
                     $this->sortDirection
@@ -125,5 +162,11 @@ class ProjectEnrollmentTable extends Component
     public function resetSearch()
     {
         $this->search = '';
+    }
+
+    public function resetAllFilters()
+    {
+        $this->filterByStatus = '';
+        $this->filterByCountry = '';
     }
 }

@@ -86,7 +86,67 @@
                 </div>
             @endif
             {{-- ./Filter - Mentor --}}
+
+            {{-- Filter - Status --}}
+            <div class="flex flex-col">
+                <h2 class="text-lg text-darker-blue">
+                    Status
+                </h2>
+
+                <select wire:model="filterByStatus" class="mt-4 text-sm border border-primary rounded-md">
+                    <option value="" hidden>
+                        Select Status
+                    </option>
+                    <option value="0">
+                        Ongoing
+                    </option>
+                    <option value="1">
+                        Complete
+                    </option>
+                </select>
+
+                <button
+                    type="button"
+                    wire:click="$set('filterByStatus', '')"
+                    class="{{ $filterByStatus === '' ? 'hidden' : 'block' }} self-end mt-2 mr-1 text-sm hover:underline"
+                >
+                    Reset
+                </button>
+            </div>
+            {{-- ./Filter - Status --}}
+
+            {{-- Filter - Country --}}
+            <div class="flex flex-col">
+                <h2 class="text-lg text-darker-blue">
+                    Country
+                </h2>
+
+                <select wire:model="filterByCountry" class="mt-4 text-sm border border-primary rounded-md">
+                    <option value="" hidden>
+                        Select Country
+                    </option>
+
+                    @foreach ($countries as $country)
+                        <option value="{{ $country->name }}">
+                            {{ $country->name }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <button
+                    type="button"
+                    wire:click="$set('filterByCountry', '')"
+                    class="{{ empty($filterByCountry) ? 'hidden' : 'block' }} self-end mt-2 mr-1 text-sm hover:underline"
+                >
+                    Reset
+                </button>
+            </div>
+            {{-- ./Filter - Country --}}
         </div>
+
+        <button wire:click="resetAllFilters" type="button" class="mt-8 px-8 py-2 text-sm text-white bg-primary rounded-full">
+            Reset All Filters
+        </button>
     </div>
     {{-- ./Search and Filters --}}
 
@@ -115,7 +175,7 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Team Name
+                                    Staff
                                 </span>
                             </div>
                         </th>
@@ -123,7 +183,15 @@
                         <th scope="col" class="pr-8">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-darker-blue font-medium">
-                                    Institution
+                                    Country
+                                </span>
+                            </div>
+                        </th>
+
+                        <th scope="col" class="pr-8">
+                            <div class="w-full flex justify-between items-center gap-5">
+                                <span class="text-sm text-darker-blue font-medium">
+                                    Team Name
                                 </span>
                             </div>
                         </th>
@@ -150,11 +218,15 @@
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $enrolledProject->student->team_name ?? '-' }}
+                                {{ $enrolledProject->student->staff->first_name }} {{ $enrolledProject->student->staff->last_name }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $enrolledProject->student->institution?->name ?? '-' }}
+                                {{ $enrolledProject->student->country ?? '-' }}
+                            </td>
+
+                            <td class="pr-8 py-2">
+                                {{ $enrolledProject->student->team_name ?? '-' }}
                             </td>
 
                             <td class="pr-5 py-2 rounded-e-lg">
