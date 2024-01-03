@@ -18,7 +18,9 @@
 
     // Datasets
     if ($project->dataset) {
-        $datasets_array = explode(';', $project->dataset);
+        $datasets_array = $project->dataset;
+    } else {
+        $datasets_array = [];
     }
 @endphp
 
