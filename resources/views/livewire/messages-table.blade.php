@@ -69,7 +69,7 @@
             {{-- Sort by --}}
 
             {{-- Filter - Project --}}
-            <div class="flex flex-col">
+            {{-- <div class="flex flex-col">
                 <h2 class="text-lg text-darker-blue">
                     Project
                 </h2>
@@ -93,7 +93,7 @@
                 >
                     Reset
                 </button>
-            </div>
+            </div> --}}
             {{-- ./Filter - Project --}}
 
             {{-- Filter - Project Domain --}}
