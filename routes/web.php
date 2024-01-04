@@ -340,6 +340,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/enrollment/project/{id}', [EnrolledProjectController::class, 'show'])->name('enrollment.show');
         Route::post('/enrollment/project/{id}/{student}/{project}', [EnrolledProjectController::class, 'edit'])->name('enrollment.edit');
 
+        // Notification
+        Route::view('/notifications', 'dashboard.notifications.index')->name('notifications.index');
+
         // Message
         Route::get('/messages', [CommentController::class, 'index'])->name('messages.index');
         Route::get('/messages/create', [CommentController::class, 'create'])->name('messages.create');

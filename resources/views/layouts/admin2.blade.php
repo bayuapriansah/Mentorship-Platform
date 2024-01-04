@@ -221,22 +221,25 @@
         // $notifications = getNotificationSubmission();
         // $NotificationForAdmin = $notifications['totalNotificationAdmin'];
         // $DataSubmissionNotifications = $notifications['submissionNotifications'];
+
+        // $NotificationForAdmin = getNotificationSubmission(onlyCount: true);
+        $NotificationForAdmin = 0;
       @endphp
 
       <div class="w-full bg-white mx-auto py-11 px-10 relative">
         <div class="flex flex-row-reverse">
           <div class="space-x-9">
             {{-- <button type="button" data-modal-target="message-modal" data-modal-toggle="message-modal" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel"> --}}
-            <button type="button" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
-              <svg class="w-6 h-6"  aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              <span class="sr-only">Notifications Bell</span>
-              {{-- @if ($NotificationForAdmin > 0)
-              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-[10px] font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $NotificationForAdmin > 99 ? "99+" : $NotificationForAdmin}}</div>
-              @endif --}}
+            <a href="{{ route('dashboard.notifications.index') }}" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="notification_bel">
+                <svg class="w-6 h-6"  aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span class="sr-only">Notifications Bell</span>
 
-            </button>
+                @if ($NotificationForAdmin > 0)
+                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-[10px] font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ $NotificationForAdmin > 99 ? "99+" : $NotificationForAdmin}}</div>
+                @endif
+            </a>
 
             <a href="/dashboard/messages" class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300" alt="message">
               <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -161,7 +161,7 @@ if(!function_exists('getCommentMessages')){
 }
 
 if (!function_exists('getNotificationSubmission')) {
-    function getNotificationSubmission() {
+    function getNotificationSubmission($onlyCount = false) {
         $user = null;
         $userType = null;
 
@@ -211,6 +211,10 @@ if (!function_exists('getNotificationSubmission')) {
             $submissionNotifications = $submissionNotifications->whereHas('project', function($query) use ($user) {
                 $query->where('company_id', $user->company_id);
             });
+        }
+
+        if ($onlyCount) {
+            return $submissionNotifications->count();
         }
 
         // Execute the query
