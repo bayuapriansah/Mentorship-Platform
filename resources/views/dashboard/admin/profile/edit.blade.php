@@ -1,7 +1,7 @@
 @extends('layouts.admin2')
 @section('content')
 <div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Edit Profile</h3>
+  <h3 class="text-dark-blue font-medium text-[1.375rem]">Edit Profile</h3>
 </div>
 
 @if (Auth::guard('web')->check())
@@ -32,7 +32,7 @@
     @enderror
   </div>
   @else
-  <div class="flex justify-between">
+  <div>
     <input class="border border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="name" type="text" value="{{$user->name}}" placeholder="Name *" name="name" required><br>
     @error('name')
         <p class="text-red-600 text-sm mt-1">
@@ -40,7 +40,7 @@
         </p>
     @enderror
   </div>
-  <div class="flex justify-between mt-4">
+  <div class="mt-4">
     <input class="border bg-gray-300 border-light-blue rounded-lg w-full h-12 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none cursor-not-allowed" id="email" type="text" value="{{$user->email}}" placeholder="Email *" name="email" readonly required><br>
     @error('email')
         <p class="text-red-600 text-sm mt-1">
@@ -123,7 +123,7 @@
         </p>
     @enderror
   </div>
-  <button class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm intelOne" type="submit">Update Profile</button>
+  <button class="py-2.5 px-11 mt-4 rounded-full bg-primary text-center capitalize text-white text-sm" type="submit">Update Profile</button>
 
   <div class="flex justify-between mt-4">
   </div>

@@ -281,11 +281,11 @@
                         <div class="p-6 text-left space-x-4">
                             <img src="{{asset('assets/img/dots-1.png')}}" class="absolute top-0 right-0 w-[233px] h-[108px]" alt="">
                             <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to Logout?</h3>
-                            <div class="relative z-50">
-                              <button data-modal-hide="popup-logout" type="submit" class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full shadow-xl">
+                            <div class="relative z-50 mt-8">
+                              <button data-modal-hide="popup-logout" type="submit" class="text-white text-sm font-normal bg-primary px-14 py-2 rounded-full">
                                 Yes
                               </button>
-                              <button data-modal-hide="popup-logout" type="button" class="intelOne  text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 rounded-full shadow-xl ">Cancel</button>
+                              <button data-modal-hide="popup-logout" type="button" class="ml-3 bg-white border border-primary text-primary text-sm font-normal px-12 py-2 rounded-full">Cancel</button>
                             </div>
                         </div>
                     </div>

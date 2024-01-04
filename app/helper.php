@@ -76,7 +76,7 @@ if (!function_exists('nameUserAuth')) {
         if (Auth::guard('student')->check()) {
             return Auth::guard('student')->user()->first_name . " " .  Auth::guard('student')->user()->last_name;
         } elseif (Auth::guard('web')->check()) {
-            return Auth::guard('web')->user()->first_name . " " .  Auth::guard('web')->user()->last_name;
+            return Auth::guard('web')->user()->name;
         } elseif (Auth::guard('mentor')->check()) {
             return Auth::guard('mentor')->user()->first_name . " " .  Auth::guard('mentor')->user()->last_name;
         } elseif (Auth::guard('customer')->check()) {
