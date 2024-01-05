@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\SimintEncryption;
+use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
 {
@@ -94,22 +95,26 @@ class StaffController extends Controller
 
     public function update(Request $request,Mentor $staff)
     {
-      $validated = $request->validate([
-        'email' => 'required|email',
-        'first_name' => 'required',
-        'last_name' => 'required',
-    ]);
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+        ]);
 
-    $supervisor = Mentor::find($staff->id);
-    $supervisor->email = $validated['email'];
-    $supervisor->first_name = $validated['first_name'];
-    $supervisor->last_name = $validated['last_name'];
-    $supervisor->save();
-    $message = "Successfully updated Staff Member";
+        $supervisor = Mentor::find($staff->id);
+        $supervisor->email = $validated['email'];
+        $supervisor->first_name = $validated['first_name'];
+        $supervisor->last_name = $validated['last_name'];
 
-    toastr()->success($message);
+        if ($request->has('password') && $request->input('password') !== '') {
+            $supervisor->password = Hash::make($request->input('password'));
+        }
 
-    return redirect('/dashboard/staffs');
+        $supervisor->save();
+
+        toastr()->success('Data updated successfully');
+
+        return redirect('/dashboard/staffs');
     }
 
     public function suspend(Mentor $staff)

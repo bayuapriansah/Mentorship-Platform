@@ -50,6 +50,28 @@
             @enderror
         </div>
 
+        <div class="relative mt-6">
+            <input
+                type="password"
+                id="input-password"
+                name="password"
+                placeholder="Password"
+                class="w-full border border-light-blue rounded-lg h-11 py-3 pl-4 pr-12 text-lightest-grey::placeholder leading-tight focus:outline-none"
+            >
+
+            <span
+                toggle="#input-password"
+                onclick="toggleShowPassword(this)"
+                class="absolute top-[35%] right-3 h-4 w-4 bg-cover bg-center bg-no-repeat cursor-pointer"
+                style="background-image: url({{ asset('/assets/img/icon/eye-close.svg') }})"
+            >
+            </span>
+        </div>
+
+        <small class="m-1 text-grey">
+            Leave it blank if you don't want to change
+        </small>
+
         <div class="mt-6 flex items-center gap-3">
             <button class="py-2 px-11 bg-primary rounded-full text-center capitalize bg-orange text-white text-sm"
                 type="submit">
@@ -62,4 +84,20 @@
             </a>
         </div>
     </form>
+@endsection
+
+@section('more-js')
+    <script>
+        function toggleShowPassword(trigger) {
+            const passwordInput = $($(trigger).attr('toggle'))
+
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text')
+                $(trigger).css('background-image', 'url("{{ asset('/assets/img/icon/eye-open.svg') }}")')
+            } else {
+                passwordInput.attr('type', 'password')
+                $(trigger).css('background-image', 'url("{{ asset('/assets/img/icon/eye-close.svg') }}")')
+            }
+        }
+    </script>
 @endsection
