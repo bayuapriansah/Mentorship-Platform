@@ -2,10 +2,6 @@
 
 @section('more-css')
     @livewireStyles
-
-    <style>
-        [x-cloak] { display: none !important; }
-    </style>
 @endsection
 
 @section('content')
@@ -57,7 +53,6 @@
 
 @section('more-js')
     @livewireScripts
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script>
         function showTestimonial(name, content) {

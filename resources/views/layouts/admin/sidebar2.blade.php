@@ -38,13 +38,6 @@
           <a href="/dashboard/institutions_partners">Institutions & Partner</a>
         @endif
     </li> --}}
-    <li class="hover:font-medium">
-        @if(Route::is('dashboard.testimonial'))
-          <a href="{{ route('dashboard.testimonial') }}" class="font-medium">Testimonials</a>
-        @else
-          <a href="{{ route('dashboard.testimonial') }}">Testimonials</a>
-        @endif
-    </li>
   @endif
 
   <li class="hover:font-medium">
@@ -60,6 +53,33 @@
           <a href="/dashboard/customers" class="font-medium">Customers</a>
         @else
           <a href="/dashboard/customers">Customers</a>
+        @endif
+    </li>
+  @endif
+
+  <li x-data="{ isExpanded: false }" class="flex flex-col gap-4">
+    <button x-on:click="isExpanded = !isExpanded" class="{{ Route::is('dashboard.internal-document.*') ? 'font-medium' : '' }} w-max flex items-center gap-3 hover:font-medium">
+        <i x-bind:class="isExpanded ? 'fas fa-chevron-up fa-xs' : 'fas fa-chevron-down fa-xs'"></i>
+        Internal Document
+    </button>
+
+    <div x-show="isExpanded" class="pr-4 flex flex-col gap-4 border-e border-white">
+        <a href="{{ route('dashboard.internal-document.all-pages.index') }}" class="{{ Route::is('dashboard.internal-document.all-pages.*') ? 'font-medium' : '' }} hover:font-medium">
+            All Pages
+        </a>
+
+        <a href="{{ route('dashboard.internal-document.group-section.index') }}" class="{{ Route::is('dashboard.internal-document.group-section.*') ? 'font-medium' : '' }} hover:font-medium">
+            Group Section
+        </a>
+    </div>
+  </li>
+
+  @if (Auth::guard('web')->check())
+    <li class="hover:font-medium">
+        @if(Route::is('dashboard.testimonial'))
+        <a href="{{ route('dashboard.testimonial') }}" class="font-medium">Testimonials</a>
+        @else
+        <a href="{{ route('dashboard.testimonial') }}">Testimonials</a>
         @endif
     </li>
   @endif

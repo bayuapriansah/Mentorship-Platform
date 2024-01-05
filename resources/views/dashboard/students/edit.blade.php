@@ -1,11 +1,5 @@
 @extends('layouts.admin2')
 
-@section('more-css')
-    <style>
-        [x-cloak] { display: none !important; }
-    </style>
-@endsection
-
 @section('content')
 {{-- Breadcrumb --}}
 <div class="flex flex-wrap text-[1.375rem] text-dark-blue font-medium gap-3">
@@ -541,8 +535,6 @@
 @endsection
 
 @section('more-js')
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
     <script>
         function submitEndDateForm() {
             document.getElementById('end-date-form').submit()
