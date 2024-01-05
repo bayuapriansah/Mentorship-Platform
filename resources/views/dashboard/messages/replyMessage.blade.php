@@ -10,7 +10,7 @@
         <div >
             <label for="inputproject">Select Project <span class="text-red-600">*</span></label>
             <select
-                class="mt-2 border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
+                class="mt-2 border border-grey text-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
                 id="inputproject" name="project" disabled>
                 <option value="{{ $injection->project_id }}">{{ $injection->project->name }}</option>
             </select>
@@ -19,7 +19,7 @@
         <div class="mt-4">
             <label for="inputproject">Select Task <span class="text-red-600">*</span></label>
             <select
-                class="mt-2 border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
+                class="mt-2 border border-grey text-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
                 id="inputproject" name="project" disabled>
                 <option value="{{ $injection->id }}">{{ $injection->title }}</option>
             </select>
@@ -28,7 +28,7 @@
         <div class="mt-4">
             <label for="inputproject">Select Student <span class="text-red-600">*</span></label>
             <select
-                class="mt-2 border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
+                class="mt-2 border border-grey text-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
                 id="inputproject" name="project" disabled>
                 <option value="{{ $participant->id }}">{{ $participant->first_name }} {{ $participant->last_name }}</option>
             </select>
@@ -38,7 +38,7 @@
             <label for="inputproject">CC </label>
             {{-- <input type="text" class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none"> --}}
             <select
-                class="mt-2 border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
+                class="mt-2 border border-grey text-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none "
                 id="inputproject" name="project" disabled>
                 <option value="{{ $participant->id }}">
                     {{ $participant->mentor->first_name }} {{ $participant->mentor->last_name }},
