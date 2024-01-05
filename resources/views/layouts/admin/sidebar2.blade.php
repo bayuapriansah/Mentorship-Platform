@@ -64,11 +64,11 @@
     </button>
 
     <div x-show="isExpanded" class="pr-4 flex flex-col gap-4 border-e border-white">
-        <a href="{{ route('dashboard.internal-document.all-pages') }}" class="{{ Route::is('dashboard.internal-document.all-pages') ? 'font-medium' : '' }} hover:font-medium">
+        <a href="{{ route('dashboard.internal-document.all-pages.index') }}" class="{{ Route::is('dashboard.internal-document.all-pages.*') ? 'font-medium' : '' }} hover:font-medium">
             All Pages
         </a>
 
-        <a href="{{ route('dashboard.internal-document.group-section') }}" class="{{ Route::is('dashboard.internal-document.group-section') ? 'font-medium' : '' }} hover:font-medium">
+        <a href="{{ route('dashboard.internal-document.group-section.index') }}" class="{{ Route::is('dashboard.internal-document.group-section.*') ? 'font-medium' : '' }} hover:font-medium">
             Group Section
         </a>
     </div>

@@ -15,4 +15,9 @@ class InternalDocumentController extends Controller
     {
         return view('dashboard.internal-document.group-section');
     }
+
+    public function addPage()
+    {
+        return view('dashboard.internal-document.add-page');
+    }
 }

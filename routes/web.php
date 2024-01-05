@@ -211,8 +211,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::delete('/staffs/{staff}', [StaffController::class, 'destroy'])->name('staffs.destroy');
 
         // Internal Document
-        Route::get('/internal-document/all-pages', [InternalDocumentController::class, 'allPages'])->name('internal-document.all-pages');
-        Route::get('/internal-document/group-section', [InternalDocumentController::class, 'groupSection'])->name('internal-document.group-section');
+        Route::get('/internal-document/all-pages', [InternalDocumentController::class, 'allPages'])->name('internal-document.all-pages.index');
+        Route::get('/internal-document/all-pages/add', [InternalDocumentController::class, 'addPage'])->name('internal-document.all-pages.add');
+        Route::get('/internal-document/group-section', [InternalDocumentController::class, 'groupSection'])->name('internal-document.group-section.index');
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
