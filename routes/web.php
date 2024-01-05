@@ -31,6 +31,8 @@ use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\InternalDocumentController;
+
 // use App\Http\Controllers\ChatbotController;
 
 /*
@@ -208,6 +210,9 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/staffs/{staff}/suspend', [StaffController::class, 'suspend' ])->name('staffs.suspend');
         Route::delete('/staffs/{staff}', [StaffController::class, 'destroy'])->name('staffs.destroy');
 
+        // Internal Document
+        Route::get('/internal-document/all-pages', [InternalDocumentController::class, 'allPages'])->name('internal-document.all-pages');
+        Route::get('/internal-document/group-section', [InternalDocumentController::class, 'groupSection'])->name('internal-document.group-section');
 
         // Institution
         // Route::post('institutions/{institution}/edit/confirm', [InstitutionController::class, 'update'])->name('institutions.update.confirm');
