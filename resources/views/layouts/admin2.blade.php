@@ -206,10 +206,10 @@
 <body>
   <div class="max-w-[2000px] mx-auto">
     <div class="flex">
-      <div class="w-1/5 min-h-screen bg-gradient-to-b from-darker-blue to-dark-blue items-center py-9 px-14 justify-center" >
+      <div class="w-1/5 min-h-screen bg-gradient-to-b from-darker-blue to-dark-blue items-center py-9 px-10 justify-center" >
         <div class="flex-col">
           <a href="{{ route('index') }}">
-            <img src="{{asset('assets/img/intellogo2022_1.png')}}" class="w-[188px] h-[53px] object-scale-down mx-auto" alt="">
+            <img src="{{ asset('/assets/img/logo/impact-festival-white-logo.png') }}" class="w-full object-scale-down mx-auto" alt="Logo">
           </a>
         </div>
         <div class="flex flex-row-reverse py-14 text-white text-right">
