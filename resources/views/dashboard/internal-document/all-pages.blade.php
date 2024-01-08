@@ -1,5 +1,9 @@
 @extends('layouts.admin2')
 
+@section('more-css')
+    @livewireStyles
+@endsection
+
 @section('content')
 <div class="flex justify-between items-center">
     <h1 class="text-dark-blue font-medium text-[1.375rem]">
@@ -13,4 +17,12 @@
         Add Page
     </a>
 </div>
+
+<div class="mt-6">
+    @livewire('internal-document-pages-table')
+</div>
+@endsection
+
+@section('more-js')
+    @livewireScripts
 @endsection
