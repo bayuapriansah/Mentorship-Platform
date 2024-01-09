@@ -144,15 +144,11 @@
 
                             <td class="pr-8 py-2">
                                 <div class="dropdown inline-block relative">
-                                    @if ($doc_page->is_draft)
-                                        <button type="button" class="text-sm text-[#DEAA51] hover:underline">
-                                            Draft
-                                        </button>
-                                    @else
-                                        <button type="button" class="text-sm text-[#11BF61] hover:underline">
-                                            Publish
-                                        </button>
-                                    @endif
+                                    <button type="button" class="w-32 px-2.5 py-1 bg-primary rounded-lg flex justify-between items-center text-sm text-white">
+                                        {{ $doc_page->is_draft ? 'Draft' : 'Published' }}
+
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
 
                                     <div class="z-10 dropdown-menu absolute right-0 hidden border border-light-blue bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                                         <ul class="py-2 text-sm text-gray-700">
