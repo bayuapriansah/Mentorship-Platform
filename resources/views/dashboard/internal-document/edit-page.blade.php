@@ -74,7 +74,7 @@
         </h2>
 
         <textarea id="problem" name="description" required>
-            {{ old('problem', $page->description) }}
+            {{ old('description', $page->description) }}
         </textarea>
 
         @error('description')
@@ -87,7 +87,7 @@
     <div class="mt-10">
         <div class="flex justify-between items-center">
             <h2 class="text-xl text-darker-blue font-medium">
-                File (Optional)
+                Files (Optional)
             </h2>
 
             <div class="flex items-center gap-3 text-primary">
@@ -138,6 +138,38 @@
         </div>
     </div>
     {{-- ./Upload File --}}
+
+    {{-- Files Header Info --}}
+    <div class="mt-10 flex flex-col gap-3">
+        <h2 class="text-xl text-darker-blue font-medium">
+            Files Header Info (Optional)
+        </h2>
+
+        <textarea id="problem" name="files_header_info" required>
+            {{ old('files_header_info', $page->files_header_info) }}
+        </textarea>
+
+        @error('files_header_info')
+            <span class="text-red-500 text-sm font-medium">{{ $message }}</span>
+        @enderror
+    </div>
+    {{-- ./Files Header Info --}}
+
+    {{-- Files Footer Info --}}
+    <div class="mt-10 flex flex-col gap-3">
+        <h2 class="text-xl text-darker-blue font-medium">
+            Files Footer Info (Optional)
+        </h2>
+
+        <textarea id="problem" name="files_footer_info" required>
+            {{ old('files_footer_info', $page->files_footer_info) }}
+        </textarea>
+
+        @error('files_footer_info')
+            <span class="text-red-500 text-sm font-medium">{{ $message }}</span>
+        @enderror
+    </div>
+    {{-- ./Files Footer Info --}}
 
     {{-- Group Section --}}
     <div class="mt-10 flex flex-col gap-3">

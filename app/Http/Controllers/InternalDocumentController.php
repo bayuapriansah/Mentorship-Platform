@@ -79,6 +79,8 @@ class InternalDocumentController extends Controller
                     'subtitle' => $validated['subtitle'],
                     'description' => $validated['description'],
                     'files' => count($file_path) > 0 ? json_encode($file_path) : null,
+                    'files_header_info' => $request->input('files_header_info'),
+                    'files_footer_info' => $request->input('files_footer_info'),
                 ]);
             });
 
@@ -155,6 +157,8 @@ class InternalDocumentController extends Controller
                     'subtitle' => $validated['subtitle'],
                     'description' => $validated['description'],
                     'files' => count($file_path) > 0 ? json_encode($file_path) : null,
+                    'files_header_info' => $request->input('files_header_info'),
+                    'files_footer_info' => $request->input('files_footer_info'),
                 ]);
             });
 
