@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class InternalDocumentController extends Controller
 {
@@ -73,14 +74,19 @@ class InternalDocumentController extends Controller
                     }
                 }
 
-                InternalDocumentPage::create([
+                $page = InternalDocumentPage::create([
                     'internal_document_group_section_id' => $validated['internal_document_group_section_id'],
                     'title' => $validated['title'],
+                    'slug' => Str::slug($validated['title']),
                     'subtitle' => $validated['subtitle'],
                     'description' => $validated['description'],
                     'files' => count($file_path) > 0 ? json_encode($file_path) : null,
                     'files_header_info' => $request->input('files_header_info'),
                     'files_footer_info' => $request->input('files_footer_info'),
+                ]);
+
+                $page->update([
+                    'slug' => Str::slug($page->title . '-'. $page->id),
                 ]);
             });
 
@@ -154,6 +160,7 @@ class InternalDocumentController extends Controller
                 $page->update([
                     'internal_document_group_section_id' => $validated['internal_document_group_section_id'],
                     'title' => $validated['title'],
+                    'slug' => Str::slug($validated['title'] . '-'. $page->id),
                     'subtitle' => $validated['subtitle'],
                     'description' => $validated['description'],
                     'files' => count($file_path) > 0 ? json_encode($file_path) : null,

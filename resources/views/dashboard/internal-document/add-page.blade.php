@@ -32,6 +32,7 @@
             name="title"
             value="{{ old('title') }}"
             placeholder="Type Something. . ."
+            maxlength="1000"
             class="h-11 px-4 py-2 border border-grey rounded-lg leading-tight focus:outline-none"
             autofocus
             required
@@ -55,6 +56,7 @@
             name="subtitle"
             value="{{ old('subtitle') }}"
             placeholder="Type Something. . ."
+            maxlength="1000"
             class="h-11 px-4 py-2 border border-grey rounded-lg leading-tight focus:outline-none"
             required
         >
