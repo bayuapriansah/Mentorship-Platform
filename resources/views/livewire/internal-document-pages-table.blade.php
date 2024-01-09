@@ -182,7 +182,7 @@
 
                             <td class="pr-8 py-2">
                                 <div class="flex items-center gap-4">
-                                    <a href="#" title="Edit">
+                                    <a href="{{ route('dashboard.internal-document.all-pages.edit', ['id' => $doc_page->id]) }}" title="Edit">
                                         <i class="fas fa-pen text-darker-blue"></i>
                                     </a>
 

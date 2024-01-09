@@ -214,6 +214,8 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::get('/internal-document/all-pages', [InternalDocumentController::class, 'allPages'])->name('internal-document.all-pages.index');
         Route::get('/internal-document/all-pages/add', [InternalDocumentController::class, 'addPage'])->name('internal-document.all-pages.add');
         Route::post('/internal-document/all-pages/add', [InternalDocumentController::class, 'savePage'])->name('internal-document.all-pages.save');
+        Route::get('/internal-document/all-pages/edit/{id}', [InternalDocumentController::class, 'editPage'])->name('internal-document.all-pages.edit');
+        Route::put('/internal-document/all-pages/edit/{id}', [InternalDocumentController::class, 'updatePage'])->name('internal-document.all-pages.update');
         Route::get('/internal-document/group-section', [InternalDocumentController::class, 'groupSection'])->name('internal-document.group-section.index');
 
         // Institution

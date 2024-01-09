@@ -101,8 +101,8 @@ class InternalDocumentPagesTable extends Component
 
         if (is_array($files)) {
             foreach ($files as $file) {
-                if (file_exists(storage_path('app/'. $file))) {
-                    unlink(storage_path('app/'. $file));
+                if (file_exists(storage_path('app/public/'. $file))) {
+                    unlink(storage_path('app/public/'. $file));
                 }
             }
         }
