@@ -6,6 +6,7 @@ use App\Models\InternalDocumentGroupSection;
 use App\Models\InternalDocumentPage;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class InternalDocumentSeeder extends Seeder
 {
@@ -30,10 +31,13 @@ class InternalDocumentSeeder extends Seeder
         }
 
         for ($i = 1; $i <= 20; $i++) {
+            $title = 'Document #' . $i;
+
             InternalDocumentPage::create([
                 'id' => $i,
                 'internal_document_group_section_id' => 1,
-                'title' => 'Document #' . $i,
+                'title' => $title,
+                'slug' => Str::slug($title . '-' . $i),
                 'subtitle' => 'This is a subtitle',
                 'description' => '<p>This is a description</p>',
             ]);

@@ -97,16 +97,6 @@ class InternalDocumentPagesTable extends Component
         }
 
         $page = InternalDocumentPage::find($id);
-        $files = json_decode($page->files);
-
-        if (is_array($files)) {
-            foreach ($files as $file) {
-                if (file_exists(storage_path('app/public/'. $file))) {
-                    unlink(storage_path('app/public/'. $file));
-                }
-            }
-        }
-
         $page->delete();
 
         toastr()->success('Page deleted successfully');

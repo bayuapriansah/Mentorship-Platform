@@ -7,7 +7,9 @@ use App\Models\InternalDocumentPage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class InternalDocumentController extends Controller
 {
@@ -72,12 +74,19 @@ class InternalDocumentController extends Controller
                     }
                 }
 
-                InternalDocumentPage::create([
+                $page = InternalDocumentPage::create([
                     'internal_document_group_section_id' => $validated['internal_document_group_section_id'],
                     'title' => $validated['title'],
+                    'slug' => Str::slug($validated['title']),
                     'subtitle' => $validated['subtitle'],
                     'description' => $validated['description'],
                     'files' => count($file_path) > 0 ? json_encode($file_path) : null,
+                    'files_header_info' => $request->input('files_header_info'),
+                    'files_footer_info' => $request->input('files_footer_info'),
+                ]);
+
+                $page->update([
+                    'slug' => Str::slug($page->title . '-'. $page->id),
                 ]);
             });
 
@@ -97,9 +106,10 @@ class InternalDocumentController extends Controller
             abort(404);
         }
 
+        $files = json_decode($page->files) !== null ? json_decode($page->files) : [];
         $sections = InternalDocumentGroupSection::orderBy('created_at')->get();
 
-        return view('dashboard.internal-document.edit-page', compact('page', 'sections'));
+        return view('dashboard.internal-document.edit-page', compact('page', 'files', 'sections'));
     }
 
     public function updatePage(Request $request, $id)
@@ -150,9 +160,12 @@ class InternalDocumentController extends Controller
                 $page->update([
                     'internal_document_group_section_id' => $validated['internal_document_group_section_id'],
                     'title' => $validated['title'],
+                    'slug' => Str::slug($validated['title'] . '-'. $page->id),
                     'subtitle' => $validated['subtitle'],
                     'description' => $validated['description'],
                     'files' => count($file_path) > 0 ? json_encode($file_path) : null,
+                    'files_header_info' => $request->input('files_header_info'),
+                    'files_footer_info' => $request->input('files_footer_info'),
                 ]);
             });
 
@@ -168,6 +181,56 @@ class InternalDocumentController extends Controller
 
             toastr()->success('Page updated successfully');
             return redirect()->route('dashboard.internal-document.all-pages.index');
+        } catch (Exception $e) {
+            toastr()->error($e->getMessage());
+            return back()->withInput();
+        }
+    }
+
+    public function deletePageFile(Request $request, $id)
+    {
+        try {
+            $page = InternalDocumentPage::find($id);
+            $file_path = $request->query('file_path');
+
+            if (!$page || !$file_path) {
+                abort(404);
+            }
+
+            $file_path = urldecode($file_path);
+
+            $files = json_decode($page->files) !== null ? json_decode($page->files) : [];
+            $target = '';
+
+            foreach ($files as $file) {
+                if ($file === $file_path) {
+                    $target = $file;
+                    break;
+                }
+            }
+
+            if ($target === '') {
+                throw new Exception('File not found');
+            }
+
+            if (file_exists(storage_path('app/public/'. $target))) {
+                DB::transaction(function () use ($page, $files, $target) {
+                    $trashFolder = 'public/trash/'. date('Ymd');
+
+                    Storage::makeDirectory($trashFolder);
+                    Storage::move('public/'. $target, $trashFolder . '/'. $target);
+
+                    $files = array_diff($files, [$target]);
+                    $page->update([
+                        'files' => count($files) > 0 ? json_encode($files) : null,
+                    ]);
+                });
+            } else {
+                throw new Exception('File not found');
+            }
+
+            toastr()->success('File deleted successfully');
+            return back()->withInput();
         } catch (Exception $e) {
             toastr()->error($e->getMessage());
             return back()->withInput();

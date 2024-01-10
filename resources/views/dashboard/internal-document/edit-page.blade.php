@@ -33,6 +33,7 @@
             name="title"
             value="{{ old('title', $page->title) }}"
             placeholder="Type Something. . ."
+            maxlength="1000"
             class="h-11 px-4 py-2 border border-grey rounded-lg leading-tight focus:outline-none"
             autofocus
             required
@@ -56,6 +57,7 @@
             name="subtitle"
             value="{{ old('subtitle', $page->subtitle) }}"
             placeholder="Type Something. . ."
+            maxlength="1000"
             class="h-11 px-4 py-2 border border-grey rounded-lg leading-tight focus:outline-none"
             required
         >
@@ -74,7 +76,7 @@
         </h2>
 
         <textarea id="problem" name="description" required>
-            {{ old('problem', $page->description) }}
+            {{ old('description', $page->description) }}
         </textarea>
 
         @error('description')
@@ -87,7 +89,7 @@
     <div class="mt-10">
         <div class="flex justify-between items-center">
             <h2 class="text-xl text-darker-blue font-medium">
-                File (Optional)
+                Files (Optional)
             </h2>
 
             <div class="flex items-center gap-3 text-primary">
@@ -97,12 +99,12 @@
             </div>
         </div>
 
-        @if (json_encode($page->files) !== null && count(json_decode($page->files)) > 0)
+        @if (count($files) > 0)
             <div class="my-6 flex flex-col gap-4">
-                @foreach (json_decode($page->files) as $file)
+                @foreach ($files as $file)
                     <div class="px-6 py-3 border border-grey rounded-lg flex items-center">
                         <p class="text-sm">
-                            {{ substr(str_replace('public/internal-document/', '', $file), 0, 50) }}{{ strlen(str_replace('public/internal-document/', '', $file)) >= 50 ? '...' : '' }}
+                            {{ substr(str_replace('internal-document/', '', $file), 0, 50) }}{{ strlen(str_replace('internal-document/', '', $file)) >= 50 ? '...' : '' }}
                         </p>
 
                         <div class="ml-auto flex items-center gap-4">
@@ -110,9 +112,9 @@
                                 <i class="fas fa-download"></i>
                             </a>
 
-                            <button type="button" title="Delete">
+                            <a href="{{ route('dashboard.internal-document.all-pages.delete-file', ['id' => $page->id, 'file_path' => urlencode($file)]) }}" title="Delete" class="delete-file-link">
                                 <i class="fas fa-trash-alt text-red-600"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 @endforeach
@@ -138,6 +140,38 @@
         </div>
     </div>
     {{-- ./Upload File --}}
+
+    {{-- Files Header Info --}}
+    <div class="mt-10 flex flex-col gap-3">
+        <h2 class="text-xl text-darker-blue font-medium">
+            Files Header Info (Optional)
+        </h2>
+
+        <textarea id="problem" name="files_header_info" required>
+            {{ old('files_header_info', $page->files_header_info) }}
+        </textarea>
+
+        @error('files_header_info')
+            <span class="text-red-500 text-sm font-medium">{{ $message }}</span>
+        @enderror
+    </div>
+    {{-- ./Files Header Info --}}
+
+    {{-- Files Footer Info --}}
+    <div class="mt-10 flex flex-col gap-3">
+        <h2 class="text-xl text-darker-blue font-medium">
+            Files Footer Info (Optional)
+        </h2>
+
+        <textarea id="problem" name="files_footer_info" required>
+            {{ old('files_footer_info', $page->files_footer_info) }}
+        </textarea>
+
+        @error('files_footer_info')
+            <span class="text-red-500 text-sm font-medium">{{ $message }}</span>
+        @enderror
+    </div>
+    {{-- ./Files Footer Info --}}
 
     {{-- Group Section --}}
     <div class="mt-10 flex flex-col gap-3">
@@ -169,7 +203,6 @@
 </form>
 {{-- ./Form --}}
 @endsection
-
 
 @section('more-js')
     <script>
@@ -214,5 +247,15 @@
                 }
             }
         }
+
+        $('.delete-file-link').on('click', function(e) {
+            e.preventDefault()
+
+            let deleteConfirm = confirm('Are you sure you want to permanently delete this file?\u000AWARNING! This action cannot be undone.')
+
+            if (deleteConfirm) {
+                window.location.href = $(this).attr('href')
+            }
+        })
     </script>
 @endsection
