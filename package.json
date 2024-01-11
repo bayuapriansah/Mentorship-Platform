@@ -5,6 +5,7 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@tailwindcss/typography": "^0.5.10",
         "autoprefixer": "^10.4.14",
         "axios": "^1.1.2",
         "flowbite": "^1.7.0",

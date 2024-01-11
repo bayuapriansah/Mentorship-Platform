@@ -23,6 +23,15 @@ class InternalDocumentController extends Controller
         return view('dashboard.internal-document.group-section');
     }
 
+    public function viewPage($id)
+    {
+        $page = InternalDocumentPage::find($id);
+        abort_if(!$page, 404);
+        $files = $this->getFiles($page->id);
+
+        return view('dashboard.internal-document.view-page', compact('page', 'files'));
+    }
+
     public function addPage()
     {
         $sections = InternalDocumentGroupSection::orderBy('created_at')->get();
@@ -235,5 +244,79 @@ class InternalDocumentController extends Controller
             toastr()->error($e->getMessage());
             return back()->withInput();
         }
+    }
+
+    public function getFiles($id)
+    {
+        $page = InternalDocumentPage::findOrFail($id);
+        $files = json_decode($page->files) !== null ? json_decode($page->files) : [];
+        $result = [];
+
+        foreach ($files as $file) {
+            $result[] = [
+                'name' => $file,
+                'url' => asset('storage/'. $file),
+                'logo' => $this->getFileLogo($file),
+            ];
+        }
+
+        return $result;
+    }
+
+    private function getFileLogo($filePath)
+    {
+        $extLogos = [
+            [
+                'ext' => ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff', 'tif', 'ico'],
+                'logo' => asset('/assets/img/file-logo/image.png'),
+            ],
+            [
+                'ext' => ['txt', 'rtf'],
+                'logo' => asset('/assets/img/file-logo/text.png'),
+            ],
+            [
+                'ext' => ['csv'],
+                'logo' => asset('/assets/img/file-logo/csv.png'),
+            ],
+            [
+                'ext' => ['pdf'],
+                'logo' => asset('/assets/img/file-logo/pdf.png'),
+            ],
+            [
+                'ext' => ['doc', 'docx'],
+                'logo' => asset('/assets/img/file-logo/ms-word.png'),
+            ],
+            [
+                'ext' => ['xls', 'xlsx'],
+                'logo' => asset('/assets/img/file-logo/ms-excel.png'),
+            ],
+            [
+                'ext' => ['ppt', 'pptx'],
+                'logo' => asset('/assets/img/file-logo/ms-powerpoint.png'),
+            ],
+            [
+                'ext' => ['py', 'pyw', 'ipy', 'ipynb'],
+                'logo' => asset('/assets/img/file-logo/python.png'),
+            ],
+            [
+                'ext' => ['sql', 'db', 'plpgsql'],
+                'logo' => asset('/assets/img/file-logo/sql.png'),
+            ],
+            [
+                'ext' => ['zip', 'rar', '7z', 'tar.gz', 'gz'],
+                'logo' => asset('/assets/img/file-logo/zip.png'),
+            ],
+        ];
+
+        $generalFileLogo = asset('/assets/img/file-logo/general.png');
+        $ext = pathinfo(storage_path('app/public/'. $filePath), PATHINFO_EXTENSION);
+
+        foreach ($extLogos as $logo) {
+            if (in_array($ext, $logo['ext'])) {
+                return $logo['logo'];
+            }
+        }
+
+        return $generalFileLogo;
     }
 }

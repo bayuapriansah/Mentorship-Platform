@@ -212,6 +212,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
 
         // Internal Document
         Route::get('/internal-document/all-pages', [InternalDocumentController::class, 'allPages'])->name('internal-document.all-pages.index');
+        Route::get('/internal-document/all-pages/view/{id}', [InternalDocumentController::class, 'viewPage'])->name('internal-document.all-pages.view');
         Route::get('/internal-document/all-pages/add', [InternalDocumentController::class, 'addPage'])->name('internal-document.all-pages.add');
         Route::post('/internal-document/all-pages/add', [InternalDocumentController::class, 'savePage'])->name('internal-document.all-pages.save');
         Route::get('/internal-document/all-pages/edit/{id}', [InternalDocumentController::class, 'editPage'])->name('internal-document.all-pages.edit');
