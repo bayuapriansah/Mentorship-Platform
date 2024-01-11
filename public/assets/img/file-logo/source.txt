@@ -1,0 +1,32 @@
+1. Image
+https://www.flaticon.com/free-icon/image_1824880?term=image+file&page=1&position=57&origin=search&related_id=1824880
+
+2. Txt
+https://www.flaticon.com/free-icon/text-file_9889012?term=text+file&page=1&position=6&origin=style&related_id=9889012
+
+3. CSV
+https://www.flaticon.com/free-icon/csv-file-format_8760619?term=csv&page=1&position=1&origin=style&related_id=8760619
+
+4. PDF
+https://www.flaticon.com/free-icon/pdf_136522?term=pdf+file&page=1&position=3&origin=search&related_id=136522
+
+5. Ms Word
+https://www.flaticon.com/free-icon/word_732226?term=word+file&page=1&position=3&origin=search&related_id=732226
+
+6. Ms Excel
+https://www.flaticon.com/free-icon/excel_732220?term=microsoft+excel&page=1&position=1&origin=search&related_id=732220
+
+7. Ms Powerpoint
+https://www.flaticon.com/free-icon/powerpoint_732224?term=powerpoint&page=1&position=2&origin=search&related_id=732224
+
+8. Python
+https://www.flaticon.com/free-icon/py_172546?term=python&page=1&position=16&origin=search&related_id=172546
+
+9. SQL
+https://www.flaticon.com/free-icon/sql_9543826?term=sql&page=1&position=9&origin=search&related_id=9543826
+
+10. Archive
+https://www.flaticon.com/free-icon/zip_3979411?term=zip+file&page=1&position=9&origin=search&related_id=3979411
+
+11. General
+https://www.flaticon.com/free-icon/file_342348?term=file&page=1&position=29&origin=search&related_id=342348
