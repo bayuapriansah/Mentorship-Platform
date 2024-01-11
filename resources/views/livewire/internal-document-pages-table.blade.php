@@ -193,7 +193,7 @@
                             </td>
 
                             <td class="pr-5 py-2 rounded-e-lg">
-                                <a href="#" class="">
+                                <a href="{{ route('dashboard.internal-document.all-pages.view', ['id' => $doc_page->id]) }}">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </td>
