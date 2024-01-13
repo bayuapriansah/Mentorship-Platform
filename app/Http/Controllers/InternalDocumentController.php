@@ -32,6 +32,17 @@ class InternalDocumentController extends Controller
         return view('dashboard.internal-document.view-page', compact('page', 'files'));
     }
 
+    public function viewPublicPage($slug)
+    {
+        $page = InternalDocumentPage::where('slug', $slug)->where('is_draft', false)->first();
+        abort_if(!$page, 404);
+
+        $groupSections = InternalDocumentGroupSection::orderBy('id')->get();
+        $files = $this->getFiles($page->id);
+
+        return view('internal-document', compact('groupSections', 'page', 'files'));
+    }
+
     public function addPage()
     {
         $sections = InternalDocumentGroupSection::orderBy('created_at')->get();
