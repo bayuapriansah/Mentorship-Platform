@@ -115,9 +115,9 @@ class ProjectController extends Controller
 
     public function dashboardIndexCreate()
     {
-        $partner = Company::orderBy('id')->first();
         $backUrl = route('dashboard.projects.index');
         $formAction = route('dashboard.projects.store');
+        $partner = Company::orderBy('id')->first();
         $institutions = Institution::get();
 
         return view('dashboard.projects.create', compact(
@@ -199,15 +199,18 @@ class ProjectController extends Controller
 
     public function dashboardIndexEdit(Project $project)
     {
-        // if(Auth::guard('web')->check()){
-        $partners = Company::get();
-        // $institutions = (new InstitutionController)->GetInstituionData();
+        $backUrl = route('dashboard.projects.index');
+        $formAction = route('dashboard.projects.update', ['project' => $project->id]);
         $cards = ProjectSection::where('project_id', $project->id)->get();
-
         $institutions = Institution::get();
-        return view('dashboard.projects.edit', compact(['project','partners','cards','institutions']));
-        // }
-        // return view('dashboard.projects.edit', compact('project'));
+
+        return view('dashboard.projects.edit', compact(
+            'project',
+            'backUrl',
+            'formAction',
+            'cards',
+            'institutions'
+        ));
     }
 
     public function dashboardIndexUpdate(Request $request, Project $project)
@@ -721,7 +724,6 @@ class ProjectController extends Controller
     {
         $backUrl = route('dashboard.partner.partnerProjects', ['partner' => $partner->id]);
         $formAction = route('dashboard.partner.partnerProjectsStore', ['partner' => $partner->id]);
-
         $institutions = Institution::get();
 
         return view('dashboard.projects.create', compact(
@@ -822,10 +824,18 @@ class ProjectController extends Controller
 
     public function partnerProjectsEdit(Company $partner, Project $project)
     {
-        $project = Project::find($project->id);
+        $backUrl = route('dashboard.partner.partnerProjects', ['partner' => $partner->id]);
+        $formAction = route('dashboard.partner.partnerProjectsUpdate', ['partner' => $partner->id]);
         $cards = ProjectSection::where('project_id', $project->id)->get();
         $institutions = Institution::get();
-        return view('dashboard.projects.edit', compact('partner', 'project', 'cards', 'institutions'));
+
+        return view('dashboard.projects.edit', compact(
+            'backUrl',
+            'formAction',
+            'project',
+            'cards',
+            'institutions'
+        ));
     }
 
     public function publishDraft(Company $partner, Project $project)
