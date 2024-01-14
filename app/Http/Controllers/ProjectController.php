@@ -115,9 +115,17 @@ class ProjectController extends Controller
 
     public function dashboardIndexCreate()
     {
-        $partners = Company::get();
+        $partner = Company::orderBy('id')->first();
+        $backUrl = route('dashboard.projects.index');
+        $formAction = route('dashboard.projects.store');
         $institutions = Institution::get();
-        return view('dashboard.projects.create', compact('partners','institutions'));
+
+        return view('dashboard.projects.create', compact(
+            'backUrl',
+            'formAction',
+            'partner',
+            'institutions',
+        ));
     }
 
     public function dashboardIndexStore(Request $request)
@@ -711,8 +719,17 @@ class ProjectController extends Controller
 
     public function partnerProjectsCreate(Company $partner)
     {
+        $backUrl = route('dashboard.partner.partnerProjects', ['partner' => $partner->id]);
+        $formAction = route('dashboard.partner.partnerProjectsStore', ['partner' => $partner->id]);
+
         $institutions = Institution::get();
-        return view('dashboard.projects.create', compact('partner', 'institutions'));
+
+        return view('dashboard.projects.create', compact(
+            'backUrl',
+            'formAction',
+            'partner',
+            'institutions',
+        ));
     }
 
     public function partnerProjectsStore(Request $request,Company $partner)

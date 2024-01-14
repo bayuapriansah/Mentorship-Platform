@@ -1,404 +1,359 @@
 @extends('layouts.admin2')
+
 @section('content')
-@if (Route::is('dashboard.partner.partnerProjectsCreate'))
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/partners/{{$partner->id}}/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+<div class="mb-6 flex justify-between items-center">
+    <h1 class="text-dark-blue font-medium text-[1.375rem]">
+        {{ $partner->name }}
+        <span class="mx-3">></span>
+        Projects
+    </h1>
+
+    <a href="{{ $backUrl }}" class="flex items-center gap-3 text-xl">
+        <i class="fas fa-times-circle mt-1 text-primary"></i>
+        Cancel
+    </a>
 </div>
-@else
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-</div>
-@endif
-@if (Route::is('dashboard.partner.partnerProjectsCreate'))
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Add Project</h3>
-  <a href="/dashboard/partners/{{$partner->id}}/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
-</div>
-@else
-<div class="flex justify-between mb-10">
-  @if(Auth::guard('web')->check())
-    <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
-    <h3 class="text-dark-blue font-medium text-xl">Submit Project Proposal</h3>
-  @endif
-  <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
-</div>
-@endif
 
-@if (Route::is('dashboard.partner.partnerProjectsCreate'))
-<form action="/dashboard/partners/{{$partner->id}}/projects" method="post" enctype="multipart/form-data" class="w-3/4">
-@else
-<form action="/dashboard/projects" method="post" enctype="multipart/form-data" class="w-3/4">
-@endif
-  @csrf
-  <div class="mb-3">
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Project Name *" id="inputname" name="name" value="{{old('name')}}">
-    @error('name')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
+<form action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
+    @csrf
 
-  <div class="mb-3 flex justify-between">
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain"  name="project_domain">
-      <option value="" hidden>Select Project Domain *</option>
-      <option value="nlp" {{old('domain') == 'nlp' ? 'selected': ''}}>NLP</option>
-      <option value="statistical" {{old('domain') == 'statistical' ? 'selected': ''}}>Statistical Data</option>
-      <option value="computer_vision" {{old('domain') == 'computer_vision' ? 'selected': ''}}>Computer Vision</option>
-    </select>
-    @error('domain')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
+    <div>
+        <input
+            type="text"
+            id="inputname"
+            name="name"
+            value="{{ old('name') }}"
+            placeholder="Project Name *"
+            class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none"
+        >
 
+        @error('name')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
 
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 mr-5 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
-      <option value="" hidden>Project Duration *</option>
-      <option value="1" {{old('period') == '1' ? 'selected': ''}}>A Week</option>
-      <option value="1" {{old('period') == '1' ? 'selected': ''}}>1 Month</option>
-      <option value="2" {{old('period') == '2' ? 'selected': ''}}>2 Month(s)</option>
-      <option value="3" {{old('period') == '3' ? 'selected': ''}}>3 Month(s)</option>
-    </select>
-    @error('period')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputtype"  name="type">
-      <option value="" hidden>Project Type *</option>
-      <option value="weekly">Weekly</option>
-      <option value="monthly">Monthly</option>
-    </select>
-    @error('type')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
+    <div class="mt-5 grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+            <select id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                <option value="" hidden>Select Project Domain *</option>
+                <option value="nlp" {{ old('domain') == 'nlp' ? 'selected': '' }}>NLP</option>
+                <option value="statistical" {{ old('domain') == 'statistical' ? 'selected': '' }}>Machine Learning</option>
+                <option value="computer_vision" {{ old('domain') == 'computer_vision' ? 'selected': '' }}>Computer Vision</option>
+            </select>
 
-  <div class="mb-3">
-    @if (Route::is('dashboard.partner.partnerProjectsCreate'))
-      <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
-        <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
-      </select>
-    @else
-      @if (Auth::guard('customer')->check())
-        <select class="border bg-gray-300 border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" disabled >
-            <option value="{{Auth::guard('customer')->user()->company_id}}" >{{Auth::guard('customer')->user()->company->name}}</option>
+            @error('domain')
+                <p class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+        <div class="col-span-4">
+            <select id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                <option value="" hidden>Project Duration *</option>
+                <option value="1" {{old('period') == '1' ? 'selected': ''}}>A Week</option>
+                <option value="1" {{old('period') == '1' ? 'selected': ''}}>1 Month</option>
+                <option value="2" {{old('period') == '2' ? 'selected': ''}}>2 Month(s)</option>
+                <option value="3" {{old('period') == '3' ? 'selected': ''}}>3 Month(s)</option>
+            </select>
+
+            @error('period')
+                <p class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+        <div class="col-span-4">
+            <select id="inputtype" name="type" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                <option value="" hidden>Project Type *</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+            </select>
+
+            @error('type')
+                <p class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+    </div>
+
+    <div class="mt-5">
+        <input readonly type="hidden" id="inputpartner" name="partner" value="{{ $partner->id }}">
+
+        <select disabled class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
+            <option value="{{ $partner->id }}" hidden>{{ $partner->name }}</option>
         </select>
-      @else
-        <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
-          <option value="" hidden>Select Partner</option>
-          @foreach ($partners as $partner)
-            <option value="{{$partner->id}}" >{{$partner->name}}</option>
+
+        @error('partner')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <textarea name="problem" id="problem">
+            {{ old('problem') }}
+        </textarea>
+
+        @error('problem')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <input
+            type="text"
+            id="inputoverview"
+            name="overview"
+            value="{{ old('overview') }}"
+            placeholder="Brief Project Overview (Optional)"
+            class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none"
+        >
+
+        @error('overview')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <select id="inputinstitution"  name="institution_id" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+            <option value="" hidden>Select Institution</option>
+            @foreach ($institutions as $institution)
+                <option value="{{ $institution->id }}">
+                    {{ $institution->name }}
+                </option>
             @endforeach
         </select>
-      @endif
-    @endif
-    @error('partner')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  <div class="mb-3">
-    {{-- <input type="text" class="form-control" id="inputproblem" name="problem" value="{{old('problem')}}"> --}}
-    <textarea name="problem" id="problem" cols="30" rows="10">{{old('problem')}}</textarea>
-    @error('problem')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  <div class="mb-3">
-    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
-        <option value="" hidden>Project type</option>
-        <option value="private_project">Final project (private)</option>
-        <option value="public">Public to all institutions</option>
-        @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
-          <option value="private">Private to one institution</option>
-        @elseif(Auth::guard('mentor')->check())
-          @if (Auth::guard('mentor')->user()->institution_id != 0 )
-            <option value="private">Private to your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
-          @else{
-            <option value="private">Private to one institution</option>
-          }
-          @endif
-        @endif
-    </select>
-    @error('projectType')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  <div class="mb-3">
-    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputinstitution"  name="institution_id" >
-        <option value="" hidden>Select Institution</option>
-        @foreach ($institutions as $institution)
-        <option value="{{$institution->id}}" >{{$institution->name}}</option>
-        @endforeach
-    </select>
-  </div>
-
-  <div class="mb-3">
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Brief Project Overview (Optional)" id="inputoverview" name="overview" value="{{old('overview')}}">
-    @error('overview')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  {{-- <div class="mb-3">
-    <label for="inputperiod" class="form-label">Period *max 3</label>
-    <div class="row">
-      <div class="col">
-        <input type="number" class="form-control" id="inputperiod" name="period" value="{{old('period')}}">
-      </div>
-      <div class="col my-auto">
-        <label for="inputperiod" class="form-label" id="period_text_month">Month</label>
-      </div>
     </div>
 
-    @error('period')
-        <p class="text-danger text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div> --}}
+    <div class="mt-5">
+        <select id="inputprojecttype" name="projectType" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+            <option value="" hidden>Select Project Privacy Settings *</option>
+            <option value="private_project">Final project (private)</option>
+            <option value="public">Public to all institutions</option>
 
-  {{-- fix id name and option value to clear the confussion --}}
-  {{-- @if(Auth::guard('web')->check())
-  <div class="mb-3">
-    <label for="inputvalid" class="form-label">Company</label>
-    <select class="form-control form-select" id="inputCompany" aria-label="Default select example" name="company_id">
-      <option value="">--Select Project Company--</option>
-      @foreach($companies as $company)
-      <option value="{{$company->id}}" {{old('company_id') == $company->id ? 'selected': ''}} >{{$company->name}}</option>
-      @endforeach
-    </select>
-    @error('company_id')
-        <p class="text-danger text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  @endif --}}
-
-  {{-- add institution dropdown --}}
-  {{-- @if(Auth::guard('web')->check())
-  <div class="mb-3">
-    <label for="inputvalid" class="form-label">Institution</label>
-    <select class="form-control form-select" id="inputInstitution" aria-label="Default select example" name="institution_id">
-      <option>Institution Name *</option>
-      @forelse($GetInstituionData as $ins)
-      <option value="{{$ins->id}}">{{$ins->institutions}}</option>
-      @empty
-      <p>There is no Country Data</p>
-      @endforelse
-    </select><br>
-    @error('institution')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  @endif --}}
-{{--  --}}
-<div class="mb-3 mt-7">
-    <div class="flex justify-between items-center">
-        <h3 class="text-dark-blue font-medium text-xl">
-            Add Dataset <span class="text-red-600">*</span>
-        </h3>
-        <button id="add-dataset-btn" type="button" class="ml-2">
-            <i class="fa-solid fa-circle-plus"></i> Add
-        </button>
-    </div>
-    <div id="dataset-fields-container">
-        @php
-            $datasets = old('dataset', isset($project) ? $project->dataset : ['']);
-            $datasetCount = count($datasets);
-        @endphp
-
-        @foreach ($datasets as $index => $datasetUrl)
-            <div class="flex items-center mt-2 relative">
-                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
-                @if ($index > 0)
-                    <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fa-solid fa-circle-minus"></i></button>
+            @if(Auth::guard('web')->check() || Auth::guard('customer')->check())
+                <option value="private">Private to one institution</option>
+            @elseif(Auth::guard('mentor')->check())
+                @if (Auth::guard('mentor')->user()->institution_id != 0 )
+                    <option value="private">Private to your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
+                @else
+                    <option value="private">Private to one institution</option>
                 @endif
-            </div>
-        @endforeach
+            @endif
+        </select>
+
+        @error('projectType')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
     </div>
-    @error('dataset')
-        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-    @enderror
-</div>
 
+    <div class="mt-7">
+        <div class="flex justify-between items-center gap-6">
+            <h3 class="text-dark-blue font-medium text-xl">
+                Add Datasets <span class="text-red-600">*</span>
+            </h3>
 
+            <button id="add-dataset-btn" type="button" class="flex items-center gap-3 text-xl">
+                <i class="fa-solid fa-circle-plus mt-1 text-primary"></i>
+                Add
+            </button>
+        </div>
 
-{{--  --}}
-  @if (Auth::guard('web')->check())
-  <div class="mb-3 mt-10 flex justify-between">
-    <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
-      <div class="text-xl text-dark-blue">
-        <i class="fa-solid fa-circle-plus"></i>
-        <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card">
-      </div>
-  </div>
-  @endif
+        <div id="dataset-fields-container">
+            @php
+                $datasets = old('dataset', isset($project) ? $project->dataset : ['']);
+                $datasetCount = count($datasets);
+            @endphp
 
-  <div class="mb-3">
+            @foreach ($datasets as $index => $datasetUrl)
+                <div class="flex items-center mt-2 relative">
+                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
+                    @if ($index > 0)
+                        <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fa-solid fa-circle-minus text-red-600"></i></button>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+
+        @error('dataset')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
     @if (Auth::guard('web')->check())
-      <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Add Project">
-    @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
-      <input type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue hover:bg-dark-blue border-solid text-center capitalize bg-orange text-white font-light text-sm cursor-pointer" name="addProject" value="Propose Project">
+        <div class="mt-10 flex justify-between">
+            <h3 class="text-dark-blue font-medium text-xl">
+                Task <span class="text-red-600">*</span>
+            </h3>
+
+            <div class="flex items-center gap-3 text-xl text-dark-blue">
+                <i class="fa-solid fa-circle-plus mt-1 text-primary"></i>
+                <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Task">
+            </div>
+        </div>
     @endif
-  </div>
+
+    <div class="mt-10">
+        @if (Auth::guard('web')->check())
+            <input type="submit" class="py-2 px-11 rounded-full border-2 bg-primary text-center text-white text-sm cursor-pointer" name="addProject" value="Add Project">
+        @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check())
+            <input type="submit" class="py-2 px-11 rounded-full border-2 bg-primary text-center text-white text-sm cursor-pointer" name="addProject" value="Propose Project">
+        @endif
+    </div>
 </form>
 @endsection
 
-@if(Auth::guard('web')->check() || Auth::guard('customer')->check())
-  @section('more-js')
-  <script>
-    $(document).ready(function () {
-        $('#institution').on('change', function () {
-            var institutionVal = this.value;
-            var base_url = window.location.origin;
-            $("#ForState").html('');
-            $.ajax({
-                url: base_url+"/api/institution/"+institutionVal,
-                contentType: "application/json",
-                dataType: 'json',
-                success: function (result) {
-                  console.log(result);
-                  $('#ForCountry').val(result.countries);
-                  $('#ForState').val(result.states);
-                }
+@if (Auth::guard('web')->check() || Auth::guard('customer')->check())
+    @section('more-js')
+        <script>
+            $(document).ready(function () {
+                $('#institution').on('change', function () {
+                    var institutionVal = this.value;
+                    var base_url = window.location.origin;
+                    $("#ForState").html('');
+                    $.ajax({
+                        url: base_url + "/api/institution/" + institutionVal,
+                        contentType: "application/json",
+                        dataType: 'json',
+                        success: function (result) {
+                            console.log(result);
+                            $('#ForCountry').val(result.countries);
+                            $('#ForState').val(result.states);
+                        }
+                    });
+                });
+
+                $('#inputinstitution').hide();
+                $("#inputprojecttype").change(function () {
+                    var values = $("#inputprojecttype option:selected").val();
+                    if (values == 'private') {
+                        $('#inputinstitution').show();
+                    } else {
+                        $('#inputinstitution').hide();
+                    }
+                });
             });
-        });
 
-        $('#inputinstitution').hide();
-        $("#inputprojecttype").change(function(){
-          var values = $("#inputprojecttype option:selected").val();
-          if(values=='private'){
-            $('#inputinstitution').show();
-          }else{
-            $('#inputinstitution').hide();
-          }
-        });
-    });
+            document.addEventListener('DOMContentLoaded', function () {
+                const container = document.getElementById('dataset-fields-container');
+                const addButton = document.getElementById('add-dataset-btn');
 
-    document.addEventListener('DOMContentLoaded', function() {
-    const container = document.getElementById('dataset-fields-container');
-    const addButton = document.getElementById('add-dataset-btn');
+                addButton.addEventListener('click', function () {
+                    addDatasetInputField('');
+                });
 
-    addButton.addEventListener('click', function() {
-        addDatasetInputField('');
-    });
+                function addDatasetInputField(value) {
+                    const inputWrapper = document.createElement('div');
+                    inputWrapper.className = 'flex items-center mt-2 relative';
 
-    function addDatasetInputField(value) {
-        const inputWrapper = document.createElement('div');
-        inputWrapper.className = 'flex items-center mt-2 relative';
+                    const newInput = document.createElement('input');
+                    newInput.type = 'text';
+                    newInput.className = 'dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
+                    newInput.placeholder = 'Add Data set URLs separated by semi-colon';
+                    newInput.name = 'dataset[]';
+                    newInput.value = value;
+                    newInput.required = true;
 
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.className = 'dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
-        newInput.placeholder = 'Add Data set URLs separated by semi-colon';
-        newInput.name = 'dataset[]';
-        newInput.value = value;
-        newInput.required = true;
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.className = 'remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2';
+                    removeButton.innerHTML = '<i class="fa-solid fa-circle-minus text-red-600"></i>';
+                    removeButton.onclick = function () {
+                        inputWrapper.remove();
+                    };
 
-        const removeButton = document.createElement('button');
-        removeButton.type = 'button';
-        removeButton.className = 'remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2';
-        removeButton.innerHTML = '<i class="fa-solid fa-circle-minus"></i>';
-        removeButton.onclick = function() {
-            inputWrapper.remove();
-        };
+                    inputWrapper.appendChild(newInput);
+                    inputWrapper.appendChild(removeButton);
+                    container.appendChild(inputWrapper);
+                }
 
-        inputWrapper.appendChild(newInput);
-        inputWrapper.appendChild(removeButton);
-        container.appendChild(inputWrapper);
-    }
+                // Function to remove dataset input field
+                window.removeDatasetInputField = function (button) {
+                    button.parentElement.remove();
+                };
 
-    // Function to remove dataset input field
-    window.removeDatasetInputField = function(button) {
-        button.parentElement.remove();
-    };
-
-    // Add remove functionality to existing dataset input fields
-    const existingRemoveButtons = container.querySelectorAll('.remove-dataset-btn');
-    existingRemoveButtons.forEach(button => {
-        button.onclick = function() {
-            this.parentElement.remove();
-        };
-    });
-});
-
-  </script>
-  @endsection
-@elseif(Auth::guard('mentor')->check())
-  @if (Auth::guard('mentor')->user()->institution_id != 0)
-    @section('more-js')
-    <script>
-      $(document).ready(function () {
-          $('#institution').on('change', function () {
-              var institutionVal = this.value;
-              var base_url = window.location.origin;
-              $("#ForState").html('');
-              $.ajax({
-                  url: base_url+"/api/institution/"+institutionVal,
-                  contentType: "application/json",
-                  dataType: 'json',
-                  success: function (result) {
-                    console.log(result);
-                    $('#ForCountry').val(result.countries);
-                    $('#ForState').val(result.states);
-                  }
-              });
-          });
-
-          $('#inputinstitution').hide();
-      });
-    </script>
+                // Add remove functionality to existing dataset input fields
+                const existingRemoveButtons = container.querySelectorAll('.remove-dataset-btn');
+                existingRemoveButtons.forEach(button => {
+                    button.onclick = function () {
+                        this.parentElement.remove();
+                    };
+                });
+            });
+        </script>
     @endsection
-  @else
-    @section('more-js')
-    <script>
-      $(document).ready(function () {
-          $('#institution').on('change', function () {
-              var institutionVal = this.value;
-              var base_url = window.location.origin;
-              $("#ForState").html('');
-              $.ajax({
-                  url: base_url+"/api/institution/"+institutionVal,
-                  contentType: "application/json",
-                  dataType: 'json',
-                  success: function (result) {
-                    console.log(result);
-                    $('#ForCountry').val(result.countries);
-                    $('#ForState').val(result.states);
-                  }
-              });
-          });
+@elseif (Auth::guard('mentor')->check())
+    @if (Auth::guard('mentor')->user()->institution_id != 0)
+        @section('more-js')
+            <script>
+                $(document).ready(function () {
+                    $('#institution').on('change', function () {
+                        var institutionVal = this.value;
+                        var base_url = window.location.origin;
+                        $("#ForState").html('');
+                        $.ajax({
+                            url: base_url + "/api/institution/" + institutionVal,
+                            contentType: "application/json",
+                            dataType: 'json',
+                            success: function (result) {
+                                console.log(result);
+                                $('#ForCountry').val(result.countries);
+                                $('#ForState').val(result.states);
+                            }
+                        });
+                    });
 
-          $('#inputinstitution').hide();
+                    $('#inputinstitution').hide();
+                });
+            </script>
+        @endsection
+    @else
+        @section('more-js')
+            <script>
+                $(document).ready(function () {
+                    $('#institution').on('change', function () {
+                        var institutionVal = this.value;
+                        var base_url = window.location.origin;
+                        $("#ForState").html('');
+                        $.ajax({
+                            url: base_url + "/api/institution/" + institutionVal,
+                            contentType: "application/json",
+                            dataType: 'json',
+                            success: function (result) {
+                                console.log(result);
+                                $('#ForCountry').val(result.countries);
+                                $('#ForState').val(result.states);
+                            }
+                        });
+                    });
 
-          $("#inputprojecttype").change(function(){
-            var values = $("#inputprojecttype option:selected").val();
-            if(values=='private'){
-              $('#inputinstitution').show();
-            }else{
-              $('#inputinstitution').hide();
-            }
-          });
-      });
-    </script>
-    @endsection
-  @endif
+                    $('#inputinstitution').hide();
+
+                    $("#inputprojecttype").change(function () {
+                        var values = $("#inputprojecttype option:selected").val();
+                        if (values == 'private') {
+                            $('#inputinstitution').show();
+                        } else {
+                            $('#inputinstitution').hide();
+                        }
+                    });
+                });
+            </script>
+        @endsection
+    @endif
 @endif
