@@ -146,9 +146,9 @@
                             </td>
 
                             <td class="pr-8 py-2">
-                                <a href="{{ route('dashboard.enrollment.show', ['id' => encData($project->id)]) }}" class="px-2 py-1 bg-primary rounded-lg text-sm text-white flex">
+                                <a href="{{ route('dashboard.enrollment.show', ['id' => encData($project->id)]) }}" class="px-2 py-1 bg-primary rounded-lg text-sm text-white flex justify-between items-center gap-4">
                                     {{ $project->enrolled_project->count() }}
-                                    <span class="ml-auto mr-2 text-base">></span>
+                                    <span class="text-base">></span>
                                 </a>
                             </td>
 
@@ -158,28 +158,28 @@
 
 
                             <td class="pr-8 py-2">
-                                <a href="{{ route('dashboard.submission.show', ['project' => $project->id]) }}" class="px-2 py-1 bg-primary rounded-lg text-sm text-white flex">
-                                    Submission
-                                    <span class="ml-auto mr-2 text-base">></span>
+                                <a href="{{ route('dashboard.submission.show', ['project' => $project->id]) }}" class="px-2 py-1 bg-primary rounded-lg text-sm text-white flex justify-between items-center gap-4">
+                                    Submissions
+                                    <span class="text-base">></span>
                                 </a>
                             </td>
 
                             <td class="pr-8 py-2">
                                 @php
-                                    $formattedStatus = ucfirst(str_replace('_', ' ', $project->status));
+                                    $formattedStatus = ucwords(str_replace('_', ' ', $project->status));
                                 @endphp
 
                                 @switch($project->status)
                                     @case('publish')
-                                        <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $formattedStatus }}</span>
+                                        <span class="bg-green-100 text-green-800 text-sm text-nowrap font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $formattedStatus }}</span>
                                         @break
 
                                     @case('private_project')
-                                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ $formattedStatus }}</span>
+                                        <span class="bg-indigo-100 text-indigo-800 text-sm text-nowrap font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ $formattedStatus }}</span>
                                         @break
 
                                     @case('draft')
-                                        <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $formattedStatus }}</span>
+                                        <span class="bg-red-100 text-red-800 text-sm text-nowrap font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ $formattedStatus }}</span>
                                         @break
 
                                     @default
