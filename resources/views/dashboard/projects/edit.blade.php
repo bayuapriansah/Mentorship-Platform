@@ -1,7 +1,8 @@
 @extends('layouts.admin2')
+
 @section('content')
 @if ($errors->any())
-    <div class="alert alert-danger">
+    <div class="mb-10 alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -9,405 +10,376 @@
         </ul>
     </div>
 @endif
-@if (Route::is('dashboard.partner.partnerProjectsEdit'))
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/partners/{{$partner->id}}/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+
+<div class="mb-6 flex justify-between items-center">
+    <h1 class="text-dark-blue font-medium text-[1.375rem]">
+        {{ $project->company->name }}
+        <span class="mx-3">></span>
+        Edit Project
+    </h1>
+
+    <a href="{{ $backUrl }}" class="flex items-center gap-3 text-xl">
+        <i class="fas fa-times-circle mt-1 text-primary"></i>
+        Cancel
+    </a>
 </div>
-@else
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/projects"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-</div>
-@endif
 
-@if (Route::is('dashboard.partner.partnerProjectsEdit'))
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Add Project</h3>
-  <a href="/dashboard/partners/{{$partner->id}}/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
-</div>
-@else
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Projects</h3>
-  <a href="/dashboard/projects" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
-</div>
-@endif
+<form action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
+    @csrf
+    @method('PATCH')
 
-@if (Route::is('dashboard.partner.partnerProjectsEdit'))
-<form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
-@else
+    <div>
+        <input
+            type="text"
+            id="inputname"
+            name="name"
+            value="{{ old('name', $project->name) }}"
+            placeholder="Project Name *"
+            class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+        >
 
-  {{-- @if ($errors->any())
-  <div class="alert alert-danger">
-      <ul>
-          @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-          @endforeach
-      </ul>
-  </div>
-  @endif --}}
-<form action="/dashboard/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
-@endif
-  @method('PATCH')
-  @csrf
-  {{-- <input type="hidden" value="{{$project->id}}" name="id"> --}}
-  <div class="mb-3">
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" id="inputname" name="name" value="{{$project->name}}">
-    @error('name')
-        <p class="text-danger text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  <div class="mb-3 flex justify-between">
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputdomain" aria-label="Default select example" name="project_domain">
-      <option value="" hidden>Select Project Domain *</option>
-      <option value="nlp" {{$project->project_domain == 'nlp'? 'selected':''}}>NLP</option>
-      <option value="statistical" {{$project->project_domain == 'statistical'? 'selected':''}}>Statistical</option>
-      <option value="computer_vision" {{$project->project_domain == 'computer_vision'? 'selected':''}}>Computer Vision</option>
-    </select>
-    @error('domain')
-        <p class="text-danger text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 invalid:text-lightest-grey focus:outline-none" id="inputperiod"  name="period">
-      <option value="" hidden>Project Duration *</option>
-      <option value="1" {{$project->period == '1' ? 'selected': ''}}>1 (Monthly Option)</option>
-      <option value="2" {{$project->period == '2' ? 'selected': ''}}>2 (Monthly Option)</option>
-      <option value="3" {{$project->period == '3' ? 'selected': ''}}>3 (Monthly Option)</option>
-      <option value="7" {{$project->period == '7' ? 'selected': ''}}>1 (Weekly Option)</option>
-    </select>
-    @error('period')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-    <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputtype"  name="type">
-      <option value="" hidden>Project Type *</option>
-      <option value="weekly" {{$project->type == 'weekly' ? 'selected': ''}}>Weekly</option>
-      <option value="monthly" {{$project->type == 'monthly' ? 'selected': ''}}>Monthly</option>
-    </select>
-    @error('period')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  <div class="mb-3">
-    @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-      <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputpartner"  name="partner" disabled>
-        <option value="{{$partner->id}}" hidden>{{$partner->name}}</option>
-      </select>
-    @else
-    @if(Auth::guard('customer')->check())
-      <select class="border bg-gray-300 border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputpartner">
-        <option value="" hidden>Select Partner</option>
-        @foreach ($partners as $partner)
-          <option value="{{$partner->id}}" {{$project->company_id == $partner->id?'selected':''}} >{{$partner->name}}</option>
-          @endforeach
-      </select>
-    @else
-      <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none"id="inputpartner"  name="partner" >
-        <option value="" hidden>Select Partner</option>
-        @foreach ($partners as $partner)
-          <option value="{{$partner->id}}" {{$project->company_id == $partner->id?'selected':''}} >{{$partner->name}}</option>
-          @endforeach
-      </select>
-    @endif
-    @endif
-    @error('partner')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  <div class="mb-3">
-    {{-- <input type="text" class="form-control" id="inputproblem" name="problem" value="{{$project->problem}}"> --}}
-    <textarea name="problem" id="problem" cols="30" rows="10">{{$project->problem}}</textarea>
-    @error('problem')
-        <p class="text-danger text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  <div class="mb-3">
-    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputprojecttype"  name="projectType" >
-        <option value="" hidden>Project type</option>
-        <option value="public" {{!$project->institution_id?'selected':''}} >Public to all institutions</option>
-        @if(Auth::guard('web')->check() )
-          @if($project->institution_id)
-            <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
-          @else
-            <option value="private">Private to one institution</option>
-          @endif
-        @elseif(Auth::guard('mentor')->check())
-          @if (Auth::guard('mentor')->user()->institution_id != 0)
-            <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{Auth::guard('mentor')->user()->institution->name}})</option>
-          @else
-            @if($project->institution_id)
-              <option value="private" {{$project->institution_id?'selected':''}}>Private to Your institution ({{$project->institution->name}})</option>
-            @else
-              <option value="private">Private to one institution</option>
-            @endif
-          @endif
-        @elseif(Auth::guard('customer')->check())
-          @if($project->institution_id)
-            <option value="private" {{$project->institution_id?'selected':''}}>Private to specific institution ({{$project->institution->name}})</option>
-          @else
-            <option value="private">Private to one institution</option>
-          @endif
-        @endif
-    </select>
-  </div>
-  <input type="hidden" value="{{$project->institution_id}}" name="existing_institute">
-  <div class="mb-3">
-    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight  invalid:text-lightest-grey focus:outline-none" id="inputinstitution"  name="institution_id" >
-        <option value="" hidden>Select Institution</option>
-        @foreach ($institutions as $institution)
-        <option value="{{$institution->id}}" >{{$institution->name}}</option>
-        @endforeach
-    </select>
-  </div>
-
-  <div class="mb-3">
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Brief Project Overview (Optional)" id="inputoverview" name="overview" value="{{$project->overview}}">
-    @error('overview')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-
-  {{-- @if(Auth::guard('web')->check())
-  <div class="mb-3">
-    <label for="inputvalid" class="form-label">Company</label>
-    <select class="form-control form-select" id="inputdomain" aria-label="Default select example" name="company_id">
-      <option value="">--Select Project Domain--</option>
-      @foreach($companies as $company)
-      <option value="{{$company->id}}" {{$company->id == $project->company_id? 'selected':''}} >{{$company->name}}</option>
-      @endforeach
-    </select>
-    @error('company_id')
-        <p class="text-danger text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  @endif --}}
-  {{-- add institution dropdown --}}
-  {{-- @if(Auth::guard('web')->check())
-  <div class="mb-3">
-    <label for="inputvalid" class="form-label">Institution</label>
-    <select class="form-control form-select" id="inputInstitution" aria-label="Default select example" name="institution_id">
-      <option value="{{$project->institution_id}}">{{ $GetInstituionData->where('id',$project->institution_id)->first()->institutions }}</option>
-      @forelse($GetInstituionData as $ins)
-      <option value="{{$ins->id}}">{{$ins->institutions}}</option>
-      @empty
-      <p>There is no Country Data</p>
-      @endforelse
-    </select><br>
-    @error('institution')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  @endif --}}
-  <div class="mb-3 mt-7">
-    <div class="flex justify-between items-center">
-        <h3 class="text-dark-blue font-medium text-xl">
-            Add Dataset <span class="text-red-600">*</span>
-        </h3>
-        <!-- Add Button aligned to the right -->
-        <button id="add-dataset-btn" type="button" class="ml-2">
-            <i class="fa-solid fa-circle-plus"></i> Add
-        </button>
+        @error('name')
+            <p class="text-danger text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
     </div>
-    <div id="dataset-fields-container">
-        @php
-            // Ensure that $project->dataset is always an array
-            $datasets = $project->dataset ?? [];
-        @endphp
 
-        @foreach ($datasets as $index => $datasetUrl)
-            <div class="flex items-center mt-2 relative">
-                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
-                @if ($index > 0)
-                    <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fa-solid fa-circle-minus"></i></button>
+    <div class="mt-5 grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+            <select id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                <option value="" hidden>Select Project Domain *</option>
+                <option value="nlp" {{ old('domain', $project->project_domain) == 'nlp' ? 'selected': '' }}>NLP</option>
+                <option value="statistical" {{ old('domain', $project->project_domain) == 'statistical' ? 'selected': '' }}>Machine Learning</option>
+                <option value="computer_vision" {{ old('domain', $project->project_domain) == 'computer_vision' ? 'selected': '' }}>Computer Vision</option>
+            </select>
+
+            @error('domain')
+                <p class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+        <div class="col-span-4">
+            <select id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                <option value="" hidden>Project Duration *</option>
+                <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option>
+                <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>1 Month</option>
+                <option value="2" {{ old('period', $project->period) == '2' ? 'selected': '' }}>2 Month(s)</option>
+                <option value="3" {{ old('period', $project->period) == '3' ? 'selected': '' }}>3 Month(s)</option>
+            </select>
+
+            @error('period')
+                <p class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+        <div class="col-span-4">
+            <select id="inputtype" name="type" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                <option value="" hidden>Project Type *</option>
+                <option value="weekly" {{ old('type', $project->type) == 'weekly' ? 'selected' : '' }}>Weekly</option>
+                <option value="monthly" {{ old('type', $project->type) == 'monthly' ? 'selected' : '' }}>Monthly</option>
+            </select>
+
+            @error('type')
+                <p class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <input readonly type="hidden" id="inputpartner" name="partner" value="{{ $project->company->id }}">
+
+        <select disabled class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
+            <option value="{{ $project->company->id }}" hidden>{{ $project->company->name }}</option>
+        </select>
+
+        @error('partner')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <textarea name="problem" id="problem">
+            {{ old('problem', $project->problem) }}
+        </textarea>
+
+        @error('problem')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <input
+            type="text"
+            id="inputoverview"
+            name="overview"
+            value="{{ old('overview', $project->overview) }}"
+            placeholder="Brief Project Overview (Optional)"
+            class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none"
+        >
+
+        @error('overview')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <select id="inputprojecttype"  name="projectType" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+            <option value="" hidden>Select Project Privacy Settings *</option>
+            <option value="public" {{ !$project->institution_id ? 'selected' : '' }}>Public to all institutions</option>
+
+            @if (Auth::guard('web')->check() )
+                @if ($project->institution_id)
+                    <option value="private" {{ $project->institution_id ? 'selected' : '' }}>Private to specific institution ({{ $project->institution->name }})</option>
+                @else
+                    <option value="private">Private to one institution</option>
+                @endif
+            @elseif (Auth::guard('mentor')->check())
+                @if (Auth::guard('mentor')->user()->institution_id != 0)
+                    <option value="private" {{ $project->institution_id ? 'selected' : '' }}>Private to Your institution ({{ Auth::guard('mentor')->user()->institution->name }})</option>
+                @else
+                    @if ($project->institution_id)
+                        <option value="private" {{ $project->institution_id ? 'selected' : '' }}>Private to Your institution ({{ $project->institution->name }})</option>
+                    @else
+                        <option value="private">Private to one institution</option>
+                    @endif
+                @endif
+            @elseif (Auth::guard('customer')->check())
+                @if ($project->institution_id)
+                    <option value="private" {{ $project->institution_id ? 'selected': '' }}>Private to specific institution ({{ $project->institution->name }})</option>
+                @else
+                    <option value="private">Private to one institution</option>
+                @endif
+            @endif
+        </select>
+    </div>
+
+    <input type="hidden" value="{{ $project->institution_id }}" name="existing_institute">
+
+    <div class="mt-5">
+        <select id="inputinstitution"  name="institution_id" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+            <option value="" hidden>Select Institution</option>
+            @foreach ($institutions as $institution)
+                <option value="{{$institution->id}}" >{{$institution->name}}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="mt-7">
+        <div class="flex justify-between items-center gap-6">
+            <h3 class="text-dark-blue font-medium text-xl">
+                Datasets <span class="text-red-600">*</span>
+            </h3>
+
+            <button id="add-dataset-btn" type="button" class="flex items-center gap-3 text-xl">
+                <i class="fas fa-circle-plus mt-1 text-primary"></i>
+                Add Dataset
+            </button>
+        </div>
+        <div id="dataset-fields-container" class="mt-4">
+            @php
+                // Ensure that $project->dataset is always an array
+                $datasets = $project->dataset ?? [];
+            @endphp
+
+            @foreach ($datasets as $index => $datasetUrl)
+                <div class="flex items-center mt-2 relative">
+                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
+                    @if ($index > 0)
+                        <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fas fa-circle-minus text-red-600"></i></button>
+                    @endif
+                </div>
+            @endforeach
+
+            @if (count($datasets) === 0)
+                <div class="flex items-center mt-2 relative">
+                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" required>
+                </div>
+            @endif
+        </div>
+
+        @error('dataset')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    @if (Auth::guard('web')->check())
+        <div class="mt-10 flex justify-between">
+            <h3 class="text-dark-blue font-medium text-xl">
+                Task <span class="text-red-600">*</span>
+            </h3>
+
+            <div class="text-xl text-dark-blue">
+                @if (Route::is('dashboard.partner.partnerProjectsEdit'))
+                    <a href="{{ route('dashboard.partner.partnerProjectsInjection', ['partner' => $project->company->id, 'project' => $project->id]) }}" class="flex items-center gap-3">
+                        <i class="fas fa-circle-plus mt-1 text-primary"></i>
+                        Add Task
+                    </a>
+                @else
+                    <a href="{{ route('dashboard.projects.section', ['project' => $project->id]) }}" class="flex items-center gap-3">
+                        <i class="fas fa-circle-plus mt-1 text-primary"></i>
+                        Add Task
+                    </a>
                 @endif
             </div>
-        @endforeach
-
-        @if (count($datasets) === 0)
-            <div class="flex items-center mt-2 relative">
-                <input type="text" class="dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" required>
-            </div>
-        @endif
-    </div>
-
-    @error('dataset')
-        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-    @enderror
-</div>
-
-
-  {{-- <div class="mb-3 mt-7">
-    <h3 class="text-dark-blue font-medium text-xl">Add Dataset <span class="text-red-600">*</span></h3>
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" id="dataset[]" name="dataset" value="{{$project->dataset}}">
-    @error('dataset')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div> --}}
-  @if (Auth::guard('web')->check())
-    <div class="mb-3 mt-10 flex justify-between">
-      <h3 class="text-dark-blue font-medium text-xl">Injection Cards</h3>
-      <div class="text-xl text-dark-blue">
-        {{-- <input type="submit" class="cursor-pointer" name="addInjectionCard" value="Add Injection Card"> --}}
-        @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
-        @else
-        <a href="/dashboard/projects/{{$project->id}}/injection"><i class="fa-solid fa-circle-plus"></i> Add Injection Card</a>
-
-        @endif
-      </div>
-    </div>
-  @endif
-  <div class="mb-3 space-y-2">
-    @php
-        $no = 1
-    @endphp
-    @foreach ($cards as $card)
-    <div class="py-4 px-6 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
-      <div>Task {{$no}}: {{substr($card->title,0,38)}}...</div>
-      <div class="flex flex-col">
-        <span class="text-xs">Duration:</span>
-        <span class="text-xs text-dark-blue">{{$card->duration}} {{$card->duration==1?'Day':'Days'}}</span>
-      </div>
-      <div class="flex flex-col">
-        <span class="text-xs">Added On:</span>
-        <span class="text-xs text-dark-blue">{{$card->created_at->format('d/m/Y')}}</span>
-      </div>
-      <div class="space-x-5">
-        @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/edit"><i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i></a>
-          <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$card->id}}/delete" ><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
-        @else
-          <a href="/dashboard/projects/{{$project->id}}/injection/{{$card->id}}/edit"><i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i></a>
-          <a href="/dashboard/projects/{{$project->id}}/injection/{{$card->id}}/delete" ><i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i></a>
-        @endif
         </div>
-      {{-- <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 text-dark-blue">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
-      </svg> --}}
+    @endif
+
+    <div class="mt-4 space-y-2">
+        @foreach ($cards as $card)
+            <div class="py-4 px-6 bg-white hover:bg-[#F2F3FD] border border-grey rounded-xl grid grid-cols-12 items-center gap-4">
+                <p class="col-span-6 text-sm">
+                    Task {{ $loop->iteration }}: {{ substr($card->title, 0, 38) }}...
+                </p>
+
+                <div class="col-span-2 flex flex-col">
+                    <span class="text-xs">Duration:</span>
+                    <span class="text-xs text-dark-blue">
+                        {{ $card->duration }} {{ $card->duration == 1 ? 'Day' : 'Days' }}
+                    </span>
+                </div>
+
+                <div class="col-span-2 flex flex-col">
+                    <span class="text-xs">Added On:</span>
+                    <span class="text-xs text-dark-blue">
+                        {{ $card->created_at->format('d/m/Y') }}
+                    </span>
+                </div>
+
+                <div class="col-span-2 justify-self-end space-x-5">
+                    @if (Route::is('dashboard.partner.partnerProjectsEdit'))
+                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionEdit', ['partner' => $project->company->id, 'project' => $project->id, 'injection' => $card->id]) }}">
+                            <i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i>
+                        </a>
+
+                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionDelete', ['partner' => $project->company->id, 'project' => $project->id, 'injection' => $card->id]) }}">
+                            <i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i>
+                        </a>
+                    @else
+                        <a href="{{ route('dashboard.projects.EditSection', ['project' => $project->id, 'injection' => $card->id]) }}">
+                            <i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i>
+                        </a>
+
+                        <a href="{{ route('dashboard.projects.DestroySection', ['project' => $project->id, 'injection' => $card->id]) }}">
+                            <i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i>
+                        </a>
+                    @endif
+                </div>
+            </div>
+        @endforeach
     </div>
-    @php
-      $no++
-    @endphp
-    @endforeach
-  </div>
-  @if (Auth::guard('web')->check())
-    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Project</button>
-  @elseif(Auth::guard('mentor')->check() || Auth::guard('customer')->check() )
-    <button type="submit" class="py-2.5 px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm">Edit Proposed Project</button>
-  @endif
+
+    <div class="mt-10">
+        @if (Auth::guard('web')->check())
+            <button type="submit" class="py-2 px-11 rounded-full bg-primary text-center text-white text-sm">Update Project</button>
+        @elseif (Auth::guard('mentor')->check() || Auth::guard('customer')->check() )
+            <button type="submit" class="py-2 px-11 rounded-full bg-primary text-center text-white text-sm">Update Proposed Project</button>
+        @endif
+    </div>
 </form>
 @endsection
+
 @if (Auth::guard('web')->check()|| Auth::guard('customer')->check())
-  @section('more-js')
-  <script>
-      $(document).ready(function() {
-          $('#inputinstitution').hide();
-          $("#inputprojecttype").change(function() {
-              var values = $("#inputprojecttype option:selected").val();
-              if (values == 'private') {
-                  $('#inputinstitution').show();
-              } else {
-                  $('#inputinstitution').hide();
-              }
-          });
-      });
-
-document.addEventListener('DOMContentLoaded', function() {
-    const container = document.getElementById('dataset-fields-container');
-    const addButton = document.getElementById('add-dataset-btn');
-
-    addButton.addEventListener('click', function() {
-        addDatasetInputField('');
-    });
-
-    function addDatasetInputField(value) {
-        const inputWrapper = document.createElement('div');
-        inputWrapper.className = 'flex items-center mt-2 relative';
-
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.className = 'dataset-input border border-light-blue rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
-        newInput.placeholder = 'Add Data set URLs separated by semi-colon';
-        newInput.name = 'dataset[]';
-        newInput.value = value;
-        newInput.required = true;
-
-        const removeButton = document.createElement('button');
-        removeButton.type = 'button';
-        removeButton.className = 'remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2';
-        removeButton.innerHTML = '<i class="fa-solid fa-circle-minus"></i>';
-        removeButton.onclick = function() {
-            inputWrapper.remove();
-        };
-
-        inputWrapper.appendChild(newInput);
-        inputWrapper.appendChild(removeButton);
-        container.appendChild(inputWrapper);
-    }
-
-    // Function to remove dataset input field
-    window.removeDatasetInputField = function(button) {
-        button.parentElement.remove();
-    };
-
-    // Add remove functionality to existing dataset input fields
-    const existingRemoveButtons = container.querySelectorAll('.remove-dataset-btn');
-    existingRemoveButtons.forEach(button => {
-        button.onclick = function() {
-            this.parentElement.remove();
-        };
-    });
-});
-
-
-  </script>
-  @endsection
-@elseif(Auth::guard('mentor')->check() )
-  @if (Auth::guard('mentor')->user()->institution_id != 0)
     @section('more-js')
-      <script>
-        $(document).ready(function () {
-          $('#inputinstitution').hide();
+        <script>
+            $(document).ready(function () {
+                $('#inputinstitution').hide();
+                $("#inputprojecttype").change(function () {
+                    var values = $("#inputprojecttype option:selected").val();
+                    if (values == 'private') {
+                        $('#inputinstitution').show();
+                    } else {
+                        $('#inputinstitution').hide();
+                    }
+                });
+            });
 
-          });
-      </script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const container = document.getElementById('dataset-fields-container');
+                const addButton = document.getElementById('add-dataset-btn');
+
+                addButton.addEventListener('click', function () {
+                    addDatasetInputField('');
+                });
+
+                function addDatasetInputField(value) {
+                    const inputWrapper = document.createElement('div');
+                    inputWrapper.className = 'flex items-center mt-2 relative';
+
+                    const newInput = document.createElement('input');
+                    newInput.type = 'text';
+                    newInput.className = 'dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
+                    newInput.placeholder = 'Add Data set URLs separated by semi-colon';
+                    newInput.name = 'dataset[]';
+                    newInput.value = value;
+                    newInput.required = true;
+
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.className = 'remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2';
+                    removeButton.innerHTML = '<i class="fa-solid fa-circle-minus text-red-600"></i>';
+                    removeButton.onclick = function () {
+                        inputWrapper.remove();
+                    };
+
+                    inputWrapper.appendChild(newInput);
+                    inputWrapper.appendChild(removeButton);
+                    container.appendChild(inputWrapper);
+                }
+
+                // Function to remove dataset input field
+                window.removeDatasetInputField = function (button) {
+                    button.parentElement.remove();
+                };
+
+                // Add remove functionality to existing dataset input fields
+                const existingRemoveButtons = container.querySelectorAll('.remove-dataset-btn');
+                existingRemoveButtons.forEach(button => {
+                    button.onclick = function () {
+                        this.parentElement.remove();
+                    };
+                });
+            });
+        </script>
     @endsection
-  @else
-    @section('more-js')
-    <script>
-      $(document).ready(function () {
-        $('#inputinstitution').hide();
-          $("#inputprojecttype").change(function(){
-            var values = $("#inputprojecttype option:selected").val();
-            if(values=='private'){
-              $('#inputinstitution').show();
-            }else{
-              $('#inputinstitution').hide();
-            }
-          });
-        });
-    </script>
-    @endsection
-  @endif
+@elseif (Auth::guard('mentor')->check() )
+    @if (Auth::guard('mentor')->user()->institution_id != 0)
+        @section('more-js')
+            <script>
+                $(document).ready(function () {
+                    $('#inputinstitution').hide();
+                });
+            </script>
+        @endsection
+    @else
+        @section('more-js')
+            <script>
+                $(document).ready(function () {
+                    $('#inputinstitution').hide();
+                    $("#inputprojecttype").change(function () {
+                        var values = $("#inputprojecttype option:selected").val();
+                        if (values == 'private') {
+                            $('#inputinstitution').show();
+                        } else {
+                            $('#inputinstitution').hide();
+                        }
+                    });
+                });
+            </script>
+        @endsection
+    @endif
 @endif

@@ -66,7 +66,7 @@
 
       tinymce.init({
         selector: 'textarea#problem',
-        height: 350,
+        height: 500,
         plugins: 'media image lists',
         menubar: 'file edit insert view format table tools help',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullis | image',
@@ -87,7 +87,7 @@
 
     tinymce.init({
         selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
-        height: 350,
+        height: 500,
         plugins: 'media image lists',
         menubar: 'file edit insert view format table tools help',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
@@ -103,7 +103,7 @@
 
     tinymce.init({
         selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
-        height: 350,
+        height: 500,
         plugins: 'lists',
         menubar: '',
         toolbar: 'undo redo | styleselect | bold italic ',
