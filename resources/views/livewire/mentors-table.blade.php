@@ -172,7 +172,7 @@
                                         </span>
                                     </p>
 
-                                    <a href="#" class="w-max px-8 py-1 bg-[#6973C6] rounded-full flex justify-center items-center gap-3 text-white">
+                                    <a href="{{ route('dashboard.staffs.participants', ['staff' => $mentor->id]) }}" class="w-max px-8 py-1 bg-[#6973C6] rounded-full flex justify-center items-center gap-3 text-white">
                                         List of Participants
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>

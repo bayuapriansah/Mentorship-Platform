@@ -209,6 +209,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::patch('/staffs/{staff}/update', [StaffController::class, 'update' ])->name('staffs.update');
         Route::get('/staffs/{staff}/suspend', [StaffController::class, 'suspend' ])->name('staffs.suspend');
         Route::delete('/staffs/{staff}', [StaffController::class, 'destroy'])->name('staffs.destroy');
+        Route::get('/staffs/{staff}/participants', [StaffController::class, 'participants'])->name('staffs.participants');
 
         // Internal Document
         Route::get('/internal-document/all-pages', [InternalDocumentController::class, 'allPages'])->name('internal-document.all-pages.index');
