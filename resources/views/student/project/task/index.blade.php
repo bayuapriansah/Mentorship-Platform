@@ -15,13 +15,7 @@
 
         {{-- Domain --}}
         <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-primary border border-primary rounded-full flex justify-center text-white">
-            @if ($project->project_domain == 'statistical')
-                Machine Learning
-            @elseif($project->project_domain == 'computer_vision')
-                Computer Vision
-            @else
-                NLP
-            @endif
+            {{ $task->project->getProjectDomainText() }}
         </div>
       </div>
       <div class="col-span-4 relative -right-12">
@@ -53,7 +47,7 @@
 
     {{-- Task Description --}}
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-3">
-        <div class="col-span-9 problem text-justify text-black font-normal">
+        <div class="problem col-span-12 text-justify text-black font-normal">
             {!!$task->description!!}
         </div>
     </div>

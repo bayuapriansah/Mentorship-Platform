@@ -59,15 +59,6 @@
                     In Progress
                 </p>
             @endif
-
-
-            <div class="mt-4 p-3 flex items-center gap-2 border border-darker-blue rounded-lg text-darker-blue">
-                <i class="far fa-calendar fa-lg"></i>
-
-                <p class="text-sm">
-                    Duration: 10 Weeks
-                </p>
-            </div>
         </div>
 
         {{-- Main Content --}}
@@ -81,14 +72,17 @@
         </h1>
 
         {{-- Domain --}}
-        <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-[#E9E9E9] border border-grey rounded-full flex justify-center text-grey">
-            @if ($project->project_domain == 'statistical')
-                Machine Learning
-            @elseif($project->project_domain == 'computer_vision')
-                Computer Vision
-            @else
-                NLP
-            @endif
+        <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-primary border border-primary rounded-full flex justify-center text-white">
+            {{ $project->getProjectDomainText() }}
+        </div>
+
+        {{-- Duration --}}
+        <div class="w-max mt-6 p-3 flex items-center gap-2 border border-darker-blue rounded-lg text-darker-blue">
+            <i class="far fa-calendar fa-lg"></i>
+
+            <p class="text-sm">
+                Duration: 10 Weeks
+            </p>
         </div>
 
         {{-- Details --}}
@@ -96,7 +90,7 @@
             Project Details
         </h1>
 
-        <div class="problem w-[545px] mt-4 text-sm text-justify text-black font-normal">
+        <div class="problem mt-4 pr-8 text-sm text-justify text-black font-normal">
             {!! $project->problem !!}
         </div>
 
