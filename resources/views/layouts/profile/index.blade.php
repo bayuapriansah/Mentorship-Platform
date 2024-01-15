@@ -485,8 +485,18 @@
     </div>
 
     {{-- Logout Modal --}}
-    <form class="inline" method="post" action="{{ route('logout') }}">
+    <form class="inline pl-10" method="post" action="{{ route('logout') }}">
         @csrf
+        <button data-modal-target="popup-logout" data-modal-toggle="popup-logout" type="button"
+            class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300"
+            alt="Logout">
+            <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
         <div id="popup-logout" tabindex="-1"
             class="fixed z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
             <div class="relative w-3/6 h-full max-w-4xl md:h-auto border-[3px] border-light-blue rounded-2xl">
@@ -505,16 +515,15 @@
                     <div class="p-6 text-left space-x-4">
                         <img src="{{asset('assets/img/dots-1.png')}}" class="absolute top-0 right-0 w-[233px] h-[108px]"
                             alt="">
-                        {{-- <img src="{{asset('assets/img/dots-1.png')}}"
-                            class="absolute bottom-0 z-10 left-0 w-[233px] h-[108px]" alt=""> --}}
-                        <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to Logout?</h3>
-                        <div class="relative z-30">
+                        <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">Are you sure you want to Logout?
+                        </h3>
+                        <div class="relative z-50 mt-8">
                             <button data-modal-hide="popup-logout" type="submit"
-                                class="intelOne text-white text-sm font-normal bg-darker-blue hover:bg-dark-blue px-12 py-3 rounded-full shadow-xl">
+                                class="text-white text-sm font-normal bg-primary px-14 py-2 rounded-full">
                                 Yes
                             </button>
                             <button data-modal-hide="popup-logout" type="button"
-                                class="intelOne text-dark-blue text-sm font-normal hover:bg-neutral-100 px-12 py-3 rounded-full shadow-xl">Cancel</button>
+                                class="ml-3 bg-white border border-primary text-primary text-sm font-normal px-12 py-2 rounded-full">Cancel</button>
                         </div>
                     </div>
                 </div>
