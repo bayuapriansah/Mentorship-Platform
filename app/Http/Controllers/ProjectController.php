@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\InstitutionController;
+use Exception;
 
 class ProjectController extends Controller
 {
@@ -387,55 +388,89 @@ class ProjectController extends Controller
     // SECTION
     public function dashboardIndexSection(Project $project)
     {
-        return view('dashboard.projects.injection.index', compact(['project']));
+        $backUrl = route('dashboard.projects.edit', ['project' => $project->id]);
+        $formAction = route('dashboard.projects.storeSection', ['project' => $project->id]);
+
+        return view('dashboard.projects.injection.index', compact(
+            'project',
+            'backUrl',
+            'formAction',
+        ));
     }
 
     public function dashboardIndexStoreSection(Request $request, Project $project)
     {
-        // dd($request->all());
-        $validated = $request->validate([
-            'title' => ['required'],
-            // 'inputfiletype' => ['required'],
-            'duration' => ['required'],
-            'description' => ['required'],
-            'dataset' => ['nullable']
-        ],
-        [
-            'title.required' => 'Title is required',
-            // 'inputfiletype.required' => 'File Type is required',
-            'duration.required' => 'Duration is required',
-            'description.required' => 'Description is required',
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->get();
-        foreach ($completed_enrolled as $item) {
-            DB::table('enrolled_projects')
-            ->where('project_id', $project->id)
-            ->update([
-                'is_submited' => 0,
-                'flag_checkpoint' => null
+            $validated = $request->validate([
+                'title' => ['required'],
+                'duration' => ['required'],
+                'description' => ['required'],
+                'dataset' => ['nullable']
+            ],
+            [
+                'title.required' => 'Title is required',
+                'duration.required' => 'Duration is required',
+                'description.required' => 'Description is required',
             ]);
-        }
 
-        $section  = new ProjectSection;
-        $section_count = ProjectSection::where('project_id', $project->id);
-        $section->project_id = $project->id;
-        $section->title = $validated['title'];
-        $section->file_type = '.zip';
-        $section->duration = $validated['duration'];
-        $section->section = $section_count->count()+1;
-        $section->description = $validated['description'];
-        $section->dataset = $validated['dataset'];
-        $section->save();
-        $message = "Successfully created an injection card";
+            $completed_enrolled = EnrolledProject::where('project_id', $project->id)->get();
 
-        toastr('success', $message);
+            foreach ($completed_enrolled as $item) {
+                DB::table('enrolled_projects')
+                ->where('project_id', $project->id)
+                ->update([
+                    'is_submited' => 0,
+                    'flag_checkpoint' => null
+                ]);
+            }
 
-        if($request->input('addInjectionCard')){
-            // return redirect()->back();
-            return redirect('/dashboard/projects/'.$project->id.'/edit');
-        }else{
-            return redirect('/dashboard/projects/'.$project->id.'/injection/'.$section->id.'/attachment');
+            $section  = new ProjectSection;
+            $section_count = ProjectSection::where('project_id', $project->id);
+            $section->project_id = $project->id;
+            $section->title = $validated['title'];
+            $section->file_type = '.zip';
+            $section->duration = $validated['duration'];
+            $section->section = $section_count->count()+1;
+            $section->description = $validated['description'];
+            $section->dataset = $validated['dataset'];
+            $section->save();
+
+            if ($request->hasFile('files')) {
+                $files = $request->file('files');
+
+                if (count($files) > 0) {
+                    $attachment  = new SectionSubsection;
+                    $attachment->project_section_id = $section->id;
+
+                    for ($i = 0; $i < count($files); $i++) {
+                        $file = $files[$i];
+
+                        if ($i === 0) {
+                            $attachment->file1 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        } elseif ($i === 1) {
+                            $attachment->file2 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        } elseif ($i === 2) {
+                            $attachment->file3 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        }
+                    }
+
+                    $attachment->save();
+                }
+            }
+
+            DB::commit();
+            toastr()->success('Successfully created an injection card');
+
+            if($request->input('addInjectionCard')) {
+                return redirect('/dashboard/projects/'.$project->id.'/edit');
+            } else {
+                return redirect('/dashboard/projects/'.$project->id.'/injection/'.$section->id.'/attachment');
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
     }
 
@@ -766,14 +801,12 @@ class ProjectController extends Controller
         $project->dataset = $request->dataset;
         $project->overview = $request->overview;
         $project->save();
-        $message = "Successfully created a project";
 
-        toastr()->success($message);
+        toastr()->success('Successfully created a project');
 
-        if($request->input('addInjectionCard')){
+        if ($request->input('addInjectionCard')) {
             return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
-            // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
-        }else{
+        } else {
             return redirect('/dashboard/partners/'.$partner->id.'/projects');
         }
     }
@@ -871,56 +904,93 @@ class ProjectController extends Controller
 
     public function partnerProjectsInjection(Company $partner, Project $project)
     {
-        return view('dashboard.projects.injection.index', compact('partner', 'project'));
+        $backUrl = route('dashboard.partner.partnerProjectsEdit', ['partner' => $partner->id, 'project' => $project->id]);
+        $formAction = route('dashboard.partner.partnerProjectsInjectionStore', ['partner' => $partner->id, 'project' => $project->id]);
+
+        return view('dashboard.projects.injection.index', compact(
+            'partner',
+            'project',
+            'backUrl',
+            'formAction',
+        ));
     }
 
     public function partnerProjectsInjectionStore(Request $request, Company $partner, Project $project)
     {
-        $validated = $request->validate([
-            'title' => ['required'],
-            // 'inputfiletype' => ['required'],
-            'duration' => ['required'],
-            'description' => ['required'],
-        ],
-        [
-            'title.required' => 'Title is required',
-            // 'inputfiletype.required' => 'File Type is required',
-            'duration.required' => 'Duration is required',
-            'description.required' => 'Description is required',
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $completed_enrolled = EnrolledProject::where('project_id', $project->id)->get();
-        foreach ($completed_enrolled as $item) {
-            DB::table('enrolled_projects')
-            ->where('project_id', $project->id)
-            ->update([
-                'is_submited' => 0,
-                'flag_checkpoint' => null
+            $validated = $request->validate([
+                'title' => ['required'],
+                // 'inputfiletype' => ['required'],
+                'duration' => ['required'],
+                'description' => ['required'],
+            ],
+            [
+                'title.required' => 'Title is required',
+                // 'inputfiletype.required' => 'File Type is required',
+                'duration.required' => 'Duration is required',
+                'description.required' => 'Description is required',
             ]);
-        }
 
-        $section  = new ProjectSection;
-        $section_count = ProjectSection::where('project_id', $project->id);
-        $section->project_id = $project->id;
-        $section->title = $validated['title'];
-        $section->file_type = '.zip';
-        $section->duration = $validated['duration'];
-        $section->section = $section_count->count()+1;
-        $section->description = $validated['description'];
-        $section->save();
-        $message = "Successfully created an injection card";
+            $completed_enrolled = EnrolledProject::where('project_id', $project->id)->get();
+            foreach ($completed_enrolled as $item) {
+                DB::table('enrolled_projects')
+                ->where('project_id', $project->id)
+                ->update([
+                    'is_submited' => 0,
+                    'flag_checkpoint' => null
+                ]);
+            }
 
-        toastr()->success($message);
+            $section  = new ProjectSection;
+            $section_count = ProjectSection::where('project_id', $project->id);
+            $section->project_id = $project->id;
+            $section->title = $validated['title'];
+            $section->file_type = '.zip';
+            $section->duration = $validated['duration'];
+            $section->section = $section_count->count()+1;
+            $section->description = $validated['description'];
+            $section->save();
 
-        if($request->input('addInjectionCard')){
-            // return redirect()->back();
-            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+            if ($request->hasFile('files')) {
+                $files = $request->file('files');
 
-            // return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
-            // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
-        }else{
-            // /partners/{partner}/projects/{project}/injection/{injection}/attachment
-            return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$section->id.'/attachment');
+                if (count($files) > 0) {
+                    $attachment  = new SectionSubsection;
+                    $attachment->project_section_id = $section->id;
+
+                    for ($i = 0; $i < count($files); $i++) {
+                        $file = $files[$i];
+
+                        if ($i === 0) {
+                            $attachment->file1 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        } elseif ($i === 1) {
+                            $attachment->file2 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        } elseif ($i === 2) {
+                            $attachment->file3 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        }
+                    }
+
+                    $attachment->save();
+                }
+            }
+
+            toastr()->success('Successfully created an injection card');
+
+            if ($request->input('addInjectionCard')) {
+                // return redirect()->back();
+                return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/edit');
+
+                // return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection');
+                // return view('dashboard.partner.partnerProjectsInjection', compact('partner', 'project'));
+            } else {
+                // /partners/{partner}/projects/{project}/injection/{injection}/attachment
+                return redirect('/dashboard/partners/'.$partner->id.'/projects/'.$project->id.'/injection/'.$section->id.'/attachment');
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
     }
 
