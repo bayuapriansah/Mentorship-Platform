@@ -42,7 +42,7 @@
                             </p>
                         </div>
 
-                        <form method="POST" action="/projects/{{ $project->id }}/apply" >
+                        {{-- <form method="POST" action="/projects/{{ $project->id }}/apply">
                             @csrf
 
                             @if($enrolled_projects->isEmpty())
@@ -51,7 +51,6 @@
                                 </button>
                             @endif
 
-                            {{-- Popup --}}
                             <div id="popup-modal" tabindex="-1" class="fixed z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                                 <div class="relative w-3/6 h-full max-w-4xl md:h-auto border border-grey rounded-2xl">
                                     <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden">
@@ -73,7 +72,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                 @endif
             </div>
@@ -90,6 +89,38 @@
                         class="w-16 h-16 relative z-[4] object-cover bg-white border border-grey rounded-xl text-black text-center"
                     >
                 </div>
+
+                <form method="POST" action="/projects/{{ $project->id }}/apply" class="absolute top-[75%] right-4">
+                    @csrf
+
+                    @if($enrolled_projects->isEmpty())
+                        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="w-[140px] text-white text-lg bg-primary px-2 py-1 rounded-full" type="button">
+                            Enroll
+                        </button>
+                    @endif
+
+                    <div id="popup-modal" tabindex="-1" class="fixed z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                        <div class="relative w-3/6 h-full max-w-4xl md:h-auto border border-grey rounded-2xl">
+                            <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden">
+                                <div class="px-10 pt-7 pb-11">
+                                    <img src="{{asset('/assets/img/dots-1.png')}}" class="absolute z-[1] -bottom-3 left-6 w-[233px] h-[108px]" alt="Decoration">
+                                    <p class="text-darker-blue text-[1.4rem] font-medium">
+                                        Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ $project->company->name }}?
+                                    </p>
+
+                                    <div class="mt-5 relative z-[2] flex justify-center items-center gap-5">
+                                        <button data-modal-hide="popup-modal" type="submit" class="w-[179px] intelOne text-white text-xl bg-primary px-2 py-1 rounded-full">
+                                            Yes, Enroll me
+                                        </button>
+                                        <button data-modal-hide="popup-modal" type="button" class="w-[179px] intelOne bg-white border border-primary text-primary text-xl px-2 py-1 rounded-full">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 
