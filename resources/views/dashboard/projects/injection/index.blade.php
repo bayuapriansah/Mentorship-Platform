@@ -134,7 +134,7 @@
     <div id="files-container" class="mt-8 space-y-4"></div>
 
     <div class="mt-10">
-        <input type="submit" class="py-2 cursor-pointer px-11 rounded-full border-2 bg-primary text-center text-white text-sm" name="addInjectionCard" value="Submit">
+        <input type="submit" class="py-2 cursor-pointer px-11 rounded-full bg-primary text-center text-white text-sm" name="addInjectionCard" value="Submit">
     </div>
 </form>
 @endsection
@@ -151,7 +151,7 @@
             uploadedFiles.forEach((file, index) => {
                 $('#files-container').append(`
                     <div class="px-6 py-3 border border-light-blue rounded-lg flex items-center gap-7">
-                        <input type="hidden" name="files[]" value="${file}">
+                        <input hidden type="file" name="files[]">
                         <i class="fas fa-file text-darker-blue"></i>
                         <span class="text-sm">${file.name}</span>
                         <button class="ml-auto text-red-600" onclick="deleteFile(${index})">
@@ -159,6 +159,12 @@
                         </button>
                     </div>
                 `)
+            })
+
+            $('input[name="files[]"]').each(function(index, element) {
+                const dataTransfer = new DataTransfer()
+                dataTransfer.items.add(uploadedFiles[index])
+                $(element).prop('files', dataTransfer.files)
             })
         }
 

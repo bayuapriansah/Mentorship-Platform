@@ -430,7 +430,7 @@ class ProjectController extends Controller
             $section_count = ProjectSection::where('project_id', $project->id);
             $section->project_id = $project->id;
             $section->title = $validated['title'];
-            $section->file_type = '.zip';
+            // $section->file_type = '.zip';
             $section->duration = $validated['duration'];
             $section->section = $section_count->count()+1;
             $section->description = $validated['description'];
@@ -444,15 +444,16 @@ class ProjectController extends Controller
                     $attachment  = new SectionSubsection;
                     $attachment->project_section_id = $section->id;
 
-                    for ($i = 0; $i < count($files); $i++) {
-                        $file = $files[$i];
+                    foreach ($files as $index => $file) {
+                        $file_name = date('YmdHis') . '-' . $file->getClientOriginalName();
+                        $file->storeAs('public/projects/'.$project->id.'/attachment', $file_name);
 
-                        if ($i === 0) {
-                            $attachment->file1 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
-                        } elseif ($i === 1) {
-                            $attachment->file2 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
-                        } elseif ($i === 2) {
-                            $attachment->file3 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        if ($index === 0) {
+                            $attachment->file1 = 'projects/'.$project->id.'/attachment/'.$file_name;
+                        } elseif ($index === 1) {
+                            $attachment->file2 = 'projects/'.$project->id.'/attachment/'.$file_name;
+                        } elseif ($index === 2) {
+                            $attachment->file3 = 'projects/'.$project->id.'/attachment/'.$file_name;
                         }
                     }
 
@@ -476,9 +477,19 @@ class ProjectController extends Controller
 
     public function dashboardIndexEditSection(Project $project, ProjectSection $injection)
     {
+        $backUrl = route('dashboard.projects.edit', ['project' => $project->id]);
+        $formAction = route('dashboard.projects.UpdateSection', ['project' => $project->id, 'injection' => $injection->id]);
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
-        return view('dashboard.projects.injection.edit', compact(['project','injection', 'attachment_id','attachments']));
+
+        return view('dashboard.projects.injection.edit', compact(
+            'backUrl',
+            'formAction',
+            'project',
+            'injection',
+            'attachments',
+            'attachment_id',
+        ));
     }
 
     public function dashboardIndexShowSection(Project $project, ProjectSection $injection)
@@ -947,7 +958,7 @@ class ProjectController extends Controller
             $section_count = ProjectSection::where('project_id', $project->id);
             $section->project_id = $project->id;
             $section->title = $validated['title'];
-            $section->file_type = '.zip';
+            // $section->file_type = '.zip';
             $section->duration = $validated['duration'];
             $section->section = $section_count->count()+1;
             $section->description = $validated['description'];
@@ -960,15 +971,16 @@ class ProjectController extends Controller
                     $attachment  = new SectionSubsection;
                     $attachment->project_section_id = $section->id;
 
-                    for ($i = 0; $i < count($files); $i++) {
-                        $file = $files[$i];
+                    foreach ($files as $index => $file) {
+                        $file_name = date('YmdHis') . '-' . $file->getClientOriginalName();
+                        $file->storeAs('public/projects/'.$project->id.'/attachment', $file_name);
 
-                        if ($i === 0) {
-                            $attachment->file1 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
-                        } elseif ($i === 1) {
-                            $attachment->file2 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
-                        } elseif ($i === 2) {
-                            $attachment->file3 = Storage::disk('public')->put('projects/'.$project->id.'/attachment', $file);
+                        if ($index === 0) {
+                            $attachment->file1 = 'projects/'.$project->id.'/attachment/'.$file_name;
+                        } elseif ($index === 1) {
+                            $attachment->file2 = 'projects/'.$project->id.'/attachment/'.$file_name;
+                        } elseif ($index === 2) {
+                            $attachment->file3 = 'projects/'.$project->id.'/attachment/'.$file_name;
                         }
                     }
 
@@ -996,10 +1008,20 @@ class ProjectController extends Controller
 
     public function partnerProjectsInjectionEdit(Company $partner, Project $project, ProjectSection $injection)
     {
-        $injection = ProjectSection::find($injection->id);
+        $backUrl = route('dashboard.partner.partnerProjectsEdit', ['partner' => $partner->id, 'project' => $project->id]);
+        $formAction = route('dashboard.partner.partnerProjectsInjectionUpdate', ['partner' => $partner->id, 'project' => $project->id, 'injection' => $injection->id]);
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
-        return view('dashboard.projects.injection.edit', compact('partner', 'project', 'injection', 'attachments', 'attachment_id'));
+
+        return view('dashboard.projects.injection.edit', compact(
+            'backUrl',
+            'formAction',
+            'partner',
+            'project',
+            'injection',
+            'attachments',
+            'attachment_id'
+        ));
     }
 
     public function partnerProjectsInjectionUpdate(Request $request, Company $partner, Project $project, ProjectSection $injection)
