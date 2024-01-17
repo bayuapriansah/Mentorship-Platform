@@ -219,6 +219,7 @@
     <script>
         const dropArea = document.getElementById('drop-area')
         const fileInput = document.getElementById('file-input')
+        const maxFileUpload = 3 - {{ $countAttachment }}
         let uploadedFiles = []
 
         function renderFiles() {
@@ -247,7 +248,7 @@
         function addFile(file) {
             fileInput.value = ''
 
-            if (uploadedFiles.length >= 3) {
+            if (uploadedFiles.length >= maxFileUpload) {
                 toastr.error('You can only upload up to 3 files')
                 return
             }

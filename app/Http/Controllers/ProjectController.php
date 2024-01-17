@@ -482,6 +482,22 @@ class ProjectController extends Controller
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
 
+        $countAttachment = 0;
+
+        foreach ($attachments as $attachment) {
+            if ($attachment->file1!= null) {
+                $countAttachment++;
+            }
+
+            if ($attachment->file2!= null) {
+                $countAttachment++;
+            }
+
+            if ($attachment->file3!= null) {
+                $countAttachment++;
+            }
+        }
+
         return view('dashboard.projects.injection.edit', compact(
             'backUrl',
             'formAction',
@@ -489,6 +505,7 @@ class ProjectController extends Controller
             'injection',
             'attachments',
             'attachment_id',
+            'countAttachment',
         ));
     }
 
@@ -1013,6 +1030,22 @@ class ProjectController extends Controller
         $attachments = SectionSubsection::where('project_section_id', $injection->id)->get();
         $attachment_id = SectionSubsection::where('project_section_id', $injection->id)->first();
 
+        $countAttachment = 0;
+
+        foreach ($attachments as $attachment) {
+            if ($attachment->file1!= null) {
+                $countAttachment++;
+            }
+
+            if ($attachment->file2!= null) {
+                $countAttachment++;
+            }
+
+            if ($attachment->file3!= null) {
+                $countAttachment++;
+            }
+        }
+
         return view('dashboard.projects.injection.edit', compact(
             'backUrl',
             'formAction',
@@ -1020,7 +1053,8 @@ class ProjectController extends Controller
             'project',
             'injection',
             'attachments',
-            'attachment_id'
+            'attachment_id',
+            'countAttachment',
         ));
     }
 
