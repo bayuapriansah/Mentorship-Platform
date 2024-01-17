@@ -1,66 +1,131 @@
 @extends('layouts.admin2')
+
 @section('content')
-<div class="text-[#6973C6] hover:text-light-blue flex justify-between">
-  <a href="/dashboard/submissions/project/{{$project->id}}"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-</div>
+<div class="w-full lg:w-3/4">
+    <a href="{{ route('dashboard.submission.show', ['project' => $project->id]) }}" class="group block w-max text-lg text-[#6973C6]">
+        <
+        <span class="ml-2 group-hover:underline">
+            Back
+        </span>
+    </a>
 
+    <div class="mt-2 flex justify-between items-center">
+        <h3 class="text-dark-blue font-medium text-[1.375rem]">
+            Review Submission
+        </h3>
 
-
-<div class="flex justify-between mb-10 w-4/5 items-center">
-  <h3 class="text-dark-blue font-medium text-xl">Review Submission</h3>
-  <p>
-    @if ($submission->grade)
-        @if ($submission->grade->status==0)
-          <div class="border-4 border-red-600 text-red-600 rounded-full w-24 h-24 flex items-center justify-center">
-            Revise
-          </div>
-        @elseif($submission->grade->status==1)
-          <div class="border-4 border-green-600 text-green-600 rounded-full w-24 h-24 flex items-center justify-center">
-            Pass
-          </div>
+        @if ($submission->grade)
+            @if ($submission->grade->status == 0)
+                <div class="border-4 border-red-600 text-red-600 rounded-full w-24 h-24 flex items-center justify-center">
+                    Revise
+                </div>
+            @elseif ($submission->grade->status == 1)
+                <div class="border-4 border-green-600 text-green-600 rounded-full w-24 h-24 flex items-center justify-center">
+                    Pass
+                </div>
+            @endif
         @endif
-    @endif
-  </p>
+    </div>
+
+    <div class="mt-8 grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+            <p class="text-sm text-dark-blue font-medium">
+                Project Name
+            </p>
+
+            <p class="mt-1">
+                {{ $project->name }}
+            </p>
+        </div>
+
+        <div class="col-span-6">
+            <p class="text-sm text-dark-blue font-medium">
+                Submission Number
+            </p>
+
+            <p class="mt-1">
+                ? ? ?
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <p class="text-sm text-dark-blue font-medium">
+            Task Name
+        </p>
+
+        <p class="mt-1">
+            {{ $submission->projectSection->title }}
+        </p>
+    </div>
+
+    <div class="mt-10 grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+            <p class="text-sm text-dark-blue font-medium">
+                Participant Name
+            </p>
+
+            <p class="mt-1">
+                {{ $submission->student->first_name }} {{ $submission->student->last_name }}
+            </p>
+        </div>
+
+        <div class="col-span-4">
+            <p class="text-sm text-dark-blue font-medium">
+                Education Institution
+            </p>
+
+            <p class="mt-1">
+                {{ $submission->student->institution->name }}
+            </p>
+        </div>
+
+        <div class="col-span-4">
+            <p class="text-sm text-dark-blue font-medium">
+                Mentor
+            </p>
+
+            <p class="mt-1">
+                {{ $submission->student->mentor->first_name }} {{ $submission->student->mentor->last_name }}
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-10 grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+            <p class="text-sm text-dark-blue font-medium">
+                Started On
+            </p>
+
+            <p class="mt-1">
+                {{ $submission->created_at->format('d/m/Y') }}
+            </p>
+        </div>
+
+        <div class="col-span-4">
+            <p class="text-sm text-dark-blue font-medium">
+                Submitted On
+            </p>
+
+            <p class="mt-1">
+                {{ $submission->updated_at->format('d/m/Y') }}
+            </p>
+        </div>
+
+        <div class="col-span-4">
+            <p class="text-sm text-dark-blue font-medium">
+                Due On
+            </p>
+
+            <p class="mt-1">
+                {{ date('d/m/Y', strtotime($submission->dueDate)) }}
+            </p>
+        </div>
+    </div>
 </div>
 
-<div class="w-3/5 space-y-10">
+<div class="mt-10 space-y-10">
   <div class="space-y-6">
-    <div class="flex justify-between">
-      <div>
-        <div class="text-dark-blue font-normal">Project Domain</div>
-        <div class="font-normal">{{$project->name}}</div>
-      </div>
-      <div>
-        <div class="text-dark-blue font-normal">Project By</div>
-        <div class="font-normal">{{$project->company->name}}</div>
-      </div>
-    </div>
-    <div>
-      <div class="text-dark-blue font-normal">Task Name</div>
-      <div class="font-normal">{{$submission->projectSection->title}}</div>
-    </div>
-  </div>
-
-  <div class="space-y-6">
-    <div class="flex justify-between">
-      <div>
-        <div class="text-dark-blue font-normal">Student Name</div>
-        <div class="font-normal">{{$submission->student->first_name}} {{$submission->student->last_name}}</div>
-      </div>
-      <div>
-        <div class="text-dark-blue font-normal">Institute</div>
-        <div class="font-normal">{{$submission->student->institution->name}}</div>
-      </div>
-      <div>
-        <div class="text-dark-blue font-normal">Mentor</div>
-        <div class="font-normal">{{$submission->student->mentor->first_name}} {{$submission->student->mentor->last_name}}</div>
-      </div>
-    </div>
-    <div>
-      <div class="text-dark-blue font-normal">Submitted on</div>
-      <div class="font-normal">{{$submission->updated_at->format('d/m/Y')}}</div>
-    </div>
-
     @if ($submission->grade)
         @if ($submission->grade->status==0 || $submission->grade->status==1)
         <style>
@@ -188,21 +253,19 @@
       @endif
     @endif
   @endif
-
 </div>
-
 @endsection
 
 @section('more-js')
-<script>
-  $(document).ready(function(){
-    $('#changeGradeModal').on('show.bs.modal', function (e) {
-      $('#detailButton').text('Less Detail');
-    });
+    <script>
+        $(document).ready(function () {
+            $('#changeGradeModal').on('show.bs.modal', function (e) {
+                $('#detailButton').text('Less Detail');
+            });
 
-    $('#changeGradeModal').on('hide.bs.modal', function (e) {
-      $('#detailButton').text('More Detail');
-    });
-  });
-  </script>
+            $('#changeGradeModal').on('hide.bs.modal', function (e) {
+                $('#detailButton').text('More Detail');
+            });
+        });
+    </script>
 @endsection
