@@ -65,24 +65,22 @@ class ProjectController extends Controller
         // return view('projects.index', compact('projects'));
     }
 
-    public function show($id)
+    public function show(Project $project)
     {
-        $project = Project::find($id);
-        if(Auth::guard('student')->check()){
-          if(\Carbon\Carbon::now() > Auth::guard('student')->user()->end_date){
+        if(Auth::guard('student')->check() && Carbon::now() > Auth::guard('student')->user()->end_date) {
             abort(403);
-          }
         }
 
-        if(Auth::guard('student')->check()){
-        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)->where('project_id', $id)->get();
+        $data = [
+            'project' => $project,
+        ];
+
+        if (Auth::guard('student')->check()) {
+            $data['isEnrolled'] = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)
+                                    ->count() > 0;
         }
-        $project_sections = ProjectSection::where('project_id', $id)->get();
-        if(Auth::guard('student')->check()){
-            return view('projects.show', compact(['project','project_sections','enrolled_projects']));
-        }else{
-            return view('projects.show', compact(['project','project_sections']));
-        }
+
+        return view('projects.show', $data);
     }
 
     public function dashboardIndex()
