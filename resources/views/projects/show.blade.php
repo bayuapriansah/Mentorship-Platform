@@ -37,7 +37,7 @@
             </p>
         </div>
 
-        @if (Auth::guard('student')->check() && !$isEnrolled)
+        {{-- @if (Auth::guard('student')->check() && !$isEnrolled)
             <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" class="w-[140px] intelOne text-white text-lg bg-primary px-2 py-1 rounded-full">
                 Enroll
             </button>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
     </div>
 
 
