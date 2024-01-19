@@ -60,7 +60,7 @@
             </h2>
 
             <p class="text-[2.125rem] text-end text-dark-blue font-medium">
-                {{ $students }}
+                {{ $activeStudents }}
             </p>
         </div>
     </div>
@@ -156,12 +156,12 @@
                 <th class="col-span-2">&nbsp;</th>
                 <th class="col-span-2 flex justify-center items-center gap-3">
                     <span class="text-sm text-darker-blue font-medium">
-                        Entrepreneur
+                        Entrepreneur Track
                     </span>
                 </th>
                 <th class="col-span-2 flex justify-center items-center gap-3">
                     <span class="text-sm text-darker-blue font-medium">
-                        Skills
+                        Skills Track
                     </span>
                 </th>
                 <th class="col-span-2 flex justify-center items-center gap-3">
@@ -186,11 +186,25 @@
                     Male
                 </td>
 
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">52</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">48</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">79</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">93</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">114</td>
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
+                    {{ $sexCount['entrepreneur_track']['male'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['skills_track']['male'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['crypto_guides']['male'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['eauto']['male'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
+                    {{ $sexCount['web_helpers']['male'] }}
+                </td>
             </tr>
 
             <tr class="mt-[0.625rem] grid grid-cols-12 items-center">
@@ -198,11 +212,25 @@
                     Female
                 </td>
 
-                <td class="col-span-2 py-[0.625rem] rounded-s-lg text-xs text-center">43</td>
-                <td class="col-span-2 py-[0.625rem] text-xs text-center">70</td>
-                <td class="col-span-2 py-[0.625rem] text-xs text-center">53</td>
-                <td class="col-span-2 py-[0.625rem] text-xs text-center">104</td>
-                <td class="col-span-2 py-[0.625rem] rounded-e-lg text-xs text-center">98</td>
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
+                    {{ $sexCount['entrepreneur_track']['female'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['skills_track']['female'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['crypto_guides']['female'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['eauto']['female'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
+                    {{ $sexCount['web_helpers']['female'] }}
+                </td>
             </tr>
 
             <tr class="mt-[0.625rem] grid grid-cols-12 items-center">
@@ -210,11 +238,25 @@
                     Total
                 </td>
 
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">106</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">126</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">137</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">214</td>
-                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">235</td>
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
+                    {{ $sexCount['entrepreneur_track']['total'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['skills_track']['total'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['crypto_guides']['total'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                    {{ $sexCount['eauto']['total'] }}
+                </td>
+
+                <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
+                    {{ $sexCount['web_helpers']['total'] }}
+                </td>
             </tr>
         </table>
     </div>
