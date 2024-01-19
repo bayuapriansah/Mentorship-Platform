@@ -161,12 +161,58 @@ class DashboardController extends Controller
         $dashboardData = Cache::remember('dashboard_data', 60 * 24, function () {
             return [
                 'students' => Student::count(),
+                'activeStudents' => Student::where('is_confirm', true)->where('end_date', '>=', Carbon::now())->count(),
                 'mentors' => Mentor::where('institution_id', '>', 0)->count(),
                 'staffs' => Mentor::where('institution_id', 0)->where('offboard', 0)->count(),
                 'eProjects' => EnrolledProject::count(),
                 'companies' => Company::count(),
                 'loginLog' => LoginLog::count(),
-                // Other data...
+                'sexCount' => [
+                    'entrepreneur_track' => [
+                        'male' => Student::whereRaw('LOWER(sex) = "male"')->where('mentorship_type', 'entrepreneur_track')->count(),
+                        'female' => Student::whereRaw('LOWER(sex) = "female"')->where('mentorship_type', 'entrepreneur_track')->count(),
+                        'total' => Student::where('mentorship_type', 'entrepreneur_track')->count(),
+                    ],
+                    'skills_track' => [
+                        'male' => Student::whereRaw('LOWER(sex) = "male"')->where('mentorship_type','skills_track')->count(),
+                        'female' => Student::whereRaw('LOWER(sex) = "female"')->where('mentorship_type','skills_track')->count(),
+                        'total' => Student::where('mentorship_type','skills_track')->count(),
+                    ],
+                    'crypto_guides' => [
+                        'male' => EnrolledProject::where('project_id', 4)->whereHas('student', function ($query) {
+                            $query->whereRaw('LOWER(sex) = "male"');
+                        })->count(),
+
+                        'female' => EnrolledProject::where('project_id', 4)->whereHas('student', function ($query) {
+                            $query->whereRaw('LOWER(sex) = "female"');
+                        })->count(),
+
+                        'total' => EnrolledProject::where('project_id', 4)->count(),
+                    ],
+                    'eauto' => [
+                        'male' => EnrolledProject::where('project_id', 1)->whereHas('student', function ($query) {
+                            $query->whereRaw('LOWER(sex) = "male"');
+                        })->count(),
+
+                        'female' => EnrolledProject::where('project_id', 1)->whereHas('student', function ($query) {
+                            $query->whereRaw('LOWER(sex) = "female"');
+                        })->count(),
+
+                        'total' => EnrolledProject::where('project_id', 1)->count(),
+                    ],
+
+                    'web_helpers' => [
+                        'male' => EnrolledProject::where('project_id', 3)->whereHas('student', function ($query) {
+                            $query->whereRaw('LOWER(sex) = "male"');
+                        })->count(),
+
+                        'female' => EnrolledProject::where('project_id', 3)->whereHas('student', function ($query) {
+                            $query->whereRaw('LOWER(sex) = "female"');
+                        })->count(),
+
+                        'total' => EnrolledProject::where('project_id', 3)->count(),
+                    ],
+                ],
             ];
         });
 
