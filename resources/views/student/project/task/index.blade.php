@@ -15,13 +15,7 @@
 
         {{-- Domain --}}
         <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-primary border border-primary rounded-full flex justify-center text-white">
-            @if ($project->project_domain == 'statistical')
-                Machine Learning
-            @elseif($project->project_domain == 'computer_vision')
-                Computer Vision
-            @else
-                NLP
-            @endif
+            {{ $task->project->getProjectDomainText() }}
         </div>
       </div>
       <div class="col-span-4 relative -right-12">
@@ -30,19 +24,19 @@
             style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.084px -8.927px / 100.073% 126.737% no-repeat;"
         ></div>
 
-        <div class="w-[30px] h-[30px] absolute top-[43px] right-[120px] bg-[#FF8F51] rounded-lg"></div>
+        <div class="w-[30px] h-[30px] absolute top-[43px] right-[5.25rem] bg-[#FF8F51] rounded-lg"></div>
 
         <img
             src="{{ $task->project->company->logo ? asset('storage/'.$task->project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
             onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
             alt="Logo"
-            class="absolute top-[55px] right-[75px] w-16 h-16 object-cover bg-white border border-grey rounded-xl text-black text-center"
+            class="absolute top-[55px] right-10 w-16 h-16 object-cover bg-white border border-grey rounded-xl text-black text-center"
         >
 
-        <p class="absolute -bottom-12 right-[75px] mt-2 flex gap-2 items-center font-medium text-[#6672D3] text-xs">
+        {{-- <p class="absolute -bottom-12 right-[75px] mt-2 flex gap-2 items-center font-medium text-[#6672D3] text-xs">
             <span class="w-[10px] h-[10px] bg-[#6672D3] rounded-full"></span>
             In Progress
-        </p>
+        </p> --}}
       </div>
     </div>
 
@@ -53,7 +47,7 @@
 
     {{-- Task Description --}}
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-3">
-        <div class="col-span-9 problem text-justify text-black font-normal">
+        <div class="problem col-span-12 text-justify text-black font-normal">
             {!!$task->description!!}
         </div>
     </div>
@@ -98,7 +92,7 @@
       </div>
       </div>
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
-      <div class="col-span-10  my-auto">
+      <div class="col-span-12  my-auto">
         <h1 class="font-medium text-darker-blue text-[1.4rem] mb-2">Messages</h1>
         @if ($comments->count())
         <div id="accordion-collapse" class="border border-light-blue rounded-lg p-4 bg-white" data-accordion="collapse">
@@ -193,12 +187,13 @@
                       <div id="chatFileName"></div>
                       <input id="file-chat-input" class="hidden" type="file" name="file" />
                   </div>
-                  <div>
-                    <button type="button" class="bg-[#B11313] hover:bg-red-800 px-4 py-1 rounded-full text-white text-sm" id="btn-cancel">Cancel</button>
-                    <button type="submit">
-                      <span class="bg-dark-blue hover:bg-darker-blue px-4 py-1 rounded-full text-white text-sm">
-                        Send
-                      </span>
+                  <div class="mt-2 space-x-3">
+                    <button type="button" class="px-6 py-1 bg-white border border-primary rounded-full text-primary text-sm" id="btn-cancel">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="px-8 py-1 bg-primary border border-primary rounded-full text-white text-sm" id="btn-cancel">
+                      Send
                     </button>
                   </div>
               </div>
