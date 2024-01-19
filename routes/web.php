@@ -30,6 +30,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InternalDocumentController;
 
@@ -65,9 +66,7 @@ Route::get('/emailtemp', function () {
 Route::get('/supportlib', function () {
     return view('projects.supportlibrary');
 })->name('projects.support');
-Route::get('/faq', function () {
-    return view('faq');
-})->name('faq');
+Route::get('/faq', [FAQController::class, 'index'])->name('faq');
 Route::get('/contact', [DashboardController::class, 'contact'])->name('contact');
 Route::post('/contact', [DashboardController::class, 'sendContact'])->name('sendContact');
 Route::get('/privacy-policy', function () {
