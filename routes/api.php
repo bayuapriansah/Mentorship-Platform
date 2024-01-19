@@ -23,3 +23,70 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('comment/{id}', [CommentController::class, 'getdatacomment'])->name('getdatacomment');
 Route::get('student/project/{project}/{user}/{guard}/{institution}', [CommentController::class, 'getdatastudent'])->name('getdatastudent');
 Route::get('institution/{id}', [InstitutionController::class, 'GetInstituionById'])->name('getInstitutionData');
+
+Route::get('/dashboard/participants/{id}', function($id) {
+    $student = App\Models\Student::find($id);
+    $startOfWeek = Carbon\Carbon::now()->startOfWeek();
+    $endOfWeek = Carbon\Carbon::now()->endOfWeek();
+
+    $loginCounts = App\Models\LoginLog::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+                        ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                        ->where('student_id', $id)
+                        ->groupBy('date')
+                        ->orderBy('date', 'asc')
+                        ->get()
+                        ->pluck('count', 'date');
+
+    for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
+        $formattedDate = $date->format('Y-m-d');
+        if (!isset($loginCounts[$formattedDate])) {
+            $loginCounts[$formattedDate] = 0;
+        }
+    }
+
+    $messageCounts = App\Models\Comment::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+                        ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                        ->where('student_id', $id)
+                        ->groupBy('date')
+                        ->orderBy('date', 'asc')
+                        ->get()
+                        ->pluck('count', 'date');
+
+
+    for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
+        $formattedDate = $date->format('Y-m-d');
+        if (!isset($messageCounts[$formattedDate])) {
+            $messageCounts[$formattedDate] = 0;
+        }
+    }
+
+    return response()->json([
+        'participant' => $student,
+        'track' => $student->getMentorshipTrack(),
+        'loginCounts' => $loginCounts->values(),
+        'loginDates' => $loginCounts->keys(),
+        'messageCounts' => $messageCounts->values(),
+        'messageDates' => $messageCounts->keys(),
+    ]);
+});
+
+Route::post('/dashboard/participants', function(Request $request) {
+    $search = $request->input('search', '');
+
+    if ($search === '') {
+        $students = App\Models\Student::selectRaw("id, CONCAT(first_name, ' ', last_name) AS text")
+                        ->where('is_confirm', 1)
+                        ->orderBy('first_name')
+                        ->get()
+                        ->toArray();
+    } else {
+        $students = App\Models\Student::selectRaw("id, CONCAT(first_name, ' ', last_name) AS text")
+                        ->whereRaw("CONCAT(first_name, ' ', last_name) LIKE '%$search%'")
+                        ->where('is_confirm', 1)
+                        ->orderBy('first_name')
+                        ->get()
+                        ->toArray();
+    }
+
+    return response()->json($students);
+});

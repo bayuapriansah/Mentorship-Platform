@@ -161,7 +161,7 @@ class DashboardController extends Controller
         $dashboardData = Cache::remember('dashboard_data', 60 * 24, function () {
             return [
                 'students' => Student::count(),
-                'activeStudents' => Student::where('is_confirm', true)->where('end_date', '>=', Carbon::now())->count(),
+                'activeStudents' => Student::where('is_confirm', 1)->count(),
                 'mentors' => Mentor::where('institution_id', '>', 0)->count(),
                 'staffs' => Mentor::where('institution_id', 0)->where('offboard', 0)->count(),
                 'eProjects' => EnrolledProject::count(),
@@ -241,8 +241,33 @@ class DashboardController extends Controller
             ];
         });
 
+        // Cache the message data for 1 hour
+        $messageData = Cache::remember('message_data', 60, function () {
+            $startOfWeek = Carbon::now()->startOfWeek();
+            $endOfWeek = Carbon::now()->endOfWeek();
+
+            $messageCounts = Comment::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+                                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                                ->groupBy('date')
+                                ->orderBy('date', 'asc')
+                                ->get()
+                                ->pluck('count', 'date');
+
+            for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
+                $formattedDate = $date->format('Y-m-d');
+                if (!isset($messageCounts[$formattedDate])) {
+                    $messageCounts[$formattedDate] = 0;
+                }
+            }
+
+            return [
+                'messageCounts' => $messageCounts->values(),
+                'messageDates' => $messageCounts->keys(),
+            ];
+        });
+
         // Combine the data arrays
-        $data = array_merge($dashboardData, $loginData);
+        $data = array_merge($dashboardData, $loginData, $messageData);
 
         return view('dashboard.index', $data);
     }

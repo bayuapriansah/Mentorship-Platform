@@ -1,7 +1,137 @@
 @extends('layouts.admin2')
 
 @section('more-css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.css">
+
+    <style>
+        /* .select2.select2-container {
+            width: 403px !important;
+            height: 42px !important;
+            padding-right: 3rem !important;
+            border-radius: 0.75rem !important;
+            border: 1px solid #838383 !important;
+        } */
+
+        .select2.select2-container {
+            width: 403px !important;
+        }
+
+        .select2.select2-container .select2-selection {
+            border: 1px solid #ccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            height: 34px;
+            margin-bottom: 15px;
+            padding-right: 15px;
+            outline: none !important;
+            transition: all .15s ease-in-out;
+        }
+
+        .select2.select2-container .select2-selection .select2-selection__rendered {
+            color: #333;
+            line-height: 32px;
+            padding-right: 33px;
+        }
+
+        .select2.select2-container .select2-selection .select2-selection__arrow {
+            background: #f8f8f8;
+            border-left: 1px solid #ccc;
+            -webkit-border-radius: 0 3px 3px 0;
+            -moz-border-radius: 0 3px 3px 0;
+            border-radius: 0 3px 3px 0;
+            height: 32px;
+            width: 33px;
+        }
+
+        .select2.select2-container.select2-container--open .select2-selection.select2-selection--single {
+            background: #f8f8f8;
+        }
+
+        .select2.select2-container.select2-container--open .select2-selection.select2-selection--single .select2-selection__arrow {
+            -webkit-border-radius: 0 3px 0 0;
+            -moz-border-radius: 0 3px 0 0;
+            border-radius: 0 3px 0 0;
+        }
+
+        .select2.select2-container.select2-container--open .select2-selection.select2-selection--multiple {
+            border: 1px solid #34495e;
+        }
+
+        .select2.select2-container .select2-selection--multiple {
+            height: auto;
+            min-height: 34px;
+        }
+
+        .select2.select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
+            margin-top: 0;
+            height: 32px;
+        }
+
+        .select2.select2-container .select2-selection--multiple .select2-selection__rendered {
+            display: block;
+            padding: 0 4px;
+            line-height: 29px;
+        }
+
+        .select2.select2-container .select2-selection--multiple .select2-selection__choice {
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            margin: 4px 4px 0 0;
+            padding: 0 6px 0 22px;
+            height: 24px;
+            line-height: 24px;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .select2.select2-container .select2-selection--multiple .select2-selection__choice .select2-selection__choice__remove {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 22px;
+            width: 22px;
+            margin: 0;
+            text-align: center;
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .select2-container .select2-dropdown {
+            background: transparent;
+            border: none;
+            margin-top: -5px;
+        }
+
+        .select2-container .select2-dropdown .select2-search {
+            padding: 0;
+        }
+
+        .select2-container .select2-dropdown .select2-search input {
+            outline: none !important;
+            border: 1px solid #34495e !important;
+            border-bottom: none !important;
+            padding: 4px 6px !important;
+        }
+
+        .select2-container .select2-dropdown .select2-results {
+            padding: 0;
+        }
+
+        .select2-container .select2-dropdown .select2-results ul {
+            background: #fff;
+            border: 1px solid #34495e;
+        }
+
+        .select2-container .select2-dropdown .select2-results ul .select2-results__option--highlighted[aria-selected] {
+            background-color: #3498db;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -66,63 +196,31 @@
     </div>
     {{-- ./Cards --}}
 
-    {{-- Search and Filters --}}
-    <div class="mt-14 flex justify-end gap-14">
-        <button type="button" class="flex items-center gap-4">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_4295_8096)">
-                    <path d="M8.33333 15H11.6667V13.3333H8.33333V15ZM2.5 5V6.66667H17.5V5H2.5ZM5 10.8333H15V9.16667H5V10.8333Z" fill="#E96424"/>
-                </g>
-                <defs>
-                    <clipPath id="clip0_4295_8096">
-                    <rect width="20" height="20" fill="white"/>
-                    </clipPath>
-                </defs>
-            </svg>
-            <span class="text-sm">
-                Filters
-            </span>
-        </button>
-
-        <div class="relative">
-            <input
-                id="input-search-participant"
-                type="text"
-                placeholder="Search Participant name"
-                class="w-[403px] h-[42px] pr-12 rounded-xl border border-grey"
-                onchange="searchParticipant()"
-            >
-
-            <button id="search-btn" type="button" class="absolute top-2 right-4 text-light-brown" onclick="searchParticipant()">
-                <i class="fas fa-search fa-lg"></i>
-            </button>
-
-            <button id="clear-search-btn" type="button" style="display: none;" class="absolute top-2 right-4 text-light-brown" onclick="clearSearchParticipant()">
-                <i class="far fa-times-circle fa-lg"></i>
-            </button>
-        </div>
+    {{-- Search --}}
+    <div class="mt-14 flex justify-end">
+        <select id="select-participant"></select>
     </div>
-    {{-- ./Search and Filters --}}
+    {{-- ./Search --}}
 
     {{-- Participant --}}
-    <div id="participant-detail-container" style="display: none;" class="my-6 justify-center items-center gap-12">
+    <div id="search-result-container" style="display: none;" class="my-6 justify-center items-center gap-12">
         <p class="text-sm text-darker-blue font-medium">
             Full Name :&nbsp;
-            <span class="text-black font-normal">
+            <span id="search-result-name" class="text-black font-normal">
                 Bayu Apriansah
             </span>
         </p>
 
         <p class="text-sm text-darker-blue font-medium">
             Team Name :&nbsp;
-            <span class="text-black font-normal">
+            <span id="search-result-team-name" class="text-black font-normal">
                 Avengers
             </span>
         </p>
 
         <p class="text-sm text-darker-blue font-medium">
             Mentorship Track :&nbsp;
-            <span class="text-black font-normal">
+            <span id="search-result-track" class="text-black font-normal">
                 Skills
             </span>
         </p>
@@ -384,32 +482,60 @@
 @endsection
 
 @section('more-js')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.js"></script>
 
     <script>
-        function searchParticipant() {
-            const search = $('#input-search-participant').val()
+        $('#select-participant').select2({
+            allowClear: true,
+            placeholder: 'Search Participant Name',
 
-            if (search.length > 0) {
-                $('#search-btn').css('display', 'none')
-                $('#clear-search-btn').css('display', 'block')
-                $('#participant-detail-container').css('display', 'flex')
-            } else {
-                $('#search-btn').css('display', 'block')
-                $('#clear-search-btn').css('display', 'none')
-                $('#participant-detail-container').css('display', 'none')
+            ajax: {
+                url: "{{ url('/api/dashboard/participants') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: false
+            },
+        });
+
+        $('#select-participant').on('select2:select', function (e) {
+            const data = e.params.data;
+
+            if (data.id) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/api/dashboard/participants') }}/" + data.id,
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#search-result-name').text(`${response.participant.first_name} ${response.participant.last_name}`);
+                        $('#search-result-team-name').text(`${response.participant.team_name ?? '-'}`);
+                        $('#search-result-track').text(response.track);
+                        $('#search-result-container').css('display', 'flex');
+                    },
+                });
             }
-        }
+        });
 
-        function clearSearchParticipant() {
-            $('#input-search-participant').val('')
-            $('#search-btn').css('display', 'block')
-            $('#clear-search-btn').css('display', 'none')
-            $('#participant-detail-container').css('display', 'none')
-        }
+        $('#select-participant').on('select2:unselect', function (e) {
+            $('#search-result-container').css('display', 'none');
+        })
 
         let loginCounts = @json($loginCounts);
         let loginDates = @json($loginDates);
+        let messageCounts = @json($messageCounts);
+        let messageDates = @json($messageDates);
 
         let loginChart = new ApexCharts(document.querySelector("#login-chart"), {
             chart: {
@@ -450,7 +576,7 @@
             series: [
                 {
                     name: 'Message Frequency',
-                    data: [1100, 1550, 1400, 1550, 1200, 1600, 1450]
+                    data: messageCounts
                 }
             ],
             fill: {
@@ -463,9 +589,7 @@
                 }
             },
             xaxis: {
-                categories: [
-                    'Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'
-                ]
+                categories: messageDates
             }
         })
 
