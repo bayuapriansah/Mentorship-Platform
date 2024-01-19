@@ -21,7 +21,7 @@
     {{-- ./Header --}}
 
     {{-- Main Content --}}
-    <div x-data="{ activeSection: 'General' }" class="relative z-[2] max-w-[1366px] mx-auto pt-14 pb-24 px-20">
+    <div x-data="{ activeSection: 'General' }" class="relative z-[2] max-w-[1366px] min-h-[125vh] mx-auto pt-14 pb-24 px-20">
         <div class="grid grid-cols-12 gap-12">
             <div class="col-span-4 space-y-5">
                 @foreach ($faq as $section => $item)
