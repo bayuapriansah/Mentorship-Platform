@@ -29,9 +29,10 @@ Route::get('/dashboard/participants/{id}', function($id) {
     $startOfWeek = Carbon\Carbon::now()->startOfWeek();
     $endOfWeek = Carbon\Carbon::now()->endOfWeek();
 
-    $loginCounts = App\Models\LoginLog::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+    $loginCounts = App\Models\LoginLog::query()
                         ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
                         ->where('student_id', $id)
+                        ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
                         ->groupBy('date')
                         ->orderBy('date', 'asc')
                         ->get()
@@ -44,14 +45,17 @@ Route::get('/dashboard/participants/{id}', function($id) {
         }
     }
 
-    $messageCounts = App\Models\Comment::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+    $startOfWeek = Carbon\Carbon::now()->startOfWeek();
+    $endOfWeek = Carbon\Carbon::now()->endOfWeek();
+
+    $messageCounts = App\Models\Comment::query()
                         ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
                         ->where('student_id', $id)
+                        ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
                         ->groupBy('date')
                         ->orderBy('date', 'asc')
                         ->get()
                         ->pluck('count', 'date');
-
 
     for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
         $formattedDate = $date->format('Y-m-d');

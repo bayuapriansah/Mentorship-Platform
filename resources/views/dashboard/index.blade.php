@@ -486,52 +486,6 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.js"></script>
 
     <script>
-        $('#select-participant').select2({
-            allowClear: true,
-            placeholder: 'Search Participant Name',
-
-            ajax: {
-                url: "{{ url('/api/dashboard/participants') }}",
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        search: params.term
-                    };
-                },
-                processResults: function (response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: false
-            },
-        });
-
-        $('#select-participant').on('select2:select', function (e) {
-            const data = e.params.data;
-
-            if (data.id) {
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/api/dashboard/participants') }}/" + data.id,
-                    dataType: 'json',
-                    success: function (response) {
-                        $('#search-result-name').text(`${response.participant.first_name} ${response.participant.last_name}`);
-                        $('#search-result-team-name').text(`${response.participant.team_name ?? '-'}`);
-                        $('#search-result-track').text(response.track);
-                        $('#search-result-container').css('display', 'flex');
-                    },
-                });
-            }
-        });
-
-        $('#select-participant').on('select2:unselect', function (e) {
-            $('#search-result-container').css('display', 'none');
-        })
-
         let loginCounts = @json($loginCounts);
         let loginDates = @json($loginDates);
         let messageCounts = @json($messageCounts);
@@ -595,5 +549,72 @@
 
         loginChart.render()
         messageChart.render()
+
+        $('#select-participant').select2({
+            allowClear: true,
+            placeholder: 'Search Participant Name',
+
+            ajax: {
+                url: "{{ url('/api/dashboard/participants') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: false
+            },
+        });
+
+        $('#select-participant').on('select2:select', function (e) {
+            const data = e.params.data;
+
+            if (data.id) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/api/dashboard/participants') }}/" + data.id,
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#search-result-name').text(`${response.participant.first_name} ${response.participant.last_name}`);
+                        $('#search-result-team-name').text(`${response.participant.team_name ?? '-'}`);
+                        $('#search-result-track').text(response.track);
+
+                        loginChart.updateSeries([{
+                            name: 'Login Frequency',
+                            data: response.loginCounts
+                        }])
+
+                        messageChart.updateSeries([{
+                            name: 'Message Frequency',
+                            data: response.messageCounts
+                        }])
+
+                        $('#search-result-container').css('display', 'flex');
+                    },
+                });
+            }
+        });
+
+        $('#select-participant').on('select2:unselect', function (e) {
+            $('#search-result-container').css('display', 'none');
+
+            loginChart.updateSeries([{
+                name: 'Login Frequency',
+                data: loginCounts
+            }])
+
+            messageChart.updateSeries([{
+                name: 'Message Frequency',
+                data: messageCounts
+            }])
+        })
     </script>
 @endsection
