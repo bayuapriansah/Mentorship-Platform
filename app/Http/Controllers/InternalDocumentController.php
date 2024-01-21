@@ -13,6 +13,23 @@ use Illuminate\Support\Str;
 
 class InternalDocumentController extends Controller
 {
+    public function index()
+    {
+        $sections = InternalDocumentGroupSection::where('is_draft', false)->orderBy('id')->get();
+
+        foreach ($sections as $section) {
+            if ($section->internalDocumentPages->count() !== 0) {
+                $pages = $section->internalDocumentPages->where('is_draft', false)->sortBy('id');
+
+                if (count($pages) > 0) {
+                    return redirect()->route('internal-document', ['slug' => $pages[0]->slug]);
+                }
+            }
+        }
+
+        abort(404);
+    }
+
     public function allPages()
     {
         return view('dashboard.internal-document.all-pages');
@@ -25,7 +42,7 @@ class InternalDocumentController extends Controller
 
     public function viewPage($id)
     {
-        $page = InternalDocumentPage::find($id);
+        $page = InternalDocumentPage::where('id', $id)->where('is_draft', false)->first();
         abort_if(!$page, 404);
         $files = $this->getFiles($page->id);
 

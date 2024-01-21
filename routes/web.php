@@ -89,6 +89,7 @@ Route::view('/track-info/skills-track', 'skills-track-info')->name('track-info.s
 Route::view('/track-info/entrepreneur-track', 'entrepreneur-track-info')->name('track-info.entrepreneur-track');
 
 // Internal Document
+Route::get('/internal-document', [InternalDocumentController::class, 'index']);
 Route::get('/internal-document/{slug}', [InternalDocumentController::class, 'viewPublicPage'])->name('internal-document');
 
 // for debugging temp
