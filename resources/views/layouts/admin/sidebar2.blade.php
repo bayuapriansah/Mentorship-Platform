@@ -57,6 +57,7 @@
     </li>
   @endif
 
+  @if (Auth::guard('web')->check())
   <li x-data="{ isExpanded: false }" class="flex flex-col gap-4">
     <button x-on:click="isExpanded = !isExpanded" class="{{ Route::is('dashboard.internal-document.*') ? 'font-medium' : '' }} w-max flex items-center gap-3 hover:font-medium">
         <i x-bind:class="isExpanded ? 'fas fa-chevron-up fa-xs' : 'fas fa-chevron-down fa-xs'"></i>
@@ -73,8 +74,9 @@
         </a>
     </div>
   </li>
+  @endif
 
-  @if (Auth::guard('web')->check())
+  @if (Auth::guard('web')->check() || (Auth::guard('mentor')->check() && Auth::guard('mentor')->user()->institution_id === 0))
     <li class="hover:font-medium">
         @if(Route::is('dashboard.testimonial'))
         <a href="{{ route('dashboard.testimonial') }}" class="font-medium">Testimonials</a>

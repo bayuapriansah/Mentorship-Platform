@@ -378,6 +378,8 @@ class DashboardController extends Controller
 
     public function indexMentor()
     {
+        return $this->index();
+
         $data = [];
         $mentor = Auth::guard('mentor')->user();
 
