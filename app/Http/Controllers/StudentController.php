@@ -85,16 +85,15 @@ class StudentController extends Controller
     // }
     public function testimonial()
     {
-        $isWebGuardActive = Auth::guard('web')->check();
-        $mentorInstitutionId = optional(Auth::guard('mentor')->user())->institution_id;
+        $isAdmin = Auth::guard('web')->check();
+        $isStaff = Auth::guard('mentor')->check() && Auth::guard('mentor')->user()->institution_id === 0;
 
-        if (!$isWebGuardActive || $mentorInstitutionId != 0) {
-            return redirect()->back();
+        if ($isAdmin || $isStaff) {
+            $students = Student::has('feedback')->get();
+            return view('dashboard.students.testimonial.index', compact('students'));
+        } else {
+            abort(403);
         }
-
-        $students = Student::has('feedback')->get();
-
-        return view('dashboard.students.testimonial.index', compact('students'));
     }
     // end of 2nd code refactor
     public function register($email)
