@@ -38,10 +38,12 @@
         Projects
     </h1>
 
-    <a href="{{ $addProjectUrl }}" class="flex items-center gap-3 text-xl text-dark-blue">
-        <i class="fas fa-plus-circle mt-1 text-primary"></i>
-        Add Project
-    </a>
+    @if (Auth::guard('web')->check())
+        <a href="{{ $addProjectUrl }}" class="flex items-center gap-3 text-xl text-dark-blue">
+            <i class="fas fa-plus-circle mt-1 text-primary"></i>
+            Add Project
+        </a>
+    @endif
 </div>
 {{-- ./Header --}}
 
