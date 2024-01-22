@@ -35,9 +35,9 @@
             style="background: url({{ asset('/assets/img/home/bubble-decoration.svg') }}), transparent -0.084px -8.927px / 100.073% 126.737% no-repeat;"
         ></div>
 
-        <div class="w-[30px] h-[30px] absolute top-[45px] right-[110px] bg-[#FF8F51] rounded-lg"></div>
+        <div class="w-[30px] h-[30px] absolute top-[45px] right-[4.75rem] bg-[#FF8F51] rounded-lg"></div>
 
-        <div class="absolute top-14 right-16 flex flex-col items-end">
+        <div class="absolute top-14 right-8 flex flex-col items-end">
             <img
                 src="{{ $project->company->logo ? asset('storage/' . $project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
                 onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
@@ -45,7 +45,7 @@
                 class="w-16 h-16 object-cover bg-white border border-grey rounded-xl text-black text-center"
             >
 
-            @if ($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->where('is_submited', 1)->first())
+            {{-- @if ($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->where('is_submited', 1)->first())
                 <p class="mt-[1.4rem] text-sm text-right">
                     Completed On <br> {{ $completedDate }}
                 </p>
@@ -58,16 +58,7 @@
                     <span class="w-[10px] h-[10px] bg-[#6672D3] rounded-full"></span>
                     In Progress
                 </p>
-            @endif
-
-
-            <div class="mt-4 p-3 flex items-center gap-2 border border-darker-blue rounded-lg text-darker-blue">
-                <i class="far fa-calendar fa-lg"></i>
-
-                <p class="text-sm">
-                    Duration: 10 Weeks
-                </p>
-            </div>
+            @endif --}}
         </div>
 
         {{-- Main Content --}}
@@ -81,14 +72,17 @@
         </h1>
 
         {{-- Domain --}}
-        <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-[#E9E9E9] border border-grey rounded-full flex justify-center text-grey">
-            @if ($project->project_domain == 'statistical')
-                Machine Learning
-            @elseif($project->project_domain == 'computer_vision')
-                Computer Vision
-            @else
-                NLP
-            @endif
+        <div class="mt-2 min-w-[174px] w-max px-3 py-1 bg-primary border border-primary rounded-full flex justify-center text-white">
+            {{ $project->getProjectDomainText() }}
+        </div>
+
+        {{-- Duration --}}
+        <div class="w-max mt-6 p-3 flex items-center gap-2 border border-darker-blue rounded-lg text-darker-blue">
+            <i class="far fa-calendar fa-lg"></i>
+
+            <p class="text-sm">
+                Duration: 10 Weeks
+            </p>
         </div>
 
         {{-- Details --}}
@@ -96,7 +90,7 @@
             Project Details
         </h1>
 
-        <div class="problem w-[545px] mt-4 text-sm text-justify text-black font-normal">
+        <div class="problem mt-4 pr-8 text-sm text-justify text-black font-normal">
             {!! $project->problem !!}
         </div>
 
@@ -106,7 +100,7 @@
                 Overview
             </h1>
 
-            <div class="w-[545px] mt-4 flex flex-col gap-4 text-sm text-justify">
+            <div class="mt-4 pr-8 flex flex-col gap-4 text-sm text-justify">
                 <p>
                     {{ $project->overview }}
                 </p>
@@ -119,7 +113,7 @@
                 Datasets
             </h1>
 
-            <div class="mt-4 flex flex-wrap gap-5">
+            <div class="mt-4 pr-8 flex flex-wrap gap-5">
                 @foreach ($datasets_array as $dataset)
                     <a href="{{ $dataset }}" class="w-[172px] h-[37px] px-3 py-1 bg-primary rounded-lg flex justify-between items-center font-medium text-white">
                         <span>URL {{ $loop->iteration }}</span>
@@ -134,7 +128,7 @@
             Tasks
         </h1>
 
-        <div class="mt-4 flex flex-col gap-2">
+        <div class="mt-4 pr-8 flex flex-col gap-2">
             @foreach ($submission_data->sortByDesc('taskNumber') as $data)
             @if(\Carbon\Carbon::now()->greaterThan(\Carbon\Carbon::parse($data->release_date)))
             <a href="{{ route('student.taskDetail', [Auth::guard('student')->user()->id,$project->id, $data->section_id]) }}" class="w-full py-4 pl-7 pr-[1.4rem] @if($data->is_complete == 1) bg-white @else bg-[#F8F8F8] @endif border border-darker-blue rounded-lg grid grid-cols-12 items-center gap-1 cursor-pointer re-ordering-position-{{ $data->taskNumber }}">

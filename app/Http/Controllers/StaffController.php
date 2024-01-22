@@ -25,6 +25,11 @@ class StaffController extends Controller
         return view('dashboard.staffs.index');
     }
 
+    public function participants(Mentor $staff)
+    {
+        return view('dashboard.staffs.participants', compact('staff'));
+    }
+
     public function invite(Request $request)
     {
         return view('dashboard.staffs.invite', [

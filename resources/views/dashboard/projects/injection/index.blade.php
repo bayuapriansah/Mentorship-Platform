@@ -1,185 +1,216 @@
 @extends('layouts.admin2')
+
 @section('content')
-@if (Route::is('dashboard.partner.partnerProjectsInjection'))
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-</div>
-@else
-<div class="text-[#6973C6] hover:text-light-blue">
-  <a href="/dashboard/projects/{{$project->id}}/edit"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
-</div>
-@endif
-@if (Route::is('dashboard.partner.partnerProjectsInjection'))
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">{{$partner->name}} <i class="fa-solid fa-chevron-right"></i> Add Project <i class="fa-solid fa-chevron-right"></i> Injection Card</h3>
-  <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/edit" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
-</div>
-@else
-<div class="flex justify-between mb-10">
-  <h3 class="text-dark-blue font-medium text-xl">Add Project <i class="fa-solid fa-chevron-right"></i> Injection Card</h3>
-  <a href="#" class="text-xl text-dark-blue"><i class="fa-solid fa-circle-xmark"></i> Cancel</a>
-</div>
-@endif
+<div class="flex justify-between items-center">
+    <h1 class="text-dark-blue font-medium text-[1.375rem]">
+        {{ $project->company->name }}
+        <span class="mx-3">></span>
+        Project
+        <span class="mx-3">></span>
+        Add Task
+    </h1>
 
-@if (Route::is('dashboard.partner.partnerProjectsInjection'))
-<form action="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
-@else
-<form action="/dashboard/projects/{{$project->id}}" method="post" enctype="multipart/form-data" class="w-3/4">
-@endif
-  @csrf
-  <div class="mb-3">
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Injection Card Title *" id="inputtitle" name="title" value="{{old('title')}}">
-    @error('title')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  <div class="mb-3 flex justify-between">
-    {{-- <select class="border border-light-blue rounded-lg w-1/2 h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputfiletype" aria-label="Default select example" name="inputfiletype">
-      <option value="">Select file input type *</option>
-      <option value="zip" {{old('inputfiletype') == 'zip' ? 'selected': ''}}>.zip</option>
-      <option value="pdf" {{old('inputfiletype') == 'pdf' ? 'selected': ''}}>.pdf</option>
-      <option value="docx" {{old('inputfiletype') == 'docx' ? 'selected': ''}}>.docx</option>
-      <option value="pptx" {{old('inputfiletype') == 'ppt' ? 'selected': ''}}>.pptx</option>
-    </select>
-    @error('inputfiletype')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror --}}
+    <a href="{{ $backUrl }}" class="flex items-center gap-3 text-xl">
+        <i class="fas fa-times-circle mt-1 text-primary"></i>
+        Cancel
+    </a>
+</div>
 
-    @php
-        $durations = range(1,10);
-    @endphp
-    <select class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none" id="inputcardduration" aria-label="Default select example" name="duration">
-      <option value="" hidden>Task Duration *</option>
-      @foreach ($durations as $duration)
-      <option value="{{$duration}}">{{$duration}} {{$duration==1?'day':'days'}}</option>
-      @endforeach
-    </select>
-    @error('duration')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
+<form action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
+    @csrf
 
-  <div class="mb-3">
-    <select class="border border-light-blue bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5  invalid:text-lightest-grey focus:outline-none" id="inputproject"  name="project" disabled>
-      <option value="{{$project->id}}" hidden>{{$project->name}}</option>
-    </select>
-    @error('project')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
+    <div>
+        <input
+            type="text"
+            id="inputtitle"
+            name="title"
+            value="{{ old('title') }}"
+            placeholder="Task Name *"
+            class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none"
+        >
 
-  <div class="mb-3">
-    <textarea name="description" id="sectionDesc" cols="30" rows="10" placeholder="Task Details*">{{old('description')}}</textarea>
-    @error('description')
-        <p class="text-danger text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  <div class="mb-3">
-    <input type="text" class="border border-light-blue rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" placeholder="Dataset" id="inputtitle" name="dataset" value="{{old('title')}}">
-    @error('title')
-        <p class="text-red-600 text-sm mt-1">
-          {{$message}}
-        </p>
-    @enderror
-  </div>
-  <div class="mb-3 mt-10 flex justify-between">
-    <h3 class="text-dark-blue font-medium text-xl">File Attachment</h3>
-    <div class="text-xl text-dark-blue">
-      <i class="fa-solid fa-circle-plus"></i>
-      <input type="submit" class="cursor-pointer" name="addInjectionCardAttachment" value="Add Attachment">
+        @error('title')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
     </div>
-  </div>
-  {{-- <div class="mb-3">
-    <div class="relative cursor-pointer bg-white " id="drop-area">
-      <label for="file-input">
-        <div class="relative cursor-pointer" id="drop-area">
-          <input type="file" name="file" class="absolute opacity-0" id="file-input" required>
-          <div class="p-6 border-2 border-dashed hover:bg-white rounded-md border-light-blue">
-              <div class="text-center">
-                <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                  <p class="mt-1 text-sm text-gray-600">
-                    Click to upload or drag and drop document
-                  </p>
-                  <p class="text-xs text-gray-500 "> (MAX. 5MB)</p>
-                  <p class="mt-2 text-sm text-gray-600" id="file-name"></p>
-              </div>
-          </div>
+
+    <div class="mt-5 grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+            <select disabled class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 invalid:text-lightest-grey focus:outline-none">
+                <option>{{ $project->getProjectDomainText() }}</option>
+            </select>
         </div>
-      </label>
-    </div>
-  </div> --}}
 
-  <div class="mb-3">
-    <input type="submit" class="py-2.5 cursor-pointer px-11 mt-4 rounded-full border-2 bg-darker-blue border-solid border-darker-blue text-center capitalize bg-orange text-white font-light text-sm" name="addInjectionCard" value="Submit">
-  </div>
+        <div class="col-span-6">
+            <select id="inputcardduration" name="duration" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                <option value="" hidden>Task Duration *</option>
+
+                @foreach (range(1,10) as $duration)
+                    <option value="{{ $duration }}">
+                        {{ $duration }} {{ $duration == 1 ? 'day' : 'days' }}
+                    </option>
+                @endforeach
+            </select>
+
+            @error('duration')
+                <p class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <select disabled id="inputproject" name="project" class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 invalid:text-lightest-grey focus:outline-none">
+            <option value="{{ $project->id }}" hidden>{{ $project->name }}</option>
+        </select>
+
+        @error('project')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <textarea name="description" id="sectionDesc" placeholder="Task Details *">
+            {{ old('description') }}
+        </textarea>
+
+        @error('description')
+            <p class="text-danger text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    <div class="mt-5">
+        <input
+            type="text"
+            id="inputtitle"
+            name="dataset"
+            value="{{ old('dataset') }}"
+            placeholder="Dataset"
+            class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
+        >
+
+        @error('dataset')
+            <p class="text-red-600 text-sm mt-1">
+                {{ $message }}
+            </p>
+        @enderror
+    </div>
+
+    {{-- <div class="mt-10 flex justify-between">
+        <h3 class="text-dark-blue font-medium text-xl">File Attachment</h3>
+        <div class="text-xl text-dark-blue">
+            <i class="fa-solid fa-circle-plus"></i>
+            <input type="submit" class="cursor-pointer" name="addInjectionCardAttachment" value="Add Attachment">
+        </div>
+    </div> --}}
+
+    <div class="mt-6">
+        <div id="drop-area" class="relative cursor-pointer" style="background-color: white;">
+            <label for="file-input">
+                <div class="relative cursor-pointer" id="drop-area">
+                    <input type="file" class="absolute opacity-0" id="file-input">
+                    <div class="p-6 border-2 border-dashed hover:bg-white rounded-md border-light-blue">
+                        <div class="text-center">
+                            <i class="fas fa-file fa-3x text-lighter-blue"></i>
+                            <p class="mt-4 text-sm text-gray-600">
+                                Click to upload or drag and drop document
+                            </p>
+                            <p class="text-xs text-gray-500 "> (MAX. 5MB)</p>
+                            <p class="mt-2 text-sm text-gray-600" id="file-name"></p>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div id="files-container" class="mt-8 space-y-4"></div>
+
+    <div class="mt-10">
+        <input type="submit" class="py-2 cursor-pointer px-11 rounded-full bg-primary text-center text-white text-sm" name="addInjectionCard" value="Submit">
+    </div>
 </form>
 @endsection
+
 @section('more-js')
-<script>
-const dropArea = document.getElementById('drop-area')
-const fileInput = document.getElementById('file-input')
-const fileName = document.getElementById('file-name')
-// fileName.style.visibility = "hidden"
-// Listen for file drag-and-drop events
-dropArea.addEventListener('dragover', e => {
-    e.preventDefault()
-    dropArea.classList.add('bg-gray-200')
-})
-dropArea.addEventListener('dragleave', e => {
-    e.preventDefault()
-    dropArea.classList.remove('bg-gray-200')
-})
-dropArea.addEventListener('drop', e => {
-    e.preventDefault()
-    dropArea.classList.remove('bg-gray-200')
-    fileInput.files = e.dataTransfer.files
-    fileName.innerHTML = `<i class="fas fa-times"></i> ${e.dataTransfer.files[0].name}`
-    // You can handle the files here.
-    handleUpload(e.dataTransfer.files)
-    const fileClear = document.querySelector('.fa-times')
-    fileClear.addEventListener('click', e => {
-        e.preventDefault();
-        fileName.textContent = '';
-        fileInput.value = '';
-        resetUI();
-    });
-})
+    <script>
+        const dropArea = document.getElementById('drop-area')
+        const fileInput = document.getElementById('file-input')
+        let uploadedFiles = []
 
-// Listen for file input change events
-fileInput.addEventListener('change', e => {
-    fileName.innerHTML = `<i class="fas fa-times"></i> ${e.target.files[0].name}`
-    // You can handle the files here.
-    handleUpload(e.target.files)
-    const fileClear = document.querySelector('.fa-times')
-    fileClear.addEventListener('click', e => {
-        e.preventDefault();
-        fileName.textContent = '';
-        fileInput.value = '';
-        resetUI();
-    });
-})
+        function renderFiles() {
+            $('#files-container').html('')
 
-// Example function for handling file uploads
-function handleUpload(files) {
-    console.log('Uploading files:', files)
-    // Do something with the files here
-}
+            uploadedFiles.forEach((file, index) => {
+                $('#files-container').append(`
+                    <div class="px-6 py-3 border border-light-blue rounded-lg flex items-center gap-7">
+                        <input hidden type="file" name="files[]">
+                        <i class="fas fa-file text-darker-blue"></i>
+                        <span class="text-sm">${file.name}</span>
+                        <button class="ml-auto text-red-600" onclick="deleteFile(${index})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `)
+            })
 
-// Example function for resetting the UI
-function resetUI() {
-    console.log('Resetting UI');
-    // Do something to reset the UI
-}
+            $('input[name="files[]"]').each(function(index, element) {
+                const dataTransfer = new DataTransfer()
+                dataTransfer.items.add(uploadedFiles[index])
+                $(element).prop('files', dataTransfer.files)
+            })
+        }
 
-</script>
+        function addFile(file) {
+            fileInput.value = ''
+
+            if (uploadedFiles.length >= 3) {
+                toastr.error('You can only upload up to 3 files')
+                return
+            }
+
+            if (file) {
+                if (file.size > 5500000) {
+                    toastr.error('Maximum file size is 5 MB')
+                } else {
+                    uploadedFiles.push(file)
+                    renderFiles()
+                }
+            }
+        }
+
+        function deleteFile(index) {
+            uploadedFiles.splice(index, 1)
+            renderFiles()
+        }
+
+        dropArea.addEventListener('dragover', e => {
+            e.preventDefault()
+            dropArea.style.backgroundColor = '#f2f2f2'
+        })
+
+        dropArea.addEventListener('dragleave', e => {
+            e.preventDefault()
+            dropArea.style.backgroundColor = 'white'
+        })
+
+        dropArea.addEventListener('drop', e => {
+            e.preventDefault()
+            dropArea.classList.remove('bg-gray-200')
+            addFile(e.dataTransfer.files[0])
+        })
+
+        fileInput.addEventListener('change', e => {
+            if (e.target.files.length > 0) {
+                addFile(e.target.files[0])
+            }
+        })
+    </script>
 @endsection

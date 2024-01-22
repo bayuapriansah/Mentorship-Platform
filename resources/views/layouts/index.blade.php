@@ -25,7 +25,7 @@
 
 <body>
     {{-- NAVBAR --}}
-    <nav class="bg-white text-primary px-6 py-4">
+    <nav class="relative z-[2] bg-white text-primary px-6 py-4">
         <div class="max-w-screen-xl flex flex-col md:flex-row items-center justify-between mx-auto">
             <div class="text-lg font-semibold mb-4 md:mb-0">
                 <a href="{{ route('index') }}" class="text-dark-blue no-underline hover:text-lightest-blue">

@@ -373,3 +373,28 @@ if (!function_exists('isSkillsTrack')) {
         return auth('student')->user()->mentorship_type == 'skills_track';
     }
 }
+
+if (!function_exists('formatOrdinal')) {
+    function formatOrdinal(int $number): string {
+        if (in_array(($number % 100), array(11, 12, 13))) {
+            $suffix = 'th';
+        } else {
+            switch ($number % 10) {
+                case 1:
+                    $suffix = 'st';
+                    break;
+                case 2:
+                    $suffix = 'nd';
+                    break;
+                case 3:
+                    $suffix = 'rd';
+                    break;
+                default:
+                    $suffix = 'th';
+                    break;
+            }
+        }
+
+        return $number . $suffix;
+    }
+}

@@ -30,6 +30,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InternalDocumentController;
 
@@ -65,9 +66,7 @@ Route::get('/emailtemp', function () {
 Route::get('/supportlib', function () {
     return view('projects.supportlibrary');
 })->name('projects.support');
-Route::get('/faq', function () {
-    return view('faq');
-})->name('faq');
+Route::get('/faq', [FAQController::class, 'index'])->name('faq');
 Route::get('/contact', [DashboardController::class, 'contact'])->name('contact');
 Route::post('/contact', [DashboardController::class, 'sendContact'])->name('sendContact');
 Route::get('/privacy-policy', function () {
@@ -84,8 +83,15 @@ Route::get('/adminpage', function () {
 //     return view('index');
 // })->name('index');
 Route::get('/', [IndexController::class, 'index'])->name('index');
+
+// Track Info
 Route::view('/track-info/skills-track', 'skills-track-info')->name('track-info.skills-track');
 Route::view('/track-info/entrepreneur-track', 'entrepreneur-track-info')->name('track-info.entrepreneur-track');
+
+// Internal Document
+Route::get('/internal-document', [InternalDocumentController::class, 'index']);
+Route::get('/internal-document/{slug}', [InternalDocumentController::class, 'viewPublicPage'])->name('internal-document');
+
 // for debugging temp
 // Route::get('/ccc/{student}/{project}', [ProjectController::class, 'appliedDetail'])->name('ccc');
 // Route::get('/viewbulk', [EmailBulkInvitationController::class, 'index'])->name('view.bulk.email');
@@ -209,6 +215,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
         Route::patch('/staffs/{staff}/update', [StaffController::class, 'update' ])->name('staffs.update');
         Route::get('/staffs/{staff}/suspend', [StaffController::class, 'suspend' ])->name('staffs.suspend');
         Route::delete('/staffs/{staff}', [StaffController::class, 'destroy'])->name('staffs.destroy');
+        Route::get('/staffs/{staff}/participants', [StaffController::class, 'participants'])->name('staffs.participants');
 
         // Internal Document
         Route::get('/internal-document/all-pages', [InternalDocumentController::class, 'allPages'])->name('internal-document.all-pages.index');

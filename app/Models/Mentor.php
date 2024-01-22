@@ -44,4 +44,9 @@ class Mentor extends Authenticatable
     {
         return $this->hasMany(Student::class, 'staff_id', 'id');
     }
+
+    public function getTitle()
+    {
+        return $this->institution_id === 0 ? 'Staff' : 'Mentor';
+    }
 }
