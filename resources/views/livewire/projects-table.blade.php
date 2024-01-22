@@ -125,13 +125,15 @@
                             </div>
                         </th>
 
-                        <th scope="col" class="pr-5">
-                            <div class="w-full flex justify-between items-center gap-5">
-                                <span class="text-sm text-darker-blue font-medium">
-                                    Actions
-                                </span>
-                            </div>
-                        </th>
+                        @if (Auth::guard('web')->check())
+                            <th scope="col" class="pr-5">
+                                <div class="w-full flex justify-between items-center gap-5">
+                                    <span class="text-sm text-darker-blue font-medium">
+                                        Actions
+                                    </span>
+                                </div>
+                            </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -164,7 +166,7 @@
                                 </a>
                             </td>
 
-                            <td class="pr-8 py-2">
+                            <td @if (Auth::guard('web')->check()) class="pr-8 py-2" @else class="pr-5 py-2 rounded-e-lg" @endif>
                                 @php
                                     $formattedStatus = ucwords(str_replace('_', ' ', $project->status));
                                 @endphp
@@ -187,6 +189,7 @@
                                 @endswitch
                             </td>
 
+                            @if (Auth::guard('web')->check())
                             <td class="pr-5 py-2 rounded-e-lg">
                                 <div class="dropdown inline-block relative">
                                     <button
@@ -262,6 +265,7 @@
                                     </div>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

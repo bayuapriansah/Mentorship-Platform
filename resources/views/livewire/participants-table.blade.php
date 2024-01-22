@@ -168,6 +168,7 @@
             <table class="w-full text-left border-separate border-spacing-y-4">
                 <thead>
                     <tr>
+                        @if (Auth::guard('web')->check())
                         <th scope="col" class="pr-8 pl-5">
                             <input
                                 x-on:click="toggleCheckAllParticipants()"
@@ -175,8 +176,9 @@
                                 class="border border-light-blue rounded-sm cursor-pointer focus:ring-0 checked:bg-light-blue"
                             >
                         </th>
+                        @endif
 
-                        <th scope="col" class="pr-8">
+                        <th scope="col" class="pr-8 @if (!Auth::guard('web')->check()) pl-5 @endif">
                             <div class="w-full flex justify-between items-center gap-5">
                                 <span class="text-sm text-center text-darker-blue font-medium">
                                     Full Name
@@ -253,6 +255,7 @@
                                 }
                             }
                         }" class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }}">
+                            @if (Auth::guard('web')->check())
                             <th scope="row" x-bind:class="expanded ? 'rounded-tl-lg' : 'rounded-s-lg'" class="pr-8 pl-5 py-2">
                                 <input
                                     type="checkbox"
@@ -261,8 +264,9 @@
                                     class="check-participant border border-light-blue rounded-sm cursor-pointer focus:ring-0 checked:bg-light-blue"
                                 >
                             </th>
+                            @endif
 
-                            <td class="pr-8 py-2">
+                            <td @if (!Auth::guard('web')->check()) x-bind:class="expanded ? 'rounded-tl-lg' : 'rounded-s-lg'" class="pr-8 pl-5 py-2" @else class="pr-8 py-2 @endif">
                                 {{ $participant->first_name ?? '-' }} {{ $participant->last_name ?? '' }}
                             </td>
 
@@ -305,8 +309,11 @@
 
                         {{-- Participant Details --}}
                         <tr hidden id="participant-detail-{{ $participant->id }}" class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }} relative -top-4">
+                            @if (Auth::guard('web')->check())
                             <td class="rounded-bl-lg"></td>
-                            <td colspan="7" class="pr-5 py-6 rounded-br-lg">
+                            @endif
+
+                            <td colspan="7" @if (Auth::guard('web')->check()) class="pr-5 py-6 rounded-br-lg" @else class="px-5 py-6 rounded-b-lg" @endif>
                                 <div class="grid grid-cols-4 gap-4">
                                     {{-- DOB --}}
                                     <div class="col-span-1 flex gap-x-4 gap-y-1">
@@ -399,11 +406,11 @@
 
                                 {{-- Timeline --}}
                                 <div class="min-h-[8rem] mt-7 px-2 py-3 bg-white border border-grey rounded-2xl">
-                                    <h1 class="text-center text-xs">
+                                    <h1 class="text-center text-xs font-medium">
                                         Project Timeline
                                     </h1>
 
-                                    <div class="mt-4 flex justify-between">
+                                    {{-- <div class="mt-4 flex justify-between">
                                         <p class="text-xs text-center">
                                             {{ $participant->created_at->format('d M Y') }}
                                         </p>
@@ -421,36 +428,40 @@
                                         <p class="text-xs text-center">
                                             {{ date_format(new DateTime($participant->end_date), "d-M-Y") }}
                                         </p>
-                                    </div>
+                                    </div> --}}
+
+                                    <x-participant.project-timeline :participant="$participant" class="mt-10" />
                                 </div>
                                 {{-- ./Timeline --}}
 
                                 {{-- Actions --}}
-                                <div class="mt-4 flex gap-4">
-                                    <a href="{{ url('/dashboard/students/'. $participant->id .'/manage') }}" class="min-w-[126px] min-h-[26px] p-2 bg-dark-blue rounded-lg text-center text-xs text-white">
-                                        Edit Details
-                                    </a>
+                                @if (Auth::guard('web')->check())
+                                    <div class="mt-4 flex gap-4">
+                                        <a href="{{ url('/dashboard/students/'. $participant->id .'/manage') }}" class="min-w-[126px] min-h-[26px] p-2 bg-dark-blue rounded-lg text-center text-xs text-white">
+                                            Edit Details
+                                        </a>
 
-                                    <button
-                                        type="button"
-                                        onclick="suspendParticipant(this)"
-                                        data-suspend-id="{{ $participant->id }}"
-                                        data-suspend-institution="{{ $participant->institution->id }}"
-                                        class="suspend-btn min-w-[126px] min-h-[26px] p-2 bg-dark-yellow rounded-lg text-xs text-white"
-                                    >
-                                        Suspend Account
-                                    </button>
+                                        <button
+                                            type="button"
+                                            onclick="suspendParticipant(this)"
+                                            data-suspend-id="{{ $participant->id }}"
+                                            data-suspend-institution="{{ $participant->institution->id }}"
+                                            class="suspend-btn min-w-[126px] min-h-[26px] p-2 bg-dark-yellow rounded-lg text-xs text-white"
+                                        >
+                                            Suspend Account
+                                        </button>
 
-                                    <button
-                                        type="button"
-                                        onclick="deleteParticipant(this)"
-                                        data-delete-id="{{ $participant->id }}"
-                                        data-delete-name="{{ $participant->first_name . ' ' . $participant->last_name }}"
-                                        class="delete-btn min-w-[126px] min-h-[26px] p-2 bg-dark-red rounded-lg text-xs text-white"
-                                    >
-                                        Delete Account
-                                    </button>
-                                </div>
+                                        <button
+                                            type="button"
+                                            onclick="deleteParticipant(this)"
+                                            data-delete-id="{{ $participant->id }}"
+                                            data-delete-name="{{ $participant->first_name . ' ' . $participant->last_name }}"
+                                            class="delete-btn min-w-[126px] min-h-[26px] p-2 bg-dark-red rounded-lg text-xs text-white"
+                                        >
+                                            Delete Account
+                                        </button>
+                                    </div>
+                                @endif
                                 {{-- ./Actions --}}
                             </td>
                         </tr>
@@ -464,15 +475,17 @@
 
     {{-- Pagination --}}
     <div class="mt-5 px-2 flex items-center">
-        <div x-cloak x-show="checkedParticipants.length == 0">
-            <button disabled type="button" data-modal-target="assign-mentor-modal" data-modal-toggle="assign-mentor-modal" class="px-11 py-2 bg-[#C7C7C7] rounded-xl text-white">
-                Assign Mentor
-            </button>
+        @if (Auth::guard('web')->check())
+            <div x-cloak x-show="checkedParticipants.length == 0">
+                <button disabled type="button" data-modal-target="assign-mentor-modal" data-modal-toggle="assign-mentor-modal" class="px-11 py-2 bg-[#C7C7C7] rounded-xl text-white">
+                    Assign Mentor
+                </button>
 
-            <button disabled type="button" data-modal-target="assign-staff-modal" data-modal-toggle="assign-staff-modal" class="ml-4 px-11 py-2 bg-[#C7C7C7] rounded-xl text-white">
-                Assign Staff
-            </button>
-        </div>
+                <button disabled type="button" data-modal-target="assign-staff-modal" data-modal-toggle="assign-staff-modal" class="ml-4 px-11 py-2 bg-[#C7C7C7] rounded-xl text-white">
+                    Assign Staff
+                </button>
+            </div>
+        @endif
 
         <div x-cloak x-show="checkedParticipants.length > 0">
             <button type="button" data-modal-target="assign-mentor-modal" data-modal-toggle="assign-mentor-modal" class="px-11 py-2 bg-primary rounded-xl text-white">

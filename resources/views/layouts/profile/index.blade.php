@@ -142,7 +142,7 @@
                 </li>
 
                 <li class="text-black font-light text-sm">
-                    <a href="#">
+                    <a href="{{ url('/internal-document') }}">
                         Internal Document
                     </a>
                 </li>

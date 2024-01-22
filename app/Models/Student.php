@@ -62,6 +62,11 @@ class Student extends Authenticatable
         return $this->hasMany(LoginLog::class, 'student_id');
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     public function getMentorshipTrack()
     {
         switch ($this->mentorship_type) {

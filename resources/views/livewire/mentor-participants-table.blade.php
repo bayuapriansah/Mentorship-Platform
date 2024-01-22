@@ -345,11 +345,11 @@
 
                                 {{-- Timeline --}}
                                 <div class="min-h-[8rem] mt-7 px-2 py-3 bg-white border border-grey rounded-2xl">
-                                    <h1 class="text-center text-xs">
+                                    <h1 class="text-center text-xs font-medium">
                                         Project Timeline
                                     </h1>
 
-                                    <div class="mt-4 flex justify-between">
+                                    {{-- <div class="mt-4 flex justify-between">
                                         <p class="text-xs text-center">
                                             {{ $participant->created_at->format('d M Y') }}
                                         </p>
@@ -367,7 +367,9 @@
                                         <p class="text-xs text-center">
                                             {{ date_format(new DateTime($participant->end_date), "d-M-Y") }}
                                         </p>
-                                    </div>
+                                    </div> --}}
+
+                                    <x-participant.project-timeline :participant="$participant" class="mt-10" />
                                 </div>
                                 {{-- ./Timeline --}}
                             </td>
