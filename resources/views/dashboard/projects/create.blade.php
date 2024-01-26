@@ -179,7 +179,7 @@
 
             @foreach ($datasets as $index => $datasetUrl)
                 <div class="flex items-center mt-2 relative">
-                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
+                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasetUrl }}" required>
                     @if ($index > 0)
                         <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fas fa-circle-minus text-red-600"></i></button>
                     @endif
@@ -262,8 +262,8 @@
 
                     const newInput = document.createElement('input');
                     newInput.type = 'text';
-                    newInput.className = 'dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
-                    newInput.placeholder = 'Add Data set URLs separated by semi-colon';
+                    newInput.className = 'dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none required';
+                    newInput.placeholder = 'Add Data set URLs';
                     newInput.name = 'dataset[]';
                     newInput.value = value;
                     newInput.required = true;

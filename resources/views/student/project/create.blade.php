@@ -12,7 +12,7 @@
             Add Project
         </h1>
 
-        <div class="w-full tab:w-[641px] mt-7 mx-auto flex flex-col items-center">
+        <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col items-center">
             {{-- Project Name --}}
             <input
                 type="text"
@@ -21,7 +21,7 @@
             >
 
             {{-- Project Domain and Duration --}}
-            <div class="w-full mt-5 grid grid-cols-7 items-center gap-3">
+            <div class="w-full mt-5 mb-5 grid grid-cols-7 items-center gap-3">
                 <select class="col-span-4 p-2.5 bg-white border border-grey text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block">
                     <option class="hover:bg-lightest-blue">Computer Vision (CV)</option>
                     <option class="hover:bg-lightest-blue">Natural Language Processing (NLP)</option>
@@ -40,12 +40,12 @@
             <input
                 type="text"
                 value="Intel Corp"
-                class="mt-5 w-full h-12 px-3 py-2 bg-[#D8D8D8] border border-grey rounded-lg focus:outline-none"
-                disabled
+                class="mt-5 mb-5 w-full h-12 px-3 py-2 bg-[#D8D8D8] border border-grey rounded-lg focus:outline-none"
+                disabled hidden
             >
 
             {{-- Description --}}
-            <textarea
+            <textarea name="problem" id="problem"
                 rows="10"
                 placeholder="- Problem Statement, Project Objective, or Use Case Description&#13;&#10;- Model Type&#13;&#10;- Current Performance Metrics&#13;&#10;- Summary of Future Goals/Expectations"
                 class="w-full mt-5 px-3 py-2 border border-grey rounded-lg focus:outline-none"
