@@ -44,7 +44,7 @@
             ></textarea>
 
             {{-- Assignee --}}
-            <div class="w-full mt-9 flex flex-col gap-2">
+            {{-- <div class="w-full mt-9 flex flex-col gap-2">
                 <h2 class="font-medium text-darker-blue text-xl">
                     Task Assigned to (Optional)
                 </h2>
@@ -54,7 +54,7 @@
                     <option>Lionel Messi</option>
                     <option>C. Ronaldo</option>
                 </select>
-            </div>
+            </div> --}}
 
             {{-- Attachment --}}
             <div class="w-full mt-9">
