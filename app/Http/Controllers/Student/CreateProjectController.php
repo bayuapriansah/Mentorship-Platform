@@ -17,6 +17,11 @@ class CreateProjectController extends Controller
         return view('student.project.add-task', $this->generateFakeLayoutData());
     }
 
+    public function editTask()
+    {
+        return view('student.project.edit-task', $this->generateFakeLayoutData());
+    }
+
     private function generateFakeLayoutData()
     {
         return [

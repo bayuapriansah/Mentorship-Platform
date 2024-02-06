@@ -6,6 +6,41 @@
         'Software Engineering',
         'Computer Science & Engineering'
     ];
+
+    $team_name = [
+        "Way Back Home",
+        "AI-Powered Robotic Service Animal for People with Visual Disabilities",
+        "BRINL: Braille Interactive Learning",
+        "Melody of Fingers – Application based on PyTorch, CNN, and AIxBoard",
+        "AI powered platform to empower women in STEM",
+        "Eye tracking for communicating patients with Amyotrophic Lateral Sclerosis (ALS)",
+        "StraightenUp – Posture Assistant",
+        "Utilizing AI to help Native Bees",
+        "RescueAI: Smart City Disaster Digital Twin with Robotic Autonomy",
+        "ASRV (AI SYSTEM FOR ROAD VIOLATIONS)",
+        "Aimers - summarizer",
+        "Detect Driving Fatigue Levels Using Real-Time Deep Learning",
+        "WasteWise",
+        "ARSS(AI Recycling Seperation System)",
+        "Smart Home A-Eye Bin",
+        "Cell detection using AI – a new way of diagnosing patients.",
+        "Cancel the cancer",
+        "AI-cognito",
+        "Smart Attendance System",
+        "EIPCA - Electrocardiogram Interpretation patterns for cardiovascular abnormalities prediction",
+        "Eco marine",
+        "Cotton + quality + technology = competitive producers",
+        "Wildlife Vehicle Collisions Modelling",
+        "Courage2Correct",
+        "AI-ENABLED COMPUTER VISION FOR TUBERCULOSIS DETECTION FROM MRI SCANS",
+        "Safety Traffic through AI Analysis of Dash cam in Delivery Riders",
+        "Beach Cleaning Robot",
+        "Sign Language AI Detector for Online Conferences",
+        "HIL Simulation of Auto-Driving Control System Based on Intel Platform",
+        "Socio Economic Status Causing high-level distress amongst communities",
+        "MedINtel: Automated Triage Machine (ATM)"
+    ];
+    sort($team_name);
 @endphp
 
 @extends('layouts.index')
@@ -420,7 +455,7 @@
                 </div>
 
                 {{-- Team Name --}}
-                <div class="mt-4">
+                {{-- <div class="mt-4">
                     <input
                         type="text"
                         name="team_name"
@@ -429,6 +464,22 @@
                         class="border border-grey rounded-lg w-full h-11 py-2 px-4 leading-tight focus:outline-none"
                         required
                     >
+
+                    @error('team_name')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div> --}}
+
+                {{-- Team Name --}}
+                <div class="mt-4">
+                    <select id="team_name" name="team_name" class="w-full h-11 py-2 px-4 border border-grey rounded-lg leading-tight focus:outline-none" required>
+                        <option value="" hidden>Select Team Name</option>
+                        @foreach($team_name as $name)
+                        <option value="{{ $name }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
 
                     @error('team_name')
                         <p class="text-red-600 text-sm mt-1">

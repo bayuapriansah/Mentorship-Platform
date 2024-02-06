@@ -46,7 +46,7 @@
             >
 
             {{-- Description --}}
-            <textarea name="problem" id="problem"
+            <textarea name="sharedproject" id="sharedproject"
                 rows="10"
                 placeholder="- Problem Statement, Project Objective, or Use Case Description&#13;&#10;- Model Type&#13;&#10;- Current Performance Metrics&#13;&#10;- Summary of Future Goals/Expectations"
                 class="w-full mt-5 px-3 py-2 border border-grey rounded-lg focus:outline-none"
@@ -99,7 +99,10 @@
                     <span class="text-red-500">*</span>
                 </h2>
 
-                <a href="{{ route('participant.projects.add-task') }}" class="text-darker-blue hover:underline">
+                {{-- <a href="{{ route('participant.projects.add-task') }}" class="text-darker-blue hover:underline">
+                    Add Task
+                </a> --}}
+                <a href="#" id="add-task-button" class="text-darker-blue hover:underline">
                     Add Task
                 </a>
             </div>
@@ -111,38 +114,7 @@
                 </p>
 
                 <div id="task-list" class="flex-col gap-2" style="display: ">
-                    @for ($i = 1; $i <= 2; $i++)
-                        <div class="w-full h-16 pl-6 pr-4 mt-4 bg-white border border-grey rounded-lg grid grid-cols-12 items-center gap-1">
-                            <p class="col-span-8 text-sm">
-                                Task {{ $i }}:-
-                            </p>
 
-                            {{-- <div class="col-span-2 text-xs">
-                                <p>Assigned to:</p>
-                                <p>-</p>
-                            </div> --}}
-
-                            {{-- <div class="col-span-2 text-xs">
-                                <p>Duration:</p>
-                                <p>10 Weeks</p>
-                            </div> --}}
-
-                            <div class="col-span-2 text-xs">
-                                <p>Due Date:</p>
-                                <p>-/-/-</p>
-                            </div>
-
-                            <div class="col-span-2 flex items-center gap-6 ml-auto">
-                                <button class="text-darker-blue">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-
-                                <button class="text-red-500">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-                    @endfor
                 </div>
             </div>
         </div>
@@ -179,10 +151,130 @@
     loadFromLocalStorage();
 });
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Load saved values from localStorage
+    // Load saved tasks from localStorage
+    loadTasksFromLocalStorage();
+
+    // Add task event listener
+    document.getElementById('add-task-button').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        addTask();
+    });
+
+    // Load saved values from localStorage for other inputs
     loadFromLocalStorage();
 });
+
+// Function to load tasks from localStorage
+function loadTasksFromLocalStorage() {
+    const tasksJson = localStorage.getItem('tasks');
+    const tasks = tasksJson ? JSON.parse(tasksJson) : [];
+    tasks.forEach(task => {
+        addTaskToDOM(task);
+    });
+    updateNoTaskInfoDisplay();
+}
+
+// Function to save tasks to localStorage
+function saveTasksToLocalStorage() {
+    const tasks = [];
+    document.querySelectorAll('#task-list > div').forEach((taskElement, index) => {
+        const task = {
+            "TaskName": `Task ${index + 1}`,
+            "DueDate": "-/-/-", // Placeholder value
+            "TaskAttachments": [
+                {
+                    "Name": "Attachment Name", // Placeholder value
+                    "Link": "Attachment Link"  // Placeholder value
+                }
+            ]
+        };
+        tasks.push(task);
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+
+// Function to add a new task
+function addTask() {
+    const newTask = {
+        TaskName: `Task ${document.querySelectorAll('#task-list > div').length + 1}`,
+        DueDate: "-/-/-", // Placeholder value
+        TaskAttachments: [
+            {
+                Name: "Attachment Name", // Placeholder value
+                Link: "Attachment Link"  // Placeholder value
+            }
+        ]
+    };
+    addTaskToDOM(newTask);
+    saveTasksToLocalStorage();
+}
+
+
+// Function to add a task to the DOM
+function addTaskToDOM(task) {
+    const taskList = document.getElementById('task-list');
+    // Count the current number of tasks in the DOM to determine the new task's number
+    // Adding 1 because we're about to add a new task
+    const taskNumber = taskList.children.length + 1;
+    const newTaskElement = document.createElement('div');
+    newTaskElement.className = 'w-full h-16 pl-6 pr-4 mt-4 bg-white border border-grey rounded-lg grid grid-cols-12 items-center gap-1';
+    newTaskElement.innerHTML = `
+        <p class="col-span-8 text-sm">
+            Task ${taskNumber} : ${task.TaskName}
+        </p>
+        <div class="col-span-2 text-xs">
+            <p>Due Date:</p>
+            <p class="due-date">${task.DueDate}</p>
+        </div>
+        <div class="col-span-2 flex items-center gap-6 ml-auto">
+            <button class="text-darker-blue" onclick="editTask(this)">
+                <i class="fas fa-pen"></i>
+            </button>
+            <button class="text-red-500" onclick="removeTask(this)">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    `;
+    taskList.appendChild(newTaskElement);
+}
+
+// Function to edit a task
+function editTask(button) {
+    const taskElement = button.closest('.w-full.h-16.pl-6.pr-4.mt-4.bg-white.border.border-grey.rounded-lg.grid.grid-cols-12.items-center.gap-1');
+    const taskIndex = Array.from(taskElement.parentNode.children).indexOf(taskElement);
+    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    if (tasks.length > taskIndex) {
+        // Assuming you have a route named 'participant.projects.edit-task' that accepts a task index
+        const editTaskUrl = `/participant/projects/edit-task/${taskIndex}`;
+        window.location.href = editTaskUrl; // Redirect to the edit task page
+    }
+}
+
+// Function to remove a task
+function removeTask(button) {
+    const taskElement = button.closest('.w-full.h-16.pl-6.pr-4.mt-4.bg-white.border.border-grey.rounded-lg.grid.grid-cols-12.items-center.gap-1');
+    const taskIndex = Array.from(taskElement.parentNode.children).indexOf(taskElement);
+    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    tasks.splice(taskIndex, 1);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    taskElement.remove();
+    updateNoTaskInfoDisplay();
+}
+
+// Function to update the display of the no-task-info message
+function updateNoTaskInfoDisplay() {
+    const noTaskInfo = document.getElementById('no-task-info');
+    const taskList = document.getElementById('task-list');
+    if (taskList.children.length === 0) {
+        noTaskInfo.style.display = 'block';
+    } else {
+        noTaskInfo.style.display = 'none';
+    }
+}
 
 // Select the input elements
 const projectNameInput = document.querySelector('input[name="project_name"]');
@@ -200,7 +292,9 @@ selectElement.addEventListener('change', saveSelectValueToLocalStorage); // Add 
 function loadFromLocalStorage() {
     projectNameInput.value = localStorage.getItem('projectName') || '';
     descriptionInput.value = localStorage.getItem('description') || '';
-    hiddenInput.value = localStorage.getItem('cloudLinks') || '';
+    // Parse the JSON string back into an array
+    const savedLinks = JSON.parse(localStorage.getItem('cloudLinks') || '[]');
+    hiddenInput.value = savedLinks.join(';'); // Join the array back into a string for the hidden input
     const savedSelectValue = localStorage.getItem('selectValue');
     // Remove the placeholder if it exists
     const placeholderOption = selectElement.querySelector('option[value=""]');
@@ -231,7 +325,11 @@ function saveDescriptionToLocalStorage() {
 }
 
 function saveCloudLinksToLocalStorage() {
-    localStorage.setItem('cloudLinks', hiddenInput.value);
+    // localStorage.setItem('cloudLinks', hiddenInput.value);
+    // Split the input value by ";" and trim each link
+    const linksArray = hiddenInput.value.split(';').map(link => link.trim()).filter(link => link !== '');
+    // Save the array as a JSON string in localStorage
+    localStorage.setItem('cloudLinks', JSON.stringify(linksArray));
 }
 
 function saveSelectValueToLocalStorage() { // Add this function
@@ -303,5 +401,16 @@ customInputContainer.addEventListener('click', function(event) {
         }
     }
 });
+
+tinymce.init({
+    // Your other TinyMCE init options...
+    init_instance_callback: function(editor) {
+        var content = localStorage.getItem('tinyMCEContent');
+        if (content) {
+            editor.setContent(content);
+        }
+    }
+});
+
     </script>
 @endsection

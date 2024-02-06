@@ -73,6 +73,59 @@
                 xhr.send(formData);
                 });
 
+tinymce.init({
+    selector: 'textarea#sharedproject',
+    height: 600,
+    width: 941,
+    plugins: 'media image lists',
+    menubar: 'file edit insert view format table tools help',
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
+    images_upload_url: '{{ route("dashboard.project.image-upload") }}', // Make sure this route is correctly defined in your backend
+    images_upload_handler: imageUploadHandler, // Ensure you have defined this handler function
+    automatic_uploads: true,
+    paste_as_text: true,
+    setup: function(editor) {
+        editor.on('change', function() {
+            // Get content from the editor
+            var content = editor.getContent();
+            // Store content in localStorage
+            localStorage.setItem('tinyMCEContent', content);
+        });
+        editor.on('GetContent', function(e) {
+            var content = e.content;
+            var websiteUrl = window.location.origin; // Gets the base URL of the website
+
+            var newContent = content.replace(/data-mce-src="\.\.\/\.\.\/\.\.\/storage\/uploads\//g, 'data-mce-src="' + websiteUrl + '/storage/uploads/');
+            e.content = newContent;
+        });
+    },
+});
+
+
+
+      tinymce.init({
+        selector: 'textarea#sharedtask',
+        // content_style: "body {padding: 100px}",
+        height: 600,
+        width: 941,
+        plugins: 'media image lists',
+        menubar: 'file edit insert view format table tools help',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullis | image',
+        images_upload_url: '{{ route("dashboard.project.image-upload") }}',
+        images_upload_handler: imageUploadHandler,
+        automatic_uploads: true,
+        paste_as_text: true,
+        setup: function(editor) {
+            editor.on('GetContent', function(e) {
+                var content = e.content;
+                var websiteUrl = window.location.origin; // Gets the base URL of the website
+
+                var newContent = content.replace(/data-mce-src="\.\.\/\.\.\/\.\.\/storage\/uploads\//g, 'data-mce-src="' + websiteUrl + '/storage/uploads/');
+                e.content = newContent;
+            });
+        },
+      });
+
       tinymce.init({
         selector: 'textarea#problem',
         // content_style: "body {padding: 100px}",
@@ -246,7 +299,7 @@
             </ul>
 
             <div class="col-start-9 col-span-4 flex relative ">
-                @if (!Route::is('student.edit', 'student.allNotification', 'participant.projects.create', 'participant.projects.add-task'))
+                @if (!Route::is('student.edit', 'student.allNotification', 'participant.projects.create', 'participant.projects.add-task', 'participant.projects.edit-task'))
                     @include('layouts.profile.sidebar')
                 @else
                     <div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-4">
