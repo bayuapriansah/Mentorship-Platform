@@ -12,11 +12,15 @@
             Add Project
         </h1>
 
-        <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col items-center">
+        <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col">
             {{-- Project Name --}}
+            <h2 class="font-medium text-darker-blue text-xl mb-2">
+                Project Name
+                <span class="text-red-500">*</span>
+            </h2>
             <input
                 type="text"
-                placeholder="Project Name *"
+                placeholder="Project Name"
                 name="project_name"
                 class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
             >
@@ -45,6 +49,10 @@
                 disabled hidden
             >
 
+            <h2 class="font-medium text-darker-blue text-xl mb-2">
+                Project Details
+                <span class="text-red-500">*</span>
+            </h2>
             {{-- Description --}}
             <textarea name="sharedproject" id="sharedproject"
                 rows="10"
@@ -52,12 +60,16 @@
                 class="w-full mt-5 px-3 py-2 border border-grey rounded-lg focus:outline-none"
             ></textarea>
 
+            <h2 class="font-medium text-darker-blue text-xl mt-5">
+                Project Descriptions
+                <span class="text-red-500">(Optional)</span>
+            </h2>
             {{-- Overview --}}
             <input
                 type="text"
                 placeholder="Write a 2 - 3 sentence description of your project."
                 name="description"
-                class="mt-5 w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
+                class="mt-2 w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
             >
 
             {{-- Logo --}}
@@ -76,7 +88,7 @@
             {{-- Datasets --}}
             <div class="w-full mt-4 flex flex-col gap-2">
                 <h2 class="font-medium text-darker-blue text-xl">
-                    Add Datasets
+                    Add Dataset(s)
                     <span class="text-red-500">*</span>
                 </h2>
 
@@ -347,7 +359,8 @@ function updateBadges() {
 function createBadge(link, index) {
     const badge = document.createElement('span');
     badge.className = 'inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-green-800 bg-green-100 rounded dark:bg-green-900 dark:text-green-300';
-    badge.textContent = `Dataset ${ordinal(index)}`;
+    // badge.textContent = `Dataset ${ordinal(index)}`;
+    badge.textContent = `Dataset ${index}`;
     const removeBtn = document.createElement('button');
     removeBtn.innerHTML = `<svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>`;
     removeBtn.className = 'inline-flex items-center p-1 ms-2 text-sm text-green-400 bg-transparent rounded-sm hover:bg-green-200 hover:text-green-900 dark:hover:bg-green-800 dark:hover:text-green-300';

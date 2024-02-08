@@ -21,6 +21,7 @@
     <meta name="theme-color" content="#712cf9">
 
     @yield('more-css')
+
 </head>
 
 <body>

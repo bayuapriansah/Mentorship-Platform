@@ -16,19 +16,24 @@
             Add Task
         </h1>
 
-        <div class="w-full tab:w-[641px] mt-7 mx-auto flex flex-col items-center">
+        <div class="w-full tab:w-[641px] mt-7 mx-auto flex flex-col">
+            <h2 class="font-medium text-darker-blue text-xl mb-2">
+                Task Name
+                <span class="text-red-500">*</span>
+            </h2>
             {{-- Task Name --}}
             <input
                 type="text"
-                placeholder="Task Name *"
+                placeholder="Task Name"
                 name="TaskName"
                 class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
             >
 
             {{-- Due Date --}}
-            <div class="w-full mt-6 flex flex-col gap-3">
+            <div class="w-full mt-2 flex flex-col gap-3">
                 <h2 class="font-medium text-darker-blue text-xl">
-                    Due Date:
+                    Due Date
+                    <span class="text-red-500">*</span>
                 </h2>
 
                 <input
@@ -38,13 +43,30 @@
                 >
             </div>
 
+            <h2 class="font-medium text-darker-blue text-xl mt-2">
+                Task Details
+                <span class="text-red-500">*</span>
+            </h2>
             {{-- Details --}}
             <textarea
                 rows="10"
-                placeholder="Task Details *"
+                placeholder="Task Details Here ..."
                 name="TaskDetail"
-                class="w-full mt-7 px-3 py-2 border border-grey rounded-lg focus:outline-none"
+                class="w-full mt-2 px-3 py-2 border border-grey rounded-lg focus:outline-none"
             ></textarea>
+
+            {{-- Assignee --}}
+            <div class="w-full mt-9 flex flex-col gap-2">
+                <h2 class="font-medium text-darker-blue text-xl">
+                    Task Assigned to (Optional)
+                </h2>
+
+                <select class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
+                    <option>Task Assigned to (Optional)</option>
+                    <option>Lionel Messi</option>
+                    <option>C. Ronaldo</option>
+                </select>
+            </div>
 
             {{-- Attachment --}}
             <div class="w-full mt-9">
@@ -91,6 +113,16 @@
 @endsection
 @section('more-js')
 <script>
+// Place isValidUrl function here
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false; // Fails to construct a URL object, meaning it's not a valid URL
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Function to get today's date in yyyy-MM-dd format
     function getTodayDate() {
@@ -241,7 +273,11 @@ document.querySelector('.add-attachment-btn').addEventListener('click', function
     taskNameInput.addEventListener('change', updateTaskName);
     dueDateInput.addEventListener('change', updateDueDate);
     // Initially bind the addAttachmentInput function to the add button
-    document.querySelector('.add-attachment-btn').addEventListener('click', addAttachmentInput);
+    document.querySelector('.add-attachment-btn').addEventListener('click', function() {
+    // Directly appending the new input without checking URL validation here
+    // URL validation will be checked on save
+    addAttachmentInput();
+    });
 
     function addAttachmentInput() {
         // Adds a new empty attachment to the task object
