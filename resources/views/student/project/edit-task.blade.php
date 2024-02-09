@@ -22,12 +22,8 @@
                 <span class="text-red-500">*</span>
             </h2>
             {{-- Task Name --}}
-            <input
-                type="text"
-                placeholder="Task Name"
-                name="TaskName"
-                class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
-            >
+            <input type="text" placeholder="Task Name" name="TaskName"
+                class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
 
             {{-- Due Date --}}
             <div class="w-full mt-2 flex flex-col gap-3">
@@ -36,11 +32,8 @@
                     <span class="text-red-500">*</span>
                 </h2>
 
-                <input
-                    type="date"
-                    name="DueDate"
-                    class="h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
-                >
+                <input type="date" name="DueDate"
+                    class="h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
             </div>
 
             <h2 class="font-medium text-darker-blue text-xl mt-2">
@@ -48,21 +41,18 @@
                 <span class="text-red-500">*</span>
             </h2>
             {{-- Details --}}
-            <textarea
-                rows="10"
-                placeholder="Task Details Here ..."
-                name="TaskDetail"
-                class="w-full mt-2 px-3 py-2 border border-grey rounded-lg focus:outline-none"
-            ></textarea>
+            <textarea rows="10" placeholder="Task Details Here ..." name="TaskDetail"
+                class="w-full mt-2 px-3 py-2 border border-grey rounded-lg focus:outline-none"></textarea>
 
             {{-- Assignee --}}
             <div class="w-full mt-9 flex flex-col gap-2">
                 <h2 class="font-medium text-darker-blue text-xl">
-                    Task Assigned to (Optional)
+                    Task Assigned to
+                    <span class="text-red-500">(Optional)</span>
                 </h2>
 
                 <select class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
-                    <option>Task Assigned to (Optional)</option>
+                    <option>Select Team Member</option>
                     <option>Lionel Messi</option>
                     <option>C. Ronaldo</option>
                 </select>
@@ -72,26 +62,16 @@
             <div class="w-full mt-9">
                 <h2 class="font-medium text-darker-blue text-xl">
                     Task Attachments
-                    <span class="text-red-500">*</span>
+                    <span class="text-red-500">(Optional)</span>
                 </h2>
 
                 <div id="attachments-container" class="mt-3 flex flex-col gap-4">
                     <div class="flex justify-between items-center">
-                        <input
-                            type="text"
-                            value=""
-                            placeholder="Document Name *"
-                            name="Name"
-                            class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
-                        >
+                        <input type="text" value="" placeholder="Document Name *" name="Name"
+                            class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
 
-                        <input
-                            type="text"
-                            value=""
-                            placeholder="Document URL *"
-                            name="Link"
-                            class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
-                        >
+                        <input type="text" value="" placeholder="Document URL *" name="Link"
+                            class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
 
                         <!-- Change the id to class -->
                         <button class="add-attachment-btn w-6 h-6 bg-primary text-white rounded-full">
@@ -105,7 +85,8 @@
     </div>
 
     <div class="mt-6 flex justify-center">
-        <button type="button" id="save-task-btn" class="min-w-[196px] py-2 px-3 bg-primary border border-primary rounded-full text-white text-lg">
+        <button type="button" id="save-task-btn"
+            class="min-w-[196px] py-2 px-3 bg-primary border border-primary rounded-full text-white text-lg">
             Save Task
         </button>
     </div>
@@ -113,7 +94,7 @@
 @endsection
 @section('more-js')
 <script>
-// Place isValidUrl function here
+    // Place isValidUrl function here
 function isValidUrl(string) {
   try {
     new URL(string);
@@ -155,6 +136,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const taskNameInput = document.querySelector('input[name="TaskName"]');
     const dueDateInput = document.querySelector('input[name="DueDate"]');
     const taskDetailTextarea = document.querySelector('textarea[name="TaskDetail"]');
+    // Bind input events to form fields
+    taskNameInput.addEventListener('input', function() {
+        tasks[taskIndex].TaskName = taskNameInput.value;
+        updateLocalStorage();
+    });
+
+    dueDateInput.addEventListener('input', function() {
+        tasks[taskIndex].DueDate = dueDateInput.value;
+        updateLocalStorage();
+    });
+
+    taskDetailTextarea.addEventListener('input', function() {
+        tasks[taskIndex].TaskDetail = taskDetailTextarea.value;
+        updateLocalStorage();
+    });
 
     // Set the initial values from localStorage if they exist
     if (tasks[taskIndex]) {
@@ -180,42 +176,74 @@ document.addEventListener('DOMContentLoaded', function() {
         tasks[taskIndex].TaskDetail = taskDetailTextarea.value;
         updateLocalStorage();
     });
-//
+    //
     // Function to update an individual attachment
+    // function updateAttachment(index, name, link) {
+    //     if (tasks[taskIndex].TaskAttachments && tasks[taskIndex].TaskAttachments[index]) {
+    //         tasks[taskIndex].TaskAttachments[index].Name = name;
+    //         tasks[taskIndex].TaskAttachments[index].Link = link;
+    //         updateLocalStorage();
+    //     }
+    // }
+
+    // Update the specific attachment object at the index
     function updateAttachment(index, name, link) {
-        if (tasks[taskIndex].TaskAttachments && tasks[taskIndex].TaskAttachments[index]) {
+        if (index >= 0 && index < tasks[taskIndex].TaskAttachments.length) {
             tasks[taskIndex].TaskAttachments[index].Name = name;
             tasks[taskIndex].TaskAttachments[index].Link = link;
-            updateLocalStorage();
         }
+        updateLocalStorage();
     }
 
-document.querySelector('.add-attachment-btn').addEventListener('click', function() {
-    // No need to save currentAttachments here since we're directly appending the new input
 
-    const attachmentsContainer = document.getElementById('attachments-container');
-    const newAttachmentIndex = document.querySelectorAll('.attachment-group').length; // Use to set data-index for the new remove button
 
-    // Create and append the new attachment input group directly
-    const attachmentInputGroup = document.createElement('div');
-    attachmentInputGroup.className = 'flex justify-between items-center attachment-group';
-    attachmentInputGroup.innerHTML = `
-        <input type="text" placeholder="Document Name *" name="Name" class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
-        <input type="text" placeholder="Document URL *" name="Link" class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
-        <button class="remove-attachment-btn text-red-500" data-index="${newAttachmentIndex}"><i class="fas fa-trash-alt fa-lg"></i></button>
-    `;
+    // Bind input events to dynamically added attachment fields
+    // document.getElementById('attachments-container').addEventListener('input', function(event) {
+    //     if (event.target.name === 'Name' || event.target.name === 'Link') {
+    //         const attachmentGroup = event.target.closest('.attachment-group');
+    //         const index = Array.from(attachmentGroup.parentNode.children).indexOf(attachmentGroup) - 1; // Adjusted for zero-based index
+    //         const nameInput = attachmentGroup.querySelector('input[name="Name"]').value;
+    //         const linkInput = attachmentGroup.querySelector('input[name="Link"]').value;
+    //         updateAttachment(index, nameInput, linkInput);
+    //     }
+    // });
 
-    // Insert the new group before the Add Attachment button
-    const addAttachmentBtnGroup = document.querySelector('.add-attachment-btn').parentNode;
-    attachmentsContainer.insertBefore(attachmentInputGroup, addAttachmentBtnGroup);
+    // Event delegation for attachment input updates
+    document.getElementById('attachments-container').addEventListener('input', function(event) {
+        const index = event.target.closest('.attachment-group').getAttribute('data-index');
+        if (event.target.classList.contains('attachment-name-input')) {
+            updateAttachment(index, event.target.value, tasks[taskIndex].TaskAttachments[index].Link);
+        } else if (event.target.classList.contains('attachment-link-input')) {
+            updateAttachment(index, tasks[taskIndex].TaskAttachments[index].Name, event.target.value);
+        }
+    });
 
-    // Add event listener to the newly created remove button
-    attachmentInputGroup.querySelector('.remove-attachment-btn').addEventListener('click', removeAttachmentInput);
-});
+    document.querySelector('.add-attachment-btn').addEventListener('click', function() {
+        // No need to save currentAttachments here since we're directly appending the new input
 
-//
+        const attachmentsContainer = document.getElementById('attachments-container');
+        const newAttachmentIndex = document.querySelectorAll('.attachment-group').length; // Use to set data-index for the new remove button
 
-//
+        // Create and append the new attachment input group directly
+        const attachmentInputGroup = document.createElement('div');
+        attachmentInputGroup.className = 'flex justify-between items-center attachment-group';
+        attachmentInputGroup.innerHTML = `
+            <input type="text" placeholder="Document Name *" name="Name" class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
+            <input type="text" placeholder="Document URL *" name="Link" class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
+            <button class="remove-attachment-btn text-red-500" data-index="${newAttachmentIndex}"><i class="fas fa-trash-alt fa-lg"></i></button>
+        `;
+
+        // Insert the new group before the Add Attachment button
+        const addAttachmentBtnGroup = document.querySelector('.add-attachment-btn').parentNode;
+        attachmentsContainer.insertBefore(attachmentInputGroup, addAttachmentBtnGroup);
+
+        // Add event listener to the newly created remove button
+        attachmentInputGroup.querySelector('.remove-attachment-btn').addEventListener('click', removeAttachmentInput);
+    });
+
+    //
+
+    //
     document.getElementById('save-task-btn').addEventListener('click', function() {
         // Update task details based on current input values
         if (tasks.length > taskIndex) {
@@ -236,7 +264,7 @@ document.querySelector('.add-attachment-btn').addEventListener('click', function
         updateLocalStorage(); // Save the updated tasks array to localStorage
         window.location.href = '/participant/projects/create'; // Redirect
     });
-//
+    //
     // Function to update localStorage
     function updateLocalStorage() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -289,14 +317,44 @@ document.querySelector('.add-attachment-btn').addEventListener('click', function
         loadAttachments(); // Reload the attachment inputs
     }
 
+    // function removeAttachmentInput(event) {
+    //     const attachmentIndex = parseInt(event.target.closest('.remove-attachment-btn').getAttribute('data-index'), 10);
+    //     tasks[taskIndex].TaskAttachments.splice(attachmentIndex, 1);
+    //     updateLocalStorage();
+    //     // Instead of reloading all attachments, just remove the specific attachment element
+    //     event.target.closest('.attachment-group').remove();
+    //     // Update data-index for remaining attachments
+    //     document.querySelectorAll('.attachment-group').forEach((group, index) => {
+    //         group.querySelector('.remove-attachment-btn').setAttribute('data-index', index);
+    //     });
+    // }
+
     function removeAttachmentInput(event) {
+        // Prevent the form from submitting if the button is inside a form
+        event.preventDefault();
+
         const attachmentIndex = parseInt(event.target.closest('.remove-attachment-btn').getAttribute('data-index'), 10);
-        tasks[taskIndex].TaskAttachments.splice(attachmentIndex, 1);
+
+        // Remove the attachment from the tasks object
+        if (attachmentIndex >= 0 && attachmentIndex < tasks[taskIndex].TaskAttachments.length) {
+            tasks[taskIndex].TaskAttachments.splice(attachmentIndex, 1);
+        }
+
+        // Update localStorage
         updateLocalStorage();
-        // Instead of reloading all attachments, just remove the specific attachment element
+
+        // Remove the attachment input group from the DOM
         event.target.closest('.attachment-group').remove();
-        // Update data-index for remaining attachments
-        document.querySelectorAll('.attachment-group').forEach((group, index) => {
+
+        // Re-index the remaining attachments
+        reindexAttachments();
+    }
+
+    function reindexAttachments() {
+        const attachmentGroups = document.querySelectorAll('.attachment-group');
+        attachmentGroups.forEach((group, index) => {
+            // Update the data-index attribute to match the new index
+            group.setAttribute('data-index', index);
             group.querySelector('.remove-attachment-btn').setAttribute('data-index', index);
         });
     }
@@ -308,15 +366,14 @@ document.querySelector('.add-attachment-btn').addEventListener('click', function
         tasks[taskIndex].TaskAttachments.forEach((attachment, index) => {
             const attachmentInputGroup = document.createElement('div');
             attachmentInputGroup.className = 'flex justify-between items-center attachment-group';
+            attachmentInputGroup.setAttribute('data-index', index); // Set the data-index attribute here
             attachmentInputGroup.innerHTML = `
-                <input type="text" placeholder="Document Name *" name="Name" class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none" value="${attachment.Name}">
-                <input type="text" placeholder="Document URL *" name="Link" class="w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none" value="${attachment.Link}">
+                <input type="text" placeholder="Document Name *" name="Name" class="attachment-name-input w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none" value="${attachment.Name}">
+                <input type="text" placeholder="Document URL *" name="Link" class="attachment-link-input w-[290px] h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none" value="${attachment.Link}">
                 <button class="remove-attachment-btn text-red-500" data-index="${index}"><i class="fas fa-trash-alt fa-lg"></i></button>
             `;
-
             attachmentsContainer.appendChild(attachmentInputGroup);
-
-            // Add event listener to the newly created remove button
+            // Bind the removeAttachmentInput function to the click event of the trash icon
             attachmentInputGroup.querySelector('.remove-attachment-btn').addEventListener('click', removeAttachmentInput);
         });
 

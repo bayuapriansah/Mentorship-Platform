@@ -210,9 +210,27 @@ function saveTasksToLocalStorage() {
 
 
 // Function to add a new task
+// function addTask() {
+//     const newTask = {
+//         TaskName: `Task ${document.querySelectorAll('#task-list > div').length + 1}`,
+//         DueDate: "-/-/-", // Placeholder value
+//         TaskAttachments: [
+//             {
+//                 Name: "Attachment Name", // Placeholder value
+//                 Link: "Attachment Link"  // Placeholder value
+//             }
+//         ]
+//     };
+//     addTaskToDOM(newTask);
+//     saveTasksToLocalStorage();
+// }
+
 function addTask() {
+    // Calculate the new task's index based on the existing tasks
+    const taskIndex = document.querySelectorAll('#task-list > div').length;
+
     const newTask = {
-        TaskName: `Task ${document.querySelectorAll('#task-list > div').length + 1}`,
+        TaskName: `Task ${taskIndex + 1}`,
         DueDate: "-/-/-", // Placeholder value
         TaskAttachments: [
             {
@@ -223,7 +241,11 @@ function addTask() {
     };
     addTaskToDOM(newTask);
     saveTasksToLocalStorage();
+
+    // Redirect to the "Edit Task" page with a dynamic task index
+    window.location.href = `https://mentorship-platform.dev/participant/projects/edit-task/${taskIndex}`;
 }
+
 
 
 // Function to add a task to the DOM

@@ -273,9 +273,9 @@ tinymce.init({
                 </li>
 
                 <li class="text-black font-light text-sm">
-                    <a href="{{ route('projects.support') }}">
-                        Support
-                    </a>
+                    {{-- <a href="{{ route('projects.support') }}"> --}}
+                        {{-- Support --}}
+                    {{-- </a> --}}
                 </li>
 
                 {{-- @if (Route::is('student.allProjects') || Route::is('student.ongoingProjects') || Route::is('student.completedProjects'))

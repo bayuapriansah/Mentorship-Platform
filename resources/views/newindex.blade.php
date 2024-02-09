@@ -46,9 +46,9 @@
                     </button>
                 @else
                     <a href="{{ route('multiLogIn') }}" class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Login</a>
-                    <a href="{{ route('registerPage') }}" class="bg-dark-blue text-white rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Register</a>  
-                @endif            
-            </div>            
+                    <a href="{{ route('registerPage') }}" class="bg-dark-blue text-white rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Register</a>
+                @endif
+            </div>
             {{-- Navbar Componet --}}
             <div id="Industry-Partners-hover" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                 Coming Soon
@@ -73,13 +73,14 @@
                     <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                     @endif
                 </li>
-                </ul>
-                <div class="py-2">
-                    <form class="inline" method="post" action="{{ route('logout') }}">
-                        @csrf
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
-                    </form>
-                </div>
+            </ul>
+
+            <div class="py-2">
+                <form class="inline" method="post" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
+                </form>
+            </div>
             </div>
             @endif
             {{-- End Navbar Component --}}
