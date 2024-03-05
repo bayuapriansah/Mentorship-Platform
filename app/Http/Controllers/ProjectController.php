@@ -334,9 +334,9 @@ class ProjectController extends Controller
         // dd($remaining_time_time);
         // dd($now_time->addMonth($project->period)->toDateString());
 
-        $project_time = $now_time->addMonth($project->period);
+        // $project_time = $now_time->addMonth($project->period);
+        $project_time = $now_time->addWeek($project->period);
         $project_totaldays = Carbon::now()->diffInDays($project_time);
-
         // dd($remaining_intern_days-$project_totaldays);
 
         // dd(Auth::guard('student')->user()->end_date);

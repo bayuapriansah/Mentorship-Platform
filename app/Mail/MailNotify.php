@@ -33,7 +33,7 @@ class MailNotify extends Mailable
     {
         return $this->from(
             env('MAIL_FROM_ADDRESS', 'sip@sustainablelivinglab.org'),
-            env('MAIL_FROM_NAME', 'Mentorship Platform X'),
+            env('MAIL_FROM_NAME', 'Mentorship Platform'),
         )->with('data', $this->data);
     }
 

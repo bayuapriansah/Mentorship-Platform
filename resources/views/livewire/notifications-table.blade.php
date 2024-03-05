@@ -25,7 +25,7 @@
                                     <div class="max-w-[70%] ml-3">
                                         <p class="text-darker-blue font-medium">
                                             There is New Submission, From :
-                                            {{ $submission->student->first_name }} {{ $submission->student->last_name }} at Section ({{ $submission->projectSection->title }})
+                                            {{ optional($submission->student)->first_name }} {{ optional($submission->student)->last_name }} at Section ({{ optional($submission->projectSection)->title }})
                                         </p>
 
                                         <p class="mt-2 text-xs">
@@ -34,10 +34,13 @@
 
                                     </div>
 
-                                    <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submission->project_id, $submission->id, $submission->student->id]) }}" class="self-center ml-auto px-3 py-1 bg-primary rounded-lg flex gap-6 text-sm text-white">
-                                        View Notification
-                                        <span>></span>
-                                    </a>
+                                    @if($submission->project && $submission && $submission->student)
+                                        <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submission->project->id, $submission->id, $submission->student->id]) }}" class="self-center ml-auto px-3 py-1 bg-primary rounded-lg flex gap-6 text-sm text-white">
+                                            View Notification
+                                            <span>></span>
+                                        </a>
+                                    @endif
+
                                 </div>
                             </td>
                         </tr>

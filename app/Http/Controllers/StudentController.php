@@ -910,6 +910,7 @@ class StudentController extends Controller
         $checkReadNotification = ReadNotification::where('notifications_id',$notification_id)->where('student_id',$student_id)->first();
         $checkIdNotification = Notification::where('id',$notification_id)->where('project_id',$project_id)->where('status','publish')->first();
         $checkEnrolled = EnrolledProject::where('student_id',$student_id)->where('project_id',$project_id)->first();
+        // dd($checkReadNotification);
         if($checkIdNotification != null){
             if(!$checkReadNotification){
                 $ReadNotification = new ReadNotification;
@@ -917,6 +918,8 @@ class StudentController extends Controller
                 $ReadNotification->notifications_id = $notification_id;
                 $ReadNotification->is_read = 1;
                 $ReadNotification->save();
+            }else{
+                return redirect()->back();
             }
         }else{
             return redirect()->back();
