@@ -73,9 +73,11 @@
 
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-2">
       <div class="col-span-10 text-justify">
+        {{-- @dd($project->dataset); --}}
           @if ($project->dataset)
               @php
-                  $datasets_array = explode(';', $project->dataset);
+                  $datasets_array = $project->dataset;
+                //   $datasets_array = explode(';', $project->dataset);
               @endphp
               <div class="mb-6">
                     <h1 class="mt-8 font-medium text-darker-blue text-[1.4rem]">Dataset</h1>

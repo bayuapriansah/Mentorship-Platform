@@ -211,7 +211,7 @@
         @endforeach --}}
       </div>
       @if($student->is_confirm == 1)
-        <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
+        <p class="text-black text-xs">{{$dateApply->addWeeks($project->period)->format('d M Y')}}</p>
       @endif
     </div>
     @if($student->is_confirm == 0)
