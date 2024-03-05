@@ -26,7 +26,7 @@
   </div>
   <div>
     <p class="text-light-blue">Project By</p>
-    <p>{{$project->company->name}}</p>
+    <p>{{optional($project->company)->name;}}</p>
   </div>
 </div>
 

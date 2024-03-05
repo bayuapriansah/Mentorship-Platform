@@ -19,7 +19,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <p>{{$project->company->name}}</p>
+                <p>{{optional($project->company)->name;}}</p>
               </div>
             </div>
             <div class="row">

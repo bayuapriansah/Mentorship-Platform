@@ -98,7 +98,7 @@
             </a>
 
             <p class="text-black text-justify text-sm">
-                Students will take on real-world projects specifically developed for them to hone their technical AI skills.
+                Take on real-world projects specifically developed for them to hone your technical AI skill.
             </p>
         </div>
     </div>
@@ -112,7 +112,7 @@
             </a>
 
             <p class="text-black text-sm text-justify">
-                Students will extend their personal projects submitted to the Intel AI Impact Festival with the focus on polishing their project and preparing to take the project to the next level as a new business venture.
+                Extend your personal projects submitted to the Intel AI Impact Festival with a focus on polishing their projects and preparing to take the project to the next level as a new business venture.
             </p>
         </div>
 
@@ -155,7 +155,7 @@
                 >
 
                 <h5 class="mt-4 font-bold text-lg text-darker-blue">
-                    {{ $project->company->name }}
+                    {{ optional($project->company)->name; }}
                 </h5>
 
                 <div class="min-w-[124px] mt-4 px-4 py-1 bg-lightest-blue rounded-full text-black text-center text-xs">

@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex justify-between items-center">
     <h1 class="text-dark-blue font-medium text-[1.375rem]">
-        {{ $project->company->name }}
+        {{ optional($project->company)->name; }}
         <span class="mx-3">></span>
         Project
         <span class="mx-3">></span>

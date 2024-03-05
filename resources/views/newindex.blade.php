@@ -200,7 +200,7 @@
                                 </div>
                                 <div class="flex-col">
                                     <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">{{substr($project->name,0,18)}}{{ (strlen($project->name) > 18) ? '...' : '' }}</p>
-                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">{{$project->company->name}}</p>
+                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">{{optional($project->company)->name;}}</p>
                                     <div class="pt-2">
                                         <p
                                         class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">

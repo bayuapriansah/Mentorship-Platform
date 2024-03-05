@@ -13,7 +13,7 @@
 
 <div class="mb-6 flex justify-between items-center">
     <h1 class="text-dark-blue font-medium text-[1.375rem]">
-        {{ $project->company->name }}
+        {{ optional($project->company)->name; }}
         <span class="mx-3">></span>
         Edit Project
     </h1>
@@ -93,10 +93,10 @@
     </div>
 
     <div class="mt-5">
-        <input readonly type="hidden" id="inputpartner" name="partner" value="{{ $project->company->id }}">
+        <input readonly type="hidden" id="inputpartner" name="partner" value="{{ optional($project->company)->id }}">
 
         <select disabled class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
-            <option value="{{ $project->company->id }}" hidden>{{ $project->company->name }}</option>
+            <option value="{{ optional($project->company)->id }}" hidden>{{ optional($project->company)->name; }}</option>
         </select>
 
         @error('partner')
@@ -225,7 +225,7 @@
 
             <div class="text-xl text-dark-blue">
                 @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-                    <a href="{{ route('dashboard.partner.partnerProjectsInjection', ['partner' => $project->company->id, 'project' => $project->id]) }}" class="flex items-center gap-3">
+                    <a href="{{ route('dashboard.partner.partnerProjectsInjection', ['partner' => optional($project->company)->id, 'project' => $project->id]) }}" class="flex items-center gap-3">
                         <i class="fas fa-circle-plus mt-1 text-primary"></i>
                         Add Task
                     </a>
@@ -262,11 +262,11 @@
 
                 <div class="col-span-2 justify-self-end space-x-5">
                     @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionEdit', ['partner' => $project->company->id, 'project' => $project->id, 'injection' => $card->id]) }}">
+                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionEdit', ['partner' => optional($project->company)->id, 'project' => $project->id, 'injection' => $card->id]) }}">
                             <i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i>
                         </a>
 
-                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionDelete', ['partner' => $project->company->id, 'project' => $project->id, 'injection' => $card->id]) }}">
+                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionDelete', ['partner' => optional($project->company)->id, 'project' => $project->id, 'injection' => $card->id]) }}">
                             <i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i>
                         </a>
                     @else

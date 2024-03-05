@@ -57,7 +57,7 @@
                                         <div class="px-10 pt-7 pb-11">
                                             <img src="{{asset('/assets/img/dots-1.png')}}" class="absolute z-[1] -bottom-3 left-6 w-[233px] h-[108px]" alt="Decoration">
                                             <p class="text-darker-blue text-[1.4rem] font-medium">
-                                                Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ $project->company->name }}?
+                                                Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ optional($project->company)->name; }}?
                                             </p>
 
                                             <div class="mt-5 relative z-[2] flex justify-center items-center gap-5">
@@ -105,7 +105,7 @@
                                 <div class="px-10 pt-7 pb-11">
                                     <img src="{{asset('/assets/img/dots-1.png')}}" class="absolute z-[1] -bottom-3 left-6 w-[233px] h-[108px]" alt="Decoration">
                                     <p class="text-darker-blue text-[1.4rem] font-medium">
-                                        Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ $project->company->name }}?
+                                        Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ optional($project->company)->name; }}?
                                     </p>
 
                                     <div class="mt-5 relative z-[2] flex justify-center items-center gap-5">
