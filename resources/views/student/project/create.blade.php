@@ -56,7 +56,6 @@
             {{-- Description --}}
             <textarea name="sharedproject" id="sharedproject"
                 rows="10"
-                placeholder="- Problem Statement, Project Objective, or Use Case Description&#13;&#10;- Model Type&#13;&#10;- Current Performance Metrics&#13;&#10;- Summary of Future Goals/Expectations"
                 class="w-full mt-5 px-3 py-2 border border-grey rounded-lg focus:outline-none"
             ></textarea>
 
@@ -90,6 +89,12 @@
                 <h2 class="font-medium text-darker-blue text-xl">
                     Add Dataset(s)
                     <span class="text-red-500">*</span>
+                    <i data-tooltip-target="tooltip-animation" class="fa fa-info-circle" aria-hidden="true"></i>
+
+                    <div id="tooltip-animation" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Tooltip content
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </h2>
 
     <!-- Custom input container -->
@@ -189,48 +194,36 @@ function loadTasksFromLocalStorage() {
     updateNoTaskInfoDisplay();
 }
 
-// Function to save tasks to localStorage
-function saveTasksToLocalStorage() {
-    const tasks = [];
-    document.querySelectorAll('#task-list > div').forEach((taskElement, index) => {
-        const task = {
-            "TaskName": `Task ${index + 1}`,
-            "DueDate": "-/-/-", // Placeholder value
-            "TaskAttachments": [
-                {
-                    "Name": "Attachment Name", // Placeholder value
-                    "Link": "Attachment Link"  // Placeholder value
-                }
-            ]
-        };
-        tasks.push(task);
-    });
+function getTasksFromLocalStorage() {
+    // Attempt to retrieve the existing tasks from local storage and parse them
+    const storedTasks = localStorage.getItem('tasks');
+    try {
+        return storedTasks ? JSON.parse(storedTasks) : [];
+    } catch (error) {
+        // In case of any errors during parsing, return an empty array
+        console.error('Error parsing tasks from local storage:', error);
+        return [];
+    }
+}
+
+function saveTaskToLocalStorage(newTask) {
+    // Retrieve existing tasks from local storage
+    const tasks = getTasksFromLocalStorage();
+
+    // Add the new task to the array of tasks
+    tasks.push(newTask);
+
+    // Save the updated tasks array back to local storage
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-
-// Function to add a new task
-// function addTask() {
-//     const newTask = {
-//         TaskName: `Task ${document.querySelectorAll('#task-list > div').length + 1}`,
-//         DueDate: "-/-/-", // Placeholder value
-//         TaskAttachments: [
-//             {
-//                 Name: "Attachment Name", // Placeholder value
-//                 Link: "Attachment Link"  // Placeholder value
-//             }
-//         ]
-//     };
-//     addTaskToDOM(newTask);
-//     saveTasksToLocalStorage();
-// }
-
 function addTask() {
-    // Calculate the new task's index based on the existing tasks
-    const taskIndex = document.querySelectorAll('#task-list > div').length;
+    // Calculate the new task's index based on the existing tasks in local storage
+    const tasks = getTasksFromLocalStorage();
+    const total = tasks.length + 1;
 
     const newTask = {
-        TaskName: `Task ${taskIndex + 1}`,
+        TaskName: `Task ${total}`,
         DueDate: "-/-/-", // Placeholder value
         TaskAttachments: [
             {
@@ -239,13 +232,17 @@ function addTask() {
             }
         ]
     };
+
+    // Add the new task to the DOM (Implementation of addTaskToDOM is assumed to be correct)
     addTaskToDOM(newTask);
-    saveTasksToLocalStorage();
 
-    // Redirect to the "Edit Task" page with a dynamic task index
-    window.location.href = `https://mentorship-platform.dev/participant/projects/edit-task/${taskIndex}`;
+    // Save the new task to local storage
+    saveTaskToLocalStorage(newTask);
+
+    // Redirect to the "Edit Task" page with the index of the new task
+    // Note: Since we're redirecting immediately after adding, the taskIndex for redirect should be tasks.length, as it's the index of the new task before it's added
+    window.location.href = `https://mentorship-platform.dev/participant/projects/edit-task/${tasks.length}`;
 }
-
 
 
 // Function to add a task to the DOM

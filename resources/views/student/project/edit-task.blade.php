@@ -50,11 +50,19 @@
                     Task Assigned to
                     <span class="text-red-500">(Optional)</span>
                 </h2>
-
-                <select class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
+                <select class="w-full h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none" name="assigned">
                     <option>Select Team Member</option>
-                    <option>Lionel Messi</option>
-                    <option>C. Ronaldo</option>
+                    @php
+                    $teamStudents = teamList($student->team_name);
+                    @endphp
+                    @if($teamStudents->isNotEmpty())
+                    @foreach($teamStudents as $student)
+                        <!-- Student data display -->
+                        <option value="{{ $student->first_name }} {{ $student->last_name }}">{{ $student->first_name }} {{ $student->last_name }}</option>
+                    @endforeach
+                    @else
+                    <p>No students found in this team.</p>
+                    @endif
                 </select>
             </div>
 

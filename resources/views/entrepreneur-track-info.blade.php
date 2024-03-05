@@ -1,11 +1,11 @@
 @php
     $skills = [
-        'Data Collection',
-        'Data Wrangling',
-        'Data Pipelining',
-        'AI Model Building',
-        'AI Model Evaluation',
-        'AI Solution Proof of Concept (POC) deployment',
+        'Having a competitive model',
+        'Writing necessary business documentation',
+        'Having a robust dataset',
+        'Creating a basic website to display the product and company information',
+        'Having a demonstrable product via a UI',
+        'Pitching their product to potential investors and/or customers',
     ];
 @endphp
 
@@ -64,15 +64,15 @@
 
         <div class="max-w-[994px] mt-7 flex flex-col gap-4 text-center text-lg">
             <p>
-                This track offers students the opportunity to work on one of three AI projects in an online work-like environment. Unlike typical projects or tutorials that provide a step-by-step guide, this platform is designed to replicate a real-world work setting, allowing students to tackle projects with increasing independence. By completing a project on this platform, students will develop valuable skills in problem-solving, time management, and accountability as they take ownership of their tasks and meet deadlines.
+                This track offers participants the opportunity to continue their work on the project they submitted to the Intel Global AI Impact Festival in an online work-like environment. During this track, the participants’ projects will be supported in defining the next steps for their projects to prepare them to go to the next level as a new business venture.
             </p>
 
             <p>
-                The projects our students will be choosing from working on have been designed to give students practical skills that will be beneficial in industry. From this program, students will work on the following skills:
+                During this program, participants will work towards:
             </p>
         </div>
 
-        <div class="w-[745px] mt-8 px-8 pt-8 pb-6 bg-[#F3F3F3] rounded-2xl grid grid-cols-2 gap-x-2 gap-y-4">
+        <div class="w-[900px] mt-8 px-8 pt-8 pb-6 bg-[#F3F3F3] rounded-2xl grid grid-cols-2 gap-x-2 gap-y-4">
             @foreach ($skills as $skill)
                 <div class="flex gap-4 items-baseline">
                     <i class="fas fa-circle-check fa-xl"></i>
@@ -133,7 +133,7 @@
                 </h2>
 
                 <p class="max-w-[383px] mt-4 text-sm text-justify">
-                    On the entrepreneur track page, you have to add projects and add tasks for your team by clicking the plus sign in the box provided. And will continue with project planning.
+                    For the entrepreneur track, you will be extending the work you’ve done for your project that was submitted to the Intel AI Global Impact Festival. Therefore, to support your team’s work, the communication between your team and your mentors, and documentation, you will use this platform as your task management system. To start, you will need to add your project to the platform. By doing the following:
                 </p>
             </div>
         </div>
@@ -162,7 +162,7 @@
 
             <img
                 src="{{ asset('/assets/img/entrepreneur-track-info/arrow-down-left.png') }}""
-                class="absolute -top-28 right-[22rem] scale-y-75"
+                class="absolute -top-24 right-[22rem] scale-y-75"
             >
         </div>
 
