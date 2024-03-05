@@ -388,11 +388,11 @@
         {{-- <a href="/profile/{{Auth::guard('student')->user()->id}}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
       @endif
     @elseif($total = $totalMonth->sum()<3 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
-      <p class="text-dark-blue font-medium text-sm text-center my-3">Sorry! You did not meet the requirements to complete the internship.</p>
-      <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
+      <p class="text-dark-blue font-medium text-sm text-center my-3">Sorry! You did not meet the requirements to complete the mentorship programs.</p>
+      {{-- <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button> --}}
     @else
-      <p class="text-dark-blue font-medium text-sm text-center my-3">Complete entire program to unlock</p>
-      <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
+      {{-- <p class="text-dark-blue font-medium text-sm text-center my-3">Complete entire program to unlock</p>
+      <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button> --}}
       {{-- <a href="/profile/{{Auth::guard('student')->user()->id}}/{{ $student->institution->id }}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
     @endif
 
