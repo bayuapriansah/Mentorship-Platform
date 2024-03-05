@@ -1156,6 +1156,13 @@ class StudentController extends Controller
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
+        // come back here, remove only if it fix
+//         $enrolledProject = EnrolledProject::where('student_id', $student_id)->first();
+//         $checkEnrolled = ($enrolledProject && $enrolledProject->project_id == $project_id) || $enrolledProject === null;
+
+//         dd($checkEnrolled);
+
+// return redirect()->route('student.allProjects', [$student_id]);
 
         $student = Student::where('id', $student_id)->first();
         if(\Carbon\Carbon::now() > $student->end_date){
