@@ -83,7 +83,7 @@
                     <div class="w-[30px] h-[30px] absolute z-[3] -top-3 -left-3 bg-[#FF8F51] rounded-lg"></div>
 
                     <img
-                        src="{{ $project->company->logo ? asset('storage/'.$project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                        src="{{ optional($project->company)->logo ? asset('storage/'.optional($project->company)->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
                         onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
                         alt="Logo"
                         class="w-16 h-16 relative z-[4] object-cover bg-white border border-grey rounded-xl text-black text-center"

@@ -196,7 +196,7 @@
                             class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-[250px] overflow-hidden">
                             <div class="flex space-x-2">
                                 <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
-                                    <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
+                                    <img src="{{asset('storage/'.optional($project->company)->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
                                 </div>
                                 <div class="flex-col">
                                     <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">{{substr($project->name,0,18)}}{{ (strlen($project->name) > 18) ? '...' : '' }}</p>

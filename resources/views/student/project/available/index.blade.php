@@ -39,7 +39,7 @@
                 <div class="flex space-x-2">
                     <div class=" my-auto border border-light-blue rounded-xl py-4 px-2 mr-2 relative">
                         <img
-                            src="{{ asset('storage/' . $project->company->logo) }}"
+                            src="{{ asset('storage/' . optional($project->company)->logo) }}"
                             onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
                             alt="Logo"
                             class="w-16 h-9 object-scale-down mx-auto"

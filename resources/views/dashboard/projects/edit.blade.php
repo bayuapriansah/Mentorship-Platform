@@ -64,10 +64,11 @@
         <div class="col-span-4">
             <select id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
                 <option value="" hidden>Project Duration *</option>
-                <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option>
-                <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>1 Month</option>
+                <option value="1" {{ old('period', $project->period) == '10' ? 'selected': '' }}>10 Weeks</option>
+                {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option> --}}
+                {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>1 Month</option>
                 <option value="2" {{ old('period', $project->period) == '2' ? 'selected': '' }}>2 Month(s)</option>
-                <option value="3" {{ old('period', $project->period) == '3' ? 'selected': '' }}>3 Month(s)</option>
+                <option value="3" {{ old('period', $project->period) == '3' ? 'selected': '' }}>3 Month(s)</option> --}}
             </select>
 
             @error('period')
@@ -81,7 +82,7 @@
             <select id="inputtype" name="type" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
                 <option value="" hidden>Project Type *</option>
                 <option value="weekly" {{ old('type', $project->type) == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                <option value="monthly" {{ old('type', $project->type) == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                {{-- <option value="monthly" {{ old('type', $project->type) == 'monthly' ? 'selected' : '' }}>Monthly</option> --}}
             </select>
 
             @error('type')
@@ -135,7 +136,7 @@
         @enderror
     </div>
 
-    <div class="mt-5">
+    <div class="mt-5" hidden>
         <select id="inputprojecttype"  name="projectType" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
             <option value="" hidden>Select Project Privacy Settings *</option>
             <option value="public" {{ !$project->institution_id ? 'selected' : '' }}>Public to all institutions</option>
@@ -196,7 +197,8 @@
 
             @foreach ($datasets as $index => $datasetUrl)
                 <div class="flex items-center mt-2 relative">
-                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
+                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasetUrl }}" required>
+                    {{-- <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required> --}}
                     @if ($index > 0)
                         <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fas fa-circle-minus text-red-600"></i></button>
                     @endif

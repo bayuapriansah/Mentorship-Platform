@@ -39,7 +39,7 @@
 
         <div class="absolute top-14 right-8 flex flex-col items-end">
             <img
-                src="{{ $project->company->logo ? asset('storage/' . $project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                src="{{ optional($project->company)->logo ? asset('storage/' . optional($project->company)->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
                 onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
                 alt="Logo"
                 class="w-16 h-16 object-cover bg-white border border-grey rounded-xl text-black text-center"

@@ -13,7 +13,7 @@
         </div>
 
         <img
-            src="{{ $project->company->logo ? asset('storage/'.$project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+            src="{{ optional($project->company)->logo ? asset('storage/'.optional($project->company)->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
             onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
             alt="Logo"
             class="absolute -bottom-4 right-16 w-20 h-20 object-cover bg-white border border-grey rounded-xl text-black text-center"

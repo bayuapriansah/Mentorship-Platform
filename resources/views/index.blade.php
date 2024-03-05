@@ -147,8 +147,8 @@
         @foreach ($projects as $project)
             <div class="project-card w-[316px] min-h-[405px] pt-7 pb-10 px-6 flex flex-col items-center">
                 <img
-                    {{-- src="{{ 'storage/' . $project->company->logo }}" --}}
-                    src="{{ $project->company->logo ? asset('storage/' . $project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                    {{-- src="{{ 'storage/' . optional($project->company)->logo }}" --}}
+                    src="{{ optional($project->company)->logo ? asset('storage/' . optional($project->company)->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
                     onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
                     alt="Logo"
                     class="w-20 h-20 rounded-lg tab:rounded-xl bg-white border border-grey text-black text-center"
