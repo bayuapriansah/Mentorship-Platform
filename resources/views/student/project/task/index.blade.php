@@ -72,25 +72,31 @@
     </div>
 
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-2">
-      <div class="col-span-10 text-justify">
-          @if ($project->dataset)
-              @php
-                  $datasets_array = explode(';', $project->dataset);
-              @endphp
-              <div class="mb-6">
+        <div class="col-span-10 text-justify">
+            @if ($project->dataset)
+                @php
+                    // Ensure that $project->dataset is a string.
+                    $datasets_string = is_array($project->dataset) ? implode(';', $project->dataset) : $project->dataset;
+                    $datasets_array = explode(';', $datasets_string);
+                @endphp
+                <div class="mb-6">
                     <h1 class="mt-8 font-medium text-darker-blue text-[1.4rem]">Dataset</h1>
                     <div class="mt-4 flex flex-wrap gap-5">
-                        @foreach ($datasets_array as $dataset_array)
-                            <a href="{{ $dataset_array }}" class="w-[172px] h-[37px] px-3 py-1 bg-primary rounded-lg flex justify-between items-center font-medium text-white">
-                                <span>URL {{ $loop->iteration }}</span>
-                                <span>></span>
-                            </a>
+                        @foreach ($datasets_array as $dataset)
+                            {{-- Ensure that $dataset is a valid URL --}}
+                            @if (filter_var($dataset, FILTER_VALIDATE_URL))
+                                <a href="{{ $dataset }}" target="_blank" rel="noopener noreferrer" class="w-[172px] h-[37px] px-3 py-1 bg-primary rounded-lg flex justify-between items-center font-medium text-white">
+                                    <span>URL {{ $loop->iteration }}</span>
+                                    <span>&gt;</span>
+                                </a>
+                            @endif
                         @endforeach
                     </div>
-              </div>
-          @endif
-      </div>
-      </div>
+                </div>
+            @endif
+        </div>
+    </div>
+
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-12">
       <div class="col-span-12  my-auto">
         <h1 class="font-medium text-darker-blue text-[1.4rem] mb-2">Messages</h1>

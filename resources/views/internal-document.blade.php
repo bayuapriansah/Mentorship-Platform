@@ -98,7 +98,26 @@
             @endif
         </div>
         {{-- ./Page Content --}}
+        <style>
+            /* This styles the scrollbar track */
+            ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px; /* height of the horizontal scrollbar */
+            background-color: #f5f5f5; /* background of the scrollbar track */
+            }
 
+            /* This styles the scrollbar thumb (the draggable element) */
+            ::-webkit-scrollbar-thumb {
+            background-color: #888; /* color of the scrollbar thumb */
+            border-radius: 6px; /* roundness of the scrollbar thumb */
+            border: 2px solid #f5f5f5; /* creates padding around the scrollbar thumb */
+            }
+
+            /* This styles the scrollbar thumb on hover */
+            ::-webkit-scrollbar-thumb:hover {
+            background-color: #555; /* color of the scrollbar thumb on hover */
+            }
+        </style>
         {{-- Internal Page Sections --}}
         <div class="col-span-2">
             <p class="text-xl text-darker-blue font-medium">

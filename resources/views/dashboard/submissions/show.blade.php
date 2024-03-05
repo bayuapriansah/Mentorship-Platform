@@ -142,25 +142,24 @@
             Task Submission
         </div>
 
-        <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
             @if (strpos($submission->file, 'https://') !== false)
+            <a href="{{ $submission->file }}" target="_blank" class="text-base flex items-center justify-between border border-light-blue rounded-xl hover:bg-[#F2F3FD] bg-white px-6 py-4 w-full">
                 <i class="fa-solid fa-link"></i>
-
-                <a href="{{ $submission->file }}" target="_blank" class="text-base">
-                    Submission Link
-                </a>
-
+                <span class="flex-grow text-center">Submission Link</span>
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+
             @else
                 <img src="{{ asset('/assets/img/icon/Vector.png') }}" class="object-scale-down">
                 <a href="{{ asset('/storage/'.$submission->file) }}" target="_blank" class="text-base">
+                    <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
                     Submission file .{{ substr($submission->file, strpos($submission->file, '.')+1) }}
+                    </div>
                 </a>
                 <img src="{{asset('assets/img/icon/download.png')}}" class="object-scale-down">
             @endif
             {{-- /dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/edit --}}
             {{-- <a href="/dashboard/partners/{{$partner->id}}/projects/{{$project->id}}/injection/{{$injection->id}}/attachment/{{$attachment_id->id}}/delete/{{1}}"><i class="text-red-600 fa-solid fa-trash-can fa-lg  my-auto"></i></a> --}}
-        </div>
     </div>
 
     <div>
