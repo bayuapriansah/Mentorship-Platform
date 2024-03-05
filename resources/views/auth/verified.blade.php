@@ -8,7 +8,7 @@
     </h1>
 
     <p class="mt-2 text-center text-xl">
-        Thanks for signing up for Simulated Mentorship Platform.<br>
+        Thanks for signing up for Mentorship Program Platform.<br>
         We're happy to have you.
     </p>
 

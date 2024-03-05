@@ -23,7 +23,7 @@
       <div class="w-full mx-auto py-16">
         <br /><br /><br /><br />
         <p class=" text-[22px] mt-1">
-          This is to certify that 
+          This is to certify that
         </p>
         <div class="mb-2">
           <h1 class="text-3xl capitalize font-medium">
@@ -32,7 +32,7 @@
         </div>
         <div class="flex flex-col -space-y-2">
           <p>
-            participated in a 2-week-long Simulated AI Internship with Sustainable Living Lab from
+            participated in a 10-weeks-long Mentorship Program with Sustainable Living Lab from
           </p>
           <p>
             {{$student->created_at->format('d-m-Y')}} to {{Carbon\Carbon::parse($student->end_date)->format('d-m-Y')}}
@@ -40,7 +40,7 @@
         </div>
         <div class="flex flex-col -space-y-2">
           <p>
-            During the internship, they successfully completed a simulated industry project on
+            During the internship, they successfully completed a Mentorship Program industry project on
           </p>
           <p>Computer Vision.</p>
         </div>
