@@ -144,13 +144,13 @@
 
         <div class="py-4 px-6 w-3/4 bg-white hover:bg-[#F2F3FD] border border-light-blue rounded-xl flex justify-between">
             @if (strpos($submission->file, 'https://') !== false)
-                <i class="fa-solid fa-link"></i>
-
+                <a href="{{ $submission->file }}" target="_blank" class="fa-solid fa-link"></a>
                 <a href="{{ $submission->file }}" target="_blank" class="text-base">
-                    Submission Link
-                </a>
 
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    Submission Link
+
+                </a>
+                <a href="{{ $submission->file }}" target="_blank" class="fa-solid fa-arrow-up-right-from-square"></a>
             @else
                 <img src="{{ asset('/assets/img/icon/Vector.png') }}" class="object-scale-down">
                 <a href="{{ asset('/storage/'.$submission->file) }}" target="_blank" class="text-base">
