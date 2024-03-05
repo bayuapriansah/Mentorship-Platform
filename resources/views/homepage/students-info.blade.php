@@ -26,7 +26,7 @@
                 <h2 class="intelOne text-dark-blue font-bold text-4xl">Information<br><span class="text-light-brown"> For Students</span></h2>
             </div>
             <div class="relative my-auto">
-                <p class="mb-4 text-black text-justify">On this platform, students will have the opportunity to work on AI projects in an online work-like environment. Most projects or tutorials found online walk students through projects step by step, giving them a clear pathway from the original idea to a solution. On this platform, the projects students will be working on have been designed to walk students through a project as it manifests itself in a work-like setting. The goal is for students to develop their independence by finding solutions to problems, time management and responsibility by meeting deadlines, and accountability for their work as the owners of their tasks. Once the students have completed their simulated internship, not only will they have grown as developers, but they will have grown their project portfolio.
+                <p class="mb-4 text-black text-justify">On this platform, students will have the opportunity to work on AI projects in an online work-like environment. Most projects or tutorials found online walk students through projects step by step, giving them a clear pathway from the original idea to a solution. On this platform, the projects students will be working on have been designed to walk students through a project as it manifests itself in a work-like setting. The goal is for students to develop their independence by finding solutions to problems, time management and responsibility by meeting deadlines, and accountability for their work as the owners of their tasks. Once the students have completed their Mentorship Program, not only will they have grown as developers, but they will have grown their project portfolio.
                 </p>
                 <p class="m-0 text-black text-justify">
                     The projects our students will be working on have been designed to give students practical skills that will be beneficial in industry. From this program, students will work on the following skills:
@@ -105,7 +105,7 @@
                 <div class="relative z-30 rounded-lg mr-16">
                     <img src="{{ asset('assets/img/for_students/step1.svg') }}" loading="lazy" class="inset-0 w-1/4 h-1/4 ml-auto" alt="for students">
                     <h1 class="text-2xl font-medium text-right py-3">Register & Login</h1>
-                    <p class="text-black font-normal text-right py-3">Initiate your path to practical learning and industry experience on our Simulated Internship Platform. Register & Login to hone your skills, engage in professional interactions, and cultivate a notable portfolio for a competitive career landscape.</p>
+                    <p class="text-black font-normal text-right py-3">Initiate your path to practical learning and industry experience on our Mentorship Program Platform. Register & Login to hone your skills, engage in professional interactions, and cultivate a notable portfolio for a competitive career landscape.</p>
                 </div>
             </div>
             <div class="relative my-auto">

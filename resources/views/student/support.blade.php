@@ -6,7 +6,7 @@
       <div class="flex justify-between">
         <h1 class="text-dark-blue text-2xl font-medium flex items-center">Contact Support</h1>
       </div>
-      <p>Contact the Simulated Internship Platform team for any technical support that you require.
+      <p>Contact the Mentorship Program Platform team for any technical support that you require.
         For project support, kindly use the chat feature available under each project task.</p>
     </div>
   </div>

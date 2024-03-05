@@ -6,7 +6,7 @@
   <meta name="x-apple-disable-message-reformatting">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="telephone=no" name="format-detection">
-  <title>Simulated Internship Email</title><!--[if (mso 16)]>
+  <title>Mentorship Program Email</title><!--[if (mso 16)]>
     <style type="text/css">
     a {text-decoration: none;}
     </style>
@@ -190,7 +190,7 @@ td .es-button-border-1:hover {
                  <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:515px">
                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                     <tr>
-                     <td align="left" style="padding-left:20px;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#838383;font-size:12px">© {{ date('Y') }} Intel Simulated Internships. All rights reserved.</p></td>
+                     <td align="left" style="padding-left:20px;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#838383;font-size:12px">© {{ date('Y') }} Intel Mentorship Program. All rights reserved.</p></td>
                     </tr>
                   </table></td>
                 </tr>

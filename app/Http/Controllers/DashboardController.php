@@ -734,7 +734,7 @@ class DashboardController extends Controller
   {
       // if (Auth::guard('student')->check()) {
       //   $data = [
-      //     'subject' => 'Simulated Internship Contact-Us',
+      //     'subject' => 'Mentorship Contact-Us',
       //     'body' => $mailto,
       //     'first_name' => Auth::guard('student')->user()->first_name,
       //     'last_name' => Auth::guard('student')->user()->last_name,
@@ -744,7 +744,7 @@ class DashboardController extends Controller
       //   ];
       // }else{
         $data = [
-          'subject' => 'Simulated Internship Contact-Us',
+          'subject' => 'Mentorship Program Contact-Us',
           'body' => $mailto,
           'first_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->first_name : $validated['first_name'],
           'last_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->last_name : $validated['last_name'],

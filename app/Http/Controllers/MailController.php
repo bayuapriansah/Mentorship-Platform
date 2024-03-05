@@ -54,7 +54,7 @@ class MailController extends Controller
     public function otplogin($mailto,$otpdata) //Email , OTP
     {
         $data = [
-            'subject' => '[Simulated Internship] OTP Verification',
+            'subject' => '[Mentorship Program] OTP Verification',
             'body' => $otpdata,
             'type' => 'otp',
         ];
@@ -146,7 +146,7 @@ class MailController extends Controller
             'body2' => 'Project Name: '.$projectName,
             'body3' => '',
             'body4' => 'Best regards,',
-            'body5'=> 'Simulated Internship Team ❤️',
+            'body5'=> 'Mentorship Platform Team ❤️',
             'type' => 'welcome',
         ];
         try

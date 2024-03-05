@@ -25,7 +25,7 @@ class FAQController extends Controller
             ],
             [
                 'question' => 'What are the requirements to enroll in a project?',
-                'answer' => 'To enroll in a project you must be currently attending an institute which is involved in the Simulated Internship Program.'
+                'answer' => 'To enroll in a project you must be currently attending an institute which is involved in the Mentorship Program.'
             ],
             [
                 'question' => 'What are the requirements to complete a project?',
@@ -53,7 +53,7 @@ class FAQController extends Controller
             ],
             [
                 'question' => 'Will there be a supervisor or mentor assigned to me during the internship?',
-                'answer' => 'There will be one supervisor assigned to you from your own institute, and one staff member assigned to you from the Simulated Internship Platform team. You can chat with the supervisor and the staff member for any required support using the messaging feature present under each task of a project.'
+                'answer' => 'There will be one supervisor assigned to you from your own institute, and one staff member assigned to you from the Mentorship Program Platform team. You can chat with the supervisor and the staff member for any required support using the messaging feature present under each task of a project.'
             ],
             [
                 'question' => 'What are the expectations from an intern during an internship project?',

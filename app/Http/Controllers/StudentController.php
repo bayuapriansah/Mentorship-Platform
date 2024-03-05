@@ -1366,7 +1366,7 @@ class StudentController extends Controller
     public function SupportMail($mailto,$validated) //Email, urlInvitation
     {
       $data = [
-        'subject' => 'Simulated Internship Support-Mail',
+        'subject' => 'Mentorship Program Support-Mail',
         'body' => $mailto,
         'first_name' => $validated['first_name'],
         'last_name' => $validated['last_name'],

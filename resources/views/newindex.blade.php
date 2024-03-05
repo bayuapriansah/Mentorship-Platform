@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simulated Internship</title>
+    <title>Mentorship Platform</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icon/favicon.ico') }}">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -93,7 +93,7 @@
             <div class="grid md:grid-cols-2 gap-4 items-center">
                 <div class="my-auto">
                     <h2 class="intelOne text-white font-bold text-3xl leading-11 py-4">
-                        <span class="text-light-brown">Simulated Internship</span> Platform for <span
+                        <span class="text-light-brown">Mentorship Program</span> Platform for <span
                             class="text-light-brown">Industry Readiness</span>
                     </h2>
                     <span class="intelOne text-white py-6 font-light text-lg leading-6">Join today to work on real-world
@@ -329,7 +329,7 @@
             <hr class="my-6 border-black border-t-2 sm:mx-auto lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {{ date('Y') }} <a
-                        href="/" class="hover:underline">Simulated Internship</a>. All Rights Reserved.
+                        href="/" class="hover:underline">Mentorship Program</a>. All Rights Reserved.
                 </span>
                 {{-- <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
             <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
