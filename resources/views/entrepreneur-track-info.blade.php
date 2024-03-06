@@ -273,7 +273,7 @@
                 </h2>
 
                 <p class="max-w-[395px] mt-4 text-sm text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor dui vitae dolor ornare, sit amet volutpat libero molestie. Sed non eleifend mi, in vehicula libero.
+                    Dive into your tasks and transform your project into a new venture with the support of your teammates and mentors.
                 </p>
             </div>
         </div>
