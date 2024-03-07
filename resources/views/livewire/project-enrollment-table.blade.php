@@ -210,23 +210,23 @@
                     @foreach ($enrolledProjects as $enrolledProject)
                         <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }}">
                             <td class="pr-8 pl-5 py-2 rounded-s-lg">
-                                {{ $enrolledProject->student->first_name }} {{ $enrolledProject->student->last_name }}
+                                {{ optional($enrolledProject->student)->first_name }} {{ optional($enrolledProject->student)->last_name }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $enrolledProject->student->mentor->first_name }} {{ $enrolledProject->student->mentor->last_name }}
+                                {{ optional(optional($enrolledProject->student)->mentor)->first_name }} {{ optional(optional($enrolledProject->student)->mentor)->last_name }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $enrolledProject->student->staff->first_name }} {{ $enrolledProject->student->staff->last_name }}
+                                {{ optional(optional($enrolledProject->student)->staff)->first_name }} {{ optional(optional($enrolledProject->student)->staff)->last_name }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $enrolledProject->student->country ?? '-' }}
+                                {{ optional($enrolledProject->student)->country ?? '-' }}
                             </td>
 
                             <td class="pr-8 py-2">
-                                {{ $enrolledProject->student->team_name ?? '-' }}
+                                {{ optional($enrolledProject->student)->team_name ?? '-' }}
                             </td>
 
                             <td class="pr-5 py-2 rounded-e-lg">
