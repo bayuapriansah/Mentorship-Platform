@@ -153,7 +153,7 @@ class ProjectController extends Controller
         $project->project_domain = $validated['project_domain'];
         $project->type = $validated['type'];
         $project->period = $validated['period'];
-        $project->type = 'monthly';
+        // $project->type = 'weekly';
         if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
             $project->status = 'draft';
             $project->proposed_by = null;

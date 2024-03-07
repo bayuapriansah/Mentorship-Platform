@@ -2,14 +2,50 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Http\Controllers\Controller;
+use App\Models\Project;
+use App\Models\Student;
+use App\Models\Institution;
 use Illuminate\Http\Request;
+use App\Models\ProjectSection;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CreateProjectController extends Controller
 {
     public function index()
     {
+        // $project_name = Student::where('email', $email)->first();
+        // dd(Auth::guard('student')->user()->team_name);
+        // dd(Auth::guard('student')->user());
+        $project = new Project;
+        $project->name = Auth::guard('student')->user()->team_name;
+        $project->project_domain = " ";
+        $project->problem = "<p><span style='color: #999;' data-mce-style='color: #999;'> -Problem Statement, Project Objective, or Use Case Description<br>-Model Type<br>-Current Performance Metrics<br>-Summary of Future Goals/Expectations<br></span></p>";
+        $project->type = "weekly";
+        $project->period = 10;
+        $project->status = 'draft';
+        $project->team_name = Auth::guard('student')->user()->team_name;
+        $project->company_id = 1;
+        $project->dataset = "";
+        $project->overview = "Write a 2 - 3 sentence description of your project.";
+        $project->save();
+        $message = "Successfully created a project";
+
+        toastr()->success($message);
         return view('student.project.create', $this->generateFakeLayoutData());
+    }
+
+    public function editproject(Project $project)
+    {
+        $formAction = route('dashboard.projects.update', ['project' => $project->id]);
+        $cards = ProjectSection::where('project_id', $project->id)->get();
+        $institutions = Institution::get();
+        return view('student.project.edit', compact(
+            'project',
+            'formAction',
+            'cards',
+            'institutions'
+        ), $this->generateFakeLayoutData());
     }
 
     public function addTask()
