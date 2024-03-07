@@ -48,8 +48,8 @@
     {{-- Page Subtitle --}}
     <div class="mt-10 flex flex-col gap-3">
         <h2 class="text-xl text-darker-blue font-medium">
-            Page Subtitle
-            <span class="text-[#EA0202]">*</span>
+            Page Subtitle (Optional)
+            {{-- <span class="text-[#EA0202]">(Optional)</span> --}}
         </h2>
 
         <input
@@ -59,7 +59,7 @@
             placeholder="Type Something. . ."
             maxlength="1000"
             class="h-11 px-4 py-2 border border-grey rounded-lg leading-tight focus:outline-none"
-            required
+
         >
 
         @error('subtitle')

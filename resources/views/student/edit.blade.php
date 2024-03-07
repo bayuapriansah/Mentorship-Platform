@@ -261,28 +261,32 @@
                                     readonly>
                             </div>
 
+                            @php
+                                $hidden = true;
+                            @endphp
+                            @if ($hidden = false)
+                                {{-- Change Track --}}
+                                @if($student->switch_skill == 0 && \Carbon\Carbon::now() <= \Carbon\Carbon::parse($end_date_switch) )
+                                    <div
+                                        class="mt-3 flex items-center gap-8">
+                                        <button type="button" data-modal-target="change-track-confirm-modal"
+                                            data-modal-toggle="change-track-confirm-modal"
+                                            class="py-3 px-10 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium">
+                                            Change Track
+                                        </button>
 
-                            {{-- Change Track --}}
-                            @if($student->switch_skill == 0 && \Carbon\Carbon::now() <= \Carbon\Carbon::parse($end_date_switch) )
-                                <div
-                                    class="mt-3 flex items-center gap-8">
-                                    <button type="button" data-modal-target="change-track-confirm-modal"
-                                        data-modal-toggle="change-track-confirm-modal"
-                                        class="py-3 px-10 border-2 border-solid border-primary rounded-full text-center text-primary text-sm font-medium">
-                                        Change Track
-                                    </button>
-
-                                    <p class="text-black text-xs text-justify font-light">
-                                        You can only change your track once and will not be able
-                                        to<br>return to your previous work once you change.
-                                    </p>
-                                </div>
-                            @else
-                                <div class="mt-3 flex items-center gap-8">
-                                    <p class="text-black text-xs text-justify font-light">
-                                        You can't change your track anymore.
-                                    </p>
-                                </div>
+                                        <p class="text-black text-xs text-justify font-light">
+                                            You can only change your track once and will not be able
+                                            to<br>return to your previous work once you change.
+                                        </p>
+                                    </div>
+                                @else
+                                    <div class="mt-3 flex items-center gap-8">
+                                        <p class="text-black text-xs text-justify font-light">
+                                            You can't change your track anymore.
+                                        </p>
+                                    </div>
+                            @endif
                            @endif
 
                     </div>
@@ -357,7 +361,7 @@
         </div>
     </div>
 </div>
-
+@if ($hidden = false)
 {{-- Change Track Confirm --}}
 <div id="change-track-confirm-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -436,6 +440,7 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
 @section('more-js')
 <script>

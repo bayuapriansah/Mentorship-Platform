@@ -15,7 +15,7 @@
 
   <script src="https://kit.fontawesome.com/f845b2d56c.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.tiny.cloud/1/gm5482398yg3mbfrvxr3y0bok7hggsq0gervklzy8n1jpj1a/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/c4fnz0jmum59svb2qpxhe3tnay9nokoed263303akhgyhywv/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     const imageUploadHandler = (blobInfo, progress) => new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -67,9 +67,9 @@
       tinymce.init({
         selector: 'textarea#problem',
         height: 500,
-        plugins: 'media image lists',
+        plugins: 'media image lists autolink',
         menubar: 'file edit insert view format table tools help',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullis | image',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
         images_upload_url: '{{ route("dashboard.project.image-upload") }}',
         images_upload_handler: imageUploadHandler,
         automatic_uploads: true,
@@ -88,7 +88,7 @@
     tinymce.init({
         selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
         height: 500,
-        plugins: 'media image lists',
+        plugins: 'media image lists autolink',
         menubar: 'file edit insert view format table tools help',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
         images_upload_url: 'postAcceptor.php',

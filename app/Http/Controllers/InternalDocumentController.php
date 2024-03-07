@@ -72,7 +72,7 @@ class InternalDocumentController extends Controller
             $validator = Validator::make($request->all(), [
                 'internal_document_group_section_id' => 'required',
                 'title' => 'required',
-                'subtitle' => 'required',
+                'subtitle' => 'nullable',
                 'description' => 'required',
             ], [
                 'internal_document_group_section_id.required' => 'Please select a group section',
@@ -161,7 +161,7 @@ class InternalDocumentController extends Controller
             $validator = Validator::make($request->all(), [
                 'internal_document_group_section_id' => 'required',
                 'title' => 'required',
-                'subtitle' => 'required',
+                'subtitle' => 'nullable',
                 'description' => 'required',
             ], [
                 'internal_document_group_section_id.required' => 'Please select a group section',

@@ -48,12 +48,14 @@
                 Mentorship Platform
             </span>
         </h1>
-
+        @if (isLoggedIn())
+        @else
         <div class="mt-6 tab:mt-12">
             <a href="{{ route('multiLogIn') }}" class="text-white text-sm font-normal bg-primary px-8 py-1.5 hd:px-16 tab:py-3.5 rounded-full">
                 Get Started
             </a>
         </div>
+        @endif
     </div>
 </div>
 
@@ -144,6 +146,7 @@
     </h1>
 
     <div class="mt-12 flex flex-wrap justify-center gap-[3.25rem]">
+        {{-- @dd($projects); --}}
         @foreach ($projects as $project)
             <div class="project-card w-[316px] min-h-[405px] pt-7 pb-10 px-6 flex flex-col items-center">
                 <img
@@ -155,7 +158,7 @@
                 >
 
                 <h5 class="mt-4 font-bold text-lg text-darker-blue">
-                    {{ optional($project->company)->name; }}
+                    {{ optional($project)->name; }}
                 </h5>
 
                 <div class="min-w-[124px] mt-4 px-4 py-1 bg-lightest-blue rounded-full text-black text-center text-xs">
@@ -196,15 +199,37 @@
             Entrepreneur Track
         </h1>
 
-        <a href="#" class="text-center text-white bg-primary px-8 py-2 text-xl rounded-full">
+        {{-- <a href="#" class="text-center text-white bg-primary px-8 py-2 text-xl rounded-full">
             View Project Planner
-        </a>
+        </a> --}}
+        <button data-modal-target="popup-enterpreneur-track-project-planner" data-modal-toggle="popup-enterpreneur-track-project-planner" type="button" class="text-center text-white bg-primary px-8 py-2 text-xl rounded-full" alt="View Project Planner">
+            View Project Planner
+        </button>
     </div>
 
     <div class="bubble-decoration-2 hidden tab:block absolute z-[2] -bottom-0 -right-8"></div>
     <div class="hidden tab:block absolute -bottom-60 -right-[10%] w-[621px] h-[621px] blue-shadow"></div>
 </div>
-
+<div id="popup-enterpreneur-track-project-planner" tabindex="-1" class="fixed z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+    <div class="relative w-3/6 h-full max-w-4xl md:h-auto border-[3px] border-light-blue rounded-2xl">
+        <div class="relative bg-white rounded-xl shadow-2xl">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 text-sm p-1.5 ml-auto inline-flex items-center z-30" data-modal-hide="popup-enterpreneur-track-project-planner">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-6 text-left space-x-4">
+                <img src="{{asset('assets/img/dots-1.png')}}" class="absolute top-0 right-0 w-[233px] h-[108px]" alt="">
+                <h3 class="text-dark-blue text-2xl font-medium mb-3 text-left">This is only relevant for the entrepreneur track</h3>
+                <div class="relative z-50 mt-8">
+                  <button data-modal-hide="popup-enterpreneur-track-project-planner" type="submit" class="text-white text-sm font-normal bg-primary px-14 py-2 rounded-full">
+                    Okay!
+                  </button>
+                  {{-- <button data-modal-hide="popup-enterpreneur-track-project-planner" type="button" class="ml-3 bg-white border border-primary text-primary text-sm font-normal px-12 py-2 rounded-full">Cancel</button> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
 {{-- Mentorship Timeline --}}
 <div class="relative overflow-y-clip max-w-screen-xl mt-48 mx-auto px-6 pb-[11.25rem] flex flex-col items-center gap-[4.25rem]">
     <h1 class="relative z-[2] text-3xl text-center text-darker-blue font-bold">

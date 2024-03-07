@@ -22,7 +22,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <script src="https://cdn.tiny.cloud/1/gm5482398yg3mbfrvxr3y0bok7hggsq0gervklzy8n1jpj1a/tinymce/6/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/c4fnz0jmum59svb2qpxhe3tnay9nokoed263303akhgyhywv/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
 
@@ -77,7 +77,7 @@
             selector: 'textarea#sharedproject',
             height: 600,
             width: 941,
-            plugins: 'media image lists',
+            plugins: 'media image lists autolink',
             menubar: 'file edit insert view format table tools help',
             toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
             images_upload_url: '{{ route("dashboard.project.image-upload") }}',
@@ -138,9 +138,9 @@
         // content_style: "body {padding: 100px}",
         height: 600,
         width: 941,
-        plugins: 'media image lists',
+        plugins: 'media image lists autolink',
         menubar: 'file edit insert view format table tools help',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullis | image',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
         images_upload_url: '{{ route("dashboard.project.image-upload") }}',
         images_upload_handler: imageUploadHandler,
         automatic_uploads: true,
@@ -161,9 +161,9 @@
         // content_style: "body {padding: 100px}",
         height: 600,
         width: 941,
-        plugins: 'media image lists',
+        plugins: 'media image lists autolink',
         menubar: 'file edit insert view format table tools help',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullis | image',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
         images_upload_url: '{{ route("dashboard.project.image-upload") }}',
         images_upload_handler: imageUploadHandler,
         automatic_uploads: true,

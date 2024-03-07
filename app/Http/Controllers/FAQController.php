@@ -16,54 +16,57 @@ class FAQController extends Controller
 
         $faq['General'] = [
             [
-                'question' => 'What types of projects are available on the website?',
-                'answer' => 'We have various AI projects ranging from Machine Learning (ML), Natural Language Processing (NLP), to Computer Vision (CV).'
-            ],
-            [
-                'question' => 'How do I enroll in a project?',
-                'answer' => 'When you go to the Internship Projects page you will see the list of all available projects. To enroll simply click on the enroll button. Note that you can only be enrolled in one project at a time therefore, you will be able to enroll in another project after you have completed the project you are currently enrolled in.'
-            ],
-            [
-                'question' => 'What are the requirements to enroll in a project?',
-                'answer' => 'To enroll in a project you must be currently attending an institute which is involved in the Mentorship Program.'
-            ],
-            [
-                'question' => 'What are the requirements to complete a project?',
-                'answer' => 'Each project has it\'s own specific requirements. After you enroll in a project you will receive a variety of tasks which you will need to complete. Once you submit a task, your institutions supervisor mark your task as pass or return it to you for revisions. You must pass all the tasks to complete a project.'
+                'question' => 'What is the difference between the Skills Track and the Entrepreneur Track?',
+                'answer' => 'The Mentorship Program offers two different tracks to support the different goals of all participants. The core difference between these tracks is that the Skills Track is designed for participants who want to extend their knowledge of AI and develop their technical skills, while the Entrepreneur Track is designed for participants who want to continue to develop the project they submitted to the Intel AI Global Impact Festival.'
             ],
             [
                 'question' => 'How long is this program?',
-                'answer' => 'The program is typically 4 months long and comprised of projects of various durations (generally 1 month).'
+                'answer' => 'The program is 10 weeks long.'
             ],
             [
-                'question' => 'Are there any deadlines for applying for projects?',
-                'answer' => 'The deadlines for each task/project are the soft deadlines. These deadlines are what your customer is expecting you to meet but, your educational institute will be responsible for fixing hard deadlines.'
+                'question' => 'Will there be a mentor assigned to me?',
+                'answer' => 'You will have two official mentors for this program. One mentor from Intel and one mentor from the Mentorship Program’s team will be assigned to you upon registration. You can chat with your mentors via the messaging feature present under each task of a project.'
             ],
             [
-                'question' => 'Can I work on more than one project at a time?',
-                'answer' => 'You can only be enrolled in one project at a time. However, if the deadline of a project has passed, you can enroll in a second one while you finish the first project.'
-            ],
-            [
-                'question' => 'Will I receive college credit for my internship?',
-                'answer' => 'College credit specifics is dependent on your insitution. Please contact your institution for more information.'
-            ],
-            [
-                'question' => 'Are there any opportunities for full-time employment after the program?',
-                'answer' => 'We cannot guarantee employment after this program.'
-            ],
-            [
-                'question' => 'Will there be a supervisor or mentor assigned to me during the internship?',
-                'answer' => 'There will be one supervisor assigned to you from your own institute, and one staff member assigned to you from the Mentorship Program Platform team. You can chat with the supervisor and the staff member for any required support using the messaging feature present under each task of a project.'
-            ],
-            [
-                'question' => 'What are the expectations from an intern during an internship project?',
-                'answer' => 'An intern is expected to enroll in and complete multiple projects on the platform based on the duration of their internship. For each project, they must pass all the tasks inside the recommended project duration where each tasks should be completed inside the recommended task duration.'
-            ],
-            [
-                'question' => 'I see an industry partner listed but there is not a project listed by them?',
-                'answer' => 'We have various industry partners however, we can only run a limited number of projects at a time. Our list of industry partners represents those we have worked with, either currently or in the past.'
+                'question' => 'What are the expectations from a participant in this program?',
+                'answer' => 'Each participant is expected to enroll in and complete one project on the platform over the 10 week period. The participant must choose either the Skills Track or the Entrepreneur Track and complete all tasks associated with their respective projects to the satisfaction of their mentorship team. Participants should submit each task before the assigned deadline passes.'
             ],
         ];
+
+        $faq['Skills Track'] = [
+            [
+                'question' => 'What types of projects are available for the Skills Track?',
+                'answer' => 'There are three AI projects available that are focused on one of the three domains: Machine Learning (ML), Natural Language Processing (NLP), and Computer Vision (CV).'
+            ],
+            [
+                'question' => 'How do I enroll in a project?',
+                'answer' => 'When you go to the Available Project(s) page, you will see the list of all available projects. To enroll, simply click on the View Project button which will bring you to the project page of the project you’ve selected. Read the project description and if the project appeals to you, click on the enroll button. Note that you can only be enrolled in one project for the mentorship, so choose wisely.'
+            ],
+            [
+                'question' => 'What are the requirements to complete a project?',
+                'answer' => 'Each project has its own specific requirements outlined in the project’s tasks. Once you submit a task, your mentors will mark your task as pass or return it to you for revisions. You must pass all the tasks to complete a project within the 10 weeks of the mentorship program.'
+            ],
+            [
+                'question' => 'Are there any deadlines for submitting my work?',
+                'answer' => 'The deadlines for each task are provided on the task, however, these are soft deadlines. You will be able to submit a task after the deadline, however, it is advised to always submit before the deadline to keep you on track for the project.'
+            ],
+            [
+                'question' => 'When do I see the next task?',
+                'answer' => 'After you have submitted a past task or the deadline of a task has passed you will see the next task.'
+            ],
+        ];
+
+        $faq['Entrepreneur Track'] = [
+            [
+                'question' => 'Can I select a new project for this track?',
+                'answer' => 'The goal for this track is to take the project that you have submitted for the Intel AI Global Impact Festival 2023 to the next level. Therefore, this track will be based on the submitted project.'
+            ],
+            [
+                'question' => 'What happens if my group mates choose the Skills Track will I be able to continue on for the Entrepreneur Track?',
+                'answer' => 'Yes, you can! You can take on the Entrepreneur Track as an individual or a group.'
+            ],
+        ];
+
 
         return view('faq', compact('faq'));
     }
