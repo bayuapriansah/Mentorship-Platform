@@ -64,7 +64,7 @@
         <div class="col-span-4">
             <select id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
                 <option value="" hidden>Project Duration *</option>
-                <option value="1" {{ old('period', $project->period) == '10' ? 'selected': '' }}>10 Weeks</option>
+                <option value="10" {{ old('period', $project->period) == '10' ? 'selected': '' }}>10 Weeks</option>
                 {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option> --}}
                 {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>1 Month</option>
                 <option value="2" {{ old('period', $project->period) == '2' ? 'selected': '' }}>2 Month(s)</option>
