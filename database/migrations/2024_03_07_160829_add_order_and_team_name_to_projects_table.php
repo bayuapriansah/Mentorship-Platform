@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::table('projects', function (Blueprint $table) {
             $table->integer('order')->nullable()->after('institution_id'); // Add 'order' field after 'institution_id'
             $table->string('team_name')->nullable()->after('order'); // Add 'team_name' field, nullable, after 'order'
+            $table->string('mentorship_type')->nullable()->default('entrepreneur_track')->after('team_name'); // Add 'team_name' field, nullable, after 'order'
         });
     }
 

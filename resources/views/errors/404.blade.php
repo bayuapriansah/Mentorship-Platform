@@ -8,4 +8,5 @@
 
 @extends('layouts.error')
 @section('code', '404')
-@section('message', $message)
+@section('message', 'The page does not exist')
+{{-- @section('message', $message) --}}

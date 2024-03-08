@@ -16,7 +16,10 @@
                 <form action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
                     @csrf
                     @method('PATCH')
-
+                    <h2 class="font-medium text-darker-blue text-xl mt-5">
+                        Project Descriptions
+                        <span class="text-red-500">(Optional)</span>
+                    </h2>
                     <div>
                         <input
                             type="text"
@@ -34,8 +37,8 @@
                         @enderror
                     </div>
                     <div class="mt-5 grid grid-cols-12 gap-4">
-                        <div class="col-span-4">
-                            <select id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                        <div class="col-span-6">
+                            <select id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none required">
                                 <option value="" hidden>Select Project Domain *</option>
                                 <option value="nlp" {{ old('domain', $project->project_domain) == 'nlp' ? 'selected': '' }}>Natural Language Processing (NLP)</option>
                                 <option value="statistical" {{ old('domain', $project->project_domain) == 'statistical' ? 'selected': '' }}>Machine Learning (ML)</option>
@@ -49,8 +52,9 @@
                             @enderror
                         </div>
 
-                        <div class="col-span-4">
-                            <select id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
+                        <div class="col-span-6">
+                            {{-- <select disabled id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none"> --}}
+                            <select disabled id="inputperiod" class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
                                 <option value="" hidden>Project Duration *</option>
                                 <option value="10" {{ old('period', $project->period) == '10' ? 'selected': '' }}>10 Weeks</option>
                                 {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option> --}}
@@ -66,11 +70,10 @@
                             @enderror
                         </div>
 
-                        <div class="col-span-4">
+                        {{-- <div class="col-span-4">
                             <select id="inputtype" name="type" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
                                 <option value="" hidden>Project Type *</option>
                                 <option value="weekly" {{ old('type', $project->type) == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                                {{-- <option value="monthly" {{ old('type', $project->type) == 'monthly' ? 'selected' : '' }}>Monthly</option> --}}
                             </select>
 
                             @error('type')
@@ -78,10 +81,10 @@
                                     {{ $message }}
                                 </p>
                             @enderror
-                        </div>
+                        </div> --}}
                     </div>
 
-                    <div class="mt-5">
+                    <div class="mt-5" hidden>
                         <input readonly type="hidden" id="inputpartner" name="partner" value="{{ optional($project->company)->id }}">
 
                         <select disabled class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
@@ -106,7 +109,10 @@
                             </p>
                         @enderror
                     </div>
-
+                    <h2 class="font-medium text-darker-blue text-xl mt-5">
+                        Project Descriptions
+                        <span class="text-red-500">(Optional)</span>
+                    </h2>
                     <div class="mt-5">
                         <input
                             type="text"
@@ -169,7 +175,14 @@
                     <div class="mt-7">
                         <div class="flex justify-between items-center gap-6">
                             <h3 class="text-dark-blue font-medium text-xl">
-                                Datasets <span class="text-red-600">*</span>
+                                Dataset(s)
+                                <span class="text-red-500">*</span>
+                                <i data-tooltip-target="tooltip-animation" class="fa fa-info-circle" aria-hidden="true"></i>
+
+                                <div id="tooltip-animation" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                    Please put Valid URL links
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
                             </h3>
 
                             <button id="add-dataset-btn" type="button" class="flex items-center gap-3 text-xl">
@@ -186,7 +199,7 @@
                             @foreach ($datasets as $index => $datasetUrl)
                                 <div class="flex items-center mt-2 relative">
                                     <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasetUrl }}" required>
-                                    {{-- <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required> --}}
+                                    {{-- <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasetUrl }}" required> --}}
                                     @if ($index > 0)
                                         <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fas fa-circle-minus text-red-600"></i></button>
                                     @endif
@@ -195,7 +208,7 @@
 
                             @if (count($datasets) === 0)
                                 <div class="flex items-center mt-2 relative">
-                                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" required>
+                                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" required>
                                 </div>
                             @endif
                         </div>
@@ -207,7 +220,7 @@
                         @enderror
                     </div>
 
-                    @if (Auth::guard('web')->check())
+                    @if (Auth::guard('student')->check())
                         <div class="mt-10 flex justify-between">
                             <h3 class="text-dark-blue font-medium text-xl">
                                 Task <span class="text-red-600">*</span>
@@ -321,7 +334,7 @@
             const newInput = document.createElement('input');
             newInput.type = 'text';
             newInput.className = 'dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
-            newInput.placeholder = 'Add Data set URLs separated by semi-colon';
+            newInput.placeholder = 'Add Data set URLs';
             newInput.name = 'dataset[]';
             newInput.value = value;
             newInput.required = true;
