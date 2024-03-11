@@ -13,7 +13,7 @@
             </h1>
 
             <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col">
-                <form action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
+                <form id="project-form" action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
                     @csrf
                     @method('PATCH')
                     <h2 class="font-medium text-darker-blue text-xl mt-5">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="mt-5 grid grid-cols-12 gap-4">
                         <div class="col-span-6">
-                            <select id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none required">
+                            <select required id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none required">
                                 <option value="" hidden>Select Project Domain *</option>
                                 <option value="nlp" {{ old('domain', $project->project_domain) == 'nlp' ? 'selected': '' }}>Natural Language Processing (NLP)</option>
                                 <option value="statistical" {{ old('domain', $project->project_domain) == 'statistical' ? 'selected': '' }}>Machine Learning (ML)</option>
@@ -129,8 +129,8 @@
                             </p>
                         @enderror
                     </div>
-
-                    <div class="mt-5" hidden>
+{{-- No Project Type since the activation will be location in another button --}}
+                    {{-- <div class="mt-5" hidden>
                         <select id="inputprojecttype"  name="projectType" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
                             <option value="" hidden>Select Project Privacy Settings *</option>
                             <option value="public" {{ !$project->institution_id ? 'selected' : '' }}>Public to all institutions</option>
@@ -159,9 +159,9 @@
                                 @endif
                             @endif
                         </select>
-                    </div>
+                    </div> --}}
 
-                    <input type="hidden" value="{{ $project->institution_id }}" name="existing_institute">
+                    {{-- <input type="hidden" value="{{ $project->institution_id }}" name="existing_institute">
 
                     <div class="mt-5">
                         <select id="inputinstitution"  name="institution_id" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
@@ -170,7 +170,7 @@
                                 <option value="{{$institution->id}}" >{{$institution->name}}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="mt-7">
                         <div class="flex justify-between items-center gap-6">
@@ -227,17 +227,10 @@
                             </h3>
 
                             <div class="text-xl text-dark-blue">
-                                @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-                                    <a href="{{ route('dashboard.partner.partnerProjectsInjection', ['partner' => optional($project->company)->id, 'project' => $project->id]) }}" class="flex items-center gap-3">
-                                        <i class="fas fa-circle-plus mt-1 text-primary"></i>
-                                        Add Task
-                                    </a>
-                                @else
-                                    <a href="{{ route('dashboard.projects.section', ['project' => $project->id]) }}" class="flex items-center gap-3">
-                                        <i class="fas fa-circle-plus mt-1 text-primary"></i>
-                                        Add Task
-                                    </a>
-                                @endif
+                                <a href="{{ route('participant.projects.task', ['project' => $project->id]) }}" class="flex items-center gap-3">
+                                    <i class="fas fa-circle-plus mt-1 text-primary"></i>
+                                    Add Task
+                                </a>
                             </div>
                         </div>
                     @endif
@@ -285,21 +278,13 @@
                             </div>
                         @endforeach
                     </div>
-
-                    <div class="mt-10">
-                        @if (Auth::guard('web')->check())
-                            <button type="submit" class="py-2 px-11 rounded-full bg-primary text-center text-white text-sm">Update Project</button>
-                        @elseif (Auth::guard('mentor')->check() || Auth::guard('customer')->check() )
-                            <button type="submit" class="py-2 px-11 rounded-full bg-primary text-center text-white text-sm">Update Proposed Project</button>
-                        @endif
-                    </div>
                 </form>
             </div>
         </div>
 
         <div class="mt-6 flex justify-center">
             <button type="button" id="add-project-btn" class="min-w-[196px] py-2 px-3 bg-[#E9E9E9] border border-grey rounded-full text-[#838383] text-lg">
-                Add Project
+                Apply Changes
             </button>
         </div>
     </div>
@@ -320,6 +305,21 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
+
+        const button = document.getElementById('add-project-btn');
+        const form = document.getElementById('project-form');
+
+        button.addEventListener('click', function(event) {
+            // Check if the form is valid
+            if (form.checkValidity()) {
+                // Submit the form if all required fields are filled
+                form.submit();
+            } else {
+                // If the form is invalid, trigger the browser's default validation UI
+                form.reportValidity();
+            }
+        });
+
         const container = document.getElementById('dataset-fields-container');
         const addButton = document.getElementById('add-dataset-btn');
 

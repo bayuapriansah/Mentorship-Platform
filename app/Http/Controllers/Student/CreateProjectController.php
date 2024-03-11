@@ -41,6 +41,7 @@ class CreateProjectController extends Controller
         toastr()->success($message);
         // Redirect to the edit route with the new project's ID
         return redirect()->route('participant.projects.edit', ['project' => $project->id]);
+
     }
 
     public function indexView()
@@ -48,6 +49,7 @@ class CreateProjectController extends Controller
         return view('student.project.create', $this->generateFakeLayoutData());
     }
 
+    // for project
     public function editproject(Project $project)
     {
         $teamName = Auth::guard('student')->user()->team_name;
@@ -60,7 +62,7 @@ class CreateProjectController extends Controller
             return redirect()->back();
         }
 
-        $formAction = route('dashboard.projects.update', ['project' => $project->id]);
+        $formAction = route('participant.projects.update', ['project' => $project->id]);
         $cards = ProjectSection::where('project_id', $project->id)->get();
         $institutions = Institution::get();
         return view('student.project.edit', compact(
@@ -68,6 +70,19 @@ class CreateProjectController extends Controller
             'formAction',
             'cards',
             'institutions'
+        ), $this->generateFakeLayoutData());
+    }
+
+    // For Injection
+    public function addProjectTask(Project $project)
+    {
+        $backUrl = route('participant.projects.update', ['project' => $project->id]);
+        // $formAction = route('dashboard.projects.storeSection', ['project' => $project->id]);
+
+        return view('student.project.add-task', compact(
+            'project',
+            'backUrl',
+            // 'formAction',
         ), $this->generateFakeLayoutData());
     }
 
@@ -94,5 +109,48 @@ class CreateProjectController extends Controller
             'enrolled_projects' => new \Illuminate\Database\Eloquent\Collection(),
             'dataDate' => (new \App\Http\Controllers\SimintEncryption)->daycompare(auth()->user()->created_at,auth()->user()->end_date),
         ];
+    }
+
+    public function projectUpdate(Request $request, Project $project)
+    {
+        $teamName = Auth::guard('student')->user()->team_name;
+
+        // dd($request->all());
+
+        $validated = $request->validate([
+            'name' => ['required'],
+            'project_domain' => ['required', 'in:nlp,statistical,computer_vision'],
+            // 'type' => ['required'],
+            // 'period' => ['required'],
+            // 'projectType' => ['required'],
+            'problem' => ['required'],
+            // 'overview' => ['optional'],
+            'dataset' => ['required'],
+        ],
+        [
+            'name.required' => 'Project name is required',
+            'project_domain.required' => 'Project domain is required',
+            'project_domain.in' => 'The selected project domain is invalid',
+            // 'type.required' => 'Project type is required',
+            // 'period.required' => 'Project period is required',
+            // 'projectType.required' => 'Project type is required',
+            'problem.required' => 'Project problem is required',
+            'dataset.required' => 'Dataset is required',
+        ]);
+
+        $project_update = Project::findOrFail($project->id);
+        // dd($project_update);
+        // if(Auth::guard('web')->check()){
+        $project_update->name = $validated['name'];
+        $project_update->project_domain = $validated['project_domain'];
+        $project_update->problem = $validated['problem'];
+        $project_update->overview = $request->overview;
+        $project_update->dataset = $request->dataset;
+
+        $project_update->save();
+
+        toastr()->success('Project has been updated');
+
+        return redirect()->route('student.allProjects', ['student' => Auth::guard('student')->user()->id]);
     }
 }
