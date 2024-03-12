@@ -325,8 +325,14 @@ class DashboardController extends Controller
             ];
         });
 
-        // Combine the data arrays
-        $data = array_merge($dashboardData, $loginData, $messageData);
+        // dd(Auth::guard('mentor')->user()->institution_id);
+        if(Auth::guard('mentor')->check()){
+            $assignStudents = Student::where('is_confirm', 1)->where('mentor_id', Auth::guard('mentor')->user()->id)->count();
+            $data = array_merge($dashboardData, $loginData, $messageData, ['assignStudents' => $assignStudents]);
+        }else{
+            // Combine the data arrays
+            $data = array_merge($dashboardData, $loginData, $messageData);
+        }
 
         return view('dashboard.index', $data);
     }

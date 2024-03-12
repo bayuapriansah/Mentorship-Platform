@@ -1177,7 +1177,14 @@ class StudentController extends Controller
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
         })->get();
-        $project = Project::where('status', 'publish')->findOrFail($project_id);
+
+        if(Auth::guard('student')->user()->mentorship_type == 'entrepreneur_track'){
+            $project = Project::where('status', 'private')->findOrFail($project_id);
+        }else{
+            $project = Project::where('status', 'publish')->findOrFail($project_id);
+        }
+
+
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student_id);
