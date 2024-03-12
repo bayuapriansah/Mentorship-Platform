@@ -313,6 +313,7 @@ class CreateProjectController extends Controller
         $enrolled_project->project_id = $project->id;
         $enrolled_project->is_submited = 0;
         $enrolled_project->mentorshipType = 'enterpreneurship';
+        $enrolled_project->team_name = $teamName;
         $enrolled_project->save();
 
         toastr()->success('Project has been enrolled successfully.');

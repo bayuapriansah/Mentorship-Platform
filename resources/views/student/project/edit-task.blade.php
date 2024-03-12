@@ -13,7 +13,7 @@
                     {{ $project->name }}
                 </a>
                 <span class="ml-2 mr-4">></span>
-                Create Task
+                    {{ $ProjectSection->title }}
             </h1>
 
             <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col">
