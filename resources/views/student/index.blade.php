@@ -124,7 +124,7 @@
                                                     <div
                                                         class="intelOne text-white text-sm font-normal bg-light-brown px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
                                                         <i class="fa-solid fa-clock-rotate-left"></i>
-                                                        <span class="ml-2">Draft</span>
+                                                        <span class="ml-2">Ongoing</span>
                                                     </div>
                                                     {{-- @if ($enrolled_project->is_submited == 0)
                                                         <div
@@ -186,13 +186,21 @@
                                                         Edit Project
                                                     </a>
                                                 @endif
-
+@if(!DB::table('enrolled_projects')->where('student_id', auth()->user()->id)->where('mentorshipType', 'enterpreneurship')->exists());
                                                 <a
                                                     href="{{ route('participant.projects.task.enroll', ['project' => $existingProject->id]) }}"
                                                     class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
                                                 >
                                                     Enroll Project
                                                 </a>
+@else
+                                                <a
+                                                href="{{ '' }}"
+                                                class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
+                                                >
+                                                    View Project
+                                                </a>
+@endif
                                             </div>
                                         </div>
                                     </div>
