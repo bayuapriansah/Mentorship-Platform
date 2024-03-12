@@ -9,19 +9,20 @@
                     My Project
                 </a>
                 <span class="ml-2 mr-4">></span>
-                Create Project
+                {{ $project->name }}
             </h1>
 
             <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col">
                 <form id="project-form" action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
                     @csrf
                     @method('PATCH')
-                    <h2 class="font-medium text-darker-blue text-xl mt-5">
-                        Project Descriptions
-                        <span class="text-red-500">(Optional)</span>
+                    <h2 class="font-medium text-darker-blue text-xl my-5">
+                        Project Name
+                        <span class="text-red-500">*</span>
                     </h2>
                     <div>
                         <input
+                            reuq'
                             type="text"
                             id="inputname"
                             name="name"
@@ -36,6 +37,10 @@
                             </p>
                         @enderror
                     </div>
+                    <h2 class="font-medium text-darker-blue text-xl my-5">
+                        Project Type
+                        <span class="text-red-500">*</span>
+                    </h2>
                     <div class="mt-5 grid grid-cols-12 gap-4">
                         <div class="col-span-6">
                             <select required id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none required">
@@ -97,7 +102,10 @@
                             </p>
                         @enderror
                     </div>
-
+                    <h2 class="font-medium text-darker-blue text-xl my-5">
+                        Project Details
+                        <span class="text-red-500">*</span>
+                    </h2>
                     <div class="mt-5">
                         <textarea name="problem" id="problem">
                             {{ old('problem', $project->problem) }}
@@ -243,9 +251,10 @@
                                 </p>
 
                                 <div class="col-span-2 flex flex-col">
-                                    <span class="text-xs">Duration:</span>
+                                    <span class="text-xs">Due Date:</span>
                                     <span class="text-xs text-dark-blue">
-                                        {{ $card->duration }} {{ $card->duration == 1 ? 'Day' : 'Days' }}
+                                        {{ $card->due_date }}
+                                        {{-- {{ $card->duration }} {{ $card->duration == 1 ? 'Day' : 'Days' }} --}}
                                     </span>
                                 </div>
 
@@ -257,23 +266,12 @@
                                 </div>
 
                                 <div class="col-span-2 justify-self-end space-x-5">
-                                    @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-                                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionEdit', ['partner' => optional($project->company)->id, 'project' => $project->id, 'injection' => $card->id]) }}">
-                                            <i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i>
-                                        </a>
-
-                                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionDelete', ['partner' => optional($project->company)->id, 'project' => $project->id, 'injection' => $card->id]) }}">
-                                            <i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i>
-                                        </a>
-                                    @else
-                                        <a href="{{ route('dashboard.projects.EditSection', ['project' => $project->id, 'injection' => $card->id]) }}">
-                                            <i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i>
-                                        </a>
-
-                                        <a href="{{ route('dashboard.projects.DestroySection', ['project' => $project->id, 'injection' => $card->id]) }}">
-                                            <i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i>
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('participant.projects.edit-task', ['project' => $project->id, 'ProjectSection' => $card->id]) }}">
+                                        <i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i>
+                                    </a>
+                                    <a href="{{ route('participant.projects.task.delete', ['project' => $project->id, 'ProjectSection' => $card->id]) }}">
+                                        <i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i>
+                                    </a>
                                 </div>
                             </div>
                         @endforeach

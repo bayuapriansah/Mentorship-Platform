@@ -17,20 +17,20 @@
             </h1>
 
             <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col">
-                <form id="project-form" action="{{-- $formAction --}}" method="post" enctype="multipart/form-data" class="mt-10">
+                <form id="project-form" action="{{ $formAction }}" method="post" enctype="multipart/form-data" class="mt-10">
                     @csrf
                     @method('PATCH')
-                    <h2 class="font-medium text-darker-blue text-xl mt-5">
-                        Project Descriptions
-                        <span class="text-red-500">(Optional)</span>
+                    <h2 class="font-medium text-darker-blue text-xl my-5">
+                        Task Label
+                        <span class="text-red-500">*</span>
                     </h2>
                     <div>
                         <input
                             type="text"
                             id="inputname"
                             name="name"
-                            value="{{ old('name', $project->name) }}"
-                            placeholder="Project Name *"
+                            value=""
+                            placeholder="Task Label *"
                             class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
                         >
 
@@ -40,71 +40,19 @@
                             </p>
                         @enderror
                     </div>
-                    <div class="mt-5 grid grid-cols-12 gap-4">
-                        <div class="col-span-6">
-                            <select required id="inputdomain" name="project_domain" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none required">
-                                <option value="" hidden>Select Project Domain *</option>
-                                <option value="nlp" {{ old('domain', $project->project_domain) == 'nlp' ? 'selected': '' }}>Natural Language Processing (NLP)</option>
-                                <option value="statistical" {{ old('domain', $project->project_domain) == 'statistical' ? 'selected': '' }}>Machine Learning (ML)</option>
-                                <option value="computer_vision" {{ old('domain', $project->project_domain) == 'computer_vision' ? 'selected': '' }}>Computer Vision (CV)</option>
-                            </select>
+                    <div class="w-full mt-5 flex flex-col gap-3">
+                        <h2 class="font-medium text-darker-blue text-xl">
+                            Due Date
+                            <span class="text-red-500">*</span>
+                        </h2>
 
-                            @error('domain')
-                                <p class="text-red-600 text-sm mt-1">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="col-span-6">
-                            {{-- <select disabled id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none"> --}}
-                            <select disabled id="inputperiod" class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
-                                <option value="" hidden>Project Duration *</option>
-                                <option value="10" {{ old('period', $project->period) == '10' ? 'selected': '' }}>10 Weeks</option>
-                                {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option> --}}
-                                {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>1 Month</option>
-                                <option value="2" {{ old('period', $project->period) == '2' ? 'selected': '' }}>2 Month(s)</option>
-                                <option value="3" {{ old('period', $project->period) == '3' ? 'selected': '' }}>3 Month(s)</option> --}}
-                            </select>
-
-                            @error('period')
-                                <p class="text-red-600 text-sm mt-1">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        {{-- <div class="col-span-4">
-                            <select id="inputtype" name="type" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
-                                <option value="" hidden>Project Type *</option>
-                                <option value="weekly" {{ old('type', $project->type) == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                            </select>
-
-                            @error('type')
-                                <p class="text-red-600 text-sm mt-1">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div> --}}
-                    </div>
-
-                    <div class="mt-5" hidden>
-                        <input readonly type="hidden" id="inputpartner" name="partner" value="{{ optional($project->company)->id }}">
-
-                        <select disabled class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
-                            <option value="{{ optional($project->company)->id }}" hidden>{{ optional($project->company)->name; }}</option>
-                        </select>
-
-                        @error('partner')
-                            <p class="text-red-600 text-sm mt-1">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                        <input type="date" name="DueDate"
+                            class="h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
                     </div>
 
                     <div class="mt-5">
                         <textarea name="problem" id="problem">
-                            {{ old('problem', $project->problem) }}
+                            {{-- {{ old('problem', $project->problem) }} --}}
                         </textarea>
 
                         @error('problem')
@@ -113,21 +61,25 @@
                             </p>
                         @enderror
                     </div>
-                    <h2 class="font-medium text-darker-blue text-xl mt-5">
-                        Project Descriptions
+                    <h2 class="font-medium text-darker-blue text-xl my-5">
+                        Task Assigned to
                         <span class="text-red-500">(Optional)</span>
                     </h2>
-                    <div class="mt-5">
-                        <input
-                            type="text"
-                            id="inputoverview"
-                            name="overview"
-                            value="{{ old('overview', $project->overview) }}"
-                            placeholder="Brief Project Overview (Optional)"
-                            class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none"
-                        >
+                    @php
+                        $teamStudents = teamList($student->team_name);
+                    @endphp
 
-                        @error('overview')
+                    {{-- @dd($teamStudents->where('team_name',$student->team_name)->where('id',317)); --}}
+                    <div class="col-span-6">
+                        <select required id="inputdomain" name="assign" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none required">
+                            <option value="" hidden>Select team members</option>
+                            @foreach($teamStudents as $student)
+                            <!-- Student data display -->
+                            <option value="{{ $student->id }}">{{ $student->first_name }} {{ $student->last_name }}</option>
+                            @endforeach
+                        </select>
+
+                        @error('domain')
                             <p class="text-red-600 text-sm mt-1">
                                 {{ $message }}
                             </p>
@@ -137,7 +89,7 @@
                     <div class="mt-7">
                         <div class="flex justify-between items-center gap-6">
                             <h3 class="text-dark-blue font-medium text-xl">
-                                Dataset(s)
+                                Task Attachments
                                 <span class="text-red-500">*</span>
                                 <i data-tooltip-target="tooltip-animation" class="fa fa-info-circle" aria-hidden="true"></i>
 
@@ -149,30 +101,16 @@
 
                             <button id="add-dataset-btn" type="button" class="flex items-center gap-3 text-xl">
                                 <i class="fas fa-circle-plus mt-1 text-primary"></i>
-                                Add Dataset
+                                Task Attachments
                             </button>
                         </div>
                         <div id="dataset-fields-container" class="mt-4">
-                            @php
-                                // Ensure that $project->dataset is always an array
-                                $datasets = $project->dataset ?? [];
-                            @endphp
-
-                            @foreach ($datasets as $index => $datasetUrl)
-                                <div class="flex items-center mt-2 relative">
-                                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasetUrl }}" required>
-                                    {{-- <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasetUrl }}" required> --}}
-                                    @if ($index > 0)
-                                        <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fas fa-circle-minus text-red-600"></i></button>
-                                    @endif
-                                </div>
-                            @endforeach
-
-                            @if (count($datasets) === 0)
-                                <div class="flex items-center mt-2 relative">
-                                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" required>
-                                </div>
-                            @endif
+                            <div class="flex flex-wrap gap-2 items-center mt-2 relative">
+                                {{-- Dataset Label Input --}}
+                                <input type="text" class="dataset-label-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Dataset Label" name="dataset_label[]" required>
+                                {{-- Dataset URL Input --}}
+                                <input type="text" class="dataset-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" required>
+                            </div>
                         </div>
 
                         @error('dataset')
@@ -208,7 +146,6 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-
         const button = document.getElementById('add-project-btn');
         const form = document.getElementById('project-form');
 
@@ -227,21 +164,32 @@
         const addButton = document.getElementById('add-dataset-btn');
 
         addButton.addEventListener('click', function () {
-            addDatasetInputField('');
+            addDatasetInputField('', '');
         });
 
-        function addDatasetInputField(value) {
+        function addDatasetInputField(datasetValue, labelValue) {
             const inputWrapper = document.createElement('div');
-            inputWrapper.className = 'flex items-center mt-2 relative';
+            inputWrapper.className = 'flex flex-wrap gap-2 items-center mt-2 relative';
 
+            // Input for Dataset URL
             const newInput = document.createElement('input');
             newInput.type = 'text';
-            newInput.className = 'dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
+            newInput.className = 'dataset-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
             newInput.placeholder = 'Add Data set URLs';
             newInput.name = 'dataset[]';
-            newInput.value = value;
+            newInput.value = datasetValue;
             newInput.required = true;
 
+            // Input for Dataset Label
+            const newLabelInput = document.createElement('input');
+            newLabelInput.type = 'text';
+            newLabelInput.className = 'dataset-label-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none';
+            newLabelInput.placeholder = 'Dataset Label';
+            newLabelInput.name = 'dataset_label[]';
+            newLabelInput.value = labelValue;
+            newLabelInput.required = true;
+
+            // Remove Button
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.className = 'remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2';
@@ -250,15 +198,14 @@
                 inputWrapper.remove();
             };
 
+            // Append Dataset URL Input and Dataset Label Input to the wrapper
+            inputWrapper.appendChild(newLabelInput);
             inputWrapper.appendChild(newInput);
             inputWrapper.appendChild(removeButton);
+
+            // Append the entire wrapper to the container
             container.appendChild(inputWrapper);
         }
-
-        // Function to remove dataset input field
-        window.removeDatasetInputField = function (button) {
-            button.parentElement.remove();
-        };
 
         // Add remove functionality to existing dataset input fields
         const existingRemoveButtons = container.querySelectorAll('.remove-dataset-btn');
@@ -269,4 +216,5 @@
         });
     });
 </script>
+
 @endsection

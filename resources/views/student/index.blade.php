@@ -33,6 +33,7 @@
                                 $projectType = $enrolled_projects_entrepreneur;
                             }
                         @endphp
+
                         @forelse($projectType as $enrolled_project)
                             @if ($enrolled_project->project)
                                 <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
@@ -116,29 +117,110 @@
                                     You need to enroll in 1 <span class="font-medium">projects</span> for your internship.
                                 </p>
                             @else
-                                <div class="min-h-[154px] p-3 relative bg-white border border-grey rounded-xl">
-                                    <div class="absolute inset-0 bg-white rounded-xl opacity-50"></div>
+                                @if($existingProject)
+                                    <div class="border mb-5 hover:border-darker-blue hover:border border-light-blue py-5 px-5 rounded-xl bg-white">
+                                        <div class="flex space-x-2">
+                                            <div class=" my-auto border border-light-blue rounded-xl py-4 px-2 mr-2 relative">
+                                                    <div
+                                                        class="intelOne text-white text-sm font-normal bg-light-brown px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
+                                                        <i class="fa-solid fa-clock-rotate-left"></i>
+                                                        <span class="ml-2">Draft</span>
+                                                    </div>
+                                                    {{-- @if ($enrolled_project->is_submited == 0)
+                                                        <div
+                                                            class="intelOne text-white text-sm font-normal bg-light-brown px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
+                                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                                            <span class="ml-2">Ongoing</span>
+                                                        </div>
+                                                    @elseif($enrolled_project->is_submited == 1)
+                                                        <div
+                                                            class="intelOne text-white text-sm font-normal bg-light-green px-6 rounded-full absolute -top-8 left-0 flex items-center justify-between">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            <span class="ml-2">Completed</span>
+                                                        </div>
+                                                    @endif --}}
+                                                <img
+                                                    src="{{ asset('/assets/img/project-logo-placeholder.png') }}"
+                                                    onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
+                                                    alt="Logo"
+                                                    class="w-16 h-9 object-scale-down mx-auto"
+                                                >
+                                            </div>
+                                            <div class="flex-col">
+                                                <p class="text-darker-blue font-bold text-sm">
+                                                    {{ $existingProject->name }}
+                                                </p>
 
-                                    <a href="{{ route('participant.projects.create') }}" class="absolute inset-0 flex justify-center items-center">
-                                        <i class="fas fa-plus fa-10x text-primary"></i>
-                                    </a>
+                                                <div class="min-w-[112px] mt-2 px-2 py-1 bg-lightest-blue rounded-full text-center text-xs font-medium">
+                                                    @switch($existingProject->project_domain)
+                                                        @case('statistical')
+                                                            Machine Learning (ML)
+                                                            @break
+                                                        @case('computer_vision')
+                                                            Computer Vision (CV)
+                                                            @break
+                                                        @default
+                                                            Natural Language Processing (NLP)
+                                                    @endswitch
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-grey font-normal text-xs py-2 m-0">
+                                            {{ substr($existingProject->overview, 0, 250) }}...
+                                        </div>
+                                        <div class="flex justify-between mt-0">
+                                            <p class="intelOne text-black text-sm font-normal my-auto">
+                                                Duration:
+                                                <span class="font-bold">
+                                                    {{-- {{ $enrolled_project->project->period }} Month(s) --}}
+                                                    10 Weeks
+                                                </span>
+                                            </p>
 
-                                    <div class="flex gap-2 items-end">
-                                        <div class="h-16 w-16 border border-grey rounded-lg bg-gradient-to-r from-gray-400 to-gray-100"></div>
+                                            <div class="flex items-center gap-4">
+                                                @if (!isSkillsTrack())
+                                                    <a
+                                                        href="{{ route('participant.projects.create') }}"
+                                                        class="text-primary text-sm font-normal bg-white border border-primary px-12 py-2 rounded-full"
+                                                    >
+                                                        Edit Project
+                                                    </a>
+                                                @endif
 
-                                        <div class="flex flex-col gap-2 w-full">
-                                            <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
-                                            <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
+                                                {{-- <a
+                                                    href="/profile/{{ Auth::guard('student')->user()->id }}/enrolled/{{ $enrolled_project->project->id }}/detail"
+                                                    class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
+                                                >
+                                                    View Project
+                                                </a> --}}
+                                            </div>
                                         </div>
                                     </div>
+                                @else
+                                    <div class="min-h-[154px] p-3 relative bg-white border border-grey rounded-xl">
+                                        <div class="absolute inset-0 bg-white rounded-xl opacity-50"></div>
 
-                                    <div class="mt-2 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
-                                    <div class="mt-1 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
+                                        <a href="{{ route('participant.projects.create') }}" class="absolute inset-0 flex justify-center items-center">
+                                            <i class="fas fa-plus fa-10x text-primary"></i>
+                                        </a>
 
-                                    <div class="w-max ml-auto text-white text-sm font-normal bg-primary px-8 py-1 rounded-full">
-                                        View Project
+                                        <div class="flex gap-2 items-end">
+                                            <div class="h-16 w-16 border border-grey rounded-lg bg-gradient-to-r from-gray-400 to-gray-100"></div>
+
+                                            <div class="flex flex-col gap-2 w-full">
+                                                <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
+                                                <div class="h-5 w-1/5 bg-gradient-to-r from-gray-400 to-white"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
+                                        <div class="mt-1 h-6 w-1/2 bg-gradient-to-r from-gray-400 to-white"></div>
+
+                                        <div class="w-max ml-auto text-white text-sm font-normal bg-primary px-8 py-1 rounded-full">
+                                            View Project
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             @endif
                         @endforelse
                     </div>

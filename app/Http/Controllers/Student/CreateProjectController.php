@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Student;
 use App\Models\Institution;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\ProjectSection;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -76,14 +77,63 @@ class CreateProjectController extends Controller
     // For Injection
     public function addProjectTask(Project $project)
     {
-        $backUrl = route('participant.projects.update', ['project' => $project->id]);
-        // $formAction = route('dashboard.projects.storeSection', ['project' => $project->id]);
+        $backUrl = route('participant.projects.edit', ['project' => $project->id]);
+        $formAction = route('participant.projects.task.progress', ['project' => $project->id]);
 
         return view('student.project.add-task', compact(
             'project',
             'backUrl',
-            // 'formAction',
+            'formAction',
         ), $this->generateFakeLayoutData());
+    }
+
+    public function addTaskProgress(Request $request, Project $project)
+    {
+        $teamName = Auth::guard('student')->user()->team_name;
+
+        $validated = $request->validate([
+            'name' => 'required',
+            'DueDate' => 'required',
+            'problem' => 'required',
+            'assign' => 'required',
+            'dataset_label' => 'required',
+            'dataset' => 'required',
+        ], [
+            'name.required' => 'Project name is required',
+            'DueDate.required' => 'Due date is required',
+            'problem.required' => 'Project problem is required',
+            'assign.required' => 'Assignment field is required',
+            'dataset_label.required' => 'Dataset label is required',
+            'dataset.required' => 'Dataset is required',
+        ]);
+
+        // Calculate the section number
+        $lastSection = ProjectSection::where('project_id', $project->id)->latest('section')->first();
+        $sectionNumber = $lastSection ? $lastSection->section + 1 : 1;
+
+        // Calculate the duration
+        $today = now();
+        $dueDate = Carbon::createFromFormat('Y-m-d', $validated['DueDate']);
+        $duration = $dueDate->diffInDays($today);
+
+        // Create and save the new project section
+        $projectSection = new ProjectSection();
+        $projectSection->project_id = $project->id;
+        $projectSection->section = $sectionNumber;
+        $projectSection->title = $validated['name'];
+        $projectSection->description = $validated['problem'];
+        $projectSection->dataset_label = $validated['dataset_label'];
+        $projectSection->dataset = $validated['dataset'];
+        $projectSection->duration = $duration;
+        $projectSection->assigned_to = $validated['assign'];
+        $projectSection->due_date = $validated['DueDate'];
+        $projectSection->file_type = '.zip';
+        $projectSection->save();
+
+        // dd($projectSection);
+        toastr()->success('Project Task has been added successfully.');
+
+        return redirect()->route('participant.projects.edit', ['project' => $project->id]);
     }
 
     public function addTask()
@@ -91,9 +141,77 @@ class CreateProjectController extends Controller
         return view('student.project.add-task', $this->generateFakeLayoutData());
     }
 
-    public function editTask()
+    public function editTaskProgress(Request $request, Project $project, ProjectSection $ProjectSection)
     {
-        return view('student.project.edit-task', $this->generateFakeLayoutData());
+        // dd($ProjectSection->id);
+        $teamName = Auth::guard('student')->user()->team_name;
+
+        $validated = $request->validate([
+            'name' => 'required',
+            'DueDate' => 'required',
+            'problem' => 'required',
+            'assign' => 'required',
+            'dataset_label' => 'required',
+            'dataset' => 'required',
+        ], [
+            'name.required' => 'Project name is required',
+            'DueDate.required' => 'Due date is required',
+            'problem.required' => 'Project problem is required',
+            'assign.required' => 'Assignment field is required',
+            'dataset_label.required' => 'Dataset label is required',
+            'dataset.required' => 'Dataset is required',
+        ]);
+
+        // Calculate the section number
+        $lastSection = ProjectSection::where('project_id', $project->id)->latest('section')->first();
+        $sectionNumber = $lastSection ? $lastSection->section + 1 : 1;
+
+        // Calculate the duration
+        $today = now();
+        $dueDate = Carbon::createFromFormat('Y-m-d', $validated['DueDate']);
+        $duration = $dueDate->diffInDays($today);
+
+        // Create and save the new project section
+        $projectSection_update = ProjectSection::findOrFail($ProjectSection->id);
+        $projectSection_update->title = $validated['name'];
+        $projectSection_update->description = $validated['problem'];
+        $projectSection_update->dataset_label = $validated['dataset_label'];
+        $projectSection_update->dataset = $validated['dataset'];
+        $projectSection_update->duration = $duration;
+        $projectSection_update->assigned_to = $validated['assign'];
+        $projectSection_update->due_date = $validated['DueDate'];
+        $projectSection_update->file_type = '.zip';
+        $projectSection_update->save();
+
+        // dd($projectSection);
+        toastr()->success('Project Task has been updated successfully.');
+
+        return redirect()->route('participant.projects.edit', ['project' => $project->id]);
+    }
+
+    public function editTask(Project $project, ProjectSection $ProjectSection)
+    {
+        $teamName = Auth::guard('student')->user()->team_name;
+
+        // Check if a project with the same team_name already exists
+        $existingProject = Project::where('team_name', $teamName)->first();
+
+        if ($existingProject->id != $project->id) {
+            // Redirect to the edit route with the existing project's ID
+            return redirect()->back();
+        }
+
+        $formAction = route('participant.projects.edit-task.progress', ['project' => $project->id, 'ProjectSection' => $ProjectSection->id]);
+        $cards = ProjectSection::where('project_id', $project->id)->get();
+        $backUrl = route('participant.projects.edit', ['project' => $project->id]);
+        return view('student.project.edit-task', compact(
+            'project',
+            'ProjectSection',
+            'formAction',
+            'cards',
+            'backUrl'
+        ), $this->generateFakeLayoutData());
+        // return view('student.project.edit-task', $this->generateFakeLayoutData());
     }
 
     private function generateFakeLayoutData()
@@ -152,5 +270,27 @@ class CreateProjectController extends Controller
         toastr()->success('Project has been updated');
 
         return redirect()->route('student.allProjects', ['student' => Auth::guard('student')->user()->id]);
+    }
+
+    public function deleteProjectTask(Project $project, ProjectSection $ProjectSection)
+    {
+        $teamName = Auth::guard('student')->user()->team_name;
+
+        // Check if the project belongs to the student's team
+        if ($project->team_name !== $teamName) {
+            // Optionally, you can return a custom error message or use abort(403)
+            toastr()->error('Error Not Found');
+            return back();
+        }
+
+        // Update the section field before soft deleting
+        $ProjectSection_del = ProjectSection::findOrFail($ProjectSection->id);
+        $ProjectSection_del->section = 0;
+        $ProjectSection_del->save();
+        $ProjectSection_del->delete(); // This will soft-delete the project section
+
+        toastr()->success('Project Task has been deleted successfully.');
+
+        return back(); // Redirect the user back to the previous page
     }
 }

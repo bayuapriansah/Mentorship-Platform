@@ -779,6 +779,10 @@ class StudentController extends Controller
         $enrolled_projects_entrepreneur = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)
                                                         ->where('mentorshipType', 'entrepreneur')
                                                         ->get();
+
+        $teamName = Auth::guard('student')->user()->team_name;
+        // Check if a project with the same team_name already exists
+        $existingProject = Project::where('team_name', $teamName)->first();
         $completed_months = Project::whereHas('enrolled_project', function($q){
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
@@ -786,7 +790,7 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        return view('student.index', compact('enrolled_projects','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+        return view('student.index', compact('enrolled_projects','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages', 'existingProject'));
     }
 
     public function ongoingProjects($id)
