@@ -195,7 +195,7 @@
                                                 </a>
 @else
                                                 <a
-                                                href="{{ '' }}"
+                                                href="/profile/{{Auth::guard('student')->user()->id}}/enrolled/{{$existingProject->id}}/detail"
                                                 class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
                                                 >
                                                     View Project
