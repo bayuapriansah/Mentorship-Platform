@@ -16,7 +16,7 @@
                             </a>
                         </h1>
 
-                        @if (isSkillsTrack() && !DB::table('enrolled_projects')->where('student_id', auth()->user()->id)->exists())
+                        @if (isSkillsTrack() && !DB::table('enrolled_projects')->where('student_id', auth()->user()->id)->where('mentorshipType', 'skill')->exists())
                             <h1 class="w-max py-2 text-grey text-xl">
                                 <a href="{{ route('student.allProjectsAvailable', ['student' => auth()->user()->id]) }}?is_skills_track">
                                     Available Projects
@@ -187,12 +187,12 @@
                                                     </a>
                                                 @endif
 
-                                                {{-- <a
-                                                    href="/profile/{{ Auth::guard('student')->user()->id }}/enrolled/{{ $enrolled_project->project->id }}/detail"
+                                                <a
+                                                    href="{{ route('participant.projects.task.enroll', ['project' => $existingProject->id]) }}"
                                                     class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"
                                                 >
-                                                    View Project
-                                                </a> --}}
+                                                    Enroll Project
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

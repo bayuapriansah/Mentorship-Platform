@@ -18,4 +18,5 @@ Route::prefix('participant')->middleware('auth:student')->group(function() {
     Route::patch('/projects/edit/{project}/edit-task/{ProjectSection}/progress', [App\Http\Controllers\Student\CreateProjectController::class, 'editTaskProgress'])->name('participant.projects.edit-task.progress');
     // Add this route for deleting a project section
     Route::get('/projects/del/{project}/task/{ProjectSection}', [App\Http\Controllers\Student\CreateProjectController::class, 'deleteProjectTask'])->name('participant.projects.task.delete');
+    Route::get('/projects/enroll/{project}', [App\Http\Controllers\Student\CreateProjectController::class, 'enrollProject'])->name('participant.projects.task.enroll');
 });

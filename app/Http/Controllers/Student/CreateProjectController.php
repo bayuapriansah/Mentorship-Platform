@@ -8,6 +8,7 @@ use App\Models\Institution;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\ProjectSection;
+use App\Models\EnrolledProject;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -290,6 +291,31 @@ class CreateProjectController extends Controller
         $ProjectSection_del->delete(); // This will soft-delete the project section
 
         toastr()->success('Project Task has been deleted successfully.');
+
+        return back(); // Redirect the user back to the previous page
+    }
+
+    public function enrollProject(Project $project)
+    {
+        // dd($project);
+        $teamName = Auth::guard('student')->user()->team_name;
+
+        // Check if the project belongs to the student's team
+        if ($project->team_name !== $teamName) {
+            // Optionally, you can return a custom error message or use abort(403)
+            toastr()->error('Error Not Found');
+            return back();
+        }
+
+        $enrolled_project = new EnrolledProject;
+        // Update the status field
+        $enrolled_project->student_id = Auth::guard('student')->user()->id;
+        $enrolled_project->project_id = $project->id;
+        $enrolled_project->is_submited = 0;
+        $enrolled_project->mentorshipType = 'enterpreneurship';
+        $enrolled_project->save();
+
+        toastr()->success('Project has been enrolled successfully.');
 
         return back(); // Redirect the user back to the previous page
     }
