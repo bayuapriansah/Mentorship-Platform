@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\Project;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\EnrolledProject;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectsTable extends Component
 {
@@ -89,5 +91,30 @@ class ProjectsTable extends Component
     public function resetSearch()
     {
         $this->search = '';
+    }
+
+    public function countEnrolled($project)
+    {
+        if (Auth::guard('mentor')->check()) {
+            $query = EnrolledProject::query()->where('project_id', $project->id);
+
+            if (Auth::guard('mentor')->user()->institution_id != 0) {
+                $query = $query->whereHas('student', function ($q) {
+                    $q->where('institution_id', Auth::guard('mentor')->user()->institution_id);
+                });
+
+                $query = $query->whereHas('student', function ($q) {
+                    $q->where('mentor_id', Auth::guard('mentor')->user()->id);
+                });
+            } else {
+                $query = $query->whereHas('student', function ($q) {
+                    $q->where('staff_id', Auth::guard('mentor')->user()->id);
+                });
+            }
+
+            return $query->count();
+        } else {
+            return $project->enrolled_project_count;
+        }
     }
 }

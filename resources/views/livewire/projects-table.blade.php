@@ -149,7 +149,8 @@
 
                             <td class="pr-8 py-2">
                                 <a href="{{ route('dashboard.enrollment.show', ['id' => encData($project->id)]) }}" class="px-2 py-1 bg-primary rounded-lg text-sm text-white flex justify-between items-center gap-4">
-                                    {{ $project->enrolled_project->count() }}
+                                    {{-- {{ $project->enrolled_project->count() }} --}}
+                                    {{ $this->countEnrolled($project) }}
                                     <span class="text-base">></span>
                                 </a>
                             </td>

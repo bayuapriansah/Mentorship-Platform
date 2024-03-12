@@ -69,7 +69,7 @@
             {{-- Sort by --}}
 
             {{-- Filter - Mentor --}}
-            @if (Auth::guard('mentor')->check() && Auth::guard('mentor')->user()->institution_id != 0)
+            {{-- @if (Auth::guard('mentor')->check() && Auth::guard('mentor')->user()->institution_id != 0)
                 <div class="flex flex-col">
                     <h2 class="text-lg text-darker-blue">
                         Participants
@@ -84,7 +84,7 @@
                         </option>
                     </select>
                 </div>
-            @endif
+            @endif --}}
             {{-- ./Filter - Mentor --}}
         </div>
     </div>

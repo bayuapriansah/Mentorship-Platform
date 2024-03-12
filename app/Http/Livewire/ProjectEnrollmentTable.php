@@ -24,7 +24,7 @@ class ProjectEnrollmentTable extends Component
     public $sortDirection = 'asc';
     public $filterByStatus = '';
     public $filterByCountry = '';
-    public $filterByMentor = 'all';
+    public $filterByMentor = 'my';
 
     public $sortOptions = [
         'student.name' => 'Participant Name',

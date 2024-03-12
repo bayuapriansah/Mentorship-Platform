@@ -19,7 +19,7 @@ class SubmissionsTable extends Component
     public $search = '';
     public $sortField = 'student.name';
     public $sortDirection = 'asc';
-    public $filterByMentor = 'all';
+    public $filterByMentor = 'my';
 
     public $sortOptions = [
         'student.name' => 'Participant Name',
