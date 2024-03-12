@@ -143,7 +143,7 @@
                     </h1>
 
                     <p class="text-lg">
-                        Welcome to The {{ Auth::guard('mentor')->user()->getTitle() }} Dashboard.
+                        Welcome to the {{ Auth::guard('mentor')->user()->getTitle() }} Dashboard.
                     </p>
                 </div>
 
