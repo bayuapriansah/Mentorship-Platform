@@ -150,7 +150,7 @@
                     @foreach ($submissions as $submission)
                         <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-[#EBEDFF]' : 'bg-[#F8F8F8]' }}">
                             <td class="pr-8 pl-5 py-2 rounded-s-lg">
-                                {{ $submission->student->first_name }} {{ $submission->student->last_name }}
+                                {{ optional($submission->student)->first_name }} {{ optional($submission->student)->last_name }}
                             </td>
 
                             <td class="pr-8 py-2">

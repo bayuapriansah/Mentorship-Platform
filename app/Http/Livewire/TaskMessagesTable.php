@@ -78,7 +78,7 @@ class TaskMessagesTable extends Component
         $count = commentPerSection($this->projectSection)->where('student_id', $participant_id)->count();
 
         if ($count > 0) {
-            echo $count + ' Unread Messages';
+            echo $count . ' Unread Messages'; // Corrected concatenation
         }
     }
 }

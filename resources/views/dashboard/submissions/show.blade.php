@@ -78,7 +78,7 @@
             </p>
 
             <p class="mt-1">
-                {{ $submission->student->first_name }} {{ $submission->student->last_name }}
+                {{ optional($submission->student)->first_name }} {{ optional($submission->student)->last_name }}
             </p>
         </div>
 

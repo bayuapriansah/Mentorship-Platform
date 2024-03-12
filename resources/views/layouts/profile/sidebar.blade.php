@@ -48,7 +48,7 @@
           class="w-[100px] h-[100px] rounded-full  mx-auto object-cover ring ring-[#C5CAF3]"
       >
       <p class="mt-4 text-darker-blue text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
-      <p class="mt-2 text-black text-sm text-center">{{$student->year_of_study}} Year, B.Tech in<br> {{$student->study_program}} </p>
+      <p class="mt-2 text-black text-sm text-center">{{$student->year_of_study}} Year<br> {{$student->study_program}} </p>
       <div class="w-12 h-12 mt-2 mx-auto bg-white rounded-full flex justify-center items-center">
           <img
               src="{{ $student->institution->logo ? asset('storage/'.$student->institution->logo) : asset('/assets/img/institution-placeholder.png') }}"
