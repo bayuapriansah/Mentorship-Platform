@@ -779,6 +779,10 @@ class StudentController extends Controller
         $enrolled_projects_entrepreneur = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)
                                                         ->where('mentorshipType', 'entrepreneur')
                                                         ->get();
+
+        $teamName = Auth::guard('student')->user()->team_name;
+        // Check if a project with the same team_name already exists
+        $existingProject = Project::where('team_name', $teamName)->first();
         $completed_months = Project::whereHas('enrolled_project', function($q){
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
@@ -786,7 +790,7 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->first();
         // dd($student->created_at);
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
-        return view('student.index', compact('enrolled_projects','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages'));
+        return view('student.index', compact('enrolled_projects','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages', 'existingProject'));
     }
 
     public function ongoingProjects($id)
@@ -910,6 +914,7 @@ class StudentController extends Controller
         $checkReadNotification = ReadNotification::where('notifications_id',$notification_id)->where('student_id',$student_id)->first();
         $checkIdNotification = Notification::where('id',$notification_id)->where('project_id',$project_id)->where('status','publish')->first();
         $checkEnrolled = EnrolledProject::where('student_id',$student_id)->where('project_id',$project_id)->first();
+        // dd($checkReadNotification);
         if($checkIdNotification != null){
             if(!$checkReadNotification){
                 $ReadNotification = new ReadNotification;
@@ -917,6 +922,8 @@ class StudentController extends Controller
                 $ReadNotification->notifications_id = $notification_id;
                 $ReadNotification->is_read = 1;
                 $ReadNotification->save();
+            }else{
+                return redirect()->back();
             }
         }else{
             return redirect()->back();
@@ -1153,6 +1160,13 @@ class StudentController extends Controller
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
+        // come back here, remove only if it fix
+//         $enrolledProject = EnrolledProject::where('student_id', $student_id)->first();
+//         $checkEnrolled = ($enrolledProject && $enrolledProject->project_id == $project_id) || $enrolledProject === null;
+
+//         dd($checkEnrolled);
+
+// return redirect()->route('student.allProjects', [$student_id]);
 
         $student = Student::where('id', $student_id)->first();
         if(\Carbon\Carbon::now() > $student->end_date){
@@ -1163,7 +1177,14 @@ class StudentController extends Controller
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
         })->get();
-        $project = Project::where('status', 'publish')->findOrFail($project_id);
+
+        if(Auth::guard('student')->user()->mentorship_type == 'entrepreneur_track'){
+            $project = Project::where('status', 'private')->findOrFail($project_id);
+        }else{
+            $project = Project::where('status', 'publish')->findOrFail($project_id);
+        }
+
+
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student_id);
@@ -1366,7 +1387,7 @@ class StudentController extends Controller
     public function SupportMail($mailto,$validated) //Email, urlInvitation
     {
       $data = [
-        'subject' => 'Simulated Internship Support-Mail',
+        'subject' => 'Mentorship Program Support-Mail',
         'body' => $mailto,
         'first_name' => $validated['first_name'],
         'last_name' => $validated['last_name'],

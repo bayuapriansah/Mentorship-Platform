@@ -86,7 +86,7 @@
                         {{ $data['expired_date'] }}
                     </strong>
                 @endif
-                For assistance, please contact our support team at help@simulatedinternship.com
+                For assistance, please contact our support team at mentorship@sustainablelivinglab.org
             </p>
 
             <p class="regards">

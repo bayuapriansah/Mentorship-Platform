@@ -46,9 +46,9 @@
                         @if (count($section->internalDocumentPages) > 0)
                             <div x-cloak x-show="isExpanded" class="pl-6 flex flex-col gap-3">
                                 @foreach ($section->internalDocumentPages as $sectionPage)
-                                    <a href="{{ route('internal-document', ['slug' => $sectionPage->slug]) }}" class="{{ $sectionPage->id === $page->id ? 'bg-[#E4E7FF]' : '' }} px-2 rounded-md hover:bg-[#E4E7FF]">
-                                        {{ $sectionPage->title }}
-                                    </a>
+                                <a href="{{ !empty($sectionPage->slug) ? route('internal-document', ['slug' => $sectionPage->slug]) : '#' }}" class="{{ $sectionPage->id === $page->id ? 'bg-[#E4E7FF]' : '' }} px-2 rounded-md hover:bg-[#E4E7FF]">
+                                    {{ $sectionPage->title }}
+                                </a>
                                 @endforeach
                             </div>
                         @endif

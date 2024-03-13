@@ -61,7 +61,7 @@ class NotificationsTable extends Component
 
 
         if ($userType === 'mentor') {
-            $query = $query->whereHas('students', function ($q) use ($user) {
+            $query = $query->whereHas('student', function ($q) use ($user) {
                 $q->where('mentor_id', $user->id);
             });
         }

@@ -49,12 +49,12 @@
           @enderror
         </div>
         <div class="mb-3">
-          <select id="user" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="user" required>
+          <select id="user" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-grey focus:outline-none " name="user" required>
             <option value="" hidden>Type Of User *</option>
             <option value="Student">Student</option>
-            <option value="Supervisor">Supervisor</option>
-            <option value="Company Partner">Company Partner</option>
-            <option value="Institution">Institution</option>
+            {{-- <option value="Supervisor">Supervisor</option> --}}
+            {{-- <option value="Company Partner">Company Partner</option> --}}
+            {{-- <option value="Institution">Institution</option> --}}
             <option value="Other">Other</option>
           </select><br>
           @error('user')
@@ -64,7 +64,7 @@
           @enderror
         </div>
         <div class="mb-3">
-          <select id="query" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-lightest-grey focus:outline-none " name="query" required>
+          <select id="query" class="text w-full border border-light-blue rounded-lg py-2 px-4 leading-tight invalid:text-grey focus:outline-none " name="query" required>
             <option value="" hidden>Type Of Query *</option>
             <option value="General Queries">General Queries</option>
             <option value="Get Involved">Get Involved</option>
@@ -96,8 +96,8 @@
     </div>
     <div class="col-start-8 col-span-5">
       <img src="{{asset('assets/img/image19.png')}}" alt="">
-      <h5 class="font-bold text-xl py-5">About intel digital readliness</h5>
-      <p class="text-grey font-normal text-sm">Intel® Digital Readiness Programs empower the non-technical audiences with the appropriate skill sets, mind-sets, toolsets, and opportunities to use technology impactfully and responsibly in the AI-fuelled world.</p>
+      <h5 class="font-bold text-xl py-5">About Mentorship Program Platform</h5>
+      <p class="text-grey font-normal text-sm">Our mentorship platform connects individuals with mentors who can guide them through Intel® AI Festival. These programs build essential technological skills and mindsets for success in the AI-driven world.</p>
     </div>
   </div>
 </section>

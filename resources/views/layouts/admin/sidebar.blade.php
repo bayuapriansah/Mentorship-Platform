@@ -2,7 +2,7 @@
 
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard.admin')}}">
-      <div class="sidebar-brand-text mx-3">Simulated Intern</div>
+      <div class="sidebar-brand-text mx-3">Mentorship Program Intern</div>
   </a>
 
   <!-- Divider -->
@@ -82,7 +82,7 @@
     </a>
   </li>
   @endif
-  
+
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

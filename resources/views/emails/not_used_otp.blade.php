@@ -5,7 +5,7 @@
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simulated Internship</title>
+    <title>Mentorship Program</title>
     {{-- <title>{{$data['subject']}}</title> --}}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
@@ -82,17 +82,17 @@
 <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
   <div style="margin:50px auto;width:70%;padding:20px 0">
     <div style="border-bottom:1px solid #eee">
-      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Simulated Internship</a>
+      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Mentorship Program</a>
     </div>
     <p style="font-size:1.1em">Dear User,,</p>
     <p>This code is confidential, please do not share to anyone.</p>
     <p>Your One Time Password(OTP):</p>
     <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">{{$data['body']}}</h2>
     <p>It's Only Last for 5 Minutes</p>
-    <p style="font-size:0.9em;">Best Regards,<br />Simulated Internship</p>
+    <p style="font-size:0.9em;">Best Regards,<br />Mentorship Program</p>
     <hr style="border:none;border-top:1px solid #eee" />
     <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-      <p>Simulated Internship</p>
+      <p>Mentorship Program</p>
     </div>
   </div>
 </div>

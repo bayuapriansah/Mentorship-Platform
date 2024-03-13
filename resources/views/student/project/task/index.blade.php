@@ -72,14 +72,14 @@
     </div>
 
     <div class="grid grid-cols-12 gap-4 grid-flow-col mt-2">
-        <div class="col-span-10 text-justify">
-            @if ($project->dataset)
-                @php
-                    // Ensure that $project->dataset is a string.
-                    $datasets_string = is_array($project->dataset) ? implode(';', $project->dataset) : $project->dataset;
-                    $datasets_array = explode(';', $datasets_string);
-                @endphp
-                <div class="mb-6">
+      <div class="col-span-10 text-justify">
+        {{-- @dd($project->dataset); --}}
+          @if ($project->dataset)
+              @php
+                  $datasets_array = $project->dataset;
+                //   $datasets_array = explode(';', $project->dataset);
+              @endphp
+              <div class="mb-6">
                     <h1 class="mt-8 font-medium text-darker-blue text-[1.4rem]">Dataset</h1>
                     <div class="mt-4 flex flex-wrap gap-5">
                         @foreach ($datasets_array as $dataset)

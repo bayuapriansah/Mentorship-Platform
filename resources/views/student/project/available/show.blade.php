@@ -57,7 +57,7 @@
                                         <div class="px-10 pt-7 pb-11">
                                             <img src="{{asset('/assets/img/dots-1.png')}}" class="absolute z-[1] -bottom-3 left-6 w-[233px] h-[108px]" alt="Decoration">
                                             <p class="text-darker-blue text-[1.4rem] font-medium">
-                                                Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ $project->company->name }}?
+                                                Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ optional($project->company)->name; }}?
                                             </p>
 
                                             <div class="mt-5 relative z-[2] flex justify-center items-center gap-5">
@@ -83,7 +83,7 @@
                     <div class="w-[30px] h-[30px] absolute z-[3] -top-3 -left-3 bg-[#FF8F51] rounded-lg"></div>
 
                     <img
-                        src="{{ $project->company->logo ? asset('storage/'.$project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                        src="{{ optional($project->company)->logo ? asset('storage/'.optional($project->company)->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
                         onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
                         alt="Logo"
                         class="w-16 h-16 relative z-[4] object-cover bg-white border border-grey rounded-xl text-black text-center"
@@ -105,7 +105,7 @@
                                 <div class="px-10 pt-7 pb-11">
                                     <img src="{{asset('/assets/img/dots-1.png')}}" class="absolute z-[1] -bottom-3 left-6 w-[233px] h-[108px]" alt="Decoration">
                                     <p class="text-darker-blue text-[1.4rem] font-medium">
-                                        Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ $project->company->name }}?
+                                        Are you sure you want to enroll in the project - {{ $project->name }} offered by {{ optional($project->company)->name; }}?
                                     </p>
 
                                     <div class="mt-5 relative z-[2] flex justify-center items-center gap-5">

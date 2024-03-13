@@ -79,7 +79,7 @@ class ParticipantsTable extends Component
             case 'mentor':
                 $mentor = Auth::guard('mentor')->user();
                 $query = ($mentor->institution_id != 0)
-                    ? $query->where('institution_id', $mentor->institution_id)
+                    ? $query->where('mentor_id', $mentor->id)
                     : $query->where('staff_id', $mentor->id);
 
                 break;

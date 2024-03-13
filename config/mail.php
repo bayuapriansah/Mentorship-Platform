@@ -93,7 +93,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'sip@sustainablelivinglab.org'),
-        'name' => env('MAIL_FROM_NAME', 'Simulated Internship'),
+        'name' => env('MAIL_FROM_NAME', 'Mentorship Program'),
     ],
 
     /*

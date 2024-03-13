@@ -15,7 +15,7 @@
       </div>
       <div>
         <div class="text-dark-blue font-normal">Project By</div>
-        <div class="font-normal">{{$project->company->name}}</div>
+        <div class="font-normal">{{optional($project->company)->name;}}</div>
       </div>
     </div>
     <div>
@@ -67,7 +67,7 @@
     @csrf
     <div class="flex space-x-6">
       {{-- data-modal-target="defaultModal" data-modal-toggle="defaultModal" --}}
-      
+
       <input type="submit" class="text-white text-sm font-normal bg-[#11BF61] hover:bg-green-600 cursor-pointer px-12 py-3 mt-5  rounded-full" name="pass" value="PASS">
 
       <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white text-sm font-normal bg-[#AB0606] hover:bg-red-800 cursor-pointer px-12 py-3 mt-5  rounded-full" type="button">

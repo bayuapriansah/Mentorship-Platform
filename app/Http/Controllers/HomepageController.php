@@ -49,7 +49,7 @@ class HomepageController extends Controller
                 "id" => '7',
                 "name" => "Abhinav bazaru",
                 "email" => "abhinav.219310217@muj.manipal.edu",
-                "feedback" => "The Simulated internship program was a rewarding experience to improve my knowledge in different machine learning domains and put my theoretical knowledge to practical use.The platform was well structured and the project coordinators were very helpful and look forward to working on here again"
+                "feedback" => "The Mentorship program was a rewarding experience to improve my knowledge in different machine learning domains and put my theoretical knowledge to practical use.The platform was well structured and the project coordinators were very helpful and look forward to working on here again"
             ],
             [
                 "id" => '8',

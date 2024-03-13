@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>
         @yield('title', 'Mentorship Platform')
     </title>
@@ -21,9 +22,163 @@
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <script src="https://cdn.tiny.cloud/1/gm5482398yg3mbfrvxr3y0bok7hggsq0gervklzy8n1jpj1a/tinymce/6/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/c4fnz0jmum59svb2qpxhe3tnay9nokoed263303akhgyhywv/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
+
+    const imageUploadHandler = (blobInfo, progress) => new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '{{ route("dashboard.project.image-upload") }}');
+
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // Set CSRF token for Laravel
+
+            // console.log('CSRF Token:', csrfToken); // Log the CSRF token
+
+            xhr.upload.onprogress = (e) => {
+            progress(e.loaded / e.total * 100);
+            };
+
+            xhr.onload = () => {
+            if (xhr.status === 403) {
+            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+            return;
+            }
+
+            if (xhr.status < 200 || xhr.status>= 300) {
+                reject('HTTP Error: ' + xhr.status);
+                return;
+                }
+
+                const json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location != 'string') {
+                reject('Invalid JSON: ' + xhr.responseText);
+                return;
+                }
+
+                resolve(json.location);
+                // console.log(json.location);
+                // console.log(resolve(json.location));
+                };
+
+                xhr.onerror = () => {
+                reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                };
+
+                const formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                xhr.send(formData);
+                });
+
+        tinymce.init({
+            selector: 'textarea#sharedproject',
+            height: 600,
+            width: 941,
+            plugins: 'media image lists autolink',
+            menubar: 'file edit insert view format table tools help',
+            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
+            images_upload_url: '{{ route("dashboard.project.image-upload") }}',
+            images_upload_handler: imageUploadHandler,
+            automatic_uploads: true,
+            paste_as_text: true,
+            setup: function(editor) {
+                editor.on('change', function() {
+                    var content = editor.getContent();
+                    localStorage.setItem('tinyMCEContent', content);
+                });
+
+                editor.on('GetContent', function(e) {
+                    var content = e.content;
+                    var websiteUrl = window.location.origin;
+
+                    var newContent = content.replace(/data-mce-src="\.\.\/\.\.\/\.\.\/storage\/uploads\//g, 'data-mce-src="' + websiteUrl + '/storage/uploads/');
+                    e.content = newContent;
+                });
+
+                // Placeholder Logic
+                editor.on('init', function () {
+                    setDefaultPlaceholders(editor);
+                });
+
+                editor.on('focus', function () {
+                    clearPlaceholders(editor);
+                });
+
+                editor.on('blur', function () {
+                    if (editor.getContent() === '') {
+                        setDefaultPlaceholders(editor);
+                    }
+                });
+            }
+        });
+
+        function setDefaultPlaceholders(editor) {
+            editor.setContent(`
+            <span style="color: #999;">
+                -Problem Statement, Project Objective, or Use Case Description<br>
+                -Model Type<br>
+                -Current Performance Metrics<br>
+                -Summary of Future Goals/Expectations<br>
+            </span>
+            `);
+        }
+
+        function clearPlaceholders(editor) {
+            var content = editor.getContent(); // Get the current content
+            if (content.includes('<span style')) { // Check if the placeholder exists
+                editor.setContent(''); // Clear if it does
+            }
+        }
+
+      tinymce.init({
+        selector: 'textarea#sharedtask',
+        // content_style: "body {padding: 100px}",
+        height: 600,
+        width: 941,
+        plugins: 'media image lists autolink',
+        menubar: 'file edit insert view format table tools help',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
+        images_upload_url: '{{ route("dashboard.project.image-upload") }}',
+        images_upload_handler: imageUploadHandler,
+        automatic_uploads: true,
+        paste_as_text: true,
+        setup: function(editor) {
+            editor.on('GetContent', function(e) {
+                var content = e.content;
+                var websiteUrl = window.location.origin; // Gets the base URL of the website
+
+                var newContent = content.replace(/data-mce-src="\.\.\/\.\.\/\.\.\/storage\/uploads\//g, 'data-mce-src="' + websiteUrl + '/storage/uploads/');
+                e.content = newContent;
+            });
+        },
+      });
+
+      tinymce.init({
+        selector: 'textarea#problem',
+        // content_style: "body {padding: 100px}",
+        height: 600,
+        width: 941,
+        plugins: 'media image lists autolink',
+        menubar: 'file edit insert view format table tools help',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
+        images_upload_url: '{{ route("dashboard.project.image-upload") }}',
+        images_upload_handler: imageUploadHandler,
+        automatic_uploads: true,
+        paste_as_text: true,
+        setup: function(editor) {
+            editor.on('GetContent', function(e) {
+                var content = e.content;
+                var websiteUrl = window.location.origin; // Gets the base URL of the website
+
+                var newContent = content.replace(/data-mce-src="\.\.\/\.\.\/\.\.\/storage\/uploads\//g, 'data-mce-src="' + websiteUrl + '/storage/uploads/');
+                e.content = newContent;
+            });
+        },
+      });
+
         tinymce.init({
             selector: 'textarea#comment', // Replace this CSS selector to match the placeholder element for TinyMCE
             height: 350,
@@ -148,9 +303,9 @@
                 </li>
 
                 <li class="text-black font-light text-sm">
-                    <a href="{{ route('projects.support') }}">
-                        Support
-                    </a>
+                    {{-- <a href="{{ route('projects.support') }}"> --}}
+                        {{-- Support --}}
+                    {{-- </a> --}}
                 </li>
 
                 {{-- @if (Route::is('student.allProjects') || Route::is('student.ongoingProjects') || Route::is('student.completedProjects'))
@@ -174,7 +329,7 @@
             </ul>
 
             <div class="col-start-9 col-span-4 flex relative ">
-                @if (!Route::is('student.edit', 'student.allNotification', 'participant.projects.create', 'participant.projects.add-task'))
+                @if (!Route::is('student.edit', 'student.allNotification', 'participant.projects.view', 'participant.projects.create', 'participant.projects.edit', 'participant.projects.add-task', 'participant.projects.edit-task', 'participant.projects.task'))
                     @include('layouts.profile.sidebar')
                 @else
                     <div class="w-full bg-white absolute -top-5 rounded-xl border border-light-blue p-4">
@@ -641,7 +796,7 @@
     <div class="w-full border-t border-grey">
       <div class="max-w-[1366px] mx-auto px-16 py-4 grid grid-cols-12 gap-11 grid-flow-col ">
         <div class="col-span-5 my-auto ">
-          <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Simulated Internships. All rights reserved.</p>
+          <p class="text-grey font-normal text-xs pt-2 intelOne">© 2023 Intel Mentorship Program. All rights reserved.</p>
         </div>
       </div>
     </div>

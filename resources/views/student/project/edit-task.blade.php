@@ -13,7 +13,7 @@
                     {{ $project->name }}
                 </a>
                 <span class="ml-2 mr-4">></span>
-                Create Task
+                    {{ $ProjectSection->title }}
             </h1>
 
             <div class="w-full tab:w-[941px] mt-7 mx-auto flex flex-col">
@@ -29,7 +29,7 @@
                             type="text"
                             id="inputname"
                             name="name"
-                            value=""
+                            value="{{ $ProjectSection->title }}"
                             placeholder="Task Label *"
                             class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight focus:outline-none"
                         >
@@ -47,12 +47,13 @@
                         </h2>
 
                         <input type="date" name="DueDate"
-                            class="h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none">
+                            class="h-12 px-3 py-2 border border-grey rounded-lg focus:outline-none"
+                            value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $ProjectSection->due_date)->format('Y-m-d') }}">
                     </div>
 
                     <div class="mt-5">
                         <textarea name="problem" id="problem">
-                            {{-- {{ old('problem', $project->problem) }} --}}
+                            {{ old('problem', $ProjectSection->description) }}
                         </textarea>
 
                         @error('problem')
@@ -75,11 +76,11 @@
                             <option value="" hidden>Select team members</option>
                             @foreach($teamStudents as $student)
                             <!-- Student data display -->
-                            <option value="{{ $student->id }}">{{ $student->first_name }} {{ $student->last_name }}</option>
+                            <option value="{{ $student->id }}" {{ $ProjectSection->assigned_to == $student->id ? 'selected' : '' }}>{{ $student->first_name }} {{ $student->last_name }}</option>
                             @endforeach
                         </select>
 
-                        @error('domain')
+                        @error('assign')
                             <p class="text-red-600 text-sm mt-1">
                                 {{ $message }}
                             </p>
@@ -105,19 +106,34 @@
                             </button>
                         </div>
                         <div id="dataset-fields-container" class="mt-4">
-                            <div class="flex flex-wrap gap-2 items-center mt-2 relative">
-                                {{-- Dataset Label Input --}}
-                                <input type="text" class="dataset-label-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Dataset Label" name="dataset_label[]" required>
-                                {{-- Dataset URL Input --}}
-                                <input type="text" class="dataset-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" required>
-                            </div>
-                        </div>
+                        @php
+                            $datasetLabels = is_string($ProjectSection->dataset_label) ? json_decode($ProjectSection->dataset_label, true) : $ProjectSection->dataset_label;
+                            $datasets = is_string($ProjectSection->dataset) ? json_decode($ProjectSection->dataset, true) : $ProjectSection->dataset;
+                        @endphp
 
-                        @error('dataset')
-                            <p class="text-red-600 text-sm mt-1">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                        @if(is_array($datasetLabels) && is_array($datasets))
+                            @foreach($datasetLabels as $index => $label)
+                                <div class="flex flex-wrap gap-2 items-center mt-2 relative">
+                                    {{-- Dataset Label Input --}}
+                                    <input type="text" class="dataset-label-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Dataset Label" name="dataset_label[]" value="{{ $label }}" required>
+                                    {{-- Dataset URL Input --}}
+                                    @if(isset($datasets[$index]))
+                                    <input type="text" class="dataset-input border border-grey rounded-lg w-full md:w-auto flex-1 h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasets[$index] }}" required>
+                                    @endif
+                                    {{-- Remove Button --}}
+                                    <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2">
+                                        <i class="fas fa-minus-circle text-red-600"></i>
+                                    </button>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+
+                    @error('dataset')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
                     </div>
                 </form>
             </div>

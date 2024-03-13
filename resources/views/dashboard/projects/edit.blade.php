@@ -13,7 +13,7 @@
 
 <div class="mb-6 flex justify-between items-center">
     <h1 class="text-dark-blue font-medium text-[1.375rem]">
-        {{ $project->company->name }}
+        {{ optional($project->company)->name; }}
         <span class="mx-3">></span>
         Edit Project
     </h1>
@@ -64,10 +64,11 @@
         <div class="col-span-4">
             <select id="inputperiod" name="period" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
                 <option value="" hidden>Project Duration *</option>
-                <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option>
-                <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>1 Month</option>
+                <option value="10" {{ old('period', $project->period) == '10' ? 'selected': '' }}>10 Weeks</option>
+                {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>A Week</option> --}}
+                {{-- <option value="1" {{ old('period', $project->period) == '1' ? 'selected': '' }}>1 Month</option>
                 <option value="2" {{ old('period', $project->period) == '2' ? 'selected': '' }}>2 Month(s)</option>
-                <option value="3" {{ old('period', $project->period) == '3' ? 'selected': '' }}>3 Month(s)</option>
+                <option value="3" {{ old('period', $project->period) == '3' ? 'selected': '' }}>3 Month(s)</option> --}}
             </select>
 
             @error('period')
@@ -81,7 +82,7 @@
             <select id="inputtype" name="type" class="w-full border border-grey rounded-lg h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
                 <option value="" hidden>Project Type *</option>
                 <option value="weekly" {{ old('type', $project->type) == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                <option value="monthly" {{ old('type', $project->type) == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                {{-- <option value="monthly" {{ old('type', $project->type) == 'monthly' ? 'selected' : '' }}>Monthly</option> --}}
             </select>
 
             @error('type')
@@ -93,10 +94,10 @@
     </div>
 
     <div class="mt-5">
-        <input readonly type="hidden" id="inputpartner" name="partner" value="{{ $project->company->id }}">
+        <input readonly type="hidden" id="inputpartner" name="partner" value="{{ optional($project->company)->id }}">
 
         <select disabled class="border border-grey bg-[#D8D8D8] cursor-not-allowed rounded-lg w-full h-11 py-2 px-4 text-[#3D3D3D] font-medium leading-tight focus:outline-none">
-            <option value="{{ $project->company->id }}" hidden>{{ $project->company->name }}</option>
+            <option value="{{ optional($project->company)->id }}" hidden>{{ optional($project->company)->name; }}</option>
         </select>
 
         @error('partner')
@@ -135,7 +136,7 @@
         @enderror
     </div>
 
-    <div class="mt-5">
+    <div class="mt-5" hidden>
         <select id="inputprojecttype"  name="projectType" class="border border-grey rounded-lg w-full h-11 py-2 px-4 text-lightest-grey::placeholder leading-tight invalid:text-lightest-grey focus:outline-none">
             <option value="" hidden>Select Project Privacy Settings *</option>
             <option value="public" {{ !$project->institution_id ? 'selected' : '' }}>Public to all institutions</option>
@@ -196,7 +197,8 @@
 
             @foreach ($datasets as $index => $datasetUrl)
                 <div class="flex items-center mt-2 relative">
-                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required>
+                    <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs" name="dataset[]" value="{{ $datasetUrl }}" required>
+                    {{-- <input type="text" class="dataset-input border border-grey rounded-lg w-full h-11 py-2 pl-4 pr-10 text-lightest-grey::placeholder leading-tight focus:outline-none" placeholder="Add Data set URLs separated by semi-colon" name="dataset[]" value="{{ $datasetUrl }}" required> --}}
                     @if ($index > 0)
                         <button type="button" class="remove-dataset-btn absolute right-2 top-1/2 transform -translate-y-1/2" onclick="removeDatasetInputField(this)"><i class="fas fa-circle-minus text-red-600"></i></button>
                     @endif
@@ -225,7 +227,7 @@
 
             <div class="text-xl text-dark-blue">
                 @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-                    <a href="{{ route('dashboard.partner.partnerProjectsInjection', ['partner' => $project->company->id, 'project' => $project->id]) }}" class="flex items-center gap-3">
+                    <a href="{{ route('dashboard.partner.partnerProjectsInjection', ['partner' => optional($project->company)->id, 'project' => $project->id]) }}" class="flex items-center gap-3">
                         <i class="fas fa-circle-plus mt-1 text-primary"></i>
                         Add Task
                     </a>
@@ -262,11 +264,11 @@
 
                 <div class="col-span-2 justify-self-end space-x-5">
                     @if (Route::is('dashboard.partner.partnerProjectsEdit'))
-                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionEdit', ['partner' => $project->company->id, 'project' => $project->id, 'injection' => $card->id]) }}">
+                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionEdit', ['partner' => optional($project->company)->id, 'project' => $project->id, 'injection' => $card->id]) }}">
                             <i class="fa-solid fa-pencil fa-lg text-dark-blue my-auto"></i>
                         </a>
 
-                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionDelete', ['partner' => $project->company->id, 'project' => $project->id, 'injection' => $card->id]) }}">
+                        <a href="{{ route('dashboard.partner.partnerProjectsInjectionDelete', ['partner' => optional($project->company)->id, 'project' => $project->id, 'injection' => $card->id]) }}">
                             <i class="fa-solid fa-trash-can text-red-600 fa-lg my-auto"></i>
                         </a>
                     @else

@@ -15,7 +15,7 @@
 
   <script src="https://kit.fontawesome.com/f845b2d56c.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.tiny.cloud/1/gm5482398yg3mbfrvxr3y0bok7hggsq0gervklzy8n1jpj1a/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/c4fnz0jmum59svb2qpxhe3tnay9nokoed263303akhgyhywv/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     const imageUploadHandler = (blobInfo, progress) => new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -67,9 +67,9 @@
       tinymce.init({
         selector: 'textarea#problem',
         height: 500,
-        plugins: 'media image lists',
+        plugins: 'media image lists autolink',
         menubar: 'file edit insert view format table tools help',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullis | image',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | image',
         images_upload_url: '{{ route("dashboard.project.image-upload") }}',
         images_upload_handler: imageUploadHandler,
         automatic_uploads: true,
@@ -88,7 +88,7 @@
     tinymce.init({
         selector: 'textarea#sectionDesc', // Replace this CSS selector to match the placeholder element for TinyMCE
         height: 500,
-        plugins: 'media image lists',
+        plugins: 'media image lists autolink',
         menubar: 'file edit insert view format table tools help',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
         images_upload_url: 'postAcceptor.php',
@@ -222,12 +222,12 @@
       </div>
 
       @php
-        // $notifications = getNotificationSubmission();
-        // $NotificationForAdmin = $notifications['totalNotificationAdmin'];
-        // $DataSubmissionNotifications = $notifications['submissionNotifications'];
+        $notifications = getNotificationSubmission();
+        $NotificationForAdmin = $notifications['totalNotificationAdmin'];
+        $DataSubmissionNotifications = $notifications['submissionNotifications'];
 
-        // $NotificationForAdmin = getNotificationSubmission(onlyCount: true);
-        $NotificationForAdmin = 0;
+        $NotificationForAdmin = getNotificationSubmission(onlyCount: true);
+        // $NotificationForAdmin = 0;
       @endphp
 
       <div class="w-full bg-white mx-auto py-11 px-10 relative">
@@ -250,9 +250,9 @@
                 <path d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
               <span class="sr-only">Notifications Message</span>
-              {{-- @if (getCommentMessages()->count() > 0)
+              @if (getCommentMessages()->count() > 0)
               <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">{{ getCommentMessages()->count() }}</div>
-              @endif --}}
+              @endif
             </a>
 
             @if (Auth::guard('web')->check())

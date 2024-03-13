@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simulated Internship</title>
+    <title>Mentorship Platform</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/icon/favicon.ico') }}">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -46,9 +46,9 @@
                     </button>
                 @else
                     <a href="{{ route('multiLogIn') }}" class="border-dark-blue text-dark-blue rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Login</a>
-                    <a href="{{ route('registerPage') }}" class="bg-dark-blue text-white rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Register</a>  
-                @endif            
-            </div>            
+                    <a href="{{ route('registerPage') }}" class="bg-dark-blue text-white rounded-full border-[1px] border-solid border-dark-blue px-4 py-2">Register</a>
+                @endif
+            </div>
             {{-- Navbar Componet --}}
             <div id="Industry-Partners-hover" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                 Coming Soon
@@ -73,13 +73,14 @@
                     <a href="{{ route('dashboard.customer') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                     @endif
                 </li>
-                </ul>
-                <div class="py-2">
-                    <form class="inline" method="post" action="{{ route('logout') }}">
-                        @csrf
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
-                    </form>
-                </div>
+            </ul>
+
+            <div class="py-2">
+                <form class="inline" method="post" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
+                </form>
+            </div>
             </div>
             @endif
             {{-- End Navbar Component --}}
@@ -92,7 +93,7 @@
             <div class="grid md:grid-cols-2 gap-4 items-center">
                 <div class="my-auto">
                     <h2 class="intelOne text-white font-bold text-3xl leading-11 py-4">
-                        <span class="text-light-brown">Simulated Internship</span> Platform for <span
+                        <span class="text-light-brown">Mentorship Program</span> Platform for <span
                             class="text-light-brown">Industry Readiness</span>
                     </h2>
                     <span class="intelOne text-white py-6 font-light text-lg leading-6">Join today to work on real-world
@@ -195,11 +196,11 @@
                             class="block p-3 rounded-lg shadow-lg hover:border-2 border-2 hover:border-darker-blue border-[#A4AADC] bg-white max-w-sm h-[250px] overflow-hidden">
                             <div class="flex space-x-2">
                                 <div class=" my-auto border-2 border-[#A4AADC] rounded-xl py-1 px-1 mr-2">
-                                    <img src="{{asset('storage/'.$project->company->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
+                                    <img src="{{asset('storage/'.optional($project->company)->logo)}}" class="w-16 h-12 object-cover mx-auto rounded-xl" alt="Logo">
                                 </div>
                                 <div class="flex-col">
                                     <p class="intelOne text-dark-blue font-bold text-xl leading-7 m-0 overflow-ellipsis overflow-hidden">{{substr($project->name,0,18)}}{{ (strlen($project->name) > 18) ? '...' : '' }}</p>
-                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">{{$project->company->name}}</p>
+                                    <p class="text-black font-normal text-sm m-0 overflow-ellipsis overflow-hidden">{{optional($project->company)->name;}}</p>
                                     <div class="pt-2">
                                         <p
                                         class="text-dark-blue font-normal text-sm bg-lightest-blue text-center rounded-full m-0 w-36 overflow-ellipsis overflow-hidden">
@@ -328,7 +329,7 @@
             <hr class="my-6 border-black border-t-2 sm:mx-auto lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {{ date('Y') }} <a
-                        href="/" class="hover:underline">Simulated Internship</a>. All Rights Reserved.
+                        href="/" class="hover:underline">Mentorship Program</a>. All Rights Reserved.
                 </span>
                 {{-- <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
             <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">

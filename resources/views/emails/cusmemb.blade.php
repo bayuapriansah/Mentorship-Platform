@@ -6,7 +6,7 @@
   <meta name="x-apple-disable-message-reformatting">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="telephone=no" name="format-detection">
-  {{-- <title>Simulated Internship Email</title><!--[if (mso 16)]> --}}
+  {{-- <title>Mentorship Email</title><!--[if (mso 16)]> --}}
     <style type="text/css">
     a {text-decoration: none;}
     </style>
@@ -108,9 +108,9 @@ td .es-button-border-1:hover {
                       <td align="center" style="padding:0;Margin:0;padding-bottom:40px;font-size:0px"><img class="adapt-img" src="https://raw.githubusercontent.com/bayuapriansah/public-repo-images/main/simulated_cusmem.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="770" height="264"></td>
                      </tr>
                      <tr>
-                      <!-- <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:38px;font-weight: bold;">You are invited to the Intel Simulated Internship. To get started with the platform, please confirm your email address.</p></td> -->
+                      <!-- <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:38px;font-weight: bold;">You are invited to the Intel Mentorship. To get started with the platform, please confirm your email address.</p></td> -->
                       <td align="justify" style="padding:0;Margin:0;padding-bottom:30px;padding-right:40px;padding-left:30px">
-                        <div style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:30px;font-weight: bold;">You are invited to the Simulated Internship Platform. To join the platform, please verify your email address.</div></td>
+                        <div style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:40px;color:#000f8a;font-size:30px;font-weight: bold;">You are invited to the Mentorship Program Platform. To join the platform, please verify your email address.</div></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -251,7 +251,7 @@ td .es-button-border-1:hover {
                  <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:515px">
                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                     <tr>
-                     <td align="left" style="padding-left:20px;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#838383;font-size:12px">© {{ date('Y') }} Intel Simulated Internships. All rights reserved.</p></td>
+                     <td align="left" style="padding-left:20px;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family: 'IntelOne Display', arial, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#838383;font-size:12px">© {{ date('Y') }} Intel Mentorship Programs. All rights reserved.</p></td>
                     </tr>
                   </table></td>
                 </tr>

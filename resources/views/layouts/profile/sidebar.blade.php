@@ -48,7 +48,7 @@
           class="w-[100px] h-[100px] rounded-full  mx-auto object-cover ring ring-[#C5CAF3]"
       >
       <p class="mt-4 text-darker-blue text-xl text-center capitalize">{{$student->first_name}} {{$student->last_name}}</p>
-      <p class="mt-2 text-black text-sm text-center">{{$student->year_of_study}} Year, B.Tech in<br> {{$student->study_program}} </p>
+      <p class="mt-2 text-black text-sm text-center">{{$student->year_of_study}} Year<br> {{$student->study_program}} </p>
       <div class="w-12 h-12 mt-2 mx-auto bg-white rounded-full flex justify-center items-center">
           <img
               src="{{ $student->institution->logo ? asset('storage/'.$student->institution->logo) : asset('/assets/img/institution-placeholder.png') }}"
@@ -211,7 +211,7 @@
         @endforeach --}}
       </div>
       @if($student->is_confirm == 1)
-        <p class="text-black text-xs">{{$dateApply->addMonths($project->period)->format('d M Y')}}</p>
+        <p class="text-black text-xs">{{$dateApply->addWeeks($project->period)->format('d M Y')}}</p>
       @endif
     </div>
     @if($student->is_confirm == 0)
@@ -388,11 +388,11 @@
         {{-- <a href="/profile/{{Auth::guard('student')->user()->id}}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
       @endif
     @elseif($total = $totalMonth->sum()<3 && \Carbon\Carbon::now()->format('Y-m-d') > $student->end_date)
-      <p class="text-dark-blue font-medium text-sm text-center my-3">Sorry! You did not meet the requirements to complete the internship.</p>
-      <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
+      <p class="text-dark-blue font-medium text-sm text-center my-3">Sorry! You did not meet the requirements to complete the mentorship programs.</p>
+      {{-- <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button> --}}
     @else
-      <p class="text-dark-blue font-medium text-sm text-center my-3">Complete entire program to unlock</p>
-      <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button>
+      {{-- <p class="text-dark-blue font-medium text-sm text-center my-3">Complete entire program to unlock</p>
+      <button class="text-sm text-center font-normal text-white bg-grey rounded-full p-2 cursor-not-allowed">Download Certificate</button> --}}
       {{-- <a href="/profile/{{Auth::guard('student')->user()->id}}/{{ $student->institution->id }}/certificate" target="_blank" class="text-sm text-center font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2">Download Certificate</a> --}}
     @endif
 

@@ -18,7 +18,7 @@ class ChatBotController extends Controller
         ])->post('https://api.openai.com/v1/chat/completions', [
             'model' => 'gpt-3.5-turbo',
             'messages' => [
-                ["role" => "assistant", "content" => "You are a helpful assistant SimmyBot for SIP (Simulated Internship Platform)."],
+                ["role" => "assistant", "content" => "You are a helpful assistant SimmyBot for Mentorship Program."],
                 ["role" => "user", "content" => $message]
             ],
             'temperature' => 0.3,

@@ -157,8 +157,8 @@ class DashboardController extends Controller
     // Refactore code
     public function index()
     {
-        // Cache the main dashboard data for 24 hours
-        $dashboardData = Cache::remember('dashboard_data', 60 * 24, function () {
+        // Cache the main dashboard data for 4 hours
+        $dashboardData = Cache::remember('dashboard_data', 60 * 4, function () {
             return [
                 'students' => Student::count(),
                 'activeStudents' => Student::where('is_confirm', 1)->count(),
@@ -216,6 +216,65 @@ class DashboardController extends Controller
             ];
         });
 
+        $dashboardDataGender = Cache::remember('dashboard_data_gender', 1 * 1, function () {
+            return [
+                'totalMale' => Student::where('sex','male')->count(),
+                'totalFemale' => Student::where('sex','female')->count(),
+                'totalMaleSkills_track' => Student::where('sex','male')->where('mentorship_type','skills_track')->count(),
+                'totalFemaleSkills_track' => Student::where('sex','female')->where('mentorship_type','skills_track')->count(),
+                'totalMaleEnterpreneur_track' => Student::where('sex','male')->where('mentorship_type','entrepreneur_track')->count(),
+                'totalFemaleEnterpreneur_track' => Student::where('sex','female')->where('mentorship_type','enterpreneur_track')->count(),
+                'maleStudentsWithEnrolledProjectsEAuto' => Student::where('sex', 'male')
+                ->whereHas('enrolled_projects', function($query) {
+                    // Apply the condition to the enrolled_projects relationship
+                    $query->where('project_id', 1);
+                })
+                ->with('enrolled_projects')
+                ->count(),
+
+                'femaleStudentsWithEnrolledProjectsEAuto' => Student::where('sex', 'female')
+                ->whereHas('enrolled_projects', function($query) {
+                    // Apply the condition to the enrolled_projects relationship
+                    $query->where('project_id', 1);
+                })
+                ->with('enrolled_projects')
+                ->count(),
+
+                'maleStudentsWithEnrolledProjectsWebHelpers' => Student::where('sex', 'male')
+                ->whereHas('enrolled_projects', function($query) {
+                    // Apply the condition to the enrolled_projects relationship
+                    $query->where('project_id', 3);
+                })
+                ->with('enrolled_projects')
+                ->count(),
+
+                'femaleStudentsWithEnrolledProjectsWebHelpers' => Student::where('sex', 'female')
+                ->whereHas('enrolled_projects', function($query) {
+                    // Apply the condition to the enrolled_projects relationship
+                    $query->where('project_id', 3);
+                })
+                ->with('enrolled_projects')
+                ->count(),
+
+                'maleStudentsWithEnrolledProjectsCryptoGuides' => Student::where('sex', 'male')
+                ->whereHas('enrolled_projects', function($query) {
+                    // Apply the condition to the enrolled_projects relationship
+                    $query->where('project_id', 4);
+                })
+                ->with('enrolled_projects')
+                ->count(),
+
+                'femaleStudentsWithEnrolledProjectsCryptoGuides' => Student::where('sex', 'female')
+                ->whereHas('enrolled_projects', function($query) {
+                    // Apply the condition to the enrolled_projects relationship
+                    $query->where('project_id', 4);
+                })
+                ->with('enrolled_projects')
+                ->count(),
+                // Other data...
+            ];
+        });
+
         // Cache the login data for 1 hour
         $loginData = Cache::remember('login_data', 60, function () {
             $startOfWeek = Carbon::now()->startOfWeek();
@@ -266,8 +325,14 @@ class DashboardController extends Controller
             ];
         });
 
-        // Combine the data arrays
-        $data = array_merge($dashboardData, $loginData, $messageData);
+        // dd(Auth::guard('mentor')->user()->institution_id);
+        if(Auth::guard('mentor')->check()){
+            $assignStudents = Student::where('is_confirm', 1)->where('mentor_id', Auth::guard('mentor')->user()->id)->count();
+            $data = array_merge($dashboardData, $loginData, $messageData, ['assignStudents' => $assignStudents]);
+        }else{
+            // Combine the data arrays
+            $data = array_merge($dashboardData, $loginData, $messageData);
+        }
 
         return view('dashboard.index', $data);
     }
@@ -675,7 +740,7 @@ class DashboardController extends Controller
   {
       // if (Auth::guard('student')->check()) {
       //   $data = [
-      //     'subject' => 'Simulated Internship Contact-Us',
+      //     'subject' => 'Mentorship Contact-Us',
       //     'body' => $mailto,
       //     'first_name' => Auth::guard('student')->user()->first_name,
       //     'last_name' => Auth::guard('student')->user()->last_name,
@@ -685,7 +750,7 @@ class DashboardController extends Controller
       //   ];
       // }else{
         $data = [
-          'subject' => 'Simulated Internship Contact-Us',
+          'subject' => 'Mentorship Program Contact-Us',
           'body' => $mailto,
           'first_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->first_name : $validated['first_name'],
           'last_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->last_name : $validated['last_name'],

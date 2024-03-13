@@ -78,7 +78,7 @@
             </p>
 
             <p class="mt-1">
-                {{ $submission->student->first_name }} {{ $submission->student->last_name }}
+                {{ optional($submission->student)->first_name }} {{ optional($submission->student)->last_name }}
             </p>
         </div>
 
@@ -143,12 +143,13 @@
         </div>
 
             @if (strpos($submission->file, 'https://') !== false)
-            <a href="{{ $submission->file }}" target="_blank" class="text-base flex items-center justify-between border border-light-blue rounded-xl hover:bg-[#F2F3FD] bg-white px-6 py-4 w-full">
-                <i class="fa-solid fa-link"></i>
-                <span class="flex-grow text-center">Submission Link</span>
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
+                <a href="{{ $submission->file }}" target="_blank" class="fa-solid fa-link"></a>
+                <a href="{{ $submission->file }}" target="_blank" class="text-base">
 
+                    Submission Link
+
+                </a>
+                <a href="{{ $submission->file }}" target="_blank" class="fa-solid fa-arrow-up-right-from-square"></a>
             @else
                 <img src="{{ asset('/assets/img/icon/Vector.png') }}" class="object-scale-down">
                 <a href="{{ asset('/storage/'.$submission->file) }}" target="_blank" class="text-base">

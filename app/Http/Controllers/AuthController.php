@@ -263,7 +263,8 @@ class AuthController extends Controller
 
         $student->is_confirm = 1;
         $student->join_date = Carbon::now()->format('Y-m-d');
-        $student->end_date = $student->created_at->addMonth(4)->toDateString();
+        $student->end_date = $student->created_at->addDays(73)->toDateString();
+        // $student->end_date = $student->created_at->addMonth(4)->toDateString();
         $student->save();
 
         (new MailController)->EmailStudentVerificationSuccess($student->email);

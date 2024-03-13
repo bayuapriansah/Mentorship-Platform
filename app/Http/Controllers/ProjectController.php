@@ -153,7 +153,7 @@ class ProjectController extends Controller
         $project->project_domain = $validated['project_domain'];
         $project->type = $validated['type'];
         $project->period = $validated['period'];
-        $project->type = 'monthly';
+        // $project->type = 'weekly';
         if(Auth::guard('web')->check() || Auth::guard('customer')->check()){
             $project->status = 'draft';
             $project->proposed_by = null;
@@ -334,9 +334,9 @@ class ProjectController extends Controller
         // dd($remaining_time_time);
         // dd($now_time->addMonth($project->period)->toDateString());
 
-        $project_time = $now_time->addMonth($project->period);
+        // $project_time = $now_time->addMonth($project->period);
+        $project_time = $now_time->addWeek($project->period);
         $project_totaldays = Carbon::now()->diffInDays($project_time);
-
         // dd($remaining_intern_days-$project_totaldays);
 
         // dd(Auth::guard('student')->user()->end_date);

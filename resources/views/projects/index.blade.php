@@ -35,7 +35,7 @@
                     {{-- Name and Logo --}}
                     <div class="flex items-center gap-3">
                         <img
-                            src="{{ $project->company->logo ? asset('storage/' . $project->company->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
+                            src="{{ optional($project->company)->logo ? asset('storage/' . optional($project->company)->logo) : asset('/assets/img/project-logo-placeholder.png') }}"
                             onerror="this.src = `{{ asset('/assets/img/project-logo-placeholder.png') }}`"
                             alt="Logo"
                             class="w-20 h-20 bg-white border border-grey rounded-xl object-scale-down"

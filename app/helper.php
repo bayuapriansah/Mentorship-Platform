@@ -201,7 +201,7 @@ if (!function_exists('getNotificationSubmission')) {
 
         // Additional conditions for 'mentor' type
         if ($userType === 'mentor') {
-            $submissionNotifications = $submissionNotifications->whereHas('students', function ($query) use ($user) {
+            $submissionNotifications = $submissionNotifications->whereHas('student', function ($query) use ($user) {
                 $query->where('mentor_id', $user->id);
             });
         }

@@ -143,7 +143,7 @@
                     </h1>
 
                     <p class="text-lg">
-                        Welcome to The {{ Auth::guard('mentor')->user()->getTitle() }} Dashboard.
+                        Welcome to the {{ Auth::guard('mentor')->user()->getTitle() }} Dashboard.
                     </p>
                 </div>
 
@@ -198,11 +198,19 @@
 
             <div style="background: linear-gradient(90deg, #EFCBF8 3.41%, #FCEEFF 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
                 <h2 class="text-lg text-light-black">
+                    @if(Auth::guard('mentor')->check())
+                    Total Assigned Participants
+                    @else
                     Total Active Participants
+                    @endif
                 </h2>
 
                 <p class="text-[2.125rem] text-end text-dark-blue font-medium">
+                    @if(Auth::guard('mentor')->check())
+                    {{ $assignStudents }}
+                    @else
                     {{ $activeStudents }}
+                    @endif
                 </p>
             </div>
         </div>
@@ -379,7 +387,7 @@
         <div class="space-y-7">
             <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('customer')->user()->first_name}}
                 {{Auth::guard('customer')->user()->last_name}}</h3>
-            <p class="font-normal text-lg">Welcome to the Simulated Internship Platform Customer Dashboard.</p>
+            <p class="font-normal text-lg">Welcome to the Mentorship Program Platform Customer Dashboard.</p>
         </div>
         <img src="/storage/{{Auth::guard('customer')->user()->company->logo}}" class="w-80 h-44 object-scale-down"
             alt="">
