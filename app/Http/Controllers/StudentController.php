@@ -860,6 +860,7 @@ class StudentController extends Controller
 
     public function enrolledDetail($student_id, $project_id)
     {
+
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
@@ -884,9 +885,12 @@ class StudentController extends Controller
         // To Check if there's data in submission inputed from Project_section
         // $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id], ['is_complete', 1]])->get();
         $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
-
-        // To Check if The Project_Section not in the Submission Table then Show the data but limit data to only One
-        $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
+        if(Auth::guard('student')->user()->mentorship_type == "entrepreneur_track"){
+            $projectsections = ProjectSection::where('project_id', $project_id)->get();
+        }else{
+            // To Check if The Project_Section not in the Submission Table then Show the data but limit data to only One
+            $projectsections = ProjectSection::where('project_id', $project_id)->whereDoesntHave('submissions', function($query) use ($student_id){$query->where('student_id', $student_id);})->take(1)->get();
+        }
         // dd($projectsections);
         // Change is_submited in enrolled_project
 
@@ -897,7 +901,12 @@ class StudentController extends Controller
         $task_clear = $submissions->count();
 
         // Progress Bar for Task
-        $taskProgress = (100 / $total_task) * $task_clear;
+        if ($total_task == 0) {
+            // Handle the case where there are no tasks, perhaps set $taskProgress to 0 or another appropriate value
+            $taskProgress = 0;
+        } else {
+            $taskProgress = (100 / $total_task) * $task_clear;
+        }
         // $newMessage = Comment::where('student_id',$student_id)->where('read_message',0)->where('mentor_id',!NULL)->get();
         $newMessage = $this->newCommentForSidebarMenu($student_id);
         $newActivityNotifs = $this->newNotificationActivity($student_id);

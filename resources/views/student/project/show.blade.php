@@ -129,6 +129,23 @@
         </h1>
 
         <div class="mt-4 pr-8 flex flex-col gap-2">
+        @if(Auth::guard('student')->user()->mentorship_type == "entrepreneur_track")
+            @foreach ($projectsections->sortByDesc('taskNumber') as $data)
+            {{-- {{$data}} --}}
+            <a href="{{ "" }}" class="w-full py-4 pl-7 pr-[1.4rem] @if($data->is_complete == 1) bg-white @else bg-[#F8F8F8] @endif border border-darker-blue rounded-lg grid grid-cols-12 items-center gap-1 cursor-pointer re-ordering-position-{{ $data->section }}">
+                <p class="col-span-6 font-medium text-darker-blue text-sm">
+                    Task {{ $data->section }} :
+                    {{ substr($data->title, 0, 30) }}...
+                </p>
+                <p class="col-span-3 font-medium text-light-black text-xs">
+                    Due Date - {{ \Carbon\Carbon::parse($data->dueDate)->format('dS F Y') }}
+                </p>
+                <div class="col-span-1 text-[#000F8A] justify-self-end">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+            @endforeach
+        @else
             @foreach ($submission_data->sortByDesc('taskNumber') as $data)
                 @if(\Carbon\Carbon::now()->greaterThan(\Carbon\Carbon::parse($data->release_date)))
                 <a href="{{ route('student.taskDetail', [Auth::guard('student')->user()->id,$project->id, $data->section_id]) }}" class="w-full py-4 pl-7 pr-[1.4rem] @if($data->is_complete == 1) bg-white @else bg-[#F8F8F8] @endif border border-darker-blue rounded-lg grid grid-cols-12 items-center gap-1 cursor-pointer re-ordering-position-{{ $data->taskNumber }}">
@@ -169,6 +186,7 @@
                 </a>
                 @endif
             @endforeach
+        @endif
         </div>
     </div>
 </div>
