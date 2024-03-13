@@ -302,11 +302,19 @@
                     </a>
                 </li>
 
-                <li class="text-black font-light text-sm">
-                    {{-- <a href="{{ route('projects.support') }}"> --}}
-                        {{-- Support --}}
-                    {{-- </a> --}}
-                </li>
+                @if (!isSkillsTrack())
+                    <li class="text-black font-light text-sm">
+                        <a href="{{ route('student.chat', ['student' => Auth()->user()->id]) }}">
+                            Chat with Team
+                        </a>
+                    </li>
+                @endif
+
+                {{-- <li class="text-black font-light text-sm">
+                    <a href="{{ route('projects.support') }}">
+                        Support
+                    </a>
+                </li> --}}
 
                 {{-- @if (Route::is('student.allProjects') || Route::is('student.ongoingProjects') || Route::is('student.completedProjects'))
           <li class="text-dark-blue intelOne font-light text-sm"><a href="/profile/{{Auth::guard('student')->user()->id}}/allProjects" class="hover:text-neutral-500">My Projects</a></li>

@@ -1386,23 +1386,57 @@ class StudentController extends Controller
 
     public function SupportMail($mailto,$validated) //Email, urlInvitation
     {
-      $data = [
-        'subject' => 'Mentorship Program Support-Mail',
-        'body' => $mailto,
-        'first_name' => $validated['first_name'],
-        'last_name' => $validated['last_name'],
-        'email' => $validated['email'],
-        'query' => $validated['query'],
-        'message'=> $validated['message'],
-        'type' => 'support',
-      ];
+        $data = [
+            'subject' => 'Mentorship Program Support-Mail',
+            'body' => $mailto,
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'query' => $validated['query'],
+            'message'=> $validated['message'],
+            'type' => 'support',
+        ];
 
-    try
-      {
-        Mail::to($mailto)->send(new MailNotify($data));
-        return response()->json(['Your message has been successfully sent to our team.']);
-      } catch (\Exception $th) {
-        return response()->json(['Sorry Something went wrong']);
-      }
-  }
+        try
+        {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Your message has been successfully sent to our team.']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
+        }
+    }
+
+    public function chat(Student $student)
+    {
+        $allowed = !isSkillsTrack();
+
+        if (!$allowed) {
+            return redirect()->route('student.allProjects', ['student' => $student]);
+        }
+
+        $newMessage = $this->newCommentForSidebarMenu($student->id);
+        $newActivityNotifs = $this->newNotificationActivity($student->id);
+        $notifActivityCount = $this->newNotificationActivityCount($student->id);
+        $notifNewTasks = (new NotificationController)->all_notif_new_task();
+        $dataMessages = (new NotificationController)->data_comment_from_admin($student->id);
+
+        $enrolled_projects = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)
+                                            ->where('mentorshipType', 'skill')
+                                            ->get();
+
+        $enrolled_projects_entrepreneur = EnrolledProject::where('student_id', Auth::guard('student')->user()->id)
+                                                        ->where('mentorshipType', 'entrepreneur')
+                                                        ->get();
+
+        $teamName = Auth::guard('student')->user()->team_name;
+        // Check if a project with the same team_name already exists
+        $existingProject = Project::where('team_name', $teamName)->first();
+        $completed_months = Project::whereHas('enrolled_project', function($q){
+          $q->where('student_id', Auth::guard('student')->user()->id);
+          $q->where('is_submited',1);
+        })->get();
+        $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
+
+        return view('student.chat', compact('enrolled_projects','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages', 'existingProject'));
+    }
 }

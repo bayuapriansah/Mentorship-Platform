@@ -145,6 +145,8 @@ Route::group(['middleware'=>'auth:student'], function(){
     Route::get('/profile/{student}/enrolled/{project}/task/{task}/readNotif/{id}', [StudentController::class, 'readActivity'])->name('student.readActivity');
     Route::get('/profile/{student}/project/{project}/notification/{notification}/readNotifTask/', [StudentController::class, 'readActivityTask'])->name('student.readActivityTask');
 
+    // Chat with Team
+    Route::get('/profile/{student}/chat', [StudentController::class, 'chat'])->name('student.chat');
 
     // Support
     Route::get('/profile/{student}/support', [StudentController::class, 'support'])->name('student.support');
