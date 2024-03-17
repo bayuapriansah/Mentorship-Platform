@@ -417,12 +417,13 @@ if (!function_exists('notifyStudent')) {
 if (!function_exists('notifyMentor')) {
     function notifyMentor()
     {
-        $notifyMentor = NotifyMentor::where('id_mentors', auth('mentor')->user()->id)->first();
+        if (auth('mentor')->check()) {
+            $notifyMentor = NotifyMentor::where('id_mentors', auth('mentor')->user()->id)->first();
 
-        if ($notifyMentor && is_array($notifyMentor->notify_mentors_data)) {
-            return $notifyMentor->notify_mentors_data; // Return the entire notification data
+            if ($notifyMentor && is_array($notifyMentor->notify_mentors_data)) {
+                return $notifyMentor->notify_mentors_data; // Return the entire notification data
+            }
         }
-
         return []; // Return an empty array if there are no notifications or in case of any error
     }
 }
@@ -430,23 +431,24 @@ if (!function_exists('notifyMentor')) {
 if (!function_exists('notifyMentorCount')) {
     function notifyMentorCount()
     {
-        $notifyMentor = NotifyMentor::where('id_mentors', auth('mentor')->user()->id)->first();
+        if (auth('mentor')->check()) {
+            $notifyMentor = NotifyMentor::where('id_mentors', auth('mentor')->user()->id)->first();
 
-        if ($notifyMentor && is_array($notifyMentor->notify_mentors_data)) {
-            $notificationMentors = $notifyMentor->notify_mentors_data;
+            if ($notifyMentor && is_array($notifyMentor->notify_mentors_data)) {
+                $notificationMentors = $notifyMentor->notify_mentors_data;
 
-            if (isset($notificationMentors['notification']) && is_array($notificationMentors['notification'])) {
-                // Filter and count notificationMentors where 'isRead' is 0
-                $unreadCount = 0;
-                foreach ($notificationMentors['notification'] as $notification) {
-                    if (isset($notification['isRead']) && $notification['isRead'] == 0) {
-                        $unreadCount++;
+                if (isset($notificationMentors['notification']) && is_array($notificationMentors['notification'])) {
+                    // Filter and count notificationMentors where 'isRead' is 0
+                    $unreadCount = 0;
+                    foreach ($notificationMentors['notification'] as $notification) {
+                        if (isset($notification['isRead']) && $notification['isRead'] == 0) {
+                            $unreadCount++;
+                        }
                     }
+                    return $unreadCount;
                 }
-                return $unreadCount;
             }
         }
-
         return 0; // Return 0 if there are no notifications or in case of any error
     }
 }

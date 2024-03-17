@@ -65,7 +65,13 @@
         </tr>
         @endforeach
     @else
-        <p>No notifications found.</p>
+        <tr class="bg-white">
+            <td class="px-5 py-3 rounded-s-lg rounded-e-lg">
+                <div class="flex items-baseline">
+                    <p>No notifications found.</p>
+                </div>
+            </td>
+        </tr>
     @endif
                 </tbody>
             </table>
