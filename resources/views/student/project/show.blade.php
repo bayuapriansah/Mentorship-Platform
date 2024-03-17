@@ -127,12 +127,11 @@
         <h1 class="mt-16 font-medium text-darker-blue text-[1.4rem]">
             Tasks
         </h1>
-
         <div class="mt-4 pr-8 flex flex-col gap-2">
         @if(Auth::guard('student')->user()->mentorship_type == "entrepreneur_track")
             @foreach ($projectsections->sortByDesc('taskNumber') as $data)
             {{-- {{$data}} --}}
-            <a href="{{ "" }}" class="w-full py-4 pl-7 pr-[1.4rem] @if($data->is_complete == 1) bg-white @else bg-[#F8F8F8] @endif border border-darker-blue rounded-lg grid grid-cols-12 items-center gap-1 cursor-pointer re-ordering-position-{{ $data->section }}">
+            <a href="{{ route('student.taskDetail', [Auth::guard('student')->user()->id,$project->id, $data->id]) }}" class="w-full py-4 pl-7 pr-[1.4rem] @if($data->is_complete == 1) bg-white @else bg-[#F8F8F8] @endif border border-darker-blue rounded-lg grid grid-cols-12 items-center gap-1 cursor-pointer re-ordering-position-{{ $data->section }}">
                 <p class="col-span-6 font-medium text-darker-blue text-sm">
                     Task {{ $data->section }} :
                     {{ substr($data->title, 0, 30) }}...

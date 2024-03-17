@@ -12,6 +12,21 @@ class Submission extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'section_id',
+        'student_id',
+        'project_id',
+        'is_complete',
+        'flag_checkpoint',
+        'file',
+        'dataset',
+        'release_date',
+        'dueDate',
+        'taskNumber',
+        'type',
+        'mentorshipType',
+    ];
+
     public function projectSection()
     {
         return $this->belongsTo(ProjectSection::class,'section_id','id');

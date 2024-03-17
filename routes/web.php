@@ -30,6 +30,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
 use App\Http\Controllers\EmailBulkInvitationController;
+use App\Http\Controllers\SubmitProjectPlanner;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InternalDocumentController;
@@ -136,6 +137,11 @@ Route::group(['middleware'=>'auth:student'], function(){
     // Notification and Message Handler for Students
     Route::post('/notifications/mark-as-read/{idNotify}', [NotificationAndMessageController::class, 'markAsRead'])->name('notifications.students.markAsRead');
     // End Notification and Message Handler for Students
+
+    // Project Planner submit and resubmit
+    Route::post('/project/{student}/enrolled/{project}/task/{task}', [SubmitProjectPlanner::class, 'taskSubmit'])->name('student.projectPlanner.taskSubmit');
+    Route::patch('/project/{student}/enrolled/{project}/task/{task}/submission/{submission}', [StudentController::class, 'taskResubmit'])->name('student.projectPlanner.taskResubmit');
+    // End
 
     Route::post('/feedback/{student}', [StudentController::class, 'feedbackStudent'])->name('student.feedback');
     Route::get('/profile/{student}/allProjects', [StudentController::class, 'allProjects'])->name('student.allProjects');

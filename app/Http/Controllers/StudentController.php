@@ -1011,6 +1011,9 @@ class StudentController extends Controller
                 $taskSubmitForm = "";
                 $taskReSubmitForm = route('student.taskResubmit',[$student->id,$task->project->id,$task->id,$submissionData->id]);
             }
+        }else{
+            $taskSubmitFormProjectPlanner = route('student.projectPlanner.taskSubmit',[$student->id,$task->project->id,$task->id]);
+            $submissionData = Submission::where('mentorshipType', 'entrepreneur')->where('project_id',$project_id)->where('section_id', $task->id)->first();
         }
         // dd($taskProgress);
         $newMessage = $this->newCommentForSidebarMenu($student_id);
@@ -1024,6 +1027,8 @@ class StudentController extends Controller
         })->get();
         if(Auth::guard('student')->user()->mentorship_type == "skills_track"){
             return view('student.project.task.index', compact('taskSubmitForm', 'taskReSubmitForm', 'student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
+        }else{
+            return view('student.project.task.index', compact('taskSubmitFormProjectPlanner','submissionData','student','completed_months','enrolled_projects', 'dataDate', 'task','comments','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
         }
     }
 

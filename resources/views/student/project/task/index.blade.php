@@ -216,13 +216,17 @@
                     <p class="text-base leading-relaxed text-gray-500 ">
                       <div class="pb-20">
                         <h1 class="text-darker-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
-                        @if($submissionData == null)
-                          <form action="{{ $taskSubmitForm }}" method="POST" enctype="multipart/form-data">
+                        @if(Auth::guard('student')->user()->mentorship_type == "skills_track")
+                            @if($submissionData == null)
+                                <form action="{{ $taskSubmitForm }}" method="POST" enctype="multipart/form-data">
+                            @else
+                                <form action="{{ $taskReSubmitForm }}" method="POST" enctype="multipart/form-data">
+                                @method('patch')
+                            @endif
                         @else
-                          <form action="{{ $taskReSubmitForm }}" method="POST" enctype="multipart/form-data">
-                          @method('patch')
+                                <form action="{{ $taskSubmitFormProjectPlanner }}" method="POST" enctype="multipart/form-data">
                         @endif
-                          @csrf
+                            @csrf
                           <div class="relative cursor-pointer " id="drop-area">
                           {{-- <div class="relative cursor-pointer " id="drop-area"> --}}
                             <div>

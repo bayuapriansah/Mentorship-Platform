@@ -146,52 +146,55 @@
       @endif
       <div class="w-full  relative">
         @php $tipNumber = 1 @endphp
-        @foreach ($submissions as $submission)
-          {{-- @dd(array_search($submission, $submissions->toArray())) --}}
-          @if ($loop->index %2 ==0)
-            @if ($submission->grade == null)
-              {{-- <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}"> --}}
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
-              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
-                Task {{$tipNumber}} <br>
-                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
-                <div class="tooltip-arrow" data-popper-arrow></div>
-              </div>
+        @if(Auth::guard('student')->user()->mentorship_type == "skills_track")
+            @foreach ($submissions as $submission)
+            {{-- @dd(array_search($submission, $submissions->toArray())) --}}
+            @if ($loop->index %2 ==0)
+                @if ($submission->grade == null)
+                {{-- <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-toggle="flag" data-placement="top" title="Task {{$tipNumber}} &#013;{{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}"> --}}
+                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+                <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                    Task {{$tipNumber}} <br>
+                    {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                @else
+                @if($submission->grade->status == 1)
+                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+                <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                    Task {{$tipNumber}} <br>
+                    {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                @endif
+                @endif
             @else
-              @if($submission->grade->status == 1)
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute top-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
-              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
-                Task {{$tipNumber}} <br>
-                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
-                <div class="tooltip-arrow" data-popper-arrow></div>
-              </div>
-              @endif
+                @if ($submission->grade == null)
+                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+                <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                    Task {{$tipNumber}} <br>
+                    {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                {{-- {{$loop->index+1}} --}}
+                @else
+                @if($submission->grade->status == 1)
+                <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
+                <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
+                    Task {{$tipNumber}} <br>
+                    {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                @endif
+                @endif
             @endif
-          @else
-            @if ($submission->grade == null)
-            <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
-              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
-                Task {{$tipNumber}} <br>
-                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
-                <div class="tooltip-arrow" data-popper-arrow></div>
-              </div>
-            {{-- {{$loop->index+1}} --}}
-            @else
-              @if($submission->grade->status == 1)
-              <img src="{{asset('assets/img/icon/flag.png')}}" class="absolute bottom-0" alt="" style="margin-left: {{$submission->flag_checkpoint}}%" data-tooltip-target="tooltip-bottom{{$tipNumber}}" data-tooltip-placement="bottom" data-tooltip-trigger="hover">
-              <div id="tooltip-bottom{{$tipNumber}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-black text-xs font-normal border border-light-blue bg-white rounded-lg shadow-sm opacity-0 tooltip">
-                Task {{$tipNumber}} <br>
-                {{ \Carbon\Carbon::parse($submission->created_at)->format('d M Y')}}
-                <div class="tooltip-arrow" data-popper-arrow></div>
-              </div>
-              @endif
-            @endif
-          @endif
 
 
-            @php $tipNumber++ @endphp
-        @endforeach
+                @php $tipNumber++ @endphp
+            @endforeach
+        @else
 
+        @endif
         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 mt-3">
           <div class="bg-[#11BF61] h-1.5 rounded-full" style="width: {{ (round($taskDate) >= 100) ? 100 : round($taskDate)}}%"></div>
         </div>
@@ -270,6 +273,7 @@
 
   @if(Route::is('student.taskDetail'))
     <div class="flex flex-col mt-8 ">
+    @if(Auth::guard('student')->user()->mentorship_type == "skills_track")
       @if($submissionData == null)
         @if (\Carbon\Carbon::now()->format('Y-m-d') <= $student->end_date)
           <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-primary rounded-full p-2 mx-auto w-3/4">Submit Task</button>
@@ -311,15 +315,15 @@
             $datasets = explode(';',$submissionData->dataset);
             $no=1;
           @endphp
-        <div class="flex flex-col text-center my-4">
-          <h1 class="text-dark-blue font-medium text-sm text-center">Dataset</h1>
-          <div class="flex flex-wrap justify-start pt-2">
-            @foreach ($datasets as $dataset)
-              <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
-              @php $no++ @endphp
-            @endforeach
-          </div>
-        </div>
+            <div class="flex flex-col text-center my-4">
+            <h1 class="text-dark-blue font-medium text-sm text-center">Dataset</h1>
+            <div class="flex flex-wrap justify-start pt-2">
+                @foreach ($datasets as $dataset)
+                <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
+                @php $no++ @endphp
+                @endforeach
+            </div>
+            </div>
         @endif
 
         @if($submissionData->grade)
@@ -336,7 +340,74 @@
           <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-light-brown">In Review</span></p>
         @endif
       @endif
+    @else
+        @if($submissionData == null)
+            @if (\Carbon\Carbon::now()->format('Y-m-d') <= $student->end_date)
+                <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-primary rounded-full p-2 mx-auto w-3/4">Submit Task</button>
+            @endif
+        @else
+            <p class="text-xs mx-16 text-center py-2">You've successfully completed the task on {{$submissionData->created_at}}</p>
+            <div class="mx-auto w-full border border-light-blue rounded-xl text-center p-3 flex justify-between items-center">
+            @if (strpos($submissionData->file, 'https://') !== false)
+                <i class="fa-solid fa-link"></i>
+                    Your Submission Link
+                <a href="{{$submissionData->file}}">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            @else
+                <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+                Your Submission File
+                @php
+                    $ekstension = substr($submissionData->file, strpos($submissionData->file, ".") + 1);
+                @endphp
+                <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}">
+                <img  src="{{asset('assets/img/icon/download.png')}}" alt="">
+            @endif
+                {{-- <img src="{{asset('assets/img/icon/Vector.png')}}" alt="">
+                Your Submission File
+                @php
+                $ekstension = substr($submissionData->file, strpos($submissionData->file, ".") + 1);
+                @endphp
+                <a download="submission.{{$ekstension}}" href="{{asset('storage/'.$submissionData->file)}}">
+                <img  src="{{asset('assets/img/icon/download.png')}}" alt=""> --}}
 
+            {{-- <i class="fa-solid fa-link"></i>
+                Your Submission Link
+            <a href="{{$submissionData->file}}">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a> --}}
+            </div>
+            @if($submissionData->dataset)
+            @php
+                $datasets = explode(';',$submissionData->dataset);
+                $no=1;
+            @endphp
+                <div class="flex flex-col text-center my-4">
+                <h1 class="text-dark-blue font-medium text-sm text-center">Dataset</h1>
+                <div class="flex flex-wrap justify-start pt-2">
+                    @foreach ($datasets as $dataset)
+                    <a href="{{$dataset}}" class="bg-light-brown hover:bg-dark-brown px-4 py-1 rounded-lg text-white mr-2 mb-2" target="_blank">Dataset {{$no}} <i class="fa-solid fa-chevron-right"></i></a>
+                    @php $no++ @endphp
+                    @endforeach
+                </div>
+                </div>
+            @endif
+
+            @if($submissionData->grade)
+            @if ($submissionData->grade->status==1)
+                <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#11BF61]">Complete</span></p>
+            @elseif($submissionData->grade->status==0)
+                @if (\Carbon\Carbon::now()->format('Y-m-d') <= $student->end_date)
+                <button data-modal-target="staticModal" data-modal-toggle="staticModal" class="text-sm font-normal text-white bg-darker-blue hover:bg-dark-blue rounded-full p-2 mt-2">Resubmit Task </button>
+
+                <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-[#EA0202]">Revise</span></p>
+                @endif
+            @endif
+            @else
+            <p class="text-dark-blue font-medium text-sm text-center">Status : <span class="text-light-brown">In Review</span></p>
+            @endif
+        @endif
+    @endif
       {{-- grade status revise --}}
     </div>
   @else
