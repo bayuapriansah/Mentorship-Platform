@@ -231,7 +231,7 @@
     </div>
   </div>
 {{-- Mentorship Timeline --}}
-<div class="relative overflow-y-clip max-w-screen-xl mt-48 mx-auto px-6 pb-[11.25rem] flex flex-col items-center gap-[4.25rem]">
+{{-- <div class="relative overflow-y-clip max-w-screen-xl mt-48 mx-auto px-6 pb-[11.25rem] flex flex-col items-center gap-[4.25rem]">
     <h1 class="relative z-[2] text-3xl text-center text-darker-blue font-bold">
         Mentorship Timeline
     </h1>
@@ -242,10 +242,25 @@
         class="relative z-[2] w-[1066px]"
     >
 
-    {{-- Wave Effect --}}
     <div
-        class="absolute -bottom-40 left-[30%] -translate-x-[30%] w-[1558px] h-[645.315px] bg-cover bg-no-repeat"
-        style="background-image: url({{ asset('/assets/img/purple-wave.svg') }})"
-    ></div>
-</div>
+        class="absolute -bottom-40 left-[30%] -translate-x-[30%] w-full h-[645.315px] bg-cover bg-no-repeat"
+        style="background-image: url({{ asset('/assets/img/purple-wave.svg') }}); background-size: contain;"
+    >
+    </div>
+</div> --}}
+
+
+<section class="pt-16 pb-16 bg-white bg-no-repeat bg-center bg-cover bg-fixed overflow-hidden" style="background-image: url('{{ asset('/assets/img/purple-wave.svg') }}');">
+    <div class="container px-4 mx-auto">
+      <div class="py-16 px-20 bg-opacity-80 rounded-4xl">
+      {{-- <div class="py-16 px-20 bg-opacity-80 rounded-4xl" style="backdrop-filter: blur(37px);"> --}}
+        <div class="flex flex-wrap xl:items-center -m-8">
+          <div class="w-full p-8">
+              <h2 class="mb-14 text-3xl md:text-3xl text-center text-darker-blue font-bold tracking-px-n leading-tight">Mentorship Timeline</h2>
+              <img src="{{ asset('/assets/img/home/mentorship-timeline.png') }}" alt="Mentorship Timeline" class="relative z-[2] w-[1066px] mx-auto block">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 @endsection
