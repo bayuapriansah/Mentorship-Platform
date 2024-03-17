@@ -224,7 +224,12 @@
                                 @method('patch')
                             @endif
                         @else
+                            @if($submissionData == null)
                                 <form action="{{ $taskSubmitFormProjectPlanner }}" method="POST" enctype="multipart/form-data">
+                            @else
+                                <form action="{{ $taskReSubmitFormProjectPlanner }}" method="POST" enctype="multipart/form-data">
+                                @method('patch')
+                            @endif
                         @endif
                             @csrf
                           <div class="relative cursor-pointer " id="drop-area">
