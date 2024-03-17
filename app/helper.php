@@ -3,6 +3,9 @@
 use App\Models\Comment;
 use App\Models\Submission;
 use App\Models\Student;
+use App\Models\NotifyStudent;
+use App\Models\NotifyMentor;
+// use App\Models\NotifyStudent;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\ReadNotification;
 use Illuminate\Support\Facades\Auth;
@@ -371,6 +374,80 @@ if (!function_exists('isSkillsTrack')) {
     {
         // return request()->query->has('is_skills_track');
         return auth('student')->user()->mentorship_type == 'skills_track';
+    }
+}
+
+if (!function_exists('notifyStudentCount')) {
+    function notifyStudentCount()
+    {
+        $notifyStudent = NotifyStudent::where('id_students', auth('student')->user()->id)->first();
+
+        if ($notifyStudent && is_array($notifyStudent->notify_data)) {
+            $notifications = $notifyStudent->notify_data;
+
+            if (isset($notifications['notification']) && is_array($notifications['notification'])) {
+                // Filter and count notifications where 'isRead' is 0
+                $unreadCount = 0;
+                foreach ($notifications['notification'] as $notification) {
+                    if (isset($notification['isRead']) && $notification['isRead'] == 0) {
+                        $unreadCount++;
+                    }
+                }
+                return $unreadCount;
+            }
+        }
+
+        return 0; // Return 0 if there are no notifications or in case of any error
+    }
+}
+
+if (!function_exists('notifyStudent')) {
+    function notifyStudent()
+    {
+        $notifyStudent = NotifyStudent::where('id_students', auth('student')->user()->id)->first();
+
+        if ($notifyStudent && is_array($notifyStudent->notify_data)) {
+            return $notifyStudent->notify_data; // Return the entire notification data
+        }
+
+        return []; // Return an empty array if there are no notifications or in case of any error
+    }
+}
+
+if (!function_exists('notifyMentor')) {
+    function notifyMentor()
+    {
+        $notifyMentor = NotifyMentor::where('id_mentors', auth('mentor')->user()->id)->first();
+
+        if ($notifyMentor && is_array($notifyMentor->notify_mentors_data)) {
+            return $notifyMentor->notify_mentors_data; // Return the entire notification data
+        }
+
+        return []; // Return an empty array if there are no notifications or in case of any error
+    }
+}
+
+if (!function_exists('notifyMentorCount')) {
+    function notifyMentorCount()
+    {
+        $notifyMentor = NotifyMentor::where('id_mentors', auth('mentor')->user()->id)->first();
+
+        if ($notifyMentor && is_array($notifyMentor->notify_mentors_data)) {
+            $notificationMentors = $notifyMentor->notify_mentors_data;
+
+            if (isset($notificationMentors['notification']) && is_array($notificationMentors['notification'])) {
+                // Filter and count notificationMentors where 'isRead' is 0
+                $unreadCount = 0;
+                foreach ($notificationMentors['notification'] as $notification) {
+                    if (isset($notification['isRead']) && $notification['isRead'] == 0) {
+                        $unreadCount++;
+                    }
+                }
+                return $unreadCount;
+            }
+        }
+
+        return 0; // Return 0 if there are no notifications or in case of any error
     }
 }
 

@@ -141,7 +141,6 @@
                     <h1 class="text-dark-blue font-medium text-[1.375rem]">
                         Hello, {{ Auth::guard('mentor')->user()->first_name }}!
                     </h1>
-
                     <p class="text-lg">
                         Welcome to the {{ Auth::guard('mentor')->user()->getTitle() }} Dashboard.
                     </p>

@@ -16,35 +16,57 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($submissions as $submission)
-                        <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-white' : 'bg-[#F8F8F8]' }}">
-                            <td class="px-5 py-3 rounded-s-lg rounded-e-lg">
-                                <div class="flex items-baseline">
-                                    <div class="w-3 h-3 bg-primary rounded-full"></div>
+      @php
+        $notify_mentors = notifyMentor();
+      @endphp
+    @if(!empty($notify_mentors) && isset($notify_mentors['notification']))
+        @foreach($notify_mentors['notification'] as $notify_mentor)
+        <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-white' : 'bg-[#F8F8F8]' }}">
+            <td class="px-5 py-3 rounded-s-lg rounded-e-lg">
+                <div class="flex items-baseline">
+                    @if($notify_mentor['isRead'] == 0)
+                    <div class="w-3 h-3 bg-primary rounded-full"></div>
+                    @endif
+                    <div class="max-w-[70%] ml-3">
+                        <p class="text-{{ $notify_mentor['isRead'] != 1 ? 'dark-blue hover:text-darker-blue' : 'grey hover:text-gray-800' }} font-medium">
+                            There is
+                            {{ $notify_mentor['statusSubmission'] != "revision" ? 'New Submission' : 'Resubmission' }}, From :
+                            {{ $notify_mentor['studentName'] }} at Section ({{ $notify_mentor['taskTitle'] }})
+                        </p>
 
-                                    <div class="max-w-[70%] ml-3">
-                                        <p class="text-darker-blue font-medium">
-                                            There is New Submission, From :
-                                            {{ optional($submission->student)->first_name }} {{ optional($submission->student)->last_name }} at Section ({{ optional($submission->projectSection)->title }})
-                                        </p>
+                        <p class="mt-2 text-xs">
+                            @if (isset($notify_mentor['created_at']))
+                                @php
+                                    $date = new DateTime($notify_mentor['created_at']);
+                                    echo $date->format('dS F, Y - H:i:s');
+                                @endphp
+                            @else
+                                Date not available
+                            @endif
+                        </p>
 
-                                        <p class="mt-2 text-xs">
-                                            {{ $submission->updated_at->isoFormat('Do MMMM, YYYY [at] h:mma') }}
-                                        </p>
+                    </div>
+                    {{-- <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submission->project->id, $submission->id, $submission->student->id]) }}" class="self-center ml-auto px-3 py-1 bg-primary rounded-lg flex gap-6 text-sm text-white"> --}}
+                    {{-- <a href="{{ "#" }}" class="self-center ml-auto px-3 py-1 bg-primary rounded-lg flex gap-6 text-sm text-white">
+                        View Notification
+                        <span>></span>
+                    </a> --}}
+                    {{-- bg-{{ $notify_student['isRead'] != 1 ? 'dark-blue hover:bg-darker-blue' : 'grey hover:bg-gray-800' }} --}}
+                    <a href="{{ route('dashboard.notifications.mentor.markAsRead', ['idNotify' => $notify_mentor['idNotify']]) }}" class=" self-center ml-auto px-3 py-1 bg-primary rounded-lg flex gap-6 text-sm text-white" onclick="event.preventDefault(); document.getElementById('mark-as-read-form-{{ $notify_mentor['idNotify'] }}').submit();">
+                        View Notification
+                        <span>></span>
+                    </a>
 
-                                    </div>
-
-                                    @if($submission->project && $submission && $submission->student)
-                                        <a href="{{ route('dashboard.submission.singleSubmission.readNotification', [$submission->project->id, $submission->id, $submission->student->id]) }}" class="self-center ml-auto px-3 py-1 bg-primary rounded-lg flex gap-6 text-sm text-white">
-                                            View Notification
-                                            <span>></span>
-                                        </a>
-                                    @endif
-
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
+                    <form id="mark-as-read-form-{{ $notify_mentor['idNotify'] }}" action="{{ route('dashboard.notifications.mentor.markAsRead', ['idNotify' => $notify_mentor['idNotify']]) }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </td>
+        </tr>
+        @endforeach
+    @else
+        <p>No notifications found.</p>
+    @endif
                 </tbody>
             </table>
         </div>

@@ -33,6 +33,7 @@ use App\Http\Controllers\EmailBulkInvitationController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InternalDocumentController;
+use App\Http\Controllers\NotificationAndMessageController;
 
 // use App\Http\Controllers\ChatbotController;
 
@@ -132,6 +133,10 @@ Route::post('/register/customer/{email}', [CustomerController::class, 'completed
 
 // bay
 Route::group(['middleware'=>'auth:student'], function(){
+    // Notification and Message Handler for Students
+    Route::post('/notifications/mark-as-read/{idNotify}', [NotificationAndMessageController::class, 'markAsRead'])->name('notifications.students.markAsRead');
+    // End Notification and Message Handler for Students
+
     Route::post('/feedback/{student}', [StudentController::class, 'feedbackStudent'])->name('student.feedback');
     Route::get('/profile/{student}/allProjects', [StudentController::class, 'allProjects'])->name('student.allProjects');
     Route::get('/profile/{student}/allProjectsAvailable', [StudentController::class, 'allProjectsAvailable'])->name('student.allProjectsAvailable');
@@ -306,7 +311,7 @@ Route::group(['prefix'=>'dashboard','as'=>'dashboard.'], function(){
     });
 
     Route::middleware(['auth:web,customer,mentor'])->group(function(){
-
+        Route::post('/notifications/mark-as-read/mentor/{idNotify}', [NotificationAndMessageController::class, 'markAsReadMentor'])->name('notifications.mentor.markAsRead');
         Route::get('/company', [DashboardController::class, 'indexCompany'])->name('company');
 
         // All Project Assigned

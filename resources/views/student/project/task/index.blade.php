@@ -217,9 +217,9 @@
                       <div class="pb-20">
                         <h1 class="text-darker-blue font-medium text-[22px] mb-5">Upload Assignment</h1>
                         @if($submissionData == null)
-                          <form action="{{ route('student.taskSubmit',[$student->id,$task->project->id,$task->id,$submissionId->id]) }}" method="POST" enctype="multipart/form-data">
+                          <form action="{{ $taskSubmitForm }}" method="POST" enctype="multipart/form-data">
                         @else
-                          <form action="{{ route('student.taskResubmit',[$student->id,$task->project->id,$task->id,$submissionData->id]) }}" method="POST" enctype="multipart/form-data">
+                          <form action="{{ $taskReSubmitForm }}" method="POST" enctype="multipart/form-data">
                           @method('patch')
                         @endif
                           @csrf
@@ -227,7 +227,7 @@
                           {{-- <div class="relative cursor-pointer " id="drop-area"> --}}
                             <div>
                               <h1 class="text-darker-blue font-medium mb-2">File Link</h1>
-                                <input class="border border-grey rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="File Link" name="glablink">
+                                <input class="border border-grey rounded-lg w-full py-2 px-4 text-lightest-grey::placeholder leading-tight mr-5 focus:outline-none" type="text" placeholder="File Link" name="glablink" required>
                                 <p class="text-sm text-red-600" id="link_error" style="display: none;">*Please enter a link from Google Docs, Google Drive, or Google Colab</p>
                             </div>
                             <div class="mt-4">
@@ -318,23 +318,6 @@ dropArea.addEventListener('dragleave', e => {
     e.preventDefault()
     dropArea.classList.remove('bg-gray-200')
 })
-// dropArea.addEventListener('drop', e => {
-//     e.preventDefault()
-//     dropArea.classList.remove('bg-gray-200')
-//     fileInput.files = e.dataTransfer.files
-//     let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-//     fileName.classList.add(...classesToAdd);
-//     fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.dataTransfer.files[0].name} <i class="fas fa-times"></i>`
-//     // You can handle the files here.
-//     handleUpload(e.dataTransfer.files)
-//     const fileClear = document.querySelector('.fa-times')
-//     fileClear.addEventListener('click', e => {
-//         e.preventDefault();
-//         fileName.textContent = '';
-//         fileInput.value = '';
-//         resetUI();
-//     });
-// })
 
 fileChatInput.addEventListener('change', e =>{
   // console.log('${e.target.files[0].name}');
@@ -349,22 +332,6 @@ fileChatInput.addEventListener('change', e =>{
     });
 })
 
-// Listen for file input change events
-// fileInput.addEventListener('change', e => {
-//     fileName.innerHTML = `<img src="{{asset("assets/img/icon/Vector.png")}}" alt=""> ${e.target.files[0].name} <i class="fas fa-times"></i> `
-//     // You can handle the files here.
-//     handleUpload(e.target.files)
-//     let classesToAdd = ["p-2","border","border", "hover:bg-gray-50", "rounded-md", "border-dark-blue", 'p']
-//     fileName.classList.add(...classesToAdd);
-//     const fileClear = document.querySelector('.fa-times')
-//     fileClear.addEventListener('click', e => {
-//         e.preventDefault();
-//         fileName.textContent = '';
-//         fileInput.value = '';
-//         resetUI();
-//     });
-// })
-
 // Example function for handling file uploads
 function handleUpload(files) {
     console.log('Uploading files:', files)
@@ -378,14 +345,6 @@ function resetUI() {
 }
 
 
-// dataset as tags
-// var input = document.querySelector('input[name=dataset]')
-// var tagify = new Tagify(input, {
-//   whitelist: ["foo", "bar", "baz"],
-//   dropdown: {
-//     position: "input",
-//   }
-// })
 var input = document.querySelector('input[name=dataset]');
 // initialize Tagify on the above input node reference
 const tagify = new Tagify(input, {

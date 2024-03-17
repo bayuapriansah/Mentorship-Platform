@@ -7,11 +7,14 @@ use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
 use App\Models\Submission;
+use App\Models\NotifyStudent;
 use Illuminate\Http\Request;
 use App\Models\ProjectSection;
 use App\Models\ReadNotification;
 use App\Models\EnrolledProject;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SubmissionController extends Controller
 {
@@ -125,9 +128,11 @@ class SubmissionController extends Controller
         $grade = new Grade;
         if(Auth::guard('web')->check()){
             $grade->user_id = Auth::guard('web')->user()->id;
+            $grader = Auth::guard('web')->user()->name;
         }elseif(Auth::guard('mentor')->check()){
             if(Auth::guard('mentor')->check()){
                 $grade->mentor_id = Auth::guard('mentor')->user()->id;
+                $grader = Auth::guard('mentor')->user()->name;
             }
         }
         $grade->submission_id = $submission->id;
@@ -141,7 +146,6 @@ class SubmissionController extends Controller
         $project_sections = ProjectSection::where('project_id', $project->id)->get();
         $enrolled_project_completed_or_no = EnrolledProject::where([['student_id', $submission->student->id], ['project_id', $project->id]])->first()->is_submited;
         // dd($enrolled_project_completed_or_no);
-
 
         $submissionData = Submission::whereHas('grade', function($q){
             $q->where('status',1);
@@ -158,6 +162,38 @@ class SubmissionController extends Controller
             $success_project->save();
         }
         // return redirect('/submissions/project/'.$project->id.'/view/'.$submission->id.'/grade/'.$grade->id);
+
+        $notifyStudent = NotifyStudent::firstOrCreate(
+            ['id_students' => $submission->student_id],
+            ['notify_data' => ['notification' => []]] // Default as an array
+        );
+
+        $notifications = $notifyStudent->notify_data; // This is automatically an array because of the $casts attribute
+
+        // Get the last notification's idNotify and increment by 1
+        $lastNotify = end($notifications['notification']);
+        $nextIdNotify = $lastNotify ? $lastNotify['idNotify'] + 1 : 1;
+
+        $newNotification = [
+            "type" => "newGrading",
+            "isRead" => 0,
+            "message" => $request->message, // Or use $request->message, depending on your requirements
+            "idNotify" => $nextIdNotify,
+            "idProject" => $project->id,
+            "idSection" => $submission->projectSection->id,
+            "created_at" => Carbon::now()->toDateTimeString(),
+            "graderName" => $grader, // Adjust as needed
+            "titleSection" => $submission->projectSection->title, // Or another relevant field
+            "statusGrading" => $request->input('pass') ? "pass" : "revision" // Adjust based on your logic
+        ];
+
+        // Append the new notification
+        $notifications['notification'][] = $newNotification;
+
+        // Laravel will automatically convert this array to JSON when saving
+        $notifyStudent->notify_data = $notifications;
+        $notifyStudent->save();
+
         return back();
     }
     /**

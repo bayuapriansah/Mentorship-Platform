@@ -12,56 +12,57 @@
     <tbody>
       @php
         $mergedNotifs = $newActivityNotifs->merge($notifNewTasks)->sortByDesc('created_at')->all();
+        $notify_students = notifyStudent();
       @endphp
-      @foreach ($mergedNotifs as $notifNewTask)
-        @if($notifNewTask->type == 'grade')
-          @if($notifNewTask->grade == !NULL)
-          <tr>
-            <td>
-              <span class="{{$notifNewTask->grade->readornot != 1 ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
-                Result Task : {{ $notifNewTask->grade->submission->projectSection->title }}
-                <br>
-                Hi {{$student->first_name}} {{$student->last_name}},
-                @if($notifNewTask->grade->status == 0)
-                    {{ 'Sorry but you need to revise the Task' }}
-                @elseif($notifNewTask->grade->status == 1)
-                    {{ 'Great you Pass the Task' }}
-                @else
-                    {{ 'Nothing' }}
-                @endif
-                <br>
-              </span>
-              <span class="text-[#6973C6] text-xs font-normal">{{$notifNewTask->created_at->format('dS F, Y')}}</span>
-            </td>
-            <td class="">
-              <a href="{{ route('student.readActivity',[$notifNewTask->grade->submission->student_id,$notifNewTask->grade->submission->project_id,$notifNewTask->grade->submission->section_id,$notifNewTask->grade->submission->id]) }}" class="bg-{{ $notifNewTask->grade->readornot != 1 ? 'dark-blue hover:bg-darker-blue' : 'grey hover:bg-gray-800' }} rounded-lg py-1 px-4 pb-2 text-white">View Notification</a>
-            </td>
-          </tr>
-          @endif
-        @elseif($notifNewTask->type == 'notification')
-          @if($notifNewTask->project)
-            @if($notifNewTask->status != 'deldraft')
-              @if($notifNewTask->project->institution_id == $student->institution_id || $notifNewTask->project->institution_id == NULL)
+    @if(!empty($notify_students) && isset($notify_students['notification']))
+        @foreach($notify_students['notification'] as $notify_student)
                 <tr>
-                  <td>
-                    <span class="{{optional($notifNewTask->read_notification)->firstWhere(['student_id' => $student->id, 'notifications_id' => $notifNewTask->id]) != TRUE ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
-                      Task :
-                      {{ substr($notifNewTask->project->name,0,99) }}
-                      <br>
-                      {!! substr($notifNewTask->project->problem,0,80) !!}...
-                      <br>
-                    </span>
-                    <span class="text-[#6973C6] text-xs font-normal">{{$notifNewTask->created_at->format('dS F, Y')}}</span>
-                  </td>
-                  <td class="">
-                    <a href="{{ route('student.readActivityTask',[$student->id,$notifNewTask->project_id,$notifNewTask->id]) }}" class="bg-{{ optional($notifNewTask->read_notification)->firstWhere(['student_id' => $student->id, 'notifications_id' => $notifNewTask->id]) != TRUE ? 'dark-blue hover:bg-darker-blue' : 'grey hover:bg-gray-800' }} rounded-lg py-1 px-4 pb-2 text-white">View Notification</a>
-                  </td>
+                    <td>
+                      <span class="{{$notify_student['isRead'] != 1 ? 'text-sm font-medium text-dark-blue':'text-sm font-normal text-black'}}">
+                    @if(isset($notify_student['projectName']))
+                        There is a New Project: {{ $notify_student['projectName'] }}
+                    @else
+                        New notification for grading.
+                    @endif
+                    @if(isset($notify_student['type']) && $notify_student['type'] == "newGrading")
+                        Result Task : {{ $notify_student['titleSection'] ?? 'N/A' }}
+                        <br>
+                        Hi {{ Auth::guard('student')->user()->first_name }} {{ Auth::guard('student')->user()->last_name }},
+                        @if (isset($notify_student['statusGrading']))
+                            @if($notify_student['statusGrading'] == "revision")
+                                {{ 'Sorry, but you need to revise the task.' }}
+                            @elseif($notify_student['statusGrading'] == "pass")
+                                {{ 'Great, you completed the task!' }}
+                            @else
+                                {{ 'Status is not available.' }}
+                            @endif
+                        @endif
+                    @endif
+                        <br>
+                      </span>
+                      <span class="text-[#6973C6] text-xs font-normal">
+                        @if (isset($notify_student['created_at']))
+                            @php
+                                $date = new DateTime($notify_student['created_at']);
+                                echo $date->format('dS F, Y - H:i:s');
+                            @endphp
+                        @else
+                            Date not available
+                        @endif
+                      </span>
+                    </td>
+                    <td class="">
+                      <a href="{{ route('notifications.students.markAsRead', ['idNotify' => $notify_student['idNotify']]) }}" class="bg-{{ $notify_student['isRead'] != 1 ? 'dark-blue hover:bg-darker-blue' : 'grey hover:bg-gray-800' }} rounded-lg py-1 px-4 pb-2 text-white" onclick="event.preventDefault(); document.getElementById('mark-as-read-form-{{ $notify_student['idNotify'] }}').submit();">View Notification</a>
+                    </td>
                 </tr>
-              @endif
-            @endif
-          @endif
-        @endif
-      @endforeach
+                <form id="mark-as-read-form-{{ $notify_student['idNotify'] }}" action="{{ route('notifications.students.markAsRead', ['idNotify' => $notify_student['idNotify']]) }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+        @endforeach
+    @else
+        <p>No notifications found.</p>
+    @endif
+
     </tbody>
   </table>
 </div>

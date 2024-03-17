@@ -10,6 +10,7 @@ use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Student;
 use App\Models\Feedback;
+use App\Models\NotifyMentor;
 use App\Mail\MailNotify;
 use App\Models\Customer;
 use App\Models\Submission;
@@ -860,7 +861,6 @@ class StudentController extends Controller
 
     public function enrolledDetail($student_id, $project_id)
     {
-
         if($student_id != Auth::guard('student')->user()->id ){
             abort(403);
         }
@@ -870,13 +870,22 @@ class StudentController extends Controller
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
         })->get();
+
         $project = Project::findOrFail($project_id);
+
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
         // dd($project->enrolled_project->where('student_id', $student_id));
-        if($project == null || $project->enrolled_project->where('student_id', $student_id)->count() == 0){
-            abort(404);
+
+        if($project && $project->enrolled_project) {
+            $enrolledTeam = $project->enrolled_project->where('team_name', Auth::guard('student')->user()->team_name)->first();
+            if($enrolledTeam && $enrolledTeam->team_name != Auth::guard('student')->user()->team_name){
+                if($project == null || $project->enrolled_project->where('student_id', $student_id)->count() == 0){
+                    abort(404);
+                }
+            }
         }
+
 
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
@@ -970,9 +979,7 @@ class StudentController extends Controller
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
         $task = ProjectSection::findOrFail($task_id);
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $task_id)->where('student_id', Auth::guard('student')->user()->id)->get();
-        // $submission = Submission::get();
-        $submissionData = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',1)->first();
-        $submissionId = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',0)->first();
+
         $project = Project::findOrFail($project_id);
         $appliedDateStart  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->startOfDay();
         $appliedDateEnd  = \Carbon\Carbon::parse($project->enrolled_project->where('student_id', Auth::guard('student')->user()->id)->where('project_id', $project->id)->first()->created_at)->addMonths($project->period)->startOfDay();
@@ -980,14 +987,31 @@ class StudentController extends Controller
 
         // The prerequisite for count task progress
         $project_sections = ProjectSection::where('project_id', $project_id)->get();
-        $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
+        if(Auth::guard('student')->user()->mentorship_type == "skills_track"){
+            $submissionData = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',1)->first();
+            $submissionId = Submission::where('student_id',$student_id)->where('section_id', $task->id)->where('is_complete',0)->first();
+            $submissions = Submission::where([['student_id', Auth::guard('student')->user()->id] ,['project_id',$project_id], ['is_complete', 1]])->get();
+            // Total task cleared
+            $task_clear = $submissions->count();
 
-        // Total Task in Section
-        $total_task = $project_sections->count();
-        // Total task cleared
-        $task_clear = $submissions->count();
-        // Progress Bar for Task
-        $taskProgress = (100 / $total_task) * $task_clear;
+            // Total Task in Section
+            $total_task = $project_sections->count();
+            // Progress Bar for Task
+            if ($total_task > 0) {
+                $taskProgress = (100 / $total_task) * $task_clear;
+            } else {
+                // Handle the case where there are no tasks. You could set progress to 0 or another appropriate value.
+                $taskProgress = 0; // or any other value that makes sense in your context
+            }
+
+            if($submissionData == null){
+                $taskSubmitForm = route('student.taskSubmit',[$student->id,$task->project->id,$task->id,$submissionId->id]);
+                $taskReSubmitForm = "";
+            }else{
+                $taskSubmitForm = "";
+                $taskReSubmitForm = route('student.taskResubmit',[$student->id,$task->project->id,$task->id,$submissionData->id]);
+            }
+        }
         // dd($taskProgress);
         $newMessage = $this->newCommentForSidebarMenu($student_id);
         $newActivityNotifs = $this->newNotificationActivity($student_id);
@@ -998,7 +1022,9 @@ class StudentController extends Controller
           $q->where('student_id', Auth::guard('student')->user()->id);
           $q->where('is_submited',1);
         })->get();
-        return view('student.project.task.index', compact('student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
+        if(Auth::guard('student')->user()->mentorship_type == "skills_track"){
+            return view('student.project.task.index', compact('taskSubmitForm', 'taskReSubmitForm', 'student','completed_months','enrolled_projects', 'dataDate', 'task','comments', 'submissionData','submissionId','submissions','taskProgress','total_task','task_clear','taskDate','project','newMessage','newActivityNotifs','admins','notifActivityCount','notifNewTasks','dataMessages'));
+        }
     }
 
     public function taskSubmit( Request $request, $student_id, $project_id, $task_id, $submission_id )
@@ -1080,6 +1106,49 @@ class StudentController extends Controller
             $submission_date_override->save();
         }
 
+        $mentorIds = [
+            Auth::guard('student')->user()->mentor_id,
+            Auth::guard('student')->user()->staff_id,
+        ];
+
+        foreach ($mentorIds as $mentorId) {
+            // Check if the mentorId is valid before proceeding
+            if ($mentorId) {
+                $notifyMentor = NotifyMentor::firstOrCreate(
+                    ['id_mentors' => $mentorId],
+                    ['notify_mentors_data' => ['notification' => []]] // Default as an array
+                );
+
+                $notifications = $notifyMentor->notify_mentors_data; // This is automatically an array because of the $casts attribute
+
+                // Get the last notification's idNotify and increment by 1
+                $lastNotify = end($notifications['notification']);
+                $nextIdNotify = $lastNotify ? $lastNotify['idNotify'] + 1 : 1;
+
+                $newNotification = [
+                    "type" => "newSubmission",
+                    "isRead" => 0,
+                    "idNotify" => $nextIdNotify,
+                    "idStudent" => $student_id,
+                    "studentName" => Auth::guard('student')->user()->first_name . " " . Auth::guard('student')->user()->last_name,
+                    "idProject" => $project_id,
+                    "projectName" => $project->name,
+                    "idTask" => $task_id,
+                    "taskTitle" => $task->title,
+                    "idSubmission" => $submission_id, // Adjust as needed
+                    "created_at" => Carbon::now()->toDateTimeString(),
+                    "statusSubmission" => "new" // Adjust based on your logic
+                ];
+
+                // Append the new notification
+                $notifications['notification'][] = $newNotification;
+
+                // Save the updated notifications data back to the model
+                $notifyMentor->notify_mentors_data = $notifications;
+                $notifyMentor->save();
+            }
+        }
+
         return redirect('/profile/' . $student_id . '/enrolled/' . $project_id . '/task/' . $task_id);
     }
 
@@ -1124,6 +1193,49 @@ class StudentController extends Controller
 
         $grade = Grade::where('submission_id', $submission_id)->first();
         $grade->delete();
+
+        $mentorIds = [
+            Auth::guard('student')->user()->mentor_id,
+            Auth::guard('student')->user()->staff_id,
+        ];
+
+        foreach ($mentorIds as $mentorId) {
+            // Check if the mentorId is valid before proceeding
+            if ($mentorId) {
+                $notifyMentor = NotifyMentor::firstOrCreate(
+                    ['id_mentors' => $mentorId],
+                    ['notify_mentors_data' => ['notification' => []]] // Default as an array
+                );
+
+                $notifications = $notifyMentor->notify_mentors_data; // This is automatically an array because of the $casts attribute
+
+                // Get the last notification's idNotify and increment by 1
+                $lastNotify = end($notifications['notification']);
+                $nextIdNotify = $lastNotify ? $lastNotify['idNotify'] + 1 : 1;
+
+                $newNotification = [
+                    "type" => "newSubmission",
+                    "isRead" => 0,
+                    "idNotify" => $nextIdNotify,
+                    "idStudent" => $student_id,
+                    "studentName" => Auth::guard('student')->user()->first_name . " " . Auth::guard('student')->user()->last_name,
+                    "idProject" => $project_id,
+                    "projectName" => $project->name,
+                    "idTask" => $task_id,
+                    "taskTitle" => $task->title,
+                    "idSubmission" => $submission_id, // Adjust as needed
+                    "created_at" => Carbon::now()->toDateTimeString(),
+                    "statusSubmission" => "revision" // Adjust based on your logic
+                ];
+
+                // Append the new notification
+                $notifications['notification'][] = $newNotification;
+
+                // Save the updated notifications data back to the model
+                $notifyMentor->notify_mentors_data = $notifications;
+                $notifyMentor->save();
+            }
+        }
         return redirect('/profile/'.$student_id.'/enrolled/'.$project_id.'/task/'.$task_id);
 
     }

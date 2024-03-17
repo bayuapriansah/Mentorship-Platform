@@ -354,10 +354,10 @@
                                             stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
                                     <span class="sr-only">Notifications Bell</span>
-                                    @if ($notifActivityCount > 0)
-                                        <div
-                                            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">
-                                            {{ $notifActivityCount }}</div>
+                                    @if (notifyStudentCount() > 0)
+                                        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-dark-blue hover:bg-dark-blue border-2 border-white rounded-full -top-2 -right-3">
+                                            {{ notifyStudentCount() }}
+                                        </div>
                                     @endif
                                 </button>
                             </div>
@@ -513,91 +513,72 @@
                         ->merge($notifNewTasks)
                         ->sortByDesc('updated_at')
                         ->all();
-                    // $sortedNotifs = collect($mergedNotifs)->sortByDesc('created_at')->all();
+                    $notify_students = notifyStudent();
                 @endphp
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
                     <div class="max-h-60 overflow-y-auto">
                         {{-- code comment here --}}
-                        {{-- {{ $notifActivityCount}} --}}
-                        @if ($notifActivityCount > 0)
-                            @foreach ($mergedNotifs as $notification)
-                                @if ($notification->type == 'grade')
-                                    @if ($notification->grade == !null)
-                                        @if ($notification->grade->readornot != 1)
-                                            <a href="
-                                    {{ route('student.readActivity', [
-                                        $notification->grade->submission->student_id,
-                                        $notification->grade->submission->project_id,
-                                        $notification->grade->submission->section_id,
-                                        $notification->grade->submission->id,
-                                    ]) }}
-                                    "
-                                                class="mb-2 text-sm font-normal text-dark-blue">
-                                                <div id="toast-message-cta"
-                                                    class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow mt-2 p-2 hover:bg-blue-100"
-                                                    role="alert">
-                                                    <div class="flex">
-                                                        <div class="ml-3 text-sm font-normal">
-                                                            <span class="mb-1 text-sm font-semibold text-dark-blue">New
-                                                                notification for grading. <p> Result Task :
-                                                                    {{ $notification->grade->submission->projectSection->title }}</span>
-                                                            <p>
-                                                                Hi {{ $student->first_name }}
-                                                                {{ $student->last_name }},
-                                                                @if ($notification->grade->status == 0)
-                                                                    {{ 'Sorry but you need to revise the Task' }}
-                                                                @elseif($notification->grade->status == 1)
-                                                                    {{ 'Great you Complete the Task' }}
-                                                                @else
-                                                                    {{ 'Nothing' }}
-                                                                @endif.
-                                                            <div class="mb-2 text-sm font-normal text-blue-300">
-                                                                {{ $notification->grade->updated_at }}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        @endif
-                                    @endif
-                                @elseif($notification->type == 'notification')
-                                    @if ($notification->project)
-                                        @if ($notification->status != 'deldraft')
-                                            @if (
-                                                $notification->project->institution_id == $student->institution_id ||
-                                                    $notification->project->institution_id == null)
-                                                @if (optional($notification->read_notification)->firstWhere([
-                                                        'student_id' => $student->id,
-                                                        'notifications_id' => $notification->id,
-                                                    ]) == null)
-                                                    <a href="{{ route('student.readActivityTask', [$student->id, $notification->project_id, $notification->id]) }}"
-                                                        class="mb-2 text-sm font-normal text-dark-blue">
-                                                        <div id="toast-message-cta"
-                                                            class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow mt-2 p-2 hover:bg-blue-100"
-                                                            role="alert">
-                                                            <div class="flex">
-                                                                <div class="ml-3 text-sm font-normal">
-                                                                    <span
-                                                                        class="mb-1 text-sm font-semibold text-dark-blue">New
-                                                                        Project available in
-                                                                        {{ $notification->project->name }} .</span>
-                                                                    <p>
-                                                                    <div
-                                                                        class="mb-2 text-sm font-normal text-blue-300">
-                                                                        {{ $notification->updated_at }}</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                        @if(!empty($notify_students) && isset($notify_students['notification']))
+                        @php $unreadFound = false; @endphp
+                        @foreach($notify_students['notification'] as $notify_student)
+                            @if($notify_student['isRead'] == 0)
+                                @php $unreadFound = true; @endphp
+                                <a href="{{ route('notifications.students.markAsRead', ['idNotify' => $notify_student['idNotify']]) }}" class="mb-2 text-sm font-normal text-dark-blue" onclick="event.preventDefault(); document.getElementById('mark-as-read-form-{{ $notify_student['idNotify'] }}').submit();">
+                                    <div id="toast-message-cta" class="w-full max-w-xs text-gray-500 bg-white rounded-lg shadow mt-2 p-2 hover:bg-blue-100" role="alert">
+                                        <div class="flex">
+                                            <div class="ml-3 text-sm font-normal">
+                                                <span class="mb-1 text-sm font-semibold text-dark-blue">
+                                                    @if(isset($notify_student['projectName']))
+                                                        There is a New Project: {{ $notify_student['projectName'] }}
+                                                    @else
+                                                        New notification for grading.
+                                                    @endif
+                                                </span>
+                                                @if(isset($notify_student['type']) && $notify_student['type'] == "newGrading")
+                                                    <p>
+                                                        Result Task: {{ $notify_student['titleSection'] ?? 'N/A' }}
+                                                    </p>
+                                                    <p>
+                                                        Hi {{ Auth::guard('student')->user()->first_name }} {{ Auth::guard('student')->user()->last_name }},
+                                                        @if (isset($notify_student['statusGrading']))
+                                                            @if($notify_student['statusGrading'] == "revision")
+                                                                {{ 'Sorry, but you need to revise the task.' }}
+                                                            @elseif($notify_student['statusGrading'] == "pass")
+                                                                {{ 'Great, you completed the task!' }}
+                                                            @else
+                                                                {{ 'Status is not available.' }}
+                                                            @endif
+                                                        @endif
+                                                    </p>
                                                 @endif
-                                            @endif
-                                        @endif
-                                    @endif
-                                @endif
-                            @endforeach
-                        @else
-                            {{ 'No Notification' }}
+                                                <div class="mb-2 text-sm font-normal text-blue-500">
+                                                    @if (isset($notify_student['created_at']))
+                                                        @php
+                                                            $date = new DateTime($notify_student['created_at']);
+                                                            echo $date->format('dS F, Y - H:i:s');
+                                                        @endphp
+                                                    @else
+                                                        Date not available
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <form id="mark-as-read-form-{{ $notify_student['idNotify'] }}" action="{{ route('notifications.students.markAsRead', ['idNotify' => $notify_student['idNotify']]) }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            @endif
+                        @endforeach
+
+                        @if(!$unreadFound)
+                            <p>No notifications found.</p>
                         @endif
+                    @else
+                        <p>No notifications found.</p>
+                    @endif
+                        {{-- END HERE --}}
                     </div>
                     <div class="border-t border-light-blue ">
                         <a href="/profile/{{ $student->id }}/allNotification" class="text-[#6973C6] text-xs">View
