@@ -75,10 +75,28 @@ class SubmitProjectPlanner extends Controller
 
         $glablink = $request->input('glablink');
 
+        // Retrieve the ProjectSection instance based on project_id and task_id
+        $projectSection = ProjectSection::where('project_id', $project_id)->where('id', $task_id)->first();
+
+        // Check if the projectSection is not null to avoid property access on null
+        if ($projectSection) {
+            if ($projectSection->assigned_to === null) {
+                // If assigned_to is null, set studentWork to the current student's id
+                $studentWork = Auth::guard('student')->user()->id;
+            } else {
+                // If assigned_to is not null, use the assigned_to value
+                $studentWork = $projectSection->assigned_to;
+            }
+        } else {
+            // Handle the case where the project section doesn't exist
+            // You might want to throw an exception or handle this scenario appropriately
+            // For now, let's assume you want to set it to null or handle it in some way
+            $studentWork = null; // or handle this scenario appropriately
+        }
+
         $submission = Submission::create([
         'section_id' => $task_id,
-        'student_id' => ProjectSection::where('project_id', $project_id)->where('id',$task_id)->first()->assigned_to,
-        // 'student_id' => Auth::guard('student')->user()->id,
+        'student_id' => $studentWork,
         'project_id' => $project_id,
         'is_complete' => 1,
         'flag_checkpoint' => $taskDate,
