@@ -23,6 +23,11 @@ class ProjectSection extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function assigned()
+    {
+        return $this->belongsTo(Student::class,'assigned_to','id');
+    }
+
     public function sectionSubsections()
     {
         return $this->hasMany(SectionSubsection::class);

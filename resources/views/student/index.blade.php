@@ -187,7 +187,7 @@
                                                     </a>
                                                 @endif
 
-@if(!DB::table('enrolled_projects')->where('team_name', auth('student')->user()->team_name)->where('mentorshipType', 'enterpreneurship')->exists());
+@if(!DB::table('enrolled_projects')->where('student_id',auth('student')->user()->id)->where('team_name', auth('student')->user()->team_name)->where('mentorshipType', 'enterpreneurship')->exists());
                                                 <a
                                                     href="{{ route('participant.projects.task.enroll', ['project' => $existingProject->id]) }}"
                                                     class="intelOne text-white text-sm font-normal bg-primary px-12 py-2 rounded-full"

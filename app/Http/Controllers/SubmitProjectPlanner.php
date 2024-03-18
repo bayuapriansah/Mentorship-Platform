@@ -18,6 +18,7 @@ class SubmitProjectPlanner extends Controller
 {
     public function taskSubmit( Request $request,Student $student, $project_id, $task_id )
     {
+        // dd($project_sections = ProjectSection::where('project_id', $project_id)->first()->assigned->first_name." ".ProjectSection::where('project_id', $project_id)->first()->assigned->last_name);
         if ($student->id != Auth::guard('student')->user()->id) {
             abort(403);
         }
@@ -76,7 +77,8 @@ class SubmitProjectPlanner extends Controller
 
         $submission = Submission::create([
         'section_id' => $task_id,
-        'student_id' => Auth::guard('student')->user()->id,
+        'student_id' => ProjectSection::where('project_id', $project_id)->where('id',$task_id)->first()->assigned_to,
+        // 'student_id' => Auth::guard('student')->user()->id,
         'project_id' => $project_id,
         'is_complete' => 1,
         'flag_checkpoint' => $taskDate,
