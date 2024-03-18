@@ -172,12 +172,16 @@ class DashboardController extends Controller
                     'entrepreneur_track' => [
                         'male' => Student::whereRaw('LOWER(sex) = "male"')->where('mentorship_type', 'entrepreneur_track')->count(),
                         'female' => Student::whereRaw('LOWER(sex) = "female"')->where('mentorship_type', 'entrepreneur_track')->count(),
+
+                        //should be useless code but i dont know where this code use
                         'total' => Student::where('mentorship_type', 'entrepreneur_track')->count(),
                     ],
                     'skills_track' => [
-                        'male' => Student::whereRaw('LOWER(sex) = "male"')->where('mentorship_type','skills_track')->count(),
-                        'female' => Student::whereRaw('LOWER(sex) = "female"')->where('mentorship_type','skills_track')->count(),
-                        'total' => Student::where('mentorship_type','skills_track')->count(),
+                        'male' => Student::whereRaw('LOWER(sex) = "male"')->where('mentorship_type', 'skills_track')->count(),
+                        'female' => Student::whereRaw('LOWER(sex) = "female"')->where('mentorship_type', 'skills_track')->count(),
+
+                        //should be useless code but i dont know where this code use
+                        'total' => Student::where('mentorship_type', 'skills_track')->count(),
                     ],
                     'crypto_guides' => [
                         'male' => EnrolledProject::where('project_id', 4)->whereHas('student', function ($query) {
@@ -188,6 +192,7 @@ class DashboardController extends Controller
                             $query->whereRaw('LOWER(sex) = "female"');
                         })->count(),
 
+                        //should be useless code but i dont know where this code use
                         'total' => EnrolledProject::where('project_id', 4)->count(),
                     ],
                     'eauto' => [
@@ -198,7 +203,7 @@ class DashboardController extends Controller
                         'female' => EnrolledProject::where('project_id', 1)->whereHas('student', function ($query) {
                             $query->whereRaw('LOWER(sex) = "female"');
                         })->count(),
-
+                        //should be useless code but i dont know where this code use
                         'total' => EnrolledProject::where('project_id', 1)->count(),
                     ],
 
@@ -210,7 +215,7 @@ class DashboardController extends Controller
                         'female' => EnrolledProject::where('project_id', 3)->whereHas('student', function ($query) {
                             $query->whereRaw('LOWER(sex) = "female"');
                         })->count(),
-
+                        //should be useless code but i dont know where this code use
                         'total' => EnrolledProject::where('project_id', 3)->count(),
                     ],
                 ],
@@ -219,59 +224,59 @@ class DashboardController extends Controller
 
         $dashboardDataGender = Cache::remember('dashboard_data_gender', 1 * 1, function () {
             return [
-                'totalMale' => Student::where('sex','male')->count(),
-                'totalFemale' => Student::where('sex','female')->count(),
-                'totalMaleSkills_track' => Student::where('sex','male')->where('mentorship_type','skills_track')->count(),
-                'totalFemaleSkills_track' => Student::where('sex','female')->where('mentorship_type','skills_track')->count(),
-                'totalMaleEnterpreneur_track' => Student::where('sex','male')->where('mentorship_type','entrepreneur_track')->count(),
-                'totalFemaleEnterpreneur_track' => Student::where('sex','female')->where('mentorship_type','enterpreneur_track')->count(),
+                'totalMale' => Student::where('sex', 'male')->count(),
+                'totalFemale' => Student::where('sex', 'female')->count(),
+                'totalMaleSkills_track' => Student::where('sex', 'male')->where('mentorship_type', 'skills_track')->count(),
+                'totalFemaleSkills_track' => Student::where('sex', 'female')->where('mentorship_type', 'skills_track')->count(),
+                'totalMaleEnterpreneur_track' => Student::where('sex', 'male')->where('mentorship_type', 'entrepreneur_track')->count(),
+                'totalFemaleEnterpreneur_track' => Student::where('sex', 'female')->where('mentorship_type', 'enterpreneur_track')->count(),
                 'maleStudentsWithEnrolledProjectsEAuto' => Student::where('sex', 'male')
-                ->whereHas('enrolled_projects', function($query) {
-                    // Apply the condition to the enrolled_projects relationship
-                    $query->where('project_id', 1);
-                })
-                ->with('enrolled_projects')
-                ->count(),
+                    ->whereHas('enrolled_projects', function ($query) {
+                        // Apply the condition to the enrolled_projects relationship
+                        $query->where('project_id', 1);
+                    })
+                    ->with('enrolled_projects')
+                    ->count(),
 
                 'femaleStudentsWithEnrolledProjectsEAuto' => Student::where('sex', 'female')
-                ->whereHas('enrolled_projects', function($query) {
-                    // Apply the condition to the enrolled_projects relationship
-                    $query->where('project_id', 1);
-                })
-                ->with('enrolled_projects')
-                ->count(),
+                    ->whereHas('enrolled_projects', function ($query) {
+                        // Apply the condition to the enrolled_projects relationship
+                        $query->where('project_id', 1);
+                    })
+                    ->with('enrolled_projects')
+                    ->count(),
 
                 'maleStudentsWithEnrolledProjectsWebHelpers' => Student::where('sex', 'male')
-                ->whereHas('enrolled_projects', function($query) {
-                    // Apply the condition to the enrolled_projects relationship
-                    $query->where('project_id', 3);
-                })
-                ->with('enrolled_projects')
-                ->count(),
+                    ->whereHas('enrolled_projects', function ($query) {
+                        // Apply the condition to the enrolled_projects relationship
+                        $query->where('project_id', 3);
+                    })
+                    ->with('enrolled_projects')
+                    ->count(),
 
                 'femaleStudentsWithEnrolledProjectsWebHelpers' => Student::where('sex', 'female')
-                ->whereHas('enrolled_projects', function($query) {
-                    // Apply the condition to the enrolled_projects relationship
-                    $query->where('project_id', 3);
-                })
-                ->with('enrolled_projects')
-                ->count(),
+                    ->whereHas('enrolled_projects', function ($query) {
+                        // Apply the condition to the enrolled_projects relationship
+                        $query->where('project_id', 3);
+                    })
+                    ->with('enrolled_projects')
+                    ->count(),
 
                 'maleStudentsWithEnrolledProjectsCryptoGuides' => Student::where('sex', 'male')
-                ->whereHas('enrolled_projects', function($query) {
-                    // Apply the condition to the enrolled_projects relationship
-                    $query->where('project_id', 4);
-                })
-                ->with('enrolled_projects')
-                ->count(),
+                    ->whereHas('enrolled_projects', function ($query) {
+                        // Apply the condition to the enrolled_projects relationship
+                        $query->where('project_id', 4);
+                    })
+                    ->with('enrolled_projects')
+                    ->count(),
 
                 'femaleStudentsWithEnrolledProjectsCryptoGuides' => Student::where('sex', 'female')
-                ->whereHas('enrolled_projects', function($query) {
-                    // Apply the condition to the enrolled_projects relationship
-                    $query->where('project_id', 4);
-                })
-                ->with('enrolled_projects')
-                ->count(),
+                    ->whereHas('enrolled_projects', function ($query) {
+                        // Apply the condition to the enrolled_projects relationship
+                        $query->where('project_id', 4);
+                    })
+                    ->with('enrolled_projects')
+                    ->count(),
                 // Other data...
             ];
         });
@@ -282,7 +287,19 @@ class DashboardController extends Controller
             $endOfWeek = Carbon::now()->endOfWeek();
 
             $loginCounts = LoginLog::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->selectRaw('DATE(created_at) as date, COUNT(*) as count');
+
+            if (auth()->user()->institution_id < 0) {
+                $loginCounts = $loginCounts->whereHas('student', function ($query) {
+                    $query->where("is_confirm",1)->where("menthor_id",auth()->user()->id);
+                });
+            } elseif (auth()->user()->institution_id) {
+                $loginCounts = $loginCounts->whereHas('student', function ($query) {
+                    $query->where("is_confirm",1)->where("staff_id",auth()->user()->id);
+                });
+            }
+
+            $loginCounts = $loginCounts
                 ->groupBy('date')
                 ->orderBy('date', 'asc')
                 ->get()
@@ -307,11 +324,11 @@ class DashboardController extends Controller
             $endOfWeek = Carbon::now()->endOfWeek();
 
             $messageCounts = Comment::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-                                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
-                                ->groupBy('date')
-                                ->orderBy('date', 'asc')
-                                ->get()
-                                ->pluck('count', 'date');
+                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->groupBy('date')
+                ->orderBy('date', 'asc')
+                ->get()
+                ->pluck('count', 'date');
 
             for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
                 $formattedDate = $date->format('Y-m-d');
@@ -327,16 +344,16 @@ class DashboardController extends Controller
         });
 
         // dd(Auth::guard('mentor')->user()->institution_id);
-        if(Auth::guard('mentor')->check()){
-            if(Auth::guard('mentor')->user()->institution_id == 0){
+        if (Auth::guard('mentor')->check()) {
+            if (Auth::guard('mentor')->user()->institution_id == 0) {
                 // Staff
                 $assignStudents = Student::where('is_confirm', 1)->where('staff_id', Auth::guard('mentor')->user()->id)->count();
-            }else{
+            } else {
                 // Mentor
                 $assignStudents = Student::where('is_confirm', 1)->where('mentor_id', Auth::guard('mentor')->user()->id)->count();
             }
             $data = array_merge($dashboardData, $loginData, $messageData, ['assignStudents' => $assignStudents]);
-        }else{
+        } else {
             // Combine the data arrays
             $data = array_merge($dashboardData, $loginData, $messageData);
         }
@@ -345,62 +362,63 @@ class DashboardController extends Controller
     }
     // Refactore code end
 
-    public function singleSubmissionReadNotification($projectID,$submissionID,$studentId){
-      if(Auth::guard('web')->check()){
-        $checkReadNotification = ReadNotification::where('submission_id',$submissionID)->where('user_id',Auth::guard('web')->user()->id)->first();
-      }elseif(Auth::guard('mentor')->check()){
-        $checkReadNotification = ReadNotification::where('submission_id',$submissionID)->where('mentor_id',Auth::guard('mentor')->user()->id)->first();
-      }elseif(Auth::guard('customer')->check()){
-        $checkReadNotification = ReadNotification::where('submission_id',$submissionID)->where('customer_id',Auth::guard('customer')->user()->id)->first();
-      }
-      if($checkReadNotification == NULL){
-        $ReadNotification = new ReadNotification;
-        $ReadNotification->student_id = $studentId;
-        $ReadNotification->submission_id = $submissionID;
-        $ReadNotification->type = 'submissions';
-        $ReadNotification->is_read = 1;
-        if(Auth::guard('web')->check()){
-          $ReadNotification->user_id = Auth::guard('web')->user()->id;
-        }elseif(Auth::guard('mentor')->check()){
-          $ReadNotification->mentor_id = Auth::guard('mentor')->user()->id;
-        }elseif(Auth::guard('customer')->check()){
-          $ReadNotification->customer_id = Auth::guard('customer')->user()->id;
+    public function singleSubmissionReadNotification($projectID, $submissionID, $studentId)
+    {
+        if (Auth::guard('web')->check()) {
+            $checkReadNotification = ReadNotification::where('submission_id', $submissionID)->where('user_id', Auth::guard('web')->user()->id)->first();
+        } elseif (Auth::guard('mentor')->check()) {
+            $checkReadNotification = ReadNotification::where('submission_id', $submissionID)->where('mentor_id', Auth::guard('mentor')->user()->id)->first();
+        } elseif (Auth::guard('customer')->check()) {
+            $checkReadNotification = ReadNotification::where('submission_id', $submissionID)->where('customer_id', Auth::guard('customer')->user()->id)->first();
         }
-        $ReadNotification->save();
-        return redirect()->route('dashboard.submission.singleSubmission',[$projectID,$submissionID]);
-      }else{
-        return back();
-      }
+        if ($checkReadNotification == NULL) {
+            $ReadNotification = new ReadNotification;
+            $ReadNotification->student_id = $studentId;
+            $ReadNotification->submission_id = $submissionID;
+            $ReadNotification->type = 'submissions';
+            $ReadNotification->is_read = 1;
+            if (Auth::guard('web')->check()) {
+                $ReadNotification->user_id = Auth::guard('web')->user()->id;
+            } elseif (Auth::guard('mentor')->check()) {
+                $ReadNotification->mentor_id = Auth::guard('mentor')->user()->id;
+            } elseif (Auth::guard('customer')->check()) {
+                $ReadNotification->customer_id = Auth::guard('customer')->user()->id;
+            }
+            $ReadNotification->save();
+            return redirect()->route('dashboard.submission.singleSubmission', [$projectID, $submissionID]);
+        } else {
+            return back();
+        }
     }
 
     public function indexCustomer()
     {
-      $internshipsTotal  = EnrolledProject::whereHas('project', function($q){
-        $q->where('company_id', Auth::guard('customer')->user()->company_id);
-      })->get()->count();
+        $internshipsTotal  = EnrolledProject::whereHas('project', function ($q) {
+            $q->where('company_id', Auth::guard('customer')->user()->company_id);
+        })->get()->count();
 
-      $internshipsOngoing = EnrolledProject::where('is_submited', 0)->whereHas('project', function($q){
-        $q->where('company_id', Auth::guard('customer')->user()->company_id);
-      })->get()->count();
+        $internshipsOngoing = EnrolledProject::where('is_submited', 0)->whereHas('project', function ($q) {
+            $q->where('company_id', Auth::guard('customer')->user()->company_id);
+        })->get()->count();
 
-      $customerTotal = Customer::where('company_id', Auth::guard('customer')->user()->company_id)->get()->count();
+        $customerTotal = Customer::where('company_id', Auth::guard('customer')->user()->company_id)->get()->count();
 
-      $student_submissions = Submission::whereHas('project', function($q){
-        $q->where('company_id', Auth::guard('customer')->user()->company_id);
-      })->where('is_complete',1)->count();
+        $student_submissions = Submission::whereHas('project', function ($q) {
+            $q->where('company_id', Auth::guard('customer')->user()->company_id);
+        })->where('is_complete', 1)->count();
 
-      return view('dashboard.index', compact('internshipsTotal', 'internshipsOngoing', 'customerTotal', 'student_submissions'));
+        return view('dashboard.index', compact('internshipsTotal', 'internshipsOngoing', 'customerTotal', 'student_submissions'));
     }
 
     public function allCustomer()
     {
-      $members = Customer::where('company_id', Auth::guard('customer')->user()->company_id)->get();
-      return view('dashboard.companies.partner.index', compact('members'));
+        $members = Customer::where('company_id', Auth::guard('customer')->user()->company_id)->get();
+        return view('dashboard.companies.partner.index', compact('members'));
     }
 
     public function allCustomerEdit(Customer $member)
     {
-      return view('dashboard.companies.partner.edit',compact('member'));
+        return view('dashboard.companies.partner.edit', compact('member'));
     }
 
     // public function indexMentor()
@@ -467,19 +485,19 @@ class DashboardController extends Controller
 
         $relationship = ($mentor->institution_id != 0) ? 'mentor_id' : 'staff_id';
 
-        $data['student_submissions'] = Submission::whereHas('student', function($q) use ($relationship, $mentor) {
+        $data['student_submissions'] = Submission::whereHas('student', function ($q) use ($relationship, $mentor) {
             $q->where($relationship, $mentor->id);
         })->where('is_complete', 1)->count();
 
         $data['student_complete_all'] = Student::where($relationship, $mentor->id)
-            ->withCount(['enrolled_projects' => function($q) {
+            ->withCount(['enrolled_projects' => function ($q) {
                 $q->where('is_submited', 1);
             }])
             ->having('enrolled_projects_count', '=', 4)
             ->count();
 
         $data['student_complete_3'] = Student::where($relationship, $mentor->id)
-            ->withCount(['enrolled_projects' => function($q) {
+            ->withCount(['enrolled_projects' => function ($q) {
                 $q->where('is_submited', 1);
             }])
             ->having('enrolled_projects_count', '=', 3)
@@ -487,13 +505,13 @@ class DashboardController extends Controller
 
         // Students enrolled in project_id = 5 but haven't submitted yet
         $data['student_final_ongoing'] = Student::where($relationship, $mentor->id)
-            ->whereHas('enrolled_projects', function($q) {
+            ->whereHas('enrolled_projects', function ($q) {
                 $q->where('project_id', 5)->where('is_submited', 0);
             })->count();
 
         // Students enrolled in project_id = 5 and have submitted
         $data['student_final_complete'] = Student::where($relationship, $mentor->id)
-            ->whereHas('enrolled_projects', function($q) {
+            ->whereHas('enrolled_projects', function ($q) {
                 $q->where('project_id', 5)->where('is_submited', 1);
             })->count();
 
@@ -502,18 +520,18 @@ class DashboardController extends Controller
 
     public function allAssignedProjectsBEST()
     {
-      $projects = Project::all();
-      $enrolledProjects = EnrolledProject::select('project_id')->groupBy('project_id')->get();
-      $totalStudents = EnrolledProject::selectRaw('count(DISTINCT student_id) as total, project_id')->groupBy('project_id')->get();
+        $projects = Project::all();
+        $enrolledProjects = EnrolledProject::select('project_id')->groupBy('project_id')->get();
+        $totalStudents = EnrolledProject::selectRaw('count(DISTINCT student_id) as total, project_id')->groupBy('project_id')->get();
 
-      return view('dashboard.admin.assignedProjects', compact('projects', 'enrolledProjects', 'totalStudents'));
+        return view('dashboard.admin.assignedProjects', compact('projects', 'enrolledProjects', 'totalStudents'));
     }
 
     public function allAssignedProjects()
     {
-      $projects = Project::all();
-      $enrolledProjects = EnrolledProject::all();
-      return view('dashboard.admin.assignedProjects', compact('projects', 'enrolledProjects'));
+        $projects = Project::all();
+        $enrolledProjects = EnrolledProject::all();
+        return view('dashboard.admin.assignedProjects', compact('projects', 'enrolledProjects'));
     }
 
     public function sectionProjectAssign($project_id)
@@ -529,365 +547,372 @@ class DashboardController extends Controller
         $project_section = ProjectSection::find($section_id);
         $project_subsections =  SectionSubsection::where('project_section_id', $section_id)->get();
         // dd($project_subsections->submission);
-        return view('dashboard.admin.assigned.section.subsection.index', compact(['project' ,'project_section', 'project_subsections']));
+        return view('dashboard.admin.assigned.section.subsection.index', compact(['project', 'project_section', 'project_subsections']));
     }
 
     public function showAllStudentsChats($project_id, $section_id)
     {
         $enrolled_students = EnrolledProject::where('project_id', $project_id)->get();
         // dd($enrolled_students);
-        return view('dashboard.admin.assigned.section.chat.index', compact(['project_id','section_id','enrolled_students']));
+        return view('dashboard.admin.assigned.section.chat.index', compact(['project_id', 'section_id', 'enrolled_students']));
     }
 
     public function singleStudentChat($project_id, $section_id, $student_id)
     {
         $comments = Comment::where('project_id', $project_id)->where('project_section_id', $section_id)->get();
-        return view('dashboard.admin.assigned.section.chat.show', compact(['project_id','section_id','student_id','comments']));
+        return view('dashboard.admin.assigned.section.chat.show', compact(['project_id', 'section_id', 'student_id', 'comments']));
     }
 
     public function showAllStudentsSubmission($project_id, $section_id)
     {
         $enrolled_students = EnrolledProject::where('project_id', $project_id)->get();
-        return view('dashboard.admin.assigned.section.submission.index', compact(['project_id','section_id','enrolled_students']));
+        return view('dashboard.admin.assigned.section.submission.index', compact(['project_id', 'section_id', 'enrolled_students']));
     }
 
     public function singleStudentSubmission($project_id, $section_id, $student_id)
     {
         $submission = Submission::where('project_id', $project_id)->where('section_id', $section_id)->where('student_id', $student_id)->first();
-        return view('dashboard.admin.assigned.section.submission.show', compact(['project_id','section_id','student_id','submission']));
+        return view('dashboard.admin.assigned.section.submission.show', compact(['project_id', 'section_id', 'student_id', 'submission']));
     }
 
     // Profile
 
     public function profile($id)
     {
-      if (Auth::guard('web')->check()) {
-        $user = User::find($id);
-      }elseif(Auth::guard('mentor')->check()){
-        $user = Mentor::find($id);
-      }elseif(Auth::guard('customer')->check()){
-        $user = Customer::find($id);
-
-      }
-      return view('dashboard.admin.profile.edit', compact('user'));
+        if (Auth::guard('web')->check()) {
+            $user = User::find($id);
+        } elseif (Auth::guard('mentor')->check()) {
+            $user = Mentor::find($id);
+        } elseif (Auth::guard('customer')->check()) {
+            $user = Customer::find($id);
+        }
+        return view('dashboard.admin.profile.edit', compact('user'));
     }
 
-    public function updateProfile(Request $request, $id){
-      if (Auth::guard('web')->check()) {
-        $validated = $request->validate([
-          'name' => ['required'],
-          'email' => ['required'],
-          'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
-            return !empty($request->input('password'));
-          })],
-          'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
-              return !empty($request->input('password'));
-          })]
-        ],
-        [
-          'name.required' => 'Name is required',
-          'email.required' => 'Email is required',
-          'password.confirmed' => 'Password confirmation must be the same',
-          'password_confirmation.required'=> 'Please enter your confirmation password',
-        ]);
+    public function updateProfile(Request $request, $id)
+    {
+        if (Auth::guard('web')->check()) {
+            $validated = $request->validate(
+                [
+                    'name' => ['required'],
+                    'email' => ['required'],
+                    'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+                        return !empty($request->input('password'));
+                    })],
+                    'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+                        return !empty($request->input('password'));
+                    })]
+                ],
+                [
+                    'name.required' => 'Name is required',
+                    'email.required' => 'Email is required',
+                    'password.confirmed' => 'Password confirmation must be the same',
+                    'password_confirmation.required' => 'Please enter your confirmation password',
+                ]
+            );
 
-        $user = User::find($id);
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-        if(!empty($validated['password'])){
-        $user->password = Hash::make($validated['password']);
+            $user = User::find($id);
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            if (!empty($validated['password'])) {
+                $user->password = Hash::make($validated['password']);
+            }
+            $user->save();
+
+            toastr()->success('Profile Edited');
+
+            return back();
+        } elseif (Auth::guard('mentor')->check()) {
+            if (Auth::guard('mentor')->user()->institution_id != 0) {
+                $validated = $request->validate(
+                    [
+                        'first_name' => ['required'],
+                        'last_name' => ['required'],
+                        'email' => ['required'],
+                        'institution' => ['required'],
+                        'state' => ['required'],
+                        'country' => ['required'],
+                        'position' => ['required'],
+                        'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+                            return !empty($request->input('password'));
+                        })],
+                        'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+                            return !empty($request->input('password'));
+                        })]
+                    ],
+                    [
+                        'first_name.required' => 'First name is required',
+                        'last_name.required' => 'Last name is required',
+                        'email.required' => 'Email is required',
+                        'institution.required' => 'Institution is required',
+                        'state.required' => 'State is required',
+                        'country.required' => 'Country is required',
+                        'position.required' => 'Position is required',
+                        'password.confirmed' => 'Password confirmation must be the same',
+                        'password_confirmation.required' => 'Please enter your confirmation password',
+                    ]
+                );
+                $mentor = Mentor::find($id);
+                $mentor->first_name = $validated['first_name'];
+                $mentor->last_name = $validated['last_name'];
+                $mentor->position = $validated['position'];
+                if (!empty($validated['password'])) {
+                    $mentor->password = Hash::make($validated['password']);
+                }
+                $mentor->save();
+            } else {
+                $validated = $request->validate(
+                    [
+                        'first_name' => ['required'],
+                        'last_name' => ['required'],
+                        'email' => ['required'],
+                        'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+                            return !empty($request->input('password'));
+                        })],
+                        'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+                            return !empty($request->input('password'));
+                        })]
+                    ],
+                    [
+                        'first_name.required' => 'First name is required',
+                        'last_name.required' => 'Last name is required',
+                        'email.required' => 'Email is required',
+                        'password.confirmed' => 'Password confirmation must be the same',
+                        'password_confirmation.required' => 'Please enter your confirmation password',
+                    ]
+                );
+                $mentor = Mentor::find($id);
+                $mentor->first_name = $validated['first_name'];
+                $mentor->last_name = $validated['last_name'];
+                if (!empty($validated['password'])) {
+                    $mentor->password = Hash::make($validated['password']);
+                }
+                $mentor->save();
+            }
+
+            toastr()->success('Profile Edited');
+
+            return back();
+        } elseif (Auth::guard('customer')->check()) {
+            $validated = $request->validate(
+                [
+                    'first_name' => ['required'],
+                    'last_name' => ['required'],
+                    'email' => ['required'],
+                    'company' => ['required'],
+                    'position' => ['required'],
+                    'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
+                        return !empty($request->input('password'));
+                    })],
+                    'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
+                        return !empty($request->input('password'));
+                    })]
+                ],
+                [
+                    'first_name.required' => 'First name is required',
+                    'last_name.required' => 'Last name is required',
+                    'email.required' => 'Email is required',
+                    'company.required' => 'Institution is required',
+                    'sex.required' => 'Sex is required',
+                    'position.required' => 'Position is required',
+                    'password.confirmed' => 'Password confirmation must be the same',
+                    'password_confirmation.required' => 'Please enter your confirmation password',
+                ]
+            );
+
+            $customer = Customer::find($id);
+            $customer->first_name = $validated['first_name'];
+            $customer->last_name = $validated['last_name'];
+            $customer->position = $validated['position'];
+            if (!empty($validated['password'])) {
+                $customer->password = Hash::make($validated['password']);
+            }
+            $customer->save();
+
+            toastr()->success('Profile Edited');
+
+            return back();
         }
-        $user->save();
-
-        toastr()->success('Profile Edited');
-
         return back();
-      }elseif(Auth::guard('mentor')->check()){
-        if(Auth::guard('mentor')->user()->institution_id != 0){
-          $validated = $request->validate([
+    }
+
+    public function contact()
+    {
+        return view('contact');
+    }
+
+    public function sendContact(Request $request)
+    {
+
+        $validated = $request->validate([
             'first_name' => ['required'],
             'last_name' => ['required'],
             'email' => ['required'],
-            'institution' => ['required'],
-            'state' => ['required'],
-            'country' => ['required'],
-            'position' => ['required'],
-            'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
-              return !empty($request->input('password'));
-            })],
-            'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
-                return !empty($request->input('password'));
-            })]
-          ],
-          [
+            'user' => ['required'],
+            'query' => ['required'],
+            'message' => ['required'],
+            'g-recaptcha-response' => 'required|recaptcha',
+        ], [
             'first_name.required' => 'First name is required',
             'last_name.required' => 'Last name is required',
             'email.required' => 'Email is required',
-            'institution.required' => 'Institution is required',
-            'state.required' => 'State is required',
-            'country.required' => 'Country is required',
-            'position.required' => 'Position is required',
-            'password.confirmed' => 'Password confirmation must be the same',
-            'password_confirmation.required'=> 'Please enter your confirmation password',
-          ]);
-          $mentor = Mentor::find($id);
-          $mentor->first_name = $validated['first_name'];
-          $mentor->last_name = $validated['last_name'];
-          $mentor->position = $validated['position'];
-          if(!empty($validated['password'])){
-          $mentor->password = Hash::make($validated['password']);
-          }
-          $mentor->save();
-        }else{
-          $validated = $request->validate([
-            'first_name' => ['required'],
-            'last_name' => ['required'],
-            'email' => ['required'],
-            'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
-              return !empty($request->input('password'));
-            })],
-            'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
-                return !empty($request->input('password'));
-            })]
-          ],
-          [
-            'first_name.required' => 'First name is required',
-            'last_name.required' => 'Last name is required',
-            'email.required' => 'Email is required',
-            'password.confirmed' => 'Password confirmation must be the same',
-            'password_confirmation.required'=> 'Please enter your confirmation password',
-          ]);
-          $mentor = Mentor::find($id);
-          $mentor->first_name = $validated['first_name'];
-          $mentor->last_name = $validated['last_name'];
-          if(!empty($validated['password'])){
-          $mentor->password = Hash::make($validated['password']);
-          }
-          $mentor->save();
-        }
-
-        toastr()->success('Profile Edited');
-
-        return back();
-      }elseif(Auth::guard('customer')->check()){
-        $validated = $request->validate([
-          'first_name' => ['required'],
-          'last_name' => ['required'],
-          'email' => ['required'],
-          'company' => ['required'],
-          'position' => ['required'],
-          'password' => ['nullable', 'min:5', 'confirmed', Rule::requiredIf(function () use ($request) {
-            return !empty($request->input('password'));
-          })],
-          'password_confirmation' => ['nullable', Rule::requiredIf(function () use ($request) {
-              return !empty($request->input('password'));
-          })]
-        ],
-        [
-          'first_name.required' => 'First name is required',
-          'last_name.required' => 'Last name is required',
-          'email.required' => 'Email is required',
-          'company.required' => 'Institution is required',
-          'sex.required' => 'Sex is required',
-          'position.required' => 'Position is required',
-          'password.confirmed' => 'Password confirmation must be the same',
-          'password_confirmation.required'=> 'Please enter your confirmation password',
+            'user.required' => 'Type of user is required',
+            'query.required' => 'Type of query is required',
+            'message.required' => 'Message is required',
+            'g-recaptcha-response.required' => 'Captcha is required',
         ]);
 
-        $customer = Customer::find($id);
-        $customer->first_name = $validated['first_name'];
-        $customer->last_name = $validated['last_name'];
-        $customer->position = $validated['position'];
-        if(!empty($validated['password'])){
-        $customer->password = Hash::make($validated['password']);
-        }
-        $customer->save();
+        $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
 
-        toastr()->success('Profile Edited');
+        toastr()->success('Your message has been successfully sent to our team.');
 
         return back();
-      }
-      return back();
     }
 
-  public function contact()
-  {
-    return view('contact');
-  }
-
-  public function sendContact(Request $request)
-  {
-
-    $validated = $request->validate([
-      'first_name' => ['required'],
-      'last_name' => ['required'],
-      'email' => ['required'],
-      'user' => ['required'],
-      'query' => ['required'],
-      'message' => ['required'],
-      'g-recaptcha-response' => 'required|recaptcha',
-    ],[
-      'first_name.required' => 'First name is required',
-      'last_name.required' => 'Last name is required',
-      'email.required' => 'Email is required',
-      'user.required' => 'Type of user is required',
-      'query.required' => 'Type of query is required',
-      'message.required' => 'Message is required',
-      'g-recaptcha-response.required' => 'Captcha is required',
-    ]);
-
-    $this->ContactUsMail('sip@sustainablelivinglab.org', $validated);
-
-    toastr()->success('Your message has been successfully sent to our team.');
-
-    return back();
-  }
-
-  public function ContactUsMail($mailto,$validated) //Email, urlInvitation
-  {
-      // if (Auth::guard('student')->check()) {
-      //   $data = [
-      //     'subject' => 'Mentorship Contact-Us',
-      //     'body' => $mailto,
-      //     'first_name' => Auth::guard('student')->user()->first_name,
-      //     'last_name' => Auth::guard('student')->user()->last_name,
-      //     'email' => Auth::guard('student')->user()->email,
-      //     'message'=> $validated['message'],
-      //     'type' => 'contactUs',
-      //   ];
-      // }else{
+    public function ContactUsMail($mailto, $validated) //Email, urlInvitation
+    {
+        // if (Auth::guard('student')->check()) {
+        //   $data = [
+        //     'subject' => 'Mentorship Contact-Us',
+        //     'body' => $mailto,
+        //     'first_name' => Auth::guard('student')->user()->first_name,
+        //     'last_name' => Auth::guard('student')->user()->last_name,
+        //     'email' => Auth::guard('student')->user()->email,
+        //     'message'=> $validated['message'],
+        //     'type' => 'contactUs',
+        //   ];
+        // }else{
         $data = [
-          'subject' => 'Mentorship Program Contact-Us',
-          'body' => $mailto,
-          'first_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->first_name : $validated['first_name'],
-          'last_name' => Auth::guard('student')->check()? Auth::guard('student')->user()->last_name : $validated['last_name'],
-          'email' => Auth::guard('student')->check()? Auth::guard('student')->user()->email : $validated['email'],
-          'user'=> $validated['user'],
-          'query'=> $validated['query'],
-          'message'=> $validated['message'],
-          'type' => 'contactUs',
+            'subject' => 'Mentorship Program Contact-Us',
+            'body' => $mailto,
+            'first_name' => Auth::guard('student')->check() ? Auth::guard('student')->user()->first_name : $validated['first_name'],
+            'last_name' => Auth::guard('student')->check() ? Auth::guard('student')->user()->last_name : $validated['last_name'],
+            'email' => Auth::guard('student')->check() ? Auth::guard('student')->user()->email : $validated['email'],
+            'user' => $validated['user'],
+            'query' => $validated['query'],
+            'message' => $validated['message'],
+            'type' => 'contactUs',
         ];
-      // }
+        // }
 
-      try
-      {
-          Mail::to($mailto)->send(new MailNotify($data));
-          return response()->json(['Your message has been successfully sent to our team.']);
-      } catch (\Exception $th) {
-          return response()->json(['Sorry Something went wrong']);
-      }
-  }
-
-  public function studentCompleteAssign(Student $student)
-  {
-    $projects = Project::where('status', 'private_project')->get();
-    return view('dashboard.students.complete.assign', compact('student', 'projects'));
-  }
-
-  public function studentCompleteAssignStore(Request $request,Student $student)
-  {
-    $enrolled_project = new EnrolledProject;
-    $enrolled_project->student_id = $student->id;
-    $enrolled_project->project_id = $request->project;
-    $enrolled_project->is_submited = 0;
-    $enrolled_project->save();
-    return redirect('/dashboard/completed_all');
-  }
-
-//   public function studentComplete3()
-//   {
-//     if(Auth::guard('web')->check()){
-//       $students = Student::withCount(['enrolled_projects' => function($q) {
-//                               $q->where('is_submited', 1);
-//                           }])
-//                           ->having('enrolled_projects_count', '=', 3)
-//                           ->get();
-//       $enrolled_projects = EnrolledProject::get();
-//     }elseif(Auth::guard('mentor')->check()){
-//         if(Auth::guard('mentor')->user()->institution_id != 0){
-//           $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
-//                     ->withCount(['enrolled_projects' => function($q) {
-//                         $q->where('is_submited', 1);
-//                     }])
-//                     ->having('enrolled_projects_count', '=', 3)
-//                     ->get();
-//         }else{
-//           $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
-//                     ->withCount(['enrolled_projects' => function($q) {
-//                         $q->where('is_submited', 1);
-//                     }])
-//                     ->having('enrolled_projects_count', '=', 3)
-//                     ->get();
-//         }
-//         $enrolled_projects = EnrolledProject::get();
-//     }
-//     return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
-//   }
-
-  public function studentComplete3()
-  {
-    $data = [];
-
-    // Initialize the query
-    $query = Student::withCount(['enrolled_projects' => function($q) {
-        $q->where('is_submited', 1);
-    }])->having('enrolled_projects_count', '=', 3);
-
-    if (Auth::guard('web')->check()) {
-        // No additional conditions for web guard
-    } elseif (Auth::guard('mentor')->check()) {
-        $mentor = Auth::guard('mentor')->user();
-        if ($mentor->institution_id != 0) {
-            $query->where('mentor_id', $mentor->id);
-        } else {
-            $query->where('staff_id', $mentor->id);
+        try {
+            Mail::to($mailto)->send(new MailNotify($data));
+            return response()->json(['Your message has been successfully sent to our team.']);
+        } catch (\Exception $th) {
+            return response()->json(['Sorry Something went wrong']);
         }
     }
 
-    $data['students'] = $query->get();
-    $data['enrolled_projects'] = EnrolledProject::all();
+    public function studentCompleteAssign(Student $student)
+    {
+        $projects = Project::where('status', 'private_project')->get();
+        return view('dashboard.students.complete.assign', compact('student', 'projects'));
+    }
 
-    return view('dashboard.students.complete.all', $data);
-  }
+    public function studentCompleteAssignStore(Request $request, Student $student)
+    {
+        $enrolled_project = new EnrolledProject;
+        $enrolled_project->student_id = $student->id;
+        $enrolled_project->project_id = $request->project;
+        $enrolled_project->is_submited = 0;
+        $enrolled_project->save();
+        return redirect('/dashboard/completed_all');
+    }
 
-//   public function studentCompleteAll()
-//   {
-//     if(Auth::guard('web')->check()){
-//       $students = Student::withCount(['enrolled_projects' => function($q) {
-//                               $q->where('is_submited', 1);
-//                           }])
-//                           ->having('enrolled_projects_count', '=', 4)
-//                           ->get();
-//       $enrolled_projects = EnrolledProject::get();
-//     }elseif(Auth::guard('mentor')->check()){
-//         if(Auth::guard('mentor')->user()->institution_id != 0){
-//           $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
-//                     ->withCount(['enrolled_projects' => function($q) {
-//                         $q->where('is_submited', 1);
-//                     }])
-//                     ->having('enrolled_projects_count', '=', 4)
-//                     ->get();
-//         }else{
-//           $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
-//                     ->withCount(['enrolled_projects' => function($q) {
-//                         $q->where('is_submited', 1);
-//                     }])
-//                     ->having('enrolled_projects_count', '=', 4)
-//                     ->get();
-//         }
-//         $enrolled_projects = EnrolledProject::get();
-//     }
-//     return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
-//   }
+    //   public function studentComplete3()
+    //   {
+    //     if(Auth::guard('web')->check()){
+    //       $students = Student::withCount(['enrolled_projects' => function($q) {
+    //                               $q->where('is_submited', 1);
+    //                           }])
+    //                           ->having('enrolled_projects_count', '=', 3)
+    //                           ->get();
+    //       $enrolled_projects = EnrolledProject::get();
+    //     }elseif(Auth::guard('mentor')->check()){
+    //         if(Auth::guard('mentor')->user()->institution_id != 0){
+    //           $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
+    //                     ->withCount(['enrolled_projects' => function($q) {
+    //                         $q->where('is_submited', 1);
+    //                     }])
+    //                     ->having('enrolled_projects_count', '=', 3)
+    //                     ->get();
+    //         }else{
+    //           $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
+    //                     ->withCount(['enrolled_projects' => function($q) {
+    //                         $q->where('is_submited', 1);
+    //                     }])
+    //                     ->having('enrolled_projects_count', '=', 3)
+    //                     ->get();
+    //         }
+    //         $enrolled_projects = EnrolledProject::get();
+    //     }
+    //     return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
+    //   }
+
+    public function studentComplete3()
+    {
+        $data = [];
+
+        // Initialize the query
+        $query = Student::withCount(['enrolled_projects' => function ($q) {
+            $q->where('is_submited', 1);
+        }])->having('enrolled_projects_count', '=', 3);
+
+        if (Auth::guard('web')->check()) {
+            // No additional conditions for web guard
+        } elseif (Auth::guard('mentor')->check()) {
+            $mentor = Auth::guard('mentor')->user();
+            if ($mentor->institution_id != 0) {
+                $query->where('mentor_id', $mentor->id);
+            } else {
+                $query->where('staff_id', $mentor->id);
+            }
+        }
+
+        $data['students'] = $query->get();
+        $data['enrolled_projects'] = EnrolledProject::all();
+
+        return view('dashboard.students.complete.all', $data);
+    }
+
+    //   public function studentCompleteAll()
+    //   {
+    //     if(Auth::guard('web')->check()){
+    //       $students = Student::withCount(['enrolled_projects' => function($q) {
+    //                               $q->where('is_submited', 1);
+    //                           }])
+    //                           ->having('enrolled_projects_count', '=', 4)
+    //                           ->get();
+    //       $enrolled_projects = EnrolledProject::get();
+    //     }elseif(Auth::guard('mentor')->check()){
+    //         if(Auth::guard('mentor')->user()->institution_id != 0){
+    //           $students = Student::where('mentor_id', Auth::guard('mentor')->user()->id)
+    //                     ->withCount(['enrolled_projects' => function($q) {
+    //                         $q->where('is_submited', 1);
+    //                     }])
+    //                     ->having('enrolled_projects_count', '=', 4)
+    //                     ->get();
+    //         }else{
+    //           $students = Student::where('staff_id', Auth::guard('mentor')->user()->id)
+    //                     ->withCount(['enrolled_projects' => function($q) {
+    //                         $q->where('is_submited', 1);
+    //                     }])
+    //                     ->having('enrolled_projects_count', '=', 4)
+    //                     ->get();
+    //         }
+    //         $enrolled_projects = EnrolledProject::get();
+    //     }
+    //     return view('dashboard.students.complete.all', compact('students', 'enrolled_projects'));
+    //   }
 
     public function studentCompleteAll()
     {
         $data = [];
 
         // Initialize the query
-        $query = Student::whereHas('enrolled_projects', function($q) {
+        $query = Student::whereHas('enrolled_projects', function ($q) {
             $q->where('is_submited', 1);
-        }, '=', 4)->whereDoesntHave('enrolled_projects', function($q) {
+        }, '=', 4)->whereDoesntHave('enrolled_projects', function ($q) {
             $q->where('is_submited', 0);
         });
 
@@ -913,7 +938,7 @@ class DashboardController extends Controller
         $data = [];
 
         // Students enrolled in project_id = 5 and have submitted
-        $query = Student::whereHas('enrolled_projects', function($q) {
+        $query = Student::whereHas('enrolled_projects', function ($q) {
             $q->where('project_id', 5)->where('is_submited', 0);
         });
 
@@ -938,7 +963,7 @@ class DashboardController extends Controller
     {
         $data = [];
         // Students enrolled in project_id = 5 and have submitted
-        $query = Student::whereHas('enrolled_projects', function($q) {
+        $query = Student::whereHas('enrolled_projects', function ($q) {
             $q->where('project_id', 5)->where('is_submited', 1);
         })->withCount('enrolled_projects');
 
@@ -960,5 +985,5 @@ class DashboardController extends Controller
     }
 
 
-//   End of Bracket Don't Delete this bracket
+    //   End of Bracket Don't Delete this bracket
 }
