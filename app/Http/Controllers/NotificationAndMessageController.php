@@ -67,6 +67,12 @@ class NotificationAndMessageController extends Controller
                     $notification['isRead'] = 1;
                     $updated = true;
                     break; // Stop the loop once we've found and updated the relevant item
+                }else{
+                    if($notification['type'] == "newSubmission"){
+                        $idTask = $notification['idTask'];
+                        $idSubmission = $notification['idSubmission'];
+                    }
+                    $idProject = $notification['idProject'];
                 }
             }
 
