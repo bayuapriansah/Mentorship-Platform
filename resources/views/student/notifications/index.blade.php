@@ -53,11 +53,11 @@
                     </td>
                     <td class="">
                       <a href="{{ route('notifications.students.markAsRead', ['idNotify' => $notify_student['idNotify']]) }}" class="bg-{{ $notify_student['isRead'] != 1 ? 'dark-blue hover:bg-darker-blue' : 'grey hover:bg-gray-800' }} rounded-lg py-1 px-4 pb-2 text-white" onclick="event.preventDefault(); document.getElementById('mark-as-read-form-{{ $notify_student['idNotify'] }}').submit();">View Notification</a>
+                      <form id="mark-as-read-form-{{ $notify_student['idNotify'] }}" action="{{ route('notifications.students.markAsRead', ['idNotify' => $notify_student['idNotify']]) }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                     </td>
                 </tr>
-                <form id="mark-as-read-form-{{ $notify_student['idNotify'] }}" action="{{ route('notifications.students.markAsRead', ['idNotify' => $notify_student['idNotify']]) }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
         @endforeach
     @else
         <p>No notifications found.</p>

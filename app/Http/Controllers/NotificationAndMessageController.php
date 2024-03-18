@@ -26,6 +26,11 @@ class NotificationAndMessageController extends Controller
                     $notification['isRead'] = 1;
                     $updated = true;
                     break; // Stop the loop once we've found and updated the relevant item
+                }else{
+                    if($notification['type'] == "newGrading"){
+                        $idTask = $notification['idSection'];
+                    }
+                    $idProject = $notification['idProject'];
                 }
             }
 
