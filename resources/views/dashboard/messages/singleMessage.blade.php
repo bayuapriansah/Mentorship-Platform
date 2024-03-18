@@ -11,7 +11,7 @@
         <h1 class="text-dark-blue font-medium text-[1.375rem]">
             {{ substr($injection->title, 0, 35) }}{{ strlen($injection->title) >= 35 ? '...' : '' }}
             <span class="mx-3">></span>
-            Messages
+            <a href="{{ route('dashboard.messages.taskMessage', ['injection'=> $injection->id]) }}">Messages</a>
             <span class="mx-3">></span>
             {{ $participant->first_name }} {{ $participant->last_name }}
         </h1>

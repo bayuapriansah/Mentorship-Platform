@@ -1,5 +1,5 @@
 @extends('layouts.admin2')
-
+@section('title', 'Dashboard')
 @section('more-css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.css">
@@ -361,23 +361,29 @@
                         </td>
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
-                            {{ $sexCount['entrepreneur_track']['total'] }}
+                            {{-- {{ $sexCount['entrepreneur_track']['total'] }} --}}
+                            {{ $sexCount['entrepreneur_track']['male']+$sexCount['entrepreneur_track']['female'] }}
                         </td>
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                            {{ $sexCount['skills_track']['total'] }}
+                            {{-- {{ $sexCount['skills_track']['total'] }} --}}
+                            {{ $sexCount['skills_track']['male']+$sexCount['skills_track']['female'] }}
+
                         </td>
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                            {{ $sexCount['crypto_guides']['total'] }}
+                            {{-- {{ $sexCount['crypto_guides']['total'] }} --}}
+                            {{ $sexCount['crypto_guides']['male'] + $sexCount['crypto_guides']['female'] }}
                         </td>
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                            {{ $sexCount['eauto']['total'] }}
+                            {{-- {{ $sexCount['eauto']['total'] }} --}}
+                            {{ $sexCount['eauto']['male'] + $sexCount['eauto']['female'] }}
                         </td>
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
-                            {{ $sexCount['web_helpers']['total'] }}
+                            {{-- {{ $sexCount['web_helpers']['total'] }} --}}
+                            {{ $sexCount['web_helpers']['male']+$sexCount['web_helpers']['female'] }}
                         </td>
                     </tr>
                 </table>
@@ -506,10 +512,12 @@
                     return {
                         _token: $('meta[name="csrf-token"]').attr('content'),
                         search: params.term,
-                        @if (auth()->user()->institution_id)
-                            mentor: '{{ Auth::guard('mentor')->user()->id }}'
-                        @else
-                            staff: '{{ Auth::guard('mentor')->user()->id }}'
+                        @if (auth()->user()->institution_id != null)
+                            @if (auth()->user()->institution_id)
+                                mentor: '{{ Auth::guard('mentor')->user()->id }}'
+                            @else
+                                staff: '{{ Auth::guard('mentor')->user()->id }}'
+                            @endif
                         @endif
                     };
                 },
