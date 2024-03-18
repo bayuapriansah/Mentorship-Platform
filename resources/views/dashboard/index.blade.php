@@ -362,12 +362,12 @@
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
                             {{-- {{ $sexCount['entrepreneur_track']['total'] }} --}}
-                            {{ $sexCount['entrepreneur_track']['male']+$sexCount['entrepreneur_track']['female'] }}
+                            {{ $sexCount['entrepreneur_track']['male'] + $sexCount['entrepreneur_track']['female'] }}
                         </td>
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
                             {{-- {{ $sexCount['skills_track']['total'] }} --}}
-                            {{ $sexCount['skills_track']['male']+$sexCount['skills_track']['female'] }}
+                            {{ $sexCount['skills_track']['male'] + $sexCount['skills_track']['female'] }}
 
                         </td>
 
@@ -383,7 +383,7 @@
 
                         <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
                             {{-- {{ $sexCount['web_helpers']['total'] }} --}}
-                            {{ $sexCount['web_helpers']['male']+$sexCount['web_helpers']['female'] }}
+                            {{ $sexCount['web_helpers']['male'] + $sexCount['web_helpers']['female'] }}
                         </td>
                     </tr>
                 </table>
@@ -512,7 +512,7 @@
                     return {
                         _token: $('meta[name="csrf-token"]').attr('content'),
                         search: params.term,
-                        @if (auth()->user()->institution_id != null)
+                        @if (Auth::guard('mentor')->check())
                             @if (auth()->user()->institution_id)
                                 mentor: '{{ Auth::guard('mentor')->user()->id }}'
                             @else

@@ -289,14 +289,16 @@ class DashboardController extends Controller
             $loginCounts = LoginLog::whereBetween('created_at', [$startOfWeek, $endOfWeek])
                 ->selectRaw('DATE(created_at) as date, COUNT(*) as count');
 
-            if (auth()->user()->institution_id < 0) {
-                $loginCounts = $loginCounts->whereHas('student', function ($query) {
-                    $query->where("is_confirm",1)->where("menthor_id",auth()->user()->id);
-                });
-            } elseif (auth()->user()->institution_id) {
-                $loginCounts = $loginCounts->whereHas('student', function ($query) {
-                    $query->where("is_confirm",1)->where("staff_id",auth()->user()->id);
-                });
+            if (Auth::guard('mentor')->check()) {
+                if (auth()->user()->institution_id < 0) {
+                    $loginCounts = $loginCounts->whereHas('student', function ($query) {
+                        $query->where("is_confirm", 1)->where("menthor_id", auth()->user()->id);
+                    });
+                } else {
+                    $loginCounts = $loginCounts->whereHas('student', function ($query) {
+                        $query->where("is_confirm", 1)->where("staff_id", auth()->user()->id);
+                    });
+                }
             }
 
             $loginCounts = $loginCounts
@@ -324,11 +326,27 @@ class DashboardController extends Controller
             $endOfWeek = Carbon::now()->endOfWeek();
 
             $messageCounts = Comment::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
-                ->groupBy('date')
+                ->selectRaw('DATE(created_at) as date, COUNT(*) as count');
+
+
+
+            if (Auth::guard('mentor')->check()) {
+                if (auth()->user()->institution_id < 0) {
+                    $messageCounts = $messageCounts->whereHas('student', function ($query) {
+                        $query->where("is_confirm", 1)->where("menthor_id", auth()->user()->id);
+                    });
+                } else {
+                    $messageCounts = $messageCounts->whereHas('student', function ($query) {
+                        $query->where("is_confirm", 1)->where("staff_id", auth()->user()->id);
+                    });
+                }
+            }
+
+            $messageCounts = $messageCounts->groupBy('date')
                 ->orderBy('date', 'asc')
                 ->get()
                 ->pluck('count', 'date');
+
 
             for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
                 $formattedDate = $date->format('Y-m-d');
