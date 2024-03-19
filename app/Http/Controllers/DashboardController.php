@@ -290,9 +290,9 @@ class DashboardController extends Controller
                 ->selectRaw('DATE(created_at) as date, COUNT(*) as count');
 
             if (Auth::guard('mentor')->check()) {
-                if (auth()->user()->institution_id < 0) {
+                if (auth()->user()->institution_id > 0) {
                     $loginCounts = $loginCounts->whereHas('student', function ($query) {
-                        $query->where("is_confirm", 1)->where("menthor_id", auth()->user()->id);
+                        $query->where("is_confirm", 1)->where("mentor_id", auth()->user()->id);
                     });
                 } else {
                     $loginCounts = $loginCounts->whereHas('student', function ($query) {
@@ -328,12 +328,10 @@ class DashboardController extends Controller
             $messageCounts = Comment::whereBetween('created_at', [$startOfWeek, $endOfWeek])
                 ->selectRaw('DATE(created_at) as date, COUNT(*) as count');
 
-
-
             if (Auth::guard('mentor')->check()) {
-                if (auth()->user()->institution_id < 0) {
+                if (auth()->user()->institution_id > 0) {
                     $messageCounts = $messageCounts->whereHas('student', function ($query) {
-                        $query->where("is_confirm", 1)->where("menthor_id", auth()->user()->id);
+                        $query->where("is_confirm", 1)->where("mentor_id", auth()->user()->id);
                     });
                 } else {
                     $messageCounts = $messageCounts->whereHas('student', function ($query) {
