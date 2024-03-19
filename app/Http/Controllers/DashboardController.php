@@ -157,7 +157,6 @@ class DashboardController extends Controller
     // Refactore code
     public function index()
     {
-        // dd(auth()->user());
         // Cache the main dashboard data for 4 hours
         $dashboardData = Cache::remember('dashboard_data', 60 * 4, function () {
             return [
