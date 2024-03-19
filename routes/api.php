@@ -45,6 +45,8 @@ Route::get('/dashboard/participants/{id}', function ($id) {
         }
     }
 
+    $loginCounts = $loginCounts->sortKeys();
+
     $startOfWeek = Carbon\Carbon::now()->startOfWeek();
     $endOfWeek = Carbon\Carbon::now()->endOfWeek();
 
@@ -63,6 +65,8 @@ Route::get('/dashboard/participants/{id}', function ($id) {
             $messageCounts[$formattedDate] = 0;
         }
     }
+
+    $messageCounts = $messageCounts->sortKeys();
 
     return response()->json([
         'participant' => $student,

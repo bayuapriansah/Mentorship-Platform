@@ -306,12 +306,15 @@ class DashboardController extends Controller
                 ->get()
                 ->pluck('count', 'date');
 
+
             for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
                 $formattedDate = $date->format('Y-m-d');
                 if (!isset($loginCounts[$formattedDate])) {
                     $loginCounts[$formattedDate] = 0;
                 }
             }
+
+            $loginCounts = $loginCounts->sortKeys();
 
             return [
                 'loginCounts' => $loginCounts->values(),
@@ -351,6 +354,9 @@ class DashboardController extends Controller
                     $messageCounts[$formattedDate] = 0;
                 }
             }
+
+            $messageCounts = $messageCounts->sortKeys();
+            // dd($messageCounts);
 
             return [
                 'messageCounts' => $messageCounts->values(),
