@@ -1,5 +1,7 @@
 @extends('layouts.admin2')
 
+@section('title', 'Add Project')
+
 @section('content')
 <div class="mb-6 flex justify-between items-center">
     <h1 class="text-dark-blue font-medium text-[1.375rem]">

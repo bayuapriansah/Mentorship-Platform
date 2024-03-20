@@ -1,5 +1,7 @@
 @extends('layouts.admin2')
 
+@section('title', 'Edit Project')
+
 @section('content')
 @if ($errors->any())
     <div class="mb-10 alert alert-danger">
