@@ -29,8 +29,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\InstitutionController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
-use PhpParser\Node\Stmt\Break_;
 use setasign\Fpdi\Fpdi;
 
 class StudentController extends Controller

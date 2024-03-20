@@ -1,5 +1,7 @@
 @extends('layouts.admin2')
 
+@section('title', 'Edit Details Participant')
+
 @section('content')
 {{-- Breadcrumb --}}
 <div class="flex flex-wrap text-[1.375rem] text-dark-blue font-medium gap-3">
