@@ -35,6 +35,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InternalDocumentController;
 use App\Http\Controllers\NotificationAndMessageController;
+use App\Http\Livewire\UploadExcel;
 
 // use App\Http\Controllers\ChatbotController;
 
@@ -52,6 +53,7 @@ use App\Http\Controllers\NotificationAndMessageController;
 // Experimental
 // Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
 Route::get('/face-detection', [FaceDetectionController::class, 'index']);
+Route::get("/upload-excel", UploadExcel::class);
 Route::get('/run-face-detection', [FaceDetectionController::class, 'runFaceDetection']);
 
 Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments'])->middleware('auth:web');
