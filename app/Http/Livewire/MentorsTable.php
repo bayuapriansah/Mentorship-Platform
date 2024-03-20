@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 
 class MentorsTable extends Component
 {
-    use WithPagination ;
+    use WithPagination;
 
     public bool $isStaff;
     public $pageName;
