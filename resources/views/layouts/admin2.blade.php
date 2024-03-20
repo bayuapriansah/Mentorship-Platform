@@ -311,7 +311,6 @@
                             <button data-modal-target="popup-logout" data-modal-toggle="popup-logout" type="button"
                                 class="relative inline-flex items-center text-sm font-medium text-center text-light-blue rounded-lg hover:text-dark-blue focus:ring-4 focus:outline-none focus:ring-blue-300"
                                 alt="Logout">
-                                ww
                                 <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor"
                                     stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path
