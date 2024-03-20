@@ -12,6 +12,11 @@
             Loading data....
         </div>
     </div>
+    <div class="text-center text-red-500">
+        @if ($typeerror)
+            {{ $typeerror }}
+        @endif
+    </div>
     <table class="mt-5 bg-gray-500 border shadow-xl w-full">
         <tr>
             <td class="p-2">Name</td>
