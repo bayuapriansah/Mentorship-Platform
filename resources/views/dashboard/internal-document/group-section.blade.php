@@ -1,6 +1,7 @@
 @extends('layouts.admin2')
 
-@section('title', 'Internal Document')
+
+@section('title', 'Group Section')
 
 @section('more-css')
     @livewireStyles
