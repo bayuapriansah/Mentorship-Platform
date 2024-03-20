@@ -1,5 +1,7 @@
 @extends('layouts.index')
 
+@section('title', 'Internal Document')
+
 @section('content')
 <div id="main-content" class="relative min-h-screen max-w-screen-xl mx-auto px-8 py-16">
     {{-- Dots - top-right --}}
