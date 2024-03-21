@@ -15,7 +15,7 @@
 @endphp
 
 @extends('layouts.admin2')
-
+@section('title', 'Projects')
 @section('more-css')
     @livewireStyles
 @endsection

@@ -1,4 +1,7 @@
 @extends('layouts.admin2')
+
+@section('title', 'New Message')
+
 @section('content')
 <a href="{{ route('dashboard.messages.index') }}" class="group block text-lg text-[#6973C6]">
     <

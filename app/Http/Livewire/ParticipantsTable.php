@@ -63,13 +63,11 @@ class ParticipantsTable extends Component
 
     private function getParticipants()
     {
-        $guard = Auth::guard('web')->check() ? 'web' :
-                 (Auth::guard('mentor')->check() ? 'mentor' :
-                 (Auth::guard('customer')->check() ? 'customer' : null));
+        $guard = Auth::guard('web')->check() ? 'web' : (Auth::guard('mentor')->check() ? 'mentor' : (Auth::guard('customer')->check() ? 'customer' : null));
 
         $query = Student::query()
-                    ->with('mentor','staff')
-                    ->where('is_confirm', true);
+            ->with('mentor', 'staff')
+            ->where('is_confirm', true);
 
         //
         switch ($guard) {
@@ -98,17 +96,20 @@ class ParticipantsTable extends Component
         }
 
         if (!empty(trim($this->search))) {
-            $search = '%'. $this->search. '%';
-            $query = $query->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search])
-                        ->orWhereHas('mentor', function ($query) use ($search) {
-                            $query->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search]);
-                        })
-                        ->orWhereHas('staff', function ($query) use ($search) {
-                            $query->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search]);
-                        })
-                        ->orWhere('country', 'like', $search)
-                        ->orWhere('team_name', 'like', $search)
-                        ->orWhere('mentorship_type', 'like', $search);
+            $search = '%' . $this->search . '%';
+            $query = $query->where(function ($queryinsite) use ($search) {
+                $queryinsite->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search])
+                ->orWhereHas('mentor', function ($query) use ($search) {
+                    $query->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search]);
+                })
+                ->orWhereHas('staff', function ($query) use ($search) {
+                    $query->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search]);
+                })
+                ->orWhere('country', 'like', $search)
+                ->orWhere('team_name', 'like', $search)
+                ->orWhere('mentorship_type', 'like', $search);
+            });
+
         }
 
         if (!empty($this->filterByMentorshipType)) {
@@ -169,7 +170,7 @@ class ParticipantsTable extends Component
 
     public function getDataFlag(Student $participant)
     {
-        $tipNumber = 1 ;
+        $tipNumber = 1;
         $arr = $this->enrolledProjects->where('is_submited', 1)->where('student_id',  $participant->id);
         $html = '';
 
@@ -179,10 +180,10 @@ class ParticipantsTable extends Component
             $imgSrc = asset('/assets/img/icon/flag.png');
             $imgMarginLeft = ($enrolledProject->flag_checkpoint >= 90 ? '99' : $enrolledProject->flag_checkpoint) . '%';
 
-            $html .= '<p class="absolute -top-5 font-medium text-left flex-wrap text-[10px] overflow-hidden whitespace-nowrap" style="margin-left: '. $marginLeft . '">
-                        '. $content .'
+            $html .= '<p class="absolute -top-5 font-medium text-left flex-wrap text-[10px] overflow-hidden whitespace-nowrap" style="margin-left: ' . $marginLeft . '">
+                        ' . $content . '
                       </p>
-                      <img src="'. $imgSrc .'" class="absolute top-0" style="margin-left: '. $imgMarginLeft . '">
+                      <img src="' . $imgSrc . '" class="absolute top-0" style="margin-left: ' . $imgMarginLeft . '">
                       ';
 
             $tipNumber++;
@@ -197,16 +198,16 @@ class ParticipantsTable extends Component
         $html = '';
 
         foreach ($this->enrolledProjects->where('is_submited', 1)->where('student_id',  $participant->id) as $enrolledProject) {
-            $marginLeft1 = ($enrolledProject->flag_checkpoint >= 90 ? (100-6) : ($enrolledProject->flag_checkpoint-2)) . '%';
-            $marginLeft2 = ($enrolledProject->flag_checkpoint >= 90 ? (99-4) : ($enrolledProject->flag_checkpoint-2)) . '%';
+            $marginLeft1 = ($enrolledProject->flag_checkpoint >= 90 ? (100 - 6) : ($enrolledProject->flag_checkpoint - 2)) . '%';
+            $marginLeft2 = ($enrolledProject->flag_checkpoint >= 90 ? (99 - 4) : ($enrolledProject->flag_checkpoint - 2)) . '%';
             $content1 = Carbon::parse($enrolledProject->updated_at)->format('d M Y');
             $content2 = 'Project ' . $num;
 
-            $html .= '<p class="absolute font-medium text-left flex-wrap overflow-hidden whitespace-nowrap text-[8px]" style="margin-left: '. $marginLeft1 . '">
-                        '. $content1 .'
+            $html .= '<p class="absolute font-medium text-left flex-wrap overflow-hidden whitespace-nowrap text-[8px]" style="margin-left: ' . $marginLeft1 . '">
+                        ' . $content1 . '
                      </p>
-                     <p class="absolute mt-3 font-medium text-left text-[10px]" style="margin-left: '. $marginLeft2 . '">
-                        '. $content2 .'
+                     <p class="absolute mt-3 font-medium text-left text-[10px]" style="margin-left: ' . $marginLeft2 . '">
+                        ' . $content2 . '
                      </p>
                      ';
 

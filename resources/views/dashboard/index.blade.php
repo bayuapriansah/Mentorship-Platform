@@ -1,5 +1,5 @@
 @extends('layouts.admin2')
-
+@section('title', 'Dashboard')
 @section('more-css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.css">
@@ -127,43 +127,45 @@
 @endsection
 
 @section('content')
-<div class="container">
-    {{-- Non Customer --}}
-    @if (!Auth::guard('customer')->check())
-        {{-- Header --}}
-        @if (!Auth::guard('mentor')->check())
-            <h1 class="text-dark-blue font-medium text-[1.375rem]">
-                Dashboard
-            </h1>
-        @else
-            <div class="flex justify-between gap-4">
-                <div class="space-y-2">
-                    <h1 class="text-dark-blue font-medium text-[1.375rem]">
-                        Hello, {{ Auth::guard('mentor')->user()->first_name }}!
-                    </h1>
-                    <p class="text-lg">
-                        Welcome to the {{ Auth::guard('mentor')->user()->getTitle() }} Dashboard.
+    <div class="container">
+        {{-- Non Customer --}}
+        @if (!Auth::guard('customer')->check())
+            {{-- Header --}}
+            @if (!Auth::guard('mentor')->check())
+                <h1 class="text-dark-blue font-medium text-[1.375rem]">
+                    Dashboard
+                </h1>
+            @else
+                <div class="flex justify-between gap-4">
+                    <div class="space-y-2">
+                        <h1 class="text-dark-blue font-medium text-[1.375rem]">
+                            Hello, {{ Auth::guard('mentor')->user()->first_name }}!
+                        </h1>
+                        <p class="text-lg">
+                            Welcome to the {{ Auth::guard('mentor')->user()->getTitle() }} Dashboard.
+                        </p>
+                    </div>
+
+                    <img src="{{ asset('/assets/img/SL2-Registered-Logo.png') }}" class="h-[82px] w-auto" alt="SL2 Logo">
+                </div>
+            @endif
+            {{-- ./Header --}}
+
+            {{-- Cards --}}
+            <div
+                class="w-max lg:w-full mt-10 flex flex-col lg:flex-row @if (!Auth::guard('mentor')->check()) lg:justify-between @endif gap-6">
+                <div style="background: linear-gradient(90deg, #D4D9FF 3.41%, #ECEDF3 95.32%);"
+                    class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+                    <h2 class="text-lg text-light-black">
+                        Total Participants
+                    </h2>
+
+                    <p class="text-[2.125rem] text-end text-dark-blue font-medium">
+                        {{ $students }}
                     </p>
                 </div>
 
-                <img src="{{ asset('/assets/img/SL2-Registered-Logo.png') }}" class="h-[82px] w-auto" alt="SL2 Logo">
-            </div>
-        @endif
-        {{-- ./Header --}}
-
-        {{-- Cards --}}
-        <div class="w-max lg:w-full mt-10 flex flex-col lg:flex-row @if (!Auth::guard('mentor')->check())lg:justify-between @endif gap-6">
-            <div style="background: linear-gradient(90deg, #D4D9FF 3.41%, #ECEDF3 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
-                <h2 class="text-lg text-light-black">
-                    Total Participants
-                </h2>
-
-                <p class="text-[2.125rem] text-end text-dark-blue font-medium">
-                    {{ $students }}
-                </p>
-            </div>
-
-            {{-- <div style="background: linear-gradient(90deg, #D4D9FF 3.41%, #ECEDF3 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+                {{-- <div style="background: linear-gradient(90deg, #D4D9FF 3.41%, #ECEDF3 95.32%);" class="min-w-[180.34px] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
                 <h2 class="text-lg text-light-black">
                     Total Login
                 </h2>
@@ -173,254 +175,263 @@
                 </p>
             </div> --}}
 
-            @if (!Auth::guard('mentor')->check())
-                <div style="background: linear-gradient(90deg, #FBF6CC 3.41%, #FFFEF9 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+                @if (!Auth::guard('mentor')->check())
+                    <div style="background: linear-gradient(90deg, #FBF6CC 3.41%, #FFFEF9 95.32%);"
+                        class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+                        <h2 class="text-lg text-light-black">
+                            Total Mentors
+                        </h2>
+
+                        <p class="text-[2.125rem] text-end text-dark-blue font-medium">
+                            {{ $mentors }}
+                        </p>
+                    </div>
+
+                    <div style="background: linear-gradient(90deg, #CFF8D8 3.41%, #EBF9EE 95.32%);"
+                        class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
+                        <h2 class="text-lg text-light-black">
+                            Total Staffs
+                        </h2>
+
+                        <p class="text-[2.125rem] text-end text-dark-blue font-medium">
+                            {{ $staffs }}
+                        </p>
+                    </div>
+                @endif
+
+                <div style="background: linear-gradient(90deg, #EFCBF8 3.41%, #FCEEFF 95.32%);"
+                    class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
                     <h2 class="text-lg text-light-black">
-                        Total Mentors
+                        @if (Auth::guard('mentor')->check())
+                            Total Assigned Participants
+                        @else
+                            Total Active Participants
+                        @endif
                     </h2>
 
                     <p class="text-[2.125rem] text-end text-dark-blue font-medium">
-                        {{ $mentors }}
+                        @if (Auth::guard('mentor')->check())
+                            {{ $assignStudents }}
+                        @else
+                            {{ $activeStudents }}
+                        @endif
                     </p>
                 </div>
+            </div>
+            {{-- ./Cards --}}
 
-                <div style="background: linear-gradient(90deg, #CFF8D8 3.41%, #EBF9EE 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
-                    <h2 class="text-lg text-light-black">
-                        Total Staffs
-                    </h2>
+            {{-- Search --}}
+            <div class="mt-14 flex justify-end">
+                <select id="select-participant"></select>
+            </div>
+            {{-- ./Search --}}
 
-                    <p class="text-[2.125rem] text-end text-dark-blue font-medium">
-                        {{ $staffs }}
-                    </p>
-                </div>
-            @endif
+            {{-- Participant --}}
+            <div id="search-result-container" style="display: none;" class="my-6 justify-center items-center gap-12">
+                <p class="text-sm text-darker-blue font-medium">
+                    Full Name :&nbsp;
+                    <span id="search-result-name" class="text-black font-normal">
+                        Bayu Apriansah
+                    </span>
+                </p>
 
-            <div style="background: linear-gradient(90deg, #EFCBF8 3.41%, #FCEEFF 95.32%);" class="min-w-[180.34px] lg:min-w-[23.5%] min-h-[101.63px] p-3 rounded-xl border border-light-blue">
-                <h2 class="text-lg text-light-black">
-                    @if(Auth::guard('mentor')->check())
-                    Total Assigned Participants
-                    @else
-                    Total Active Participants
-                    @endif
-                </h2>
+                <p class="text-sm text-darker-blue font-medium">
+                    Team Name :&nbsp;
+                    <span id="search-result-team-name" class="text-black font-normal">
+                        Avengers
+                    </span>
+                </p>
 
-                <p class="text-[2.125rem] text-end text-dark-blue font-medium">
-                    @if(Auth::guard('mentor')->check())
-                    {{ $assignStudents }}
-                    @else
-                    {{ $activeStudents }}
-                    @endif
+                <p class="text-sm text-darker-blue font-medium">
+                    Mentorship Track :&nbsp;
+                    <span id="search-result-track" class="text-black font-normal">
+                        Skills
+                    </span>
                 </p>
             </div>
-        </div>
-        {{-- ./Cards --}}
+            {{-- ./Participant --}}
 
-        {{-- Search --}}
-        <div class="mt-14 flex justify-end">
-            <select id="select-participant"></select>
-        </div>
-        {{-- ./Search --}}
+            {{-- Charts --}}
+            <div class="mt-9 flex flex-wrap justify-between">
+                <div class="w-[48%] min-h-[293px] border border-grey rounded-2xl">
+                    <h1 class="text-lg text-dark-blue px-5 py-3">
+                        Participants Login Frequency
+                    </h1>
 
-        {{-- Participant --}}
-        <div id="search-result-container" style="display: none;" class="my-6 justify-center items-center gap-12">
-            <p class="text-sm text-darker-blue font-medium">
-                Full Name :&nbsp;
-                <span id="search-result-name" class="text-black font-normal">
-                    Bayu Apriansah
-                </span>
-            </p>
+                    <div id="login-chart" class="max-w-[95%] mt-2"></div>
+                </div>
 
-            <p class="text-sm text-darker-blue font-medium">
-                Team Name :&nbsp;
-                <span id="search-result-team-name" class="text-black font-normal">
-                    Avengers
-                </span>
-            </p>
+                <div class="w-[48%] min-h-[293px] border border-grey rounded-2xl flex flex-col">
+                    <h1 class="text-lg text-dark-blue px-5 py-3">
+                        Message Frequency by Participants
+                    </h1>
 
-            <p class="text-sm text-darker-blue font-medium">
-                Mentorship Track :&nbsp;
-                <span id="search-result-track" class="text-black font-normal">
-                    Skills
-                </span>
-            </p>
-        </div>
-        {{-- ./Participant --}}
+                    <div id="message-chart" class="max-w-[95%] mt-2"></div>
+                </div>
+            </div>
+            {{-- ./Charts --}}
 
-        {{-- Charts --}}
-        <div class="mt-9 flex flex-wrap justify-between">
-            <div class="w-[48%] min-h-[293px] border border-grey rounded-2xl">
-                <h1 class="text-lg text-dark-blue px-5 py-3">
-                    Participants Login Frequency
-                </h1>
+            {{-- Table --}}
+            <div class="mt-12 px-6 pt-5 pb-6 rounded-2xl border border-grey">
+                <table class="w-full">
+                    <tr class="grid grid-cols-12 items-center">
+                        <th class="col-span-2">&nbsp;</th>
+                        <th class="col-span-2 flex justify-center items-center gap-3">
+                            <span class="text-sm text-darker-blue font-medium">
+                                Entrepreneur Track
+                            </span>
+                        </th>
+                        <th class="col-span-2 flex justify-center items-center gap-3">
+                            <span class="text-sm text-darker-blue font-medium">
+                                Skills Track
+                            </span>
+                        </th>
+                        <th class="col-span-2 flex justify-center items-center gap-3">
+                            <span class="text-sm text-darker-blue font-medium">
+                                Crypto Guides
+                            </span>
+                        </th>
+                        <th class="col-span-2 flex justify-center items-center gap-3">
+                            <span class="text-sm text-darker-blue font-medium">
+                                eAuto
+                            </span>
+                        </th>
+                        <th class="col-span-2 flex justify-center items-center gap-3">
+                            <span class="text-sm text-darker-blue font-medium">
+                                Web Helpers
+                            </span>
+                        </th>
+                    </tr>
 
-                <div id="login-chart" class="max-w-[95%] mt-2"></div>
+                    <tr class="mt-6 grid grid-cols-12 items-center">
+                        <td class="col-span-2 text-sm text-darker-blue font-medium">
+                            Male
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
+                            {{ $sexCount['entrepreneur_track']['male'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{ $sexCount['skills_track']['male'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{ $sexCount['crypto_guides']['male'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{ $sexCount['eauto']['male'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
+                            {{ $sexCount['web_helpers']['male'] }}
+                        </td>
+                    </tr>
+
+                    <tr class="mt-[0.625rem] grid grid-cols-12 items-center">
+                        <td class="col-span-2 text-sm text-darker-blue font-medium">
+                            Female
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
+                            {{ $sexCount['entrepreneur_track']['female'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{ $sexCount['skills_track']['female'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{ $sexCount['crypto_guides']['female'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{ $sexCount['eauto']['female'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
+                            {{ $sexCount['web_helpers']['female'] }}
+                        </td>
+                    </tr>
+
+                    <tr class="mt-[0.625rem] grid grid-cols-12 items-center">
+                        <td class="col-span-2 text-sm text-darker-blue font-medium">
+                            Total
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
+                            {{-- {{ $sexCount['entrepreneur_track']['total'] }} --}}
+                            {{ $sexCount['entrepreneur_track']['male'] + $sexCount['entrepreneur_track']['female'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{-- {{ $sexCount['skills_track']['total'] }} --}}
+                            {{ $sexCount['skills_track']['male'] + $sexCount['skills_track']['female'] }}
+
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{-- {{ $sexCount['crypto_guides']['total'] }} --}}
+                            {{ $sexCount['crypto_guides']['male'] + $sexCount['crypto_guides']['female'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
+                            {{-- {{ $sexCount['eauto']['total'] }} --}}
+                            {{ $sexCount['eauto']['male'] + $sexCount['eauto']['female'] }}
+                        </td>
+
+                        <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
+                            {{-- {{ $sexCount['web_helpers']['total'] }} --}}
+                            {{ $sexCount['web_helpers']['male'] + $sexCount['web_helpers']['female'] }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {{-- ./Table --}}
+            {{-- ./Non Customer --}}
+
+            {{-- Customer --}}
+        @else
+            <div class="flex justify-between items-center">
+                <div class="space-y-7">
+                    <h3 class="text-dark-blue font-medium text-xl">Hi {{ Auth::guard('customer')->user()->first_name }}
+                        {{ Auth::guard('customer')->user()->last_name }}</h3>
+                    <p class="font-normal text-lg">Welcome to the Mentorship Program Platform Customer Dashboard.</p>
+                </div>
+                <img src="/storage/{{ Auth::guard('customer')->user()->company->logo }}"
+                    class="w-80 h-44 object-scale-down" alt="">
             </div>
 
-            <div class="w-[48%] min-h-[293px] border border-grey rounded-2xl flex flex-col">
-                <h1 class="text-lg text-dark-blue px-5 py-3">
-                    Message Frequency by Participants
-                </h1>
+            <div class="flex justify-between space-x-7 my-4">
+                <div
+                    class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                    <p class="font-normal text-[18px] text-left">Total Internships</p>
+                    <p class="text-right text-dark-blue text-3xl">{{ $internshipsTotal }}</p>
+                </div>
 
-                <div id="message-chart" class="max-w-[95%] mt-2"></div>
+                <div
+                    class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                    <p class="font-normal text-[18px] text-left">Ongoing Internships</p>
+                    <p class="text-right text-dark-blue text-3xl">{{ $internshipsOngoing }}</p>
+                </div>
+
+                <div
+                    class="border border-light-blue bg-gradient-to-r from-[#CFF8D8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                    <p class="font-normal text-[18px] text-left">Total Customers</p>
+                    <p class="text-right text-dark-blue text-3xl">{{ $customerTotal }}</p>
+                </div>
+
+                <div
+                    class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
+                    <p class="font-normal text-[18px] text-left">Total Submissions</p>
+                    <p class="text-right text-dark-blue text-3xl">{{ $student_submissions }}</p>
+                </div>
             </div>
-        </div>
-        {{-- ./Charts --}}
-
-        {{-- Table --}}
-        <div class="mt-12 px-6 pt-5 pb-6 rounded-2xl border border-grey">
-            <table class="w-full">
-                <tr class="grid grid-cols-12 items-center">
-                    <th class="col-span-2">&nbsp;</th>
-                    <th class="col-span-2 flex justify-center items-center gap-3">
-                        <span class="text-sm text-darker-blue font-medium">
-                            Entrepreneur Track
-                        </span>
-                    </th>
-                    <th class="col-span-2 flex justify-center items-center gap-3">
-                        <span class="text-sm text-darker-blue font-medium">
-                            Skills Track
-                        </span>
-                    </th>
-                    <th class="col-span-2 flex justify-center items-center gap-3">
-                        <span class="text-sm text-darker-blue font-medium">
-                            Crypto Guides
-                        </span>
-                    </th>
-                    <th class="col-span-2 flex justify-center items-center gap-3">
-                        <span class="text-sm text-darker-blue font-medium">
-                            eAuto
-                        </span>
-                    </th>
-                    <th class="col-span-2 flex justify-center items-center gap-3">
-                        <span class="text-sm text-darker-blue font-medium">
-                            Web Helpers
-                        </span>
-                    </th>
-                </tr>
-
-                <tr class="mt-6 grid grid-cols-12 items-center">
-                    <td class="col-span-2 text-sm text-darker-blue font-medium">
-                        Male
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
-                        {{ $sexCount['entrepreneur_track']['male'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['skills_track']['male'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['crypto_guides']['male'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['eauto']['male'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
-                        {{ $sexCount['web_helpers']['male'] }}
-                    </td>
-                </tr>
-
-                <tr class="mt-[0.625rem] grid grid-cols-12 items-center">
-                    <td class="col-span-2 text-sm text-darker-blue font-medium">
-                        Female
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
-                        {{ $sexCount['entrepreneur_track']['female'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['skills_track']['female'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['crypto_guides']['female'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['eauto']['female'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
-                        {{ $sexCount['web_helpers']['female'] }}
-                    </td>
-                </tr>
-
-                <tr class="mt-[0.625rem] grid grid-cols-12 items-center">
-                    <td class="col-span-2 text-sm text-darker-blue font-medium">
-                        Total
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-s-lg text-xs text-center">
-                        {{ $sexCount['entrepreneur_track']['total'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['skills_track']['total'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['crypto_guides']['total'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] text-xs text-center">
-                        {{ $sexCount['eauto']['total'] }}
-                    </td>
-
-                    <td class="col-span-2 py-[0.625rem] bg-[#F9F9F9] rounded-e-lg text-xs text-center">
-                        {{ $sexCount['web_helpers']['total'] }}
-                    </td>
-                </tr>
-            </table>
-        </div>
-        {{-- ./Table --}}
-    {{-- ./Non Customer --}}
-
-    {{-- Customer --}}
-    @else
-    <div class="flex justify-between items-center">
-        <div class="space-y-7">
-            <h3 class="text-dark-blue font-medium text-xl">Hi {{Auth::guard('customer')->user()->first_name}}
-                {{Auth::guard('customer')->user()->last_name}}</h3>
-            <p class="font-normal text-lg">Welcome to the Mentorship Program Platform Customer Dashboard.</p>
-        </div>
-        <img src="/storage/{{Auth::guard('customer')->user()->company->logo}}" class="w-80 h-44 object-scale-down"
-            alt="">
+            <h3 class="text-dark-blue font-medium text-xl mt-12">Tutorial</h3>
+        @endif
+        {{-- ./Customer --}}
     </div>
-
-    <div class="flex justify-between space-x-7 my-4">
-        <div
-            class="border border-light-blue bg-gradient-to-r from-light-blue to-white py-4 pl-4 pr-10 w-full rounded-xl">
-            <p class="font-normal text-[18px] text-left">Total Internships</p>
-            <p class="text-right text-dark-blue text-3xl">{{$internshipsTotal}}</p>
-        </div>
-
-        <div
-            class="border border-light-blue bg-gradient-to-r from-[#FBF6CC] to-white py-4 pl-4 pr-10 w-full rounded-xl">
-            <p class="font-normal text-[18px] text-left">Ongoing Internships</p>
-            <p class="text-right text-dark-blue text-3xl">{{$internshipsOngoing}}</p>
-        </div>
-
-        <div
-            class="border border-light-blue bg-gradient-to-r from-[#CFF8D8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
-            <p class="font-normal text-[18px] text-left">Total Customers</p>
-            <p class="text-right text-dark-blue text-3xl">{{$customerTotal}}</p>
-        </div>
-
-        <div
-            class="border border-light-blue bg-gradient-to-r from-[#EFCBF8] to-white py-4 pl-4 pr-10 w-full rounded-xl">
-            <p class="font-normal text-[18px] text-left">Total Submissions</p>
-            <p class="text-right text-dark-blue text-3xl">{{$student_submissions}}</p>
-        </div>
-    </div>
-    <h3 class="text-dark-blue font-medium text-xl mt-12">Tutorial</h3>
-    @endif
-    {{-- ./Customer --}}
-</div>
 @endsection
 
 @section('more-js')
@@ -441,12 +452,10 @@
             dataLabels: {
                 enabled: false
             },
-            series: [
-                {
-                    name: 'Login Frequency',
-                    data: loginCounts
-                }
-            ],
+            series: [{
+                name: 'Login Frequency',
+                data: loginCounts
+            }],
             fill: {
                 type: 'gradient',
                 gradient: {
@@ -469,12 +478,10 @@
             dataLabels: {
                 enabled: false
             },
-            series: [
-                {
-                    name: 'Message Frequency',
-                    data: messageCounts
-                }
-            ],
+            series: [{
+                name: 'Message Frequency',
+                data: messageCounts
+            }],
             fill: {
                 type: 'gradient',
                 gradient: {
@@ -501,13 +508,20 @@
                 type: "post",
                 dataType: 'json',
                 delay: 250,
-                data: function (params) {
+                data: function(params) {
                     return {
                         _token: $('meta[name="csrf-token"]').attr('content'),
-                        search: params.term
+                        search: params.term,
+                        @if (Auth::guard('mentor')->check())
+                            @if (auth()->user()->institution_id)
+                                mentor: '{{ Auth::guard('mentor')->user()->id }}'
+                            @else
+                                staff: '{{ Auth::guard('mentor')->user()->id }}'
+                            @endif
+                        @endif
                     };
                 },
-                processResults: function (response) {
+                processResults: function(response) {
                     return {
                         results: response
                     };
@@ -516,7 +530,7 @@
             },
         });
 
-        $('#select-participant').on('select2:select', function (e) {
+        $('#select-participant').on('select2:select', function(e) {
             const data = e.params.data;
 
             if (data.id) {
@@ -524,8 +538,9 @@
                     type: 'GET',
                     url: "{{ url('/api/dashboard/participants') }}/" + data.id,
                     dataType: 'json',
-                    success: function (response) {
-                        $('#search-result-name').text(`${response.participant.first_name} ${response.participant.last_name}`);
+                    success: function(response) {
+                        $('#search-result-name').text(
+                            `${response.participant.first_name} ${response.participant.last_name}`);
                         $('#search-result-team-name').text(`${response.participant.team_name ?? '-'}`);
                         $('#search-result-track').text(response.track);
 
@@ -545,7 +560,7 @@
             }
         });
 
-        $('#select-participant').on('select2:unselect', function (e) {
+        $('#select-participant').on('select2:unselect', function(e) {
             $('#search-result-container').css('display', 'none');
 
             loginChart.updateSeries([{

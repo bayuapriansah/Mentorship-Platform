@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin Dashboard</title>
+    <title>@yield('title', 'Mentorship Platform')</title>
+
     <link rel="icon" type="image/x-icon" href="{{asset('assets/img/icon/favicon.ico')}}">
 
     <!-- Custom fonts for this template-->

@@ -1,4 +1,7 @@
 @extends('layouts.admin2')
+
+@section('title', 'Reply Message')
+
 @section('content')
     <div class="flex justify-between mb-10">
         <h3 class="text-dark-blue font-medium text-[1.375rem]">Reply Message</h3>

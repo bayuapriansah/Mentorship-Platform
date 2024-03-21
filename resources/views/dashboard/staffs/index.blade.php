@@ -1,5 +1,7 @@
 @extends('layouts.admin2')
 
+@section('title', 'Memtors & Staffs')
+
 @section('more-css')
     @livewireStyles
 @endsection

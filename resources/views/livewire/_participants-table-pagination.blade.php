@@ -6,7 +6,7 @@
                 Prev
             </span>
         @else
-            <button wire:click="previousPage" wire:loading.attr="disabled" rel="prev" class="hover:underline">
+            <button wire:click="previousPage('{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" rel="prev" class="hover:underline">
                 Prev
             </button>
         @endif
@@ -38,7 +38,7 @@
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
-            <button wire:click="nextPage" wire:loading.attr="disabled" rel="next" class="hover:underline">
+            <button wire:click="nextPage('{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" rel="next" class="hover:underline">
                 Next
             </button>
         @else
