@@ -1,5 +1,7 @@
 @extends('layouts.admin2')
 
+@section('title', 'Testimonials')
+
 @section('more-css')
     @livewireStyles
 @endsection

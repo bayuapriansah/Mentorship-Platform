@@ -97,7 +97,8 @@ class ParticipantsTable extends Component
 
         if (!empty(trim($this->search))) {
             $search = '%' . $this->search . '%';
-            $query = $query->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search])
+            $query = $query->where(function ($queryinsite) use ($search) {
+                $queryinsite->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search])
                 ->orWhereHas('mentor', function ($query) use ($search) {
                     $query->whereRaw("CONCAT(first_name,' ', last_name) like?", [$search]);
                 })
@@ -107,6 +108,8 @@ class ParticipantsTable extends Component
                 ->orWhere('country', 'like', $search)
                 ->orWhere('team_name', 'like', $search)
                 ->orWhere('mentorship_type', 'like', $search);
+            });
+
         }
 
         if (!empty($this->filterByMentorshipType)) {

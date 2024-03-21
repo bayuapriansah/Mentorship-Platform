@@ -1,4 +1,7 @@
 @extends('layouts.admin2')
+
+@section('title', 'Certificate')
+
 @section('content')
 <div class="flex justify-between mb-10">
   <h3 class="text-dark-blue font-medium text-xl">Certificate </h3>
