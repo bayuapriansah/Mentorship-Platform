@@ -430,6 +430,23 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact('internshipsTotal', 'internshipsOngoing', 'customerTotal', 'student_submissions'));
     }
+    function chat(Request $request)
+    {
+        if (auth()->guard('mentor')->check()) {
+            if (auth()->user()->institution_id == 0) {
+                $data['student'] = Student::where('staff_id', auth()->user()->id)->get();
+            } else {
+                $data['student'] = Student::where('mentor_id', auth()->user()->id)->get();
+            }
+        }
+        if (!$request->team) {
+
+            return redirect(route("dashboard.chat",["team" => "Cancel the cancer"]));
+        }
+
+        $data['team_name'] = $request->team;
+        return view('dashboard.chat.index', $data);
+    }
 
     public function allCustomer()
     {

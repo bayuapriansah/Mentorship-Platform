@@ -8,10 +8,10 @@ use Livewire\Component;
 class ChatWithTeam extends Component
 {
     public $chats, $message;
+    public $team_name;
     public function render()
     {
-        $team_name = auth()->user()->team_name;
-        $this->chats = TeamChat::where("team_name", $team_name)->orderBy("created_at", "asc")->get();
+        $this->chats = TeamChat::where("team_name", $this->team_name)->orderBy("created_at", "asc")->get();
         return view('livewire.chat-with-team');
     }
     function sendMessage()

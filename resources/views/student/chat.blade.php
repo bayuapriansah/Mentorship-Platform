@@ -17,7 +17,7 @@
             </p>
 
             <div class="mt-9">
-                @livewire('chat-with-team')
+                @livewire('chat-with-team', ['team_name' => $team_name])
             </div>
         </div>
     </div>

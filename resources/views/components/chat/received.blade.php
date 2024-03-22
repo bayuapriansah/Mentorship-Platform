@@ -1,13 +1,13 @@
 <div class="flex items-start">
-    @if (getRole() == 'admin')
+    @if ($chat->sender_type == 'admin')
         @php
             $user = $chat->admin;
         @endphp
-    @elseif (getRole() == 'mentor' || getRole() == 'staff')
+    @elseif ($chat->sender_type == 'mentor' || $chat->sender_type == 'staff')
         @php
             $user = $chat->mentor;
         @endphp
-    @elseif (getRole() == 'student')
+    @elseif ($chat->sender_type == 'student')
         @php
             $user = $chat->student;
         @endphp
