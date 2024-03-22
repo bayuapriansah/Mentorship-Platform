@@ -4,7 +4,7 @@
     @endphp
     <div class="bg-blue-500 p-3 rounded-lg">
         <div class="text-xs text-white">
-            {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}
+            {{ auth()->user()->first_name }} {{ auth()->user()->last_name }} <span class="capitalize">({{ $chat->sender_type }})</span>
         </div>
         <p class="text-sm text-white">{{ $chat->message }}</p>
     </div>

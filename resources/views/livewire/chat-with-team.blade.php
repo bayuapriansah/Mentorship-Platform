@@ -2,12 +2,12 @@
     <!-- Chat Container -->
     <div class="bg-white rounded-lg shadow-md p-4">
         <!-- Chat Header -->
-        {{-- <div class="flex items-center mb-4">
+        <div class="flex items-center mb-4">
             <div class="ml-3">
-                <p class="text-xl font-medium">Your AI Assistant</p>
-                <p class="text-gray-500">Online</p>
+                <p class="text-xl font-medium">{{$team_name}}</p>
+                {{-- <p class="text-gray-500">Online</p> --}}
             </div>
-        </div> --}}
+        </div>
 
         <!-- Chat Messages -->
 

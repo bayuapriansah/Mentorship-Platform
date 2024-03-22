@@ -16,7 +16,7 @@
         alt="Other User Avatar" class="w-8 h-8 rounded-full ml-3" />
     <div class="ml-3 bg-gray-100 p-3 rounded-lg">
         <div class="text-xs ">
-            {{ $user->first_name }} {{ $user->last_name }}
+            {{ $user->first_name }} {{ $user->last_name }} <span class="capitalize">({{ $chat->sender_type }})</span>
         </div>
         <p class="text-sm text-gray-800">{{ $chat->message }}</p>
     </div>
