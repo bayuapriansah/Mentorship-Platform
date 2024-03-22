@@ -18,7 +18,7 @@ class ChatWithTeam extends Component
     {
         try {
             TeamChat::create([
-                "team_name" => auth()->user()->team_name,
+                "team_name" => $this->team_name,
                 "message" => $this->message,
                 "sender_id" => auth()->user()->id,
                 "type" => "text",
@@ -26,6 +26,7 @@ class ChatWithTeam extends Component
             ]);
             $this->message = null;
         } catch (\Throwable $th) {
+            dd($th);
         }
     }
 }
