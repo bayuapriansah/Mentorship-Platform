@@ -12,7 +12,7 @@
         <!-- Chat Messages -->
 
 
-        <div class="space-y-4 min-h-80 max-h-96 overflow-y-auto">
+        <div class="space-y-4 h-[600px] overflow-y-auto">
             @foreach ($chats as $chat)
                 <x-chat.message :chat="$chat" />
             @endforeach
