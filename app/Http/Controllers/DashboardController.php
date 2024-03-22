@@ -434,14 +434,16 @@ class DashboardController extends Controller
     {
         if (auth()->guard('mentor')->check()) {
             if (auth()->user()->institution_id == 0) {
-                $data['students'] = Student::where('staff_id', auth()->user()->id)->get();
+                $students = Student::where('staff_id', auth()->user()->id)->get();
             } else {
-                $data['students'] = Student::where('mentor_id', auth()->user()->id)->get();
+                $students = Student::where('mentor_id', auth()->user()->id)->get();
             }
         }
+
         if (!$request->team) {
-            return redirect(route("dashboard.chat", ["team" => "Cancel the cancer"]));
+            return redirect(route("dashboard.chat", ["team" => $students[0]->team_name]));
         }
+        $data['students'] = $students;
 
         $data['team_name'] = $request->team;
         return view('dashboard.chat.index', $data);

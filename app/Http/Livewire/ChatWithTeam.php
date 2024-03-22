@@ -9,10 +9,18 @@ class ChatWithTeam extends Component
 {
     public $chats, $message;
     public $team_name;
+    function mount()
+    {
+        $this->getChat();
+    }
     public function render()
     {
-        $this->chats = TeamChat::where("team_name", $this->team_name)->orderBy("created_at", "asc")->get();
         return view('livewire.chat-with-team');
+    }
+
+    function getChat()
+    {
+        $this->chats = TeamChat::with("admin", "mentor", "student")->where("team_name", $this->team_name)->orderBy("created_at", "asc")->get();
     }
     function sendMessage()
     {
@@ -25,6 +33,7 @@ class ChatWithTeam extends Component
                 "sender_type" => getRole(),
             ]);
             $this->message = null;
+            $this->getChat();
         } catch (\Throwable $th) {
             dd($th);
         }

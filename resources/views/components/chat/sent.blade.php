@@ -2,7 +2,7 @@
     @php
         $user = auth()->user();
     @endphp
-    <div class="bg-blue-500 p-3 rounded-lg">
+    <div class="bg-blue-500 p-3 rounded-lg shadow-md">
         <div class="text-xs text-white">
             {{ auth()->user()->first_name }} {{ auth()->user()->last_name }} <span class="capitalize">({{ $chat->sender_type }})</span>
         </div>
