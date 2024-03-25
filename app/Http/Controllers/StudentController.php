@@ -1567,6 +1567,8 @@ class StudentController extends Controller
         })->get();
         $dataDate = (new SimintEncryption)->daycompare($student->created_at,$student->end_date);
 
-        return view('student.chat', compact('enrolled_projects','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages', 'existingProject'));
+        $team_name = auth()->user()->team_name;
+
+        return view('student.chat', compact('enrolled_projects','team_name','enrolled_projects_entrepreneur','completed_months', 'student','dataDate','newMessage', 'newActivityNotifs','notifActivityCount','notifNewTasks','dataMessages', 'existingProject'));
     }
 }

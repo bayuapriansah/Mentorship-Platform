@@ -303,7 +303,7 @@
                 </li>
 
                 @if (!isSkillsTrack())
-                    <li class="text-black font-light text-sm" hidden>
+                    <li class="text-black font-light text-sm">
                         <a href="{{ route('student.chat', ['student' => Auth()->user()->id]) }}">
                             Chat with Team
                         </a>
