@@ -11,11 +11,6 @@
                 Chat with Team
             </h1>
 
-            <p class="mt-3 text-lg font-light">
-                Lorem ipsum dolor sit amet is simply a dummy text used as a placeholder. Lorem ipsum dolor sit amet is
-                simply a dummy text used as a placeholder.
-            </p>
-
             <div class="mt-9">
                 @livewire('chat-with-team', ['team_name' => $team_name])
             </div>

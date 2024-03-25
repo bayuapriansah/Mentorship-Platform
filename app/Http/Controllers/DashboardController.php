@@ -432,7 +432,9 @@ class DashboardController extends Controller
     }
     function chat(Request $request)
     {
-        if (auth()->guard('mentor')->check()) {
+        if (auth()->guard('web')->check()) {
+            $students = Student::all();
+        } elseif (auth()->guard('mentor')->check()) {
             if (auth()->user()->institution_id == 0) {
                 $students = Student::where('staff_id', auth()->user()->id)->get();
             } else {
@@ -443,6 +445,14 @@ class DashboardController extends Controller
         if (!$request->team) {
             return redirect(route("dashboard.chat", ["team" => $students[0]->team_name]));
         }
+
+        // filter
+        if (auth()->guard('mentor')->check()) {
+            if ($students->where("team_name", $request->team)->count() == 0) {
+                return abort(404);
+            }
+        }
+
         $data['students'] = $students;
 
         $data['team_name'] = $request->team;

@@ -9,18 +9,20 @@
             <div class="text-xl font-medium mb-4 text-center">
                 Team List
             </div>
-            <div class="flex flex-col gap-1">
+            <div class="flex flex-col gap-1 max-h-[725px] overflow-y-auto">
                 @foreach ($students->groupBy('team_name') as $key => $team)
-                    @if ($key == $team_name)
-                        <a href="{{ route('dashboard.chat', ['team' => $key]) }}"
-                            class="block p-3 rounded-lg border bg-gray-100 cursor-pointer">
-                            {{ $key }}
-                        </a>
-                    @else
-                        <a href="{{ route('dashboard.chat', ['team' => $key]) }}"
-                            class="block p-3 rounded-lg border hover:bg-gray-100 cursor-pointer">
-                            {{ $key }}
-                        </a>
+                    @if ($key)
+                        @if ($key == $team_name)
+                            <a href="{{ route('dashboard.chat', ['team' => $key]) }}"
+                                class="block p-3 rounded-xl border bg-gray-100 cursor-pointer">
+                                {{ $key }}
+                            </a>
+                        @else
+                            <a href="{{ route('dashboard.chat', ['team' => $key]) }}"
+                                class="block p-3 rounded-xl border hover:bg-gray-100 cursor-pointer">
+                                {{ $key }}
+                            </a>
+                        @endif
                     @endif
                 @endforeach
             </div>
