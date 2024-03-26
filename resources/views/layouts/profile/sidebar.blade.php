@@ -341,8 +341,8 @@
                             hour12: false,
                         });
                         let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                        console.log(datesubmit);
-                        console.log(formattedDate);
+                        // console.log(datesubmit);
+                        // console.log(formattedDate);
                         document.getElementById('submitdate').innerHTML = `${formattedDate}`;
                     </script>
                     <div
@@ -438,8 +438,8 @@
                             hour12: false,
                         });
                         let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                        console.log(datesubmit);
-                        console.log(formattedDate);
+                        // console.log(datesubmit);
+                        // console.log(formattedDate);
                         document.getElementById('submitdate').innerHTML = `${formattedDate}`;
                     </script>
                     <div
