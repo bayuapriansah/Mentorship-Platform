@@ -1,7 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ExportExcel;
 
+use App\Http\Livewire\UploadExcel;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
@@ -20,22 +23,20 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\TheWorldController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\SubmitProjectPlanner;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FaceDetectionController;
 use App\Http\Controllers\EnrolledProjectController;
-use App\Http\Controllers\EmailBulkInvitationController;
-use App\Http\Controllers\SubmitProjectPlanner;
-use App\Http\Controllers\FAQController;
-use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InternalDocumentController;
+use App\Http\Controllers\EmailBulkInvitationController;
 use App\Http\Controllers\NotificationAndMessageController;
-use App\Http\Livewire\UploadExcel;
 
 // use App\Http\Controllers\ChatbotController;
 
@@ -54,6 +55,7 @@ use App\Http\Livewire\UploadExcel;
 // Route::get('/newindex', [IndexController::class, 'newindex'])->name('newindex');
 Route::get('/face-detection', [FaceDetectionController::class, 'index']);
 Route::get("/upload-excel", UploadExcel::class);
+Route::get("/export-excel", ExportExcel::class);
 Route::get('/run-face-detection', [FaceDetectionController::class, 'runFaceDetection']);
 
 Route::get('/cleaned_comments', [App\Http\Controllers\CleanedCommentController::class, 'getCleanedComments'])->middleware('auth:web');
