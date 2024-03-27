@@ -35,5 +35,7 @@ class ExportExcel extends Component
     }
     function closemodal() {
         $this->modal = false;
+        $this->datefrom = null;
+        $this->dateto = null;
     }
 }

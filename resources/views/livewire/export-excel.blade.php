@@ -51,7 +51,7 @@
                         </button>
                     </div>
                     <div class="modal-body p-4">
-                        <p class="text-orange-400">If no filter you can let both date is empty</p>
+                        <p class="text-orange-400">If you want to filter data you can let both of date is empty</p>
                         <div>
                             <div>From</div>
                             <input type="date" wire:model="datefrom" class="w-full">
