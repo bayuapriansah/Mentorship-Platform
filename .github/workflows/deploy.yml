@@ -1,0 +1,20 @@
+name: deploy staging site
+on:
+  push:
+    branches:
+      - mentorship-dev
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands to deploy
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: "18.136.167.32"
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: "22"
+        script: |
+            cd /var/www/html/Mentorship-Platform
+            ./.scripts/deploy.sh
